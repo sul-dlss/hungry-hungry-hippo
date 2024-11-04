@@ -1,6 +1,10 @@
 require:
   - rubocop-rails
   - rubocop-performance
+  - rubocop-rspec
+  - rubocop-capybara
+  - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
   TargetRubyVersion: 3.3
@@ -414,4 +418,35 @@ Performance/StringIdentifierArgument: # new in 1.13
 Performance/StringInclude: # new in 1.7
   Enabled: true
 Performance/Sum: # new in 1.8
+  Enabled: true
+
+RSpec/StringAsInstanceDoubleConstant: # new in 3.1
+  Enabled: true
+Capybara/ClickLinkOrButtonStyle: # new in 2.19
+  Enabled: true
+Capybara/MatchStyle: # new in 2.17
+  Enabled: true
+Capybara/NegationMatcher: # new in 2.14
+  Enabled: true
+Capybara/RedundantWithinFind: # new in 2.20
+  Enabled: true
+Capybara/SpecificActions: # new in 2.14
+  Enabled: true
+Capybara/SpecificFinders: # new in 2.13
+  Enabled: true
+Capybara/SpecificMatcher: # new in 2.12
+  Enabled: true
+Capybara/RSpec/HaveSelector: # new in 2.19
+  Enabled: true
+RSpecRails/AvoidSetupHook: # new in 2.4
+  Enabled: true
+RSpecRails/HaveHttpStatus: # new in 2.12
+  Enabled: true
+RSpecRails/InferredSpecType: # new in 2.14
+  Enabled: true
+RSpecRails/MinitestAssertions: # new in 2.17
+  Enabled: true
+RSpecRails/NegationBeValid: # new in 2.23
+  Enabled: true
+RSpecRails/TravelAround: # new in 2.19
   Enabled: true
