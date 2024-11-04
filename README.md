@@ -1,24 +1,19 @@
-# README
+# Hungry Hungry Hippo (H3)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Development
 
-Things you may want to cover:
+### Requirements
 
-* Ruby version
+* tmux and overmind ([installation instructions](https://github.com/DarthSim/overmind#installation))
 
-* System dependencies
+### Running locally
 
-* Configuration
+```
+overmind start
+```
 
-* Database creation
+See [overmind documentation](https://github.com/DarthSim/overmind) for how to control processes.
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Debugging locally
+1. Add a `debugger` statement in the code.
+2. Connect to the process (for example, `overmind connect web`).
