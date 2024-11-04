@@ -153,6 +153,12 @@ GEM
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     ostruct (0.6.0)
+    overmind (2.5.1)
+    overmind (2.5.1-aarch64-linux)
+    overmind (2.5.1-arm-linux)
+    overmind (2.5.1-arm64-darwin)
+    overmind (2.5.1-x86-linux)
+    overmind (2.5.1-x86_64-darwin)
     parallel (1.26.3)
     parser (3.3.5.1)
       ast (~> 2.4.1)
@@ -305,6 +311,7 @@ DEPENDENCIES
   debug
   importmap-rails
   jbuilder
+  overmind
   propshaft
   puma (>= 5.0)
   rails (~> 8.0.0.rc2)
