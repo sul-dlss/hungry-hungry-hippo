@@ -1,2 +1,3 @@
 web: bin/rails server
 css: yarn install && yarn watch:css
+db: docker compose up db --abort-on-container-exit

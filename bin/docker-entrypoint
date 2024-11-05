@@ -6,9 +6,21 @@ if [ -z "${LD_PRELOAD+x}" ]; then
     export LD_PRELOAD
 fi
 
+# Don't allow this command to fail
+set -e
+
+echo "DB HOST IS: $DATABASE_HOSTNAME"
+until PGPASSWORD=$DATABASE_PASSWORD psql -h "$DATABASE_HOSTNAME" -U $DATABASE_USERNAME -c '\q'; do
+    echo "Postgres is unavailable - sleeping"
+    sleep 1
+done
+
+echo "Postgres is up - Setting up database"
+
 # If running the rails server then create or migrate existing database
 if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
-  ./bin/rails db:prepare
+    echo "Preparing the database"
+    ./bin/rails db:prepare
 fi
 
 exec "${@}"

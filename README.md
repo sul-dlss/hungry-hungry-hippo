@@ -4,18 +4,24 @@
 
 ### Requirements
 
+* docker & docker compose
 * tmux ([installation instructions](https://github.com/tmux/tmux#installation))
-* overmind ([installed via bundler](https://github.com/DarthSim/overmind/tree/master/packaging/rubygems#installation-with-rails))
+* overmind ([installed automatically via bundler](https://github.com/DarthSim/overmind/tree/master/packaging/rubygems#installation-with-rails))
 
 ### Running locally
 
+Spin up the web server, CSS asset builder, and DB container, and then set up the application database:
+
 ```shell
 bin/dev
+bin/rails db:prepare
 ```
 
-See [overmind documentation](https://github.com/DarthSim/overmind) for how to control processes.
+Then browse to http://localhost:3000 to see the running application.
 
 ### Debugging locally
 
 1. Add a `debugger` statement in the code.
 2. Connect to the process (for example, `bin/overmind connect web`).
+
+See [overmind documentation](https://github.com/DarthSim/overmind) for more about how to control processes.
