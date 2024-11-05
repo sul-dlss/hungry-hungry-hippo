@@ -133,6 +133,8 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashdiff (1.1.1)
+    honeybadger (5.19.1)
+      logger
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.0.3)
@@ -384,6 +386,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   erb_lint
+  honeybadger
   importmap-rails
   jbuilder
   overmind
