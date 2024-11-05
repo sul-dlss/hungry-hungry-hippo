@@ -42,3 +42,14 @@
 # Ignore Docker-related files
 /.dockerignore
 /Dockerfile*
+
+# Ignore local configs
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
+
+# Ignore code coverage artifacts
+/coverage
+
+# Ignore database files from containerland
+/postgres-data
