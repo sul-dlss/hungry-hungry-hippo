@@ -1,4 +1,4 @@
-# Hungry Hungry Hippo (H3)
+# Hungry Hungry Hippo (H3) FOOBAR
 
 ## Development
 
