@@ -9,8 +9,21 @@ default: &default
   timeout: 5000
 
 development:
-  <<: *default
-  database: "<%= ENV.fetch('DATABASE_NAME', 'h3_development') %>"
+  primary:
+    <<: *default
+    database: "<%= ENV.fetch('DATABASE_NAME', 'h3_development') %>"
+  queue:
+    <<: *default
+    database: "<%= ENV.fetch('DATABASE_QUEUE_NAME', 'h3_development_queue') %>"
+    migrations_paths: db/queue_migrate
+  cache:
+    <<: *default
+    database: "<%= ENV.fetch('DATABASE_CACHE_NAME', 'h3_development_cache') %>"
+    migrations_paths: db/cache_migrate
+  cable:
+    <<: *default
+    database: "<%= ENV.fetch('DATABASE_CABLE_NAME', 'h3_development_cable') %>"
+    migrations_paths: db/cable_migrate
 
 test:
   <<: *default
@@ -20,7 +33,15 @@ production:
   primary:
     <<: *default
     database: "<%= ENV.fetch('DATABASE_NAME', 'h3_production') %>"
-  # cache:
-  #   <<: *default
-  #   database: "<%= ENV.fetch('DATABASE_CACHE_NAME', 'h3_production_cache') %>"
-  #   migrations_paths: db/cache_migrate
+  queue:
+    <<: *default
+    database: "<%= ENV.fetch('DATABASE_QUEUE_NAME', 'h3_production_queue') %>"
+    migrations_paths: db/queue_migrate
+  cache:
+    <<: *default
+    database: "<%= ENV.fetch('DATABASE_CACHE_NAME', 'h3_production_cache') %>"
+    migrations_paths: db/cache_migrate
+  cable:
+    <<: *default
+    database: "<%= ENV.fetch('DATABASE_CABLE_NAME', 'h3_production_cable') %>"
+    migrations_paths: db/cable_migrate
