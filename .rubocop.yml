@@ -37,6 +37,12 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 15 # default 10
 
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
 Style/Documentation:
   Exclude:
     - 'config/application.rb'
