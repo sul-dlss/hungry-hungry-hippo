@@ -26,7 +26,7 @@ set :log_level, :info
 # set :pty, true
 
 # Default value for :linked_files is []
-# append :linked_files, "config/database.yml", 'config/master.key'
+append :linked_files, 'config/database.yml' # From puppet
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'config/settings', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
