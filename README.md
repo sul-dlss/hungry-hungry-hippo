@@ -1,3 +1,7 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/sul-dlss/hungry-hungry-hippo/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/sul-dlss/hungry-hungry-hippo/tree/main)
+[![Maintainability](https://api.codeclimate.com/v1/badges/31c5ec4d948fc6e97d12/maintainability)](https://codeclimate.com/github/sul-dlss/hungry-hungry-hippo/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/31c5ec4d948fc6e97d12/test_coverage)](https://codeclimate.com/github/sul-dlss/hungry-hungry-hippo/test_coverage)
+
 # Hungry Hungry Hippo (H3)
 
 ## Development
