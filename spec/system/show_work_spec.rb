@@ -5,6 +5,10 @@ require 'rails_helper'
 RSpec.describe 'Show a work', :rack_test do
   let(:druid) { 'druid:bc123df4567' }
 
+  before do
+    sign_in(create(:user))
+  end
+
   it 'creates a work draft' do
     visit work_path(druid)
 

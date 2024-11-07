@@ -3,6 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Create a work draft' do
+  before do
+    sign_in(create(:user))
+  end
+
   it 'creates a work draft' do
     visit new_work_path
 
