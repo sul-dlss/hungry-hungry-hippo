@@ -4,7 +4,7 @@
 lock '~> 3.19.1'
 
 set :application, 'hungry-hungry-hippo'
-set :repo_url, 'ssh://git@github.com/sul-dlss/hungry-hungry-hippo.git'
+set :repo_url, 'https://github.com/sul-dlss/hungry-hungry-hippo.git'
 
 # Default branch is :main
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
