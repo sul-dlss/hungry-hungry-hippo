@@ -10,7 +10,7 @@
 
 ### Running locally
 
-Spin up the web server, CSS asset builder, and DB container, and then set up the application database:
+Spin up the web server, CSS asset builder, and DB container, and then set up the application and solid-* databases:
 
 ```shell
 bin/dev
