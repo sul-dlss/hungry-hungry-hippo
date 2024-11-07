@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# config valid for current version and patch releases of Capistrano
-lock '~> 3.19.1'
-
 set :application, 'hungry-hungry-hippo'
 set :repo_url, 'https://github.com/sul-dlss/hungry-hungry-hippo.git'
 
@@ -26,7 +23,7 @@ set :log_level, :info
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, 'config/database.yml' # From puppet
+# append :linked_files, 'config/database.yml' # From puppet
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'config/settings', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'

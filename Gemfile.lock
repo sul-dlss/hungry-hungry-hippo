@@ -108,8 +108,6 @@ GEM
       capistrano-bundler (>= 1.4)
     capistrano-bundler (2.1.1)
       capistrano (~> 3.1)
-    capistrano-maintenance (1.2.1)
-      capistrano (>= 3.0)
     capistrano-one_time_key (0.2.0)
       capistrano (~> 3.0)
     capistrano-passenger (0.2.1)
@@ -434,7 +432,6 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
-  capistrano-maintenance (~> 1.2)
   capistrano-passenger
   capistrano-rails
   capybara
