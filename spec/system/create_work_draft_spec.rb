@@ -12,8 +12,9 @@ RSpec.describe 'Create a work draft' do
     # Title tab is active, abstract is not
     expect(page).to have_css('.nav-link.active', text: 'Title')
     expect(page).to have_css('.nav-link:not(.active)', text: 'Abstract')
-    # Title pan is visible, abstract is not
+    # Title pane with form field is visible, abstract is not
     expect(page).to have_text('Title of deposit')
+    expect(page).to have_field('work_title', type: 'text')
     expect(page).to have_no_text('Describe your deposit')
     # Clicking on abstract tab
     find('.nav-link', text: 'Abstract').click

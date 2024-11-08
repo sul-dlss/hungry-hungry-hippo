@@ -7,5 +7,11 @@ class WorksController < ApplicationController
     @work_form = WorkForm.new(title: "My Title for #{params[:druid]}")
   end
 
-  def new; end
+  def new
+    @work_form = WorkForm.new
+  end
+
+  def create
+    @work_form = WorkForm.new(work_params)
+  end
 end
