@@ -4,17 +4,19 @@
         <%= render Works::Edit::TabComponent.new(label: 'Title', tab_name: :title, selected: true) %>
         <%= render Works::Edit::TabComponent.new(label: 'Abstract', tab_name: :abstract) %>
     </div>
-    <div class="tab-content">
-        <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: 'Title of deposit', selected: true) do %>
-            <p>Title form goes here</p>
-        <% end %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, label: 'Describe your deposit') do %>
-            <p>
-                Enter a summary statement (max 600 words) describing the work that you are depositing.
-                A detailed statement may improve the discovery of your work in web searches.
-            </p>
+    <%= form_with model: @work_form, class: 'w-100' do |form| %>
+      <div class="tab-content">
+          <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: 'Title of deposit', selected: true) do %>
+              <%= render Works::Edit::TitleFieldComponent.new(form:, field_name: :title, required: true) %>
+          <% end %>
+          <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, label: 'Describe your deposit') do %>
+              <p>
+                  Enter a summary statement (max 600 words) describing the work that you are depositing.
+                  A detailed statement may improve the discovery of your work in web searches.
+              </p>
 
-            <p>Abstact form goes here</p>
-        <% end %>
-    </div>
-</div>
+              <p>Abstact form goes here</p>
+          <% end %>
+      </div>
+    <% end %>
+  </div>
