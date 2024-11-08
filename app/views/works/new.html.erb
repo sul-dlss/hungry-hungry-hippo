@@ -7,7 +7,7 @@
     <%= form_with model: @work_form, class: 'w-100' do |form| %>
       <div class="tab-content">
           <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: 'Title of deposit', selected: true) do %>
-              <%= render Works::Edit::TitleFieldComponent.new(form:, field_name: :title, required: true) %>
+              <%= render Works::Edit::TitleFieldComponent.new(form:, field_name: :title, required: true, label: 'Title of deposit') %>
           <% end %>
           <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, label: 'Describe your deposit') do %>
               <p>

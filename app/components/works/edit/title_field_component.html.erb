@@ -1,0 +1,5 @@
+<div>
+  <%= form.label field_name, label_text, class: label_classes %>
+  <p><small id="work_title_desc" class="form-text">A unique, descriptive title may improve discovery of your work in web searches.</small></p>
+  <%= form.text_field field_name, class: 'form-control', required:, aria: { describedby: 'work_title_desc' } %>
+</div>
