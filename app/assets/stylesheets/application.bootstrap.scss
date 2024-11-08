@@ -29,3 +29,17 @@
         }
     }
 }
+
+table.table-work {
+    border: 1px solid var(--stanford-30-black);
+
+    caption {
+        caption-side: top;
+        font-weight: 700;
+        font-size: large;
+        line-height: 1.5;
+        color: var(--stanford-black);
+        background-color: var(--stanford-30-black);
+        padding: 0.25rem;
+       }
+}
