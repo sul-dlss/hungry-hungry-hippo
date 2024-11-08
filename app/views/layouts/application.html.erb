@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title><%= content_for(:title) || 'Hungry Hungry Hippo' %></title>
     <meta name='viewport' content='width=device-width,initial-scale=1'>
@@ -18,12 +18,17 @@
     <link rel='apple-touch-icon' href='/icon.png'>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sul-dlss/component-library@v2024-09-04/styles/sul.css">
     <%= stylesheet_link_tag :app, 'data-turbo-track': 'reload' %>
     <%= javascript_importmap_tags %>
     <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <main>
+      <div class="container">
+        <%= yield %>
+      </div>
+    </main>
   </body>
 </html>

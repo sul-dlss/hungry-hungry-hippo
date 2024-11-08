@@ -1,0 +1,8 @@
+<%= tag.div(id:,
+            class: classes,
+            role: 'tabpanel',
+            'aria-labelledby': tab_id,
+            tabindex: '0') do %>
+    <div class="h4"><%= label %></div>
+    <%= content %>
+<% end %>

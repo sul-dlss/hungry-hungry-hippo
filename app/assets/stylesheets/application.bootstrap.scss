@@ -1,2 +1,31 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+.tabbable-panes {
+    min-height: 500px;
+
+    .nav-pills {
+        background-color: var(--stanford-30-black);
+        border-radius: var(--bs-nav-pills-border-radius);
+        
+        .nav-link:not(.active) {
+            color: var(--stanford-black);
+            border-bottom: 1px solid var(--stanford-10-black);
+            border-radius: unset;
+        }
+        
+        .nav-link.active {
+            background-color: var(--stanford-black);
+            color: var(--stanford-10-black);
+            font-weight: bold;
+            
+            &::before {
+                font-family: 'bootstrap-icons';
+                display: inline-block;
+                vertical-align: -10%;
+                margin-right: 4px;
+                content: "\F138"; // right arrow
+            }
+        }
+    }
+}
