@@ -43,5 +43,8 @@ module HungryHungryHippo
 
     # Use SQL schema format so we can have nice things like Postgres enums
     config.active_record.schema_format = :sql
+
+    # See https://viewcomponent.org/known_issues.html#issues-resolved-by-the-optional-capture-compatibility-patch
+    config.view_component.capture_compatibility_patch_enabled = true
   end
 end
