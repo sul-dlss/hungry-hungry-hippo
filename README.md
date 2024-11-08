@@ -29,3 +29,19 @@ Then browse to http://localhost:3000 to see the running application.
 2. Connect to the process (for example, `bin/overmind connect web`).
 
 See [overmind documentation](https://github.com/DarthSim/overmind) for more about how to control processes.
+
+### System tests
+
+#### Javascript
+By default, system tests will use headless Chrome, which supports javascript.
+
+If your test doesn't use javascript, consider using Rack, as it is much faster:
+```
+RSpec.describe 'Create a work draft', :rack_test do
+```
+
+#### Cyperful
+[Cyperful](https://github.com/stepful/cyperful) is a visual debugger for system tests. To run a system test, prepend `CYPERFUL=1`. For example:
+```
+CYPERFUL=1 bundle exec rspec spec/system/create_work_draft_spec.rb
+```

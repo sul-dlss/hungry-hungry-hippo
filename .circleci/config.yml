@@ -12,3 +12,8 @@ workflows:
       - ruby-rails/test-rails:
           name: test
           context: dlss
+          install-chrome: true
+          before-test:
+            - run:
+                name: Install javascript dependencies and build assets
+                command: bin/rake css:build

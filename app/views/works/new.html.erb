@@ -1,0 +1,20 @@
+<h1 class="h2 mb-3">Untitled deposit</h1>
+ <div class="d-flex tabbable-panes">
+    <div class="nav nav-pills flex-column px-2 py-1 me-5 col-3" role="tablist" aria-orientation="vertical">
+        <%= render Works::Edit::TabComponent.new(label: 'Title', tab_name: :title, selected: true) %>
+        <%= render Works::Edit::TabComponent.new(label: 'Abstract', tab_name: :abstract) %>
+    </div>
+    <div class="tab-content">
+        <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: 'Title of deposit', selected: true) do %>
+            <p>Title form goes here</p>
+        <% end %>
+        <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, label: 'Describe your deposit') do %>
+            <p>
+                Enter a summary statement (max 600 words) describing the work that you are depositing.
+                A detailed statement may improve the discovery of your work in web searches.
+            </p>
+
+            <p>Abstact form goes here</p>
+        <% end %>
+    </div>
+</div>
