@@ -12,7 +12,7 @@ install_plugin Capistrano::SCM::Git
 require 'capistrano/bundler'
 require 'capistrano/honeybadger'
 require 'capistrano/passenger'
-require 'capistrano/rails/migrations'
+require 'capistrano/rails'
 require 'dlss/capistrano'
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
