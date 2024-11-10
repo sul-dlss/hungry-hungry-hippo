@@ -41,6 +41,7 @@ gem 'bootsnap', require: false
 # Additional gems
 gem 'config'
 gem 'honeybadger'
+gem 'okcomputer'
 gem 'view_component'
 
 # DLSS/domain-specific dependencies
