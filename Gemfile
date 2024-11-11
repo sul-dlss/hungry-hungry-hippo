@@ -43,6 +43,9 @@ gem 'config'
 gem 'honeybadger'
 gem 'view_component'
 
+# DLSS/domain-specific dependencies
+gem 'cocina-models'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows], require: 'debug/prelude'
