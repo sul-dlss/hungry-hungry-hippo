@@ -7,7 +7,7 @@ RSpec.describe ToCocina::Mapper do
 
   let(:source_id) { "h3:object-#{Time.zone.now.iso8601}" }
 
-  context 'when a new work' do
+  context 'with a new work' do
     let(:work_form) { WorkForm.new(title: 'My Title') }
 
     let(:expected) do
