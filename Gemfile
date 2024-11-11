@@ -45,6 +45,8 @@ gem 'view_component'
 
 # DLSS/domain-specific dependencies
 gem 'cocina-models'
+gem 'dor-services-client', '>= 15.2.1'
+gem 'dor-workflow-client', '>= 7.6.1'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

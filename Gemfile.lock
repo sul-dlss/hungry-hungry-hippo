@@ -179,6 +179,20 @@ GEM
       capistrano-shared_configs
       ed25519
     docile (1.4.1)
+    dor-services-client (15.2.1)
+      activesupport (>= 7.0.0)
+      cocina-models (~> 0.99.0)
+      deprecation
+      faraday (~> 2.0)
+      faraday-retry
+      zeitwerk (~> 2.1)
+    dor-workflow-client (7.6.1)
+      activesupport (>= 7.0.0)
+      deprecation (>= 0.99.0)
+      faraday (~> 2.0)
+      faraday-retry (~> 2.0)
+      nokogiri (~> 1.6)
+      zeitwerk (~> 2.1)
     drb (2.2.1)
     dry-core (1.0.2)
       concurrent-ruby (~> 1.0)
@@ -220,6 +234,18 @@ GEM
     factory_bot_rails (6.4.4)
       factory_bot (~> 6.5)
       railties (>= 5.0.0)
+    faraday (2.12.0)
+      faraday-net_http (>= 2.0, < 3.4)
+      json
+      logger
+    faraday-net_http (3.3.0)
+      net-http
+    faraday-retry (2.2.1)
+      faraday (~> 2.0)
+    ffi (1.17.0-aarch64-linux-gnu)
+    ffi (1.17.0-aarch64-linux-musl)
+    ffi (1.17.0-arm-linux-gnu)
+    ffi (1.17.0-arm-linux-musl)
     ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x86_64-linux-gnu)
     fugit (1.11.1)
@@ -267,6 +293,8 @@ GEM
     minitest (5.25.1)
     msgpack (1.7.3)
     multi_json (1.15.0)
+    net-http (0.5.0)
+      uri
     net-imap (0.5.1)
       date
       net-protocol
@@ -503,6 +531,8 @@ DEPENDENCIES
   cyperful
   debug
   dlss-capistrano
+  dor-services-client (>= 15.2.1)
+  dor-workflow-client (>= 7.6.1)
   erb_lint
   factory_bot_rails
   honeybadger
