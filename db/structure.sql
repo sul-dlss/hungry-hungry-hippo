@@ -74,7 +74,7 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 CREATE TABLE public.works (
     id bigint NOT NULL,
     druid character varying,
-    title character varying,
+    title character varying NOT NULL,
     user_id bigint,
     deposit_job_started_at timestamp(6) without time zone,
     created_at timestamp(6) without time zone NOT NULL,

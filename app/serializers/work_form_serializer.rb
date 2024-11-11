@@ -8,7 +8,7 @@ class WorkFormSerializer < ActiveJob::Serializers::ObjectSerializer
   end
 
   def serialize(model)
-    super(model.as_json)
+    super(model.as_json.slice('attributes'))
   end
 
   def deserialize(hash)
