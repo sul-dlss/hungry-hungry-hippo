@@ -1,0 +1,9 @@
+<h3 class="h3 mb-4"><%= label %></h3>
+<%= render Elements::TableComponent.new(id: 'user-works', classes: 'table table-striped table-sm table-work mb-5', headers: nil) do |component| %>
+  <% works.each do |work| %>
+    <% component.with_row(values: [link_to(work.title, "/works/#{work.druid}")]) %>
+  <% end %>
+<% end %>
+<%= link_to new_work_path, class: 'btn btn-primary mb-4' do %>
+  <i class="fa fa-plus"></i> Add new work
+<% end %>

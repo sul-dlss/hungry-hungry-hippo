@@ -1,0 +1,2 @@
+<h2 class="h2 mb-4"><%= current_user.name %> - Dashboard</h2>
+<%= render Dashboard::Show::WorksListComponent.new(label: 'Your works', works: current_user.works) %>

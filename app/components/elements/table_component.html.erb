@@ -1,0 +1,16 @@
+<%= tag.table class: classes, id: do %>
+  <% if headers %>
+    <thead>
+      <tr>
+        <% headers.each do |header| %>
+          <%= tag.th header %>
+        <% end %>
+      </tr>
+    </thead>
+  <% end %>
+    <tbody>
+        <% rows.each do |row| %>
+            <%= row %>
+        <% end %>
+    </tbody>
+<% end %>
