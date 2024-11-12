@@ -68,10 +68,51 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: works; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.works (
+    id bigint NOT NULL,
+    druid character varying,
+    title character varying,
+    user_id bigint,
+    deposit_job_started_at timestamp(6) without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: works_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.works_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: works_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.works_id_seq OWNED BY public.works.id;
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: works id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.works ALTER COLUMN id SET DEFAULT nextval('public.works_id_seq'::regclass);
 
 
 --
@@ -99,10 +140,40 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: works works_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.works
+    ADD CONSTRAINT works_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: index_users_on_email_address; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_email_address ON public.users USING btree (email_address);
+
+
+--
+-- Name: index_works_on_druid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_works_on_druid ON public.works USING btree (druid);
+
+
+--
+-- Name: index_works_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_works_on_user_id ON public.works USING btree (user_id);
+
+
+--
+-- Name: works fk_rails_2d4237af37; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.works
+    ADD CONSTRAINT fk_rails_2d4237af37 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -112,5 +183,6 @@ CREATE UNIQUE INDEX index_users_on_email_address ON public.users USING btree (em
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241111223829'),
 ('20241106143736');
 
