@@ -3,6 +3,7 @@
     <div class="nav nav-pills flex-column px-2 py-1 me-5 col-3" role="tablist" aria-orientation="vertical">
         <%= render Works::Edit::TabComponent.new(label: 'Title', tab_name: :title, selected: true) %>
         <%= render Works::Edit::TabComponent.new(label: 'Abstract', tab_name: :abstract) %>
+        <%= render Works::Edit::TabComponent.new(label: 'Deposit', tab_name: :deposit) %>
     </div>
     <%= form_with model: @work_form, class: 'w-100' do |form| %>
       <div class="tab-content">
@@ -16,6 +17,14 @@
               </p>
 
               <p>Abstact form goes here</p>
+          <% end %>
+          <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, label: 'Submit your deposit') do %>
+            <p>
+              Be sure you have completed all the required sections. Your deposit may take several hours
+              to complete if your filesize is larger than GB.
+            </p>
+            <%= link_to 'Cancel', works_path %>
+            <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Deposit', classes: 'mt-2 ms-2') %>
           <% end %>
       </div>
     <% end %>
