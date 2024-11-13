@@ -22,6 +22,7 @@ class DepositJob < ApplicationJob
     work.update!(deposit_job_started_at: nil, druid:)
     # Just to be aware for future troubleshooting: There is a possible race condition between the websocket
     # connecting and the following broadcast being sent.
+    sleep 0.5 if Rails.env.test? # Avoids race condition in tests
     Turbo::StreamsChannel.broadcast_refresh_to 'wait', work.id
   end
 end

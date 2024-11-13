@@ -79,4 +79,31 @@ RSpec.describe Sdr::Repository do
       end
     end
   end
+
+  describe '#find' do
+    context 'when the object is found' do
+      let(:object_client) { instance_double(Dor::Services::Client::Object, find: cocina_object) }
+
+      let(:cocina_object) { instance_double(Cocina::Models::DRO) }
+
+      before do
+        allow(Dor::Services::Client).to receive(:object).and_return(object_client)
+      end
+
+      it 'returns the object' do
+        expect(described_class.find(druid: druid)).to eq(cocina_object)
+        expect(Dor::Services::Client).to have_received(:object).with(druid)
+      end
+    end
+
+    context 'when the object is not found' do
+      before do
+        allow(Dor::Services::Client).to receive(:object).and_raise(Dor::Services::Client::NotFoundResponse)
+      end
+
+      it 'raises' do
+        expect { described_class.find(druid: druid) }.to raise_error(Sdr::Repository::NotFoundResponse)
+      end
+    end
+  end
 end

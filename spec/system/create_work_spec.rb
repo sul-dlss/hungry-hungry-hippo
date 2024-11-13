@@ -5,7 +5,12 @@ require 'rails_helper'
 RSpec.describe 'Create a draft' do
   let(:druid) { 'druid:bc123df4567' }
 
+  let(:cocina_object) do
+    build(:dro, title: 'My Work', id: druid)
+  end
+
   before do
+    # Stubbing out for Deposit Job
     allow(Sdr::Repository).to receive(:register) do |args|
       cocina_params = args[:cocina_object].to_h
       cocina_params[:externalIdentifier] = druid
@@ -14,6 +19,8 @@ RSpec.describe 'Create a draft' do
       Cocina::Models.build(cocina_params)
     end
     allow(Sdr::Repository).to receive(:accession)
+    # Stubbing out for show page
+    allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
 
     sign_in(create(:user))
   end

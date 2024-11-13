@@ -6,8 +6,8 @@ class WorksController < ApplicationController
     work = Work.find_by!(druid: params[:druid])
     return redirect_to wait_works_path(work.id) if work.deposit_job_started?
 
-    # Stubbing this out temporarily until we have retrieving from the repository.
-    @work_form = WorkForm.new(title: work.title)
+    cocina_object = Sdr::Repository.find(druid: params[:druid])
+    @work_form = ToWorkForm::Mapper.call(cocina_object:)
   end
 
   def new

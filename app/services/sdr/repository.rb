@@ -10,11 +10,11 @@ module Sdr
     # @return [Cocina::Models::DROWithMetadata] the returned model
     # @raise [Error] if there is an error retrieving the object
     # @raise [NotFoundResponse] if the object is not found
-    # def self.find(druid:)
-    #   Dor::Services::Client.object(druid).find
-    # rescue Dor::Services::Client::NotFoundResponse
-    #   raise NotFoundResponse, "Object not found: #{druid}"
-    # end
+    def self.find(druid:)
+      Dor::Services::Client.object(druid).find
+    rescue Dor::Services::Client::NotFoundResponse
+      raise NotFoundResponse, "Object not found: #{druid}"
+    end
 
     # @param [String] druid the druid of the object
     # @return [Dor::Services::Client::ObjectVersion::VersionStatus]
