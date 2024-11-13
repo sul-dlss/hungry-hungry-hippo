@@ -1,3 +1,4 @@
+name: h3
 services:
   db:
     image: postgres:16
@@ -8,5 +9,73 @@ services:
       - 5432:5432
     volumes:
       - postgres-data:/var/lib/postgresql/data
+  
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+
+  dor-services-app:
+    image: suldlss/dor-services-app:latest
+    ports:
+      - 3003:3000
+    environment:
+      DATABASE_NAME: dor-services-app
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_HOSTNAME: db
+      DATABASE_PORT: 5432
+      RAILS_LOG_TO_STDOUT: 'true'
+      SECRET_KEY_BASE: 769171f88c527d564fb65b4b7ef712d5ae9761a21e26a41cd7c88eb0af89c74f857b9be4089119f71cf806dfc8bf9d9d2f0df91c00b119c96f462b46ebf43b0f
+      SETTINGS__ENABLED_FEATURES__CREATE_UR_ADMIN_POLICY: 'true'
+      SETTINGS__SURI__URL: http://suri:3000
+      SETTINGS__WORKFLOW__URL: http://workflow:3000
+      SETTINGS__WORKFLOW__LOGFILE: rails
+      SETTINGS__RABBITMQ__ENABLED: 'false'
+      SETTINGS__VERSION_SERVICE__SYNC_WITH_PRESERVATION: 'false'
+      SETTINGS__REDIS_URL: redis://redis:6379/
+      SETTINGS__SOLR__ENABLED: 'false'
+      SETTINGS__RELEASE__PURL_BASE_URL: https://sul-purl-stage.stanford.edu
+    depends_on:
+      - db
+      - suri
+      - redis
+
+  suri:
+    image: suldlss/suri-rails:latest
+    ports:
+      - 3002:3000
+    depends_on:
+      - db
+    environment:
+      DATABASE_NAME: suri
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_HOSTNAME: db
+      DATABASE_PORT: 5432
+      RAILS_LOG_TO_STDOUT: 'true'
+
+  workflow:
+    image: suldlss/workflow-server:latest
+    environment:
+      - RAILS_LOG_TO_STDOUT=true
+      - DATABASE_NAME=workflow-server
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=postgres
+      - DATABASE_HOSTNAME=db
+      - DATABASE_PORT=5432
+      - SETTINGS__DOR_SERVICES__URL=http://dor-services-app:3000
+      - SETTINGS__DOR_SERVICES__TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJGb28ifQ.-BVfLTW9Q1_ZQEsGv4tuzGLs5rESN7LgdtEwUltnKv4
+      - SETTINGS__ENABLE_STOMP=false
+      - SETTINGS__REDIS__HOSTNAME=redis
+      - PAGER='more'
+    depends_on:
+      - db
+      - redis
+    ports:
+      - 3001:3000
 volumes:
   postgres-data:
+  redis-data:

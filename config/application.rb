@@ -46,5 +46,7 @@ module HungryHungryHippo
 
     # See https://viewcomponent.org/known_issues.html#issues-resolved-by-the-optional-capture-compatibility-patch
     config.view_component.capture_compatibility_patch_enabled = true
+
+    config.autoload_once_paths += Dir[Rails.root.join('app/serializers')] # rubocop:disable Rails/RootPathnameMethods
   end
 end

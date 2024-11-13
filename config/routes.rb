@@ -15,6 +15,11 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :works, only: [:new, :create, :show], param: :druid
+  resources :works, only: [:new, :create, :show], param: :druid do
+    collection do
+      get 'wait/:id', to: 'works#wait', as: 'wait'
+    end
+  end
+
   root to: 'welcome#show'
 end

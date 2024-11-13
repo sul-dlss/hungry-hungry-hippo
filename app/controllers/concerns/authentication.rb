@@ -62,6 +62,8 @@ module Authentication
   end
 
   def authentication
+    # This adds the cookie in development/test so that action cable can authenticate.
+    start_new_session if Rails.env.local?
     resume_session
   end
 
