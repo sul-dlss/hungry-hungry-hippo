@@ -3,6 +3,15 @@
             role: 'tabpanel',
             'aria-labelledby': tab_id,
             tabindex: '0') do %>
-    <div class="h4"><%= label %></div>
-    <%= content %>
+            <div class="d-flex flex-column justify-content-between h-100">
+                <div>
+                    <div class="h4"><%= label %></div>
+                    <%= content %>
+                </div>
+                <% if render_footer? %>
+                    <div>
+                        <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Save as draft', variant: :'outline-primary') %>
+                    </div>
+                <% end %>
+            </div>
 <% end %>
