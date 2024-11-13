@@ -6,11 +6,11 @@
         <%= render Works::Edit::TabComponent.new(label: 'Deposit', tab_name: :deposit) %>
     </div>
     <%= form_with model: @work_form, class: 'w-100' do |form| %>
-      <div class="tab-content">
-          <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: 'Title of deposit', selected: true) do %>
+      <div class="tab-content h-100">
+          <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: 'Title of deposit', form:, selected: true) do %>
               <%= render Works::Edit::TitleFieldComponent.new(form:, field_name: :title, required: true, label: 'Title of deposit') %>
           <% end %>
-          <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, label: 'Describe your deposit') do %>
+          <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, label: 'Describe your deposit', form:) do %>
               <p>
                   Enter a summary statement (max 600 words) describing the work that you are depositing.
                   A detailed statement may improve the discovery of your work in web searches.
@@ -18,7 +18,7 @@
 
               <p>Abstact form goes here</p>
           <% end %>
-          <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, label: 'Submit your deposit') do %>
+          <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, form:, label: 'Submit your deposit', render_footer: false) do %>
             <p>
               Be sure you have completed all the required sections. Your deposit may take several hours
               to complete if your filesize is larger than GB.
