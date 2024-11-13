@@ -48,5 +48,7 @@ module HungryHungryHippo
     config.view_component.capture_compatibility_patch_enabled = true
 
     config.autoload_once_paths += Dir[Rails.root.join('app/serializers')] # rubocop:disable Rails/RootPathnameMethods
+
+    config.action_dispatch.rescue_responses['Sdr::Repository::NotFoundResponse'] = :not_found
   end
 end

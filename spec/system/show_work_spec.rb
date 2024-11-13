@@ -5,8 +5,11 @@ require 'rails_helper'
 RSpec.describe 'Show a work', :rack_test do
   let(:druid) { 'druid:bc123df4567' }
   let!(:work) { create(:work, druid: druid) }
+  let(:cocina_object) { build(:dro, title: work.title, id: druid) }
 
   before do
+    allow(Sdr::Repository).to receive(:find).with(druid: druid).and_return(cocina_object)
+
     sign_in(create(:user))
   end
 
