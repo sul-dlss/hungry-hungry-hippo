@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 
-bin/overmind start -f Procfile.dev
+# NOTE: overmind is configured via environment variables set up `.overmind.env`
+bin/overmind start
