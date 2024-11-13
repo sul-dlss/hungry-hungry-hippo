@@ -7,3 +7,6 @@ dor_services:
 
 workflow:
   url: http://localhost:3001
+
+purl:
+  url: "https://sul-purl-stage.stanford.edu"

@@ -2,16 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe ToWorkForm::Mapper do
+RSpec.describe ToWorkForm::Mapper, type: :mapping do
   subject(:work_form) { described_class.call(cocina_object:) }
 
-  let(:expected) { WorkForm.new(title: 'My Title') }
+  let(:expected) { work_form_fixture }
 
-  let(:cocina_object) do
-    build(:dro, title: 'My Title')
-  end
+  let(:cocina_object) { dro_fixture }
 
   it 'maps to cocina' do
-    expect(work_form).to equal_form(expected)
+    expect(work_form).to equal_form(work_form_fixture)
   end
 end

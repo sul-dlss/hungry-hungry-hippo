@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Create a draft' do
-  let(:druid) { 'druid:bc123df4567' }
+RSpec.describe 'Create a work' do
+  let(:druid) { druid_fixture }
 
   let(:cocina_object) do
-    build(:dro, title: 'My Work', id: druid)
+    build(:dro, title: title_fixture, id: druid)
   end
 
   before do
@@ -14,7 +14,7 @@ RSpec.describe 'Create a draft' do
     allow(Sdr::Repository).to receive(:register) do |args|
       cocina_params = args[:cocina_object].to_h
       cocina_params[:externalIdentifier] = druid
-      cocina_params[:description][:purl] = "https://purl.stanford.edu/#{druid.delete_prefix('druid:')}"
+      cocina_params[:description][:purl] = Sdr::Purl.from_druid(druid:)
       cocina_params[:structural] = {}
       Cocina::Models.build(cocina_params)
     end
@@ -40,7 +40,7 @@ RSpec.describe 'Create a draft' do
     expect(page).to have_no_text('Describe your deposit')
 
     # Filling in title
-    fill_in('work_title', with: 'My Work')
+    fill_in('work_title', with: title_fixture)
 
     # Clicking on abstract tab
     find('.nav-link', text: 'Abstract').click
@@ -54,6 +54,6 @@ RSpec.describe 'Create a draft' do
 
     # Waiting page may be too fast to catch so not testing.
     # On show page
-    expect(page).to have_css('h1', text: 'My Work')
+    expect(page).to have_css('h1', text: title_fixture)
   end
 end
