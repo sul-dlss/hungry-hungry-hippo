@@ -31,8 +31,8 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.collections (
     id bigint NOT NULL,
-    druid character varying,
-    title character varying,
+    druid character varying NOT NULL,
+    title character varying NOT NULL,
     user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -262,8 +262,8 @@ ALTER TABLE ONLY public.collections
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20241114182855'),
-('20241114175554'),
+('20241114231108'),
+('20241114231056'),
 ('20241111223829'),
 ('20241106143736');
 
