@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
-# NOTE: overmind is configured via environment variables set up `.overmind.env`
+# NOTE: overmind is configured via environment variables set in `.overmind.env`
 bin/overmind start
