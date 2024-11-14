@@ -4,9 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
   let(:work) { create(:work) }
+  let(:current_user) { create(:user) }
 
   it 'renders the works list table with rows' do
-    render_inline(described_class.new(label: 'Your works', works: [work]))
+    render_inline(described_class.new(label: 'Your works', current_user:))
 
     expect(page).to have_css('h3', text: 'Your works')
 

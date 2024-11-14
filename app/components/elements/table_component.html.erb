@@ -1,4 +1,7 @@
 <%= tag.table class: classes, id: do %>
+  <% if label.present? %>
+    <caption><%= label %></caption>
+  <% end %>
   <%= render Elements::TableHeaderComponent.new(classes: header_classes, headers: headers) if headers %>
   <%= render Elements::TableBodyComponent.new(rows: rows) if rows %>
 <% end %>
