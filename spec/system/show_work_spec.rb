@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Show a work', :rack_test do
   let(:druid) { druid_fixture }
-  let!(:collection) { create(:collection) }
-  let!(:work) { create(:work, druid: druid, title: title_fixture, collection:) }
+  let(:collection) { create(:collection) }
+  let(:work) { create(:work, druid: druid, title: title_fixture, collection:) }
   let(:cocina_object) { build(:dro, title: work.title, id: druid) }
 
   before do
