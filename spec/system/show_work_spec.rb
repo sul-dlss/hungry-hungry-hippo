@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Show a work', :rack_test do
-  let(:druid) { 'druid:bc123df4567' }
-  let!(:work) { create(:work, druid: druid) }
+  let(:druid) { druid_fixture }
+  let!(:work) { create(:work, druid: druid, title: title_fixture) }
   let(:cocina_object) { build(:dro, title: work.title, id: druid) }
 
   before do

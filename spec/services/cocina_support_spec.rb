@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe CocinaSupport do
   describe '#title_for' do
-    let(:cocina_object) { build(:dro) }
+    let(:cocina_object) { build(:dro, title: title_fixture) }
 
     it 'returns the title' do
-      expect(described_class.title_for(cocina_object: cocina_object)).to eq 'factory DRO title'
+      expect(described_class.title_for(cocina_object:)).to eq title_fixture
     end
   end
 end

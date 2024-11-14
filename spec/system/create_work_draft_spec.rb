@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Create a work draft' do
-  let(:druid) { 'druid:bc123df4567' }
+  let(:druid) { druid_fixture }
 
   let(:cocina_object) do
-    build(:dro, title: 'My Work', id: druid)
+    build(:dro, title: title_fixture, id: druid)
   end
 
   before do
@@ -14,7 +14,7 @@ RSpec.describe 'Create a work draft' do
     allow(Sdr::Repository).to receive(:register) do |args|
       cocina_params = args[:cocina_object].to_h
       cocina_params[:externalIdentifier] = druid
-      cocina_params[:description][:purl] = "https://purl.stanford.edu/#{druid.delete_prefix('druid:')}"
+      cocina_params[:description][:purl] = Sdr::Purl.from_druid(druid:)
       cocina_params[:structural] = {}
       Cocina::Models.build(cocina_params)
     end
@@ -34,13 +34,13 @@ RSpec.describe 'Create a work draft' do
     click_link_or_button('Save as draft')
 
     # Filling in title
-    fill_in('work_title', with: 'My Work')
+    fill_in('work_title', with: title_fixture)
 
     # This should work now.
     click_link_or_button('Save as draft')
 
     # Waiting page may be too fast to catch so not testing.
     # On show page
-    expect(page).to have_css('h1', text: 'My Work')
+    expect(page).to have_css('h1', text: title_fixture)
   end
 end
