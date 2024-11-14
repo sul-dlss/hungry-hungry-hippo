@@ -5,14 +5,15 @@ module Elements
   class TableComponent < ApplicationComponent
     renders_many :rows, 'Elements::TableRowComponent'
 
-    def initialize(id:, classes:, headers:)
+    def initialize(id:, classes:, header_classes:, headers:)
       @id = id
       @classes = classes
+      @header_classes = header_classes
       @headers = headers
       super()
     end
 
-    attr_reader :headers, :id
+    attr_reader :header_classes, :headers, :id
 
     def classes
       merge_classes(@classes)

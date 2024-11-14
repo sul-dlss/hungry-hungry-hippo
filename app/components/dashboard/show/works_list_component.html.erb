@@ -1,7 +1,20 @@
 <h3 class="h3 mb-4"><%= label %></h3>
-<%= render Elements::TableComponent.new(id: 'user-works', classes: 'table table-striped table-sm table-work mb-5', headers: nil) do |component| %>
+<%= render Elements::TableComponent.new(
+      id: 'worksTable',
+      classes: 'table table-striped table-sm table-work mb-5',
+      header_classes: 'table-light',
+      headers: ['Deposit', 'Deposit Status', 'Owner', 'Last Modified', 'PURL']
+    ) do |component| %>
   <% works.each do |work| %>
-    <% component.with_row(values: [link_to(work.title, "/works/#{work.druid}")]) %>
+    <% component.with_row(
+         values: [
+           link_to(work.title, "/works/#{work.druid}"),
+           work.status,
+           current_user.name,
+           I18n.l(work.updated_at, format: '%b %d, %Y'),
+           link_to("http://purl.stanford.edu/#{work.druid}", "http://purl.stanford.edu/#{work.druid}")
+         ]
+       ) %>
   <% end %>
 <% end %>
 <%= link_to new_work_path, class: 'btn btn-primary mb-4' do %>

@@ -1,16 +1,4 @@
 <%= tag.table class: classes, id: do %>
-  <% if headers %>
-    <thead>
-      <tr>
-        <% headers.each do |header| %>
-          <%= tag.th header %>
-        <% end %>
-      </tr>
-    </thead>
-  <% end %>
-    <tbody>
-        <% rows.each do |row| %>
-            <%= row %>
-        <% end %>
-    </tbody>
+  <%= render Elements::TableHeaderComponent.new(classes: header_classes, headers: headers) if headers %>
+  <%= render Elements::TableBodyComponent.new(rows: rows) if rows %>
 <% end %>
