@@ -2,8 +2,6 @@
 
 require 'rails_helper'
 
-# frozen_string_literal: true
-
 RSpec.describe Elements::SpinnerComponent, type: :component do
   it 'renders the spinner' do
     render_inline(described_class.new)

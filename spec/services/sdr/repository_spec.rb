@@ -106,4 +106,32 @@ RSpec.describe Sdr::Repository do
       end
     end
   end
+
+  describe '#status' do
+    context 'when the object is found' do
+      let(:object_client) { instance_double(Dor::Services::Client::Object, version: version_client) }
+      let(:version_client) { instance_double(Dor::Services::Client::ObjectVersion, status:) }
+
+      let(:status) { instance_double(Dor::Services::Client::ObjectVersion::VersionStatus) }
+
+      before do
+        allow(Dor::Services::Client).to receive(:object).and_return(object_client)
+      end
+
+      it 'returns the status' do
+        expect(described_class.status(druid: druid)).to eq(status)
+        expect(Dor::Services::Client).to have_received(:object).with(druid)
+      end
+    end
+
+    context 'when the object is not found' do
+      before do
+        allow(Dor::Services::Client).to receive(:object).and_raise(Dor::Services::Client::NotFoundResponse)
+      end
+
+      it 'raises' do
+        expect { described_class.status(druid: druid) }.to raise_error(Sdr::Repository::NotFoundResponse)
+      end
+    end
+  end
 end

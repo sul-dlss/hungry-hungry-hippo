@@ -1,4 +1,5 @@
-<h1 class="h3 mb-4"><%= @work_form.title %></h1>
+<h1 class="h3 mb-4 d-inline-block"><%= @work_form.title %></h1><span class="ms-4 fst-italic status"><%= @status_presenter.status_message %></span>
+<%= render Elements::ButtonLinkComponent.new(link: edit_work_path(@work_form.druid), label: 'Edit or deposit', classes: 'float-end', variant: :'outline-primary') if @status_presenter.editable? %>
 <%= render Works::Show::TableComponent.new(label: 'Title', id: 'title-table') do |component| %>
     <% component.with_row(label: 'Title', value: @work_form.title) %>
 <% end %>
