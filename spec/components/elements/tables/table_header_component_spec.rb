@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Elements::TableHeaderComponent, type: :component do
+RSpec.describe Elements::Tables::TableHeaderComponent, type: :component do
   it 'renders the row' do
     render_inline(described_class.new(classes: 'table-light', headers: ['First header', 'Second header']))
     expect(page).to have_css('thead', count: 1)

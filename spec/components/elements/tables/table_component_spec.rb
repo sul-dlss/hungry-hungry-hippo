@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Elements::TableComponent, type: :component do
+RSpec.describe Elements::Tables::TableComponent, type: :component do
   it 'renders the table' do
     render_inline(described_class.new(id: 'test-table', classes: 'table table-striped', headers: nil))
     expect(page).to have_table('test-table')

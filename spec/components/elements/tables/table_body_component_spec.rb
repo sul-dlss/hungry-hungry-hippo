@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Elements::TableBodyComponent, type: :component do
+RSpec.describe Elements::Tables::TableBodyComponent, type: :component do
   let(:work) { create(:work) }
   let(:rows) { [work.title] }
 
