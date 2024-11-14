@@ -18,15 +18,19 @@
     <link rel='apple-touch-icon' href='/icon.png'>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sul-dlss/component-library@v2024-09-04/styles/sul.css">
     <%= stylesheet_link_tag :app, 'data-turbo-track': 'reload' %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sul-dlss/component-library@v2024-09-04/styles/sul.css">
     <%= javascript_importmap_tags %>
-    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
   </head>
 
   <body>
     <main>
       <div class="container">
+        <% flash.each do |flash_type, msg| %>
+          <%= render Elements::AlertComponent.new(variant: flash_type) do %>
+            <div><%= msg %></div>
+          <% end %>
+        <% end %>
         <%= yield %>
       </div>
     </main>
