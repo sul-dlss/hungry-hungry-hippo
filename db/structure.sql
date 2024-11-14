@@ -35,8 +35,7 @@ CREATE TABLE public.collections (
     title character varying,
     user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    work_id bigint NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -112,7 +111,8 @@ CREATE TABLE public.works (
     user_id bigint,
     deposit_job_started_at timestamp(6) without time zone,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    collection_id bigint NOT NULL
 );
 
 
@@ -204,17 +204,17 @@ CREATE INDEX index_collections_on_user_id ON public.collections USING btree (use
 
 
 --
--- Name: index_collections_on_work_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_collections_on_work_id ON public.collections USING btree (work_id);
-
-
---
 -- Name: index_users_on_email_address; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_email_address ON public.users USING btree (email_address);
+
+
+--
+-- Name: index_works_on_collection_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_works_on_collection_id ON public.works USING btree (collection_id);
 
 
 --
@@ -240,11 +240,11 @@ ALTER TABLE ONLY public.works
 
 
 --
--- Name: collections fk_rails_39da757a79; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: works fk_rails_7ea9207fbe; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.collections
-    ADD CONSTRAINT fk_rails_39da757a79 FOREIGN KEY (work_id) REFERENCES public.works(id);
+ALTER TABLE ONLY public.works
+    ADD CONSTRAINT fk_rails_7ea9207fbe FOREIGN KEY (collection_id) REFERENCES public.collections(id);
 
 
 --
@@ -262,7 +262,7 @@ ALTER TABLE ONLY public.collections
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20241114175725'),
+('20241114182855'),
 ('20241114175554'),
 ('20241111223829'),
 ('20241106143736');
