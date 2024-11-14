@@ -14,19 +14,24 @@ class WorksController < ApplicationController
     @work_form = WorkForm.new
   end
 
+  # rubocop:disable Metrics/AbcSize
   def create
     @work_form = WorkForm.new(work_params)
     # The deposit param determines whether extra validations for deposits are applied.
     if @work_form.valid?
+      # TODO: Once we have a path from the dashboard, remove this step to create a collection
+      collection = Collection.create!(title: 'Temp Collection', druid: 'druid:cc234dd5678', user: current_user)
       # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
       # should be "waiting".
-      work = Work.create!(title: @work_form.title, user: current_user, deposit_job_started_at: Time.zone.now)
+      work = Work.create!(title: @work_form.title, user: current_user, deposit_job_started_at: Time.zone.now,
+                          collection_id: collection.id)
       DepositJob.perform_later(work:, work_form: @work_form, deposit: deposit?)
       redirect_to wait_works_path(work.id)
     else
       render :form, status: :unprocessable_entity
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def wait
     work = Work.find(params[:id])
