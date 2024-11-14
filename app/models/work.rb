@@ -21,8 +21,4 @@ class Work < ApplicationRecord
 
     'Deposited'
   end
-
-  def purl
-    "#{Settings.purl_url}/#{druid}"
-  end
 end
