@@ -6,6 +6,8 @@ class CreateCollection < ActiveRecord::Migration[8.0]
       t.references :user, null: false, foreign_key: true
 
       t.timestamps
+
+      t.index [:druid], unique: true
     end
   end
 end

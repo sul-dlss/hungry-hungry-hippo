@@ -20,7 +20,7 @@ class WorksController < ApplicationController
     # The deposit param determines whether extra validations for deposits are applied.
     if @work_form.valid?
       # TODO: Once we have a path from the dashboard, remove this step to create a collection
-      collection = Collection.create!(title: 'Temp Collection', druid: 'druid:cc234dd5678', user: current_user)
+      collection = Collection.create_or_find_by!(title: 'Temp Collection', druid: 'druid:cc234dd5678', user: current_user)
       # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
       # should be "waiting".
       work = Work.create!(title: @work_form.title, user: current_user, deposit_job_started_at: Time.zone.now,

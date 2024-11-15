@@ -26,39 +26,6 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
--- Name: collections; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.collections (
-    id bigint NOT NULL,
-    druid character varying NOT NULL,
-    title character varying NOT NULL,
-    user_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: collections_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.collections_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: collections_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.collections_id_seq OWNED BY public.collections.id;
-
-
---
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -111,8 +78,7 @@ CREATE TABLE public.works (
     user_id bigint,
     deposit_job_started_at timestamp(6) without time zone,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    collection_id bigint NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -136,13 +102,6 @@ ALTER SEQUENCE public.works_id_seq OWNED BY public.works.id;
 
 
 --
--- Name: collections id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.collections ALTER COLUMN id SET DEFAULT nextval('public.collections_id_seq'::regclass);
-
-
---
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -162,14 +121,6 @@ ALTER TABLE ONLY public.works ALTER COLUMN id SET DEFAULT nextval('public.works_
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
-
-
---
--- Name: collections collections_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.collections
-    ADD CONSTRAINT collections_pkey PRIMARY KEY (id);
 
 
 --
@@ -197,24 +148,10 @@ ALTER TABLE ONLY public.works
 
 
 --
--- Name: index_collections_on_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_collections_on_user_id ON public.collections USING btree (user_id);
-
-
---
 -- Name: index_users_on_email_address; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_email_address ON public.users USING btree (email_address);
-
-
---
--- Name: index_works_on_collection_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_works_on_collection_id ON public.works USING btree (collection_id);
 
 
 --
@@ -240,30 +177,12 @@ ALTER TABLE ONLY public.works
 
 
 --
--- Name: works fk_rails_7ea9207fbe; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.works
-    ADD CONSTRAINT fk_rails_7ea9207fbe FOREIGN KEY (collection_id) REFERENCES public.collections(id);
-
-
---
--- Name: collections fk_rails_9b33697360; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.collections
-    ADD CONSTRAINT fk_rails_9b33697360 FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
 -- PostgreSQL database dump complete
 --
 
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20241114231108'),
-('20241114231056'),
 ('20241111223829'),
 ('20241106143736');
 
