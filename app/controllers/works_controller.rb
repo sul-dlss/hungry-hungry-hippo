@@ -4,9 +4,9 @@
 class WorksController < ApplicationController
   before_action :check_deposit_job_started, only: %i[show edit]
   before_action :set_work_form_from_cocina, only: %i[show edit]
+  before_action :set_status, only: %i[show edit]
   def show
-    status = Sdr::Repository.status(druid: params[:druid])
-    @status_presenter = StatusPresenter.new(status: status)
+    @status_presenter = StatusPresenter.new(status: @status)
   end
 
   def new
@@ -16,6 +16,10 @@ class WorksController < ApplicationController
   end
 
   def edit
+    unless editable?
+      flash[:danger] = I18n.t('works.edit.errors.cannot_be_edited')
+      return redirect_to work_path(druid: params[:druid])
+    end
     render :form
   end
 
@@ -47,7 +51,7 @@ class WorksController < ApplicationController
   private
 
   def work_params
-    params.expect(work: [:title])
+    params.expect(work: %i[title version lock])
   end
 
   def deposit?
@@ -60,7 +64,17 @@ class WorksController < ApplicationController
   end
 
   def set_work_form_from_cocina
-    cocina_object = Sdr::Repository.find(druid: params[:druid])
-    @work_form = ToWorkForm::Mapper.call(cocina_object:)
+    @cocina_object = Sdr::Repository.find(druid: params[:druid])
+    @work_form = ToWorkForm::Mapper.call(cocina_object: @cocina_object)
+  end
+
+  def set_status
+    @status = Sdr::Repository.status(druid: params[:druid])
+  end
+
+  def editable?
+    return false unless @status.open? || @status.openable?
+
+    ToWorkForm::RoundtripValidator.roundtrippable?(work_form: @work_form, cocina_object: @cocina_object)
   end
 end

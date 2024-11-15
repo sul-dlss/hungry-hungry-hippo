@@ -5,7 +5,7 @@ module Elements
   class AlertComponent < ApplicationComponent
     # Variants are :danger, :success, :note, :info, :warning
     def initialize(title: nil, variant: :info, dismissible: false)
-      raise ArgumentError, 'Invalid variant' unless %i[danger success note info warning].include?(variant)
+      raise ArgumentError, 'Invalid variant' unless %i[danger success note info warning].include?(variant.to_sym)
 
       @title = title
       @variant = variant

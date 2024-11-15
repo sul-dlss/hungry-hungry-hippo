@@ -14,12 +14,11 @@ module ToCocina
 
     # @return [Cocina::Models::Description, Cocina::Models::RequestDescription]
     def call
-      # if work_form.druid.present?
-      #   Cocina::Models::Description.new(params)
-
-      # else
-      Cocina::Models::RequestDescription.new(params)
-      # end
+      if work_form.persisted?
+        Cocina::Models::Description.new(params)
+      else
+        Cocina::Models::RequestDescription.new(params)
+      end
     end
 
     private
@@ -28,11 +27,11 @@ module ToCocina
 
     def params
       {
-        title: CocinaDescriptionSupport.title(title: work_form.title)
+        title: CocinaDescriptionSupport.title(title: work_form.title),
         # contributor: contributors_params.presence,
         # note: note_params.presence,
         # subject: subject_params.presence,
-        # purl: Sdr::Purl.from_druid(druid: work_form.druid)
+        purl: Sdr::Purl.from_druid(druid: work_form.druid)
         # relatedResource: related_resource_params
       }.compact
     end
