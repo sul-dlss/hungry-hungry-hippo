@@ -11,7 +11,11 @@ module Elements
         super()
       end
 
-      attr_reader :classes, :rows
+      attr_reader :rows
+
+      def classes
+        merge_classes(%w[table-group-divider], @classes)
+      end
     end
   end
 end

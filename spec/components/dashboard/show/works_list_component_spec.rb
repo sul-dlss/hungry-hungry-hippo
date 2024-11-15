@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
-  let(:work) { create(:work) }
+  let(:work) { create(:work, user: current_user) }
   let(:current_user) { create(:user) }
 
   it 'renders the works list table with rows' do

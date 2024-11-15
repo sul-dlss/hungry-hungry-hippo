@@ -1,7 +1,8 @@
 <h3 class="h3 mb-4"><%= label %></h3>
+
 <%= render Elements::Tables::TableComponent.new(
       id: 'works-table',
-      classes: 'table-work mb-5',
+      classes: 'table-work border',
       headers: ['Deposit', 'Deposit Status', 'Owner', 'Last Modified', 'PURL']
     ) do |component| %>
   <% works.each do |work| %>
@@ -16,6 +17,7 @@
        ) %>
   <% end %>
 <% end %>
+
 <%= link_to new_work_path, class: 'btn btn-primary' do %>
   <div class="align-self-center d-flex justify-content-center"><%= icon %> Add new work</div>
 <% end %>
