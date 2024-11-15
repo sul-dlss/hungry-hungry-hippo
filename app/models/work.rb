@@ -4,6 +4,7 @@
 # Note that this model does not contain any cocina data.
 class Work < ApplicationRecord
   belongs_to :user
+  belongs_to :collection
 
   # deposit_job_started_at indicates that the job is queued or running.
   # User should be "waiting" until the job is completed.
