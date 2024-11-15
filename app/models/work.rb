@@ -15,10 +15,4 @@ class Work < ApplicationRecord
   def deposit_job_finished?
     deposit_job_started_at.nil?
   end
-
-  def status
-    return 'Depositing' if deposit_job_started?
-
-    'Deposited'
-  end
 end

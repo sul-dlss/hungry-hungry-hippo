@@ -18,7 +18,9 @@ module Elements
       attr_reader :label, :header_classes, :headers, :id
 
       def classes
-        merge_classes(@classes)
+        # Provides table, table-striped, and table-sm as the static default classes
+        # merged with any additional classes passed in.
+        merge_classes(%w[table table-striped table-light table-sm], @classes)
       end
     end
   end

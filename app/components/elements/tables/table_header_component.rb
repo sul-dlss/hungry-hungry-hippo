@@ -5,13 +5,20 @@ module Elements
     # Component for rendering a table header section.
     class TableHeaderComponent < ApplicationComponent
       def initialize(classes:, headers: nil)
-        # If value is not provided, content block will be rendered instead.
         @classes = classes
         @headers = headers
         super()
       end
 
-      attr_reader :classes, :headers
+      attr_reader :headers
+
+      def render?
+        headers.present?
+      end
+
+      def classes
+        merge_classes(@classes)
+      end
     end
   end
 end
