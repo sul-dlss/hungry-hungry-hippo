@@ -12,14 +12,25 @@ RSpec.describe 'Edit a work' do
     dro_with_metadata_fixture
   end
 
+  let(:updated_cocina_object) do
+    cocina_object.new(
+      description: cocina_object.description.new(title: CocinaDescriptionSupport.title(title: updated_title))
+    )
+  end
+
   let(:version_status) do
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
                                                                          version: cocina_object.version)
   end
 
+  let(:updated_title) { 'My new title' }
+
   before do
-    allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+    allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object, updated_cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    # It is already open.
+    allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
+    allow(Sdr::Repository).to receive(:update)
     create(:work, druid: druid)
 
     sign_in(create(:user))
@@ -31,5 +42,15 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_css('h1', text: title_fixture)
 
     expect(page).to have_field('Title of deposit', with: title_fixture)
+
+    fill_in('Title of deposit', with: updated_title)
+
+    click_link_or_button('Save as draft')
+
+    # Waiting page may be too fast to catch so not testing.
+    # On show page
+    expect(page).to have_css('h1', text: updated_title)
+    expect(page).to have_css('.status', text: 'New version in draft')
+    expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
   end
 end
