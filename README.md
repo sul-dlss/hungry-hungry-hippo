@@ -30,6 +30,14 @@ Then browse to http://localhost:3000 to see the running application.
 
 See [overmind documentation](https://github.com/DarthSim/overmind) for more about how to control processes.
 
+### Completing accessioning workflow
+
+accessionWF steps can be completed with:
+
+```
+bin/rake "development:accession[druid:dh414dd1590]"
+```
+
 ### System tests
 
 #### Javascript
