@@ -2,11 +2,16 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Create a work' do
+RSpec.describe 'Create a work deposit' do
   let(:druid) { druid_fixture }
 
   let(:cocina_object) do
     build(:dro, title: title_fixture, id: druid)
+  end
+
+  let(:version_status) do
+    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, accessioning?: true,
+                                                                         openable?: false)
   end
 
   before do
@@ -21,6 +26,7 @@ RSpec.describe 'Create a work' do
     allow(Sdr::Repository).to receive(:accession)
     # Stubbing out for show page
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
 
     sign_in(create(:user))
   end
@@ -55,5 +61,7 @@ RSpec.describe 'Create a work' do
     # Waiting page may be too fast to catch so not testing.
     # On show page
     expect(page).to have_css('h1', text: title_fixture)
+    expect(page).to have_css('.status', text: 'Depositing')
+    expect(page).to have_no_link('Edit or deposit')
   end
 end

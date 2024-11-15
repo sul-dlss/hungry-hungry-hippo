@@ -18,11 +18,11 @@ module Sdr
 
     # @param [String] druid the druid of the object
     # @return [Dor::Services::Client::ObjectVersion::VersionStatus]
-    # def self.status(druid:)
-    #   Dor::Services::Client.object(druid).version.status
-    # rescue Dor::Services::Client::NotFoundResponse
-    #   raise NotFoundResponse, "Object not found: #{druid}"
-    # end
+    def self.status(druid:)
+      Dor::Services::Client.object(druid).version.status
+    rescue Dor::Services::Client::NotFoundResponse
+      raise NotFoundResponse, "Object not found: #{druid}"
+    end
 
     # @param [Cocina::Models::RequestDRO] cocina_object
     # @param [Boolean] assign_doi true to assign a DOI; otherwise, false

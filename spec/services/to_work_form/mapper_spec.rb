@@ -5,8 +5,6 @@ require 'rails_helper'
 RSpec.describe ToWorkForm::Mapper, type: :mapping do
   subject(:work_form) { described_class.call(cocina_object:) }
 
-  let(:expected) { work_form_fixture }
-
   let(:cocina_object) { dro_fixture }
 
   it 'maps to cocina' do

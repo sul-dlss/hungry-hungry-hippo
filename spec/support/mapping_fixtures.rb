@@ -3,8 +3,14 @@
 # Fixtures for mappings.
 # Not using FactoryBot because we want these fixtures to be consistent across tests.
 module MappingFixtures
-  def work_form_fixture
+  def new_work_form_fixture
     WorkForm.new(title: title_fixture)
+  end
+
+  def work_form_fixture
+    new_work_form_fixture.tap do |form|
+      form.druid = druid_fixture
+    end
   end
 
   def request_dro_fixture

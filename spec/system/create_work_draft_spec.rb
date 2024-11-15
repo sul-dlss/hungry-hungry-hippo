@@ -9,6 +9,11 @@ RSpec.describe 'Create a work draft' do
     build(:dro, title: title_fixture, id: druid)
   end
 
+  let(:version_status) do
+    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1,
+                                                                         openable?: false)
+  end
+
   before do
     # Stubbing out for Deposit Job
     allow(Sdr::Repository).to receive(:register) do |args|
@@ -21,6 +26,7 @@ RSpec.describe 'Create a work draft' do
     allow(Sdr::Repository).to receive(:accession)
     # Stubbing out for show page
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
 
     sign_in(create(:user))
   end
@@ -42,5 +48,7 @@ RSpec.describe 'Create a work draft' do
     # Waiting page may be too fast to catch so not testing.
     # On show page
     expect(page).to have_css('h1', text: title_fixture)
+    expect(page).to have_css('.status', text: 'Draft - Not deposited')
+    expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
   end
 end
