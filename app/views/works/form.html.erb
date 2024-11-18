@@ -10,15 +10,14 @@
       <%= form.hidden_field :version %>
       <div class="tab-content h-100">
           <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: 'Title of deposit', form:, selected: true) do %>
-              <%= render Works::Edit::TitleFieldComponent.new(form:, field_name: :title, required: true, label: 'Title of deposit') %>
+              <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, required: true, label: 'Title of deposit',
+                                                                 help_text: 'A unique, descriptive title may improve discovery of your work in web searches.') %>
           <% end %>
           <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, label: 'Describe your deposit', form:) do %>
               <p>
                   Enter a summary statement (max 600 words) describing the work that you are depositing.
                   A detailed statement may improve the discovery of your work in web searches.
               </p>
-
-              <p>Abstact form goes here</p>
           <% end %>
           <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, form:, label: 'Submit your deposit', render_footer: false) do %>
             <p>

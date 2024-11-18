@@ -9,13 +9,23 @@ RSpec.describe Elements::Forms::TextFieldComponent, type: :component do
 
   it 'creates field with label' do
     render_inline(described_class.new(form: form, field_name:))
-    expect(page).to have_css('label')
-    expect(page).to have_css('.form-label')
-    expect(page).to have_no_css('.visually-hidden')
+    expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'title')
+    expect(page).to have_css('input.form-control[type="text"]') # rubocop:disable Capybara/SpecificMatcher
+    expect(page).to have_no_css('small.form-text')
   end
 
-  it 'creates field with hidden label' do
-    render_inline(described_class.new(form:, field_name:, hidden_label: true))
-    expect(page).to have_css('label.form-label.visually-hidden')
+  context 'when label is hidden' do
+    it 'creates field with hidden label' do
+      render_inline(described_class.new(form:, field_name:, hidden_label: true))
+      expect(page).to have_css('label.form-label.visually-hidden', text: 'title')
+    end
+  end
+
+  context 'when help text is provided' do
+    it 'creates field with help text' do
+      render_inline(described_class.new(form:, field_name:, help_text: 'Helpful text'))
+      expect(page).to have_css('input[aria-describedby="title_help"]')
+      expect(page).to have_css('small.form-text[id="title_help"]', text: 'Helpful text')
+    end
   end
 end
