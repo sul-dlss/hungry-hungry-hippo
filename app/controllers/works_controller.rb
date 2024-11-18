@@ -66,7 +66,7 @@ class WorksController < ApplicationController
   private
 
   def work_params
-    params.expect(work: %i[title version lock])
+    params.expect(work: %i[title abstract version lock])
   end
 
   def deposit?

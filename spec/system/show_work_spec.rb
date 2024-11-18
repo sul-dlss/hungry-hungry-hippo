@@ -3,10 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Show a work', :rack_test do
+  include MappingFixtures
+
   let(:druid) { druid_fixture }
   let(:collection) { create(:collection) }
-  let(:work) { create(:work, druid: druid, title: title_fixture, collection:) }
-  let(:cocina_object) { build(:dro_with_metadata, title: work.title, id: druid) }
+  let!(:work) { create(:work, druid: druid, title: title_fixture, collection:) }
+  let(:cocina_object) { dro_with_metadata_fixture }
   let(:version_status) do
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
                                                                          openable?: true, accessioning?: false)
@@ -31,6 +33,13 @@ RSpec.describe 'Show a work', :rack_test do
       expect(page).to have_css('caption', text: 'Title')
       expect(page).to have_css('tr', text: 'Title')
       expect(page).to have_css('td', text: work.title)
+    end
+
+    # Description table
+    within('table#description-table') do
+      expect(page).to have_css('caption', text: 'Description')
+      expect(page).to have_css('tr', text: 'Abstract')
+      expect(page).to have_css('td', text: abstract_fixture)
     end
   end
 end

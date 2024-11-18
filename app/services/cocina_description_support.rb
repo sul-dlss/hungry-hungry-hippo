@@ -47,12 +47,12 @@ class CocinaDescriptionSupport
   #   }.compact
   # end
 
-  # def self.note(type:, value:)
-  #   {
-  #     type:,
-  #     value:
-  #   }
-  # end
+  def self.note(type:, value:)
+    {
+      type:,
+      value:
+    }
+  end
 
   # def self.event_date(date_type:, date_value:, type: 'deposit', date_encoding_code: 'edtf')
   #   {

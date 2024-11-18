@@ -14,7 +14,10 @@ RSpec.describe 'Edit a work' do
 
   let(:updated_cocina_object) do
     cocina_object.new(
-      description: cocina_object.description.new(title: CocinaDescriptionSupport.title(title: updated_title))
+      description: cocina_object.description.new(
+        title: CocinaDescriptionSupport.title(title: updated_title),
+        note: [CocinaDescriptionSupport.note(type: 'abstract', value: updated_abstract)]
+      )
     )
   end
 
@@ -24,6 +27,7 @@ RSpec.describe 'Edit a work' do
   end
 
   let(:updated_title) { 'My new title' }
+  let(:updated_abstract) { 'This is what my work is really about.' }
 
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object, updated_cocina_object)
@@ -44,6 +48,10 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_field('Title of deposit', with: title_fixture)
 
     fill_in('Title of deposit', with: updated_title)
+
+    # Filling in abstract
+    find('.nav-link', text: 'Abstract').click
+    fill_in('work_abstract', with: abstract_fixture)
 
     click_link_or_button('Save as draft')
 

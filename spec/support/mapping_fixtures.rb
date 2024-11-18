@@ -4,7 +4,10 @@
 # Not using FactoryBot because we want these fixtures to be consistent across tests.
 module MappingFixtures
   def new_work_form_fixture
-    WorkForm.new(title: title_fixture)
+    WorkForm.new(
+      title: title_fixture,
+      abstract: abstract_fixture
+    )
   end
 
   def work_form_fixture
@@ -21,7 +24,8 @@ module MappingFixtures
         type: Cocina::Models::ObjectType.object,
         label: title_fixture,
         description: {
-          title: CocinaDescriptionSupport.title(title: title_fixture)
+          title: CocinaDescriptionSupport.title(title: title_fixture),
+          note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)]
         },
         version: 1,
         identification: { sourceId: source_id_fixture },
@@ -42,6 +46,7 @@ module MappingFixtures
         label: title_fixture,
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
+          note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
           purl: Sdr::Purl.from_druid(druid: druid_fixture)
         },
         version: 2,

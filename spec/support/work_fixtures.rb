@@ -15,3 +15,7 @@ end
 def lock_fixture
   'abc123'
 end
+
+def abstract_fixture
+  'This is what my work is about.'
+end

@@ -29,7 +29,7 @@ module ToCocina
       {
         title: CocinaDescriptionSupport.title(title: work_form.title),
         # contributor: contributors_params.presence,
-        # note: note_params.presence,
+        note: note_params,
         # subject: subject_params.presence,
         purl: Sdr::Purl.from_druid(druid: work_form.druid)
         # relatedResource: related_resource_params
@@ -45,13 +45,13 @@ module ToCocina
     #   end
     # end
 
-    # def note_params
-    #   [].tap do |params|
-    #     if work_form.abstract.present?
-    #       params << CocinaDescriptionSupport.note(type: 'abstract',
-    #                                               value: work_form.abstract)
-    #     end
-    #   end
-    # end
+    def note_params
+      [].tap do |params|
+        if work_form.abstract.present?
+          params << CocinaDescriptionSupport.note(type: 'abstract',
+                                                  value: work_form.abstract)
+        end
+      end.presence
+    end
   end
 end

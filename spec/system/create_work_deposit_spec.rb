@@ -55,6 +55,9 @@ RSpec.describe 'Create a work deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Abstract')
     expect(page).to have_text('Describe your deposit')
 
+    # Filling in abstract
+    fill_in('work_abstract', with: abstract_fixture)
+
     # Depositing the work
     find('.nav-link', text: 'Deposit').click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')

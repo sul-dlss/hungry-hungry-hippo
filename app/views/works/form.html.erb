@@ -15,6 +15,7 @@
           <% end %>
           <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, label: I18n.t('works.edit.panes.abstract.label'), form:) do %>
               <p><%= t('works.edit.fields.abstract.help_text') %></p>
+              <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: I18n.t('works.edit.fields.abstract.label')) %>
           <% end %>
           <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, form:, label: I18n.t('works.edit.panes.deposit.label'), render_footer: false) do %>
             <p><%= t('works.edit.panes.deposit.help_text') %></p>

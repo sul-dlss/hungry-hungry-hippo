@@ -53,3 +53,16 @@ RSpec.describe 'Create a work draft', :rack_test do
 ```
 CYPERFUL=1 bundle exec rspec spec/system/create_work_draft_spec.rb
 ```
+
+### Adding a new field
+1. Add the field to the appropriate form object (e.g., `app/forms/work_form.rb`), including validation.
+2. Add the field to the form view (e.g., `app/views/works/form.html.erb`), including adding strings to `config/locales/en.yml`.
+3. Permit the parameters in `app/controllers/works_controller`.
+4. Map the field from cocina to work form in `app/services/to_work_form/mapper.rb`.
+5. Map the field from work form to cocina in `app/services/to_cocina/mapper.rb` (or sub-mapper).
+6. Add the field to the work form and cocina fixtures in `spec/support/mapping_fixtures.rb`.
+7. Test serialization of the field in `spec/serializers/work_form_serializer_spec.rb`.
+8. Test adding the field in `spec/system/create_work_deposit_spec.rb`.
+9. Test editing the field in `spec/system/edit_work_spec.rb`.
+10. Add the field to the work show (`app/views/works/show.html.erb`).
+11. Test display of the field in `spec/system/show_work_spec.rb`.
