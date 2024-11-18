@@ -21,10 +21,6 @@ module IconHelper
     icon(icon_classes: 'bi bi-exclamation-circle-fill', **)
   end
 
-  def plus_icon(**)
-    icon(icon_classes: 'bi bi-plus', **)
-  end
-
   def success_icon(**)
     icon(icon_classes: 'bi bi-check-circle-fill', **)
   end
