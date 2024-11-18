@@ -53,27 +53,27 @@ module Sdr
     # @param [String] version_description the description of the version
     # @raise [Error] if there is an error opening the object
     # @return [Cocina::Models::DRO] the updated cocina object
-    # def self.open_if_needed(cocina_object:, version_description: 'Update')
-    #   status = Sdr::Repository.status(druid: cocina_object.externalIdentifier)
-    #   return cocina_object if status.open?
+    def self.open_if_needed(cocina_object:, version_description: 'Update')
+      status = Sdr::Repository.status(druid: cocina_object.externalIdentifier)
+      return cocina_object if status.open?
 
-    #   raise Error, 'Object cannot be opened' unless status.openable?
+      raise Error, 'Object cannot be opened' unless status.openable?
 
-    #   open_cocina_object = Dor::Services::Client.object(cocina_object.externalIdentifier)
-    #                                             .version.open(description: version_description)
-    #   CocinaSupport.update_version_and_lock(cocina_object:, version: open_cocina_object.version,
-    #                                         lock: open_cocina_object.lock)
-    # rescue Dor::Services::Client::Error => e
-    #   raise Error, "Opening failed: #{e.message}"
-    # end
+      open_cocina_object = Dor::Services::Client.object(cocina_object.externalIdentifier)
+                                                .version.open(description: version_description)
+      CocinaSupport.update_version_and_lock(cocina_object:, version: open_cocina_object.version,
+                                            lock: open_cocina_object.lock)
+    rescue Dor::Services::Client::Error => e
+      raise Error, "Opening failed: #{e.message}"
+    end
 
     # @param [Cocina::Models::DRO] cocina_object
     # @raise [Error] if there is an error updating the object
     # @return [Cocina::Models::DRO] the updated cocina object
-    # def self.update(cocina_object:)
-    #   Dor::Services::Client.object(cocina_object.externalIdentifier).update(params: cocina_object)
-    # rescue Dor::Services::Client::Error => e
-    #   raise Error, "Updating failed: #{e.message}"
-    # end
+    def self.update(cocina_object:)
+      Dor::Services::Client.object(cocina_object.externalIdentifier).update(params: cocina_object)
+    rescue Dor::Services::Client::Error => e
+      raise Error, "Updating failed: #{e.message}"
+    end
   end
 end

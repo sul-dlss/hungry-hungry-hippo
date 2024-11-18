@@ -7,14 +7,12 @@ class DepositJob < ApplicationJob
   # @param [Boolean] deposit if true, deposit the work; otherwise, leave as draft
   def perform(work_form:, work:, deposit:)
     cocina_object = ToCocina::Mapper.call(work_form:, source_id: "h3:object-#{work.id}")
-    # Until we're also doing updates:
-    new_cocina_object = Sdr::Repository.register(cocina_object:)
-    # new_cocina_object = if work_form.persisted?
-    #                       Sdr::Repository.open_if_needed(cocina_object:)
-    #                                      .then { |cocina_object| Sdr::Repository.update(cocina_object:) }
-    #                     else
-    #                       Sdr::Repository.register(cocina_object:)
-    #                     end
+    new_cocina_object = if work_form.persisted?
+                          Sdr::Repository.open_if_needed(cocina_object:)
+                                         .then { |cocina_object| Sdr::Repository.update(cocina_object:) }
+                        else
+                          Sdr::Repository.register(cocina_object:)
+                        end
     druid = new_cocina_object.externalIdentifier
     Sdr::Repository.accession(druid:) if deposit
 

@@ -46,6 +46,18 @@ class WorksController < ApplicationController
   end
   # rubocop:enable Metrics/AbcSize
 
+  def update
+    @work_form = WorkForm.new(work_params.merge(druid: params[:druid]))
+    # The deposit param determines whether extra validations for deposits are applied.
+    if @work_form.valid?(deposit: deposit?)
+      work = Work.find_by!(druid: params[:druid])
+      DepositJob.perform_later(work:, work_form: @work_form, deposit: deposit?)
+      redirect_to wait_works_path(work.id)
+    else
+      render :form, status: :unprocessable_entity
+    end
+  end
+
   def wait
     work = Work.find(params[:id])
     redirect_to work_path(druid: work.druid) if work.deposit_job_finished?
