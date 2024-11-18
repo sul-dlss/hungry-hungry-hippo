@@ -13,10 +13,6 @@ module Dashboard
       attr_reader :label, :current_user
 
       delegate :works, to: :current_user
-
-      def icon
-        helpers.plus_icon
-      end
     end
   end
 end
