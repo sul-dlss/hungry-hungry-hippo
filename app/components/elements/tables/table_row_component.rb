@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-module Works
-  module Show
-    # Component for rendering a table row on the work show page.
+module Elements
+  module Tables
+    # Component for rendering a table row.
     class TableRowComponent < ApplicationComponent
-      def initialize(label:, value: nil)
+      def initialize(label: nil, values: nil)
         @label = label
         # If value is not provided, content block will be rendered instead.
-        @value = value
+        @values = values
         super()
       end
 
-      attr_reader :label, :value
+      attr_reader :label, :values
     end
   end
 end

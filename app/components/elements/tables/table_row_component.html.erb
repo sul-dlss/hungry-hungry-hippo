@@ -1,0 +1,8 @@
+<tr>
+  <% if label.present? %>
+    <th class="col-3" scope="row"><%= label %></th>
+  <% end %>
+  <% values.each do |value| %>
+    <td><%= value %></td>
+  <% end %>
+</tr>

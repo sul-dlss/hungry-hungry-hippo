@@ -1,0 +1,23 @@
+<h3 class="h3 mb-4"><%= label %></h3>
+
+<%= render Elements::Tables::TableComponent.new(
+      id: 'works-table',
+      classes: 'table-work border',
+      headers: ['Deposit', 'Deposit Status', 'Owner', 'Last Modified', 'PURL']
+    ) do |component| %>
+  <% works.each do |work| %>
+    <% component.with_row(
+         values: [
+           link_to(work.title, "/works/#{work.druid}"),
+           work.deposit_job_started? ? 'Depositing' : 'Deposited',
+           current_user.name,
+           I18n.l(work.updated_at, format: '%b %d, %Y'),
+           link_to(nil, Sdr::Purl.from_druid(druid: work.druid))
+         ]
+       ) %>
+  <% end %>
+<% end %>
+
+<%= link_to new_work_path, class: 'btn btn-primary' do %>
+  <div class="align-self-center d-flex justify-content-center"><i class="bi bi-plus"></i> Add new work</div>
+<% end %>
