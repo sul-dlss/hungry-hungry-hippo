@@ -30,5 +30,27 @@
 en:
   works:
     edit:
+      fields:
+        abstract:
+          help_text: >
+            Enter a summary statement (max 600 words) describing the work that you are depositing.
+            A detailed statement may improve the discovery of your work in web searches.
+        title:
+          label: 'Title of deposit'
+          help_text: >
+            A unique, descriptive title may improve discovery of your work in web searches.
       errors:
         cannot_be_edited: 'This work cannot be edited.'
+      panes:
+        abstract:
+          tab_label: 'Abstract'
+          label: 'Describe your deposit'
+        deposit:
+          tab_label: 'Deposit'
+          label: 'Submit your deposit'
+          help_text: >
+              Be sure you have completed all the required sections. Your deposit may take several hours
+              to complete if your filesize is larger than GB.
+        title:
+          tab_label: 'Title'
+          label: 'Title of deposit'
