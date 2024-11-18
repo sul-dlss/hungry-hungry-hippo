@@ -17,11 +17,11 @@ module ToCocina
 
     # @return [Cocina::Models::DROWithMetadata, Cocina::Models::RequestDRO]
     def call
-      # if work_form.persisted?
-      #   Cocina::Models.with_metadata(Cocina::Models.build(params), work_form.lock)
-      # else
-      Cocina::Models.build_request(params)
-      # end
+      if work_form.persisted?
+        Cocina::Models.with_metadata(Cocina::Models.build(params), work_form.lock)
+      else
+        Cocina::Models.build_request(params)
+      end
     end
 
     private
@@ -30,16 +30,15 @@ module ToCocina
 
     def params
       {
-        # externalIdentifier: work_form.druid,
+        externalIdentifier: work_form.druid,
         type: Cocina::Models::ObjectType.object,
         label: work_form.title,
         description: ToCocina::DescriptionMapper.call(work_form:),
-        version: 1,
-        # version: work_form.version,
+        version: work_form.version,
         access: { view: 'world', download: 'world' },
         identification: { sourceId: source_id },
-        administrative: { hasAdminPolicy: Settings.apo }
-        # structural: ToCocina::StructuralMapper.call(work_form:, content:)
+        administrative: { hasAdminPolicy: Settings.apo },
+        structural: {}
       }.compact
     end
   end

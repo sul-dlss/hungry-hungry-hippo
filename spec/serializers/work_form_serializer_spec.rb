@@ -6,7 +6,12 @@ RSpec.describe WorkFormSerializer do
   let(:serialized_form) do
     {
       '_aj_serialized' => 'WorkFormSerializer',
-      'attributes' => { 'title' => 'My Title', 'druid' => druid }
+      'attributes' => {
+        'title' => 'My Title',
+        'druid' => druid,
+        'version' => 1,
+        'lock' => nil
+      }
     }
   end
 

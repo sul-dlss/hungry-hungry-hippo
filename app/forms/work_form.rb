@@ -5,6 +5,14 @@ class WorkForm < ApplicationForm
   attribute :druid, :string
   alias id druid
 
+  def persisted?
+    druid.present?
+  end
+
+  attribute :lock, :string
+
+  attribute :version, :integer, default: 1
+
   attribute :title, :string
   validates :title, presence: true
 end

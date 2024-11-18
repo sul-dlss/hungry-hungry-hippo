@@ -10,6 +10,8 @@ module MappingFixtures
   def work_form_fixture
     new_work_form_fixture.tap do |form|
       form.druid = druid_fixture
+      form.version = 2
+      form.lock = lock_fixture
     end
   end
 
@@ -24,7 +26,8 @@ module MappingFixtures
         version: 1,
         identification: { sourceId: source_id_fixture },
         administrative: { hasAdminPolicy: Settings.apo },
-        access: { view: 'world', download: 'world' }
+        access: { view: 'world', download: 'world' },
+        structural: {}
       }
     )
   end
@@ -33,6 +36,7 @@ module MappingFixtures
   def dro_fixture
     Cocina::Models.build(
       {
+
         externalIdentifier: druid_fixture,
         type: Cocina::Models::ObjectType.object,
         label: title_fixture,
@@ -40,7 +44,7 @@ module MappingFixtures
           title: CocinaDescriptionSupport.title(title: title_fixture),
           purl: Sdr::Purl.from_druid(druid: druid_fixture)
         },
-        version: 1,
+        version: 2,
         identification: { sourceId: source_id_fixture },
         administrative: { hasAdminPolicy: Settings.apo },
         access: { view: 'world', download: 'world' },
@@ -49,6 +53,10 @@ module MappingFixtures
     )
   end
   # rubocop:enable Metrics/MethodLength
+
+  def dro_with_metadata_fixture
+    Cocina::Models.with_metadata(dro_fixture, lock_fixture)
+  end
 
   RSpec.configure do |config|
     config.include MappingFixtures, type: :mapping

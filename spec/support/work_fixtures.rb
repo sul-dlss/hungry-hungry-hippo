@@ -11,3 +11,7 @@ end
 def druid_fixture
   'druid:bc123df4567'
 end
+
+def lock_fixture
+  'abc123'
+end

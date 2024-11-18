@@ -22,7 +22,9 @@ module ToWorkForm
     def params
       {
         druid: cocina_object.externalIdentifier,
-        title: CocinaSupport.title_for(cocina_object:)
+        lock: cocina_object.lock,
+        title: CocinaSupport.title_for(cocina_object:),
+        version: cocina_object.version
       }
     end
   end

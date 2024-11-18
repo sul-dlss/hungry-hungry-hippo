@@ -6,7 +6,7 @@ RSpec.describe 'Show a work', :rack_test do
   let(:druid) { druid_fixture }
   let(:collection) { create(:collection) }
   let(:work) { create(:work, druid: druid, title: title_fixture, collection:) }
-  let(:cocina_object) { build(:dro, title: work.title, id: druid) }
+  let(:cocina_object) { build(:dro_with_metadata, title: work.title, id: druid) }
   let(:version_status) do
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
                                                                          openable?: true, accessioning?: false)

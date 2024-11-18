@@ -28,4 +28,7 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  works:
+    edit:
+      errors:
+        cannot_be_edited: 'This work cannot be edited.'

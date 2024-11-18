@@ -6,7 +6,8 @@ RSpec.describe 'Create a work draft' do
   let(:druid) { druid_fixture }
 
   let(:cocina_object) do
-    build(:dro, title: title_fixture, id: druid)
+    cocina_object = build(:dro, title: title_fixture, id: druid)
+    Cocina::Models.with_metadata(cocina_object, 'abc123')
   end
 
   let(:version_status) do
@@ -21,7 +22,8 @@ RSpec.describe 'Create a work draft' do
       cocina_params[:externalIdentifier] = druid
       cocina_params[:description][:purl] = Sdr::Purl.from_druid(druid:)
       cocina_params[:structural] = {}
-      Cocina::Models.build(cocina_params)
+      cocina_object = Cocina::Models.build(cocina_params)
+      Cocina::Models.with_metadata(cocina_object, 'abc123')
     end
     allow(Sdr::Repository).to receive(:accession)
     # Stubbing out for show page
