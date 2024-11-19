@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Dashboard::Show::CollectionsListComponent, type: :component do
   let!(:top_collection) { create(:collection, user:, druid: 'druid:ab234dd5678') }
-  let!(:botom_collection) { create(:collection, user:, druid: 'druid:bc234dd5678') }
+  let!(:bottom_collection) { create(:collection, user:, druid: 'druid:bc234dd5678') }
   let(:user) { create(:user) }
 
   it 'renders the collections list for the user' do
@@ -12,6 +12,6 @@ RSpec.describe Dashboard::Show::CollectionsListComponent, type: :component do
 
     expect(page).to have_css('h3', text: 'Your collections')
     expect(page).to have_css('h4', text: top_collection.title)
-    expect(page).to have_css('h4', text: botom_collection.title)
+    expect(page).to have_css('h4', text: bottom_collection.title)
   end
 end

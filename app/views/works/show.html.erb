@@ -1,4 +1,4 @@
-<%= render Elements::HeaderComponent.new('h1', classes: %w[mb-4 d-inline-block], value: @work_form.title) %>
+<%= render Elements::HeaderComponent.new(level: :h1, text: @work_form.title, classes: 'mb-4 d-inline-block') %>
 <span class="ms-4 fst-italic status"><%= @status_presenter.status_message %></span>
 <%= render Elements::ButtonLinkComponent.new(link: edit_work_path(@work_form.druid), label: 'Edit or deposit', classes: 'float-end', variant: :'outline-primary') if @status_presenter.editable? %>
 <%= render Elements::Tables::TableComponent.new(id: 'title-table', classes: 'table-work mb-5', label: 'Title') do |component| %>

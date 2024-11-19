@@ -3,19 +3,31 @@
 module Elements
   # Applies an h# component with the expected styling.
   class HeaderComponent < ApplicationComponent
-    def initialize(variant, value:, classes: [])
-      raise ArgumentError, 'Invalid variant' unless %w[h1 h2 h3 h4 h5 h6].include?(variant)
+    def initialize(level:, text:, variant: nil, classes: [])
+      raise ArgumentError, 'Invalid level' unless %i[h1 h2 h3 h4 h5 h6].include?(level.to_sym)
 
+      @level = level
       @variant = variant
       @classes = classes
-      @value = value
+      @text = text
       super()
     end
 
-    attr_reader :variant, :value
-
     def classes
-      merge_classes(variant, @classes)
+      merge_classes(variant_class, @classes)
+    end
+
+    # Renders the component without the need for a .erb partial.
+    def call
+      content_tag(@level, @text, class: classes)
+    end
+
+    private
+
+    def variant_class
+      return unless @variant
+
+      @variant.to_s
     end
   end
 end

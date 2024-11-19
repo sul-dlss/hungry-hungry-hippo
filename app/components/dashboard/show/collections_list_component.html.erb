@@ -1,7 +1,7 @@
-<%= render Elements::HeaderComponent.new('h3', classes: ['mb-4'], value: label) %>
+<%= render Elements::HeaderComponent.new(level: :h3, text: label, classes: 'mb-4') %>
 
 <% collections.each do |collection| %>
-  <%= render Elements::HeaderComponent.new('h4', value: link_to(collection.title, "/collections/#{collection.druid}")) %>
+  <%= render Elements::HeaderComponent.new(level: :h4, text: link_to(collection.title, "/collections/#{collection.druid}")) %>
   <%= render Dashboard::Show::WorksListComponent.new(collection:) %>
 
   <%= link_to new_work_path, class: 'btn btn-primary' do %>

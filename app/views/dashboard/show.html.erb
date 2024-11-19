@@ -1,2 +1,2 @@
-<%= render Elements::HeaderComponent.new('h2', classes: ['mb-4'], value: "#{current_user.name} - Dashboard") %>
+<%= render Elements::HeaderComponent.new(level: :h2, text: "#{current_user.name} - Dashboard", classes: 'mb-4') %>
 <%= render Dashboard::Show::CollectionsListComponent.new(label: 'Your collections', current_user:) %>

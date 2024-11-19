@@ -1,4 +1,4 @@
-<%= render Elements::HeaderComponent.new('h1', classes: %w[mb-4], value: @work_form.title || 'Untitled deposit') %>
+<%= render Elements::HeaderComponent.new(level: :h1, text: @work_form.title || 'Untitled deposit', classes: 'mb-4') %>
  <div class="d-flex tabbable-panes">
     <div class="nav nav-pills flex-column px-2 py-1 me-5 col-3" role="tablist" aria-orientation="vertical">
         <%= render Works::Edit::TabComponent.new(label: I18n.t('works.edit.panes.title.tab_label'), tab_name: :title, selected: true) %>
