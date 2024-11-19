@@ -51,6 +51,7 @@ Style/Documentation:
   Exclude:
     - 'config/application.rb'
     - '**/application_*.rb'
+    - 'app/policies/**/*.rb'
 
 Gemspec/AddRuntimeDependency: # new in 1.65
   Enabled: true

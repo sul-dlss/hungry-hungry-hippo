@@ -2,20 +2,27 @@
 
 # Controller for a Work
 class WorksController < ApplicationController
+  before_action :set_work, only: %i[show edit update]
   before_action :check_deposit_job_started, only: %i[show edit]
   before_action :set_work_form_from_cocina, only: %i[show edit]
   before_action :set_status, only: %i[show edit]
   def show
+    authorize! @work
     @status_presenter = StatusPresenter.new(status: @status)
   end
 
   def new
+    # Once collection is being passed, should authorize that the user can create a work in that collection.
+    skip_verify_authorized!
+
     @work_form = WorkForm.new
 
     render :form
   end
 
   def edit
+    authorize! @work
+
     unless editable?
       flash[:danger] = I18n.t('works.edit.errors.cannot_be_edited')
       return redirect_to work_path(druid: params[:druid])
@@ -25,6 +32,9 @@ class WorksController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize
   def create
+    # Once collection is being passed, should authorize that the user can create a work in that collection.
+    skip_verify_authorized!
+
     @work_form = WorkForm.new(work_params)
     # The deposit param determines whether extra validations for deposits are applied.
     if @work_form.valid?
@@ -47,12 +57,13 @@ class WorksController < ApplicationController
   # rubocop:enable Metrics/AbcSize
 
   def update
+    authorize! @work
+
     @work_form = WorkForm.new(work_params.merge(druid: params[:druid]))
     # The deposit param determines whether extra validations for deposits are applied.
     if @work_form.valid?(deposit: deposit?)
-      work = Work.find_by!(druid: params[:druid])
-      DepositJob.perform_later(work:, work_form: @work_form, deposit: deposit?)
-      redirect_to wait_works_path(work.id)
+      DepositJob.perform_later(work: @work, work_form: @work_form, deposit: deposit?)
+      redirect_to wait_works_path(@work.id)
     else
       render :form, status: :unprocessable_entity
     end
@@ -60,6 +71,8 @@ class WorksController < ApplicationController
 
   def wait
     work = Work.find(params[:id])
+    authorize! work
+
     redirect_to work_path(druid: work.druid) if work.deposit_job_finished?
   end
 
@@ -73,9 +86,12 @@ class WorksController < ApplicationController
     params[:commit] == 'Deposit'
   end
 
+  def set_work
+    @work = Work.find_by!(druid: params[:druid])
+  end
+
   def check_deposit_job_started
-    work = Work.find_by!(druid: params[:druid])
-    redirect_to wait_works_path(work.id) if work.deposit_job_started?
+    redirect_to wait_works_path(@work.id) if @work.deposit_job_started?
   end
 
   def set_work_form_from_cocina

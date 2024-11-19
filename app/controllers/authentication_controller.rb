@@ -3,6 +3,7 @@
 # Controller for login and logout.
 class AuthenticationController < ApplicationController
   allow_unauthenticated_access only: %i[login]
+  skip_verify_authorized only: %i[login logout]
 
   # See Authentication concern for the methods used below.
 

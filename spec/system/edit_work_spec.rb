@@ -7,6 +7,7 @@ RSpec.describe 'Edit a work' do
   include MappingFixtures
 
   let(:druid) { druid_fixture }
+  let(:user) { create(:user) }
 
   let(:cocina_object) do
     dro_with_metadata_fixture
@@ -35,9 +36,9 @@ RSpec.describe 'Edit a work' do
     # It is already open.
     allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
     allow(Sdr::Repository).to receive(:update)
-    create(:work, druid: druid)
+    create(:work, druid: druid, user:)
 
-    sign_in(create(:user))
+    sign_in(user)
   end
 
   it 'edits a work' do
