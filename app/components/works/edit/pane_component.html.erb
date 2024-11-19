@@ -2,7 +2,8 @@
             class: classes,
             role: 'tabpanel',
             'aria-labelledby': tab_id,
-            tabindex: '0') do %>
+            tabindex: '0',
+            data: { tab_error_target: 'pane' }) do %>
             <div class="d-flex flex-column justify-content-between h-100">
                 <div>
                     <div class="h4"><%= label %></div>

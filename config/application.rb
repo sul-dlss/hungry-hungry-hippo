@@ -50,5 +50,10 @@ module HungryHungryHippo
     config.autoload_once_paths += Dir[Rails.root.join('app/serializers')] # rubocop:disable Rails/RootPathnameMethods
 
     config.action_dispatch.rescue_responses['Sdr::Repository::NotFoundResponse'] = :not_found
+
+    # Bootstrap form error handling
+    ActionView::Base.field_error_proc = proc do |html_tag, _instance|
+      html_tag.gsub('form-control', 'form-control is-invalid').html_safe # rubocop:disable Rails/OutputSafety
+    end
   end
 end

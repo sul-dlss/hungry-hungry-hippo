@@ -2,4 +2,5 @@
   <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: label, hidden_label:) %>
   <%= render Elements::Forms::HelpTextComponent.new(id: help_text_id, help_text:) %>
   <%= form.text_field field_name, class: 'form-control', required:, aria: field_aria %>
+  <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name:) %>
 </div>
