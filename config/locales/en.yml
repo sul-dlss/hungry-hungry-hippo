@@ -44,6 +44,9 @@ en:
             A unique, descriptive title may improve discovery of your work in web searches.
       errors:
         cannot_be_edited: 'This work cannot be edited.'
+        validation: >
+          Required fields have not been filled out. Click on the section(s) highlighted in red on
+          the left to correct the error(s) and then try depositing again.
       panes:
         abstract:
           tab_label: 'Abstract'

@@ -37,7 +37,7 @@ class WorksController < ApplicationController
 
     @work_form = WorkForm.new(work_params)
     # The deposit param determines whether extra validations for deposits are applied.
-    if @work_form.valid?
+    if @work_form.valid?(deposit: deposit?)
       # TODO: Once we have a path from the dashboard, remove this step to create a collection
       collection = Collection.create_or_find_by!(druid: 'druid:cc234dd5678') do |c|
         c.title = 'Temp Collection'

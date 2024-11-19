@@ -1,5 +1,6 @@
 <h1 class="h2 mb-3"><%= @work_form.title || 'Untitled deposit' %></h1>
- <div class="d-flex tabbable-panes">
+ <%= render Elements::AlertComponent.new(variant: :danger, value: I18n.t('works.edit.errors.validation')) if @work_form.errors.present? %>
+ <div class="d-flex tabbable-panes" data-controller="tab-error">
     <div class="nav nav-pills flex-column px-2 py-1 me-5 col-3" role="tablist" aria-orientation="vertical">
         <%= render Works::Edit::TabComponent.new(label: I18n.t('works.edit.panes.title.tab_label'), tab_name: :title, selected: true) %>
         <%= render Works::Edit::TabComponent.new(label: I18n.t('works.edit.panes.abstract.tab_label'), tab_name: :abstract) %>

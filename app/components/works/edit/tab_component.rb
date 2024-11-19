@@ -15,7 +15,7 @@ module Works
         tag.div(
           class: classes,
           id: "#{tab_name}-tab",
-          data: { bs_toggle: 'tab', bs_target: "##{pane_id}" },
+          data: { bs_toggle: 'tab', bs_target: "##{pane_id}", tab_error_target: 'tab' },
           type: 'button',
           'aria-controls': pane_id,
           'aria-selected': selected?

@@ -4,16 +4,17 @@ module Elements
   # Component for rendering an alert.
   class AlertComponent < ApplicationComponent
     # Variants are :danger, :success, :note, :info, :warning
-    def initialize(title: nil, variant: :info, dismissible: false)
+    def initialize(title: nil, variant: :info, dismissible: false, value: nil)
       raise ArgumentError, 'Invalid variant' unless %i[danger success note info warning].include?(variant.to_sym)
 
       @title = title
       @variant = variant
       @dismissible = dismissible
+      @value = value
       super()
     end
 
-    attr_reader :title, :variant
+    attr_reader :title, :variant, :value
 
     def classes
       merge_classes(%w[alert d-flex shadow-sm align-items-center], variant_class, dismissible_class)

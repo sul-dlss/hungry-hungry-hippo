@@ -27,6 +27,18 @@
                 content: "\F138"; // right arrow
             }
         }
+
+        .nav-link.is-invalid {
+            color: var(--bs-danger-text-emphasis);
+
+            &::after {
+                font-family: 'bootstrap-icons';
+                display: inline-block;
+                vertical-align: -10%;
+                margin-left: 10px;
+                content: "\F33A"; // exclamation triangle fill
+            }
+        }
     }
 }
 
