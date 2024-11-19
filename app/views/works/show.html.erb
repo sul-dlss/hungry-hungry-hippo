@@ -3,3 +3,6 @@
 <%= render Elements::Tables::TableComponent.new(id: 'title-table', classes: 'table-work mb-5', label: 'Title') do |component| %>
     <% component.with_row(label: 'Title', values: [@work_form.title]) %>
 <% end %>
+<%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'table-work mb-5', label: 'Description') do |component| %>
+    <% component.with_row(label: 'Abstract', values: [@work_form.abstract]) %>
+<% end %>

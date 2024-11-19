@@ -14,22 +14,7 @@ module Elements
         super()
       end
 
-      attr_reader :form, :field_name, :required, :help_text
-
-      # Override in subclasses for a different label class
-      def label_class
-        'form-label'
-      end
-
-      def label_classes
-        merge_classes(label_class, @hidden_label ? 'visually-hidden' : nil)
-      end
-
-      def label_text
-        return field_name if @label.blank?
-
-        @label
-      end
+      attr_reader :form, :field_name, :required, :help_text, :hidden_label, :label
 
       def help_text_id
         @help_text_id ||= form.field_id(field_name, 'help')

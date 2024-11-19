@@ -24,8 +24,13 @@ module ToWorkForm
         druid: cocina_object.externalIdentifier,
         lock: cocina_object.lock,
         title: CocinaSupport.title_for(cocina_object:),
+        abstract:,
         version: cocina_object.version
       }
+    end
+
+    def abstract
+      cocina_object.description.note.find { |note| note.type == 'abstract' }&.value
     end
   end
 end
