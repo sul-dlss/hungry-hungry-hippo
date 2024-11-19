@@ -6,6 +6,16 @@ class CocinaSupport
     cocina_object.description.title.first.value
   end
 
+  def self.related_links_for(cocina_object:) # rubocop:disable Metrics/AbcSize
+    return nil if cocina_object.description.relatedResource.blank?
+
+    cocina_object.description.relatedResource.map.with_index do |related_resource, i|
+      next if related_resource.access.url.empty?
+
+      [i, { url: related_resource.access.url.first[:value], text: related_resource.title.first[:value] }]
+    end.to_h.presence
+  end
+
   def self.pretty(cocina_object:)
     JSON.pretty_generate(clean(cocina_object.to_h))
   end

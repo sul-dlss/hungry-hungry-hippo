@@ -2,6 +2,12 @@
 
 # Form for a Work
 class WorkForm < ApplicationForm
+  accepts_nested_attributes_for :related_links
+
+  def self.immutable_attributes
+    ['druid']
+  end
+
   attribute :druid, :string
   alias id druid
 

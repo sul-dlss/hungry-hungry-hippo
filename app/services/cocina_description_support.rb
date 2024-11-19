@@ -27,6 +27,22 @@ class CocinaDescriptionSupport
     [{ value: title }]
   end
 
+  def self.related_links(related_links:)
+    related_links.map do |related_link|
+      {
+        access: {
+          url: [
+            { value: related_link.url }
+          ]
+        }
+      }.tap do |related_link_hash|
+        next if (related_link_text = related_link.text).blank?
+
+        related_link_hash[:title] = [{ value: related_link_text }]
+      end
+    end
+  end
+
   # @param forename [String] the forename of the person
   # @param surname [String] the surname of the person
   # @param role [Symbol] the role of the person from ROLES
