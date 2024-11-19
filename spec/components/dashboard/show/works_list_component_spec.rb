@@ -3,15 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
-  let(:work) { create(:work, user: current_user) }
+  let(:work) { create(:work, user: current_user, collection:) }
+  let(:collection) { create(:collection) }
   let(:current_user) { create(:user) }
 
   it 'renders the works list table with rows' do
-    render_inline(described_class.new(label: 'Your works', current_user:))
+    render_inline(described_class.new(collection:))
 
-    expect(page).to have_css('h3', text: 'Your works')
-
-    within('table#user-works') do
+    within('table#works-table') do
       expect(page).to have_no_css('thead')
       expect(page).to have_css('tr', count: 1)
       within('tr:nth-child(1)') do

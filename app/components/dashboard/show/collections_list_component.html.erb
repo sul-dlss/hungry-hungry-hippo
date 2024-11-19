@@ -1,0 +1,10 @@
+<h3 class="h3 mb-4"><%= label %></h3>
+
+<% collections.each do |collection| %>
+  <h4 class="h4"><%= link_to(collection.title, "/collections/#{collection.druid}") %></h4>
+  <%= render Dashboard::Show::WorksListComponent.new(collection:) %>
+
+  <%= link_to new_work_path, class: 'btn btn-primary' do %>
+    <div class="align-self-center d-flex justify-content-center">Deposit to this collection</div>
+  <% end %>
+<% end %>
