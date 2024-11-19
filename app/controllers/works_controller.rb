@@ -6,6 +6,7 @@ class WorksController < ApplicationController
   before_action :check_deposit_job_started, only: %i[show edit]
   before_action :set_work_form_from_cocina, only: %i[show edit]
   before_action :set_status, only: %i[show edit]
+
   def show
     authorize! @work
     @status_presenter = StatusPresenter.new(status: @status)
@@ -79,7 +80,7 @@ class WorksController < ApplicationController
   private
 
   def work_params
-    params.expect(work: %i[title abstract version lock])
+    params.expect(work: WorkForm.user_editable_attributes + [WorkForm.nested_attributes_hash])
   end
 
   def deposit?
