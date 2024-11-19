@@ -14,11 +14,12 @@
 
 ### Running locally
 
-Spin up the web server, CSS asset builder, and DB container, and then set up the application and solid-* databases:
+Spin up containers and the app, and then set up the application and solid-* databases:
 
 ```shell
-bin/dev
+docker compose up -d
 bin/rails db:prepare
+bin/dev
 ```
 
 Then browse to http://localhost:3000 to see the running application.
@@ -41,6 +42,7 @@ bin/rake "development:accession[druid:dh414dd1590]"
 ### System tests
 
 #### Javascript
+
 By default, system tests will use headless Chrome, which supports javascript.
 
 If your test doesn't use javascript, consider using Rack, as it is much faster:
@@ -49,6 +51,7 @@ RSpec.describe 'Create a work draft', :rack_test do
 ```
 
 #### Cyperful
+
 [Cyperful](https://github.com/stepful/cyperful) is a visual debugger for system tests. To run a system test, prepend `CYPERFUL=1`. For example:
 ```
 CYPERFUL=1 bundle exec rspec spec/system/create_work_draft_spec.rb
