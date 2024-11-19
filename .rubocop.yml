@@ -478,3 +478,6 @@ FactoryBot/RedundantFactoryOption: # new in 2.23
   Enabled: true
 FactoryBot/SyntaxMethods: # new in 2.7
   Enabled: true
+
+Performance/StringBytesize: # new in 1.23
+  Enabled: true
