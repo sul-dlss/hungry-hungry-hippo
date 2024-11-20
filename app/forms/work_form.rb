@@ -18,6 +18,7 @@ class WorkForm < ApplicationForm
   attribute :collection_id, :string
 
   attribute :lock, :string
+  attribute :content_id, :integer
 
   attribute :version, :integer, default: 1
 
