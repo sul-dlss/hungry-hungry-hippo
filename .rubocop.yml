@@ -31,6 +31,7 @@ Metrics/BlockLength:
     - describe
     - context
     - namespace
+    - class_methods
 
 Metrics/ClassLength:
   Max: 150 # default 100
