@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Fixtures for mappings.
+# Fixtures for work mappings.
 # Not using FactoryBot because we want these fixtures to be consistent across tests.
 module MappingFixtures
   def new_work_form_fixture

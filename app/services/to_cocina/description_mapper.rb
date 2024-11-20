@@ -7,14 +7,14 @@ module ToCocina
       new(...).call
     end
 
-    # @param [WorkForm] work_form
-    def initialize(work_form:)
-      @work_form = work_form
+    # @param [WorkForm] form
+    def initialize(form:)
+      @form = form
     end
 
     # @return [Cocina::Models::Description, Cocina::Models::RequestDescription]
     def call
-      if work_form.persisted?
+      if form.persisted?
         Cocina::Models::Description.new(params)
       else
         Cocina::Models::RequestDescription.new(params)
@@ -23,21 +23,21 @@ module ToCocina
 
     private
 
-    attr_reader :work_form
+    attr_reader :form
 
     def params
       {
-        title: CocinaDescriptionSupport.title(title: work_form.title),
+        title: CocinaDescriptionSupport.title(title: form.title),
         # contributor: contributors_params.presence,
         note: note_params,
         # subject: subject_params.presence,
-        purl: Sdr::Purl.from_druid(druid: work_form.druid),
-        relatedResource: CocinaDescriptionSupport.related_links(related_links: work_form.related_links)
+        purl: Sdr::Purl.from_druid(druid: form.druid),
+        relatedResource: CocinaDescriptionSupport.related_links(related_links: form.related_links)
       }.compact
     end
 
     # def contributors_params
-    #   work_form.authors.map do |contributor|
+    #   form.authors.map do |contributor|
     #     CocinaDescriptionSupport.person_contributor(
     #       forename: contributor.first_name,
     #       surname: contributor.last_name
@@ -47,9 +47,9 @@ module ToCocina
 
     def note_params
       [].tap do |params|
-        if work_form.abstract.present?
+        if form.abstract.present?
           params << CocinaDescriptionSupport.note(type: 'abstract',
-                                                  value: work_form.abstract)
+                                                  value: form.abstract)
         end
       end.presence
     end
