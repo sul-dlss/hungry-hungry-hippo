@@ -3,21 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe WorkFormSerializer do
+  let(:druid) { 'druid:bc123df4567' }
   let(:serialized_form) do
     {
       '_aj_serialized' => 'WorkFormSerializer',
-      'attributes' => {
-        'title' => title_fixture,
-        'druid' => druid,
-        'version' => 1,
-        'lock' => nil,
-        'abstract' => abstract_fixture
-      }
+      'title' => title_fixture,
+      'druid' => druid,
+      'version' => 1,
+      'lock' => nil,
+      'abstract' => abstract_fixture,
+      'related_links' => []
     }
   end
-
-  let(:druid) { 'druid:bc123df4567' }
-
   let(:work_form) { WorkForm.new(title: title_fixture, druid:, abstract: abstract_fixture) }
 
   describe '.serialize?' do

@@ -4,7 +4,7 @@
     <% if title.present? %>
         <div class="fw-semibold"><%= title %></div>
     <% end %>
-    <%= content %>
+    <%= value || content %>
   </div>
   <% if dismissible? %>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

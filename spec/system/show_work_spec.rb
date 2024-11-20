@@ -6,8 +6,9 @@ RSpec.describe 'Show a work', :rack_test do
   include MappingFixtures
 
   let(:druid) { druid_fixture }
-  let(:collection) { create(:collection) }
-  let!(:work) { create(:work, druid: druid, title: title_fixture, collection:) }
+  let(:user) { create(:user) }
+  let(:collection) { create(:collection, user:) }
+  let!(:work) { create(:work, druid: druid, title: title_fixture, collection:, user:) }
   let(:cocina_object) { dro_with_metadata_fixture }
   let(:version_status) do
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
@@ -18,7 +19,7 @@ RSpec.describe 'Show a work', :rack_test do
     allow(Sdr::Repository).to receive(:find).with(druid: druid).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid: druid).and_return(version_status)
 
-    sign_in(create(:user))
+    sign_in(user)
   end
 
   it 'creates a work draft' do
