@@ -3,9 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe DepositJob do
-  let(:druid) { 'druid:bc123df4567' }
-  let(:cocina_object) { instance_double(Cocina::Models::DROWithMetadata, externalIdentifier: druid) }
-  let(:content) { create(:content) }
+  include MappingFixtures
+
+  let(:druid) { druid_fixture }
+  let(:cocina_object) { dro_with_metadata_fixture }
 
   before do
     allow(ToCocina::Mapper).to receive(:call).and_call_original
@@ -14,7 +15,8 @@ RSpec.describe DepositJob do
   end
 
   context 'when a new work' do
-    let(:work_form) { WorkForm.new(title: work.title, content_id: content.id) }
+    let(:content) { new_content_fixture }
+    let(:work_form) { new_work_form_fixture.tap { |form| form.content_id = content.id } }
     let(:work) { create(:work, :deposit_job_started) }
 
     before do
@@ -29,12 +31,16 @@ RSpec.describe DepositJob do
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
 
       expect(work.reload.deposit_job_finished?).to be true
+      expect(work.title).to eq(work_form.title)
+      expect(work.druid).to eq(druid_fixture)
+      # TODO: Test collection
       expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with('wait', work.id)
     end
   end
 
   context 'when an existing work' do
-    let(:work_form) { WorkForm.new(title: work.title, druid:, content_id: content.id, lock: 'abc123') }
+    let(:content) { content_fixture }
+    let(:work_form) { work_form_fixture.tap { |form| form.content_id = content.id } }
     let(:work) { create(:work, :deposit_job_started, druid:) }
 
     before do
@@ -50,6 +56,8 @@ RSpec.describe DepositJob do
       expect(Sdr::Repository).not_to have_received(:accession)
 
       expect(work.reload.deposit_job_finished?).to be true
+      expect(work.title).to eq(work_form.title)
+      # TODO: Test collection
       expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with('wait', work.id)
     end
   end

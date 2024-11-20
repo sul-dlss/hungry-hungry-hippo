@@ -12,8 +12,9 @@ class DepositJob < ApplicationJob
     druid = new_cocina_object.externalIdentifier
     Sdr::Repository.accession(druid:) if deposit
 
-    # Refresh the wait page. Since the deposit job is finished, this will redirect to the show page.
+    ModelSync::Work.call(work:, cocina_object: new_cocina_object)
     work.update!(deposit_job_started_at: nil, druid:)
+    # Refresh the wait page. Since the deposit job is finished, this will redirect to the show page.
     # Just to be aware for future troubleshooting: There is a possible race condition between the websocket
     # connecting and the following broadcast being sent.
     sleep 0.5 if Rails.env.test? # Avoids race condition in tests

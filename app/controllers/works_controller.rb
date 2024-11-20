@@ -5,7 +5,7 @@ class WorksController < ApplicationController
   before_action :set_work, only: %i[show edit update]
   before_action :check_deposit_job_started, only: %i[show edit]
   before_action :set_content, only: %i[edit]
-  before_action :set_work_form_from_cocina, only: %i[show edit]
+  before_action :set_work_form_from_cocina_and_sync, only: %i[show edit]
   before_action :set_status, only: %i[show edit]
 
   def show
@@ -97,8 +97,10 @@ class WorksController < ApplicationController
     redirect_to wait_works_path(@work.id) if @work.deposit_job_started?
   end
 
-  def set_work_form_from_cocina
+  def set_work_form_from_cocina_and_sync
     @cocina_object = Sdr::Repository.find(druid: params[:druid])
+    # This updates the Work with the latest metadata from the Cocina object.
+    ModelSync::Work.call(work: @work, cocina_object: @cocina_object)
     @work_form = ToWorkForm::Mapper.call(cocina_object: @cocina_object)
   end
 

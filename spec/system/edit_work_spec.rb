@@ -8,6 +8,7 @@ RSpec.describe 'Edit a work' do
 
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
+  let!(:work) { create(:work, druid: druid, user:) }
 
   let(:cocina_object) do
     dro_with_metadata_fixture
@@ -36,7 +37,6 @@ RSpec.describe 'Edit a work' do
     # It is already open.
     allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
     allow(Sdr::Repository).to receive(:update)
-    create(:work, druid: druid, user:)
 
     sign_in(user)
   end
@@ -61,5 +61,7 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_css('h1', text: updated_title)
     expect(page).to have_css('.status', text: 'New version in draft')
     expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
+
+    expect(work.reload.title).to eq(updated_title)
   end
 end
