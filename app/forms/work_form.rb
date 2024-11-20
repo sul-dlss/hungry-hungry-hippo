@@ -16,6 +16,7 @@ class WorkForm < ApplicationForm
   end
 
   attribute :lock, :string
+  attribute :content_id, :integer
 
   attribute :version, :integer, default: 1
 

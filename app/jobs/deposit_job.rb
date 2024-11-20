@@ -6,13 +6,9 @@ class DepositJob < ApplicationJob
   # @param [Work] work
   # @param [Boolean] deposit if true, deposit the work; otherwise, leave as draft
   def perform(work_form:, work:, deposit:)
-    cocina_object = ToCocina::Mapper.call(work_form:, source_id: "h3:object-#{work.id}")
-    new_cocina_object = if work_form.persisted?
-                          Sdr::Repository.open_if_needed(cocina_object:)
-                                         .then { |cocina_object| Sdr::Repository.update(cocina_object:) }
-                        else
-                          Sdr::Repository.register(cocina_object:)
-                        end
+    content = Content.find(work_form.content_id)
+    cocina_object = ToCocina::Mapper.call(work_form:, content:, source_id: "h3:object-#{work.id}")
+    new_cocina_object = perform_persist(cocina_object:, update: work_form.persisted?)
     druid = new_cocina_object.externalIdentifier
     Sdr::Repository.accession(druid:) if deposit
 
@@ -22,5 +18,14 @@ class DepositJob < ApplicationJob
     # connecting and the following broadcast being sent.
     sleep 0.5 if Rails.env.test? # Avoids race condition in tests
     Turbo::StreamsChannel.broadcast_refresh_to 'wait', work.id
+  end
+
+  def perform_persist(cocina_object:, update:)
+    if update
+      Sdr::Repository.open_if_needed(cocina_object:)
+                     .then { |cocina_object| Sdr::Repository.update(cocina_object:) }
+    else
+      Sdr::Repository.register(cocina_object:)
+    end
   end
 end

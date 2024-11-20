@@ -59,6 +59,76 @@ ALTER SEQUENCE public.collections_id_seq OWNED BY public.collections.id;
 
 
 --
+-- Name: content_files; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.content_files (
+    id bigint NOT NULL,
+    file_type character varying NOT NULL,
+    filename character varying NOT NULL,
+    label character varying NOT NULL,
+    external_identifier character varying,
+    fileset_external_identifier character varying,
+    size integer,
+    mime_type character varying,
+    md5_digest character varying,
+    sha1_digest character varying,
+    content_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: content_files_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.content_files_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: content_files_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.content_files_id_seq OWNED BY public.content_files.id;
+
+
+--
+-- Name: contents; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contents (
+    id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: contents_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.contents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: contents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.contents_id_seq OWNED BY public.contents.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -143,6 +213,20 @@ ALTER TABLE ONLY public.collections ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: content_files id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_files ALTER COLUMN id SET DEFAULT nextval('public.content_files_id_seq'::regclass);
+
+
+--
+-- Name: contents id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contents ALTER COLUMN id SET DEFAULT nextval('public.contents_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -170,6 +254,22 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.collections
     ADD CONSTRAINT collections_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: content_files content_files_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_files
+    ADD CONSTRAINT content_files_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contents contents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contents
+    ADD CONSTRAINT contents_pkey PRIMARY KEY (id);
 
 
 --
@@ -211,6 +311,20 @@ CREATE INDEX index_collections_on_user_id ON public.collections USING btree (use
 
 
 --
+-- Name: index_content_files_on_content_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_content_files_on_content_id ON public.content_files USING btree (content_id);
+
+
+--
+-- Name: index_content_files_on_content_id_and_filename; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_content_files_on_content_id_and_filename ON public.content_files USING btree (content_id, filename);
+
+
+--
 -- Name: index_users_on_email_address; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -236,6 +350,14 @@ CREATE UNIQUE INDEX index_works_on_druid ON public.works USING btree (druid);
 --
 
 CREATE INDEX index_works_on_user_id ON public.works USING btree (user_id);
+
+
+--
+-- Name: content_files fk_rails_28017e8654; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.content_files
+    ADD CONSTRAINT fk_rails_28017e8654 FOREIGN KEY (content_id) REFERENCES public.contents(id);
 
 
 --
@@ -269,6 +391,8 @@ ALTER TABLE ONLY public.collections
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241120134012'),
+('20241120133926'),
 ('20241115001146'),
 ('20241115001126'),
 ('20241111223829'),

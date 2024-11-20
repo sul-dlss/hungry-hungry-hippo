@@ -2,6 +2,8 @@
 
 # Fixtures for mappings.
 # Not using FactoryBot because we want these fixtures to be consistent across tests.
+# rubocop:disable Metrics/ModuleLength
+# rubocop:disable Metrics/MethodLength
 module MappingFixtures
   def new_work_form_fixture
     WorkForm.new(
@@ -16,6 +18,39 @@ module MappingFixtures
       form.version = 2
       form.lock = lock_fixture
     end
+  end
+
+  # No external identifiers
+  def new_content_fixture
+    content = Content.create!
+    ContentFile.create(
+      file_type: 'attached',
+      content: content,
+      filename: filename_fixture,
+      label: file_label_fixture,
+      size: file_size_fixture,
+      mime_type: mime_type_fixture,
+      md5_digest: md5_fixture,
+      sha1_digest: sha1_fixture
+    )
+    content
+  end
+
+  def content_fixture
+    content = Content.create!
+    ContentFile.create(
+      file_type: 'deposited',
+      content: content,
+      filename: filename_fixture,
+      label: file_label_fixture,
+      size: file_size_fixture,
+      mime_type: mime_type_fixture,
+      md5_digest: md5_fixture,
+      sha1_digest: sha1_fixture,
+      external_identifier: file_external_identifier_fixture,
+      fileset_external_identifier: fileset_external_identifier_fixture
+    )
+    content
   end
 
   def request_dro_fixture
@@ -36,7 +71,50 @@ module MappingFixtures
     )
   end
 
-  # rubocop:disable Metrics/MethodLength
+  def request_dro_with_structural_fixture
+    request_dro_fixture.new(structural: {
+                              contains: [{
+                                type: 'https://cocina.sul.stanford.edu/models/resources/file',
+                                label: file_label_fixture,
+                                version: 1,
+                                structural: {
+                                  contains: [
+                                    {
+                                      type: 'https://cocina.sul.stanford.edu/models/file',
+                                      label: file_label_fixture,
+                                      filename: filename_fixture,
+                                      size: file_size_fixture,
+                                      version: 1,
+                                      hasMimeType: mime_type_fixture,
+                                      sdrGeneratedText: false,
+                                      correctedForAccessibility: false,
+                                      hasMessageDigests: [
+                                        {
+                                          type: 'md5',
+                                          digest: md5_fixture
+                                        },
+                                        {
+                                          type: 'sha1',
+                                          digest: sha1_fixture
+                                        }
+                                      ],
+                                      access: {
+                                        view: 'world',
+                                        download: 'world',
+                                        controlledDigitalLending: false
+                                      },
+                                      administrative: {
+                                        publish: true,
+                                        sdrPreserve: true,
+                                        shelve: true
+                                      }
+                                    }
+                                  ]
+                                }
+                              }]
+                            })
+  end
+
   def dro_fixture
     Cocina::Models.build(
       {
@@ -57,13 +135,67 @@ module MappingFixtures
       }
     )
   end
+
+  def dro_with_structural_fixture
+    dro_fixture.new(structural: {
+                      contains: [
+                        {
+                          type: 'https://cocina.sul.stanford.edu/models/resources/file',
+                          externalIdentifier: fileset_external_identifier_fixture,
+                          label: file_label_fixture,
+                          version: 2,
+                          structural: {
+                            contains: [
+                              {
+                                type: 'https://cocina.sul.stanford.edu/models/file',
+                                externalIdentifier: file_external_identifier_fixture,
+                                label: file_label_fixture,
+                                filename: filename_fixture,
+                                size: file_size_fixture,
+                                version: 2,
+                                hasMimeType: mime_type_fixture,
+                                sdrGeneratedText: false,
+                                correctedForAccessibility: false,
+                                hasMessageDigests: [
+                                  {
+                                    type: 'md5',
+                                    digest: md5_fixture
+                                  },
+                                  {
+                                    type: 'sha1',
+                                    digest: sha1_fixture
+                                  }
+                                ],
+                                access: {
+                                  view: 'world',
+                                  download: 'world',
+                                  controlledDigitalLending: false
+                                },
+                                administrative: {
+                                  publish: true,
+                                  sdrPreserve: true,
+                                  shelve: true
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      isMemberOf: []
+                    })
+  end
   # rubocop:enable Metrics/MethodLength
 
   def dro_with_metadata_fixture
     Cocina::Models.with_metadata(dro_fixture, lock_fixture)
   end
 
+  def dro_with_structural_and_metadata_fixture
+    Cocina::Models.with_metadata(dro_with_structural_fixture, lock_fixture)
+  end
+
   RSpec.configure do |config|
     config.include MappingFixtures, type: :mapping
   end
 end
+# rubocop:enable Metrics/ModuleLength
