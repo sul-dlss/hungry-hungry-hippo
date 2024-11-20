@@ -21,5 +21,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :collections, only: [:show], param: :druid
+
   root to: 'dashboard#show'
 end
