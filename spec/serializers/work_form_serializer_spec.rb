@@ -12,10 +12,12 @@ RSpec.describe WorkFormSerializer do
       'version' => 1,
       'lock' => nil,
       'abstract' => abstract_fixture,
-      'related_links' => []
+      'related_links' => related_links_fixture
     }
   end
-  let(:work_form) { WorkForm.new(title: title_fixture, druid:, abstract: abstract_fixture) }
+  let(:work_form) do
+    WorkForm.new(title: title_fixture, druid:, abstract: abstract_fixture, related_links: related_links_fixture)
+  end
 
   describe '.serialize?' do
     context 'with a Work Form' do

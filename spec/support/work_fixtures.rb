@@ -19,3 +19,12 @@ end
 def abstract_fixture
   'This is what my work is about.'
 end
+
+def related_links_fixture
+  [
+    {
+      'text' => 'Stanford University',
+      'url' => 'https://www.stanford.edu/'
+    }
+  ]
+end

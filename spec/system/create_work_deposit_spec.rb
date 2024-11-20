@@ -58,6 +58,15 @@ RSpec.describe 'Create a work deposit' do
     # Filling in abstract
     fill_in('work_abstract', with: abstract_fixture)
 
+    # Clicking on related content tab
+    find('.nav-link', text: 'Related content (optional)').click
+    expect(page).to have_css('.nav-link.active', text: 'Related content (optional)')
+    expect(page).to have_text('Related links')
+
+    # Filling in related links
+    fill_in('Link text', with: related_links_fixture.first['text'])
+    fill_in('URL', with: related_links_fixture.first['url'])
+
     # Depositing the work
     find('.nav-link', text: 'Deposit').click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')

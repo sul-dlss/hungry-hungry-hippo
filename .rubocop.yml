@@ -36,6 +36,8 @@ Metrics/ClassLength:
   Max: 150 # default 100
 
 Metrics/MethodLength:
+  CountAsOne:
+    - 'hash'
   Max: 15 # default 10
 
 RSpec/ExampleLength:

@@ -42,5 +42,12 @@ RSpec.describe 'Show a work', :rack_test do
       expect(page).to have_css('tr', text: 'Abstract')
       expect(page).to have_css('td', text: abstract_fixture)
     end
+
+    # Related Content table
+    within('table#related-content-table') do
+      expect(page).to have_css('caption', text: 'Related content')
+      expect(page).to have_css('tr', text: 'Related links')
+      expect(page).to have_css('td', text: related_links_fixture.first['text'])
+    end
   end
 end

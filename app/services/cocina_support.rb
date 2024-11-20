@@ -9,11 +9,11 @@ class CocinaSupport
   def self.related_links_for(cocina_object:) # rubocop:disable Metrics/AbcSize
     return nil if cocina_object.description.relatedResource.blank?
 
-    cocina_object.description.relatedResource.map.with_index do |related_resource, i|
+    cocina_object.description.relatedResource.map do |related_resource|
       next if related_resource.access.url.empty?
 
-      [i, { url: related_resource.access.url.first[:value], text: related_resource.title.first[:value] }]
-    end.to_h.presence
+      { 'url' => related_resource.access.url.first[:value], 'text' => related_resource.title.first&.[](:value) }
+    end.presence
   end
 
   def self.pretty(cocina_object:)
