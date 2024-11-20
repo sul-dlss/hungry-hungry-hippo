@@ -16,7 +16,7 @@ class WorksController < ApplicationController
     # Once collection is being passed, should authorize that the user can create a work in that collection.
     skip_verify_authorized!
 
-    @work_form = WorkForm.new
+    @work_form = WorkForm.new(collection_id: params[:collection_id])
 
     render :form
   end
@@ -39,16 +39,10 @@ class WorksController < ApplicationController
     @work_form = WorkForm.new(work_params)
     # The deposit param determines whether extra validations for deposits are applied.
     if @work_form.valid?(deposit: deposit?)
-      # TODO: Once we have a path from the dashboard, remove this step to create a collection
-      collection = Collection.create_or_find_by!(druid: 'druid:cc234dd5678') do |c|
-        c.title = 'Temp Collection'
-        c.user = current_user
-      end
-
       # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
       # should be "waiting".
       work = Work.create!(title: @work_form.title, user: current_user, deposit_job_started_at: Time.zone.now,
-                          collection_id: collection.id)
+                          collection_id: @work_form.collection_id)
       DepositJob.perform_later(work:, work_form: @work_form, deposit: deposit?)
       redirect_to wait_works_path(work.id)
     else
