@@ -4,15 +4,14 @@ module Dashboard
   module Show
     # Component for rendering a table on the work show page.
     class WorksListComponent < ApplicationComponent
-      def initialize(label:, current_user:)
-        @label = label
-        @current_user = current_user
+      def initialize(collection:)
+        @collection = collection
         super()
       end
 
-      attr_reader :label, :current_user
+      attr_reader :collection
 
-      delegate :works, to: :current_user
+      delegate :works, to: :collection
     end
   end
 end
