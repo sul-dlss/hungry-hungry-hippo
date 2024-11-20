@@ -22,7 +22,7 @@ class ApplicationForm
   end
 
   # NOTE: Options have NOT yet been implemented! (e.g., `allow_destroy`)
-  def self.accepts_nested_attributes_for(*models, **_options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def self.accepts_nested_attributes_for(*models, **_options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
     # For each nested attribute, define a getter and a setter.
     models.each do |model|
       # Each nested attribute needs a getter for ActiveModel::Serialization to include it in its related model.
@@ -60,7 +60,7 @@ class ApplicationForm
     # Allows serialization of the form using ActiveModel::Serialization
     define_method(:attributes) do
       # Keys *must* be strings
-      super().merge(models.to_h { |attr| [attr.to_s, public_send(attr)] })
+      super().merge(models.to_h { |attr| [attr.to_s, public_send(attr).map(&:attributes)] })
     end
   end
 

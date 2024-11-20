@@ -6,7 +6,8 @@ module MappingFixtures
   def new_work_form_fixture
     WorkForm.new(
       title: title_fixture,
-      abstract: abstract_fixture
+      abstract: abstract_fixture,
+      related_links: related_links_fixture
     )
   end
 
@@ -25,7 +26,8 @@ module MappingFixtures
         label: title_fixture,
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
-          note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)]
+          note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
+          relatedResource: CocinaDescriptionSupport.related_links(related_links: related_links_fixture)
         },
         version: 1,
         identification: { sourceId: source_id_fixture },
@@ -36,7 +38,6 @@ module MappingFixtures
     )
   end
 
-  # rubocop:disable Metrics/MethodLength
   def dro_fixture
     Cocina::Models.build(
       {
@@ -47,6 +48,7 @@ module MappingFixtures
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
+          relatedResource: CocinaDescriptionSupport.related_links(related_links: related_links_fixture),
           purl: Sdr::Purl.from_druid(druid: druid_fixture)
         },
         version: 2,
@@ -57,7 +59,6 @@ module MappingFixtures
       }
     )
   end
-  # rubocop:enable Metrics/MethodLength
 
   def dro_with_metadata_fixture
     Cocina::Models.with_metadata(dro_fixture, lock_fixture)

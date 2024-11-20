@@ -29,14 +29,17 @@ class CocinaDescriptionSupport
 
   def self.related_links(related_links:)
     related_links.map do |related_link|
+      # NOTE: Sometimes this is an array of hashes and sometimes it's an array of RelatedLinkForm instances
+      related_link = related_link.attributes if related_link.respond_to?(:attributes)
+
       {
         access: {
           url: [
-            { value: related_link.url }
+            { value: related_link['url'] }
           ]
         }
       }.tap do |related_link_hash|
-        next if (related_link_text = related_link.text).blank?
+        next if (related_link_text = related_link['text']).blank?
 
         related_link_hash[:title] = [{ value: related_link_text }]
       end

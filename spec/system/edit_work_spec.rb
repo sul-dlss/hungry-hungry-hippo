@@ -17,7 +17,8 @@ RSpec.describe 'Edit a work' do
     cocina_object.new(
       description: cocina_object.description.new(
         title: CocinaDescriptionSupport.title(title: updated_title),
-        note: [CocinaDescriptionSupport.note(type: 'abstract', value: updated_abstract)]
+        note: [CocinaDescriptionSupport.note(type: 'abstract', value: updated_abstract)],
+        relatedResource: CocinaDescriptionSupport.related_links(related_links: updated_related_links)
       )
     )
   end
@@ -29,6 +30,14 @@ RSpec.describe 'Edit a work' do
 
   let(:updated_title) { 'My new title' }
   let(:updated_abstract) { 'This is what my work is really about.' }
+  let(:updated_related_links) do
+    [
+      {
+        'text' => 'My new link',
+        'url' => 'https://new.stanford.edu/'
+      }
+    ]
+  end
 
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object, updated_cocina_object)
@@ -52,13 +61,20 @@ RSpec.describe 'Edit a work' do
 
     # Filling in abstract
     find('.nav-link', text: 'Abstract').click
-    fill_in('work_abstract', with: abstract_fixture)
+    fill_in('work_abstract', with: updated_abstract)
+
+    # Filling in related content
+    find('.nav-link', text: 'Related content (optional)').click
+    fill_in('Link text', with: updated_related_links.first['text'])
+    fill_in('URL', with: updated_related_links.first['url'])
 
     click_link_or_button('Save as draft')
 
     # Waiting page may be too fast to catch so not testing.
     # On show page
     expect(page).to have_css('h1', text: updated_title)
+    expect(page).to have_content(updated_abstract)
+    expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
     expect(page).to have_css('.status', text: 'New version in draft')
     expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
   end
