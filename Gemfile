@@ -69,6 +69,8 @@ end
 
 group :development do
   gem 'overmind'
+  gem 'solargraph' # For Ruby IDE purposes
+  gem 'solargraph-rails'
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 end
