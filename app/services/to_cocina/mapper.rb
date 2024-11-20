@@ -34,7 +34,7 @@ module ToCocina
         externalIdentifier: work_form.druid,
         type: Cocina::Models::ObjectType.object,
         label: work_form.title,
-        description: ToCocina::DescriptionMapper.call(work_form:),
+        description: ToCocina::DescriptionMapper.call(form: work_form),
         version: work_form.version,
         access: { view: 'world', download: 'world' },
         identification: { sourceId: source_id },
