@@ -14,6 +14,12 @@ module Elements
 
       attr_reader :form, :model_class, :form_component
 
+      def nested_models
+        return [model_class.new] if (existing_models = form.object.public_send(@field_name)).empty?
+
+        existing_models
+      end
+
       def body_id
         "card-body-#{@field_name}"
       end

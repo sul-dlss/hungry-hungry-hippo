@@ -2,15 +2,17 @@
   <div class="card-header">
     <%= header_label %>
   </div>
-  <%= tag.div(class: 'card-body', id: body_id) do %>
-    <ul class="list-group list-group-flush">
-      <%= form.fields_for field_name, model_class.new do |nested_form| %>
-        <li class="list-group-item">
-          <%= tag.div do %>
-            <%= render form_component.new(form: nested_form) %>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
+  <% nested_models.each do |nested_model| %>
+    <%= tag.div(class: 'card-body', id: body_id) do %>
+      <ul class="list-group list-group-flush">
+        <%= form.fields_for field_name, nested_model do |nested_form| %>
+          <li class="list-group-item">
+            <%= tag.div do %>
+              <%= render form_component.new(form: nested_form) %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
   <% end %>
 </div>
