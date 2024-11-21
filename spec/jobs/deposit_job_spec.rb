@@ -24,7 +24,7 @@ RSpec.describe DepositJob do
 
     it 'registers a new work' do
       described_class.perform_now(form:, object:, source_id:, deposit: true)
-      expect(ToCocina::Mapper).to have_received(:call).with(form:, source_id:)
+      expect(ToCocina::Mapper).to have_received(:call).with(form:, content:, source_id:)
       expect(Sdr::Repository).to have_received(:register)
         .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO))
       expect(Sdr::Repository).to have_received(:accession).with(druid:)

@@ -38,7 +38,7 @@ module ToCocina
         access: { view: 'world', download: 'world' },
         identification: { sourceId: source_id },
         administrative: { hasAdminPolicy: Settings.apo },
-        structural: ToCocina::StructuralMapper.call(work_form:, content:)
+        structural: ToCocina::StructuralMapper.call(work_form: form, content:)
       }.compact
     end
   end

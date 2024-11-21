@@ -9,9 +9,10 @@ module ToCocina
 
     # @param [CollectionForm] form
     # @param [source_id] source_id
-    def initialize(form:, source_id:)
+    # param [content] content: For collections, this is always nil
+    def initialize(form:, source_id:, content: nil)
       @form = form
-      @content = content
+      @content = content # Requred for interface compatibility with ToCocina::Mapper
       @source_id = source_id
     end
 

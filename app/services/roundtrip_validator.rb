@@ -1,21 +1,23 @@
 # frozen_string_literal: true
 
-# Validates that a cocina object can be converted to an object form and then back without loss.
+# Validates that a cocina object can be converted to a work form and then back without loss.
 class RoundtripValidator
   def self.roundtrippable?(...)
     new(...).call
   end
 
-  # @param [WorkForm, CollectionForm] form: a work_form or a collection_form
-  # @param [Cocina::Models::DRO, Cocina::Models::Collection] cocina_object: a DRO or a Collection object
+  # @param [WorkForm, CollectionForm] form: a WorkForm or a CollectionForm
+  # @param [Content] content
+  # @param [Cocina::Models::DRO, Cocina::Models::Collection] cocina_object
   # @param [ToWorkForm::Mapper, ToCocina::CollectionMapper] mapper: a mapper for the form
-  def initialize(form:, cocina_object:, mapper:)
+  def initialize(form:, content:, cocina_object:, mapper:)
     @form = form
+    @content = content
     @original_cocina_object = cocina_object
     @mapper = mapper
   end
 
-  # @return [Boolean] true if the collection form can be converted to a cocina object and back without loss
+  # @return [Boolean] true if the work form can be converted to a cocina object and back without loss
   def call
     if roundtripped_cocina_object == normalized_original_cocina_object
       true
@@ -35,8 +37,7 @@ class RoundtripValidator
   attr_reader :form, :content
 
   def roundtripped_cocina_object
-    @mapper.call(form:,
-                 source_id: normalized_original_cocina_object.identification&.sourceId)
+    @mapper.call(form:, content:, source_id: normalized_original_cocina_object.identification&.sourceId)
   end
 
   def normalized_original_cocina_object
