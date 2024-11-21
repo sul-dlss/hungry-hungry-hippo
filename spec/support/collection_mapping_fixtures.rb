@@ -35,7 +35,6 @@ module CollectionMappingFixtures
     )
   end
 
-  # rubocop:disable Metrics/MethodLength
   def collection_fixture
     Cocina::Models.build(
       {
@@ -54,7 +53,6 @@ module CollectionMappingFixtures
       }
     )
   end
-  # rubocop:enable Metrics/MethodLength
 
   def collection_with_metadata_fixture
     Cocina::Models.with_metadata(collection_fixture, lock_fixture)
