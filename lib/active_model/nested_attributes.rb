@@ -17,6 +17,8 @@ module ActiveModel
         define_setters_for_nested_models(models)
         allow_reflection_on_nested_models(models)
         allow_serialization_of_nested_models(models)
+        define_convenience_methods
+        define_validation_methods
       end
 
       private
@@ -69,6 +71,32 @@ module ActiveModel
         define_method(:attributes) do
           # Keys *must* be strings
           super().merge(models.to_h { |attr| [attr.to_s, public_send(attr).map(&:attributes)] })
+        end
+      end
+
+      def define_convenience_methods
+        # Facilitates validation of nested attributes
+        define_method(:nested_models) do
+          self
+            .class
+            .nested_attributes_hash
+            .keys
+            .flat_map { |nested_attr| public_send(nested_attr) }
+        end
+      end
+
+      def define_validation_methods
+        define_method(:valid?) do |*args, **kwargs, &block|
+          nested_models.all? do |nested_model|
+            next true if nested_model.valid?(*args, **kwargs, &block)
+
+            nested_model.errors.each do |error|
+              errors.add("#{nested_model.model_name.plural}.#{nested_models.index(nested_model)}.#{error.attribute}",
+                         error.message)
+            end
+
+            false
+          end && super(*args, **kwargs, &block)
         end
       end
     end

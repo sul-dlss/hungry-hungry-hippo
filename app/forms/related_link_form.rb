@@ -4,7 +4,7 @@
 class RelatedLinkForm < ApplicationForm
   attribute :text, :string
   attribute :url, :string
-  validates :url, presence: true
+  validates :url, presence: true, if: :deposit?
 
   # Make a fake ID so we can generate array-like form fields.
   def id
