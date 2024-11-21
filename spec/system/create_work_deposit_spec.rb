@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Create a work deposit' do
   let(:druid) { druid_fixture }
-  let!(:collection) { create(:collection, user:) } # rubocop:disable RSpec/LetSetup
   let(:user) { create(:user) }
   let(:cocina_object) do
     cocina_object = build(:dro, title: title_fixture, id: druid)
@@ -30,6 +29,8 @@ RSpec.describe 'Create a work deposit' do
     # Stubbing out for show page
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+
+    create(:collection, user:)
 
     sign_in(user)
   end
