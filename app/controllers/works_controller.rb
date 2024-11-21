@@ -18,7 +18,7 @@ class WorksController < ApplicationController
     skip_verify_authorized!
 
     @content = Content.create!(user: current_user)
-    @work_form = WorkForm.new(collection_id: params[:collection_id], content_id: @content.id)
+    @work_form = WorkForm.new(collection_id: params.expect(:collection_id), content_id: @content.id)
 
     render :form
   end

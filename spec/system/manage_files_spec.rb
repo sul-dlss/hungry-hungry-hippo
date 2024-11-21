@@ -3,12 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Manage files for a work' do
+  let(:user) { create(:user) }
+  let(:collection) { create(:collection, user:) }
+
   before do
-    sign_in(create(:user))
+    sign_in(user)
   end
 
   it 'creates a work' do
-    visit new_work_path
+    visit new_work_path(collection_id: collection.id)
 
     expect(page).to have_css('h1', text: 'Untitled deposit')
 
