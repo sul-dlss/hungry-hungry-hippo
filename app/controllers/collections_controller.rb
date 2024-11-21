@@ -31,7 +31,6 @@ class CollectionsController < ApplicationController
     render :form
   end
 
-  # # rubocop:disable Metrics/AbcSize
   def create
     # TODO: Verify any user should be able to create a collection.
     skip_verify_authorized!
@@ -41,14 +40,15 @@ class CollectionsController < ApplicationController
     if @collection_form.valid?(deposit: deposit?)
       # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
       # should be "waiting".
-      collection = Collection.create!(title: @collection_form.title, user: current_user, deposit_job_started_at: Time.zone.now)
+      collection = Collection.create!(title: @collection_form.title,
+                                      user: current_user,
+                                      deposit_job_started_at: Time.zone.now)
       DepositCollectionJob.perform_later(collection:, collection_form: @collection_form, deposit: deposit?)
       redirect_to wait_collections_path(collection.id)
     else
       render :form, status: :unprocessable_entity
     end
   end
-  # # rubocop:enable Metrics/AbcSize
 
   def update
     authorize! @collection
@@ -100,6 +100,7 @@ class CollectionsController < ApplicationController
   def editable?
     return false unless @status.open? || @status.openable?
 
-    ToCollectionForm::RoundtripValidator.roundtrippable?(collection_form: @collection_form, cocina_object: @cocina_object)
+    ToCollectionForm::RoundtripValidator.roundtrippable?(collection_form: @collection_form,
+                                                         cocina_object: @cocina_object)
   end
 end
