@@ -3,5 +3,5 @@
 <% collections.each do |collection| %>
   <%= render Elements::HeaderComponent.new(level: :h4, text: collection.title) %>
   <%= render Dashboard::Show::WorksListComponent.new(collection:) %>
-  <%= render Elements::ButtonLinkComponent.new(link: new_work_path, label: 'Deposit to this collection', variant: :primary) %>
+  <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_id: collection.id), label: 'Deposit to this collection', variant: :primary) %>
 <% end %>

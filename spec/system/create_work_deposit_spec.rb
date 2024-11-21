@@ -4,7 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Create a work deposit' do
   let(:druid) { druid_fixture }
-
+  let!(:collection) { create(:collection, user:) } # rubocop:disable RSpec/LetSetup
+  let(:user) { create(:user) }
   let(:cocina_object) do
     cocina_object = build(:dro, title: title_fixture, id: druid)
     Cocina::Models.with_metadata(cocina_object, 'abc123')
@@ -30,11 +31,12 @@ RSpec.describe 'Create a work deposit' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
 
-    sign_in(create(:user))
+    sign_in(user)
   end
 
   it 'creates a work' do
-    visit new_work_path
+    visit root_path
+    click_link_or_button('Deposit to this collection')
 
     expect(page).to have_css('h1', text: 'Untitled deposit')
 
