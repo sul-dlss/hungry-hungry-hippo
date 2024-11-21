@@ -2,8 +2,9 @@
 
 # Performs a deposit (without SDR API).
 class DepositJob < ApplicationJob
-  # @param [WorkForm] work_form
-  # @param [Work] work
+  # @param [WorkForm, CollectionForm] form
+  # @param [Work, Collection] object: the work or collectio
+  # @param [String] source_id: the source_id of the object
   # @param [Boolean] deposit if true, deposit the work; otherwise, leave as draft
   def perform(work_form:, work:, deposit:)
     content = Content.find(work_form.content_id)
@@ -13,7 +14,7 @@ class DepositJob < ApplicationJob
     Sdr::Repository.accession(druid:) if deposit
 
     # Refresh the wait page. Since the deposit job is finished, this will redirect to the show page.
-    work.update!(deposit_job_started_at: nil, druid:)
+    object.update!(deposit_job_started_at: nil, druid:)
     # Just to be aware for future troubleshooting: There is a possible race condition between the websocket
     # connecting and the following broadcast being sent.
     sleep 0.5 if Rails.env.test? # Avoids race condition in tests

@@ -9,7 +9,7 @@ def collection_title_fixture
 end
 
 def collection_source_id_fixture
-  'h3:collection-1'
+  'hydrus:collection-1'
 end
 
 def collection_abstract_fixture

@@ -50,7 +50,7 @@ RSpec.describe 'Edit work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
-      allow(ToWorkForm::RoundtripValidator).to receive(:roundtrippable?)
+      allow(RoundtripValidator).to receive(:roundtrippable?)
 
       sign_in(user)
     end
@@ -62,7 +62,7 @@ RSpec.describe 'Edit work' do
 
       follow_redirect!
       expect(response.body).to include('This work cannot be edited.')
-      expect(ToWorkForm::RoundtripValidator).not_to have_received(:roundtrippable?)
+      expect(RoundtripValidator).not_to have_received(:roundtrippable?)
     end
   end
 
@@ -78,7 +78,7 @@ RSpec.describe 'Edit work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
-      allow(ToWorkForm::RoundtripValidator).to receive(:roundtrippable?).and_call_original
+      allow(RoundtripValidator).to receive(:roundtrippable?).and_call_original
 
       sign_in(user)
     end
@@ -90,7 +90,7 @@ RSpec.describe 'Edit work' do
 
       follow_redirect!
       expect(response.body).to include('This work cannot be edited.')
-      expect(ToWorkForm::RoundtripValidator).to have_received(:roundtrippable?)
+      expect(RoundtripValidator).to have_received(:roundtrippable?)
     end
   end
 end

@@ -7,18 +7,18 @@ module ToCocina
       new(...).call
     end
 
-    # @param [CollectionForm] collection_form
+    # @param [CollectionForm] form
     # @param [source_id] source_id
-    def initialize(collection_form:, source_id:)
-      @collection_form = collection_form
+    def initialize(form:, source_id:)
+      @form = form
       @content = content
       @source_id = source_id
     end
 
     # @return [Cocina::Models::Collection]
     def call
-      if collection_form.persisted?
-        Cocina::Models.with_metadata(Cocina::Models.build(params), collection_form.lock)
+      if form.persisted?
+        Cocina::Models.with_metadata(Cocina::Models.build(params), form.lock)
       else
         Cocina::Models.build_request(params)
       end
@@ -26,15 +26,15 @@ module ToCocina
 
     private
 
-    attr_reader :collection_form, :source_id, :content
+    attr_reader :form, :source_id, :content
 
     def params
       {
-        externalIdentifier: collection_form.druid,
+        externalIdentifier: form.druid,
         type: Cocina::Models::ObjectType.collection,
-        label: collection_form.title,
-        description: ToCocina::DescriptionMapper.call(form: collection_form),
-        version: collection_form.version,
+        label: form.title,
+        description: ToCocina::DescriptionMapper.call(form: form),
+        version: form.version,
         access: { view: 'world' },
         identification: { sourceId: source_id },
         administrative: { hasAdminPolicy: Settings.apo }

@@ -22,6 +22,7 @@ class CollectionForm < ApplicationForm
   attribute :title, :string
   validates :title, presence: true
 
+  # The Collection description maps to the cocina abstract
   attribute :abstract, :string
   validates :abstract, presence: true, if: :deposit?
 end
