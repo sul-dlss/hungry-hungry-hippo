@@ -5,7 +5,7 @@ class WorksController < ApplicationController
   before_action :set_work, only: %i[show edit update]
   before_action :check_deposit_job_started, only: %i[show edit]
   before_action :set_work_form_from_cocina, only: %i[show edit]
-  before_action :set_content, only: %i[edit]
+  before_action :set_content, only: %i[show edit]
   before_action :set_status, only: %i[show edit]
 
   def show

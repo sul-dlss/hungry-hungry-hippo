@@ -9,7 +9,7 @@ RSpec.describe 'Show a work', :rack_test do
   let(:user) { create(:user) }
   let(:collection) { create(:collection, user:) }
   let!(:work) { create(:work, druid: druid, title: title_fixture, collection:, user:) }
-  let(:cocina_object) { dro_with_metadata_fixture }
+  let(:cocina_object) { dro_with_structural_and_metadata_fixture }
   let(:version_status) do
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
                                                                          openable?: true, accessioning?: false)
@@ -28,6 +28,14 @@ RSpec.describe 'Show a work', :rack_test do
     expect(page).to have_css('h1', text: work.title)
     expect(page).to have_css('.status', text: 'Deposited')
     expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
+
+    # Files table
+    within('table#files-table') do
+      expect(page).to have_css('caption', text: 'Files')
+      expect(page).to have_css('th', text: 'Filename')
+      expect(page).to have_css('th', text: 'Description')
+      expect(page).to have_css('td', text: filename_fixture)
+    end
 
     # Title table
     within('table#title-table') do

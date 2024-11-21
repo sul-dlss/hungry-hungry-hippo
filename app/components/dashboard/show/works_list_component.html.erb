@@ -1,8 +1,10 @@
 <%= render Elements::Tables::TableComponent.new(
       id: 'works-table',
-      classes: 'table-work border',
-      headers: ['Deposit', 'Deposit Status', 'Owner', 'Last Modified', 'PURL']
+      classes: 'table-work border'
     ) do |component| %>
+  <% component.with_header(
+       headers: ['Deposit', 'Deposit Status', 'Owner', 'Last Modified', 'PURL']
+     ) %>
   <% works.each do |work| %>
     <% component.with_row(
          values: [
