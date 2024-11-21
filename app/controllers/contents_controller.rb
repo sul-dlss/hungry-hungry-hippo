@@ -2,17 +2,21 @@
 
 # Controller for a Work contents (files)
 class ContentsController < ApplicationController
-  # Skipping authorization for now
-  skip_verify_authorized only: %i[show edit update]
   before_action :set_content, only: %i[edit update show]
 
   def show
+    authorize! @content
+
     @content_files = @content.content_files
   end
 
-  def edit; end
+  def edit
+    authorize! @content
+  end
 
   def update
+    authorize! @content
+
     update_files
     respond_to do |format|
       format.turbo_stream
