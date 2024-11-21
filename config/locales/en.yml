@@ -40,6 +40,11 @@ en:
             A detailed statement may improve the discovery of your work in web searches.
         related_content:
           label: 'Related content'
+        related_links:
+          url:
+            label: 'URL'
+          text:
+            label: 'Link text'
         title:
           label: 'Title of deposit'
           help_text: >
