@@ -21,8 +21,8 @@ module MappingFixtures
   end
 
   # No external identifiers
-  def new_content_fixture
-    content = Content.create!
+  def new_content_fixture(user: nil)
+    content = Content.create!(user: user || create(:user))
     ContentFile.create(
       file_type: 'attached',
       content: content,
@@ -36,8 +36,8 @@ module MappingFixtures
     content
   end
 
-  def content_fixture
-    content = Content.create!
+  def content_fixture(user: nil)
+    content = Content.create!(user: user || create(:user))
     ContentFile.create(
       file_type: 'deposited',
       content: content,

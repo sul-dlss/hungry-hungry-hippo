@@ -55,12 +55,19 @@ RSpec.describe 'Edit a work' do
 
     expect(page).to have_css('h1', text: title_fixture)
 
+    find('.nav-link', text: 'Title').click
     expect(page).to have_field('Title of deposit', with: title_fixture)
 
     fill_in('Title of deposit', with: updated_title)
 
-    # Filling in abstract
+    # Testing validation
     find('.nav-link', text: 'Abstract').click
+    fill_in('work_abstract', with: '')
+    find('.nav-link', text: 'Deposit').click
+    click_link_or_button('Deposit')
+    expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+
+    # Filling in abstract
     fill_in('work_abstract', with: updated_abstract)
 
     # Filling in related content

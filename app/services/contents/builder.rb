@@ -7,13 +7,14 @@ module Contents
       new(...).call
     end
 
-    def initialize(cocina_object:)
+    def initialize(cocina_object:, user:)
       @cocina_object = cocina_object
+      @user = user
     end
 
     # @return [Content] the created content
     def call
-      content = Content.create!
+      content = Content.create!(user:)
       content_file_params = content_file_params_for(content:)
       # Adding in groups with insert_all is much faster than individual creates
       content_file_params.in_groups_of(1000, false) do |content_file_params_group|
@@ -24,7 +25,7 @@ module Contents
 
     private
 
-    attr_reader :cocina_object
+    attr_reader :cocina_object, :user
 
     # rubocop:disable Metrics/AbcSize
     def content_file_params_for(content:)

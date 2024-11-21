@@ -21,5 +21,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :contents, only: [:edit, :update, :show]
+
+  resources :content_files, only: [:edit, :update, :destroy, :show]
+
   root to: 'dashboard#show'
 end

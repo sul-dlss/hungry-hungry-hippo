@@ -32,4 +32,12 @@ module IconHelper
   def warning_icon(**)
     icon(icon_classes: 'bi bi-exclamation-triangle-fill', **)
   end
+
+  def delete_icon(**)
+    icon(icon_classes: 'bi bi-trash', **)
+  end
+
+  def edit_icon(**)
+    icon(icon_classes: 'bi bi-pencil', **)
+  end
 end

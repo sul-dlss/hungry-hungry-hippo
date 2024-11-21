@@ -4,8 +4,8 @@
 class WorksController < ApplicationController
   before_action :set_work, only: %i[show edit update]
   before_action :check_deposit_job_started, only: %i[show edit]
-  before_action :set_content, only: %i[edit]
   before_action :set_work_form_from_cocina, only: %i[show edit]
+  before_action :set_content, only: %i[edit]
   before_action :set_status, only: %i[show edit]
 
   def show
@@ -17,8 +17,8 @@ class WorksController < ApplicationController
     # Once collection is being passed, should authorize that the user can create a work in that collection.
     skip_verify_authorized!
 
-    content = Content.create!
-    @work_form = WorkForm.new(collection_id: params[:collection_id], content_id: content.id)
+    @content = Content.create!(user: current_user)
+    @work_form = WorkForm.new(collection_id: params[:collection_id], content_id: @content.id)
 
     render :form
   end
@@ -48,6 +48,7 @@ class WorksController < ApplicationController
       DepositJob.perform_later(work:, work_form: @work_form, deposit: deposit?)
       redirect_to wait_works_path(work.id)
     else
+      @content = Content.find(@work_form.content_id)
       render :form, status: :unprocessable_entity
     end
   end
@@ -62,6 +63,7 @@ class WorksController < ApplicationController
       DepositJob.perform_later(work: @work, work_form: @work_form, deposit: deposit?)
       redirect_to wait_works_path(@work.id)
     else
+      @content = Content.find(@work_form.content_id)
       render :form, status: :unprocessable_entity
     end
   end
@@ -101,8 +103,8 @@ class WorksController < ApplicationController
   end
 
   def set_content
-    # Temporarily setting this to an empty content.
-    @content = Content.new
+    @content = Contents::Builder.call(cocina_object: @cocina_object, user: current_user)
+    @work_form.content_id = @content.id
   end
 
   def editable?

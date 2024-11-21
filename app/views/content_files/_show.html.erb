@@ -1,0 +1,22 @@
+<tr>
+    <td><%= content_file.filename %></td>
+    <td>
+        <%# turbo-frame and tables don't mix well: https://github.com/hotwired/turbo/issues/48 %>
+        <%= turbo_frame_tag content_file do %>
+            <div class="d-flex justify-content-between">
+                <div><%= content_file.label %></div>
+                <div>
+                    <%= render Elements::ButtonLinkComponent.new(link: edit_content_file_path(content_file), variant: :'outline-secondary', size: :sm) do %>
+                        <%= edit_icon %><span class="visually-hidden">Edit</span>
+                    <% end %>
+                </div>
+            </div>
+        <% end %>
+    </td>
+    <td><%= number_to_human_size(content_file.size) %></td>
+    <td>
+        <%= render Elements::ButtonLinkComponent.new(link: content_file_path(content_file), variant: :'outline-secondary', size: :sm, data: { turbo_method: :delete, turbo_frame: dom_id(content_file.content, 'show') }) do %>
+            <%= delete_icon %><span class="visually-hidden">Remove</span>
+        <% end %>
+    </td>
+</tr>

@@ -41,15 +41,21 @@ RSpec.describe 'Create a work deposit' do
     expect(page).to have_css('h1', text: 'Untitled deposit')
 
     # Testing tabs
-    # Title tab is active, abstract is not
-    expect(page).to have_css('.nav-link.active', text: 'Title')
+    # Manage files tab is active, abstract is not
+    expect(page).to have_css('.nav-link.active', text: 'Manage files')
     expect(page).to have_css('.nav-link:not(.active)', text: 'Abstract')
-    # Title pane with form field is visible, abstract is not
-    expect(page).to have_text('Title of deposit')
-    expect(page).to have_field('work_title', type: 'text')
+    # Manage files pane with form field is visible, abstract is not
+    expect(page).to have_css('div.h4', text: 'Manage files')
+    expect(page).to have_field('content_files', type: 'file')
     expect(page).to have_no_text('Describe your deposit')
 
+    # Adding a file
+    attach_file('content_files', 'spec/fixtures/files/hippo.png')
+    click_link_or_button('Upload')
+    expect(page).to have_css('table#content-table td', text: 'hippo.png')
+
     # Filling in title
+    find('.nav-link', text: 'Title').click
     fill_in('work_title', with: title_fixture)
 
     # Clicking on abstract tab
