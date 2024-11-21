@@ -4,6 +4,7 @@
 class WorksController < ApplicationController
   before_action :set_work, only: %i[show edit update]
   before_action :check_deposit_job_started, only: %i[show edit]
+  before_action :set_content, only: %i[edit]
   before_action :set_work_form_from_cocina, only: %i[show edit]
   before_action :set_status, only: %i[show edit]
 
@@ -16,7 +17,8 @@ class WorksController < ApplicationController
     # Once collection is being passed, should authorize that the user can create a work in that collection.
     skip_verify_authorized!
 
-    @work_form = WorkForm.new(collection_id: params[:collection_id])
+    content = Content.create!
+    @work_form = WorkForm.new(collection_id: params[:collection_id], content_id: content.id)
 
     render :form
   end
@@ -98,9 +100,15 @@ class WorksController < ApplicationController
     @status = Sdr::Repository.status(druid: params[:druid])
   end
 
+  def set_content
+    # Temporarily setting this to an empty content.
+    @content = Content.new
+  end
+
   def editable?
     return false unless @status.open? || @status.openable?
 
-    ToWorkForm::RoundtripValidator.roundtrippable?(work_form: @work_form, cocina_object: @cocina_object)
+    ToWorkForm::RoundtripValidator.roundtrippable?(work_form: @work_form, cocina_object: @cocina_object,
+                                                   content: @content)
   end
 end

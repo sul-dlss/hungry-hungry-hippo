@@ -8,8 +8,9 @@ module ToCocina
     end
 
     # @param [WorkForm] work_form
+    # @param [Content] content
     # @param [source_id] source_id
-    def initialize(work_form:, source_id:)
+    def initialize(work_form:, content:, source_id:)
       @work_form = work_form
       @content = content
       @source_id = source_id
@@ -38,7 +39,7 @@ module ToCocina
         access: { view: 'world', download: 'world' },
         identification: { sourceId: source_id },
         administrative: { hasAdminPolicy: Settings.apo },
-        structural: {}
+        structural: ToCocina::StructuralMapper.call(work_form:, content:)
       }.compact
     end
   end

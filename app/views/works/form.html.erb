@@ -11,6 +11,7 @@
       <%= form.hidden_field :lock %>
       <%= form.hidden_field :version %>
       <%= form.hidden_field :collection_id %>
+      <%= form.hidden_field :content_id %>
       <div class="tab-content h-100">
         <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: I18n.t('works.edit.panes.title.label'), form:, selected: true) do %>
           <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, required: true, label: I18n.t('works.edit.fields.title.label'),
