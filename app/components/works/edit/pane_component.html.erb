@@ -12,6 +12,7 @@
                 <% if render_footer? %>
                     <div>
                         <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Save as draft', variant: :'outline-primary') %>
+                        <%= render Works::Edit::NextButtonComponent.new(tab_name:) %>
                     </div>
                 <% end %>
             </div>
