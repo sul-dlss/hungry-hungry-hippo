@@ -64,9 +64,14 @@ en:
           help_text: >
               Be sure you have completed all the required sections. Your deposit may take several hours
               to complete if your filesize is larger than GB.
+        files:
+          tab_label: 'Manage files'
+          label: 'Manage files'
+          list: 'Your files'
         related_content:
           tab_label: 'Related content (optional)'
           label: 'Related content'
         title:
           tab_label: 'Title'
           label: 'Title of deposit'
+      

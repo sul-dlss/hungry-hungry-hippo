@@ -18,6 +18,9 @@ class DepositJob < ApplicationJob
     # connecting and the following broadcast being sent.
     sleep 0.5 if Rails.env.test? # Avoids race condition in tests
     Turbo::StreamsChannel.broadcast_refresh_to 'wait', work.id
+
+    # Content isn't needed anymore
+    content.destroy!
   end
 
   def perform_persist(cocina_object:, update:)

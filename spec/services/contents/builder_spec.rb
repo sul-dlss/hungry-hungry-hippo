@@ -5,9 +5,10 @@ require 'rails_helper'
 RSpec.describe Contents::Builder do
   include MappingFixtures
 
-  subject(:content) { described_class.call(cocina_object: dro_with_structural_fixture) }
+  subject(:content) { described_class.call(cocina_object: dro_with_structural_fixture, user:) }
 
-  let(:expected_content_file) { content_fixture.content_files.first }
+  let(:user) { create(:user) }
+  let(:expected_content_file) { content_fixture(user:).content_files.first }
 
   it 'builds Content and Content Files model objects' do
     expect(content).to be_a(Content)

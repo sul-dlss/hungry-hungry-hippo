@@ -41,8 +41,13 @@ RSpec.describe 'Create a work draft' do
 
     expect(page).to have_css('h1', text: 'Untitled deposit')
 
-    # This shouldn't work because title is required.
+    # Title is required.
+    find('.nav-link', text: 'Title').click
     click_link_or_button('Save as draft')
+
+    # Validation fails for title.
+    expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+    expect(page).to have_css('input.is-invalid#work_title') # rubocop:disable Capybara/SpecificMatcher
 
     # Filling in title
     fill_in('work_title', with: title_fixture)

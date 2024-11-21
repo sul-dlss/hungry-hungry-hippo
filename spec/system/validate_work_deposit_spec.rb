@@ -13,6 +13,7 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('h1', text: 'Untitled deposit')
 
     # Filling in title
+    find('.nav-link', text: 'Title').click
     fill_in('work_title', with: title_fixture)
 
     # Abstract is required for deposit, but skipping.

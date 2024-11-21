@@ -2,7 +2,8 @@
   <%= render Elements::AlertComponent.new(variant: :danger, value: I18n.t('works.edit.errors.validation')) if @work_form.errors.present? %>
   <div class="d-flex tabbable-panes" data-controller="tab-error">
     <div class="nav nav-pills flex-column px-2 py-1 me-5 col-3" role="tablist" aria-orientation="vertical">
-      <%= render Works::Edit::TabComponent.new(label: I18n.t('works.edit.panes.title.tab_label'), tab_name: :title, selected: true) %>
+      <%= render Works::Edit::TabComponent.new(label: I18n.t('works.edit.panes.files.tab_label'), tab_name: :files, selected: true) %>
+      <%= render Works::Edit::TabComponent.new(label: I18n.t('works.edit.panes.title.tab_label'), tab_name: :title) %>
       <%= render Works::Edit::TabComponent.new(label: I18n.t('works.edit.panes.abstract.tab_label'), tab_name: :abstract) %>
       <%= render Works::Edit::TabComponent.new(label: I18n.t('works.edit.panes.related_content.tab_label'), tab_name: :related_content) %>
       <%= render Works::Edit::TabComponent.new(label: I18n.t('works.edit.panes.deposit.tab_label'), tab_name: :deposit) %>
@@ -13,8 +14,18 @@
       <%= form.hidden_field :collection_id %>
       <%= form.hidden_field :content_id %>
       <div class="tab-content h-100">
-        <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: I18n.t('works.edit.panes.title.label'), form:, selected: true) do %>
-          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, required: true, label: I18n.t('works.edit.fields.title.label'),
+        <%= render Works::Edit::PaneComponent.new(tab_name: :files, form:, label: I18n.t('works.edit.panes.files.label'), selected: true) do %>
+          <%= turbo_frame_tag @content, 'edit', src: edit_content_path(@content) do %>
+              <%= render Elements::SpinnerComponent.new %>
+          <% end %>
+          <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
+          <div class="h5 mb-3"><%= t('works.edit.panes.files.list') %></div>
+          <%= turbo_frame_tag @content, 'show', src: content_path(@content) do %>
+              <%= render Elements::SpinnerComponent.new %>
+          <% end %>
+        <% end %>
+        <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: I18n.t('works.edit.panes.title.label'), form:) do %>
+          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('works.edit.fields.title.label'),
                                                              help_text: I18n.t('works.edit.fields.title.help_text')) %>
         <% end %>
         <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, label: I18n.t('works.edit.panes.abstract.label'), form:) do %>
