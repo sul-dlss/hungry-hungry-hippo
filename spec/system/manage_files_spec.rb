@@ -7,6 +7,10 @@ RSpec.describe 'Manage files for a work' do
   let(:collection) { create(:collection, user:) }
 
   before do
+    Kaminari.configure do |config|
+      config.default_per_page = 2
+    end
+
     sign_in(user)
   end
 
@@ -22,22 +26,38 @@ RSpec.describe 'Manage files for a work' do
     click_link_or_button('Upload')
 
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
+    expect(page).to have_no_css('ul.pagination')
 
-    # Add another file
-    attach_file('content_files', 'spec/fixtures/files/hippo.svg')
+    # Add 2 more files
+    attach_file('content_files', ['spec/fixtures/files/hippo.svg', 'spec/fixtures/files/hippo.txt'])
     click_link_or_button('Upload')
 
-    # Now both are listed.
+    # First 2 are listed on page.
+    expect(page).to have_css('ul.pagination')
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
     expect(page).to have_css('table#content-table td', text: 'hippo.svg')
+    expect(page).to have_no_css('table#content-table td', text: 'hippo.txt')
+
+    # Go to the next page
+    click_link_or_button('Next')
+
+    # Third is listed on page.
+    expect(page).to have_no_css('table#content-table td', text: 'hippo.png')
+    expect(page).to have_no_css('table#content-table td', text: 'hippo.svg')
+    expect(page).to have_css('table#content-table td', text: 'hippo.txt')
+
+    # Go back to the first page
+    click_link_or_button('1')
 
     # Delete the first file
+    expect(page).to have_css('table#content-table td', text: 'hippo.png')
     all('a', text: 'Remove').first.click
     expect(page).to have_no_css('table#content-table td', text: 'hippo.png')
     expect(page).to have_css('table#content-table td', text: 'hippo.svg')
+    expect(page).to have_css('table#content-table td', text: 'hippo.txt')
 
     # Edit the description
-    click_link_or_button('Edit')
+    all('a', text: 'Edit').first.click
     fill_in('Description', with: 'This is a hippo.')
     click_link_or_button('Update')
 

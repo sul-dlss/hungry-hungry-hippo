@@ -17,5 +17,6 @@
         <% end %>
       </tbody>
     </table>
+    <%= paginate content_files, params: { controller: 'contents', action: 'show', id: content.id } %>
   <% end %>
 <% end %>
