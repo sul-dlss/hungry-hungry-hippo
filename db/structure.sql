@@ -204,6 +204,7 @@ ALTER SEQUENCE public.content_files_id_seq OWNED BY public.content_files.id;
 
 CREATE TABLE public.contents (
     id bigint NOT NULL,
+    user_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -498,6 +499,13 @@ CREATE UNIQUE INDEX index_content_files_on_content_id_and_filename ON public.con
 
 
 --
+-- Name: index_contents_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_contents_on_user_id ON public.contents USING btree (user_id);
+
+
+--
 -- Name: index_users_on_email_address; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -547,6 +555,14 @@ ALTER TABLE ONLY public.works
 
 ALTER TABLE ONLY public.works
     ADD CONSTRAINT fk_rails_7ea9207fbe FOREIGN KEY (collection_id) REFERENCES public.collections(id);
+
+
+--
+-- Name: contents fk_rails_854287fee7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contents
+    ADD CONSTRAINT fk_rails_854287fee7 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
