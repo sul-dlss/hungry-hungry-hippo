@@ -5,13 +5,14 @@ require 'rails_helper'
 RSpec.describe 'Validate a work deposit' do
   let(:user) { create(:user) }
   let(:collection) { create(:collection, user:) }
+  let(:work_path_with_collection) { new_work_path(collection_id: collection.id) }
 
   before do
     sign_in(user)
   end
 
   it 'validates a work' do
-    visit new_work_path(collection_id: collection.id)
+    visit work_path_with_collection
 
     expect(page).to have_css('h1', text: 'Untitled deposit')
 
@@ -31,7 +32,7 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
     click_link_or_button('Deposit')
     expect(page).to have_css('h1', text: title_fixture)
-    expect(page).to have_current_path(new_work_path)
+    expect(page).to have_current_path(work_path_with_collection)
 
     # Alert
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
@@ -49,7 +50,7 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
     click_link_or_button('Deposit')
     expect(page).to have_css('h1', text: title_fixture)
-    expect(page).to have_current_path(new_work_path(collection_id: collection.id))
+    expect(page).to have_current_path(work_path_with_collection)
 
     # Alert
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
@@ -67,7 +68,7 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
     click_link_or_button('Deposit')
     expect(page).to have_css('h1', text: title_fixture)
-    expect(page).to have_current_path(new_work_path)
+    expect(page).to have_current_path(work_path_with_collection)
 
     # No Alert!
     expect(page).to have_no_css('.alert-danger', text: 'Required fields have not been filled out.')
