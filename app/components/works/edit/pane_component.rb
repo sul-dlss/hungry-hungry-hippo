@@ -14,7 +14,7 @@ module Works
         super()
       end
 
-      attr_reader :tab_name, :next_tab_name, :selected, :label, :form
+      attr_reader :tab_name, :selected, :label, :form
 
       def classes
         merge_classes(%w[tab-pane fade h-100], selected ? 'show active' : nil)
