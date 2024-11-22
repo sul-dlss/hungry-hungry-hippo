@@ -6,11 +6,7 @@ export default class extends Controller {
   show(event) {
     event.preventDefault();
 
-    const tabsOrder = ["title", "abstract", "related_content", "deposit"]
-    const nextTabIndex = tabsOrder.indexOf(this.selectorValue) + 1
-    const nextTab = tabsOrder[nextTabIndex]
-
-    const triggerEl = document.querySelector(`#${nextTab}-tab`)
+    const triggerEl = document.querySelector(`#${this.selectorValue}`)
     bootstrap.Tab.getOrCreateInstance(triggerEl).show()
   }
 }
