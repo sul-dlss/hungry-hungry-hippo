@@ -8,6 +8,7 @@ RSpec.describe DepositWorkJob do
   let(:content) { create(:content) }
 
   before do
+    allow(Contents::Analyzer).to receive(:call)
     allow(ToCocina::Work::Mapper).to receive(:call).and_call_original
     allow(Sdr::Repository).to receive(:accession)
     allow(Turbo::StreamsChannel).to receive(:broadcast_refresh_to)
@@ -23,8 +24,8 @@ RSpec.describe DepositWorkJob do
 
     it 'registers a new work' do
       described_class.perform_now(work_form:, work:, deposit: true)
-      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:,
-                                                                  content:,
+      expect(Contents::Analyzer).to have_received(:call).with(content: content)
+      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:, content:,
                                                                   source_id: "h3:object-#{work.id}")
       expect(Sdr::Repository).to have_received(:register)
         .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO))
@@ -45,8 +46,8 @@ RSpec.describe DepositWorkJob do
 
     it 'updates an existing work' do
       described_class.perform_now(work_form: work_form, work: work, deposit: false)
-      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:,
-                                                                  content:,
+      expect(Contents::Analyzer).to have_received(:call).with(content: content)
+      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:, content:,
                                                                   source_id: "h3:object-#{work.id}")
       expect(Sdr::Repository).to have_received(:open_if_needed)
         .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata))

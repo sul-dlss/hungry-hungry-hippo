@@ -7,6 +7,8 @@ class DepositWorkJob < ApplicationJob
   # @param [Boolean] deposit if true, deposit the work; otherwise, leave as draft
   def perform(work_form:, work:, deposit:)
     content = Content.find(work_form.content_id)
+    # Add missing digests and mime types
+    Contents::Analyzer.call(content: content)
     cocina_object = ToCocina::Work::Mapper.call(work_form:, content:, source_id: "h3:object-#{work.id}")
     new_cocina_object = perform_persist(cocina_object:, update: work_form.persisted?)
     druid = new_cocina_object.externalIdentifier
