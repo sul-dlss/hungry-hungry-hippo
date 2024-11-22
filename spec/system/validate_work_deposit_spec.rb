@@ -37,24 +37,6 @@ RSpec.describe 'Validate a work deposit' do
     # Alert
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
-    # Related content is marked invalid
-    expect(page).to have_css('.nav-link.active', text: 'Related content (optional)')
-    expect(page).to have_css('input.is-invalid#work_related_links_269fc60adb004b0b719031a97aedf5e9_url') # rubocop:disable Capybara/SpecificMatcher
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
-
-    # Make the related link valid
-    fill_in('URL', with: related_links_fixture.first['url'])
-
-    # Try to deposit again
-    find('.nav-link', text: 'Deposit').click
-    expect(page).to have_css('.nav-link.active', text: 'Deposit')
-    click_link_or_button('Deposit')
-    expect(page).to have_css('h1', text: title_fixture)
-    expect(page).to have_current_path(work_path_with_collection)
-
-    # Alert
-    expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
-
     # Abstract is marked invalid
     expect(page).to have_css('.nav-link.active', text: 'Abstract')
     expect(page).to have_css('textarea.is-invalid#work_abstract')
@@ -62,6 +44,15 @@ RSpec.describe 'Validate a work deposit' do
 
     # Make the abstract valid
     fill_in('Abstract', with: abstract_fixture)
+
+    # Related content is marked invalid
+    expect(page).to have_css('.nav-link', text: 'Related content (optional)')
+    find('.nav-link', text: 'Related content (optional)').click
+    expect(page).to have_css('input.is-invalid#work_related_links_269fc60adb004b0b719031a97aedf5e9_url') # rubocop:disable Capybara/SpecificMatcher
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
+
+    # Make the related link valid
+    fill_in('URL', with: related_links_fixture.first['url'])
 
     # Try to deposit again
     find('.nav-link', text: 'Deposit').click

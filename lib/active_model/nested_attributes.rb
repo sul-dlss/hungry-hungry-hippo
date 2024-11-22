@@ -87,7 +87,7 @@ module ActiveModel
 
       def define_validation_methods
         define_method(:valid?) do |*args, **kwargs, &block|
-          nested_models.all? do |nested_model|
+          nested_valid = nested_models.all? do |nested_model|
             next true if nested_model.valid?(*args, **kwargs, &block)
 
             nested_model.errors.each do |error|
@@ -96,7 +96,11 @@ module ActiveModel
             end
 
             false
-          end && super(*args, **kwargs, &block)
+          end
+
+          self_valid = super(*args, **kwargs, &block)
+
+          nested_valid && self_valid
         end
       end
     end
