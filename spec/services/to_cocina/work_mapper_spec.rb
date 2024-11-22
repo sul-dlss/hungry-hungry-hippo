@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe ToCocina::Mapper, type: :mapping do
-  subject(:cocina_object) { described_class.call(form:, content:, source_id: source_id_fixture) }
+RSpec.describe ToCocina::WorkMapper, type: :mapping do
+  subject(:cocina_object) { described_class.call(work_form:, content:, source_id: source_id_fixture) }
 
   let(:content) { content_fixture }
-  let(:form) { work_form_fixture }
+  let(:work_form) { work_form_fixture }
 
   context 'with a new work' do
-    let(:form) { new_work_form_fixture }
+    let(:work_form) { new_work_form_fixture }
     let(:content) { new_content_fixture }
 
     it 'maps to cocina' do

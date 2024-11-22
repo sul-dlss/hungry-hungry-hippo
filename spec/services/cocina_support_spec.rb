@@ -11,6 +11,24 @@ RSpec.describe CocinaSupport do
     end
   end
 
+  describe '#abstract_for' do
+    let(:cocina_object) do
+      build(:dro, title: title_fixture).then do |object|
+        object.new(
+          object
+            .to_h
+            .tap do |obj|
+            obj[:description][:note] = [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)]
+          end
+        )
+      end
+    end
+
+    it 'returns the abstract' do
+      expect(described_class.abstract_for(cocina_object:)).to eq abstract_fixture
+    end
+  end
+
   describe '#related_links_for' do
     context 'when object has related links' do
       let(:cocina_object) do

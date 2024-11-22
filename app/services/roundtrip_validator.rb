@@ -9,12 +9,10 @@ class RoundtripValidator
   # @param [WorkForm, CollectionForm] form: a WorkForm or a CollectionForm
   # @param [Content] content
   # @param [Cocina::Models::DRO, Cocina::Models::Collection] cocina_object
-  # @param [ToWorkForm::Mapper, ToCocina::CollectionMapper] mapper: a mapper for the form
-  def initialize(form:, content:, cocina_object:, mapper:)
+  def initialize(form:, cocina_object:, content: nil)
     @form = form
     @content = content
     @original_cocina_object = cocina_object
-    @mapper = mapper
   end
 
   # @return [Boolean] true if the work form can be converted to a cocina object and back without loss
@@ -36,8 +34,19 @@ class RoundtripValidator
 
   attr_reader :form, :content
 
+  def a_collection?
+    form.is_a?(CollectionForm)
+  end
+
   def roundtripped_cocina_object
-    @mapper.call(form:, content:, source_id: normalized_original_cocina_object.identification&.sourceId)
+    if a_collection?
+      ToCocina::CollectionMapper.call(collection_form: form,
+                                      source_id: normalized_original_cocina_object.identification&.sourceId)
+    else
+      ToCocina::WorkMapper.call(work_form: form,
+                                content:,
+                                source_id: normalized_original_cocina_object.identification&.sourceId)
+    end
   end
 
   def normalized_original_cocina_object

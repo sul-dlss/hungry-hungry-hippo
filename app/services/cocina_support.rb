@@ -6,6 +6,10 @@ class CocinaSupport
     cocina_object.description.title.first.value
   end
 
+  def self.abstract_for(cocina_object:)
+    cocina_object.description.note.find { |note| note.type == 'abstract' }&.value
+  end
+
   def self.related_links_for(cocina_object:) # rubocop:disable Metrics/AbcSize
     return nil if cocina_object.description.relatedResource.blank?
 

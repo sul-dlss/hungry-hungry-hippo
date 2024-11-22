@@ -130,11 +130,12 @@ CREATE TABLE public.ar_internal_metadata (
 
 CREATE TABLE public.collections (
     id bigint NOT NULL,
-    druid character varying NOT NULL,
+    druid character varying,
     title character varying NOT NULL,
     user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    deposit_job_started_at timestamp(6) without time zone
 );
 
 
@@ -595,6 +596,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241122160839'),
 ('20241121122120'),
 ('20241120134012'),
 ('20241120133926'),

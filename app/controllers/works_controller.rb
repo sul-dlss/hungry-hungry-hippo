@@ -43,12 +43,12 @@ class WorksController < ApplicationController
     if @work_form.valid?(deposit: deposit?)
       # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
       # should be "waiting".
-      @work = Work.create!(title: @work_form.title,
-                           user: current_user,
-                           deposit_job_started_at: Time.zone.now,
-                           collection_id: @work_form.collection_id)
-      DepositJob.perform_later(object: @work, form: @work_form, source_id:, deposit: deposit?)
-      redirect_to wait_works_path(@work.id)
+      work = Work.create!(title: @work_form.title,
+                          user: current_user,
+                          deposit_job_started_at: Time.zone.now,
+                          collection_id: @work_form.collection_id)
+      DepositJob.perform_later(object: work, form: @work_form, deposit: deposit?)
+      redirect_to wait_works_path(work.id)
     else
       @content = Content.find(@work_form.content_id)
       render :form, status: :unprocessable_entity
@@ -61,7 +61,7 @@ class WorksController < ApplicationController
     @work_form = WorkForm.new(work_params.merge(druid: params[:druid]))
     # The deposit param determines whether extra validations for deposits are applied.
     if @work_form.valid?(deposit: deposit?)
-      DepositJob.perform_later(object: @work, form: @work_form, source_id:, deposit: deposit?)
+      DepositJob.perform_later(object: @work, form: @work_form, deposit: deposit?)
       redirect_to wait_works_path(@work.id)
     else
       @content = Content.find(@work_form.content_id)
@@ -109,16 +109,9 @@ class WorksController < ApplicationController
     @work_form.content_id = @content.id
   end
 
-  def source_id
-    "h3:object-#{@work.id}"
-  end
-
   def editable?
     return false unless @status.open? || @status.openable?
 
-    RoundtripValidator.roundtrippable?(form: @work_form,
-                                       cocina_object: @cocina_object,
-                                       content: @content,
-                                       mapper: ToCocina::Mapper)
+    RoundtripValidator.roundtrippable?(form: @work_form, cocina_object: @cocina_object, content: @content)
   end
 end

@@ -3,12 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe RoundtripValidator, type: :mapping do
-  subject(:roundtrippable?) { described_class.roundtrippable?(form:, cocina_object:, content:, mapper:) }
+  subject(:roundtrippable?) { described_class.roundtrippable?(form:, cocina_object:, content:) }
 
   context 'when roundtripping a work form' do
     let(:form) { work_form_fixture }
     let(:content) { content_fixture }
-    let(:mapper) { ToCocina::Mapper }
 
     context 'when roundtrippable' do
       let(:cocina_object) { dro_with_structural_and_metadata_fixture }
@@ -29,7 +28,6 @@ RSpec.describe RoundtripValidator, type: :mapping do
 
   context 'when roundtripping a collection form' do
     let(:form) { collection_form_fixture }
-    let(:mapper) { ToCocina::CollectionMapper }
     let(:content) { nil }
 
     context 'when roundtrippable' do
