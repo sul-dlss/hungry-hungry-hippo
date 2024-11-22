@@ -1,5 +1,5 @@
 <%= turbo_frame_tag content, 'show' do %>
-  <% if content_files.empty? && local_assigns[:query].nil? %>
+  <% if content_files.empty? %>
     <%= render Elements::AlertComponent.new(title: 'No files uploaded.', variant: :warning) %>
   <% else %>
     <table class="table table-hover table-sm" id="content-table">

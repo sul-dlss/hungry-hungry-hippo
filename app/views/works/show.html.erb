@@ -2,11 +2,8 @@
 <span class="ms-4 fst-italic status"><%= @status_presenter.status_message %></span>
 <%= render Elements::ButtonLinkComponent.new(link: edit_work_path(@work_form.druid), label: 'Edit or deposit', classes: 'float-end', variant: :'outline-primary') if @status_presenter.editable? %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'files-table', classes: 'table-work mb-5', label: 'Files') do |component| %>
-  <% component.with_header(headers: %w[Filename Description], each_classes: ['col-6']) %>
-  <% @content.content_files.each do |content_file| %>
-    <% component.with_row(values: [content_file.filename, content_file.label]) %>
-  <% end %>
+<%= turbo_frame_tag @content, src: content_path(@content) do %>
+  <%= render Elements::SpinnerComponent.new %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'title-table', classes: 'table-work mb-5', label: 'Title') do |component| %>

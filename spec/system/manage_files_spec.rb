@@ -29,7 +29,10 @@ RSpec.describe 'Manage files for a work' do
     expect(page).to have_no_css('ul.pagination')
 
     # Add 2 more files
-    attach_file('content_files', ['spec/fixtures/files/hippo.svg', 'spec/fixtures/files/hippo.txt'])
+    attach_file('content_files', 'spec/fixtures/files/hippo.svg')
+    click_link_or_button('Upload')
+    expect(page).to have_css('table#content-table td', text: 'hippo.svg')
+    attach_file('content_files', 'spec/fixtures/files/hippo.txt')
     click_link_or_button('Upload')
 
     # First 2 are listed on page.

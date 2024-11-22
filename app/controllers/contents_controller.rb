@@ -8,6 +8,14 @@ class ContentsController < ApplicationController
     authorize! @content
 
     @content_files = @content.content_files.order(filename: :asc).page(params[:page])
+
+    # This can be called from the work edit/update page or the work show page.
+    # If from the show page, render the table.
+    if Rails.application.routes.recognize_path(request.referer)[:action] == 'show'
+      render :show_table
+    else
+      render :show
+    end
   end
 
   def edit
