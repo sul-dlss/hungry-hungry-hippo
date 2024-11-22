@@ -194,6 +194,7 @@ GEM
       nokogiri (~> 1.6)
       zeitwerk (~> 2.1)
     drb (2.2.1)
+    druid-tools (3.0.0)
     dry-core (1.0.2)
       concurrent-ruby (~> 1.0)
       logger
@@ -578,6 +579,7 @@ DEPENDENCIES
   dlss-capistrano
   dor-services-client (>= 15.2.1)
   dor-workflow-client (>= 7.6.1)
+  druid-tools
   erb_lint
   factory_bot_rails
   honeybadger

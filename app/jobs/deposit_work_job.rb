@@ -6,12 +6,16 @@ class DepositWorkJob < ApplicationJob
   # @param [Work] work
   # @param [Boolean] deposit if true, deposit the work; otherwise, leave as draft
   def perform(work_form:, work:, deposit:)
-    content = Content.find(work_form.content_id)
+    @work_form = work_form
+    @work = work
+
     # Add missing digests and mime types
     Contents::Analyzer.call(content: content)
-    cocina_object = ToCocina::Work::Mapper.call(work_form:, content:, source_id: "h3:object-#{work.id}")
-    new_cocina_object = perform_persist(cocina_object:, update: work_form.persisted?)
+    new_cocina_object = perform_persist
     druid = new_cocina_object.externalIdentifier
+
+    Contents::Stager.call(content:, druid:)
+
     Sdr::Repository.accession(druid:) if deposit
 
     # Refresh the wait page. Since the deposit job is finished, this will redirect to the show page.
@@ -25,8 +29,17 @@ class DepositWorkJob < ApplicationJob
     content.destroy!
   end
 
-  def perform_persist(cocina_object:, update:)
-    if update
+  private
+
+  attr_reader :work_form, :work
+
+  def content
+    @content ||= Content.find(work_form.content_id)
+  end
+
+  def perform_persist
+    cocina_object = ToCocina::Work::Mapper.call(work_form:, content:, source_id: "h3:object-#{work.id}")
+    if work_form.persisted?
       Sdr::Repository.open_if_needed(cocina_object:)
                      .then { |cocina_object| Sdr::Repository.update(cocina_object:) }
     else
