@@ -4,9 +4,14 @@ module Elements
   module Tables
     # Component for rendering a table header section.
     class TableHeaderComponent < ApplicationComponent
-      def initialize(classes:, headers: nil)
+      def initialize(headers:, classes: [], each_classes: [])
         @classes = classes
         @headers = headers
+        # Classes to apply to each header cell.
+        # For example, given: ['class1', nil, ['class3']]
+        # The first header cell will have 'class1', the second will have no additional classes,
+        # and the third will have 'class3'.
+        @each_classes = each_classes
         super()
       end
 
@@ -18,6 +23,10 @@ module Elements
 
       def classes
         merge_classes(@classes)
+      end
+
+      def classes_for_header(header_index)
+        merge_classes(@each_classes[header_index])
       end
     end
   end

@@ -1,12 +1,22 @@
 <%= render Elements::HeaderComponent.new(level: :h1, text: @work_form.title, classes: 'mb-4 d-inline-block') %>
 <span class="ms-4 fst-italic status"><%= @status_presenter.status_message %></span>
 <%= render Elements::ButtonLinkComponent.new(link: edit_work_path(@work_form.druid), label: 'Edit or deposit', classes: 'float-end', variant: :'outline-primary') if @status_presenter.editable? %>
+
+<%= render Elements::Tables::TableComponent.new(id: 'files-table', classes: 'table-work mb-5', label: 'Files') do |component| %>
+  <% component.with_header(headers: %w[Filename Description], each_classes: ['col-6']) %>
+  <% @content.content_files.each do |content_file| %>
+    <% component.with_row(values: [content_file.filename, content_file.label]) %>
+  <% end %>
+<% end %>
+
 <%= render Elements::Tables::TableComponent.new(id: 'title-table', classes: 'table-work mb-5', label: 'Title') do |component| %>
   <% component.with_row(label: 'Title', values: [@work_form.title]) %>
 <% end %>
+
 <%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'table-work mb-5', label: 'Description') do |component| %>
   <% component.with_row(label: 'Abstract', values: [@work_form.abstract]) %>
 <% end %>
+
 <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'table-work mb-5', label: 'Related content') do |component| %>
   <% component.with_row(label: 'Related links', values: @work_form.related_links.map { |related_link| link_to(related_link.text || related_link.url, related_link.url) }) %>
 <% end %>

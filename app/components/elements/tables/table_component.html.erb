@@ -2,6 +2,6 @@
   <% if label.present? %>
     <caption><%= label %></caption>
   <% end %>
-  <%= render(Elements::Tables::TableHeaderComponent.new(classes: header_classes, headers: headers)) %>
+  <%= header %>
   <%= render Elements::Tables::TableBodyComponent.new(rows: rows) %>
 <% end %>

@@ -3,15 +3,21 @@
 require 'rails_helper'
 
 RSpec.describe Elements::Tables::TableComponent, type: :component do
-  it 'renders the table' do
-    render_inline(described_class.new(id: 'test-table', classes: 'table table-striped', headers: nil))
-    expect(page).to have_table('test-table')
+  context 'with no rows' do
+    it 'does not render the table' do
+      render_inline(described_class.new(id: 'test-table'))
+
+      expect(page).to have_no_table('test-table')
+    end
   end
 
   context 'with headers' do
     it 'renders the table with headers' do
       render_inline(
-        described_class.new(id: 'test-table', classes: 'table table-striped', headers: ['Header 1', 'Header 2'])
+        described_class.new(id: 'test-table',
+                            classes: 'table table-striped').with_header(headers: [
+                                                                          'Header 1', 'Header 2'
+                                                                        ])
       )
 
       within('table#test-table') do
@@ -26,8 +32,7 @@ RSpec.describe Elements::Tables::TableComponent, type: :component do
   context 'with rows' do
     it 'renders the table with rows' do
       render_inline(
-        described_class.new(id: 'test-table', classes: 'table table-striped',
-                            headers: ['Header 1', 'Header 2']) do |component|
+        described_class.new(id: 'test-table', classes: 'table table-striped') do |component|
           component.with_row(['Row 1', 'Row 2'])
           component.with_row(['Row 3', 'Row 4'])
         end

@@ -1,7 +1,7 @@
 <%= tag.thead class: classes do %>
   <tr>
-  <% headers.each do |header| %>
-    <%= tag.th header %>
+  <% headers.each_with_index do |header, index| %>
+    <%= tag.th header, class: classes_for_header(index) %>
   <% end %>
   </tr>
 <% end %>
