@@ -54,7 +54,7 @@ module ToCocina
         label: content_file.label,
         filename: content_file.filename,
         access: { view: 'world', download: 'world' },
-        administrative: { publish: true, sdrPreserve: true, shelve: true },
+        administrative: { publish: !content_file.hidden?, sdrPreserve: true, shelve: !content_file.hidden? },
         hasMimeType: content_file.mime_type,
         hasMessageDigests: message_digests_for(content_file),
         size: content_file.size,

@@ -36,7 +36,7 @@ module MappingFixtures
     content
   end
 
-  def content_fixture(user: nil)
+  def content_fixture(user: nil, hide: false)
     content = Content.create!(user: user || create(:user))
     ContentFile.create(
       file_type: 'deposited',
@@ -48,7 +48,8 @@ module MappingFixtures
       md5_digest: md5_fixture,
       sha1_digest: sha1_fixture,
       external_identifier: file_external_identifier_fixture,
-      fileset_external_identifier: fileset_external_identifier_fixture
+      fileset_external_identifier: fileset_external_identifier_fixture,
+      hide:
     )
     content
   end
@@ -138,7 +139,7 @@ module MappingFixtures
     )
   end
 
-  def dro_with_structural_fixture
+  def dro_with_structural_fixture(hide: false)
     dro_fixture.new(structural: {
                       contains: [
                         {
@@ -174,9 +175,9 @@ module MappingFixtures
                                   controlledDigitalLending: false
                                 },
                                 administrative: {
-                                  publish: true,
+                                  publish: !hide,
                                   sdrPreserve: true,
-                                  shelve: true
+                                  shelve: !hide
                                 }
                               }
                             ]
@@ -191,8 +192,8 @@ module MappingFixtures
     Cocina::Models.with_metadata(dro_fixture, lock_fixture)
   end
 
-  def dro_with_structural_and_metadata_fixture
-    Cocina::Models.with_metadata(dro_with_structural_fixture, lock_fixture)
+  def dro_with_structural_and_metadata_fixture(**)
+    Cocina::Models.with_metadata(dro_with_structural_fixture(**), lock_fixture)
   end
 
   RSpec.configure do |config|

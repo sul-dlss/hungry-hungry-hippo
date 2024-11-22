@@ -174,7 +174,8 @@ CREATE TABLE public.content_files (
     sha1_digest character varying,
     content_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    hide boolean DEFAULT false NOT NULL
 );
 
 
@@ -595,6 +596,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241122204826'),
 ('20241121122120'),
 ('20241120134012'),
 ('20241120133926'),
