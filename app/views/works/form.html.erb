@@ -14,7 +14,7 @@
       <%= form.hidden_field :collection_id %>
       <%= form.hidden_field :content_id %>
       <div class="tab-content h-100">
-        <%= render Works::Edit::PaneComponent.new(tab_name: :files, next_tab_name: :title, form:, label: I18n.t('works.edit.panes.files.label'), selected: true) do %>
+        <%= render Works::Edit::PaneComponent.new(tab_name: :files, form:, label: I18n.t('works.edit.panes.files.label'), selected: true) do %>
           <%= turbo_frame_tag @content, 'edit', src: edit_content_path(@content) do %>
               <%= render Elements::SpinnerComponent.new %>
           <% end %>
@@ -24,15 +24,15 @@
               <%= render Elements::SpinnerComponent.new %>
           <% end %>
         <% end %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :title, next_tab_name: :abstract, label: I18n.t('works.edit.panes.title.label'), form:) do %>
+        <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: I18n.t('works.edit.panes.title.label'), form:) do %>
           <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('works.edit.fields.title.label'),
                                                              help_text: I18n.t('works.edit.fields.title.help_text')) %>
         <% end %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, next_tab_name: :related_content, label: I18n.t('works.edit.panes.abstract.label'), form:) do %>
+        <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, label: I18n.t('works.edit.panes.abstract.label'), form:) do %>
           <p><%= t('works.edit.fields.abstract.help_text') %></p>
           <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: I18n.t('works.edit.fields.abstract.label')) %>
         <% end %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :related_content, next_tab_name: :deposit, label: I18n.t('works.edit.panes.related_content.label'), form:) do %>
+        <%= render Works::Edit::PaneComponent.new(tab_name: :related_content, label: I18n.t('works.edit.panes.related_content.label'), form:) do %>
           <%= render Elements::Forms::NestedComponent.new(form:, model_class: RelatedLinkForm, field_name: :related_links, form_component: RelatedLinks::EditComponent) %>
         <% end %>
         <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, form:, label: I18n.t('works.edit.panes.deposit.label'), render_footer: false) do %>

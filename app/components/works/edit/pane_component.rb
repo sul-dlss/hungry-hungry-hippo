@@ -4,14 +4,12 @@ module Works
   module Edit
     # Component for a tab pane.
     # Based on https://getbootstrap.com/docs/5.3/components/navs-tabs/#javascript-behavior
-    # rubocop:disable Metrics/ParameterLists
     class PaneComponent < ApplicationComponent
-      def initialize(tab_name:, label:, form:, next_tab_name: nil, selected: false, render_footer: true)
+      def initialize(tab_name:, label:, form:, selected: false, render_footer: true)
         @tab_name = tab_name
         @label = label
         @selected = selected
         @form = form
-        @next_tab_name = next_tab_name
         @render_footer = render_footer
         super()
       end
@@ -30,14 +28,9 @@ module Works
         "#{tab_name}-tab"
       end
 
-      def next_tab_id
-        "#{next_tab_name}-tab"
-      end
-
       def render_footer?
         @render_footer
       end
     end
-    # rubocop:enable Metrics/ParameterLists
   end
 end

@@ -6,7 +6,10 @@ export default class extends Controller {
   show(event) {
     event.preventDefault();
 
-    const triggerEl = document.querySelector(`#${this.selectorValue}`)
-    bootstrap.Tab.getOrCreateInstance(triggerEl).show()
+    // get the current and next tabs
+    const currentTab = document.querySelector(`#${this.selectorValue}`)
+    const nextTab = currentTab.nextElementSibling
+
+    bootstrap.Tab.getOrCreateInstance(nextTab).show()
   }
 }
