@@ -12,7 +12,7 @@ module ToWorkForm
     end
 
     def call
-      WorkForm.new(params)
+      WorkForm.new(**params)
     end
 
     private
@@ -25,7 +25,7 @@ module ToWorkForm
         lock: cocina_object.lock,
         title: CocinaSupport.title_for(cocina_object:),
         abstract: CocinaSupport.abstract_for(cocina_object:),
-        related_links: CocinaSupport.related_links_for(cocina_object:),
+        related_links_attributes: CocinaSupport.related_links_for(cocina_object:),
         version: cocina_object.version
       }
     end

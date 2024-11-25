@@ -38,7 +38,7 @@ class WorksController < ApplicationController
     # Once collection is being passed, should authorize that the user can create a work in that collection.
     skip_verify_authorized!
 
-    @work_form = WorkForm.new(work_params)
+    @work_form = WorkForm.new(**work_params)
     # The deposit param determines whether extra validations for deposits are applied.
     if @work_form.valid?(deposit: deposit?)
       # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
@@ -57,7 +57,7 @@ class WorksController < ApplicationController
   def update
     authorize! @work
 
-    @work_form = WorkForm.new(work_params.merge(druid: params[:druid]))
+    @work_form = WorkForm.new(**update_work_params)
     # The deposit param determines whether extra validations for deposits are applied.
     if @work_form.valid?(deposit: deposit?)
       DepositWorkJob.perform_later(work: @work, work_form: @work_form, deposit: deposit?)
@@ -78,7 +78,11 @@ class WorksController < ApplicationController
   private
 
   def work_params
-    params.expect(work: WorkForm.user_editable_attributes + [WorkForm.nested_attributes_hash])
+    params.expect(work: WorkForm.user_editable_attributes + [WorkForm.nested_attributes])
+  end
+
+  def update_work_params
+    work_params.merge(druid: params[:druid])
   end
 
   def deposit?

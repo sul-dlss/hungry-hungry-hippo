@@ -31,7 +31,9 @@ module ToCocina
           title: CocinaDescriptionSupport.title(title: collection_form.title),
           note: note_params,
           purl: Sdr::Purl.from_druid(druid: collection_form.druid),
-          relatedResource: CocinaDescriptionSupport.related_links(related_links: collection_form.related_links)
+          relatedResource: CocinaDescriptionSupport.related_links(
+            related_links: collection_form.related_links_attributes
+          )
         }.compact
       end
 

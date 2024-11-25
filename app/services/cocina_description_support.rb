@@ -31,6 +31,7 @@ class CocinaDescriptionSupport
     related_links.map do |related_link|
       # NOTE: Sometimes this is an array of hashes and sometimes it's an array of RelatedLinkForm instances
       related_link = related_link.attributes if related_link.respond_to?(:attributes)
+      next if related_link['url'].blank?
 
       {
         access: {
@@ -43,7 +44,7 @@ class CocinaDescriptionSupport
 
         related_link_hash[:title] = [{ value: related_link_text }]
       end
-    end
+    end.compact_blank
   end
 
   # @param forename [String] the forename of the person

@@ -8,7 +8,7 @@ module WorkMappingFixtures
     WorkForm.new(
       title: title_fixture,
       abstract: abstract_fixture,
-      related_links: related_links_fixture
+      related_links_attributes: related_links_fixture
     )
   end
 

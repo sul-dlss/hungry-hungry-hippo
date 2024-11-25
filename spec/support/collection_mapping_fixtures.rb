@@ -6,7 +6,8 @@ module CollectionMappingFixtures
   def new_collection_form_fixture
     CollectionForm.new(
       title: collection_title_fixture,
-      description: collection_description_fixture
+      description: collection_description_fixture,
+      related_links_attributes: related_links_fixture
     )
   end
 
@@ -25,7 +26,8 @@ module CollectionMappingFixtures
         label: collection_title_fixture,
         description: {
           title: CocinaDescriptionSupport.title(title: collection_title_fixture),
-          note: [CocinaDescriptionSupport.note(type: 'abstract', value: collection_description_fixture)]
+          note: [CocinaDescriptionSupport.note(type: 'abstract', value: collection_description_fixture)],
+          relatedResource: CocinaDescriptionSupport.related_links(related_links: related_links_fixture)
         },
         version: 1,
         identification: { sourceId: collection_source_id_fixture },
@@ -44,6 +46,7 @@ module CollectionMappingFixtures
         description: {
           title: CocinaDescriptionSupport.title(title: collection_title_fixture),
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: collection_description_fixture)],
+          relatedResource: CocinaDescriptionSupport.related_links(related_links: related_links_fixture),
           purl: Sdr::Purl.from_druid(druid: collection_druid_fixture)
         },
         version: 2,

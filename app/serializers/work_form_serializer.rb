@@ -8,10 +8,10 @@ class WorkFormSerializer < ActiveJob::Serializers::ObjectSerializer
   end
 
   def serialize(model)
-    super(model.serializable_hash(include: model.class.nested_attributes_hash))
+    super(model.serializable_hash(include: model.class.nested_attributes))
   end
 
   def deserialize(hash)
-    WorkForm.new(hash.except('_aj_serialized'))
+    WorkForm.new(**hash.except('_aj_serialized'))
   end
 end

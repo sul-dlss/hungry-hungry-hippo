@@ -4,10 +4,5 @@
 class RelatedLinkForm < ApplicationForm
   attribute :text, :string
   attribute :url, :string
-  validates :url, presence: true, if: :deposit?
-
-  # Make a fake ID so we can generate array-like form fields.
-  def id
-    Digest::MD5.hexdigest("#{url}#{text}")
-  end
+  validates :url, presence: true, if: :deposit?, unless: ->(link) { link.text.blank? }
 end

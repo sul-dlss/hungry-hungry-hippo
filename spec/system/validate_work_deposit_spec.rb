@@ -48,7 +48,7 @@ RSpec.describe 'Validate a work deposit' do
     # Related content is marked invalid
     expect(page).to have_css('.nav-link', text: 'Related content (optional)')
     find('.nav-link', text: 'Related content (optional)').click
-    expect(page).to have_css('input.is-invalid#work_related_links_269fc60adb004b0b719031a97aedf5e9_url') # rubocop:disable Capybara/SpecificMatcher
+    expect(page).to have_css('input.is-invalid#work_related_links_attributes_0_url') # rubocop:disable Capybara/SpecificMatcher
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
 
     # Make the related link valid

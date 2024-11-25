@@ -1,18 +1,20 @@
-<div class="card my-3">
-  <div class="card-header">
+<fieldset class="my-3" data-controller="nested-form">
+  <legend class="h5">
     <%= header_label %>
-  </div>
-  <% nested_models.each do |nested_model| %>
-    <%= tag.div(class: 'card-body', id: body_id) do %>
-      <ul class="list-group list-group-flush">
-        <%= form.fields_for field_name, nested_model do |nested_form| %>
-          <li class="list-group-item">
-            <%= tag.div do %>
-              <%= render form_component.new(form: nested_form) %>
-            <% end %>
-          </li>
+  </legend>
+  <%= tag.div(class: 'mb-3', data: { nested_form_target: 'container' }) do %>
+    <template data-nested-form-target="template">
+      <%= form.fields_for field_name, model_class.new, child_index: 'NEW_RECORD' do |nested_form| %>
+        <%= tag.div(class: 'mb-3 p-3 border border-3 border-light-subtle border-opacity-75', data: { index: nested_form.options[:child_index], nested_form_target: 'instance' }) do %>
+          <%= render form_component.new(form: nested_form) %>
         <% end %>
-      </ul>
+      <% end %>
+    </template>
+    <%= form.fields_for field_name do |nested_form| %>
+      <%= tag.div(class: 'mb-3 p-3 border border-3 border-light-subtle border-opacity-75', data: { index: nested_form.options[:child_index], nested_form_target: 'instance' }) do %>
+        <%= render form_component.new(form: nested_form) %>
+      <% end %>
     <% end %>
   <% end %>
-</div>
+  <%= render Elements::ButtonComponent.new(label: add_button_label, variant: :'outline-secondary', classes: 'my-4', data: { action: 'click->nested-form#add' }) %>
+</fieldset>
