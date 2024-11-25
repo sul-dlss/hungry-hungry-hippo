@@ -72,8 +72,16 @@ RSpec.describe 'Edit a work' do
 
     # Filling in related content
     find('.nav-link', text: 'Related content (optional)').click
-    fill_in('Link text', with: updated_related_links.first['text'])
-    fill_in('URL', with: updated_related_links.first['url'])
+    fill_in('Link text', with: 'delete')
+    fill_in('URL', with: 'me')
+    # Test adding a new nested field
+    click_link_or_button('+ Add another related link')
+    fill_in('work_related_links_attributes_1_text', with: updated_related_links.first['text'])
+    fill_in('work_related_links_attributes_1_url', with: updated_related_links.first['url'])
+    # Test removing a nested field
+    within('div[data-index="0"]') do
+      find('button[data-action="click->nested-form#delete"]').click
+    end
 
     click_link_or_button('Save as draft')
 
