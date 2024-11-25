@@ -1,6 +1,6 @@
 <%= turbo_stream.replace dom_id(@content, 'show') do %>
-    <%= render partial: 'contents/show', locals: { content: @content, content_files: @content.content_files } %>
+  <%= render partial: 'contents/show', locals: { content: @content, content_files: @content.content_files.page(1) } %>
 <% end %>
 <%= turbo_stream.replace dom_id(@content, 'edit') do %>
-    <%= render partial: 'contents/edit', locals: { content: @content } %>
+  <%= render partial: 'contents/edit', locals: { content: @content } %>
 <% end %>

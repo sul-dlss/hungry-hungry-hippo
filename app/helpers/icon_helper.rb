@@ -40,4 +40,20 @@ module IconHelper
   def edit_icon(**)
     icon(icon_classes: 'bi bi-pencil', **)
   end
+
+  def first_icon(**)
+    icon(icon_classes: 'bi bi-chevron-double-left', **)
+  end
+
+  def last_icon(**)
+    icon(icon_classes: 'bi bi-chevron-double-right', **)
+  end
+
+  def next_icon(**)
+    icon(icon_classes: 'bi bi-chevron-right', **)
+  end
+
+  def previous_icon(**)
+    icon(icon_classes: 'bi bi-chevron-left', **)
+  end
 end

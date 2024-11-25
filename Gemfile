@@ -42,6 +42,7 @@ gem 'bootsnap', require: false
 gem 'action_policy'
 gem 'config'
 gem 'honeybadger'
+gem 'kaminari' # For pagination
 gem 'okcomputer'
 gem 'view_component'
 gem 'whenever', require: false

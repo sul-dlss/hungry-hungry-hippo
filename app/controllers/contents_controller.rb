@@ -7,7 +7,7 @@ class ContentsController < ApplicationController
   def show
     authorize! @content
 
-    @content_files = @content.content_files
+    @content_files = @content.content_files.order(filename: :asc).page(params[:page])
   end
 
   def edit
