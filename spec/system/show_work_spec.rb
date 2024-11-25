@@ -36,7 +36,7 @@ RSpec.describe 'Show a work' do
                                               ],
                                               access: { view: 'world', download: 'world',
                                                         controlledDigitalLending: false },
-                                              administrative: { publish: true, sdrPreserve: true, shelve: true }
+                                              administrative: { publish: false, sdrPreserve: true, shelve: false }
                                             }
                                           ]
                                         }
@@ -133,6 +133,8 @@ RSpec.describe 'Show a work' do
       expect(page).to have_css('td', text: 'My file1')
       expect(page).to have_css('td', text: 'my_file2.txt')
       expect(page).to have_no_css('td', text: 'my_file3.txt')
+      expect(page).to have_css('td', text: 'No')
+      expect(page).to have_css('td', text: 'Yes')
     end
     expect(page).to have_css('ul.pagination')
     click_link_or_button('Next')
