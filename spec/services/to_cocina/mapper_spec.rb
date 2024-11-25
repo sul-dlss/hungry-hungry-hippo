@@ -23,6 +23,14 @@ RSpec.describe ToCocina::Mapper, type: :mapping do
     end
   end
 
+  context 'with a work with a hidden file' do
+    let(:content) { content_fixture(hide: true) }
+
+    it 'maps to cocina' do
+      expect(cocina_object).to equal_cocina(dro_with_structural_and_metadata_fixture(hide: true))
+    end
+  end
+
   context 'with a work with a new file' do
     let(:content) { new_content_fixture }
 

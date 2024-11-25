@@ -6,4 +6,8 @@ class ContentFile < ApplicationRecord
   has_one_attached :file
 
   enum :file_type, attached: 'attached', deposited: 'deposited'
+
+  def hidden?
+    hide
+  end
 end
