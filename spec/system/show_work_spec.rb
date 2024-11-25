@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Show a work', :rack_test do
-  include MappingFixtures
+  include WorkMappingFixtures
 
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }

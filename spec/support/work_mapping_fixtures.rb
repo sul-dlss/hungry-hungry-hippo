@@ -3,7 +3,7 @@
 # Fixtures for mappings.
 # Not using FactoryBot because we want these fixtures to be consistent across tests.
 # rubocop:disable Metrics/ModuleLength
-module MappingFixtures
+module WorkMappingFixtures
   def new_work_form_fixture
     WorkForm.new(
       title: title_fixture,
@@ -197,7 +197,7 @@ module MappingFixtures
   end
 
   RSpec.configure do |config|
-    config.include MappingFixtures, type: :mapping
+    config.include WorkMappingFixtures, type: :mapping
   end
 end
 # rubocop:enable Metrics/ModuleLength

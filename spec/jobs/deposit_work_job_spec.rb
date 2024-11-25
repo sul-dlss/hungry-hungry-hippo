@@ -23,7 +23,9 @@ RSpec.describe DepositWorkJob do
 
     it 'registers a new work' do
       described_class.perform_now(work_form:, work:, deposit: true)
-      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:, content:, source_id: "h3:object-#{work.id}")
+      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:,
+                                                                  content:,
+                                                                  source_id: "h3:object-#{work.id}")
       expect(Sdr::Repository).to have_received(:register)
         .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO))
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
@@ -43,7 +45,9 @@ RSpec.describe DepositWorkJob do
 
     it 'updates an existing work' do
       described_class.perform_now(work_form: work_form, work: work, deposit: false)
-      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:, content:, source_id: "h3:object-#{work.id}")
+      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:,
+                                                                  content:,
+                                                                  source_id: "h3:object-#{work.id}")
       expect(Sdr::Repository).to have_received(:open_if_needed)
         .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata))
       expect(Sdr::Repository).to have_received(:update).with(cocina_object: cocina_object)

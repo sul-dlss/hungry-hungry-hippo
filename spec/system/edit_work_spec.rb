@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Edit a work' do
   # Using mapping fixtures because it provides a roundtrippable DRO.
-  include MappingFixtures
+  include WorkMappingFixtures
 
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }

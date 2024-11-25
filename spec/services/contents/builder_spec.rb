@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Contents::Builder do
-  include MappingFixtures
+  include WorkMappingFixtures
 
   subject(:content) { described_class.call(cocina_object: dro_with_structural_fixture(hide:), user:) }
 

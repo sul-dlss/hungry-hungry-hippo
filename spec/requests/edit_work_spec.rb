@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Edit work' do
-  include MappingFixtures
+  include WorkMappingFixtures
 
   let(:druid) { druid_fixture }
 
