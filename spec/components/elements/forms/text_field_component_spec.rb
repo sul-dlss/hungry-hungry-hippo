@@ -42,4 +42,11 @@ RSpec.describe Elements::Forms::TextFieldComponent, type: :component do
       expect(page).to have_css('div.invalid-feedback.is-invalid', text: 'is required')
     end
   end
+
+  context 'when data is provided' do
+    it 'creates field with data' do
+      render_inline(described_class.new(form:, field_name:, data: { test: 'test_data' }))
+      expect(page).to have_css('input[data-test="test_data"]')
+    end
+  end
 end

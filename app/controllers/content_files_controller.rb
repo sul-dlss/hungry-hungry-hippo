@@ -36,6 +36,6 @@ class ContentFilesController < ApplicationController
   end
 
   def content_file_params
-    params.expect(content_file: [:label])
+    params.expect(content_file: %i[label hide])
   end
 end

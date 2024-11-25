@@ -67,5 +67,12 @@ RSpec.describe 'Manage files for a work' do
     # The description is updated.
     expect(page).to have_css('table#content-table td', text: 'hippo.svg')
     expect(page).to have_css('table#content-table td', text: 'This is a hippo.')
+    content_file = ContentFile.find_by(filename: 'hippo.svg')
+    expect(content_file.label).to eq('This is a hippo.')
+
+    # Hide the file
+    all('input[type=checkbox][name="content_file[hide]"]').first.check
+    expect(page).to have_field('hide', checked: true)
+    expect(content_file.reload.hide).to be true
   end
 end
