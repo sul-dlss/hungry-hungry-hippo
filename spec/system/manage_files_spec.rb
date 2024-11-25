@@ -39,7 +39,7 @@ RSpec.describe 'Manage files for a work' do
     expect(page).to have_no_css('table#content-table td', text: 'hippo.txt')
 
     # Go to the next page
-    click_link_or_button('Next')
+    all('a', text: 'Next', class: 'page-link').first.click
 
     # Third is listed on page.
     expect(page).to have_no_css('table#content-table td', text: 'hippo.png')
