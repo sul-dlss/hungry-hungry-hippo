@@ -27,4 +27,7 @@ class WorkForm < ApplicationForm
 
   attribute :abstract, :string
   validates :abstract, presence: true, if: :deposit?
+
+  attribute :license, :string
+  validates :license, presence: true, if: :deposit?
 end

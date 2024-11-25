@@ -29,6 +29,10 @@ def related_links_fixture
   ]
 end
 
+def license_fixture
+  'https://creativecommons.org/licenses/by/4.0/legalcode'
+end
+
 def filename_fixture
   'my_file.txt'
 end

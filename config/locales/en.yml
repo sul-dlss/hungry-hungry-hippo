@@ -49,6 +49,14 @@ en:
           label: 'Title of deposit'
           help_text: >
             A unique, descriptive title may improve discovery of your work in web searches.
+        license:
+          label: 'License'
+          help_text: Assigning a license may improve discovery of your work in web searches.
+          license_terms_of_use: In addition to the license, the following Terms of Use will also be displayed on your PURL page.
+          terms_of_use: >
+            User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or
+            confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to
+            additional license and use restrictions applied by the depositor.
       errors:
         cannot_be_edited: 'This work cannot be edited.'
         validation: >
@@ -68,6 +76,11 @@ en:
           tab_label: 'Manage files'
           label: 'Manage files'
           list: 'Your files'
+        license:
+          tab_label: 'License'
+          label: 'License'
+          help_text: >
+            More text here.
         related_content:
           tab_label: 'Related content (optional)'
           label: 'Related content'
