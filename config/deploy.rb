@@ -58,3 +58,7 @@ before 'deploy:restart', 'shared_configs:update'
 set :assets_manifests, lambda {
   [release_path.join('public', fetch(:assets_prefix), '.manifest.json')]
 }
+
+# Namespace crontab entries by application and stage
+set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+set :whenever_roles, [:scheduler]

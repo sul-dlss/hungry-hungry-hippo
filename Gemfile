@@ -44,6 +44,7 @@ gem 'config'
 gem 'honeybadger'
 gem 'okcomputer'
 gem 'view_component'
+gem 'whenever', require: false
 
 # DLSS/domain-specific dependencies
 gem 'cocina-models'
