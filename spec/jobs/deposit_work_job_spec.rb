@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe DepositJob do
+RSpec.describe DepositWorkJob do
   let(:druid) { 'druid:bc123df4567' }
   let(:cocina_object) { instance_double(Cocina::Models::DROWithMetadata, externalIdentifier: druid) }
   let(:content) { create(:content) }
 
   before do
-    allow(ToCocina::Mapper).to receive(:call).and_call_original
+    allow(ToCocina::Work::Mapper).to receive(:call).and_call_original
     allow(Sdr::Repository).to receive(:accession)
     allow(Turbo::StreamsChannel).to receive(:broadcast_refresh_to)
   end
@@ -23,7 +23,9 @@ RSpec.describe DepositJob do
 
     it 'registers a new work' do
       described_class.perform_now(work_form:, work:, deposit: true)
-      expect(ToCocina::Mapper).to have_received(:call).with(work_form:, content:, source_id: "h3:object-#{work.id}")
+      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:,
+                                                                  content:,
+                                                                  source_id: "h3:object-#{work.id}")
       expect(Sdr::Repository).to have_received(:register)
         .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO))
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
@@ -43,7 +45,9 @@ RSpec.describe DepositJob do
 
     it 'updates an existing work' do
       described_class.perform_now(work_form: work_form, work: work, deposit: false)
-      expect(ToCocina::Mapper).to have_received(:call).with(work_form:, content:, source_id: "h3:object-#{work.id}")
+      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:,
+                                                                  content:,
+                                                                  source_id: "h3:object-#{work.id}")
       expect(Sdr::Repository).to have_received(:open_if_needed)
         .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata))
       expect(Sdr::Repository).to have_received(:update).with(cocina_object: cocina_object)

@@ -36,7 +36,9 @@ module ToWorkForm
     attr_reader :work_form, :content
 
     def roundtripped_cocina_object
-      ToCocina::Mapper.call(work_form:, content:, source_id: normalized_original_cocina_object.identification&.sourceId)
+      ToCocina::Work::Mapper.call(work_form:,
+                                  content:,
+                                  source_id: normalized_original_cocina_object.identification&.sourceId)
     end
 
     def normalized_original_cocina_object
