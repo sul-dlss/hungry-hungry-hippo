@@ -45,7 +45,7 @@ class WorksController < ApplicationController
       # should be "waiting".
       work = Work.create!(title: @work_form.title, user: current_user, deposit_job_started_at: Time.zone.now,
                           collection_id: @work_form.collection_id)
-      DepositJob.perform_later(work:, work_form: @work_form, deposit: deposit?)
+      DepositWorkJob.perform_later(work:, work_form: @work_form, deposit: deposit?)
       redirect_to wait_works_path(work.id)
     else
       @content = Content.find(@work_form.content_id)
@@ -60,7 +60,7 @@ class WorksController < ApplicationController
     @work_form = WorkForm.new(work_params.merge(druid: params[:druid]))
     # The deposit param determines whether extra validations for deposits are applied.
     if @work_form.valid?(deposit: deposit?)
-      DepositJob.perform_later(work: @work, work_form: @work_form, deposit: deposit?)
+      DepositWorkJob.perform_later(work: @work, work_form: @work_form, deposit: deposit?)
       redirect_to wait_works_path(@work.id)
     else
       @content = Content.find(@work_form.content_id)
