@@ -47,4 +47,30 @@ RSpec.describe CocinaSupport do
       end
     end
   end
+
+  describe '#abstract_for' do
+    let(:cocina_object) do
+      # NOTE: the :dro factory in the cocina-models gem does not have a seam
+      #       for injecting abstract, so we do it manually here
+      build(:dro, title: title_fixture).then do |object|
+        object.new(
+          object
+          .to_h
+          .tap do |obj|
+            obj[:description][:note] =
+              [
+                {
+                  type: 'abstract',
+                  value: abstract_fixture
+                }
+              ]
+          end
+        )
+      end
+    end
+
+    it 'returns the abstract' do
+      expect(described_class.abstract_for(cocina_object:)).to eq abstract_fixture
+    end
+  end
 end

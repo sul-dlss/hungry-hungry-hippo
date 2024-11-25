@@ -16,6 +16,10 @@ class CocinaSupport
     end.presence
   end
 
+  def self.abstract_for(cocina_object:)
+    cocina_object.description.note.find { |note| note.type == 'abstract' }&.value
+  end
+
   def self.pretty(cocina_object:)
     JSON.pretty_generate(clean(cocina_object.to_h))
   end
