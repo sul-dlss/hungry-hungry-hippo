@@ -13,13 +13,13 @@ RSpec.describe WorkFormSerializer do
       'version' => 1,
       'lock' => nil,
       'abstract' => abstract_fixture,
-      'related_links' => related_links_fixture,
+      'related_links_attributes' => related_links_fixture,
       'content_id' => 5
     }
   end
   let(:work_form) do
     WorkForm.new(title: title_fixture, druid:, collection_id: 1, abstract: abstract_fixture,
-                 related_links: related_links_fixture, content_id: 5)
+                 related_links_attributes: related_links_fixture, content_id: 5)
   end
 
   describe '.serialize?' do
@@ -44,7 +44,7 @@ RSpec.describe WorkFormSerializer do
 
   describe '.deserialize' do
     it 'deserializes a Work Form' do
-      expect(described_class.deserialize(serialized_form).attributes).to eq(work_form.attributes)
+      expect(described_class.deserialize(serialized_form)).to equal_form(work_form)
     end
   end
 end

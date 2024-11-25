@@ -77,32 +77,34 @@ RSpec.describe ApplicationForm do
       stub_const('GadgetForm', gadget_form_class)
     end
 
-    %i[widgets gadgets].each do |model|
-      it 'defines an instance getter that defaults to an empty array' do
-        expect(form_instance.public_send(model)).to eq([])
+    %i[widgets_attributes gadgets_attributes].each do |model|
+      it 'defines an instance getter that defaults to an array with an empty form object' do
+        expect(form_instance.public_send(model)).to contain_exactly(
+          instance_of(
+            model.to_s.delete_suffix('_attributes').classify.concat(described_class::FORM_CLASS_SUFFIX).constantize
+          )
+        )
       end
 
       it 'defines an instance setter that can take a hash argument' do
         form_instance.public_send(:"#{model}=", { 'fake_id_here' => { 'fake_attr' => 'real_value' } })
-        expect(form_instance.public_send(model)).to contain_exactly(
-          instance_of(model.to_s.classify.concat(described_class::FORM_CLASS_SUFFIX).constantize)
-        )
+
+        expect(form_instance.public_send(model).map(&:fake_attr)).to eq(['real_value'])
       end
 
       it 'defines an instance setter that can take an array argument' do
         form_instance.public_send(:"#{model}=", [{ 'fake_attr' => 'real_value' }])
-        expect(form_instance.public_send(model)).to contain_exactly(
-          instance_of(model.to_s.classify.concat(described_class::FORM_CLASS_SUFFIX).constantize)
-        )
+
+        expect(form_instance.public_send(model).map(&:fake_attr)).to eq(['real_value'])
       end
     end
 
     it 'overrides the instance-level attributes method to include nested attributes' do
-      expect(form_instance.attributes.keys).to contain_exactly('foo', 'widgets', 'gadgets')
+      expect(form_instance.attributes.keys).to contain_exactly('foo', 'widgets_attributes', 'gadgets_attributes')
     end
 
-    it 'defines a class-level nested_attributes_hash method that returns nested attribute names' do
-      expect(TestForm.nested_attributes_hash).to eq({ widgets: {}, gadgets: {} })
+    it 'defines a class-level nested_attributes method that returns nested attribute names' do
+      expect(TestForm.nested_attributes).to eq({ widgets_attributes: {}, gadgets_attributes: {} })
     end
   end
 end

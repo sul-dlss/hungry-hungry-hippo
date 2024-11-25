@@ -7,37 +7,19 @@ module Elements
       def initialize(form:, model_class:, field_name:, form_component:)
         @form = form
         @model_class = model_class
-        @field_name = field_name.to_s
+        @field_name = field_name
         @form_component = form_component
         super()
       end
 
-      attr_reader :form, :model_class, :form_component
+      attr_reader :form, :model_class, :field_name, :form_component
 
-      def nested_models
-        return [model_class.new] if (existing_models = form.object.public_send(@field_name)).empty?
-
-        existing_models
-      end
-
-      def body_id
-        "card-body-#{@field_name}"
+      def add_button_label
+        "+ Add another #{model_class.model_name.singular.humanize(capitalize: false)}"
       end
 
       def header_label
         model_class.model_name.plural.humanize
-      end
-
-      # Return the field name with empty square brackets to mimic nested attributes for
-      # ActiveModel models if field_name is plural
-      def field_name
-        (plural_field_name? ? "#{@field_name}[]" : @field_name).to_sym
-      end
-
-      private
-
-      def plural_field_name?
-        @field_name == @field_name.pluralize
       end
     end
   end

@@ -13,94 +13,73 @@ module ActiveModel
     class_methods do
       # NOTE: Options have NOT yet been implemented! (e.g., `allow_destroy`)
       def accepts_nested_attributes_for(*models, **_options)
-        define_getters_for_nested_models(models)
-        define_setters_for_nested_models(models)
-        allow_reflection_on_nested_models(models)
-        allow_serialization_of_nested_models(models)
-        define_convenience_methods
-        define_validation_methods
+        define_attribute_types_for(models)
+        define_attributes_for(models)
+        define_getters_for(models)
+        define_validation_for(models)
+        allow_reflection_on(models)
       end
 
       private
 
-      def define_getters_for_nested_models(models)
-        # For each nested attribute, define a getter
+      def define_attribute_types_for(models) # rubocop:disable Metrics/AbcSize
         models.each do |model|
-          # Each nested attribute needs a getter for ActiveModel::Serialization to include it in its related model.
-          define_method(:"#{model}") do
-            # Default the instance variable to an empty array so we can append to it below.
-            instance_variable_get(:"@#{model}") || []
-          end
-        end
-      end
+          next if const_defined?(model.to_s.classify.concat('Type'))
 
-      def define_setters_for_nested_models(models)
-        # For each nested attribute, define a setter
-        models.each do |model|
-          # This is invoked by both the form submission, which supplies a hash argument with each key being a bogus ID,
-          # or by the deposit job which uses ActiveModel::Serialization to automagically handle the nested
-          # attribute, in which case it lacks the bogus IDs and is an array. We like the automagicks, so we
-          # deal with both cases here.
-          define_method(:"#{model}=") do |attributes_hash_or_list|
-            # Default the instance variable to an empty array so we can append to it below.
-            instance_variable_set(:"@#{model}", instance_variable_get(:"@#{model}") || [])
-
-            # The key in `attributes_hash_or_list`, if a hash, is a throw-away ID, so ignore it.
-            Array.wrap(attributes_hash_or_list.try(:values) || attributes_hash_or_list).each do |attributes|
-              instance_variable_get(:"@#{model}").push(
-                # This chain of operations converts nested attributes symbols to related form classes,
-                # e.g., :related_links => RelatedLinkForm
-                model.to_s.classify.concat('Form').constantize.new(attributes)
-              )
+          # For a :related_links attr, define a custom RelatedLinksType to be used in the `attribute` call below
+          const_set(
+            model.to_s.classify.concat('Type'),
+            Class.new(ActiveModel::Type::Value) do
+              # Defining `#cast` on an ActiveModel type tells it how to deserialize,
+              # e.g., from a hash or an array of hashes to RelatedLinkForm instances
+              define_method(:cast) do |attributes_hash_or_list|
+                # The key in `attributes_hash_or_list`, if a hash, is a throw-away ID, so ignore it.
+                Array.wrap(attributes_hash_or_list.try(:values) || attributes_hash_or_list).map do |attributes|
+                  # This chain of operations converts nested attributes symbols to related form classes,
+                  # e.g., :related_links => RelatedLinkForm
+                  model.to_s.classify.concat('Form').constantize.new(**attributes)
+                end
+              end
             end
+          )
+        end
+      end
+
+      def define_attributes_for(models)
+        models.each do |model|
+          attribute :"#{model}_attributes", const_get(model.to_s.classify.concat('Type')).new,
+                    array: true, default: -> { [{}] }
+        end
+      end
+
+      def define_getters_for(models)
+        models.each do |model|
+          # Each nested attribute needs a getter for the form helper to recognize it as a nested attribute
+          define_method(:"#{model}") do
+            # Return the attribute set up immediately above
+            public_send(:"#{model}_attributes")
           end
         end
       end
 
-      def allow_reflection_on_nested_models(models)
+      def define_validation_for(models)
+        define_method(:valid?) do |*args, **kwargs, &block|
+          self_valid = super(*args, **kwargs, &block)
+
+          nested_valid = models.all? do |nested_model_name|
+            public_send(nested_model_name).map { |nested_model| nested_model.valid?(*args, **kwargs, &block) }.all?
+          end
+
+          self_valid && nested_valid
+        end
+      end
+
+      def allow_reflection_on(models)
         # Allow reflection on all the nested attributes within a class. This defines
         # a method on the form class itself that reduces copypasta in other places, e.g.,
         # param validation in controllers.
-        singleton_class.define_method(:nested_attributes_hash) do
-          models.index_with { {} }
-        end
-      end
-
-      def allow_serialization_of_nested_models(models)
-        # Allows serialization of the form using ActiveModel::Serialization
-        define_method(:attributes) do
-          # Keys *must* be strings
-          super().merge(models.to_h { |attr| [attr.to_s, public_send(attr).map(&:attributes)] })
-        end
-      end
-
-      def define_convenience_methods
-        # Facilitates validation of nested attributes
-        define_method(:nested_models) do
-          self
-            .class
-            .nested_attributes_hash
-            .keys
-            .flat_map { |nested_attr| public_send(nested_attr) }
-        end
-      end
-
-      def define_validation_methods
-        define_method(:valid?) do |*args, **kwargs, &block|
-          nested_valid = nested_models.all? do |nested_model|
-            next true if nested_model.valid?(*args, **kwargs, &block)
-
-            nested_model.errors.each do |error|
-              errors.add("#{nested_model.model_name.plural}.#{nested_models.index(nested_model)}.#{error.attribute}",
-                         error.message)
-            end
-
-            false
-          end
-
-          self_valid = super(*args, **kwargs, &block)
-
-          nested_valid && self_valid
+        singleton_class.define_method(:nested_attributes) do
+          models.to_h { |model| [:"#{model}_attributes", {}] }
         end
       end
     end
