@@ -21,6 +21,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :collections, only: [:new, :create, :show, :edit, :update], param: :druid do
+    resources :works, only: [:index]
+    collection do
+      get 'wait/:id', to: 'collections#wait', as: 'wait'
+    end
+  end
+
   resources :contents, only: [:edit, :update, :show]
 
   resources :content_files, only: [:edit, :update, :destroy, :show]
