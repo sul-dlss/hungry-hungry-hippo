@@ -1,6 +1,6 @@
 <%= turbo_frame_tag content, 'edit' do %>
-    <%= form_with model: content do |form| %>
-        <%= render Elements::Forms::FileFieldComponent.new(field_name: :files, form:, label: 'Upload more files', required: true) %>
-        <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Upload', classes: 'mt-2') %>
+    <%= form_with model: content, data: { controller: 'dropzone' }, id: 'file-dropzone', class: 'dropzone' do |form| %>
+        <%= render Elements::ProgressBarComponent.new(label: 'Upload progress', classes: 'd-none', data: { dropzone_target: 'progress' }) %>
     <% end %>
+
 <% end %>

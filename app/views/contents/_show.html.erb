@@ -1,4 +1,5 @@
 <%= turbo_frame_tag content, 'show' do %>
+  <% content_files ||= content.content_files.page(1) %>
   <% if content_files.empty? %>
     <%= render Elements::AlertComponent.new(title: 'No files uploaded.', variant: :warning) %>
   <% else %>

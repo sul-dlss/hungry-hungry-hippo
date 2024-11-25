@@ -26,9 +26,12 @@ class ContentsController < ApplicationController
     authorize! @content
 
     update_files
-    respond_to do |format|
-      format.turbo_stream
-    end
+
+    # Broadcast the update to the content
+    Turbo::StreamsChannel.broadcast_update_later_to @content, target: 'content-files', partial: 'contents/show',
+                                                              locals: { content: @content }
+
+    head :ok
   end
 
   private
@@ -44,10 +47,10 @@ class ContentsController < ApplicationController
   end
 
   def update_files
-    files = params[:content][:files].compact_blank
-    files.each do |file|
-      content_file = ContentFile.create!(content: @content, filename: filename_for(file), file_type: :attached,
-                                         size: file.size, label: file.original_filename)
+    files = params[:content][:files]
+    files.each_value do |file|
+      content_file = ContentFile.create_with(file_type: :attached, size: file.size, label: file.original_filename)
+                                .find_or_create_by!(content: @content, filename: filename_for(file))
       content_file.file.attach(file)
     end
   end
