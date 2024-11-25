@@ -2,14 +2,105 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Show a work', :rack_test do
+RSpec.describe 'Show a work' do
   include WorkMappingFixtures
 
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
   let(:collection) { create(:collection, user:) }
   let!(:work) { create(:work, druid: druid, title: title_fixture, collection:, user:) }
-  let(:cocina_object) { dro_with_structural_and_metadata_fixture }
+  # Need multiple files to test pagination
+  let(:cocina_object) do
+    dro_with_metadata_fixture.new(structural: {
+                                    contains: [
+                                      {
+                                        type: 'https://cocina.sul.stanford.edu/models/resources/file',
+                                        externalIdentifier: 'https://cocina.sul.stanford.edu/fileSet/kb185hz2713-f6bafda8-5719-4f77-bd76-02aaa542de74',
+                                        label: 'My file',
+                                        version: 2,
+                                        structural: {
+                                          contains: [
+                                            {
+                                              type: 'https://cocina.sul.stanford.edu/models/file',
+                                              externalIdentifier: 'https://cocina.sul.stanford.edu/file/kb185hz2713-f6bafda8-5719-4f77-bd76-02aaa542de74/my_file1.text',
+                                              label: 'My file1',
+                                              filename: 'my_file1.txt',
+                                              size: 204_615,
+                                              version: 2,
+                                              hasMimeType: 'text/plain',
+                                              sdrGeneratedText: false,
+                                              correctedForAccessibility: false,
+                                              hasMessageDigests: [
+                                                { type: 'md5', digest: '46b763ec34319caa5c1ed090aca46ef2' },
+                                                { type: 'sha1', digest: 'd4f94915b4c6a3f652ee7de8aae9bcf2c37d93ea' }
+                                              ],
+                                              access: { view: 'world', download: 'world',
+                                                        controlledDigitalLending: false },
+                                              administrative: { publish: true, sdrPreserve: true, shelve: true }
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      {
+                                        type: 'https://cocina.sul.stanford.edu/models/resources/file',
+                                        externalIdentifier: 'https://cocina.sul.stanford.edu/fileSet/lb185hz2713-f6bafda8-5719-4f77-bd76-02aaa542de74',
+                                        label: 'My file2',
+                                        version: 2,
+                                        structural: {
+                                          contains: [
+                                            {
+                                              type: 'https://cocina.sul.stanford.edu/models/file',
+                                              externalIdentifier: 'https://cocina.sul.stanford.edu/file/lb185hz2713-f6bafda8-5719-4f77-bd76-02aaa542de74/my_file2.text',
+                                              label: 'My file2',
+                                              filename: 'my_file2.txt',
+                                              size: 204_615,
+                                              version: 2,
+                                              hasMimeType: 'text/plain',
+                                              sdrGeneratedText: false,
+                                              correctedForAccessibility: false,
+                                              hasMessageDigests: [
+                                                { type: 'md5', digest: '46b763ec34319caa5c1ed090aca46ef2' },
+                                                { type: 'sha1', digest: 'd4f94915b4c6a3f652ee7de8aae9bcf2c37d93ea' }
+                                              ],
+                                              access: { view: 'world', download: 'world',
+                                                        controlledDigitalLending: false },
+                                              administrative: { publish: true, sdrPreserve: true, shelve: true }
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      {
+                                        type: 'https://cocina.sul.stanford.edu/models/resources/file',
+                                        externalIdentifier: 'https://cocina.sul.stanford.edu/fileSet/mb185hz2713-f6bafda8-5719-4f77-bd76-02aaa542de74',
+                                        label: 'My file2',
+                                        version: 2,
+                                        structural: {
+                                          contains: [
+                                            {
+                                              type: 'https://cocina.sul.stanford.edu/models/file',
+                                              externalIdentifier: 'https://cocina.sul.stanford.edu/file/mb185hz2713-f6bafda8-5719-4f77-bd76-02aaa542de74/my_file2.text',
+                                              label: 'My file3',
+                                              filename: 'my_file3.txt',
+                                              size: 204_615,
+                                              version: 2,
+                                              hasMimeType: 'text/plain',
+                                              sdrGeneratedText: false,
+                                              correctedForAccessibility: false,
+                                              hasMessageDigests: [
+                                                { type: 'md5', digest: '46b763ec34319caa5c1ed090aca46ef2' },
+                                                { type: 'sha1', digest: 'd4f94915b4c6a3f652ee7de8aae9bcf2c37d93ea' }
+                                              ],
+                                              access: { view: 'world', download: 'world',
+                                                        controlledDigitalLending: false },
+                                              administrative: { publish: true, sdrPreserve: true, shelve: true }
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    isMemberOf: []
+                                  })
+  end
   let(:version_status) do
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
                                                                          openable?: true, accessioning?: false)
@@ -19,10 +110,14 @@ RSpec.describe 'Show a work', :rack_test do
     allow(Sdr::Repository).to receive(:find).with(druid: druid).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid: druid).and_return(version_status)
 
+    Kaminari.configure do |config|
+      config.default_per_page = 2
+    end
+
     sign_in(user)
   end
 
-  it 'creates a work draft' do
+  it 'shows a work' do
     visit work_path(druid)
 
     expect(page).to have_css('h1', text: work.title)
@@ -34,7 +129,16 @@ RSpec.describe 'Show a work', :rack_test do
       expect(page).to have_css('caption', text: 'Files')
       expect(page).to have_css('th', text: 'Filename')
       expect(page).to have_css('th', text: 'Description')
-      expect(page).to have_css('td', text: filename_fixture)
+      expect(page).to have_css('td', text: 'my_file1.txt')
+      expect(page).to have_css('td', text: 'My file1')
+      expect(page).to have_css('td', text: 'my_file2.txt')
+      expect(page).to have_no_css('td', text: 'my_file3.txt')
+    end
+    expect(page).to have_css('ul.pagination')
+    click_link_or_button('Next')
+    within('table#files-table') do
+      expect(page).to have_css('td', text: 'my_file3.txt')
+      expect(page).to have_no_css('td', text: 'my_file1.txt')
     end
 
     # Title table
