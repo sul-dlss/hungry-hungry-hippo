@@ -2,7 +2,7 @@
 <span class="ms-4 fst-italic status"><%= @status_presenter.status_message %></span>
 <%= render Elements::ButtonLinkComponent.new(link: edit_work_path(@work_form.druid), label: 'Edit or deposit', classes: 'float-end', variant: :'outline-primary') if @status_presenter.editable? %>
 
-<%= turbo_frame_tag @content, src: content_path(@content) do %>
+<%= turbo_frame_tag @content, src: show_table_content_path(@content) do %>
   <%= render Elements::SpinnerComponent.new %>
 <% end %>
 

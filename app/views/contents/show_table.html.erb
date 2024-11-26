@@ -6,6 +6,6 @@
     <% end %>
   <% end %>
   <div class="mb-5">
-    <%= paginate @content_files, params: { controller: 'contents', action: 'show', id: @content.id } %>
+    <%= paginate @content_files, params: { controller: 'contents', action: 'show_table', id: @content.id } %>
   </div>
 <% end %>
