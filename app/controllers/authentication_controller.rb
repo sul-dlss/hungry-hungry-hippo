@@ -4,6 +4,7 @@
 class AuthenticationController < ApplicationController
   allow_unauthenticated_access only: %i[login]
   skip_verify_authorized only: %i[login logout]
+  skip_after_action :verify_authorized, if: :mission_control?
 
   # See Authentication concern for the methods used below.
 
@@ -16,5 +17,9 @@ class AuthenticationController < ApplicationController
     terminate_session
 
     redirect_to SHIBBOLETH_LOGOUT_PATH
+  end
+
+  def mission_control?
+    is_a?(::MissionControl::Jobs::ApplicationController)
   end
 end

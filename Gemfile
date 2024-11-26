@@ -28,6 +28,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'tzinfo-data', platforms: %i[windows jruby]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+gem 'mission_control-jobs' # Rails-based frontend to Active Job adapters that support SolidQueue
 gem 'solid_cable'
 gem 'solid_cache'
 gem 'solid_queue'

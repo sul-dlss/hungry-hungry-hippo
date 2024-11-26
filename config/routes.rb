@@ -26,4 +26,6 @@ Rails.application.routes.draw do
   resources :content_files, only: [:edit, :update, :destroy, :show]
 
   root to: 'dashboard#show'
+
+  mount MissionControl::Jobs::Engine, at: "/jobs"
 end
