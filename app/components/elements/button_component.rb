@@ -3,7 +3,7 @@
 module Elements
   # Generic button component
   class ButtonComponent < ViewComponent::Base
-    def initialize(label:, classes: [], variant: nil, size: nil, **options)
+    def initialize(label: nil, classes: [], variant: nil, size: nil, **options)
       @label = label
       @classes = classes
       @variant = variant
@@ -20,7 +20,7 @@ module Elements
         type: 'button',
         **options
       ) do
-        label
+        label || content
       end
     end
   end

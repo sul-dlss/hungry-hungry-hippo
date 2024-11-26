@@ -12,7 +12,8 @@ module ActiveModel
 
     class_methods do
       # NOTE: Options have NOT yet been implemented! (e.g., `allow_destroy`)
-      def accepts_nested_attributes_for(*models, **_options)
+      def accepts_nested_attributes_for(*models, **options)
+        validate_options!(options)
         define_attribute_types_for(models)
         define_attributes_for(models)
         define_getters_for(models)
@@ -21,6 +22,11 @@ module ActiveModel
       end
 
       private
+
+      def validate_options!(options)
+        opts = { allow_destroy: true }.merge(options)
+        opts.assert_valid_keys(:allow_destroy)
+      end
 
       def define_attribute_types_for(models) # rubocop:disable Metrics/AbcSize
         models.each do |model|

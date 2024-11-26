@@ -1,18 +1,32 @@
-<fieldset class="my-3" data-controller="nested-form">
+<fieldset class="my-3" data-controller="nested-form" data-nested-form-selector-value=".row">
   <legend class="h5">
     <%= header_label %>
   </legend>
-  <%= tag.div(class: 'mb-3', data: { nested_form_target: 'container' }) do %>
+  <%= tag.div(class: 'mb-3 container', data: { nested_form_target: 'container' }) do %>
     <template data-nested-form-target="template">
       <%= form.fields_for field_name, model_class.new, child_index: 'NEW_RECORD' do |nested_form| %>
-        <%= tag.div(class: 'mb-3 p-3 border border-3 border-light-subtle border-opacity-75', data: { index: nested_form.options[:child_index], nested_form_target: 'instance' }) do %>
-          <%= render form_component.new(form: nested_form) %>
+        <%= tag.div(class: 'mb-3 p-3 border border-3 border-light-subtle border-opacity-75 row', data: { index: nested_form.options[:child_index], nested_form_target: 'instance' }) do %>
+          <div class="col">
+            <%= render form_component.new(form: nested_form) %>
+          </div>
+          <div class="col-md-auto">
+            <%= render Elements::ButtonComponent.new(classes: 'border border-0 float-end', size: :lg, data: { action: 'click->nested-form#delete' }) do %>
+              <i class="bi bi-trash"></i>
+            <% end %>
+          </div>
         <% end %>
       <% end %>
     </template>
     <%= form.fields_for field_name do |nested_form| %>
-      <%= tag.div(class: 'mb-3 p-3 border border-3 border-light-subtle border-opacity-75', data: { index: nested_form.options[:child_index], nested_form_target: 'instance' }) do %>
-        <%= render form_component.new(form: nested_form) %>
+      <%= tag.div(class: 'mb-3 p-3 border border-3 border-light-subtle border-opacity-75 row', data: { index: nested_form.options[:child_index], nested_form_target: 'instance' }) do %>
+        <div class="col">
+          <%= render form_component.new(form: nested_form) %>
+        </div>
+        <div class="col-md-auto">
+          <%= render Elements::ButtonComponent.new(classes: 'border border-0 float-end', size: :lg, data: { action: 'click->nested-form#delete' }) do %>
+            <%= helpers.delete_icon %>
+          <% end %>
+        </div>
       <% end %>
     <% end %>
   <% end %>

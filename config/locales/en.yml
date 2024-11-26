@@ -30,6 +30,13 @@
 en:
   errors:
     not_authorized: 'You are not authorized to perform the requested action.'
+  related_links:
+    edit:
+      fields:
+        url:
+          label: 'URL'
+        text:
+          label: 'Link text'
   works:
     edit:
       fields:
@@ -38,13 +45,6 @@ en:
           help_text: >
             Enter a summary statement (max 600 words) describing the work that you are depositing.
             A detailed statement may improve the discovery of your work in web searches.
-        related_content:
-          label: 'Related content'
-        related_links:
-          url:
-            label: 'URL'
-          text:
-            label: 'Link text'
         title:
           label: 'Title of deposit'
           help_text: >
@@ -74,4 +74,3 @@ en:
         title:
           tab_label: 'Title'
           label: 'Title of deposit'
-      
