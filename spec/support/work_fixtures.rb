@@ -33,6 +33,10 @@ def license_fixture
   'https://creativecommons.org/licenses/by/4.0/legalcode'
 end
 
+def license_label_fixture
+  'CC-BY-4.0'
+end
+
 def filename_fixture
   'my_file.txt'
 end
