@@ -76,6 +76,13 @@ RSpec.describe 'Create a work deposit' do
     fill_in('Link text', with: related_links_fixture.first['text'])
     fill_in('URL', with: related_links_fixture.first['url'])
 
+    # Clicking on Next to go to license tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'License')
+
+    # Selecting license
+    select('CC-BY-4.0 Attribution International', from: 'work_license')
+
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
     find('.nav-link', text: 'Deposit').click

@@ -8,7 +8,8 @@ module WorkMappingFixtures
     WorkForm.new(
       title: title_fixture,
       abstract: abstract_fixture,
-      related_links_attributes: related_links_fixture
+      related_links_attributes: related_links_fixture,
+      license: license_fixture
     )
   end
 
@@ -67,7 +68,8 @@ module WorkMappingFixtures
         version: 1,
         identification: { sourceId: source_id_fixture },
         administrative: { hasAdminPolicy: Settings.apo },
-        access: { view: 'world', download: 'world' },
+        access: { view: 'world', download: 'world', license: license_fixture,
+                  useAndReproductionStatement: I18n.t('works.edit.fields.license.terms_of_use') },
         structural: {}
       }
     )
@@ -133,7 +135,10 @@ module WorkMappingFixtures
         version: 2,
         identification: { sourceId: source_id_fixture },
         administrative: { hasAdminPolicy: Settings.apo },
-        access: { view: 'world', download: 'world' },
+        access: { view: 'world',
+                  download: 'world',
+                  license: license_fixture,
+                  useAndReproductionStatement: I18n.t('works.edit.fields.license.terms_of_use') },
         structural: {}
       }
     )

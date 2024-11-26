@@ -163,5 +163,16 @@ RSpec.describe 'Show a work' do
       expect(page).to have_css('tr', text: 'Related links')
       expect(page).to have_css('td', text: related_links_fixture.first['text'])
     end
+
+    # License table
+    within('table#license-table') do
+      expect(page).to have_css('caption', text: 'License')
+      expect(page).to have_css('tr', text: 'License')
+      expect(page).to have_css('td', text: license_label_fixture)
+      expect(page).to have_css('tr', text: 'Terms of use')
+      expect(page).to have_css('td',
+                               text: 'Content distributed via the Stanford Digital Repository may be subject to ' \
+                                     'additional license and use restrictions applied by the depositor.')
+    end
   end
 end

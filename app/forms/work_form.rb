@@ -27,4 +27,15 @@ class WorkForm < ApplicationForm
 
   attribute :abstract, :string
   validates :abstract, presence: true, if: :deposit?
+
+  attribute :license, :string
+  validates :license, presence: true, if: :deposit?
+
+  def license_label
+    return unless license
+
+    yaml = YAML.load_file('config/licenses.yml')
+    selected_license = yaml.select { |_, v| v['uri'] == license }
+    selected_license.keys.first
+  end
 end

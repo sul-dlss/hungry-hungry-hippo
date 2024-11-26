@@ -37,11 +37,16 @@ module ToCocina
           label: work_form.title,
           description: ToCocina::Work::DescriptionMapper.call(work_form:),
           version: work_form.version,
-          access: { view: 'world', download: 'world' },
+          access:,
           identification: { sourceId: source_id },
           administrative: { hasAdminPolicy: Settings.apo },
           structural: ToCocina::Work::StructuralMapper.call(work_form:, content:)
         }.compact
+      end
+
+      def access
+        { view: 'world', download: 'world', license: work_form.license.presence,
+          useAndReproductionStatement: I18n.t('works.edit.fields.license.terms_of_use') }.compact
       end
     end
   end

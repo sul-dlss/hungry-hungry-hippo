@@ -53,7 +53,7 @@ module HungryHungryHippo
 
     # Bootstrap form error handling
     ActionView::Base.field_error_proc = proc do |html_tag, _instance|
-      html_tag.gsub(/(form-control|form-check-input)/, '\1 is-invalid').html_safe # rubocop:disable Rails/OutputSafety
+      html_tag.gsub(/(form-control|form-check-input|form-select)/, '\1 is-invalid').html_safe # rubocop:disable Rails/OutputSafety
     end
   end
 end
