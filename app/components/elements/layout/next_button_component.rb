@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Works
-  module Edit
+module Elements
+  module Layout
     # Next button to progress through tabbed form
     class NextButtonComponent < Elements::ButtonComponent
       def initialize(tab_id:)

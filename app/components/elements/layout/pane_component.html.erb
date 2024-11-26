@@ -12,7 +12,7 @@
                 <% if render_footer? %>
                     <div>
                         <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Save as draft', variant: :'outline-primary') %>
-                        <%= render Works::Edit::NextButtonComponent.new(tab_id:) %>
+                        <%= render Elements::Layout::NextButtonComponent.new(tab_id:) %>
                     </div>
                 <% end %>
             </div>
