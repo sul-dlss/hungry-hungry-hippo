@@ -21,7 +21,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :contents, only: [:edit, :update, :show]
+  resources :contents, only: [:edit, :update, :show] do
+    member do
+      get 'show_table', to: 'contents#show_table', as: 'show_table'
+    end
+  end
 
   resources :content_files, only: [:edit, :update, :destroy, :show]
 

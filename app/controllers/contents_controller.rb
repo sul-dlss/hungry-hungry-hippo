@@ -2,20 +2,17 @@
 
 # Controller for a Work contents (files)
 class ContentsController < ApplicationController
-  before_action :set_content, only: %i[edit update show]
+  before_action :set_content, only: %i[edit update show show_table]
+  before_action :set_content_files, only: %i[show show_table]
 
+  # Called from work edit/update form.
   def show
     authorize! @content
+  end
 
-    @content_files = @content.content_files.order(filename: :asc).page(params[:page])
-
-    # This can be called from the work edit/update page or the work show page.
-    # If from the show page, render the table.
-    if Rails.application.routes.recognize_path(request.referer)[:action] == 'show'
-      render :show_table
-    else
-      render :show
-    end
+  # Called from work show page.
+  def show_table
+    authorize! @content
   end
 
   def edit
@@ -35,6 +32,10 @@ class ContentsController < ApplicationController
 
   def set_content
     @content = Content.find(params[:id])
+  end
+
+  def set_content_files
+    @content_files = @content.content_files.order(filename: :asc).page(params[:page])
   end
 
   # ActionDispath::Http::UploadedFile only provides the base name.
