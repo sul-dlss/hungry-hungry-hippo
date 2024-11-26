@@ -57,8 +57,9 @@ RSpec.describe 'Validate a work deposit' do
     fill_in('URL', with: related_links_fixture.first['url'])
 
     # License is marked invalid
+    find('.nav-link', text: 'License').click
     expect(page).to have_css('.nav-link.is-invalid', text: 'License')
-    expect(page).to have_select('.is-invalid#work_license')
+    expect(page).to have_css('select.is-invalid#work_license') # rubocop:disable Capybara/SpecificMatcher
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
 
     # Select the license
