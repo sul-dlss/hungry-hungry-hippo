@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Works
-  module Edit
+module Elements
+  module Layout
     # Component for a tab pane.
     # Based on https://getbootstrap.com/docs/5.3/components/navs-tabs/#javascript-behavior
     class PaneComponent < ApplicationComponent
