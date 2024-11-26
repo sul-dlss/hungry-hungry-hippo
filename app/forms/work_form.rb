@@ -8,6 +8,10 @@ class WorkForm < ApplicationForm
     ['druid']
   end
 
+  def self.licenses
+    @licenses ||= YAML.load_file('config/licenses.yml')
+  end
+
   attribute :druid, :string
   alias id druid
 
@@ -31,11 +35,11 @@ class WorkForm < ApplicationForm
   attribute :license, :string
   validates :license, presence: true, if: :deposit?
 
+  # Shorter license label for the show page
   def license_label
     return unless license
 
-    yaml = YAML.load_file('config/licenses.yml')
-    selected_license = yaml.select { |_, v| v['uri'] == license }
+    selected_license = WorkForm.licenses.select { |_, v| v['uri'] == license }
     selected_license.keys.first
   end
 end
