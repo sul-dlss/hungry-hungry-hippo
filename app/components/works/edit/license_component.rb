@@ -4,23 +4,27 @@ module Works
   module Edit
     # Select field for license
     class LicenseComponent < ApplicationComponent
-      def initialize(form:, hidden_label: false, label: nil, help_text: nil)
+      def initialize(form:)
         @form = form
-        @hidden_label = hidden_label
-        @label = label
-        @help_text = help_text
         super()
       end
 
-      attr_reader :form, :hidden_label, :label, :help_text
+      attr_reader :form
 
       def field_name
         :license
       end
 
+      def label
+        I18n.t('works.edit.fields.license.label')
+      end
+
+      def help_text
+        I18n.t('works.edit.fields.license.help_text')
+      end
+
       def license_options
-        yaml = YAML.load_file('config/licenses.yml')
-        yaml.values.map { |license| [license['label'], license['uri']] }
+        WorkForm.licenses.values.map { |license| [license['label'], license['uri']] }
       end
 
       def prompt

@@ -37,8 +37,7 @@
           <%= render Elements::Forms::NestedComponent.new(form:, model_class: RelatedLinkForm, field_name: :related_links, form_component: RelatedLinks::EditComponent) %>
         <% end %>
         <%= render Works::Edit::PaneComponent.new(tab_name: :license, label: I18n.t('works.edit.panes.license.label'), form:) do %>
-          <%= render Works::Edit::LicenseComponent.new(form:, label: I18n.t('works.edit.fields.license.label'),
-                                                       help_text: I18n.t('works.edit.fields.license.help_text')) %>
+          <%= render Works::Edit::LicenseComponent.new(form:) %>
         <% end %>
         <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, form:, label: I18n.t('works.edit.panes.deposit.label'), render_footer: false) do %>
           <p><%= t('works.edit.panes.deposit.help_text') %></p>
