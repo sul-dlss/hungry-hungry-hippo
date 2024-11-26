@@ -19,7 +19,8 @@ module Works
       end
 
       def license_options
-        [['CC-BY-4.0 Attribution International', 'https://creativecommons.org/licenses/by/4.0/legalcode']]
+        yaml = YAML.load_file('config/licenses.yml')
+        yaml.values.map { |license| [license['label'], license['uri']] }
       end
 
       def prompt
