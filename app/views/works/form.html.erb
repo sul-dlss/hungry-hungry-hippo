@@ -16,14 +16,18 @@
       <%= form.hidden_field :content_id %>
       <div class="tab-content h-100">
         <%= render Works::Edit::PaneComponent.new(tab_name: :files, form:, label: I18n.t('works.edit.panes.files.label'), selected: true) do %>
+          <%= turbo_stream_from @content %>
+
+          <%# Using a turboframe otherwise having a form within a form is problematic. %>
           <%= turbo_frame_tag @content, 'edit', src: edit_content_path(@content) do %>
-              <%= render Elements::SpinnerComponent.new %>
+-              <%= render Elements::SpinnerComponent.new %>
           <% end %>
+
           <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
           <div class="h5 mb-3"><%= t('works.edit.panes.files.list') %></div>
-          <%= turbo_frame_tag @content, 'show', src: content_path(@content) do %>
-              <%= render Elements::SpinnerComponent.new %>
-          <% end %>
+          <div id="content-files">
+            <%= render partial: 'contents/show', locals: { content: @content, content_files: @content.content_files.page(1) } %>
+          </div>
         <% end %>
         <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: I18n.t('works.edit.panes.title.label'), form:) do %>
           <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('works.edit.fields.title.label'),

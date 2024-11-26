@@ -22,18 +22,14 @@ RSpec.describe 'Manage files for a work' do
     expect(page).to have_css('.alert-warning', text: 'No files uploaded.')
 
     # Add one file
-    attach_file('content_files', 'spec/fixtures/files/hippo.png')
-    click_link_or_button('Upload')
+    # This doesn't work in Cyperful
+    find('.dropzone').drop('spec/fixtures/files/hippo.png')
 
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
     expect(page).to have_no_css('ul.pagination')
 
     # Add 2 more files
-    attach_file('content_files', 'spec/fixtures/files/hippo.svg')
-    click_link_or_button('Upload')
-    expect(page).to have_css('table#content-table td', text: 'hippo.svg')
-    attach_file('content_files', 'spec/fixtures/files/hippo.txt')
-    click_link_or_button('Upload')
+    find('.dropzone').drop('spec/fixtures/files/hippo.svg', 'spec/fixtures/files/hippo.txt')
 
     # First 2 are listed on page.
     expect(page).to have_css('ul.pagination')
