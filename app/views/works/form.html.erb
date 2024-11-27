@@ -7,5 +7,5 @@
   <% component.with_tab(label: I18n.t('works.edit.panes.related_content.tab_label'), tab_name: :related_content) %>
   <% component.with_tab(label: I18n.t('works.edit.panes.license.tab_label'), tab_name: :license) %>
   <% component.with_tab(label: I18n.t('works.edit.panes.deposit.tab_label'), tab_name: :deposit) %>
-  <% component.with_work_form(work_form: @work_form, files: @content) %>
+  <% component.with_form_work(work_form: @work_form, files: @content) %>
 <% end %>

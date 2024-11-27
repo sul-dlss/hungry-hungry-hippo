@@ -5,7 +5,10 @@ module Elements
     # Component for rendering tabbed navigation for the provided form.
     class TabbedFormComponent < ApplicationComponent
       renders_many :tabs, 'Elements::Layout::TabComponent'
-      renders_one :work_form, 'Works::Edit::FormComponent'
+      renders_one :form, types: {
+        work: Works::Edit::FormComponent,
+        collection: Collections::Edit::FormComponent
+      }
 
       def initialize(orientation: 'vertical', classes: [], tab_classes: [])
         @orientation = orientation

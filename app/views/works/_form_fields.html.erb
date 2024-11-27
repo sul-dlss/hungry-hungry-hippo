@@ -1,21 +1,21 @@
-<%= form_with model: @work_form, class: 'w-100' do |form| %>
+<%= form_with model: work_form, class: 'w-100' do |form| %>
   <%= form.hidden_field :lock %>
   <%= form.hidden_field :version %>
   <%= form.hidden_field :collection_id %>
   <%= form.hidden_field :content_id %>
   <div class="tab-content h-100">
     <%= render Elements::Layout::PaneComponent.new(tab_name: :files, form:, label: I18n.t('works.edit.panes.files.label'), selected: true) do %>
-      <%= turbo_stream_from @content %>
+      <%= turbo_stream_from content %>
 
       <%# Using a turboframe otherwise having a form within a form is problematic. %>
-      <%= turbo_frame_tag @content, 'edit', src: edit_content_path(@content) do %>
+      <%= turbo_frame_tag content, 'edit', src: edit_content_path(@content) do %>
 -              <%= render Elements::SpinnerComponent.new %>
       <% end %>
 
       <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
       <div class="h5 mb-3"><%= t('works.edit.panes.files.list') %></div>
       <div id="content-files">
-        <%= render partial: 'contents/show', locals: { content: @content, content_files: @content.content_files.page(1) } %>
+        <%= render partial: 'contents/show', locals: { content:, content_files: content.content_files.page(1) } %>
       </div>
     <% end %>
     <%= render Elements::Layout::PaneComponent.new(tab_name: :title, label: I18n.t('works.edit.panes.title.label'), form:) do %>
