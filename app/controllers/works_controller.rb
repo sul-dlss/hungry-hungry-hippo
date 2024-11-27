@@ -11,6 +11,10 @@ class WorksController < ApplicationController
   def show
     authorize! @work
     @status_presenter = StatusPresenter.new(status: @status)
+
+    # This updates the Work with the latest metadata from the Cocina object.
+    # Does not update the Work's collection if the collection cannot be found.
+    ModelSync::Work.call(work: @work, cocina_object: @cocina_object, raise: false)
   end
 
   def new
@@ -30,6 +34,10 @@ class WorksController < ApplicationController
       flash[:danger] = I18n.t('works.edit.errors.cannot_be_edited')
       return redirect_to work_path(druid: params[:druid])
     end
+
+    # This updates the Work with the latest metadata from the Cocina object.
+    ModelSync::Work.call(work: @work, cocina_object: @cocina_object)
+
     render :form
   end
 
@@ -114,6 +122,10 @@ class WorksController < ApplicationController
 
   def editable?
     return false unless @status.open? || @status.openable?
+
+    # This handles the case in which the collection for the work was changed elsewhere
+    # and there is not a Collection record for the collection_druid in the work.
+    return false unless Collection.exists?(druid: @work_form.collection_druid)
 
     ToWorkForm::RoundtripValidator.roundtrippable?(work_form: @work_form, cocina_object: @cocina_object,
                                                    content: @content)
