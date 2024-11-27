@@ -2,16 +2,19 @@
   <%= form.hidden_field :lock %>
   <%= form.hidden_field :version %>
   <div class="tab-content h-100">
-    <%= render Elements::Layout::PaneComponent.new(tab_name: :title, label: I18n.t('works.edit.panes.title.label'), form:) do %>
-      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('works.edit.fields.title.label'),
-                                                         help_text: I18n.t('works.edit.fields.title.help_text')) %>
+    <%= render Elements::Layout::PaneComponent.new(tab_name: :title, label: I18n.t('collections.edit.panes.title.label'), form:, selected: true) do %>
+      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('collections.edit.fields.title.label'),
+                                                         help_text: I18n.t('collections.edit.fields.title.help_text')) %>
     <% end %>
-    <%= render Elements::Layout::PaneComponent.new(tab_name: :description, label: 'Description', form:) do %>
-      <p><%= t('works.edit.fields.abstract.help_text') %></p>
-      <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: 'Description') %>
+    <%= render Elements::Layout::PaneComponent.new(tab_name: :description, label: I18n.t('collections.edit.panes.description.label'), form:) do %>
+      <p><%= t('collections.edit.fields.description.help_text') %></p>
+      <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: I18n.t('collections.edit.fields.description.label')) %>
     <% end %>
-    <%= render Elements::Layout::PaneComponent.new(tab_name: :deposit, form:, label: I18n.t('works.edit.panes.deposit.label'), render_footer: false) do %>
-      <p><%= t('works.edit.panes.deposit.help_text') %></p>
+    <%= render Elements::Layout::PaneComponent.new(tab_name: :related_content, label: I18n.t('collections.edit.panes.related_content.label'), form:) do %>
+      <%= render Elements::Forms::NestedComponent.new(form:, model_class: RelatedLinkForm, field_name: :related_links, form_component: RelatedLinks::EditComponent) %>
+    <% end %>
+    <%= render Elements::Layout::PaneComponent.new(tab_name: :deposit, form:, label: I18n.t('collections.edit.panes.deposit.label'), render_footer: false) do %>
+      <p><%= t('collections.edit.panes.deposit.help_text') %></p>
       <%= link_to 'Cancel', collections_path %>
       <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Deposit', classes: 'mt-2 ms-2') %>
     <% end %>

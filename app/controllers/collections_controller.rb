@@ -25,7 +25,7 @@ class CollectionsController < ApplicationController
     authorize! @collection
 
     unless editable?
-      flash[:danger] = I18n.t('works.edit.errors.cannot_be_edited')
+      flash[:danger] = I18n.t('collection.edit.errors.cannot_be_edited')
       return redirect_to collection_path(druid: params[:druid])
     end
     render :form
@@ -37,15 +37,17 @@ class CollectionsController < ApplicationController
 
     @collection_form = CollectionForm.new(**collection_params)
     # The deposit param determines whether extra validations for deposits are applied.
-    return unless @collection_form.valid?(deposit: deposit?)
-
-    # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
-    # should be "waiting".
-    collection = Collection.create!(title: @collection_form.title,
-                                    user: current_user,
-                                    deposit_job_started_at: Time.zone.now)
-    DepositCollectionJob.perform_later(collection:, collection_form: @collection_form, deposit: deposit?)
-    redirect_to wait_collections_path(collection.id)
+    if @collection_form.valid?(deposit: deposit?)
+      # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
+      # should be "waiting".
+      collection = Collection.create!(title: @collection_form.title,
+                                      user: current_user,
+                                      deposit_job_started_at: Time.zone.now)
+      DepositCollectionJob.perform_later(collection:, collection_form: @collection_form, deposit: deposit?)
+      redirect_to wait_collections_path(collection.id)
+    else
+      render :form, status: :unprocessable_entity
+    end
   end
 
   def update
@@ -53,17 +55,19 @@ class CollectionsController < ApplicationController
 
     @collection_form = CollectionForm.new(**update_collection_params)
     # The deposit param determines whether extra validations for deposits are applied.
-    reurn unless @collection_form.valid?(deposit: deposit?)
-
-    DepositCollectionJob.perform_later(collection: @collection, collection_form: @collection_form, deposit: deposit?)
-    redirect_to wait_collections_path(@collection.id)
+    if @collection_form.valid?(deposit: deposit?)
+      DepositCollectionJob.perform_later(collection: @collection, collection_form: @collection_form, deposit: deposit?)
+      redirect_to wait_collections_path(@collection.id)
+    else
+      render :form, status: :unprocessable_entity
+    end
   end
 
   def wait
     collection = Collection.find(params[:id])
     authorize! collection
 
-    redirect_to collection_path(druid: colletion.druid) if collection.deposit_job_finished?
+    redirect_to collection_path(druid: collection.druid) if collection.deposit_job_finished?
   end
 
   private
