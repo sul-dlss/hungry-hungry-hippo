@@ -53,6 +53,10 @@ set :passenger_restart_options, -> { '' }
 # update shared_configs before restarting app (from dlss-capistrano gem)
 before 'deploy:restart', 'shared_configs:update'
 
+# Manage SolidQueue via systemd (from dlss-capistrano gem)
+set :solid_queue_systemd_role, :app
+set :solid_queue_systemd_use_hooks, true
+
 # configure capistrano-rails to work with propshaft instead of sprockets
 # (we don't have public/assets/.sprockets-manifest* or public/assets/manifest*.*)
 set :assets_manifests, lambda {
