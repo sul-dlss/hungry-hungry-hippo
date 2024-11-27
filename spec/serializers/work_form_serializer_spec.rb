@@ -9,7 +9,7 @@ RSpec.describe WorkFormSerializer do
       '_aj_serialized' => 'WorkFormSerializer',
       'title' => title_fixture,
       'druid' => druid,
-      'collection_id' => 1,
+      'collection_druid' => collection_druid_fixture,
       'version' => 1,
       'lock' => nil,
       'abstract' => abstract_fixture,
@@ -19,7 +19,7 @@ RSpec.describe WorkFormSerializer do
     }
   end
   let(:work_form) do
-    WorkForm.new(title: title_fixture, druid:, collection_id: 1, abstract: abstract_fixture,
+    WorkForm.new(title: title_fixture, druid:, collection_druid: collection_druid_fixture, abstract: abstract_fixture,
                  related_links_attributes: related_links_fixture, license: license_fixture, content_id: 5)
   end
 

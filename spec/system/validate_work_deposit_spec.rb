@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Validate a work deposit' do
   let(:user) { create(:user) }
   let(:collection) { create(:collection, user:) }
-  let(:work_path_with_collection) { new_work_path(collection_id: collection.id) }
+  let(:work_path_with_collection) { new_work_path(collection_druid: collection.druid) }
 
   before do
     sign_in(user)

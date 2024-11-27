@@ -68,8 +68,9 @@ RSpec.describe 'Edit work' do
 
   context 'when the work is not roundtrippable' do
     let(:user) { create(:user) }
-    let(:work) { create(:work, druid:, user:) }
-    let(:cocina_object) { build(:dro_with_metadata, title: work.title, id: druid) }
+    let(:collection) { create(:collection, user: user) }
+    let(:work) { create(:work, druid:, user:, collection:) }
+    let(:cocina_object) { build(:dro_with_metadata, title: work.title, id: druid, collection_ids: [collection.druid]) }
     let(:version_status) do
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
                                                                            version: cocina_object.version)

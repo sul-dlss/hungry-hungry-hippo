@@ -18,7 +18,7 @@ class WorksController < ApplicationController
     skip_verify_authorized!
 
     @content = Content.create!(user: current_user)
-    @work_form = WorkForm.new(collection_id: params.expect(:collection_id), content_id: @content.id)
+    @work_form = WorkForm.new(collection_druid: params.expect(:collection_druid), content_id: @content.id)
 
     render :form
   end
@@ -43,8 +43,9 @@ class WorksController < ApplicationController
     if @work_form.valid?(deposit: deposit?)
       # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
       # should be "waiting".
+      collection = Collection.find_by!(druid: @work_form.collection_druid)
       work = Work.create!(title: @work_form.title, user: current_user, deposit_job_started_at: Time.zone.now,
-                          collection_id: @work_form.collection_id)
+                          collection: collection)
       DepositWorkJob.perform_later(work:, work_form: @work_form, deposit: deposit?)
       redirect_to wait_works_path(work.id)
     else

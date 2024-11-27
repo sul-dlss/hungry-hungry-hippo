@@ -6,6 +6,7 @@ RSpec.describe DepositWorkJob do
   let(:druid) { 'druid:bc123df4567' }
   let(:cocina_object) { instance_double(Cocina::Models::DROWithMetadata, externalIdentifier: druid) }
   let(:content) { create(:content) }
+  let(:collection) { create(:collection) }
 
   before do
     allow(Contents::Analyzer).to receive(:call)
@@ -16,8 +17,8 @@ RSpec.describe DepositWorkJob do
   end
 
   context 'when a new work' do
-    let(:work_form) { WorkForm.new(title: work.title, content_id: content.id) }
-    let(:work) { create(:work, :deposit_job_started) }
+    let(:work_form) { WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid) }
+    let(:work) { create(:work, :deposit_job_started, collection:) }
 
     before do
       allow(Sdr::Repository).to receive(:register).and_return(cocina_object)
@@ -39,7 +40,10 @@ RSpec.describe DepositWorkJob do
   end
 
   context 'when an existing work' do
-    let(:work_form) { WorkForm.new(title: work.title, druid:, content_id: content.id, lock: 'abc123') }
+    let(:work_form) do
+      WorkForm.new(title: work.title, druid:, content_id: content.id, lock: 'abc123',
+                   collection_druid: collection.druid)
+    end
     let(:work) { create(:work, :deposit_job_started, druid:) }
 
     before do
