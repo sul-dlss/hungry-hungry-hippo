@@ -63,9 +63,10 @@
   }
 
   min-height: 150px;
-  border: 1px solid rgba(0, 0, 0, 0.8);
+  border: 1px dashed rgba(0, 0, 0, 0.8);
   border-radius: 5px;
   padding: 20px 20px;
+  background-color: var(--stanford-10-black);
 
   &.dz-started {
     .dz-message {
@@ -81,7 +82,7 @@
   }
   .dz-message {
     text-align: center;
-    margin: 3em 0;
+    margin: 1.5em 0;
 
     .dz-button {
       background: none;

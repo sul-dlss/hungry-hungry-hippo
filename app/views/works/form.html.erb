@@ -18,6 +18,7 @@
         <%= render Works::Edit::PaneComponent.new(tab_name: :files, form:, label: I18n.t('works.edit.panes.files.label'), selected: true) do %>
           <%= turbo_stream_from @content %>
 
+          <div class="h5 mb-3 mt-4"><%= t('works.edit.panes.files.upload') %></div>
           <%# Using a turboframe otherwise having a form within a form is problematic. %>
           <%= turbo_frame_tag @content, 'edit', src: edit_content_path(@content) do %>
 -              <%= render Elements::SpinnerComponent.new %>

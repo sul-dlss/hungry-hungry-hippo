@@ -1,6 +1,11 @@
 <%= turbo_frame_tag content, 'edit' do %>
     <%= form_with model: content, data: { controller: 'dropzone' }, id: 'file-dropzone', class: 'dropzone' do |form| %>
         <%= render Elements::ProgressBarComponent.new(label: 'Upload progress', classes: 'd-none', data: { dropzone_target: 'progress' }) %>
+        <div class="dz-message">
+            <div class="fs-1"><%= upload_icon %></div>
+            <div class="fs-5">Drag and drop your files here, up to 10GB or 25,000 files.</div>
+            <div class="fs-5">or</div>
+            <%= render Elements::ButtonComponent.new(label: 'Select files to upload', variant: :'outline-primary', classes: 'mt-2') %>
+        </div>
     <% end %>
-
 <% end %>

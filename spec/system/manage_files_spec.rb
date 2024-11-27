@@ -19,7 +19,7 @@ RSpec.describe 'Manage files for a work' do
 
     expect(page).to have_css('h1', text: 'Untitled deposit')
 
-    expect(page).to have_css('.alert-warning', text: 'No files uploaded.')
+    expect(page).to have_text('Your files will appear here once they have been uploaded.')
 
     # Add one file
     # This doesn't work in Cyperful
