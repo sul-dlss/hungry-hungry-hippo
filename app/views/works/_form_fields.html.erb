@@ -1,7 +1,7 @@
 <%= form_with model: work_form, class: 'w-100' do |form| %>
   <%= form.hidden_field :lock %>
   <%= form.hidden_field :version %>
-  <%= form.hidden_field :collection_id %>
+  <%= form.hidden_field :collection_druid %>
   <%= form.hidden_field :content_id %>
   <div class="tab-content h-100">
     <%= render Elements::Layout::PaneComponent.new(tab_name: :files, form:, label: I18n.t('works.edit.panes.files.label'), selected: true) do %>

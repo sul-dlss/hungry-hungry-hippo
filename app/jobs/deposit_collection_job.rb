@@ -12,8 +12,6 @@ class DepositCollectionJob < ApplicationJob
     new_cocina_object = perform_persist
     druid = new_cocina_object.externalIdentifier
 
-    Contents::Stager.call(content:, druid:)
-
     Sdr::Repository.accession(druid:) if deposit
 
     # Refresh the wait page. Since the deposit job is finished, this will redirect to the show page.
