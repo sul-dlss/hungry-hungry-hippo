@@ -19,7 +19,7 @@ class WorkForm < ApplicationForm
     druid.present?
   end
 
-  attribute :collection_id, :integer
+  attribute :collection_druid, :string
 
   attribute :lock, :string
   attribute :content_id, :integer

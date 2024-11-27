@@ -15,7 +15,7 @@ RSpec.describe 'Manage files for a work' do
   end
 
   it 'creates a work' do
-    visit new_work_path(collection_id: collection.id)
+    visit new_work_path(collection_druid: collection.druid)
 
     expect(page).to have_css('h1', text: 'Untitled deposit')
 
