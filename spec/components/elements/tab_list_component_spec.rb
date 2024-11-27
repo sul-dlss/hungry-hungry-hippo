@@ -2,7 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Elements::Layout::TabbedFormComponent, type: :component do
+RSpec.describe Elements::TabListComponent, type: :component do
+  include WorkMappingFixtures
+
   context 'with no tabs' do
     it 'does not render the tabbed form' do
       render_inline(described_class.new)
@@ -17,7 +19,7 @@ RSpec.describe Elements::Layout::TabbedFormComponent, type: :component do
     before do
       component.with_tab(label: 'Tab 1', tab_name: :tab_one, selected: true)
       component.with_tab(label: 'Tab 2', tab_name: :tab_two)
-      component.with_form_collection(collection_form: CollectionForm.new)
+      component.with_form { 'Form' }
     end
 
     it 'renders the tabbed form with tabs' do

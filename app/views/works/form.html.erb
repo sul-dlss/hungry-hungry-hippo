@@ -1,11 +1,53 @@
 <%= render Elements::HeaderComponent.new(level: :h1, variant: :h2, text: @work_form.title || 'Untitled deposit', classes: 'mb-3') %>
 <%= render Elements::AlertComponent.new(variant: :danger, value: I18n.t('works.edit.errors.validation')) if @work_form.errors.present? %>
-<%= render Elements::Layout::TabbedFormComponent.new do |component| %>
+<%= render Elements::TabListComponent.new do |component| %>
   <% component.with_tab(label: I18n.t('works.edit.panes.files.tab_label'), tab_name: :files, selected: true) %>
   <% component.with_tab(label: I18n.t('works.edit.panes.title.tab_label'), tab_name: :title) %>
   <% component.with_tab(label: I18n.t('works.edit.panes.abstract.tab_label'), tab_name: :abstract) %>
   <% component.with_tab(label: I18n.t('works.edit.panes.related_content.tab_label'), tab_name: :related_content) %>
   <% component.with_tab(label: I18n.t('works.edit.panes.license.tab_label'), tab_name: :license) %>
   <% component.with_tab(label: I18n.t('works.edit.panes.deposit.tab_label'), tab_name: :deposit) %>
-  <% component.with_form_work(work_form: @work_form, files: @content) %>
+  <% component.with_form do %>
+    <%= form_with model: @work_form, class: 'w-100' do |form| %>
+      <%= form.hidden_field :lock %>
+      <%= form.hidden_field :version %>
+      <%= form.hidden_field :collection_druid %>
+      <%= form.hidden_field :content_id %>
+      <div class="tab-content h-100">
+        <%= render Elements::PaneComponent.new(tab_name: :files, form:, label: I18n.t('works.edit.panes.files.label'), selected: true) do %>
+          <%= turbo_stream_from @content %>
+
+          <%# Using a turboframe otherwise having a form within a form is problematic. %>
+          <%= turbo_frame_tag @content, 'edit', src: edit_content_path(@content) do %>
+    -              <%= render Elements::SpinnerComponent.new %>
+          <% end %>
+
+          <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
+          <div class="h5 mb-3"><%= t('works.edit.panes.files.list') %></div>
+          <div id="content-files">
+            <%= render partial: 'contents/show', locals: { content: @content, content_files: @content.content_files.page(1) } %>
+          </div>
+        <% end %>
+        <%= render Elements::PaneComponent.new(tab_name: :title, label: I18n.t('works.edit.panes.title.label'), form:) do %>
+          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('works.edit.fields.title.label'),
+                                                             help_text: I18n.t('works.edit.fields.title.help_text')) %>
+        <% end %>
+        <%= render Elements::PaneComponent.new(tab_name: :abstract, label: I18n.t('works.edit.panes.abstract.label'), form:) do %>
+          <p><%= t('works.edit.fields.abstract.help_text') %></p>
+          <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: I18n.t('works.edit.fields.abstract.label')) %>
+        <% end %>
+        <%= render Elements::PaneComponent.new(tab_name: :related_content, label: I18n.t('works.edit.panes.related_content.label'), form:) do %>
+          <%= render Elements::Forms::NestedComponent.new(form:, model_class: RelatedLinkForm, field_name: :related_links, form_component: RelatedLinks::EditComponent) %>
+        <% end %>
+        <%= render Elements::PaneComponent.new(tab_name: :license, label: I18n.t('works.edit.panes.license.label'), form:) do %>
+          <%= render Works::Edit::LicenseComponent.new(form:) %>
+        <% end %>
+        <%= render Elements::PaneComponent.new(tab_name: :deposit, form:, label: I18n.t('works.edit.panes.deposit.label'), render_footer: false) do %>
+          <p><%= t('works.edit.panes.deposit.help_text') %></p>
+          <%= link_to 'Cancel', works_path %>
+          <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Deposit', classes: 'mt-2 ms-2') %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
 <% end %>
