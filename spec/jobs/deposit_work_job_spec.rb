@@ -3,10 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe DepositWorkJob do
-  let(:druid) { 'druid:bc123df4567' }
-  let(:cocina_object) { instance_double(Cocina::Models::DROWithMetadata, externalIdentifier: druid) }
+  include WorkMappingFixtures
+
+  let(:druid) { druid_fixture }
+  let(:cocina_object) { dro_with_metadata_fixture }
   let(:content) { create(:content) }
-  let(:collection) { create(:collection) }
+  let(:collection) { create(:collection, druid: collection_druid_fixture) }
 
   before do
     allow(Contents::Analyzer).to receive(:call)
@@ -41,7 +43,7 @@ RSpec.describe DepositWorkJob do
 
   context 'when an existing work' do
     let(:work_form) do
-      WorkForm.new(title: work.title, druid:, content_id: content.id, lock: 'abc123',
+      WorkForm.new(title: title_fixture, druid:, content_id: content.id, lock: 'abc123',
                    collection_druid: collection.druid)
     end
     let(:work) { create(:work, :deposit_job_started, druid:) }
@@ -51,6 +53,8 @@ RSpec.describe DepositWorkJob do
     end
 
     it 'updates an existing work' do
+      expect(work.title).not_to eq(title_fixture)
+
       described_class.perform_now(work_form: work_form, work: work, deposit: false)
       expect(Contents::Analyzer).to have_received(:call).with(content: content)
       expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:, content:,
@@ -61,7 +65,9 @@ RSpec.describe DepositWorkJob do
       expect(Sdr::Repository).to have_received(:update).with(cocina_object: cocina_object)
       expect(Sdr::Repository).not_to have_received(:accession)
 
-      expect(work.reload.deposit_job_finished?).to be true
+      expect(work.reload.title).to eq(title_fixture)
+
+      expect(work.deposit_job_finished?).to be true
       expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with('wait', work.id)
     end
   end

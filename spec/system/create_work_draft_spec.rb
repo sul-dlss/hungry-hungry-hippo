@@ -17,7 +17,7 @@ RSpec.describe 'Create a work draft' do
       cocina_params = args[:cocina_object].to_h
       cocina_params[:externalIdentifier] = druid
       cocina_params[:description][:purl] = Sdr::Purl.from_druid(druid:)
-      cocina_params[:structural] = {}
+      cocina_params[:structural] = { isMemberOf: [collection_druid_fixture] }
       cocina_object = Cocina::Models.build(cocina_params)
       (@registered_cocina_object = Cocina::Models.with_metadata(cocina_object, 'abc123'))
     end
@@ -27,7 +27,7 @@ RSpec.describe 'Create a work draft' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object }) # rubocop:disable RSpec/InstanceVariable
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
 
-    create(:collection, user:)
+    create(:collection, user:, druid: collection_druid_fixture)
 
     sign_in(user)
   end

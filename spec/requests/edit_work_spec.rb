@@ -13,7 +13,7 @@ RSpec.describe 'Edit work' do
       allow(Sdr::Repository).to receive(:status)
         .with(druid:).and_return(instance_double(Dor::Services::Client::ObjectVersion::VersionStatus))
 
-      create(:work, druid:)
+      create(:work, druid:, collection: create(:collection, druid: collection_druid_fixture))
       sign_in(create(:user))
     end
 
@@ -40,8 +40,10 @@ RSpec.describe 'Edit work' do
 
   context 'when the work is not open or openable' do
     let(:user) { create(:user) }
-    let(:work) { create(:work, druid:, user:) }
-    let(:cocina_object) { build(:dro_with_metadata, title: work.title, id: druid) }
+    let(:work) { create(:work, druid:, user:, collection: create(:collection, druid: collection_druid_fixture)) }
+    let(:cocina_object) do
+      build(:dro_with_metadata, title: work.title, id: druid, collection_ids: [collection_druid_fixture])
+    end
     let(:version_status) do
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, openable?: false,
                                                                            accessioning?: true)
@@ -92,6 +94,66 @@ RSpec.describe 'Edit work' do
       follow_redirect!
       expect(response.body).to include('This work cannot be edited.')
       expect(ToWorkForm::RoundtripValidator).to have_received(:roundtrippable?)
+    end
+  end
+
+  context 'when the cocina object does not have a collection' do
+    let(:user) { create(:user) }
+    let(:work) { create(:work, druid:, user:) }
+    let(:cocina_object) do
+      build(:dro_with_metadata, title: work.title, id: druid)
+    end
+    let(:version_status) do
+      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
+                                                                           accessioning?: false, version: 1)
+    end
+
+    before do
+      allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
+      allow(ToWorkForm::RoundtripValidator).to receive(:roundtrippable?)
+
+      sign_in(user)
+    end
+
+    it 'redirects to the show page' do
+      get "/works/#{druid}/edit"
+
+      expect(response).to redirect_to(work_path(druid))
+
+      follow_redirect!
+      expect(response.body).to include('This work cannot be edited.')
+      expect(ToWorkForm::RoundtripValidator).not_to have_received(:roundtrippable?)
+    end
+  end
+
+  context 'when the collection from the cocina object cannot be found' do
+    let(:user) { create(:user) }
+    let(:work) { create(:work, druid:, user:) }
+    let(:cocina_object) do
+      build(:dro_with_metadata, title: work.title, id: druid, collection_ids: ['druid:gj446wf8162'])
+    end
+    let(:version_status) do
+      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
+                                                                           accessioning?: false, version: 1)
+    end
+
+    before do
+      allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
+      allow(ToWorkForm::RoundtripValidator).to receive(:roundtrippable?)
+
+      sign_in(user)
+    end
+
+    it 'redirects to the show page' do
+      get "/works/#{druid}/edit"
+
+      expect(response).to redirect_to(work_path(druid))
+
+      follow_redirect!
+      expect(response.body).to include('This work cannot be edited.')
+      expect(ToWorkForm::RoundtripValidator).not_to have_received(:roundtrippable?)
     end
   end
 end
