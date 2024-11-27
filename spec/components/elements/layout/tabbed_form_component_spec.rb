@@ -10,7 +10,7 @@ RSpec.describe Elements::Layout::TabbedFormComponent, type: :component do
       expect(page).to have_no_css('.tabbable-panes')
     end
   end
-  
+
   context 'with tabs' do
     let(:component) { described_class.new }
 

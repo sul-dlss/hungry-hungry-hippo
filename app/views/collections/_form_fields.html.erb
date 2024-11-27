@@ -1,0 +1,19 @@
+<%= form_with model: collection_form, class: 'w-100' do |form| %>
+  <%= form.hidden_field :lock %>
+  <%= form.hidden_field :version %>
+  <div class="tab-content h-100">
+    <%= render Elements::Layout::PaneComponent.new(tab_name: :title, label: I18n.t('works.edit.panes.title.label'), form:) do %>
+      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('works.edit.fields.title.label'),
+                                                         help_text: I18n.t('works.edit.fields.title.help_text')) %>
+    <% end %>
+    <%= render Elements::Layout::PaneComponent.new(tab_name: :description, label: 'Description', form:) do %>
+      <p><%= t('works.edit.fields.abstract.help_text') %></p>
+      <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: 'Description') %>
+    <% end %>
+    <%= render Elements::Layout::PaneComponent.new(tab_name: :deposit, form:, label: I18n.t('works.edit.panes.deposit.label'), render_footer: false) do %>
+      <p><%= t('works.edit.panes.deposit.help_text') %></p>
+      <%= link_to 'Cancel', collections_path %>
+      <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Deposit', classes: 'mt-2 ms-2') %>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,8 @@
+<%= render Elements::HeaderComponent.new(level: :h1, variant: :h2, text: @collection_form.title || 'Untitled deposit', classes: 'mb-3') %>
+<%= render Elements::AlertComponent.new(variant: :danger, value: I18n.t('works.edit.errors.validation')) if @collection_form.errors.present? %>
+<%= render Elements::Layout::TabbedFormComponent.new do |component| %>
+  <% component.with_tab(label: I18n.t('works.edit.panes.title.tab_label'), tab_name: :title, selected: true) %>
+  <% component.with_tab(label: 'Description', tab_name: :description) %>
+  <% component.with_tab(label: I18n.t('works.edit.panes.deposit.tab_label'), tab_name: :deposit) %>
+  <% component.with_form_collection(collection_form: @collection_form) %>
+<% end %>
