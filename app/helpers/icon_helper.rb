@@ -56,4 +56,8 @@ module IconHelper
   def previous_icon(**)
     icon(icon_classes: 'bi bi-chevron-left', **)
   end
+
+  def upload_icon(**)
+    icon(icon_classes: 'bi bi-cloud-upload-fill', **)
+  end
 end

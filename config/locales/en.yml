@@ -76,6 +76,7 @@ en:
           tab_label: 'Manage files'
           label: 'Manage files'
           list: 'Your files'
+          upload: 'Upload your files'
         license:
           tab_label: 'License'
           label: 'License'
