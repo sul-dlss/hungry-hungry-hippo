@@ -6,11 +6,6 @@ RSpec.describe 'Create a work draft' do
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
 
-  let(:cocina_object) do
-    cocina_object = build(:dro, title: title_fixture, id: druid)
-    Cocina::Models.with_metadata(cocina_object, 'abc123')
-  end
-
   let(:version_status) do
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1,
                                                                          openable?: false)
@@ -24,11 +19,12 @@ RSpec.describe 'Create a work draft' do
       cocina_params[:description][:purl] = Sdr::Purl.from_druid(druid:)
       cocina_params[:structural] = {}
       cocina_object = Cocina::Models.build(cocina_params)
-      Cocina::Models.with_metadata(cocina_object, 'abc123')
+      (@registered_cocina_object = Cocina::Models.with_metadata(cocina_object, 'abc123'))
     end
     allow(Sdr::Repository).to receive(:accession)
+
     # Stubbing out for show page
-    allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+    allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object }) # rubocop:disable RSpec/InstanceVariable
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
 
     create(:collection, user:)
