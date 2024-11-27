@@ -17,6 +17,7 @@ RSpec.describe Elements::Layout::TabbedFormComponent, type: :component do
     before do
       component.with_tab(label: 'Tab 1', tab_name: :tab_one, selected: true)
       component.with_tab(label: 'Tab 2', tab_name: :tab_two)
+      component.with_form_collection(collection_form: CollectionForm.new)
     end
 
     it 'renders the tabbed form with tabs' do

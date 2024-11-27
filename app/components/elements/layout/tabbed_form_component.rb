@@ -30,7 +30,7 @@ module Elements
       end
 
       def render?
-        tabs?
+        tabs? && form?
       end
     end
   end
