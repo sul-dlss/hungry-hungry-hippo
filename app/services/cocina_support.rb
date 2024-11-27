@@ -53,4 +53,8 @@ class CocinaSupport
     end
     Cocina::Models.with_metadata(Cocina::Models.build(params), lock)
   end
+
+  def self.collection_druid_for(cocina_object:)
+    cocina_object.structural.isMemberOf.first
+  end
 end

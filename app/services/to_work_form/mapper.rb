@@ -27,7 +27,8 @@ module ToWorkForm
         abstract: CocinaSupport.abstract_for(cocina_object:),
         related_links_attributes: CocinaSupport.related_links_for(cocina_object:),
         license:,
-        version: cocina_object.version
+        version: cocina_object.version,
+        collection_druid: CocinaSupport.collection_druid_for(cocina_object:)
       }
     end
 

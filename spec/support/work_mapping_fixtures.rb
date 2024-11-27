@@ -9,7 +9,8 @@ module WorkMappingFixtures
       title: title_fixture,
       abstract: abstract_fixture,
       related_links_attributes: related_links_fixture,
-      license: license_fixture
+      license: license_fixture,
+      collection_druid: collection_druid_fixture
     )
   end
 
@@ -70,7 +71,7 @@ module WorkMappingFixtures
         administrative: { hasAdminPolicy: Settings.apo },
         access: { view: 'world', download: 'world', license: license_fixture,
                   useAndReproductionStatement: I18n.t('works.edit.fields.license.terms_of_use') },
-        structural: {}
+        structural: { isMemberOf: [collection_druid_fixture] }
       }
     )
   end
@@ -115,7 +116,8 @@ module WorkMappingFixtures
                                     }
                                   ]
                                 }
-                              }]
+                              }],
+                              isMemberOf: [collection_druid_fixture]
                             })
   end
 
@@ -139,7 +141,7 @@ module WorkMappingFixtures
                   download: 'world',
                   license: license_fixture,
                   useAndReproductionStatement: I18n.t('works.edit.fields.license.terms_of_use') },
-        structural: {}
+        structural: { isMemberOf: [collection_druid_fixture] }
       }
     )
   end
@@ -189,7 +191,7 @@ module WorkMappingFixtures
                           }
                         }
                       ],
-                      isMemberOf: []
+                      isMemberOf: [collection_druid_fixture]
                     })
   end
 
