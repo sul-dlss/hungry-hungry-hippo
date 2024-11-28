@@ -1,0 +1,7 @@
+<div data-controller="related-work" data-related-work-citation-container-selector-value=".field-container">
+  <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :identifier, label: helpers.t('related_works.edit.fields.identifier.label.html'), data: { related_work_target: 'identifier' }) %>
+  <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :use_citation, label: helpers.t('related_works.edit.fields.use_citation.label'),
+                                                    data: { action: 'related-work#toggleCitation', related_work_target: 'useCitation' }) %>
+  <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :citation, label: helpers.t('related_works.edit.fields.citation.label'), data: { related_work_target: 'citation' }) %>
+  <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :relationship, options:, required: false, label: helpers.t('related_works.edit.fields.relationship.label.html'), prompt:) %>
+</div>

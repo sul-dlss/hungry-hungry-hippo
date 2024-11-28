@@ -28,15 +28,44 @@
 #       enabled: "ON"
 
 en:
+  activemodel:
+    errors:
+      models:
+        related_work:
+          attributes:
+            relationship:
+              inclusion: '%{value} is not a valid relationship for related works'
   errors:
     not_authorized: 'You are not authorized to perform the requested action.'
   related_links:
     edit:
       fields:
-        url:
-          label: 'URL'
         text:
           label: 'Link text'
+        url:
+          label: 'URL'
+  related_works:
+    edit:
+      fields:
+        citation:
+          label: 'Full citation for work'
+        use_citation:
+          label: "I don't have a link but would like to enter a citation for a related work."
+        identifier:
+          label:
+            html: 'Link for a related work <em>(e.g., DOI, arXiv, PMID, PURL, or other URL)</em>'
+        relationship:
+          label:
+            html: 'How is your deposit related to this work?  <a href="https://sdr.library.stanford.edu/related-works" target="_blank">Get help choosing a term</a>'
+          options:
+            referenced by: "It's referenced or cited by"
+            references: 'It references or cites'
+            has original version: "It's a specific version or instance of"
+            has version: 'It has specific versions or instances, one of which is'
+            preceded by: 'It succeeds or is a continuation of'
+            succeeded by: 'It precedes or is continued by'
+            part of: "It's one part of"
+            has part: 'It consists of parts, one of which is'
   works:
     edit:
       fields:

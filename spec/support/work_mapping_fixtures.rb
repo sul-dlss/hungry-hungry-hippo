@@ -9,6 +9,7 @@ module WorkMappingFixtures
       title: title_fixture,
       abstract: abstract_fixture,
       related_links_attributes: related_links_fixture,
+      related_works_attributes: related_works_fixture,
       license: license_fixture,
       collection_druid: collection_druid_fixture
     )
@@ -64,7 +65,8 @@ module WorkMappingFixtures
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
-          relatedResource: CocinaDescriptionSupport.related_links(related_links: related_links_fixture)
+          relatedResource: CocinaDescriptionSupport.related_works(related_works: related_works_fixture) +
+                           CocinaDescriptionSupport.related_links(related_links: related_links_fixture)
         },
         version: 1,
         identification: { sourceId: source_id_fixture },
@@ -121,7 +123,7 @@ module WorkMappingFixtures
                             })
   end
 
-  def dro_fixture
+  def dro_fixture # rubocop:disable Metrics/AbcSize
     Cocina::Models.build(
       {
 
@@ -131,7 +133,8 @@ module WorkMappingFixtures
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
-          relatedResource: CocinaDescriptionSupport.related_links(related_links: related_links_fixture),
+          relatedResource: CocinaDescriptionSupport.related_works(related_works: related_works_fixture) +
+                           CocinaDescriptionSupport.related_links(related_links: related_links_fixture),
           purl: Sdr::Purl.from_druid(druid: druid_fixture)
         },
         version: 2,

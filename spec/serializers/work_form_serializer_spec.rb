@@ -14,13 +14,15 @@ RSpec.describe WorkFormSerializer do
       'lock' => nil,
       'abstract' => abstract_fixture,
       'related_links_attributes' => related_links_fixture,
+      'related_works_attributes' => related_works_fixture,
       'license' => license_fixture,
       'content_id' => 5
     }
   end
   let(:work_form) do
     WorkForm.new(title: title_fixture, druid:, collection_druid: collection_druid_fixture, abstract: abstract_fixture,
-                 related_links_attributes: related_links_fixture, license: license_fixture, content_id: 5)
+                 related_links_attributes: related_links_fixture, related_works_attributes: related_works_fixture,
+                 license: license_fixture, content_id: 5)
   end
 
   describe '.serialize?' do

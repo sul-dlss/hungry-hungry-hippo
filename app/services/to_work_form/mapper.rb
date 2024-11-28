@@ -25,6 +25,7 @@ module ToWorkForm
         lock: cocina_object.lock,
         title: CocinaSupport.title_for(cocina_object:),
         abstract: CocinaSupport.abstract_for(cocina_object:),
+        related_works_attributes: CocinaSupport.related_works_for(cocina_object:),
         related_links_attributes: CocinaSupport.related_links_for(cocina_object:),
         license:,
         version: cocina_object.version,

@@ -4,18 +4,20 @@ module Elements
   module Forms
     # Base component for all form fields.
     class FieldComponent < ApplicationComponent
-      def initialize(form:, field_name:, required: false, hidden_label: false, label: nil, help_text: nil, data: {}) # rubocop:disable Metrics/ParameterLists
+      def initialize(form:, field_name:, required: false, hidden_label: false, label: nil, help_text: nil, disabled: false, hidden: false, data: {}) # rubocop:disable Metrics/ParameterLists, Layout/LineLength
         @form = form
         @field_name = field_name
         @required = required
         @hidden_label = hidden_label
         @label = label
         @help_text = help_text
+        @hidden = hidden
+        @disabled = disabled
         @data = data
         super()
       end
 
-      attr_reader :form, :field_name, :required, :help_text, :hidden_label, :label, :data
+      attr_reader :form, :field_name, :required, :help_text, :hidden_label, :label, :hidden, :disabled, :data
 
       def help_text_id
         @help_text_id ||= form.field_id(field_name, 'help')
