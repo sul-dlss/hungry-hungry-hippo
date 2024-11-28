@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Works
-  module Edit
+module Elements
+  module TabForm
     # Component for a tab in a tabbed pane.
     class TabComponent < ApplicationComponent
       def initialize(label:, tab_name:, selected: false)
