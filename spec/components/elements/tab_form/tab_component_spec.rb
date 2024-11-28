@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Elements::TabComponent, type: :component do
+RSpec.describe Elements::TabForm::TabComponent, type: :component do
   it 'renders a tab' do
     render_inline(described_class.new(label: 'Tab 1', tab_name: :tab_one))
 

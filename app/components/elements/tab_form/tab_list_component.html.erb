@@ -1,0 +1,17 @@
+<%= tag.div class: classes, 'data-controller': 'tab-error' do %>
+  <%= tag.div class: tab_classes, role: 'tablist', 'aria-orientation': 'vertical' do |component| %>
+    <% tabs.each do |tab| %>
+      <%= tab %>
+    <% end %>
+  <% end %>
+  <%= form_with(model:, class: 'w-100') do |form| %>
+    <% hidden_fields.each do |field| %>
+      <%= form.hidden_field field %>
+    <% end %>
+    <div class="tab-content h-100">
+      <% panes.each do |pane| %>
+        <%= pane %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
