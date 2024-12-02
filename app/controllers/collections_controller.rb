@@ -13,9 +13,7 @@ class CollectionsController < ApplicationController
   end
 
   def new
-    # Once collection is being passed, should authorize that the user can create a work in that collection.
-    skip_verify_authorized!
-
+    authorize! Collection
     @collection_form = CollectionForm.new
 
     render :form
@@ -32,9 +30,7 @@ class CollectionsController < ApplicationController
   end
 
   def create
-    # Once collection is being passed, should authorize that the user can create a work in that collection.
-    skip_verify_authorized!
-
+    authorize! Collection
     @collection_form = CollectionForm.new(**collection_params)
     # The deposit param determines whether extra validations for deposits are applied.
     if @collection_form.valid?(deposit: deposit?)
