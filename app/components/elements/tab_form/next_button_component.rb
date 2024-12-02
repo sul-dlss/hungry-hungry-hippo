@@ -3,7 +3,7 @@
 module Elements
   module TabForm
     # Next button to progress through tabbed form
-    class NextButtonComponent < Elements::ButtonComponent
+    class NextButtonComponent < ButtonComponent
       def initialize(tab_id:)
         super(label: 'Next',
               variant: :primary,

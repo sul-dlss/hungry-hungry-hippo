@@ -3,7 +3,7 @@
 module Elements
   module Forms
     # Component for form file fields
-    class FileFieldComponent < Forms::FieldComponent
+    class FileFieldComponent < FieldComponent
     end
   end
 end
