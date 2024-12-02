@@ -31,7 +31,7 @@ class WorksController < ApplicationController
     authorize! @work
 
     unless editable?
-      flash[:danger] = I18n.t('works.edit.errors.cannot_be_edited')
+      flash[:danger] = helpers.t('works.edit.errors.cannot_be_edited')
       return redirect_to work_path(druid: params[:druid])
     end
 
