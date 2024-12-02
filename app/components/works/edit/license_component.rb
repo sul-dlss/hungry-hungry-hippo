@@ -16,11 +16,11 @@ module Works
       end
 
       def label
-        I18n.t('works.edit.fields.license.label')
+        helpers.t('works.edit.fields.license.label')
       end
 
       def help_text
-        I18n.t('works.edit.fields.license.help_text')
+        helpers.t('works.edit.fields.license.help_text')
       end
 
       def license_options
