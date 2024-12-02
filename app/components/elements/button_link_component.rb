@@ -15,7 +15,7 @@ module Elements
     attr_reader :link, :label
 
     def call
-      link_to(link, class: Elements::ButtonSupport.classes(variant: @variant, classes:), **@options) do
+      link_to(link, class: ButtonSupport.classes(variant: @variant, classes:), **@options) do
         label || content
       end
     end

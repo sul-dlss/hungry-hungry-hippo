@@ -16,7 +16,7 @@ module Elements
       attr_reader :form, :label
 
       def call
-        form.submit(label, class: Elements::ButtonSupport.classes(variant: @variant, classes:), **@options)
+        form.submit(label, class: ButtonSupport.classes(variant: @variant, classes:), **@options)
       end
 
       def classes

@@ -16,7 +16,7 @@ module Elements
 
     def call
       tag.button(
-        class: Elements::ButtonSupport.classes(variant: @variant, size: @size, classes: @classes),
+        class: ButtonSupport.classes(variant: @variant, size: @size, classes: @classes),
         type: 'button',
         **options
       ) do

@@ -3,7 +3,7 @@
 module Elements
   module Forms
     # Component for form checkbox field
-    class CheckboxComponent < Forms::FieldComponent
+    class CheckboxComponent < FieldComponent
     end
   end
 end

@@ -3,7 +3,7 @@
 module Elements
   module Forms
     # Component for form textarea fields
-    class TextareaFieldComponent < Forms::FieldComponent
+    class TextareaFieldComponent < FieldComponent
     end
   end
 end
