@@ -19,7 +19,7 @@ class TestShibbolethHeaders
       env[mangle(Authentication::NAME_HEADER)] = user.name
       env[mangle(Authentication::FIRST_NAME_HEADER)] = user.first_name
     end
-    env[Authentication::GROUPS_HEADER] = Array(groups).join(';') if groups
+    env[mangle(Authentication::GROUPS_HEADER)] = Array(groups).join(';') if groups
     @app.call(env)
   end
   # rubocop:enable Metrics/AbcSize

@@ -35,7 +35,7 @@ module Authentication
     # This will be called for all controller actions.
     # require_authentication will also be called for all controller actions,
     # unless skipped with allow_unauthenticated_access.
-    before_action :authentication, :require_authentication
+    before_action :authentication, :require_authentication, :set_current_groups
     helper_method :authenticated?, :current_user
   end
 
@@ -75,6 +75,10 @@ module Authentication
     Current.user ||= User.find_by(email_address: remote_user)
   end
 
+  def set_current_groups
+    Current.groups ||= groups_from_session
+  end
+
   def request_authentication
     session[:return_to_after_authenticating] = request.url
     redirect_to login_path
@@ -107,6 +111,17 @@ module Authentication
       name: DEV_NAME,
       first_name: DEV_FIRST_NAME
     }
+  end
+
+  # This looks first in the session for groups, and then to the headers.
+  # This allows the application session to outlive the shiboleth session
+  def groups_from_session
+    session['groups'] ||= begin
+      raw_header = request.headers[GROUPS_HEADER]
+      roles = ENV.fetch('ROLES', nil)
+      raw_header = roles if Rails.env.development?
+      raw_header&.split(';') || []
+    end
   end
 
   def terminate_session

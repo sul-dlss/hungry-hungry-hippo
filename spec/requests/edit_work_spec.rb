@@ -24,6 +24,28 @@ RSpec.describe 'Edit work' do
     end
   end
 
+  context 'when the user is an administrator' do
+    let(:admin_user) { create(:user) }
+    let(:groups) { ['dlss:hydrus-app-administrators'] }
+    let(:version_status) do
+      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 1,
+                                                                           openable?: true)
+    end
+
+    before do
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+      create(:work, druid:, collection: create(:collection, druid: collection_druid_fixture))
+      sign_in(admin_user, groups:)
+    end
+
+    it 'displays the work edit page' do
+      get "/works/#{druid}/edit"
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   context 'when the deposit job started' do
     let!(:work) { create(:work, :deposit_job_started, druid:) }
 
@@ -53,18 +75,41 @@ RSpec.describe 'Edit work' do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
       allow(ToWorkForm::RoundtripValidator).to receive(:roundtrippable?)
-
-      sign_in(user)
     end
 
-    it 'redirects to the show page' do
-      get "/works/#{druid}/edit"
+    context 'when the user is the depositor' do
+      before do
+        sign_in(user)
+      end
 
-      expect(response).to redirect_to(work_path(druid))
+      it 'redirects to the show page' do
+        get "/works/#{druid}/edit"
 
-      follow_redirect!
-      expect(response.body).to include('This work cannot be edited.')
-      expect(ToWorkForm::RoundtripValidator).not_to have_received(:roundtrippable?)
+        expect(response).to redirect_to(work_path(druid))
+
+        follow_redirect!
+        expect(response.body).to include('This work cannot be edited.')
+        expect(ToWorkForm::RoundtripValidator).not_to have_received(:roundtrippable?)
+      end
+    end
+
+    context 'when the user is an administrator' do
+      let(:admin_user) { create(:user) }
+      let(:groups) { ['dlss:hydrus-app-administrators'] }
+
+      before do
+        sign_in(admin_user, groups:)
+      end
+
+      it 'redirects to the show page' do
+        get "/works/#{druid}/edit"
+
+        expect(response).to redirect_to(work_path(druid))
+
+        follow_redirect!
+        expect(response.body).to include('This work cannot be edited.')
+        expect(ToWorkForm::RoundtripValidator).not_to have_received(:roundtrippable?)
+      end
     end
   end
 

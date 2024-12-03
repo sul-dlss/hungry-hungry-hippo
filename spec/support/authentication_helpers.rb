@@ -2,11 +2,12 @@
 
 # Helpers to assist with authentication.
 module AuthenticationHelpers
-  def authentication_headers_for(user)
+  def authentication_headers_for(user, groups: [])
     {
       Authentication::REMOTE_USER_HEADER => user.email_address,
       Authentication::NAME_HEADER => user.name,
-      Authentication::FIRST_NAME_HEADER => user.first_name
+      Authentication::FIRST_NAME_HEADER => user.first_name,
+      Authentication::GROUPS_HEADER => groups.join(';')
     }
   end
 

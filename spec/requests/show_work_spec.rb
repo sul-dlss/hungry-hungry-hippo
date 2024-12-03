@@ -23,6 +23,29 @@ RSpec.describe 'Show work' do
     end
   end
 
+  context 'when the user is an administrator' do
+    let(:admin_user) { create(:user) }
+    let(:groups) { ['dlss:hydrus-app-administrators'] }
+
+    before do
+      create(:work, druid:)
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
+      allow(Sdr::Repository).to receive(:status)
+        .with(druid:).and_return(
+          instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1,
+                                                                               openable?: false)
+        )
+
+      sign_in(admin_user, groups:)
+    end
+
+    it 'display the work show page' do
+      get "/works/#{druid}"
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   context 'when the deposit job started' do
     let!(:work) { create(:work, :deposit_job_started, druid:, user:) }
     let(:user) { create(:user) }

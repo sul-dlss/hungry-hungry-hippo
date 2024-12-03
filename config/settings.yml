@@ -12,3 +12,8 @@ purl:
   url: "https://sul-purl-stage.stanford.edu"
 
 staging_location: '/dor/workspace'
+
+# mappings from authorization role to workgroup name
+authorization_workgroup_names:
+  administrators: 'dlss:hydrus-app-administrators'
+  collection_creators: 'dlss:hydrus-app-collection-creators'
