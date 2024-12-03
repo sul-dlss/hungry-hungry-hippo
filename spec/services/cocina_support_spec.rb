@@ -143,4 +143,75 @@ RSpec.describe CocinaSupport do
       expect(updated_cocina_object.structural.contains.first.structural.contains.first.version).to eq version
     end
   end
+
+  describe '#event_date_for' do
+    subject(:event_date) { described_class.event_date_for(cocina_object:, type: 'publication') }
+
+    let(:cocina_object) do
+      # NOTE: the :dro factory in the cocina-models gem does not have a seam
+      #       for injecting abstract, so we do it manually here
+      build(:dro).then do |object|
+        object.new(
+          object
+          .to_h
+          .tap do |obj|
+            obj[:description][:event] =
+              [
+                event
+              ]
+          end
+        )
+      end
+    end
+
+    context 'when event date is EDTF with year only' do
+      let(:event) do
+        CocinaDescriptionSupport.event_date(type: 'publication', date: '2021')
+      end
+
+      it 'returns the event date' do
+        expect(event_date).to eq(year: 2021)
+      end
+    end
+
+    context 'when event date is EDTF with year and month only' do
+      let(:event) do
+        CocinaDescriptionSupport.event_date(type: 'publication', date: '2021-03')
+      end
+
+      it 'returns the event date' do
+        expect(event_date).to eq(year: 2021, month: 3)
+      end
+    end
+
+    context 'when event date is EDTF' do
+      let(:event) do
+        CocinaDescriptionSupport.event_date(type: 'publication', date: '2021-03-05')
+      end
+
+      it 'returns the event date' do
+        expect(event_date).to eq(year: 2021, month: 3, day: 5)
+      end
+    end
+
+    context 'when event date is not EDTF' do
+      let(:event) do
+        CocinaDescriptionSupport.event_date(type: 'publication', date: '2021-03-05', date_encoding_code: 'iso8601')
+      end
+
+      it 'returns nil' do
+        expect(event_date).to be_nil
+      end
+    end
+
+    context 'when event date is not correct type' do
+      let(:event) do
+        CocinaDescriptionSupport.event_date(type: 'deposit', date: '2021-03-05')
+      end
+
+      it 'returns nil' do
+        expect(event_date).to be_nil
+      end
+    end
+  end
 end

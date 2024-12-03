@@ -11,7 +11,8 @@ module WorkMappingFixtures
       related_links_attributes: related_links_fixture,
       related_works_attributes: related_works_fixture,
       license: license_fixture,
-      collection_druid: collection_druid_fixture
+      collection_druid: collection_druid_fixture,
+      publication_date_attributes: { year: '2024', month: '12' }
     )
   end
 
@@ -57,6 +58,7 @@ module WorkMappingFixtures
     content
   end
 
+  # rubocop:disable Metrics/AbcSize
   def request_dro_fixture
     Cocina::Models.build_request(
       {
@@ -64,6 +66,7 @@ module WorkMappingFixtures
         label: title_fixture,
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
+          event: [CocinaDescriptionSupport.event_date(type: 'publication', date: '2024-12', primary: true)],
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
           relatedResource: CocinaDescriptionSupport.related_works(related_works: related_works_fixture) +
                            CocinaDescriptionSupport.related_links(related_links: related_links_fixture)
@@ -77,6 +80,7 @@ module WorkMappingFixtures
       }
     )
   end
+  # rubocop:enable Metrics/AbcSize
 
   def request_dro_with_structural_fixture
     request_dro_fixture.new(structural: {
@@ -132,6 +136,7 @@ module WorkMappingFixtures
         label: title_fixture,
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
+          event: [CocinaDescriptionSupport.event_date(type: 'publication', date: '2024-12', primary: true)],
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
           relatedResource: CocinaDescriptionSupport.related_works(related_works: related_works_fixture) +
                            CocinaDescriptionSupport.related_links(related_links: related_links_fixture),

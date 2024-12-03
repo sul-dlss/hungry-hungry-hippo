@@ -31,6 +31,7 @@ module ToCocina
           title: CocinaDescriptionSupport.title(title: work_form.title),
           # contributor: contributors_params.presence,
           note: note_params,
+          event: event_params,
           # subject: subject_params.presence,
           purl: Sdr::Purl.from_druid(druid: work_form.druid),
           relatedResource: CocinaDescriptionSupport.related_works(related_works: work_form.related_works_attributes) +
@@ -52,6 +53,15 @@ module ToCocina
           if work_form.abstract.present?
             params << CocinaDescriptionSupport.note(type: 'abstract',
                                                     value: work_form.abstract)
+          end
+        end.presence
+      end
+
+      def event_params
+        [].tap do |params|
+          if work_form.publication_date.year.present?
+            params << CocinaDescriptionSupport.event_date(type: 'publication', primary: true,
+                                                          date: work_form.publication_date.to_edtf_s)
           end
         end.presence
       end

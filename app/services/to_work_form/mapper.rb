@@ -19,6 +19,7 @@ module ToWorkForm
 
     attr_reader :cocina_object
 
+    # rubocop:disable Metrics/AbcSize
     def params
       {
         druid: cocina_object.externalIdentifier,
@@ -29,9 +30,11 @@ module ToWorkForm
         related_links_attributes: CocinaSupport.related_links_for(cocina_object:),
         license:,
         version: cocina_object.version,
-        collection_druid: CocinaSupport.collection_druid_for(cocina_object:)
+        collection_druid: CocinaSupport.collection_druid_for(cocina_object:),
+        publication_date_attributes: CocinaSupport.event_date_for(cocina_object:, type: 'publication')
       }
     end
+    # rubocop:enable Metrics/AbcSize
 
     def license
       cocina_object.access.license

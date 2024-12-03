@@ -87,7 +87,9 @@ class WorksController < ApplicationController
   private
 
   def work_params
-    params.expect(work: WorkForm.user_editable_attributes + [WorkForm.nested_attributes])
+    # TODO: Extract nested form handling. See https://github.com/sul-dlss/hungry-hungry-hippo/issues/218
+    params.expect(work: WorkForm.user_editable_attributes + [WorkForm.nested_attributes] +
+    [{ publication_date_attributes: %i[year month day] }])
   end
 
   def update_work_params

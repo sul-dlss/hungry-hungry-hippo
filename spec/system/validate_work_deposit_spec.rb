@@ -22,6 +22,11 @@ RSpec.describe 'Validate a work deposit' do
 
     # Abstract is required for deposit, but skipping.
 
+    # Bad date
+    find('.nav-link', text: 'Dates (optional)').click
+    expect(page).to have_css('.nav-link.active', text: 'Dates (optional)')
+    fill_in('Year', with: 'abc')
+
     # Clicking on related content tab & filling in related link text and *not* URL (which is required for deposit)
     find('.nav-link', text: 'Related content (optional)').click
     expect(page).to have_css('.nav-link.active', text: 'Related content (optional)')
@@ -46,6 +51,13 @@ RSpec.describe 'Validate a work deposit' do
 
     # Make the abstract valid
     fill_in('Abstract', with: abstract_fixture)
+
+    # Publication date is marked invalid
+    expect(page).to have_css('.nav-link', text: 'Dates (optional)')
+    find('.nav-link', text: 'Dates (optional)').click
+    expect(page).to have_css('input.is-invalid#work_publication_date_attributes_year') # rubocop:disable Capybara/SpecificMatcher
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be greater than or equal to 1000')
+    fill_in('Year', with: '2024')
 
     # Related content is marked invalid
     expect(page).to have_css('.nav-link', text: 'Related content (optional)')

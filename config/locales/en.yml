@@ -86,6 +86,14 @@ en:
             User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or
             confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to
             additional license and use restrictions applied by the depositor.
+        publication_date:
+          label: 'Previous publication date'
+          year:
+            label: 'Year'
+          month:
+            label: 'Month'
+          day:
+            label: 'Day'
       errors:
         cannot_be_edited: 'This work cannot be edited.'
         validation: >
@@ -95,6 +103,9 @@ en:
         abstract:
           tab_label: 'Abstract'
           label: 'Describe your deposit'
+        dates:
+          tab_label: 'Dates (optional)'
+          label: 'Enter dates related to your deposit'
         deposit:
           tab_label: 'Deposit'
           label: 'Submit your deposit'
