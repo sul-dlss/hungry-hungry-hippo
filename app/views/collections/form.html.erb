@@ -1,0 +1,31 @@
+<%= render Elements::HeaderComponent.new(level: :h1, variant: :h2, text: @collection_form.title || 'Untitled collection', classes: 'mb-3') %>
+<%= render Elements::AlertComponent.new(variant: :danger, value: I18n.t('collections.edit.errors.validation')) if @collection_form.errors.present? %>
+<%= render Elements::TabForm::TabListComponent.new(model: @collection_form, hidden_fields: %i[lock version]) do |component| %>
+  <% component.with_tab(label: I18n.t('collections.edit.panes.title.tab_label'), tab_name: :title, selected: true) %>
+  <% component.with_tab(label: I18n.t('collections.edit.panes.description.tab_label'), tab_name: :description) %>
+  <% component.with_tab(label: I18n.t('collections.edit.panes.related_content.tab_label'), tab_name: :related_content) %>
+  <% component.with_tab(label: I18n.t('collections.edit.panes.deposit.tab_label'), tab_name: :deposit) %>
+  <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
+  <%# TabListComponent will render the actual form. %>
+  <% form_with(model: @collection_form) do |form| %>
+    <% component.with_pane(tab_name: :title, label: I18n.t('collections.edit.panes.title.label'), selected: true, form:) do %>
+      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('collections.edit.fields.title.label'),
+                                                         help_text: I18n.t('collections.edit.fields.title.help_text')) %>
+    <% end %>
+
+    <% component.with_pane(tab_name: :description, label: I18n.t('collections.edit.panes.description.label'), form:) do %>
+      <p><%= t('collections.edit.fields.description.help_text') %></p>
+      <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: I18n.t('collections.edit.fields.description.label')) %>
+    <% end %>
+
+    <% component.with_pane(tab_name: :related_content, label: I18n.t('collections.edit.panes.related_content.label'), form:) do %>
+      <%= render Elements::Forms::NestedComponent.new(form:, model_class: RelatedLinkForm, field_name: :related_links, form_component: RelatedLinks::EditComponent) %>
+    <% end %>
+
+    <% component.with_pane(tab_name: :deposit, label: I18n.t('collections.edit.panes.deposit.label'), form:, render_footer: false) do %>
+      <p><%= t('collections.edit.panes.deposit.help_text') %></p>
+      <%= link_to 'Cancel', collections_path %>
+      <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Deposit', classes: 'mt-2 ms-2') %>
+    <% end %>
+  <% end %>
+<% end %>
