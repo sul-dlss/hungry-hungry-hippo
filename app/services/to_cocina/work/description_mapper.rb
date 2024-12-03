@@ -30,7 +30,7 @@ module ToCocina
       def params
         {
           title: CocinaDescriptionSupport.title(title: work_form.title),
-          # contributor: contributors_params.presence,
+          contributor: CocinaDescriptionSupport.contributors(contributors: work_form.authors_attributes),
           note: note_params,
           event: event_params,
           subject: CocinaDescriptionSupport.keywords(keywords: work_form.keywords_attributes),
@@ -44,15 +44,6 @@ module ToCocina
         }.compact
       end
       # rubocop:enable Metrics/AbcSize
-
-      # def contributors_params
-      #   work_form.authors.map do |contributor|
-      #     CocinaDescriptionSupport.person_contributor(
-      #       forename: contributor.first_name,
-      #       surname: contributor.last_name
-      #     )
-      #   end
-      # end
 
       def note_params
         [].tap do |params|

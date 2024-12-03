@@ -6,6 +6,7 @@ module WorkMappingFixtures
   def new_work_form_fixture
     WorkForm.new(
       title: title_fixture,
+      authors_attributes: authors_fixture,
       abstract: abstract_fixture,
       related_links_attributes: related_links_fixture,
       related_works_attributes: related_works_fixture,
@@ -69,6 +70,8 @@ module WorkMappingFixtures
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
           subject: CocinaDescriptionSupport.keywords(keywords: keywords_fixture),
+          contributor: [CocinaDescriptionSupport.person_contributor(**person_contributor_fixture),
+                        CocinaDescriptionSupport.organization_contributor(**organization_contributor_fixture)],
           event: [CocinaDescriptionSupport.event_date(type: 'publication', date: '2024-12', primary: true)],
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
           relatedResource: CocinaDescriptionSupport.related_works(related_works: related_works_fixture) +
@@ -202,6 +205,8 @@ module WorkMappingFixtures
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
           subject: CocinaDescriptionSupport.keywords(keywords: keywords_fixture),
+          contributor: [CocinaDescriptionSupport.person_contributor(**person_contributor_fixture),
+                        CocinaDescriptionSupport.organization_contributor(**organization_contributor_fixture)],
           event: [CocinaDescriptionSupport.event_date(type: 'publication', date: '2024-12', primary: true)],
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
           relatedResource: CocinaDescriptionSupport.related_works(related_works: related_works_fixture) +

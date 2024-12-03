@@ -119,6 +119,21 @@ en:
             User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or
             confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to
             additional license and use restrictions applied by the depositor.
+        contributors:
+          role:
+            label: 'Role'
+          role_type:
+            label: 'Role type'
+          orcid_or_name:
+            label: 'ORCID iD or Name'
+          orcid:
+            error: 'ORCID iD must be formatted as "https://orcid.org/XXXX-XXXX-XXXX-XXXX"'
+          first_name:
+            label: 'First name'
+          last_name:
+            label: 'Last name'
+          organization:
+            label: 'Organization name'
         work_type:
           label: 'What type of content will you deposit?'
         work_subtypes:
@@ -132,7 +147,12 @@ en:
       panes:
         abstract:
           tab_label: 'Abstract & keywords'
-          label: 'Abstract'
+          label: 'Describe your deposit'
+        authors:
+          tab_label: 'Authors'
+          label: 'Author(s) to include in citation'
+          help_text: >
+            When there are multiple authors, list them in the order they should appear in the citation.
         dates:
           tab_label: 'Dates (optional)'
           label: 'Enter dates related to your deposit'
@@ -150,8 +170,6 @@ en:
         license:
           tab_label: 'License'
           label: 'License'
-          help_text: >
-            More text here.
         related_content:
           tab_label: 'Related content (optional)'
           label: 'Related content'

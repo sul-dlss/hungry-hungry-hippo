@@ -5,7 +5,7 @@ module Elements
     # Component for form select fields
     class SelectFieldComponent < ApplicationComponent
       def initialize(form:, field_name:, options:, required: false, hidden_label: false, # rubocop:disable Metrics/ParameterLists
-                     label: nil, help_text: nil, prompt: false)
+                     label: nil, help_text: nil, prompt: false, data: {})
         @form = form
         @field_name = field_name
         @options = options
@@ -14,10 +14,11 @@ module Elements
         @label = label
         @help_text = help_text
         @prompt = prompt
+        @data = data
         super()
       end
 
-      attr_reader :form, :field_name, :options, :required, :hidden_label, :label, :help_text, :prompt
+      attr_reader :form, :field_name, :options, :required, :hidden_label, :label, :help_text, :prompt, :data
 
       def help_text_id
         @help_text_id ||= form.field_id(field_name, 'help')

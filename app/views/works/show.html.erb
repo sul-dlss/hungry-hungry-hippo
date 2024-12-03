@@ -27,7 +27,9 @@
   <% component.with_row(label: 'Contact emails', values: [@work_form.contact_emails_attributes.map(&:email).join(', ')]) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'table-show mb-5', label: 'Dates') do |component| %>
+<%= render Works::Show::AuthorsShowComponent.new(work: @work_form) %>
+
+<%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'table-work mb-5', label: 'Dates') do |component| %>
   <% component.with_row(label: 'Publication date', values: [@work_form.publication_date.to_s]) %>
 <% end %>
 
