@@ -68,9 +68,15 @@ RSpec.describe 'Create a work deposit' do
     # Clicking on Next to go to related content tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Related content (optional)')
-    expect(page).to have_text('Related links')
+
+    # Filling in related works
+    expect(page).to have_text('Related works')
+    fill_in('Link for a related work (e.g., DOI, arXiv, PMID, PURL, or other URL)',
+            with: related_works_fixture.second['identifier'])
+    select('It consists of parts, one of which is', from: 'work_related_works_attributes_0_relationship')
 
     # Filling in related links
+    expect(page).to have_text('Related links')
     fill_in('Link text', with: related_links_fixture.first['text'])
     fill_in('URL', with: related_links_fixture.first['url'])
 

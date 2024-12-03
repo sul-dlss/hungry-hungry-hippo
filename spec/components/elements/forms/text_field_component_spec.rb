@@ -13,6 +13,7 @@ RSpec.describe Elements::Forms::TextFieldComponent, type: :component do
     expect(page).to have_css('input.form-control[type="text"]:not(.is-invalid)')
     expect(page).to have_no_css('small.form-text')
     expect(page).to have_no_css('div.invalid-feedback.is-invalid')
+    expect(page).to have_css('div.field-container', visible: :visible)
   end
 
   context 'when label is hidden' do
@@ -27,6 +28,20 @@ RSpec.describe Elements::Forms::TextFieldComponent, type: :component do
       render_inline(described_class.new(form:, field_name:, help_text: 'Helpful text'))
       expect(page).to have_css('input[aria-describedby="title_help"]')
       expect(page).to have_css('small.form-text[id="title_help"]', text: 'Helpful text')
+    end
+  end
+
+  context 'when disabled is set to true' do
+    it 'renders the text field as disabled' do
+      render_inline(described_class.new(form:, field_name:, disabled: true))
+      expect(page.find('input.form-control[type="text"]')).to be_disabled
+    end
+  end
+
+  context 'when hidden is set to true' do
+    it 'renders the containing div as hidden' do
+      render_inline(described_class.new(form:, field_name:, hidden: true))
+      expect(page).to have_css('div.field-container', visible: :hidden)
     end
   end
 

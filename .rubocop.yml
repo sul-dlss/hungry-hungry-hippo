@@ -482,6 +482,17 @@ FactoryBot/RedundantFactoryOption: # new in 2.23
   Enabled: true
 FactoryBot/SyntaxMethods: # new in 2.7
   Enabled: true
-
 Performance/StringBytesize: # new in 1.23
+  Enabled: true
+Lint/HashNewWithKeywordArgumentsAsDefault: # new in 1.69
+  Enabled: true
+Lint/NumericOperationWithConstantResult: # new in 1.69
+  Enabled: true
+Lint/UselessDefined: # new in 1.69
+  Enabled: true
+Style/DigChain: # new in 1.69
+  Enabled: true
+Style/FileNull: # new in 1.69
+  Enabled: true
+Style/FileTouch: # new in 1.69
   Enabled: true

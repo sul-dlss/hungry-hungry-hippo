@@ -162,6 +162,9 @@ RSpec.describe 'Show a work' do
       expect(page).to have_css('caption', text: 'Related content')
       expect(page).to have_css('tr', text: 'Related links')
       expect(page).to have_css('td', text: related_links_fixture.first['text'])
+      expect(page).to have_css('tr', text: 'Related published work')
+      expect(page).to have_css('td', text: 'Here is a valid citation. (part of)')
+      expect(page).to have_css('td', text: 'doi:10.7710/2162-3309.1059 (has part)')
     end
 
     # License table

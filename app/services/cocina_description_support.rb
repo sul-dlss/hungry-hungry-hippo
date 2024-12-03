@@ -47,6 +47,24 @@ class CocinaDescriptionSupport
     end.compact_blank
   end
 
+  def self.related_works(related_works:) # rubocop:disable Metrics/AbcSize
+    related_works.map do |related_work|
+      # NOTE: Sometimes this is an array of hashes and sometimes it's an array of RelatedLinkForm instances
+      related_work = related_work.attributes if related_work.respond_to?(:attributes)
+      next if related_work['citation'].blank? && related_work['identifier'].blank?
+
+      {
+        type: related_work['relationship']
+      }.tap do |related_work_hash|
+        related_work_hash[:identifier] = [{ uri: related_work['identifier'] }] if related_work['identifier'].present?
+
+        if related_work['citation'].present?
+          related_work_hash[:note] = [{ type: 'preferred citation', value: related_work['citation'] }]
+        end
+      end
+    end.compact_blank
+  end
+
   # @param forename [String] the forename of the person
   # @param surname [String] the surname of the person
   # @param role [Symbol] the role of the person from ROLES

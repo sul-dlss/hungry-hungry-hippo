@@ -36,6 +36,7 @@
     <% end %>
 
     <% component.with_pane(tab_name: :related_content, label: t('works.edit.panes.related_content.label'), form:) do %>
+      <%= render Elements::Forms::NestedComponent.new(form:, model_class: RelatedWorkForm, field_name: :related_works, form_component: RelatedWorks::EditComponent) %>
       <%= render Elements::Forms::NestedComponent.new(form:, model_class: RelatedLinkForm, field_name: :related_links, form_component: RelatedLinks::EditComponent) %>
     <% end %>
 

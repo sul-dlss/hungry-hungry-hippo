@@ -9,11 +9,28 @@ class CocinaSupport
   def self.related_links_for(cocina_object:) # rubocop:disable Metrics/AbcSize
     return nil if cocina_object.description.relatedResource.blank?
 
-    cocina_object.description.relatedResource.map do |related_resource|
-      next if related_resource.access.url.empty?
+    cocina_object.description.relatedResource.filter_map do |related_resource|
+      next if related_resource.access&.url.blank?
 
       { 'url' => related_resource.access.url.first[:value], 'text' => related_resource.title.first&.[](:value) }
     end.presence
+  end
+
+  def self.related_works_for(cocina_object:)
+    return nil if cocina_object.description.relatedResource.blank?
+
+    cocina_object.description.relatedResource.map do |related_resource|
+      citation, identifier = related_work_values_from(related_resource)
+
+      next if citation.blank? && identifier.blank?
+
+      {
+        'citation' => citation,
+        'identifier' => identifier,
+        'relationship' => related_resource.type,
+        'use_citation' => citation.present?
+      }
+    end.compact_blank.presence
   end
 
   def self.abstract_for(cocina_object:)
@@ -23,6 +40,19 @@ class CocinaSupport
   def self.pretty(cocina_object:)
     JSON.pretty_generate(clean(cocina_object.to_h))
   end
+
+  def self.related_work_values_from(related_resource) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    return [] if RelatedWorkForm::RELATIONSHIP_TYPES.exclude?(related_resource.type)
+
+    if related_resource.note&.first&.[](:type) == 'preferred citation'
+      return [related_resource.note&.first&.[](:value), nil]
+    end
+
+    return [nil, related_resource.identifier&.first&.[](:uri)] if related_resource.identifier&.first&.[](:uri).present?
+
+    []
+  end
+  private_class_method :related_work_values_from
 
   # Clean up a hash or array by removing empty values
   # rubocop:disable Metrics/CyclomaticComplexity

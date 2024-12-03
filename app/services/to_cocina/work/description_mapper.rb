@@ -33,7 +33,8 @@ module ToCocina
           note: note_params,
           # subject: subject_params.presence,
           purl: Sdr::Purl.from_druid(druid: work_form.druid),
-          relatedResource: CocinaDescriptionSupport.related_links(related_links: work_form.related_links_attributes)
+          relatedResource: CocinaDescriptionSupport.related_works(related_works: work_form.related_works_attributes) +
+            CocinaDescriptionSupport.related_links(related_links: work_form.related_links_attributes)
         }.compact
       end
 

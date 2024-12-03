@@ -28,6 +28,14 @@ RSpec.describe 'Edit a work' do
       }
     ]
   end
+  let(:updated_related_works) do
+    [
+      {
+        'relationship' => 'references',
+        'identifier' => 'https://purl.stanford.edu/fake'
+      }
+    ]
+  end
 
   before do
     # On the second call, this will return the cocina object submitted to update.
@@ -67,7 +75,7 @@ RSpec.describe 'Edit a work' do
     # Filling in abstract
     fill_in('work_abstract', with: updated_abstract)
 
-    # Filling in related content
+    # Filling in related content, first related links
     find('.nav-link', text: 'Related content (optional)').click
     fill_in('Link text', with: 'delete')
     fill_in('URL', with: 'me')
@@ -76,8 +84,19 @@ RSpec.describe 'Edit a work' do
     fill_in('work_related_links_attributes_1_text', with: updated_related_links.first['text'])
     fill_in('work_related_links_attributes_1_url', with: updated_related_links.first['url'])
     # Test removing a nested field
-    within('div[data-index="0"]') do
-      find('button[data-action="click->nested-form#delete"]').click
+    within_fieldset('Related links') do
+      within('div[data-index="0"]') do
+        find('button[data-action="click->nested-form#delete"]').click
+      end
+    end
+    # Then add a related work
+    click_link_or_button('+ Add another related work')
+    within_fieldset('Related works') do
+      within('div[data-index="2"]') do
+        fill_in('Link for a related work (e.g., DOI, arXiv, PMID, PURL, or other URL)',
+                with: updated_related_works.first['identifier'])
+        select('It references or cites', from: 'work_related_works_attributes_2_relationship')
+      end
     end
 
     click_link_or_button('Save as draft')
@@ -87,6 +106,7 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_css('h1', text: updated_title)
     expect(page).to have_content(updated_abstract)
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
+    expect(page).to have_content('https://purl.stanford.edu/fake (references)')
     expect(page).to have_css('.status', text: 'New version in draft')
     expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
   end

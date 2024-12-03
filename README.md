@@ -57,15 +57,38 @@ RSpec.describe 'Create a work draft', :rack_test do
 CYPERFUL=1 bundle exec rspec spec/system/create_work_draft_spec.rb
 ```
 
-### Adding a new field
+### Adding a new simple field
+
+A "simple" field is a single value, such as a title (string) or a version number
+(integer). If the field you're adding is more complex, such as one that has
+component parts (e.g., a related link or work), see the following section.
+
 1. Add the field to the appropriate form object (e.g., `app/forms/work_form.rb`), including validation.
-2. Add the field to the form view (e.g., `app/views/works/form.html.erb`), including adding strings to `config/locales/en.yml`.
-3. Permit the parameters in `app/controllers/works_controller`.
-4. Map the field from cocina to work form in `app/services/to_work_form/mapper.rb`.
-5. Map the field from work form to cocina in `app/services/to_cocina/mapper.rb` (or sub-mapper).
-6. Add the field to the work form and cocina fixtures in `spec/support/mapping_fixtures.rb`.
-7. Test serialization of the field in `spec/serializers/work_form_serializer_spec.rb`.
-8. Test adding the field in `spec/system/create_work_deposit_spec.rb`.
-9. Test editing the field in `spec/system/edit_work_spec.rb`.
-10. Add the field to the work show (`app/views/works/show.html.erb`).
-11. Test display of the field in `spec/system/show_work_spec.rb`.
+1. Add the field to the form view (e.g., `app/views/works/form.html.erb`), including adding strings to `config/locales/en.yml`.
+1. Permit the parameters in `app/controllers/works_controller`.
+1. Map the field from cocina to work form in `app/services/to_work_form/mapper.rb`.
+1. Map the field from work form to cocina in `app/services/to_cocina/mapper.rb` (or sub-mapper).
+1. Add the field to the work form and cocina fixtures in `spec/support/mapping_fixtures.rb`.
+1. Test serialization of the field in `spec/serializers/work_form_serializer_spec.rb`.
+1. Test adding the field in `spec/system/create_work_deposit_spec.rb`.
+1. Test editing the field in `spec/system/edit_work_spec.rb`.
+1. Add the field to the work show (`app/views/works/show.html.erb`).
+1. Test display of the field in `spec/system/show_work_spec.rb`.
+
+### Adding a new nested field
+
+A "nested" field is one that is not "simple" (see prior section).
+
+1. Create a new form object for the nested field (e.g., `app/forms/related_link_form.rb`), defining attributes and validations.
+1. Add the new form to the `accepts_nested_attributes_for` list for the appropriate form object (e.g., `app/forms/work_form.rb`).
+1. Create a new view component for editing the nested field (e.g., `app/components/related_links/edit_component.rb` & `app/components/related_links/edit_component.html.erb`), including adding strings to `config/locales/en.yml`.
+1. Add the nested field to the form view (e.g., `app/views/works/form.html.erb`)
+1. (OPTIONAL) Add a new Stimulus controller if any special interactions are needed for the new field
+1. Map the field from cocina to the work and/or collection form (e.g., `app/services/to_work_form/mapper.rb`).
+1. Map the field from the work and/or collection form to cocina in `app/services/to_cocina/mapper.rb` (or sub-mapper).
+1. Add the field to the work form and cocina fixtures in `spec/support/mapping_fixtures.rb`.
+1. Test serialization of the field in `spec/serializers/work_form_serializer_spec.rb`.
+1. Test adding the field in `spec/system/create_work_deposit_spec.rb`.
+1. Test editing the field in `spec/system/edit_work_spec.rb`.
+1. Add the field to the work show (`app/views/works/show.html.erb`).
+1. Test display of the field in `spec/system/show_work_spec.rb`.

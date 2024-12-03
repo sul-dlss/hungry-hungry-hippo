@@ -1,6 +1,6 @@
-<div>
+<%= tag.div class: 'mb-4 field-container', hidden: do %>
   <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: label, hidden_label:) %>
   <%= render Elements::Forms::HelpTextComponent.new(id: help_text_id, help_text:) %>
-  <%= form.text_field field_name, class: 'form-control', required:, aria: field_aria, data: %>
+  <%= form.text_field field_name, class: 'form-control', required:, aria: field_aria, disabled:, data: %>
   <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name:) %>
-</div>
+<% end %>
