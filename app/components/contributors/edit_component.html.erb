@@ -1,0 +1,3 @@
+<%= render Elements::Forms::ToggleComponent.new(form:, field_name: :role_type, label: t('works.edit.fields.role_type.label'), options: role_type_options) %>
+<%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :person_role, options: PERSON_ROLES, label: t('works.edit.fields.role.label')) %>
+<%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :organization_role, options: ORGANIZATION_ROLES, label: t('works.edit.fields.role.label')) %>
