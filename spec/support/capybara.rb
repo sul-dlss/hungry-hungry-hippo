@@ -15,7 +15,12 @@ RSpec.configure do |config|
 
   # This will output the browser console logs after each system test
   config.after(:each, type: :system) do |example|
-    puts Capybara.page.driver.browser.logs.get(:browser) unless example.metadata[:rack_test] || ENV['CYPERFUL']
+    next if example.metadata[:rack_test] || ENV['CYPERFUL'].present?
+
+    Rails.logger.info('Browser log entries from system spec run include:')
+    Capybara.page.driver.browser.logs.get(:browser).each do |log_entry|
+      Rails.logger.info("* #{log_entry}")
+    end
   end
 end
 
