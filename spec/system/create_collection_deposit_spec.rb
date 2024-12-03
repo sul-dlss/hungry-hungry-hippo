@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Create a collection deposit' do
   let(:druid) { collection_druid_fixture }
   let(:user) { create(:user) }
+  let(:groups) { ['dlss:hydrus-app-collection-creators'] }
   let(:cocina_object) do
     cocina_object = build(:collection, title: collection_title_fixture, id: druid)
     Cocina::Models.with_metadata(cocina_object, 'abc123')
@@ -29,7 +30,7 @@ RSpec.describe 'Create a collection deposit' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
 
-    sign_in(user)
+    sign_in(user, groups:)
   end
 
   it 'creates a collection' do

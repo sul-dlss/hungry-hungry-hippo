@@ -40,6 +40,7 @@ RSpec.describe 'Edit collection' do
 
   context 'when the work is not open or openable' do
     let(:user) { create(:user) }
+    let(:groups) { ['dlss:hydrus-app-collection-creators'] }
     let(:collection) { create(:collection, druid:, user:) }
     let(:cocina_object) { build(:collection_with_metadata, title: collection.title, id: druid) }
     let(:version_status) do
@@ -52,7 +53,7 @@ RSpec.describe 'Edit collection' do
       allow(Sdr::Repository).to receive(:status).with(druid: collection.druid).and_return(version_status)
       allow(ToCollectionForm::RoundtripValidator).to receive(:roundtrippable?)
 
-      sign_in(user)
+      sign_in(user, groups:)
     end
 
     it 'redirects to the show page' do
@@ -68,6 +69,7 @@ RSpec.describe 'Edit collection' do
 
   context 'when the collection is not roundtrippable' do
     let(:user) { create(:user) }
+    let(:groups) { ['dlss:hydrus-app-collection-creators'] }
     let(:collection) { create(:collection, user: user, druid:) }
     let!(:cocina_object) { build(:collection_with_metadata, title: collection.title, id: druid) }
     let(:version_status) do
@@ -80,7 +82,7 @@ RSpec.describe 'Edit collection' do
       allow(Sdr::Repository).to receive(:status).with(druid: collection.druid).and_return(version_status)
       allow(ToCollectionForm::RoundtripValidator).to receive(:roundtrippable?).and_call_original
 
-      sign_in(user)
+      sign_in(user, groups:)
     end
 
     it 'redirects to the show page' do

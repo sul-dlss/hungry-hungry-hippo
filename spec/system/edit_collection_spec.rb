@@ -8,6 +8,7 @@ RSpec.describe 'Edit a collection' do
 
   let(:druid) { collection_druid_fixture }
   let(:user) { create(:user) }
+  let(:groups) { ['dlss:hydrus-app-collection-creators'] }
 
   let(:cocina_object) do
     collection_with_metadata_fixture
@@ -47,7 +48,7 @@ RSpec.describe 'Edit a collection' do
     allow(Sdr::Repository).to receive(:update)
     create(:collection, druid: druid, user:)
 
-    sign_in(user)
+    sign_in(user, groups:)
   end
 
   it 'edits a collection' do

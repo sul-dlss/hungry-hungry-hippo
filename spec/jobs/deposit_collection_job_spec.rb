@@ -29,7 +29,7 @@ RSpec.describe DepositCollectionJob do
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
 
       expect(collection.reload.deposit_job_finished?).to be true
-      expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with('wait', collection.id)
+      expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with('collection/wait', collection.id)
     end
   end
 
@@ -51,7 +51,7 @@ RSpec.describe DepositCollectionJob do
       expect(Sdr::Repository).not_to have_received(:accession)
 
       expect(collection.reload.deposit_job_finished?).to be true
-      expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with('wait', collection.id)
+      expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with('collection/wait', collection.id)
     end
   end
 end

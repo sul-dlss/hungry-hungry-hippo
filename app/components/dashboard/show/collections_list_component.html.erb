@@ -1,5 +1,7 @@
-<%= render Elements::HeaderComponent.new(level: :h3, text: label, classes: 'mb-4') %>
-<%= render Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary) %>
+<div class="d-flex">
+  <%= render Elements::HeaderComponent.new(level: :h3, text: label, classes: 'mb-4 w-100 text-nowrap') %>
+  <%= render Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary, classes: 'ml-auto text-nowrap h-50') %>
+</div>
 
 <% collections.each do |collection| %>
   <%= render Collections::HeaderLinkComponent.new(collection:, level: :h4) %>

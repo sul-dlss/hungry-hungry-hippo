@@ -4,10 +4,11 @@ require 'rails_helper'
 
 RSpec.describe 'Validate a collection deposit' do
   let(:user) { create(:user) }
+  let(:groups) { ['dlss:hydrus-app-collection-creators'] }
   let(:collection_path) { new_collection_path }
 
   before do
-    sign_in(user)
+    sign_in(user, groups:)
   end
 
   it 'validates a work' do
