@@ -1,14 +1,14 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ["citation", "identifier", "useCitation"]
+  static targets = ['citation', 'identifier', 'useCitation']
   static values = { citationContainerSelector: String }
 
-  connect() {
+  connect () {
     this.toggleCitation()
   }
 
-  toggleCitation() {
+  toggleCitation () {
     // If the `use_citation` box is checked, the user wants to use a citation
     // rather than an identifier as the value of the related work. When the box
     // is checked, we unhide the div that contains the citation field, enable
