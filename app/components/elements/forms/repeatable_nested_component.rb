@@ -10,16 +10,22 @@ module Elements
         @model_class = model_class
         @field_name = field_name
         @form_component = form_component
+        @hidden_label = hide_label
+        @classes = classes
         super()
       end
 
-      attr_reader :form, :model_class, :field_name, :form_component
+      attr_reader :form, :model_class, :field_name, :form_component, :hidden_label
 
       def add_button_label
         "+ Add another #{model_class.model_name.singular.humanize(capitalize: false)}"
       end
 
-      def header_label
+      def classes
+        merge_classes(@classes)
+      end
+
+      def label_text
         model_class.model_name.plural.humanize
       end
     end
