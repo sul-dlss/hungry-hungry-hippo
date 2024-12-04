@@ -1,0 +1,20 @@
+<div class="row" data-controller="form-date">
+  <div class="col-2">
+    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :year, label: helpers.t('publication_date.edit.fields.year.label'), hidden_label: true,
+                                                       placeholder: helpers.t('publication_date.edit.fields.year.label'), data: { form_date_target: 'year', action: 'form-date#update' }) %>
+  </div>
+  <div class="col-2">
+    <%= render Elements::Forms::SelectMonthFieldComponent.new(form:, field_name: :month, label: helpers.t('publication_date.edit.fields.month.label'), hidden_label: true,
+                                                              data: { form_date_target: 'month', action: 'form-date#update' }) %>
+  </div>
+  <div class="col-2">
+    <%= render Elements::Forms::SelectDayFieldComponent.new(form:, field_name: :day, label: helpers.t('publication_date.edit.fields.day.label'), hidden_label: true,
+                                                            data: { form_date_target: 'day', action: 'form-date#update' }) %>
+  </div>
+  <div class="col-1"></div>
+  <div class="col-1">
+    <%= render Elements::ButtonComponent.new(classes: 'border border-0', variant: :'outline-primary', size: :lg, data: { action: 'form-date#reset' }) do %>
+      <%= helpers.delete_icon %><span class="visually-hidden">Clear</span>
+    <% end %>
+  </div>
+</div>

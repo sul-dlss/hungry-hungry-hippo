@@ -19,7 +19,7 @@
     <% end %>
 
     <% component.with_pane(tab_name: :related_content, label: I18n.t('collections.edit.panes.related_content.label'), form:) do %>
-      <%= render Elements::Forms::NestedComponent.new(form:, model_class: RelatedLinkForm, field_name: :related_links, form_component: RelatedLinks::EditComponent) %>
+      <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent) %>
     <% end %>
 
     <% component.with_pane(tab_name: :deposit, label: I18n.t('collections.edit.panes.deposit.label'), form:, render_footer: false) do %>

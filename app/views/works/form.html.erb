@@ -37,33 +37,12 @@
     <% end %>
 
     <% component.with_pane(tab_name: :dates, label: t('works.edit.panes.dates.label'), form:) do %>
-      <% form.fields_for :publication_date do |date_form| %>
-        <fieldset id="publication-date">
-          <legend class="form-label"><%= t('works.edit.fields.publication_date.label') %></legend>
-          <div class="row" data-controller="form-date">
-            <div class="col-2">
-              <%= render Elements::Forms::TextFieldComponent.new(form: date_form, field_name: :year, label: t('works.edit.fields.publication_date.year.label'), hidden_label: true, placeholder: t('works.edit.fields.publication_date.year.label'), data: { form_date_target: 'year', action: 'form-date#update' }) %>
-            </div>
-            <div class="col-2">
-              <%= render Elements::Forms::SelectMonthFieldComponent.new(form: date_form, field_name: :month, label: t('works.edit.fields.publication_date.month.label'), hidden_label: true, data: { form_date_target: 'month', action: 'form-date#update' }) %>
-            </div>
-            <div class="col-2">
-              <%= render Elements::Forms::SelectDayFieldComponent.new(form: date_form, field_name: :day, label: t('works.edit.fields.publication_date.day.label'), hidden_label: true, data: { form_date_target: 'day', action: 'form-date#update' }) %>
-            </div>
-            <div class="col-1"></div>
-            <div class="col-1">
-              <%= render Elements::ButtonComponent.new(classes: 'border border-0', variant: :'outline-primary', size: :lg, data: { action: 'form-date#reset' }) do %>
-                <%= delete_icon %><span class="visually-hidden">Clear</span>
-              <% end %>
-            </div>
-          </div>
-        </fieldset>
-      <% end %>
+      <%= render NestedComponentPresenter.for(form:, field_name: :publication_date, model_class: DateForm, form_component: PublicationDate::EditComponent) %>
     <% end %>
 
     <% component.with_pane(tab_name: :related_content, label: t('works.edit.panes.related_content.label'), form:) do %>
-      <%= render Elements::Forms::NestedComponent.new(form:, model_class: RelatedWorkForm, field_name: :related_works, form_component: RelatedWorks::EditComponent) %>
-      <%= render Elements::Forms::NestedComponent.new(form:, model_class: RelatedLinkForm, field_name: :related_links, form_component: RelatedLinks::EditComponent) %>
+      <%= render NestedComponentPresenter.for(form:, field_name: :related_works, model_class: RelatedWorkForm, form_component: RelatedWorks::EditComponent) %>
+      <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent) %>
     <% end %>
 
     <% component.with_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form:) do %>
