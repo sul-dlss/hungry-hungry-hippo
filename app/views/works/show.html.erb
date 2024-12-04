@@ -11,7 +11,7 @@
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'table-work mb-5', label: 'Dates') do |component| %>
-  <% component.with_row(label: 'Publication date', values: [@work_form.publication_date.to_edtf_s]) %>
+  <% component.with_row(label: 'Publication date', values: [@work_form.publication_date.to_s]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'table-work mb-5', label: 'Description') do |component| %>

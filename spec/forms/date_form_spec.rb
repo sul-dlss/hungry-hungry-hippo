@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe DateForm do
-  describe '.to_edtf_s' do
+  describe '.to_s' do
     it 'returns the date as an EDTF string' do
-      expect(described_class.new(year: 2021, month: 3, day: 5).to_edtf_s).to eq '2021-03-05'
+      expect(described_class.new(year: 2021, month: 3, day: 5).to_s).to eq '2021-03-05'
     end
   end
 
