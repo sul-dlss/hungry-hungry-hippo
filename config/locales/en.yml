@@ -111,18 +111,21 @@ en:
             User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or
             confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to
             additional license and use restrictions applied by the depositor.
-        publication_date:
-          label: 'Previous publication date'
-          year:
-            label: 'Year'
-          month:
-            label: 'Month'
-          day:
-            label: 'Day'
-        role:
-          label: 'Role'
-        role_type:
-          label: 'Role type'
+        contributors:
+          role:
+            label: 'Role'
+          role_type:
+            label: 'Role type'
+          orcid_or_name:
+            label: 'ORCID iD or Name'
+          orcid:
+            error: 'ORCID iD must be formatted as "https://orcid.org/XXXX-XXXX-XXXX-XXXX"'
+          first_name:
+            label: 'First name'
+          last_name:
+            label: 'Last name'
+          organization:
+            label: 'Organization name'
       errors:
         cannot_be_edited: 'This work cannot be edited.'
         validation: >

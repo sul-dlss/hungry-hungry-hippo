@@ -11,49 +11,49 @@ module Contributors
     attr_reader :form
 
     def role_type_options
-      %w[Individual Organization]
+      [%w[person Individual], %w[organization Organization]]
     end
 
     PERSON_ROLES = [
-      'Author',
-      'Advisor',
-      'Composer',
-      'Contributing author',
-      'Copyright holder',
-      'Creator',
-      'Data collector',
-      'Data contributor',
-      'Editor',
-      'Event organizer',
-      'Interviewee',
-      'Interviewer',
-      'Performer',
-      'Photographer',
-      'Primary thesis advisor',
-      'Principal investigator',
-      'Researcher',
-      'Software developer',
-      'Speaker',
-      'Thesis advisor'
+      ['Author', 'author'],
+      ['Advisor', 'advisor'],
+      ['Composer', 'composer'],
+      ['Contributing Author', 'contributing_author'],
+      ['Copyright holder', 'copyright_holder'],
+      ['Creator', 'creator'],
+      ['Data collector', 'data_collector'],
+      ['Data contributor', 'data_contributor'],
+      ['Editor', 'editor'],
+      ['Event organizer', 'event_organizer'],
+      ['Interviewee', 'interviewee'],
+      ['Interviewer', 'interviewer'],
+      ['Performer', 'performer'],
+      ['Photographer', 'photographer'],
+      ['Primary thesis advisor', 'primary_thesis_advisor'],
+      ['Principal investigator', 'principal_investigator'],
+      ['Researcher', 'researcher'],
+      ['Software developer', 'software_developer'],
+      ['Speaker', 'speaker'],
+      ['Thesis advisor', 'thesis_advisor']
     ].freeze
 
     ORGANIZATION_ROLES = [
-      'Author',
-      'Conference',
-      'Contributing author',
-      'Copyright holder',
-      'Data collector',
-      'Data contributor',
-      'Degree granting institution',
-      'Distributor',
-      'Event',
-      'Event organizer',
-      'Funder',
-      'Host institution',
-      'Issuing body',
-      'Publisher',
-      'Research group',
-      'Sponsor'
+      ['Author', 'author'],
+      ['Conference', 'conference'],
+      ['Contributing author', 'contributing_author'],
+      ['Copyright holder', 'copyright_holder'],
+      ['Data collector', 'data_collector'],
+      ['Data contributor', 'data_contributor'],
+      ['Degree granting institution', 'degree_granting_institution'],
+      ['Distributor', 'distributor'],
+      ['Event', 'event'],
+      ['Event organizer', 'event_organizer'],
+      ['Funder', 'funder'],
+      ['Host institution', 'host_institution'],
+      ['Issuing body', 'issuing_body'],
+      ['Publisher', 'publisher'],
+      ['Research group', 'research_group'],
+      ['Sponsor', 'sponsor']
     ].freeze
   end
 end

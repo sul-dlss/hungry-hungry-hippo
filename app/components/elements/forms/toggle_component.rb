@@ -4,9 +4,9 @@ module Elements
   module Forms
     # Component for a toggle-like radio button group field
     class ToggleComponent < FieldComponent
-      def initialize(options:)
+      def initialize(options:, **)
         @options = options
-        super()
+        super(**)
       end
 
       attr_reader :options

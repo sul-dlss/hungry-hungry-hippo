@@ -43,6 +43,7 @@ class WorksController < ApplicationController
 
   def create # rubocop:disable Metrics/AbcSize
     @work_form = WorkForm.new(**work_params)
+
     collection = Collection.find_by!(druid: @work_form.collection_druid)
     authorize! collection, with: WorkPolicy
 
