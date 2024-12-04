@@ -61,7 +61,7 @@ module ToCocina
         [].tap do |params|
           if work_form.publication_date.year.present?
             params << CocinaDescriptionSupport.event_date(type: 'publication', primary: true,
-                                                          date: work_form.publication_date.to_edtf_s)
+                                                          date: work_form.publication_date.to_s)
           end
         end.presence
       end

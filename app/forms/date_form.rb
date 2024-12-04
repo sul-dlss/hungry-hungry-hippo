@@ -12,7 +12,7 @@ class DateForm < ApplicationForm
   attribute :day, :integer
   validates :day, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 31, allow_nil: true }
 
-  def to_edtf_s
+  def to_s
     EdtfSupport.to_edtf_s(year:, month:, day:)
   end
 end
