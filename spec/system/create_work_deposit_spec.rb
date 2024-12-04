@@ -71,7 +71,7 @@ RSpec.describe 'Create a work deposit' do
     expect(page).to have_text('Enter dates related to your deposit')
 
     # Filling in dates
-    within_fieldset('publication-date') do
+    within_fieldset('publication_date') do
       # Month and day are disabled initially.
       expect(page).to have_field('Year', disabled: false, text: '')
       expect(page).to have_field('Month', disabled: true)

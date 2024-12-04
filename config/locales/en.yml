@@ -37,6 +37,16 @@ en:
               inclusion: '%{value} is not a valid relationship for related works'
   errors:
     not_authorized: 'You are not authorized to perform the requested action.'
+  publication_date:
+    edit:
+      legend: 'Previous publication date'
+      fields:
+        year:
+          label: 'Year'
+        month:
+          label: 'Month'
+        day:
+          label: 'Day'
   related_links:
     edit:
       fields:
@@ -86,14 +96,6 @@ en:
             User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or
             confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to
             additional license and use restrictions applied by the depositor.
-        publication_date:
-          label: 'Previous publication date'
-          year:
-            label: 'Year'
-          month:
-            label: 'Month'
-          day:
-            label: 'Day'
       errors:
         cannot_be_edited: 'This work cannot be edited.'
         validation: >

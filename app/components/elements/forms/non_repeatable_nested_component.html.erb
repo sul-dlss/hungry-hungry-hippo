@@ -1,0 +1,10 @@
+<%= tag.fieldset(id: field_name) do %>
+  <legend class="form-label">
+    <%= header_label %>
+  </legend>
+  <%= tag.div(class: 'mb-3') do %>
+    <%= form.fields_for field_name do |nested_form| %>
+      <%= render form_component.new(form: nested_form) %>
+    <% end %>
+  <% end %>
+<% end %>

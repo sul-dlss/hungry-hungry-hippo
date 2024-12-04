@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Elements::Forms::NestedComponent, type: :component do
+RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
   subject(:component) do
-    described_class.new(form:, model_class: RelatedLinkForm, field_name: :related_links,
+    described_class.new(form:, field_name: :related_links, model_class: RelatedLinkForm,
                         form_component: RelatedLinks::EditComponent)
   end
 
