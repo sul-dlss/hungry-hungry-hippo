@@ -41,17 +41,13 @@ class ContentsController < ApplicationController
     @content_files = @content.content_files.order(filename: :asc).page(params[:page])
   end
 
-  # ActionDispath::Http::UploadedFile only provides the base name.
-  # This attempts to get the complete filename from the headers.
-  def filename_for(file)
-    file.headers.match(/filename="(.+)"/)[1]
-  end
-
   def update_files
     files = params[:content][:files]
-    files.each_value do |file|
+    files.each do |index, file|
+      # Dropzone controller is modified to provide the full path as content[:paths][index]
+      path = params[:content][:paths][index]
       content_file = ContentFile.create_with(file_type: :attached, size: file.size, label: file.original_filename)
-                                .find_or_create_by!(content: @content, filename: filename_for(file))
+                                .find_or_create_by!(content: @content, filename: path)
       content_file.file.attach(file)
     end
   end
