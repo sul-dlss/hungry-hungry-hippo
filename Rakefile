@@ -15,14 +15,14 @@ begin
 
   desc 'Run erblint against ERB files'
   task erblint: :environment do
-    puts 'Running erblint...'
+    puts 'Running ERB linter...'
     system('bin/erb_lint --lint-all --format compact')
   end
 
   desc 'Run Yarn linter against JS files'
   task eslint: :environment do
-    puts 'Running JS linters...'
-    system('yarn run lint')
+    puts 'Running JS linter...'
+    system('yarn lint')
   end
 
   desc 'Run all configured linters'

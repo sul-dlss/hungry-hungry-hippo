@@ -54,8 +54,18 @@ RSpec.describe 'Create a work draft', :rack_test do
 
 [Cyperful](https://github.com/stepful/cyperful) is a visual debugger for system tests. To run a system test, prepend `CYPERFUL=1`. For example:
 ```
-CYPERFUL=1 bundle exec rspec spec/system/create_work_draft_spec.rb
+CYPERFUL=1 bin/rspec spec/system/create_work_draft_spec.rb
 ```
+
+### Code Linters
+
+To run all configured linters, run `bin/rake lint`.
+
+To run linters individually, run which ones you need:
+
+* Ruby code: `bin/rubocop` (add `-a` flag to autocorrect violations)
+* ERB templates: `bin/erb_lint --lint-all --format compact` (add `-a` flag to autocorrect violations)
+* JavaScript code: `yarn lint` (add `--fix` flag to autocorrect violations)
 
 ### Adding a new simple field
 
