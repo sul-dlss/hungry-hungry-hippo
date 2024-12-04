@@ -10,12 +10,7 @@
 
 raise "Seeds are for development only" unless Rails.env.development?
 
-user = User.find_or_create_by!(email_address: Authentication::DEV_REMOTE_USER) do |user|
+User.find_or_create_by!(email_address: Authentication::DEV_REMOTE_USER) do |user|
   user.first_name = Authentication::DEV_FIRST_NAME
   user.name = Authentication::DEV_NAME
-end
-
-Collection.find_or_create_by!(title: 'Test Collection') do |collection|
-  collection.user = user
-  collection.druid = 'druid:cd234fg5678'
 end
