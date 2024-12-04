@@ -67,8 +67,8 @@ component parts (e.g., a related link or work), see the following section.
 1. Add the field to the form view (e.g., `app/views/works/form.html.erb`), including adding strings to `config/locales/en.yml`.
 1. Permit the parameters in `app/controllers/works_controller`.
 1. Map the field from cocina to work form in `app/services/to_work_form/mapper.rb`.
-1. Map the field from work form to cocina in `app/services/to_cocina/mapper.rb` (or sub-mapper).
-1. Add the field to the work form and cocina fixtures in `spec/support/mapping_fixtures.rb`.
+1. Map the field from work form to cocina in `app/services/to_cocina/work/mapper.rb` (or sub-mapper).
+1. Add the field to the work form and cocina fixtures in `spec/support/work_mapping_fixtures.rb`.
 1. Test serialization of the field in `spec/serializers/work_form_serializer_spec.rb`.
 1. Test adding the field in `spec/system/create_work_deposit_spec.rb`.
 1. Test editing the field in `spec/system/edit_work_spec.rb`.
@@ -85,8 +85,8 @@ A "nested" field is one that is not "simple" (see prior section).
 1. Add the nested field to the form view (e.g., `app/views/works/form.html.erb`)
 1. (OPTIONAL) Add a new Stimulus controller if any special interactions are needed for the new field
 1. Map the field from cocina to the work and/or collection form (e.g., `app/services/to_work_form/mapper.rb`).
-1. Map the field from the work and/or collection form to cocina in `app/services/to_cocina/mapper.rb` (or sub-mapper).
-1. Add the field to the work form and cocina fixtures in `spec/support/mapping_fixtures.rb`.
+1. Map the field from the work and/or collection form to cocina in `app/services/to_cocina/work/mapper.rb` (or sub-mapper).
+1. Add the field to the work form and cocina fixtures in `spec/support/work_mapping_fixtures.rb`.
 1. Test serialization of the field in `spec/serializers/work_form_serializer_spec.rb`.
 1. Test adding the field in `spec/system/create_work_deposit_spec.rb`.
 1. Test editing the field in `spec/system/edit_work_spec.rb`.
