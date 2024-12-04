@@ -30,6 +30,14 @@ export default class extends Controller {
       this.progressTarget.classList.add('d-none')
       this.updateProgress(0)
     })
+    this.dropzone.on('sendingmultiple', (files, xhr, data) => {
+      // Add the full path of each file to the form data
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        const path = file.fullPath ? file.fullPath : file.name
+        data.append(`content[paths][${i}]`, path)
+      }
+    })
   }
 
   updateProgress (progress) {
