@@ -7,9 +7,10 @@ module Elements
       renders_many :rows, 'Elements::Tables::TableRowComponent'
       renders_one :header, 'Elements::Tables::TableHeaderComponent'
 
-      def initialize(id:, classes: [], label: nil)
+      def initialize(id:, classes: [], body_classes: [], label: nil)
         @id = id
         @classes = classes
+        @body_classes = body_classes
         @label = label
         super()
       end
@@ -20,6 +21,10 @@ module Elements
         # Provides table, table-striped, and table-sm as the static default classes
         # merged with any additional classes passed in.
         merge_classes(%w[table table-striped table-light table-sm], @classes)
+      end
+
+      def body_classes
+        merge_classes(%w[table-group-divider], @body_classes)
       end
 
       def render?

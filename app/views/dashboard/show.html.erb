@@ -1,2 +1,2 @@
 <%= render Elements::HeaderComponent.new(level: :h2, text: "#{current_user.name} - Dashboard", classes: 'mb-4') %>
-<%= render Dashboard::Show::CollectionsListComponent.new(label: 'Your collections', current_user:) %>
+<%= render Dashboard::Show::CollectionsListComponent.new(label: 'Your collections', collections: current_user.collections, status_map: @status_map) %>

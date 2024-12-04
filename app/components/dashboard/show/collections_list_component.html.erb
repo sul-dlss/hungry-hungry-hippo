@@ -5,6 +5,6 @@
 
 <% collections.each do |collection| %>
   <%= render Collections::HeaderLinkComponent.new(collection:, level: :h4) %>
-  <%= render Dashboard::Show::WorksListComponent.new(collection:) %>
+  <%= render Dashboard::Show::WorksListComponent.new(collection:, status_map:) %>
   <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary) %>
 <% end %>

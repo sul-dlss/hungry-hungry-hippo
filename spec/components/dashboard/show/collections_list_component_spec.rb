@@ -8,7 +8,7 @@ RSpec.describe Dashboard::Show::CollectionsListComponent, type: :component do
   let(:user) { create(:user) }
 
   it 'renders the collections list for the user' do
-    render_inline(described_class.new(label: 'Your collections', current_user: user))
+    render_inline(described_class.new(label: 'Your collections', collections: user.collections, status_map: {}))
 
     expect(page).to have_css('h3', text: 'Your collections')
     expect(page).to have_css('h4', text: top_collection.title)
