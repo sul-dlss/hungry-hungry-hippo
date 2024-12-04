@@ -54,8 +54,9 @@ RSpec.describe 'Create a work deposit' do
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
 
     # Filling in title
-    find('.nav-link', text: 'Title').click
+    find('.nav-link', text: 'Title & contact').click
     fill_in('work_title', with: title_fixture)
+    fill_in('Contact email', with: contact_email_fixture.first['email'])
 
     # Click Next to go to abstract tab
     click_link_or_button('Next')

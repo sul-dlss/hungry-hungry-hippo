@@ -26,6 +26,7 @@ module ToCocina
 
       attr_reader :work_form
 
+      # rubocop:disable Metrics/AbcSize
       def params
         {
           title: CocinaDescriptionSupport.title(title: work_form.title),
@@ -35,9 +36,13 @@ module ToCocina
           # subject: subject_params.presence,
           purl: Sdr::Purl.from_druid(druid: work_form.druid),
           relatedResource: CocinaDescriptionSupport.related_works(related_works: work_form.related_works_attributes) +
-            CocinaDescriptionSupport.related_links(related_links: work_form.related_links_attributes)
+            CocinaDescriptionSupport.related_links(related_links: work_form.related_links_attributes),
+          access: {
+            accessContact: CocinaDescriptionSupport.contact_emails(contact_emails: work_form.contact_emails_attributes)
+          }
         }.compact
       end
+      # rubocop:enable Metrics/AbcSize
 
       # def contributors_params
       #   work_form.authors.map do |contributor|

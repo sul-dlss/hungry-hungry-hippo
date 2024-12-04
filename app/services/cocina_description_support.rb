@@ -27,6 +27,21 @@ class CocinaDescriptionSupport
     [{ value: title }]
   end
 
+  def self.contact_emails(contact_emails:)
+    contact_emails.map do |contact_email|
+      # Since contact_email is either a Hash or an instance of ContactEmailForm,
+      # we need to make it a hash of the attributes if it's a ContactEmailForm
+      contact_email = contact_email.attributes if contact_email.respond_to?(:attributes)
+      next if contact_email['email'].blank?
+
+      {
+        value: contact_email['email'],
+        type: 'email',
+        displayLabel: 'Contact'
+      }
+    end.compact_blank
+  end
+
   def self.related_links(related_links:)
     related_links.map do |related_link|
       # NOTE: Sometimes this is an array of hashes and sometimes it's an array of RelatedLinkForm instances

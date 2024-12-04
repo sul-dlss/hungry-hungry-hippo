@@ -145,9 +145,11 @@ RSpec.describe 'Show a work' do
 
     # Title table
     within('table#title-table') do
-      expect(page).to have_css('caption', text: 'Title')
+      expect(page).to have_css('caption', text: 'Title and contact')
       expect(page).to have_css('tr', text: 'Title')
       expect(page).to have_css('td', text: work.title)
+      expect(page).to have_css('tr', text: 'Contact emails')
+      expect(page).to have_css('td', text: contact_email_fixture.pluck(:email).join(', '))
     end
 
     # Description table
