@@ -1,10 +1,10 @@
-<%= tag.div %>
-  <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: label, hidden_label:, default_label_class: 'form-check-label') %>
-  <%= tag.div class: 'button-group' role: 'group'>
-    <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: options.first, hidden_label:, default_label_class: 'form-check-label') %>
-    <%= form.radio_button field_name, options.first, class: 'form-check-input' %>
-    <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: options.last, hidden_label:, default_label_class: 'form-check-label') %>
-    <%= form.radio_button field_name, options.last, class: 'form-check-input' checked%>
+<%= tag.div do %>
+  <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: label) %><br>
+  <%= tag.div class: 'btn-group', role: 'group' do %>
+    <% options.each do |option| %>
+      <%= form.radio_button field_name, option.first, type: 'radio', class: 'btn-check' %>
+      <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: option.last, hidden_label:, classes: 'btn btn-outline-primary') %>
+    <% end %>
   <% end %>
   <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name:) %>
 <% end %>
