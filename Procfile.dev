@@ -1,3 +1,3 @@
-web: bin/rails server
+web: ROLES=dlss:hydrus-app-administrators bin/rails server
 css: yarn install && yarn watch:css
 jobs: bin/jobs
