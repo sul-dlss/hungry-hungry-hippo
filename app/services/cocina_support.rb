@@ -87,4 +87,24 @@ class CocinaSupport
   def self.collection_druid_for(cocina_object:)
     cocina_object.structural.isMemberOf.first
   end
+
+  # Returns the event date parsed from an EDTF date value.
+  # @param [Cocina::Models::DRO] cocina_object
+  # @param [String] type, e.g., 'publication'
+  # @return [Hash, Nil] with keys for year, month, and day
+  def self.event_date_for(cocina_object:, type:) # rubocop:disable Metrics/AbcSize
+    event = cocina_object.description.event.find { |e| e.type == type }
+    return if event.blank?
+
+    cocina_date = event.date.first
+    return unless cocina_date.encoding&.code == 'edtf'
+
+    date = Date.edtf!(cocina_date.value)
+    # Using count of dashes to determine the date parts present
+    dash_count = cocina_date.value.count('-')
+    { year: date.year }.tap do |date_params|
+      date_params[:month] = date.month if dash_count >= 1
+      date_params[:day] = date.day if dash_count == 2
+    end
+  end
 end

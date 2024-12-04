@@ -85,3 +85,11 @@ end
 def fileset_external_identifier_fixture
   'https://cocina.sul.stanford.edu/fileSet/kb185hz2713-f6bafda8-5719-4f77-bd76-02aaa542de74'
 end
+
+def publication_date_fixture
+  {
+    'year' => 2024,
+    'month' => 6,
+    'day' => 10
+  }
+end

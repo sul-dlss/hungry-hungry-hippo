@@ -42,6 +42,7 @@ gem 'bootsnap', require: false
 # Additional gems
 gem 'action_policy'
 gem 'config'
+gem 'edtf'
 gem 'honeybadger'
 gem 'kaminari' # For pagination
 gem 'okcomputer'

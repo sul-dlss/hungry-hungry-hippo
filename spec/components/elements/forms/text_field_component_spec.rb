@@ -64,4 +64,11 @@ RSpec.describe Elements::Forms::TextFieldComponent, type: :component do
       expect(page).to have_css('input[data-test="test_data"]')
     end
   end
+
+  context 'when placeholder is provided' do
+    it 'creates field with placeholder' do
+      render_inline(described_class.new(form:, field_name:, placeholder: 'My placeholder'))
+      expect(page).to have_css('input[placeholder="My placeholder"]')
+    end
+  end
 end

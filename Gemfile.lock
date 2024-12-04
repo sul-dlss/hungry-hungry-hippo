@@ -592,6 +592,7 @@ DEPENDENCIES
   dor-services-client (>= 15.2.1)
   dor-workflow-client (>= 7.6.1)
   druid-tools
+  edtf
   erb_lint
   factory_bot_rails
   honeybadger

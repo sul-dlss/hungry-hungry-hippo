@@ -177,5 +177,12 @@ RSpec.describe 'Show a work' do
                                text: 'Content distributed via the Stanford Digital Repository may be subject to ' \
                                      'additional license and use restrictions applied by the depositor.')
     end
+
+    # Dates table
+    within('table#dates-table') do
+      expect(page).to have_css('caption', text: 'Dates')
+      expect(page).to have_css('tr', text: 'Publication date')
+      expect(page).to have_css('td', text: '2024-12')
+    end
   end
 end

@@ -3,6 +3,7 @@
 # Form for a Work
 class WorkForm < ApplicationForm
   accepts_nested_attributes_for :related_links, :related_works
+  accepts_nested_attributes_for :publication_date, form_class: DateForm, array: false
 
   def self.immutable_attributes
     ['druid']

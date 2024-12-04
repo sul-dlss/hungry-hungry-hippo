@@ -65,6 +65,31 @@ RSpec.describe 'Create a work deposit' do
     # Filling in abstract
     fill_in('work_abstract', with: abstract_fixture)
 
+    # Clicking on Next to go to dates tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Dates (optional)')
+    expect(page).to have_text('Enter dates related to your deposit')
+
+    # Filling in dates
+    within_fieldset('publication-date') do
+      # Month and day are disabled initially.
+      expect(page).to have_field('Year', disabled: false, text: '')
+      expect(page).to have_field('Month', disabled: true)
+      expect(page).to have_field('Day', disabled: true)
+      # They become enabled as fields are filled in.
+      fill_in('Year', with: '2024')
+      select('June', from: 'Month')
+      select('10', from: 'Day')
+      # Clear
+      click_link_or_button('Clear')
+      expect(page).to have_field('Year', disabled: false, text: '')
+      expect(page).to have_field('Month', disabled: true)
+      expect(page).to have_field('Day', disabled: true)
+      fill_in('Year', with: '2024')
+      select('June', from: 'Month')
+      select('10', from: 'Day')
+    end
+
     # Clicking on Next to go to related content tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Related content (optional)')

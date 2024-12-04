@@ -92,17 +92,25 @@ class CocinaDescriptionSupport
     }
   end
 
-  # def self.event_date(date_type:, date_value:, type: 'deposit', date_encoding_code: 'edtf')
-  #   {
-  #     type:,
-  #     date: [{
-  #       value: date_value,
-  #       type: date_type,
-  #       encoding: { code: date_encoding_code }
+  # @param date [String] the value of the date, e.g., '2024-03'
+  # @param type [String] the type of the date, e.g., 'publication'
+  # @param date_encoding_code [String] the encoding code for the date, e.g., 'edtf'
+  # @param primary [Boolean] whether this is the primary date
+  def self.event_date(date:, type:, date_encoding_code: 'edtf', primary: false)
+    {
+      type:,
+      date: [
+        {
+          value: date,
+          type: type,
+          encoding: { code: date_encoding_code }
 
-  #     }]
-  #   }
-  # end
+        }.tap do |date_params|
+          date_params[:status] = 'primary' if primary
+        end
+      ]
+    }
+  end
 
   # def self.event_contributor(contributor_name_value:, type: 'publication', contributor_type: 'organization',
   #                            role: :PUBLISHER)

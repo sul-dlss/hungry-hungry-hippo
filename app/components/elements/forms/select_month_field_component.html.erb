@@ -1,6 +1,6 @@
-<%= tag.div class: 'mb-4 field-container', hidden: do %>
+<div>
   <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: label, hidden_label:) %>
   <%= render Elements::Forms::HelpTextComponent.new(id: help_text_id, help_text:) %>
-  <%= form.text_field field_name, class: 'form-control', required:, aria: field_aria, disabled:, data:, placeholder: %>
+  <%= select_month(value, { prompt: label, field_name:, prefix: }, { class: classes, aria: field_aria, data: }) %>
   <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name:) %>
-<% end %>
+</div>
