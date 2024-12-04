@@ -90,6 +90,7 @@ component parts (e.g., a related link or work), see the following section.
 A "nested" field is one that is not "simple" (see prior section).
 
 1. Create a new form object for the nested field (e.g., `app/forms/related_link_form.rb`), defining attributes and validations.
+    * NOTE: Make sure the name of your field is in the name of your form, e.g., for a field name of `creation_date`, name the form `CreationDateForm`.
 1. Add the new form to the `accepts_nested_attributes_for` list for the appropriate form object (e.g., `app/forms/work_form.rb`).
 1. Create a new view component for editing the nested field (e.g., `app/components/related_links/edit_component.rb` & `app/components/related_links/edit_component.html.erb`), including adding strings to `config/locales/en.yml`.
 1. Add the nested field to the form view (e.g., `app/views/works/form.html.erb`)
