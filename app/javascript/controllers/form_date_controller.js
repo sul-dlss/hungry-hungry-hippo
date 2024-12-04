@@ -2,12 +2,12 @@ import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = ['year', 'month', 'day']
-  
-  connect() {
-    this.update();
+
+  connect () {
+    this.update()
   }
 
-  update() {
+  update () {
     // Disable month and day fields if year is empty
     // Disable day field if month is empty
     this.monthTarget.disabled = false
@@ -20,7 +20,7 @@ export default class extends Controller {
     }
   }
 
-  reset() {
+  reset () {
     this.yearTarget.value = ''
     this.monthTarget.value = ''
     this.dayTarget.value = ''
