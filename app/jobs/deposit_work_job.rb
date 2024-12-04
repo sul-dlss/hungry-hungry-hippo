@@ -20,12 +20,8 @@ class DepositWorkJob < ApplicationJob
 
     ModelSync::Work.call(work:, cocina_object: new_cocina_object)
 
-    # Refresh the wait page. Since the deposit job is finished, this will redirect to the show page.
+    # The wait page will refresh until deposit_job_started_at is nil.
     work.update!(deposit_job_started_at: nil, druid:)
-    # Just to be aware for future troubleshooting: There is a possible race condition between the websocket
-    # connecting and the following broadcast being sent.
-    sleep 0.5 if Rails.env.test? # Avoids race condition in tests
-    Turbo::StreamsChannel.broadcast_refresh_to 'wait', work.id
 
     # Content isn't needed anymore
     content.destroy!

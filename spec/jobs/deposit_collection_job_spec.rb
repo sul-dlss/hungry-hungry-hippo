@@ -9,7 +9,6 @@ RSpec.describe DepositCollectionJob do
   before do
     allow(ToCocina::Collection::Mapper).to receive(:call).and_call_original
     allow(Sdr::Repository).to receive(:accession)
-    allow(Turbo::StreamsChannel).to receive(:broadcast_refresh_to)
   end
 
   context 'when a new collection' do
@@ -29,7 +28,6 @@ RSpec.describe DepositCollectionJob do
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
 
       expect(collection.reload.deposit_job_finished?).to be true
-      expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with('collection/wait', collection.id)
     end
   end
 
@@ -51,7 +49,6 @@ RSpec.describe DepositCollectionJob do
       expect(Sdr::Repository).not_to have_received(:accession)
 
       expect(collection.reload.deposit_job_finished?).to be true
-      expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with('collection/wait', collection.id)
     end
   end
 end
