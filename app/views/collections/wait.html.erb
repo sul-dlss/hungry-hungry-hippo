@@ -1,2 +1,6 @@
-<%= turbo_stream_from 'wait', params[:id] %>
-<%= render Elements::SpinnerComponent.new(message: 'Processing...', variant: :info, classes: 'my-2') %>
+<%# Setting the turbo_refresh_method will make the refresh smooth. %>
+<% content_for(:turbo_refresh_method, 'refresh') %>
+
+<%= tag.div data: { controller: 'refresh' } do %>
+    <%= render Elements::SpinnerComponent.new(message: 'Processing...', variant: :info, classes: 'my-2') %>
+<% end %>

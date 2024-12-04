@@ -15,7 +15,6 @@ RSpec.describe DepositWorkJob do
     allow(ToCocina::Work::Mapper).to receive(:call).and_call_original
     allow(Contents::Stager).to receive(:call)
     allow(Sdr::Repository).to receive(:accession)
-    allow(Turbo::StreamsChannel).to receive(:broadcast_refresh_to)
   end
 
   context 'when a new work' do
@@ -37,7 +36,6 @@ RSpec.describe DepositWorkJob do
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
 
       expect(work.reload.deposit_job_finished?).to be true
-      expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with('wait', work.id)
     end
   end
 
@@ -68,7 +66,6 @@ RSpec.describe DepositWorkJob do
       expect(work.reload.title).to eq(title_fixture)
 
       expect(work.deposit_job_finished?).to be true
-      expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with('wait', work.id)
     end
   end
 end
