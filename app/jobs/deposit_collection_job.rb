@@ -14,6 +14,8 @@ class DepositCollectionJob < ApplicationJob
 
     Sdr::Repository.accession(druid:) if deposit
 
+    ModelSync::Collection.call(collection:, cocina_object: new_cocina_object)
+
     # The wait page will refresh until deposit_job_started_at is nil.
     collection.update!(deposit_job_started_at: nil, druid:)
   end

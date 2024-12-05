@@ -10,6 +10,9 @@ class CollectionsController < ApplicationController
   def show
     authorize! @collection
     @status_presenter = StatusPresenter.new(status: @status)
+
+    # This updates the Collection with the latest metadata from the Cocina object.
+    ModelSync::Collection.call(collection: @collection, cocina_object: @cocina_object)
   end
 
   def new
@@ -26,6 +29,10 @@ class CollectionsController < ApplicationController
       flash[:danger] = I18n.t('collections.edit.errors.cannot_be_edited')
       return redirect_to collection_path(druid: params[:druid])
     end
+
+    # This updates the Collection with the latest metadata from the Cocina object.
+    ModelSync::Collection.call(collection: @collection, cocina_object: @cocina_object)
+
     render :form
   end
 
