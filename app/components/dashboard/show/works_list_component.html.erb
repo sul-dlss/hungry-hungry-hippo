@@ -2,7 +2,7 @@
       id:
     ) do |component| %>
   <% component.with_header(
-       headers: ['Deposit', 'Deposit Status', 'Owner', 'Last Modified', 'PURL']
+       headers: ['Recent deposits in collection', 'Deposit status', 'Owner', 'Last modified', 'Persistent link']
      ) %>
   <% works.each do |work| %>
     <% component.with_row(values: values_for(work), id: id_for(work)) %>
