@@ -6,7 +6,7 @@ RSpec.describe 'Show dashboard', :rack_test do
   let!(:work) { create(:work, :with_druid, user:, collection:) }
   let!(:work_without_druid) { create(:work, user:, collection:) }
   let!(:draft_work) { create(:work, :with_druid, user:, collection:) }
-  let(:collection) { create(:collection, user:) }
+  let(:collection) { create(:collection, :with_druid, user:) }
   let(:user) { create(:user) }
   let(:version_status) do
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, accessioning?: true,

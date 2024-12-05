@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Dashboard::Show::DraftsListComponent, type: :component do
   let(:work) { create(:work, :with_druid, user:, collection:) }
-  let(:collection) { create(:collection) }
+  let(:collection) { create(:collection, :with_druid) }
   let(:user) { create(:user) }
 
   it 'renders the drafts list table with rows' do
