@@ -53,9 +53,8 @@
   }
 }
 
-table.table-work {
-  border: 1px solid var(--stanford-30-black);
-
+// Common to styled tables
+table.table-h3 {
   caption {
     caption-side: top;
     font-weight: 700;
@@ -66,3 +65,17 @@ table.table-work {
     padding: 0.25rem;
   }
 }
+
+table.table-show {
+  @extend .border;  
+  @extend .table-striped;
+  @extend .table-light;
+  @extend .table-sm;
+
+  border: 1px solid var(--stanford-30-black);
+
+  tbody {
+    @extend .table-group-divider;
+  }
+}
+

@@ -6,24 +6,24 @@
   <%= render Elements::SpinnerComponent.new %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'title-table', classes: 'table-work mb-5', label: 'Title') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'title-table', classes: 'table-show mb-5', label: 'Title') do |component| %>
   <% component.with_row(label: 'Title', values: [@work_form.title]) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'table-work mb-5', label: 'Dates') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'table-show mb-5', label: 'Dates') do |component| %>
   <% component.with_row(label: 'Publication date', values: [@work_form.publication_date.to_s]) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'table-work mb-5', label: 'Description') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'table-show mb-5', label: 'Description') do |component| %>
   <% component.with_row(label: 'Abstract', values: [@work_form.abstract]) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'table-work mb-5', label: 'Related content') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'table-show mb-5', label: 'Related content') do |component| %>
   <% component.with_row(label: 'Related published work', values: @work_form.related_works_attributes.map(&:to_s)) %>
   <% component.with_row(label: 'Related links', values: @work_form.related_links_attributes.map { |related_link| link_to(related_link.text || related_link.url, related_link.url) }) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'license-table', classes: 'table-work mb-5', label: 'License and additional terms of use') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'license-table', classes: 'table-show mb-5', label: 'License and additional terms of use') do |component| %>
   <% component.with_row(label: 'License', values: [@work_form.license_label]) %>
   <% component.with_row(label: 'Terms of use', values: [t('works.edit.fields.license.terms_of_use')]) %>
 <% end %>
