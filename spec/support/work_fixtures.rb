@@ -46,6 +46,17 @@ def related_works_fixture
   ]
 end
 
+def contact_email_fixture
+  [
+    {
+      'email' => 'aperson@example.com'
+    },
+    {
+      'email' => 'anotherperson@example.com'
+    }
+  ]
+end
+
 def license_fixture
   'https://creativecommons.org/licenses/by/4.0/legalcode'
 end

@@ -35,6 +35,10 @@ en:
           attributes:
             relationship:
               inclusion: '%{value} is not a valid relationship for related works'
+        contact_email:
+          attributes:
+            email:
+              format: '%{value} is not a valid email address'
   errors:
     not_authorized: 'You are not authorized to perform the requested action.'
   publication_date:
@@ -47,6 +51,11 @@ en:
           label: 'Month'
         day:
           label: 'Day'
+  contact_email:
+    edit:
+      fields:
+        email:
+          label: 'Contact email'
   related_links:
     edit:
       fields:
@@ -128,7 +137,7 @@ en:
           tab_label: 'Related content (optional)'
           label: 'Related content'
         title:
-          tab_label: 'Title'
+          tab_label: 'Title & contact'
           label: 'Title of deposit'
   collections:
     edit:

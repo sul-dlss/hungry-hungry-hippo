@@ -6,6 +6,20 @@ class CocinaSupport
     cocina_object.description.title.first.value
   end
 
+  # Maps the value from the accessContact field in the Cocina::DescriptiveAccessMetadata object.
+  # to the email value for a contact_email in the WorkForm
+  # @param [Cocina::Models::DRO] cocina_object
+  # @return [Array<Hash>, Nil] with keys for email
+  def self.contact_emails_for(cocina_object:)
+    return nil if cocina_object.description.access.blank?
+
+    cocina_object.description.access.accessContact.filter_map do |access_contact|
+      next if access_contact.value.blank?
+
+      { 'email' => access_contact[:value] }
+    end.presence
+  end
+
   def self.related_links_for(cocina_object:) # rubocop:disable Metrics/AbcSize
     return nil if cocina_object.description.relatedResource.blank?
 

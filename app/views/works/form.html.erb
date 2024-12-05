@@ -29,6 +29,7 @@
     <% component.with_pane(tab_name: :title, label: t('works.edit.panes.title.label'), form:) do %>
       <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: t('works.edit.fields.title.label'),
                                                          help_text: t('works.edit.fields.title.help_text')) %>
+      <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false) %>
     <% end %>
 
     <% component.with_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), form:) do %>
