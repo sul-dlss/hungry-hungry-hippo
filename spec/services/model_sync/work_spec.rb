@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe ModelSync::Work do
   let(:druid) { druid_fixture }
-  let(:collection) { create(:collection) }
-  let(:new_collection) { create(:collection) }
+  let(:collection) { create(:collection, :with_druid) }
+  let(:new_collection) { create(:collection, :with_druid) }
   let(:work) { create(:work, druid:, collection:) }
   let(:cocina_object) do
     Cocina::Models.with_metadata(build(:dro, id: druid, title: title_fixture, collection_ids: [new_collection.druid]),

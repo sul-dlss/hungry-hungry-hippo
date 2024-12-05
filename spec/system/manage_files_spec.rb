@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Manage files for a work' do
   let(:user) { create(:user) }
-  let(:collection) { create(:collection, user:) }
+  let(:collection) { create(:collection, :with_druid, user:) }
 
   before do
     Kaminari.configure do |config|

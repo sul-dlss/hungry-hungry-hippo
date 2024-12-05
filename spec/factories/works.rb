@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :work do
     sequence(:title) { |n| "Work #{n}" }
     user
-    collection
+    association :collection, :with_druid # rubocop:disable FactoryBot/AssociationStyle
     object_updated_at { Time.zone.now }
 
     trait :deposit_job_started do

@@ -115,7 +115,7 @@ RSpec.describe 'Edit work' do
 
   context 'when the work is not roundtrippable' do
     let(:user) { create(:user) }
-    let(:collection) { create(:collection, user: user) }
+    let(:collection) { create(:collection, :with_druid, user: user) }
     let(:work) { create(:work, druid:, user:, collection:) }
     let(:cocina_object) { build(:dro_with_metadata, title: work.title, id: druid, collection_ids: [collection.druid]) }
     let(:version_status) do
