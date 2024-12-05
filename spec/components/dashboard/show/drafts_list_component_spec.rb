@@ -13,7 +13,7 @@ RSpec.describe Dashboard::Show::DraftsListComponent, type: :component do
     table = page.find('table')
     expect(table).to have_css('th', text: 'Deposit')
     expect(table).to have_css('th', text: 'Collection')
-    expect(table).to have_css('th', text: 'Last Modified')
+    expect(table).to have_css('th', text: 'Last modified')
     table_body = table.find('tbody')
     expect(table_body).to have_css('tr', count: 1)
     row = table_body.find('tr')
