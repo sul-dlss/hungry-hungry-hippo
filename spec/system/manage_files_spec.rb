@@ -25,7 +25,10 @@ RSpec.describe 'Manage files for a work' do
     # This doesn't work in Cyperful
     find('.dropzone').drop('spec/fixtures/files/hippo.png')
 
-    expect(page).to have_css('table#content-table td', text: 'hippo.png')
+    within('table#content-table') do
+      expect(page).to have_css('td:nth-of-type(1)', text: 'hippo.png') # Filename
+      expect(page).to have_css('td:nth-of-type(2)', text: '') # Label
+    end
     expect(page).to have_no_css('ul.pagination')
 
     # Add 2 more files
@@ -69,6 +72,7 @@ RSpec.describe 'Manage files for a work' do
     # Hide the file
     all('input[type=checkbox][name="content_file[hide]"]').first.check
     expect(page).to have_field('hide', checked: true)
+    sleep 0.25 # Wait for the form to submit.
     expect(content_file.reload.hide).to be true
   end
 end
