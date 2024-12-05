@@ -5,6 +5,7 @@ FactoryBot.define do
     sequence(:title) { |n| "Work #{n}" }
     user
     collection
+    object_updated_at { Time.zone.now }
 
     trait :deposit_job_started do
       deposit_job_started_at { Time.zone.now }

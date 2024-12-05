@@ -284,7 +284,8 @@ CREATE TABLE public.works (
     deposit_job_started_at timestamp(6) without time zone,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    collection_id bigint NOT NULL
+    collection_id bigint NOT NULL,
+    object_updated_at timestamp(6) without time zone
 );
 
 
@@ -528,6 +529,13 @@ CREATE UNIQUE INDEX index_works_on_druid ON public.works USING btree (druid);
 
 
 --
+-- Name: index_works_on_object_updated_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_works_on_object_updated_at ON public.works USING btree (object_updated_at);
+
+
+--
 -- Name: index_works_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -597,6 +605,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241205013747'),
 ('20241125181104'),
 ('20241122204826'),
 ('20241121122120'),

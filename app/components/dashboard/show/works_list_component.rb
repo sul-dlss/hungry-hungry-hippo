@@ -27,7 +27,7 @@ module Dashboard
           link_to(work.title, link_for(work)),
           @status_map[work.id].status_message,
           work.user.name,
-          I18n.l(work.updated_at, format: '%b %d, %Y'),
+          I18n.l(work.object_updated_at, format: '%b %d, %Y'),
           work.druid ? link_to(nil, Sdr::Purl.from_druid(druid: work.druid)) : nil
         ]
       end
