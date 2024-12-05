@@ -18,11 +18,11 @@ class WorksController < ApplicationController
   end
 
   def new
-    # Once collection is being passed, should authorize that the user can create a work in that collection.
-    skip_verify_authorized!
+    collection = Collection.find_by!(druid: params.expect(:collection_druid))
+    authorize! collection, with: WorkPolicy
 
     @content = Content.create!(user: current_user)
-    @work_form = WorkForm.new(collection_druid: params.expect(:collection_druid), content_id: @content.id)
+    @work_form = WorkForm.new(collection_druid: collection.druid, content_id: @content.id)
 
     render :form
   end
@@ -43,17 +43,16 @@ class WorksController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize
   def create
-    # Once collection is being passed, should authorize that the user can create a work in that collection.
-    skip_verify_authorized!
-
     @work_form = WorkForm.new(**work_params)
+    collection = Collection.find_by!(druid: @work_form.collection_druid)
+    authorize! collection, with: WorkPolicy
+
     # The deposit param determines whether extra validations for deposits are applied.
     if @work_form.valid?(deposit: deposit?)
       # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
       # should be "waiting".
-      collection = Collection.find_by!(druid: @work_form.collection_druid)
       work = Work.create!(title: @work_form.title, user: current_user, deposit_job_started_at: Time.zone.now,
-                          collection: collection)
+                          collection:)
       DepositWorkJob.perform_later(work:, work_form: @work_form, deposit: deposit?)
       redirect_to wait_works_path(work.id)
     else
