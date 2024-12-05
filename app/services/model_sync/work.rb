@@ -48,7 +48,7 @@ module ModelSync
     end
 
     def collection
-      Collection.find_by!(druid: collection_druid)
+      ::Collection.find_by!(druid: collection_druid)
     rescue ActiveRecord::RecordNotFound
       raise Error, "Collection not found: #{collection_druid}" if @raise
 

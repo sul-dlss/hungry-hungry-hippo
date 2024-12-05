@@ -3,8 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe DepositCollectionJob do
-  let(:druid) { 'druid:cc234dd5678' }
-  let(:cocina_object) { instance_double(Cocina::Models::CollectionWithMetadata, externalIdentifier: druid) }
+  include CollectionMappingFixtures
+
+  let(:druid) { collection_druid_fixture }
+  let(:cocina_object) { collection_with_metadata_fixture }
 
   before do
     allow(ToCocina::Collection::Mapper).to receive(:call).and_call_original
@@ -32,7 +34,7 @@ RSpec.describe DepositCollectionJob do
   end
 
   context 'when an existing collection' do
-    let(:collection_form) { CollectionForm.new(title: collection.title, druid:, lock: 'abc123') }
+    let(:collection_form) { CollectionForm.new(title: collection_title_fixture, druid:, lock: 'abc123') }
     let(:collection) { create(:collection, :deposit_job_started, druid:) }
 
     before do
@@ -48,7 +50,8 @@ RSpec.describe DepositCollectionJob do
       expect(Sdr::Repository).to have_received(:update).with(cocina_object: cocina_object)
       expect(Sdr::Repository).not_to have_received(:accession)
 
-      expect(collection.reload.deposit_job_finished?).to be true
+      expect(collection.reload.title).to eq(collection_title_fixture)
+      expect(collection.deposit_job_finished?).to be true
     end
   end
 end
