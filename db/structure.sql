@@ -235,6 +235,36 @@ ALTER SEQUENCE public.contents_id_seq OWNED BY public.contents.id;
 
 
 --
+-- Name: depositors; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.depositors (
+    collection_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+--
+-- Name: managers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.managers (
+    collection_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+--
+-- Name: reviewers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.reviewers (
+    collection_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -519,6 +549,27 @@ CREATE INDEX index_contents_on_user_id ON public.contents USING btree (user_id);
 
 
 --
+-- Name: index_depositors_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_depositors_on_collection_id_and_user_id ON public.depositors USING btree (collection_id, user_id);
+
+
+--
+-- Name: index_managers_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_managers_on_collection_id_and_user_id ON public.managers USING btree (collection_id, user_id);
+
+
+--
+-- Name: index_reviewers_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_reviewers_on_collection_id_and_user_id ON public.reviewers USING btree (collection_id, user_id);
+
+
+--
 -- Name: index_users_on_email_address; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -616,6 +667,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241205222413'),
 ('20241211213303'),
 ('20241205212622'),
 ('20241205013747'),
