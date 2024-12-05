@@ -2,17 +2,16 @@
 
 module Dashboard
   module Show
-    # Component for rendering collection titles and collection works for the current user.
+    # Component for rendering collection titles and collection works.
     class CollectionsListComponent < ApplicationComponent
-      def initialize(label:, current_user:)
+      def initialize(label:, collections:, status_map:)
         @label = label
-        @current_user = current_user
+        @collections = collections
+        @status_map = status_map
         super()
       end
 
-      attr_reader :label, :current_user
-
-      delegate :collections, to: :current_user
+      attr_reader :label, :collections, :status_map
     end
   end
 end

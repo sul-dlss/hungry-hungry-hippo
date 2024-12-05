@@ -92,3 +92,13 @@ end
 
 # This has to be after FactoryBot include
 require 'cocina/rspec'
+
+# View Components silently ignore within calls.
+# See https://github.com/ViewComponent/view_component/issues/1910
+module ViewComponent
+  module TestHelpers # rubocop:disable Style/Documentation
+    def within(...)
+      raise "`within` doesn't work in component tests. Use `page.find` instead."
+    end
+  end
+end

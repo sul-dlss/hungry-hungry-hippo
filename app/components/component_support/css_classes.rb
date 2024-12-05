@@ -10,7 +10,7 @@ module ComponentSupport
     def self.merge(*args)
       args.map do |arg|
         Array(arg&.split)
-      end.flatten.compact.uniq.join(' ')
+      end.flatten.compact.uniq.join(' ').presence
     end
   end
 end
