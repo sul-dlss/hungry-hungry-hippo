@@ -1,0 +1,10 @@
+<%= render Elements::Tables::TableComponent.new(
+      id:
+    ) do |component| %>
+  <% component.with_header(
+       headers: ['Deposit', 'Collection', 'Last Modified']
+     ) %>
+  <% works.each do |work| %>
+    <% component.with_row(values: values_for(work), id: id_for(work)) %>
+  <% end %>
+<% end %>
