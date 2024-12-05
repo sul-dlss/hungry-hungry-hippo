@@ -46,7 +46,7 @@ class ContentsController < ApplicationController
     files.each do |index, file|
       # Dropzone controller is modified to provide the full path as content[:paths][index]
       path = params[:content][:paths][index]
-      content_file = ContentFile.create_with(file_type: :attached, size: file.size, label: file.original_filename)
+      content_file = ContentFile.create_with(file_type: :attached, size: file.size, label: '')
                                 .find_or_create_by!(content: @content, filename: path)
       content_file.file.attach(file)
     end
