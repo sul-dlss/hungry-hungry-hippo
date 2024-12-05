@@ -13,7 +13,7 @@ module ModelSync
     end
 
     # @param [Work] work
-    # @param [Cocina::Models::DRO,Cocina::Models::RequestDRO] cocina_object
+    # @param [Cocina::Models::DROWithMetadata,Cocina::Models::RequestDRO] cocina_object
     # @param [Boolean] raise whether to raise an error if the collection is not found
     # @raise [Error] if the collection is not found
     def initialize(work:, cocina_object:, raise: true)
@@ -23,12 +23,21 @@ module ModelSync
     end
 
     def call
-      work.update!(title:, collection:)
+      work.update!(**update_params)
     end
 
     private
 
     attr_reader :work, :cocina_object
+
+    def update_params
+      {
+        title: title,
+        collection: collection
+      }.tap do |params|
+        params[:object_updated_at] = cocina_object.try(:modified)
+      end.compact
+    end
 
     def title
       CocinaSupport.title_for(cocina_object:)

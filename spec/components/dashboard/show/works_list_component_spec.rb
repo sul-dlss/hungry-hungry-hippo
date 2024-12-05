@@ -3,7 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
-  let(:work) { create(:work, user: current_user, collection:, druid: druid_fixture) }
+  let(:work) do
+    create(:work, user: current_user, collection:, druid: druid_fixture,
+                  object_updated_at: Time.zone.parse('2024-12-3'))
+  end
   let(:work_without_druid) { create(:work, user: current_user, collection:) }
   let(:collection) { create(:collection) }
   let(:current_user) { create(:user) }
@@ -30,6 +33,7 @@ RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
     expect(first_row).to have_css('td:nth-of-type(1)', text: work.title)
     expect(first_row).to have_link(work.title, href: "/works/#{work.druid}")
     expect(first_row).to have_css('td:nth-of-type(2)', text: 'Draft - Not deposited')
+    expect(first_row).to have_css('td:nth-of-type(4)', text: 'Dec 03, 2024')
     expect(first_row).to have_css('td:nth-of-type(5)', text: Sdr::Purl.from_druid(druid: work.druid))
     second_row = table_body.find('tr:nth-of-type(2)')
     expect(second_row).to have_css('td:nth-of-type(1)', text: work_without_druid.title)
