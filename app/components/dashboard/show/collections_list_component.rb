@@ -12,6 +12,10 @@ module Dashboard
       end
 
       attr_reader :label, :collections, :status_map
+
+      def create_new_collection?
+        helpers.allowed_to?(:new?, Collection)
+      end
     end
   end
 end
