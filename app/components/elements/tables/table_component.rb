@@ -20,11 +20,11 @@ module Elements
       def classes
         # Provides table, table-striped, and table-sm as the static default classes
         # merged with any additional classes passed in.
-        merge_classes(%w[table table-striped table-light table-sm], @classes)
+        merge_classes(%w[table table-h3], @classes)
       end
 
       def body_classes
-        merge_classes(%w[table-group-divider], @body_classes)
+        merge_classes(@body_classes)
       end
 
       def render?
