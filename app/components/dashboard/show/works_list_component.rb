@@ -24,12 +24,20 @@ module Dashboard
 
       def values_for(work)
         [
-          link_to(work.title, work_path(work)),
+          link_to(work.title, link_for(work)),
           @status_map[work.id].status_message,
           work.user.name,
           I18n.l(work.updated_at, format: '%b %d, %Y'),
           work.druid ? link_to(nil, Sdr::Purl.from_druid(druid: work.druid)) : nil
         ]
+      end
+
+      private
+
+      def link_for(work)
+        return wait_works_path(work) unless work.druid
+
+        work_path(druid: work.druid)
       end
     end
   end
