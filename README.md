@@ -67,11 +67,11 @@ To run linters individually, run which ones you need:
 * ERB templates: `bin/erb_lint --lint-all --format compact` (add `-a` flag to autocorrect violations)
 * JavaScript code: `yarn lint` (add `--fix` flag to autocorrect violations)
 
-### Adding a new simple field
+### Adding a new simple, non-repeatable field
 
-A "simple" field is a single value, such as a title (string) or a version number
-(integer). If the field you're adding is more complex, such as one that has
-component parts (e.g., a related link or work), see the following section.
+A "simple" field is a single, non-repeatable value, such as a title (string) or a version 
+number (integer). If the field you're adding is repeatable or more complex, such as one that 
+has structure (e.g., a related link or work), see the following section.
 
 1. Add the field to the appropriate form object (e.g., `app/forms/work_form.rb`), including validation.
 1. Add the field to the form view (e.g., `app/views/works/form.html.erb`), including adding strings to `config/locales/en.yml`.
@@ -85,7 +85,7 @@ component parts (e.g., a related link or work), see the following section.
 1. Add the field to the work show (`app/views/works/show.html.erb`).
 1. Test display of the field in `spec/system/show_work_spec.rb`.
 
-### Adding a new nested field
+### Adding a new nested (structured or repeatable) field
 
 A "nested" field is one that is not "simple" (see prior section).
 
