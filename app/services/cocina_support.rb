@@ -61,6 +61,21 @@ class CocinaSupport
     cocina_object.description.note.find { |note| note.type == 'abstract' }&.value
   end
 
+  # @return [Array<String,Array<String>>] work_type, work_subtypes
+  def self.work_type_and_subtypes_for(cocina_object:)
+    self_deposit_values = self_deposit_form_for(cocina_object:)&.structuredValue || []
+    work_type = self_deposit_values.find { |value| value[:type] == 'type' }&.value
+    work_subtypes = self_deposit_values.filter_map { |value| value[:type] == 'subtype' && value.value }
+    [work_type, work_subtypes]
+  end
+
+  # @return [Cocina::Models::DescriptiveValue] descriptive value for Stanford self-deposit resource types
+  def self.self_deposit_form_for(cocina_object:)
+    cocina_object.description.form.find do |form|
+      form&.source&.value == ToCocina::Work::TypesMapper::RESOURCE_TYPE_SOURCE_LABEL
+    end
+  end
+
   def self.pretty(cocina_object:)
     JSON.pretty_generate(clean(cocina_object.to_h))
   end

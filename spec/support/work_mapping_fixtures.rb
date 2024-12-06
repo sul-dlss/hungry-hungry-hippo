@@ -13,7 +13,9 @@ module WorkMappingFixtures
       collection_druid: collection_druid_fixture,
       publication_date_attributes: { year: '2024', month: '12' },
       contact_emails_attributes: contact_emails_fixture,
-      keywords_attributes: keywords_fixture
+      keywords_attributes: keywords_fixture,
+      work_type: work_type_fixture,
+      work_subtypes: work_subtypes_fixture
     )
   end
 
@@ -71,7 +73,8 @@ module WorkMappingFixtures
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
           relatedResource: CocinaDescriptionSupport.related_works(related_works: related_works_fixture) +
                            CocinaDescriptionSupport.related_links(related_links: related_links_fixture),
-          access: { accessContact: CocinaDescriptionSupport.contact_emails(contact_emails: contact_emails_fixture) }
+          access: { accessContact: CocinaDescriptionSupport.contact_emails(contact_emails: contact_emails_fixture) },
+          form: form_fixture
         },
         version: 1,
         identification: { sourceId: source_id_fixture },
@@ -81,6 +84,68 @@ module WorkMappingFixtures
         structural: { isMemberOf: [collection_druid_fixture] }
       }
     )
+  end
+
+  def form_fixture
+    [
+      {
+        structuredValue: [
+          {
+            value: 'Image',
+            type: 'type'
+          },
+          {
+            value: 'CAD',
+            type: 'subtype'
+          },
+          {
+            value: 'Map',
+            type: 'subtype'
+          }
+        ],
+        type: 'resource type',
+        source: {
+          value: 'Stanford self-deposit resource types'
+        }
+      },
+      {
+        value: 'Computer-aided designs',
+        type: 'genre',
+        uri: 'http://id.loc.gov/vocabulary/graphicMaterials/tgm002405',
+        source: {
+          code: 'lctgm'
+        }
+      },
+      {
+        value: 'Maps',
+        type: 'genre',
+        uri: 'http://id.loc.gov/authorities/genreForms/gf2011026387',
+        source: {
+          code: 'lcgft'
+        }
+      },
+      {
+        value: 'still image',
+        type: 'resource type',
+        source: {
+          value: 'MODS resource types'
+        }
+      },
+      {
+        value: 'cartographic',
+        type: 'resource type',
+        source: {
+          value: 'MODS resource types'
+        }
+      },
+      {
+        value: 'Image',
+        type: 'resource type',
+        source: {
+          value: 'DataCite resource types'
+        }
+      }
+    ]
   end
 
   def request_dro_with_structural_fixture
@@ -142,6 +207,7 @@ module WorkMappingFixtures
           relatedResource: CocinaDescriptionSupport.related_works(related_works: related_works_fixture) +
                            CocinaDescriptionSupport.related_links(related_links: related_links_fixture),
           access: { accessContact: CocinaDescriptionSupport.contact_emails(contact_emails: contact_emails_fixture) },
+          form: form_fixture,
           purl: Sdr::Purl.from_druid(druid: druid_fixture)
         },
         version: 2,

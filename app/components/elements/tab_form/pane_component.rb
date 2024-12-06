@@ -5,7 +5,7 @@ module Elements
     # Component for a tab pane.
     # Based on https://getbootstrap.com/docs/5.3/components/navs-tabs/#javascript-behavior
     class PaneComponent < ApplicationComponent
-      def initialize(tab_name:, label:, form:, selected: false, render_footer: true)
+      def initialize(tab_name:, form:, label: nil, selected: false, render_footer: true)
         @tab_name = tab_name
         @label = label
         @selected = selected

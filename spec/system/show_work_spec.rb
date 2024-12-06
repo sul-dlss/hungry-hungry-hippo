@@ -161,6 +161,15 @@ RSpec.describe 'Show a work' do
       expect(page).to have_css('td', text: keywords_fixture.pluck(:text).join(', '))
     end
 
+    # Work type table
+    within('table#work-type-table') do
+      expect(page).to have_css('caption', text: 'Type of deposit')
+      expect(page).to have_css('tr', text: 'Deposit type')
+      expect(page).to have_css('td', text: work_type_fixture)
+      expect(page).to have_css('tr', text: 'Deposit subtypes')
+      expect(page).to have_css('td', text: work_subtypes_fixture.join(', '))
+    end
+
     # Related Content table
     within('table#related-content-table') do
       expect(page).to have_css('caption', text: 'Related content')

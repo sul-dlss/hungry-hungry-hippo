@@ -6,9 +6,9 @@ class WorkType
 
   MINIMUM_REQUIRED_MUSIC_SUBTYPES = 1
   MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES = 2
-  MIXED_MATERIAL = 'mixed material'
-  MUSIC = 'music'
-  OTHER = 'other'
+  MIXED_MATERIALS = 'Mixed Materials'
+  MUSIC = 'Music'
+  OTHER = 'Other'
 
   DATA_TYPES = [
     '3D model', 'Database', 'Documentation', 'Geospatial data', 'Image',
@@ -63,63 +63,43 @@ class WorkType
 
   MIXED_TYPES = (['Music'] + MORE_TYPES).sort.freeze
 
-  attr_reader :id, :label, :html_label, :icon, :cocina_type, :subtypes
+  attr_reader :label, :cocina_type, :subtypes
 
   def initialize(**params)
-    @id = params.fetch(:id)
     @label = params.fetch(:label)
-    @html_label = params.fetch(:html_label)
-    @icon = params.fetch(:icon)
     @subtypes = params.fetch(:subtypes)
     @cocina_type = params.fetch(:cocina_type)
   end
 
-  def self.purl_reservation_type
-    new(id: 'purl_reservation', label: 'PURL reservation', html_label: 'PURL reservation', icon: '', subtypes: [],
-        cocina_type: Cocina::Models::ObjectType.object)
+  def to_s
+    @label
   end
 
-  def self.find(id)
-    (all + [purl_reservation_type]).find { |work| work.id == id } || raise(InvalidType, "Unknown worktype #{id}")
+  def self.find(label)
+    all.find { |work| work.label == label } || raise(InvalidType, "Unknown worktype #{label}")
   end
 
   # id is a value acceptable for MODS typeOfResource
 
   def self.all # rubocop:disable Metrics/AbcSize
     [
-      new(id: 'text', label: 'Text', html_label: 'Text', icon: 'book-open',
-          subtypes: TEXT_TYPES, cocina_type: Cocina::Models::ObjectType.object),
-      new(id: 'data', label: 'Data', html_label: 'Data', icon: 'chart-bar',
-          subtypes: DATA_TYPES, cocina_type: Cocina::Models::ObjectType.object),
-      new(id: 'software, multimedia', label: 'Software/Code', html_label: 'Software/<wbr>Code'.html_safe, icon: 'mouse',
-          subtypes: SOFTWARE_TYPES, cocina_type: Cocina::Models::ObjectType.object),
-      new(id: 'image', label: 'Image', html_label: 'Image', icon: 'images',
-          subtypes: IMAGE_TYPES, cocina_type: Cocina::Models::ObjectType.object),
-      new(id: 'sound', label: 'Sound', html_label: 'Sound', icon: 'microphone-alt',
-          subtypes: SOUND_TYPES, cocina_type: Cocina::Models::ObjectType.object),
-      new(id: 'video', label: 'Video', html_label: 'Video', icon: 'film',
-          subtypes: VIDEO_TYPES, cocina_type: Cocina::Models::ObjectType.object),
-      new(id: 'music', label: 'Music', html_label: 'Music', icon: 'music',
-          subtypes: MUSIC_TYPES, cocina_type: Cocina::Models::ObjectType.object),
-      new(id: 'mixed material', label: 'Mixed Materials', html_label: 'Mixed Materials', icon: 'play',
-          subtypes: MIXED_TYPES, cocina_type: Cocina::Models::ObjectType.object),
-      new(id: 'other', label: 'Other', html_label: 'Other', icon: 'archive',
-          subtypes: [], cocina_type: Cocina::Models::ObjectType.object)
+      new(label: 'Text', subtypes: TEXT_TYPES, cocina_type: Cocina::Models::ObjectType.object),
+      new(label: 'Data', subtypes: DATA_TYPES, cocina_type: Cocina::Models::ObjectType.object),
+      new(label: 'Software/Code', subtypes: SOFTWARE_TYPES, cocina_type: Cocina::Models::ObjectType.object),
+      new(label: 'Image', subtypes: IMAGE_TYPES, cocina_type: Cocina::Models::ObjectType.object),
+      new(label: 'Sound', subtypes: SOUND_TYPES, cocina_type: Cocina::Models::ObjectType.object),
+      new(label: 'Video', subtypes: VIDEO_TYPES, cocina_type: Cocina::Models::ObjectType.object),
+      new(label: 'Music', subtypes: MUSIC_TYPES, cocina_type: Cocina::Models::ObjectType.object),
+      new(label: 'Mixed Materials', subtypes: MIXED_TYPES, cocina_type: Cocina::Models::ObjectType.object),
+      new(label: 'Other', subtypes: [], cocina_type: Cocina::Models::ObjectType.object)
     ]
-  end
-
-  def self.type_list
-    all.map(&:id).sort
   end
 
   def self.more_types
     MORE_TYPES
   end
 
-  def self.subtypes_for(id, include_more_types: false)
-    subtypes = find(id).subtypes
-    return subtypes unless include_more_types
-
-    subtypes + more_types
+  def self.subtypes_for(label)
+    find(label).subtypes
   end
 end

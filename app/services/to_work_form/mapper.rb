@@ -33,7 +33,17 @@ module ToWorkForm
         version: cocina_object.version,
         collection_druid: CocinaSupport.collection_druid_for(cocina_object:),
         publication_date_attributes: CocinaSupport.event_date_for(cocina_object:, type: 'publication')
-      }
+      }.merge(work_type_params)
+    end
+
+    def work_type_params
+      work_type, work_subtypes = CocinaSupport.work_type_and_subtypes_for(cocina_object:)
+      if work_type == WorkType::OTHER
+        return { work_type:, work_subtypes: [],
+                 other_work_subtype: work_subtypes.first }
+      end
+
+      { work_type:, work_subtypes: }
     end
   end
 end
