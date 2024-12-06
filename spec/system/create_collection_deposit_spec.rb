@@ -40,28 +40,20 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_css('h1', text: 'Untitled collection')
 
     # Testing tabs
-    expect(page).to have_css('.nav-link.active', text: 'Title')
-    expect(page).to have_css('.nav-link:not(.active)', text: 'Description')
+    expect(page).to have_css('.nav-link.active', text: 'Details')
+    expect(page).to have_css('.nav-link:not(.active)', text: 'Related links')
     # Manage files pane with form field is visible, abstract is not
-    expect(page).to have_css('div.h4', text: 'Title')
-    expect(page).to have_no_text('Describe your collection')
+    expect(page).to have_css('div.h4', text: 'Collection details')
 
-    # Filling in title
-    find('.nav-link', text: 'Title').click
+    # Filling in title and description
+    find('.nav-link', text: 'Details').click
     fill_in('collection_title', with: collection_title_fixture)
-
-    # Click Next to go to abstract tab
-    click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Description')
-    expect(page).to have_text('Describe your collection')
-
-    # Filling in abstract
     fill_in('collection_description', with: collection_description_fixture)
 
     # Clicking on Next to go to related content tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Related content (optional)')
-    expect(page).to have_text('Related links')
+    expect(page).to have_css('.nav-link.active', text: 'Related links')
+    expect(page).to have_text('Links to related content (optional)')
 
     # Filling in related links
     fill_in('Link text', with: related_links_fixture.first['text'])

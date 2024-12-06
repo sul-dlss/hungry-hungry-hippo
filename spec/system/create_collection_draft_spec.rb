@@ -41,7 +41,7 @@ RSpec.describe 'Create a collection draft' do
     expect(page).to have_css('h1', text: 'Untitled collection')
 
     # Title is required.
-    find('.nav-link', text: 'Title').click
+    find('.nav-link', text: 'Details').click
     click_link_or_button('Save as draft')
 
     # Validation fails for title.
