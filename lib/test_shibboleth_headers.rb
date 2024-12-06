@@ -12,8 +12,7 @@ class TestShibbolethHeaders
     @app = app
   end
 
-  # rubocop:disable Metrics/AbcSize
-  def call(env)
+  def call(env) # rubocop:disable Metrics/AbcSize
     if user
       env[mangle(Authentication::REMOTE_USER_HEADER)] = user.email_address
       env[mangle(Authentication::NAME_HEADER)] = user.name
@@ -22,7 +21,6 @@ class TestShibbolethHeaders
     env[mangle(Authentication::GROUPS_HEADER)] = Array(groups).join(';') if groups
     @app.call(env)
   end
-  # rubocop:enable Metrics/AbcSize
 
   # Transform the header key into the format that Rack expects.
   def mangle(key)

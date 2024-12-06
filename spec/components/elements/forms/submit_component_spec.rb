@@ -9,6 +9,6 @@ RSpec.describe Elements::Forms::SubmitComponent, type: :component do
   it 'renders the submit button' do
     render_inline(described_class.new(form:, label: 'Deposit'))
     expect(page).to have_css('input[value="Deposit"]')
-    expect(page).to have_css('input[type=submit]') # rubocop:disable Capybara/SpecificMatcher
+    expect(page).to have_css('input[type=submit]')
   end
 end

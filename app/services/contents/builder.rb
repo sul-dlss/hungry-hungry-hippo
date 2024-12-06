@@ -27,9 +27,8 @@ module Contents
 
     attr_reader :cocina_object, :user
 
-    # rubocop:disable Metrics/AbcSize
-    def content_file_params_for(content:)
-      cocina_object.structural.contains.flat_map.each do |file_set|
+    def content_file_params_for(content:) # rubocop:disable Metrics/AbcSize
+      cocina_object.structural.contains.flat_map do |file_set|
         file_set.structural.contains.map do |file|
           {
             file_type: :deposited,
@@ -48,7 +47,6 @@ module Contents
       end
     end
 
-    # rubocop:enable Metrics/AbcSize
     def digest_for(type:, file:)
       file.hasMessageDigests.find { |digest| digest.type == type }&.digest
     end

@@ -46,7 +46,7 @@ RSpec.describe 'Create a collection draft' do
 
     # Validation fails for title.
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
-    expect(page).to have_css('input.is-invalid#collection_title') # rubocop:disable Capybara/SpecificMatcher
+    expect(page).to have_field('collection_title', class: 'is-invalid')
 
     # Filling in title
     fill_in('collection_title', with: collection_title_fixture)
