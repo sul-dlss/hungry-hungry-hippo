@@ -148,9 +148,9 @@ en:
             Enter a summary statement (max 600 words) describing the collection that you are creating.
             A detailed statement may improve the discovery of your collection in web searches.
         title:
-          label: 'Title of collection'
+          label: 'Collection name'
           help_text: >
-            A unique, descriptive title may improve discovery of your collection in web searches.
+            A unique, descriptive name may improve discovery of your collection in web searches.
         license:
           label: 'License'
           help_text: Assigning a default license may improve discovery of your collection in web searches.
@@ -178,9 +178,9 @@ en:
           label: 'License'
           help_text: >
             More text here.
-        related_content:
-          tab_label: 'Related content (optional)'
-          label: 'Related content'
-        title:
-          tab_label: 'Title'
-          label: 'Title of collection'
+        related_links:
+          tab_label: 'Related links'
+          label: 'Links to related content (optional)'
+        details:
+          tab_label: 'Details'
+          label: 'Collection details'

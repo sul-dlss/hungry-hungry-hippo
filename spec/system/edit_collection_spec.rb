@@ -56,13 +56,13 @@ RSpec.describe 'Edit a collection' do
 
     expect(page).to have_css('h1', text: collection_title_fixture)
 
-    find('.nav-link', text: 'Title').click
-    expect(page).to have_field('Title of collection', with: collection_title_fixture)
+    find('.nav-link', text: 'Details').click
+    expect(page).to have_field('Collection name', with: collection_title_fixture)
 
-    fill_in('Title of collection', with: updated_title)
+    fill_in('Collection name', with: updated_title)
 
     # Testing validation
-    find('.nav-link', text: 'Description').click
+    find('.nav-link', text: 'Details').click
     fill_in('collection_description', with: '')
     find('.nav-link', text: 'Deposit').click
     click_link_or_button('Deposit')
@@ -72,7 +72,7 @@ RSpec.describe 'Edit a collection' do
     fill_in('collection_description', with: updated_description)
 
     # Filling in related content
-    find('.nav-link', text: 'Related content (optional)').click
+    find('.nav-link', text: 'Related links').click
     fill_in('Link text', with: 'delete')
     fill_in('URL', with: 'me')
     # Test adding a new nested field
