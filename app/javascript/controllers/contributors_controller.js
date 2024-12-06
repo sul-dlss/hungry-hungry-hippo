@@ -5,10 +5,11 @@ export default class extends Controller {
                     'selectPersonRole', 'selectOrganizationRole', 'personName', 'organizationName']
 
   connect () {
-    if (this.contributorTypePersonTarget.checked = true) {
-      this.contributorTypePersonSelected()
-    } else {
+    console.log(this.contributorTypeOrganizationTarget.checked)
+    if (this.contributorTypeOrganizationTarget.checked) {
       this.contributorTypeOrganizationSelected()
+    } else {
+      this.contributorTypePersonSelected()
     }
   }
 
