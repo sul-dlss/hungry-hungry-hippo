@@ -41,8 +41,7 @@ class WorksController < ApplicationController
     render :form
   end
 
-  # rubocop:disable Metrics/AbcSize
-  def create
+  def create # rubocop:disable Metrics/AbcSize
     @work_form = WorkForm.new(**work_params)
     collection = Collection.find_by!(druid: @work_form.collection_druid)
     authorize! collection, with: WorkPolicy
@@ -60,7 +59,6 @@ class WorksController < ApplicationController
       render :form, status: :unprocessable_entity
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   def update
     authorize! @work

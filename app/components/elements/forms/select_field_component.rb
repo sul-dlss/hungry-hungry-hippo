@@ -3,9 +3,8 @@
 module Elements
   module Forms
     # Component for form select fields
-    # rubocop:disable Metrics/ParameterLists
     class SelectFieldComponent < ApplicationComponent
-      def initialize(form:, field_name:, options:, required: false, hidden_label: false,
+      def initialize(form:, field_name:, options:, required: false, hidden_label: false, # rubocop:disable Metrics/ParameterLists
                      label: nil, help_text: nil, prompt: false)
         @form = form
         @field_name = field_name
@@ -30,6 +29,5 @@ module Elements
         { describedby: help_text_id }
       end
     end
-    # rubocop:enable Metrics/ParameterLists
   end
 end

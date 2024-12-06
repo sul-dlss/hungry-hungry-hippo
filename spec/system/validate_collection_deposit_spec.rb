@@ -48,7 +48,7 @@ RSpec.describe 'Validate a collection deposit' do
     # Related content is marked invalid
     expect(page).to have_css('.nav-link', text: 'Related content (optional)')
     find('.nav-link', text: 'Related content (optional)').click
-    expect(page).to have_css('input.is-invalid#collection_related_links_attributes_0_url') # rubocop:disable Capybara/SpecificMatcher
+    expect(page).to have_field('collection_related_links_attributes_0_url', class: 'is-invalid')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
 
     # Make the related link valid

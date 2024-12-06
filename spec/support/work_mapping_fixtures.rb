@@ -2,7 +2,6 @@
 
 # Fixtures for mappings.
 # Not using FactoryBot because we want these fixtures to be consistent across tests.
-# rubocop:disable Metrics/ModuleLength
 module WorkMappingFixtures
   def new_work_form_fixture
     WorkForm.new(
@@ -59,8 +58,7 @@ module WorkMappingFixtures
     content
   end
 
-  # rubocop:disable Metrics/AbcSize
-  def request_dro_fixture
+  def request_dro_fixture # rubocop:disable Metrics/AbcSize
     Cocina::Models.build_request(
       {
         type: Cocina::Models::ObjectType.object,
@@ -82,7 +80,6 @@ module WorkMappingFixtures
       }
     )
   end
-  # rubocop:enable Metrics/AbcSize
 
   def request_dro_with_structural_fixture
     request_dro_fixture.new(structural: {
@@ -218,4 +215,3 @@ module WorkMappingFixtures
     config.include WorkMappingFixtures, type: :mapping
   end
 end
-# rubocop:enable Metrics/ModuleLength

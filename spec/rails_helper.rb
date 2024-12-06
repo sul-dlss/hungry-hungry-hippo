@@ -39,6 +39,9 @@ require 'capybara/rspec'
 #
 Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
 
+# Must be required *after* FactoryBot is required (via spec/support/ requires
+require 'cocina/rspec'
+
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
 begin
@@ -46,9 +49,8 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
-RSpec.configure do |config|
-  config.include FactoryBot::Syntax::Methods
 
+RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
@@ -88,17 +90,4 @@ RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
   config.include ViewComponent::SystemTestHelpers, type: :component
   config.include Capybara::RSpecMatchers, type: :component
-end
-
-# This has to be after FactoryBot include
-require 'cocina/rspec'
-
-# View Components silently ignore within calls.
-# See https://github.com/ViewComponent/view_component/issues/1910
-module ViewComponent
-  module TestHelpers # rubocop:disable Style/Documentation
-    def within(...)
-      raise "`within` doesn't work in component tests. Use `page.find` instead."
-    end
-  end
 end

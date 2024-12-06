@@ -24,7 +24,7 @@ RSpec.describe 'Create a work deposit' do
     allow(Sdr::Repository).to receive(:accession)
 
     # Stubbing out for show page
-    allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object }) # rubocop:disable RSpec/InstanceVariable
+    allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
 
     create(:collection, user:, druid: collection_druid_fixture)

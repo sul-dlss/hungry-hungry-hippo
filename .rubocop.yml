@@ -11,6 +11,7 @@ AllCops:
   TargetRubyVersion: 3.3
   DisplayCopNames: true
   Include:
+    - 'Capfile'
     - 'Rakefile'
     - 'config.ru'
     - '**/*.rb'
@@ -41,6 +42,10 @@ Metrics/MethodLength:
     - 'hash'
   Max: 15 # default 10
 
+Metrics/ModuleLength:
+  Exclude:
+    - spec/support/work_mapping_fixtures.rb # it's meant to be a large container of mappings
+
 RSpec/ExampleLength:
   Enabled: false
 
@@ -49,6 +54,10 @@ RSpec/MultipleExpectations:
 
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
+
+RSpec/InstanceVariable:
+  Exclude:
+    - spec/system/**/* # We use instance variables in system specs to stub Cocina operations
 
 Style/Documentation:
   Exclude:
@@ -451,6 +460,8 @@ Capybara/SpecificFinders: # new in 2.13
   Enabled: true
 Capybara/SpecificMatcher: # new in 2.12
   Enabled: true
+  Exclude:
+    - spec/components/elements/forms/submit_component_spec.rb # we want to explicitly test for an HTML input with type="submit"
 Capybara/RSpec/HaveSelector: # new in 2.19
   Enabled: true
 RSpecRails/AvoidSetupHook: # new in 2.4
