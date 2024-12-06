@@ -3,10 +3,16 @@
 # Form for a related work
 class RelatedWorkForm < ApplicationForm
   RELATIONSHIP_TYPES = [
+    'supplement to',
+    'supplemented by',
     'referenced by',
     'references',
-    'has original version',
+    'derived from',
+    'source of',
+    'version of record',
+    'identical to',
     'has version',
+    'has original version',
     'preceded by',
     'succeeded by',
     'part of',
