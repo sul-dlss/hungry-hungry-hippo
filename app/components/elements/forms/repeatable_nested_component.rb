@@ -22,13 +22,13 @@ module Elements
       end
 
       def classes
-        merge_classes(%w[mb-3 p-3 row], bordered_classes)
+        merge_classes(%w[mb-3 row], bordered_classes)
       end
 
       def bordered_classes
         return [] unless @bordered
 
-        %w[border border-3 border-light-subtle border-opacity-75]
+        %w[p-3 border border-3 border-light-subtle border-opacity-75]
       end
 
       def label_text
