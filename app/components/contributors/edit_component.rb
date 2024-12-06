@@ -11,7 +11,13 @@ module Contributors
     attr_reader :form
 
     def role_type_options
-      [%w[person Individual], %w[organization Organization]]
+      [{ 'value' => 'person',
+         'label' => 'Individual',
+         'data' => { contributors_target: 'contributorTypePerson', action: 'contributors#contributorTypeChanged' } },
+       { 'value' => 'organization',
+         'label' => 'Organization',
+         'data' => { contributors_target: 'contributorTypeOrganization',
+                     action: 'contributors#contributorTypeChanged' } }]
     end
 
     PERSON_ROLES = [
