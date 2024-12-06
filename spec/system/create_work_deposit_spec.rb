@@ -66,6 +66,17 @@ RSpec.describe 'Create a work deposit' do
     # Filling in abstract
     fill_in('work_abstract', with: abstract_fixture)
 
+    # Click Next to go to work type tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Type of deposit')
+    expect(page).to have_text('What type of content will you deposit?')
+
+    # Filling in abstract
+    choose('Text')
+    check('Thesis')
+    click_link_or_button('See more options')
+    check('3D model')
+
     # Clicking on Next to go to dates tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Dates (optional)')

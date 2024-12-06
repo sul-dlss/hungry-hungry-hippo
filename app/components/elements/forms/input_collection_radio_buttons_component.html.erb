@@ -1,6 +1,11 @@
 <%= form.collection_radio_buttons field_name, input_collection, value_method, text_method do |builder| %>
   <%= tag.div class: div_classes do %>
-    <%= builder.radio_button(class: 'form-check-input') %>
+    <%= builder.radio_button(class: 'form-check-input', data: input_data) %>
     <%= builder.label(class: 'form-check-label') %>
   <% end %>
 <% end %>
+<%# This triggers the invalid feedback to be displayed. %>
+<% if errors? %>
+  <div class="is-invalid"></div>
+<% end %>
+<%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name:) %>

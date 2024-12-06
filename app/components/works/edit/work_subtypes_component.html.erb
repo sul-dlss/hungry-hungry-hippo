@@ -1,0 +1,25 @@
+<%= tag.div class: 'd-none mt-5', data: do %>
+  <% if content %>
+    <%= content %>
+  <% else %>
+    <div class="h4"><%= t('works.edit.fields.work_subtypes.label') %></div>
+    <% if minimum_terms.positive? %>
+      <p>Select at least <%= term_phrase %> below:</p>
+    <% end %>
+    <div class="row">
+      <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: work_subtypes, div_classes: 'col-4') %>
+    </div>
+
+    <%# More options %>
+    <% if more_options? %>
+      <%= tag.a class: 'mt-4 d-block', data: { bs_toggle: 'collapse' }, href: "##{collapse_id}", role: 'button', 'aria-expanded': false, 'aria-controls': collapse_id do %>
+        See more options
+      <% end %>
+      <%= tag.div id: collapse_id, class: 'collapse' do %>
+        <div class="row">
+          <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: more_types, div_classes: 'col-4') %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
