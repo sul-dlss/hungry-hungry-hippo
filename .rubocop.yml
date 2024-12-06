@@ -45,6 +45,9 @@ Metrics/ModuleLength:
   Exclude:
     - spec/support/work_mapping_fixtures.rb # it's meant to be a large container of mappings
 
+Rails/HasAndBelongsToMany:
+  Enabled: false
+  
 RSpec/ExampleLength:
   Enabled: false
 
