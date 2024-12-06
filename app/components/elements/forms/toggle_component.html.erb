@@ -2,8 +2,8 @@
   <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: label) %><br>
   <%= tag.div class: 'btn-group', role: 'group' do %>
     <% options.each do |option| %>
-      <%= form.radio_button field_name, option.first, type: 'radio', class: 'btn-check' %>
-      <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: option.last, hidden_label:, classes: 'btn btn-outline-primary') %>
+      <%= form.radio_button field_name, option['value'], type: 'radio', class: 'btn-check', data: option['data'] %>
+      <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: option['label'], hidden_label:, classes: 'btn btn-outline-primary') %>
     <% end %>
   <% end %>
   <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name:) %>

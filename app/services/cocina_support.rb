@@ -43,8 +43,7 @@ class CocinaSupport
         'organization_role' => (contributor.role.first.value.sub(' ', '_') if contributor.type == 'organization'),
         'organization_name' => (contributor.name.first.value if contributor.type == 'organization'),
         'orcid' => (contributor.identifier&.find { |id| id.type == 'ORCID' }&.value if contributor.type == 'person'),
-        'with_orcid' => contributor.identifier&.find { |id| id.type == 'ORCID' }.present?
-      }
+        'with_orcid' => contributor.identifier&.find { |id| id.type == 'ORCID' }.present? }
     end.presence
   end
 

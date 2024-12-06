@@ -134,7 +134,7 @@ class CocinaDescriptionSupport
       source: SOURCE
     },
     # organization roles
-     # 'Conference' => '', # not a marcrelator role
+    # 'Conference' => '', # not a marcrelator role
     degree_granting_institution: {
       value: 'degree granting institution',
       code: 'dgg',
@@ -262,7 +262,7 @@ class CocinaDescriptionSupport
       role: [ROLES.fetch(role.to_sym)],
       status: ('primary' if primary),
       identifier: [orcid_identifier(orcid)].compact
-      # note: affiliations.map { |affiliation_attrs| affiliation(**affiliation_attrs) }.presence
+      # NOTE: affiliations.map { |affiliation_attrs| affiliation(**affiliation_attrs) }.presence
     }.compact
   end
 
