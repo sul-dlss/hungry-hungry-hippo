@@ -1,10 +1,11 @@
-<%= tag.div do %>
+<%= tag.div class: 'mb-4' do %>
   <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: label) %><br>
   <%= tag.div class: 'btn-group', role: 'group' do %>
-    <% options.each do |option| %>
-      <%= form.radio_button field_name, option['value'], type: 'radio', class: 'btn-check', data: option['data'] %>
-      <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: option['label'], hidden_label:, classes: 'btn btn-outline-primary') %>
+      <% options.each do |option| %>
+        <%= form.radio_button field_name, option['value'], type: 'radio', class: 'btn-check', data: option['data'] %>
+        <!-- Actions must be triggered by button label, which overlays radio -->
+        <%= form.label field_name, option['label'], value: option['value'], class: 'btn btn-outline-primary', data: option['label_data'] %>
+      <% end %>
     <% end %>
-  <% end %>
   <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name:) %>
 <% end %>

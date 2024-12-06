@@ -2,7 +2,7 @@
 
 # Form for an author or non-author contributor
 class ContributorForm < ApplicationForm
-  attribute :role_type, :string
+  attribute :role_type, :string, default: 'person'
 
   attribute :person_role, :string
   validates :person_role, presence: true, if: :person?
