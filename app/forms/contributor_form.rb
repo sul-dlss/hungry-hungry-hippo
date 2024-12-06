@@ -2,7 +2,8 @@
 
 # Form for an author or non-author contributor
 class ContributorForm < ApplicationForm
-  attribute :role_type, :string, default: 'person'
+  validate :name_must_be_complete
+  attribute :role_type, :string
 
   attribute :person_role, :string
   validates :person_role, presence: true, if: :person?
@@ -14,10 +15,10 @@ class ContributorForm < ApplicationForm
   attribute :orcid, :string, default: nil
 
   attribute :first_name, :string
-  validates :first_name, presence: true, if: :person?
+  validates :first_name, presence: true, if: -> { person? && deposit? }
 
   attribute :last_name, :string
-  validates :last_name, presence: true, if: :person?
+  validates :last_name, presence: true, if: -> { person? && deposit? }
 
   validates :orcid, format: { with: %r{\Ahttps://(.*\.)?orcid.org/\d{4}-\d{4}-\d{4}-\d{3}[0-9X]\z},
                               message: I18n.t('works.edit.fields.contributors.orcid.error') },
@@ -29,5 +30,18 @@ class ContributorForm < ApplicationForm
 
   def person?
     role_type == 'person'
+  end
+
+  # check that both name parts are provided
+  def name_must_be_complete
+    return if first_name.blank? && last_name.blank?
+
+    return if first_name.present? && last_name.present?
+
+    if first_name.blank?
+      errors.add(:first_name, "can't be blank")
+    else
+      errors.add(:last_name, "can't be blank")
+    end
   end
 end

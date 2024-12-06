@@ -259,7 +259,7 @@ class CocinaDescriptionSupport
         }
       ],
       type: 'person',
-      role: [ROLES.fetch(role.to_sym)],
+      role: [ROLES.fetch(role.to_sym)].compact,
       status: ('primary' if primary),
       identifier: [orcid_identifier(orcid)].compact
       # NOTE: affiliations.map { |affiliation_attrs| affiliation(**affiliation_attrs) }.presence
@@ -268,11 +268,11 @@ class CocinaDescriptionSupport
 
   def self.organization_contributor(org_name:, role:, primary: false)
     {
-      name: [{ value: org_name }],
+      name: [{ value: org_name }.compact],
       type: 'organization',
-      role: [ROLES.fetch(role.sub(' ', '_').to_sym)],
+      role: [role.presence ? ROLES.fetch(role.sub(' ', '_').to_sym) : nil].compact,
       status: ('primary' if primary)
-    }
+    }.compact
   end
 
   def self.orcid_identifier(orcid)
