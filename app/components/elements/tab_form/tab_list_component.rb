@@ -20,7 +20,7 @@ module Elements
       def classes
         # Provides d-flex, tabbable-panes as the static default classes
         # merged with any additional classes passed in.
-        merge_classes(%w[d-flex tabbable-panes], @classes)
+        merge_classes(%w[d-flex tabbable-panes mb-5], @classes)
       end
 
       def tab_classes
