@@ -13,11 +13,14 @@ module Contributors
     def role_type_options
       [{ 'value' => 'person',
          'label' => 'Individual',
-         'data' => { contributors_target: 'contributorTypePerson', action: 'contributors#contributorTypeChanged' } },
+         'data' => { contributors_target: 'contributorTypePerson' },
+         'label_data' => { contributors_target: 'contributorTypePersonLabel',
+                           action: 'click->contributors#contributorTypePersonSelected' } },
        { 'value' => 'organization',
          'label' => 'Organization',
-         'data' => { contributors_target: 'contributorTypeOrganization',
-                     action: 'contributors#contributorTypeChanged' } }]
+         'data' => { contributors_target: 'contributorTypeOrganization' },
+         'label_data' => { contributors_target: 'contributorTypeOrganizationLabel',
+                           action: 'click->contributors#contributorTypeOrganizationSelected' } }]
     end
 
     PERSON_ROLES = [
