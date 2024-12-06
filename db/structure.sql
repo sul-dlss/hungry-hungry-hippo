@@ -277,8 +277,8 @@ CREATE TABLE public.schema_migrations (
 CREATE TABLE public.users (
     id bigint NOT NULL,
     email_address character varying NOT NULL,
-    name character varying NOT NULL,
-    first_name character varying NOT NULL,
+    name character varying,
+    first_name character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -664,6 +664,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241206021849'),
 ('20241205222413'),
 ('20241205212622'),
 ('20241205013747'),
