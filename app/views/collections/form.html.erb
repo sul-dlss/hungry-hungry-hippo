@@ -17,6 +17,7 @@
 <%= render Elements::TabForm::TabListComponent.new(model: @collection_form, form_id:, hidden_fields: %i[lock version]) do |component| %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.details.tab_label'), tab_name: :details, selected: true) %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.related_links.tab_label'), tab_name: :related_links) %>
+  <% component.with_tab(label: I18n.t('collections.edit.panes.participants.tab_label'), tab_name: :participants) %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.deposit.tab_label'), tab_name: :deposit) %>
   <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
   <%# TabListComponent will render the actual form. %>
@@ -29,6 +30,12 @@
 
     <% component.with_pane(tab_name: :related_links, label: I18n.t('collections.edit.panes.related_links.label'), form_id:) do %>
       <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, hidden_label: true) %>
+    <% end %>
+
+    <% component.with_pane(tab_name: :participants, label: I18n.t('collections.edit.panes.participants.label'), form:) do %>
+      <p><%= t('collections.edit.panes.participants.help_text') %></p>
+      <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, form_component: Collections::ContributorComponent) %>
+      <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, form_component: Collections::ContributorComponent) %>
     <% end %>
 
     <% component.with_after_form_pane(tab_name: :deposit, label: I18n.t('collections.edit.panes.deposit.label'), form_id:, render_footer: false) do %>
