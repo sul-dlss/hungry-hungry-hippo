@@ -1,0 +1,6 @@
+<%= form.collection_checkboxes field_name, input_collection, value_method, text_method do |builder| %>
+  <%= tag.div class: div_classes do %>
+    <%= builder.check_box(class: 'form-check-input') %>
+    <%= builder.label(class: 'form-check-label') %>
+  <% end %>
+<% end %>
