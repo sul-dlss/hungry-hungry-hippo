@@ -11,6 +11,8 @@ class DepositCollectionJob < ApplicationJob
 
     new_cocina_object = perform_persist
     druid = new_cocina_object.externalIdentifier
+    set_managers
+    set_depositors
 
     Sdr::Repository.accession(druid:) if deposit
 
@@ -31,6 +33,22 @@ class DepositCollectionJob < ApplicationJob
                      .then { |cocina_object| Sdr::Repository.update(cocina_object:) }
     else
       Sdr::Repository.register(cocina_object:)
+    end
+  end
+
+  def set_managers
+    collection_form.managers_attributes.each do |manager|
+      manager = manager.attributes if manager.respond_to?(:attributes)
+      user = User.find_or_create_by(email_address: "#{manager['sunetid']}@stanford.edu")
+      collection.managers.append(user)
+    end
+  end
+
+  def set_depositors
+    collection_form.depositors_attributes.each do |depositor|
+      depositor = depositor.attributes if depositor.respond_to?(:attributes)
+      user = User.find_or_create_by(email_address: "#{depositor['sunetid']}@stanford.edu")
+      collection.depositors.append(user)
     end
   end
 end
