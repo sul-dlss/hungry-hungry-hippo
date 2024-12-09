@@ -11,9 +11,7 @@
             <%= render form_component.new(form: nested_form) %>
           </div>
           <div class="col-md-auto">
-            <%= render Elements::ButtonComponent.new(classes: 'border border-0 float-end', variant: :'outline-primary', size: :lg, data: { action: 'click->nested-form#delete' }) do %>
-              <%= helpers.delete_icon %>
-            <% end %>
+            <%= render Elements::DeleteButtonComponent.new(classes: 'float-end', data: { action: 'click->nested-form#delete' }) %>
           </div>
         <% end %>
       <% end %>
@@ -25,9 +23,7 @@
           <%= render form_component.new(form: nested_form) %>
         </div>
         <div class="col-md-auto">
-          <%= render Elements::ButtonComponent.new(classes: 'border border-0 float-end', variant: :'outline-primary', size: :lg, data: { action: 'click->nested-form#delete' }) do %>
-            <%= helpers.delete_icon %>
-          <% end %>
+          <%= render Elements::DeleteButtonComponent.new(classes: 'float-end', data: { action: 'click->nested-form#delete' }) %>
         </div>
       <% end %>
     <% end %>

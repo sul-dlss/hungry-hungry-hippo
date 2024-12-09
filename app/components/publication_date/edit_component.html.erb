@@ -13,8 +13,6 @@
   </div>
   <div class="col-1"></div>
   <div class="col-1">
-    <%= render Elements::ButtonComponent.new(classes: 'border border-0', variant: :'outline-primary', size: :lg, data: { action: 'form-date#reset' }) do %>
-      <%= helpers.delete_icon %><span class="visually-hidden">Clear</span>
-    <% end %>
+    <%= render Elements::DeleteButtonComponent.new(data: { action: 'form-date#reset' }) %>
   </div>
 </div>
