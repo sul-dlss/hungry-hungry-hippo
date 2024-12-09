@@ -1,0 +1,2568 @@
+Data:
+  type:
+    - type: resource type
+      value: Dataset
+      uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+      source:
+        uri: http://id.loc.gov/vocabulary/resourceTypes/
+  datacite_type: Dataset
+  subtypes:
+    3D model:
+      - type: resource type
+        value: three dimensional object
+        source:
+          value: MODS resource types
+    Animation:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Article:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book chapter:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Broadcast:
+      # no value
+    CAD:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Capstone:
+      # no value
+    Code:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Conference session:
+      # no value
+    Correspondence:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Course/instructional materials:
+      # no value
+    Data:
+      # no value
+    Database:
+      # no value
+    Documentary:
+      # no value
+    Documentation:
+      # no value
+    Dramatic performance:
+      # no value
+    Essay:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Ethnography:
+      # no value
+    Event:
+      # no value
+    Experimental audio/video:
+      # no value
+    Field recording:
+      # no value
+    Game:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Geospatial data:
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    Government document:
+      # no value
+    Image:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Interview:
+      # no value
+    Journal/periodical issue:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Manuscript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Map:
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    MIDI:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Musical transcription:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Notated music:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Narrative film:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Oral history:
+      # no value
+    Other spoken word:
+      # no value
+    Performance:
+      # no value
+    Photograph:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Piano roll:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Podcast:
+      - type: resource type
+        value: sound recording-nonmusical
+        source:
+          value: MODS resource types
+    Poetry reading:
+      # no value
+    Policy brief:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Portfolio:
+      # no value
+    Poster:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Preprint:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Presentation recording:
+      # no value
+    Presentation slides:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Questionnaire:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Remote sensing imagery:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Software:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Sound recording:
+      - type: resource type
+        value: sound recording
+        source:
+          value: MODS resource types
+    Speaker notes:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Speech:
+      # no value
+    Statistical model:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Story:
+      # no value
+    Syllabus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Tabular data:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Technical report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Text corpus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Text:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Thesis:
+      # no value
+    Transcript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Unedited recording:
+      # no value
+    Video art:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Video recording:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    White paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Working paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+Image:
+  type:
+    - type: resource type
+      value: still image
+      source:
+        value: MODS resource types
+  datacite_type: Image
+  subtypes:
+    3D model:
+      - type: resource type
+        value: three dimensional object
+        source:
+          value: MODS resource types
+    Animation:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Article:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book chapter:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Broadcast:
+      # no value
+    CAD:
+      # no value
+    Capstone:
+      # no value
+    Code:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Conference session:
+      # no value
+    Correspondence:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Course/instructional materials:
+      # no value
+    Data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Database:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Documentary:
+      # no value
+    Documentation:
+      # no value
+    Dramatic performance:
+      # no value
+    Essay:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Ethnography:
+      # no value
+    Event:
+      # no value
+    Experimental audio/video:
+      # no value
+    Field recording:
+      # no value
+    Game:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Geospatial data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    Government document:
+      # no value
+    Image:
+      # no value
+    Interview:
+      # no value
+    Journal/periodical issue:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Manuscript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Map:
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    MIDI:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Musical transcription:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Notated music:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Narrative film:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Oral history:
+      # no value
+    Other spoken word:
+      # no value
+    Performance:
+      # no value
+    Photograph:
+      # no value
+    Piano roll:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Podcast:
+      - type: resource type
+        value: sound recording-nonmusical
+        source:
+          value: MODS resource types
+    Poetry reading:
+      # no value
+    Policy brief:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Portfolio:
+      # no value
+    Poster:
+      # no value
+    Preprint:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Presentation recording:
+      # no value
+    Presentation slides:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Questionnaire:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Remote sensing imagery:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Software:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Sound recording:
+      - type: resource type
+        value: sound recording
+        source:
+          value: MODS resource types
+    Speaker notes:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Speech:
+      # no value
+    Statistical model:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Story:
+      # no value
+    Syllabus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Tabular data:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Technical report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Text corpus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Text:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Thesis:
+      # no value
+    Transcript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Unedited recording:
+      # no value
+    Video art:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Video recording:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    White paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Working paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+Mixed Materials:
+  type:
+    - type: resource type
+      value: mixed material
+      source:
+        value: MODS resource types
+  datacite_type: Collection
+  subtypes:
+    3D model:
+      - type: resource type
+        value: three dimensional object
+        source:
+          value: MODS resource types
+    Animation:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Article:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book chapter:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Broadcast:
+      # no value
+    CAD:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Capstone:
+      # no value
+    Code:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Conference abstract:
+      # no value
+    Conference session:
+      # no value
+    Correspondence:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Course/instructional materials:
+      # no value
+    Data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Database:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Documentary:
+      # no value
+    Documentation:
+      # no value
+    Dramatic performance:
+      # no value
+    Essay:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Ethnography:
+      # no value
+    Event:
+      # no value
+    Experimental audio/video:
+      # no value
+    Field recording:
+      # no value
+    Game:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Geospatial data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    Government document:
+      # no value
+    Image:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Interview:
+      # no value
+    Journal/periodical issue:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Manuscript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Map:
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    MIDI:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Musical transcription:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Notated music:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Narrative film:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Oral history:
+      # no value
+    Other spoken word:
+      # no value
+    Pamphlet:
+      # no value
+    Performance:
+      # no value
+    Photograph:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Piano roll:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Podcast:
+      - type: resource type
+        value: sound recording-nonmusical
+        source:
+          value: MODS resource types
+    Poetry reading:
+      # no value
+    Policy brief:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Portfolio:
+      # no value
+    Poster:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Preprint:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Presentation recording:
+      # no value
+    Presentation slides:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Questionnaire:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Remote sensing imagery:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Software:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Sound recording:
+      - type: resource type
+        value: sound recording
+        source:
+          value: MODS resource types
+    Speaker notes:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Speech:
+      # no value
+    Statistical model:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Story:
+      # no value
+    Syllabus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Tabular data:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Technical report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Text corpus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Text:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Thesis:
+      # no value
+    Transcript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Unedited recording:
+      # no value
+    Video art:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Video recording:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    White paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Working paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+Music:
+  datacite_type: Other
+  subtypes:
+    3D model:
+      - type: resource type
+        value: three dimensional object
+        source:
+          value: MODS resource types
+    Animation:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Article:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book chapter:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Broadcast:
+      # no value
+    CAD:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Capstone:
+      # no value
+    Code:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Conference session:
+      # no value
+    Correspondence:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Course/instructional materials:
+      # no value
+    Data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Database:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Documentary:
+      # no value
+    Documentation:
+      # no value
+    Dramatic performance:
+      # no value
+    Essay:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Ethnography:
+      # no value
+    Event:
+      # no value
+    Experimental audio/video:
+      # no value
+    Field recording:
+      # no value
+    Game:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Geospatial data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    Government document:
+      # no value
+    Image:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Interview:
+      # no value
+    Journal/periodical issue:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Manuscript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Map:
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    MIDI:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Musical transcription:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Notated music:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Narrative film:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Oral history:
+      # no value
+    Other spoken word:
+      # no value
+    Performance:
+      # no value
+    Photograph:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Piano roll:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Podcast:
+      - type: resource type
+        value: sound recording-nonmusical
+        source:
+          value: MODS resource types
+    Poetry reading:
+      # no value
+    Policy brief:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Portfolio:
+      # no value
+    Poster:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Preprint:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Presentation recording:
+      # no value
+    Presentation slides:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Questionnaire:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Remote sensing imagery:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Software:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Sound recording:
+      - type: resource type
+        value: sound recording
+        source:
+          value: MODS resource types
+    Speaker notes:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Speech:
+      # no value
+    Statistical model:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Story:
+      # no value
+    Syllabus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Tabular data:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Technical report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Text corpus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Text:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Thesis:
+      # no value
+    Transcript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Unedited recording:
+      # no value
+    Video art:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Video recording:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    White paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Working paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+Other:
+  datacite_type: Other
+  subtypes:
+    3D model:
+      - type: resource type
+        value: three dimensional object
+        source:
+          value: MODS resource types
+    Animation:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Article:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book chapter:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Broadcast:
+      # no value
+    CAD:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Capstone:
+      # no value
+    Code:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Conference session:
+      # no value
+    Correspondence:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Course/instructional materials:
+      # no value
+    Data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Database:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Documentary:
+      # no value
+    Documentation:
+      # no value
+    Dramatic performance:
+      # no value
+    Essay:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Ethnography:
+      # no value
+    Event:
+      # no value
+    Experimental audio/video:
+      # no value
+    Field recording:
+      # no value
+    Game:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Geospatial data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    Government document:
+      # no value
+    Image:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Interview:
+      # no value
+    Journal/periodical issue:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Manuscript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Map:
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    MIDI:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Musical transcription:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Notated music:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Narrative film:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Oral history:
+      # no value
+    Other spoken word:
+      # no value
+    Performance:
+      # no value
+    Photograph:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Piano roll:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Podcast:
+      - type: resource type
+        value: sound recording-nonmusical
+        source:
+          value: MODS resource types
+    Poetry reading:
+      # no value
+    Policy brief:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Portfolio:
+      # no value
+    Poster:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Preprint:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Presentation recording:
+      # no value
+    Presentation slides:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Questionnaire:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Remote sensing imagery:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Software:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Sound recording:
+      - type: resource type
+        value: sound recording
+        source:
+          value: MODS resource types
+    Speaker notes:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Speech:
+      # no value
+    Statistical model:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Story:
+      # no value
+    Syllabus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Tabular data:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Technical report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Text corpus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Text:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Thesis:
+      # no value
+    Transcript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Unedited recording:
+      # no value
+    Video art:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Video recording:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    White paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Working paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+Software/Code:
+  type:
+    - type: resource type
+      value: software, multimedia
+      source:
+        value: MODS resource types
+  datacite_type: Software
+  subtypes:
+    3D model:
+      - type: resource type
+        value: three dimensional object
+        source:
+          value: MODS resource types
+    Animation:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Article:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book chapter:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Broadcast:
+      # no value
+    CAD:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Capstone:
+      # no value
+    Code:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Conference session:
+      # no value
+    Correspondence:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Course/instructional materials:
+      # no value
+    Data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Database:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Documentary:
+      # no value
+    Documentation:
+      # no value
+    Dramatic performance:
+      # no value
+    Essay:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Ethnography:
+      # no value
+    Event:
+      # no value
+    Experimental audio/video:
+      # no value
+    Field recording:
+      # no value
+    Game:
+      # no value
+    Geospatial data:
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Government document:
+      # no value
+    Image:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Interview:
+      # no value
+    Journal/periodical issue:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Manuscript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Map:
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    MIDI:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Musical transcription:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Notated music:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Narrative film:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Oral history:
+      # no value
+    Other spoken word:
+      # no value
+    Performance:
+      # no value
+    Photograph:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Piano roll:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Podcast:
+      - type: resource type
+        value: sound recording-nonmusical
+        source:
+          value: MODS resource types
+    Poetry reading:
+      # no value
+    Policy brief:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Portfolio:
+      # no value
+    Poster:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Preprint:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Presentation recording:
+      # no value
+    Presentation slides:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Questionnaire:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Remote sensing imagery:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Software:
+      # no value
+    Sound recording:
+      - type: resource type
+        value: sound recording
+        source:
+          value: MODS resource types
+    Speaker notes:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Speech:
+      # no value
+    Statistical model:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Story:
+      # no value
+    Syllabus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Tabular data:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Technical report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Text corpus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Text:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Thesis:
+      # no value
+    Transcript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Unedited recording:
+      # no value
+    Video art:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Video recording:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    White paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Working paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+Sound:
+  type:
+    - type: resource type
+      value: sound recording
+      source:
+        value: MODS resource types
+  datacite_type: Sound
+  subtypes:
+    3D model:
+      - type: resource type
+        value: three dimensional object
+        source:
+          value: MODS resource types
+    Animation:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Article:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book chapter:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Broadcast:
+      # no value
+    CAD:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Capstone:
+      # no value
+    Code:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Conference session:
+      # no value
+    Correspondence:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Course/instructional materials:
+      # no value
+    Data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Database:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Documentary:
+      # no value
+    Documentation:
+      # no value
+    Dramatic performance:
+      # no value
+    Essay:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Ethnography:
+      # no value
+    Event:
+      # no value
+    Experimental audio/video:
+      # no value
+    Field recording:
+      # no value
+    Game:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Geospatial data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    Government document:
+      # no value
+    Image:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Interview:
+      # no value
+    Journal/periodical issue:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Manuscript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Map:
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    MIDI:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Musical transcription:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Notated music:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Narrative film:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Oral history:
+      # no value
+    Other spoken word:
+      # no value
+    Performance:
+      # no value
+    Photograph:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Piano roll:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Podcast:
+      - type: resource type
+        value: sound recording-nonmusical
+        source:
+          value: MODS resource types
+    Poetry reading:
+      # no value
+    Policy brief:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Portfolio:
+      # no value
+    Poster:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Preprint:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Presentation recording:
+      # no value
+    Presentation slides:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Questionnaire:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Remote sensing imagery:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Software:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Sound recording:
+      # no value
+    Speaker notes:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Speech:
+      # no value
+    Statistical model:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Story:
+      # no value
+    Syllabus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Tabular data:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Technical report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Text corpus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Text:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Thesis:
+      # no value
+    Transcript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Unedited recording:
+      # no value
+    Video art:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Video recording:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    White paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Working paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+Text:
+  type:
+    - type: resource type
+      value: text
+      source:
+        value: MODS resource types
+  datacite_type: Text
+  subtypes:
+    3D model:
+      - type: resource type
+        value: three dimensional object
+        source:
+          value: MODS resource types
+    Animation:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Article:
+      # no value
+    Book:
+      # no value
+    Book chapter:
+      # no value
+    Broadcast:
+      # no value
+    CAD:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Capstone:
+      # no value
+    Code:
+      # no value
+    Conference session:
+      # no value
+    Correspondence:
+      # no value
+    Course/instructional materials:
+      # no value
+    Data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Database:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Documentary:
+      # no value
+    Documentation:
+      # no value
+    Dramatic performance:
+      # no value
+    Essay:
+      # no value
+    Ethnography:
+      # no value
+    Event:
+      # no value
+    Experimental audio/video:
+      # no value
+    Field recording:
+      # no value
+    Game:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Geospatial data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    Government document:
+      # no value
+    Image:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Interview:
+      # no value
+    Journal/periodical issue:
+      # no value
+    Manuscript:
+      # no value
+    Map:
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    MIDI:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Musical transcription:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Notated music:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Narrative film:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Oral history:
+      # no value
+    Other spoken word:
+      # no value
+    Performance:
+      # no value
+    Photograph:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Piano roll:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Podcast:
+      - type: resource type
+        value: sound recording-nonmusical
+        source:
+          value: MODS resource types
+    Poetry reading:
+      # no value
+    Policy brief:
+      # no value
+    Portfolio:
+      # no value
+    Poster:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Preprint:
+      # no value
+    Presentation recording:
+      # no value
+    Presentation slides:
+      # no value
+    Questionnaire:
+      # no value
+    Remote sensing imagery:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Report:
+      # no value
+    Software:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Sound recording:
+      - type: resource type
+        value: sound recording
+        source:
+          value: MODS resource types
+    Speaker notes:
+      # no value
+    Speech:
+      # no value
+    Statistical model:
+      # no value
+    Story:
+      # no value
+    Syllabus:
+      # no value
+    Tabular data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Technical report:
+      # no value
+    Text corpus:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Text:
+      # no value
+    Thesis:
+      # no value
+    Transcript:
+      # no value
+    Unedited recording:
+      # no value
+    Video art:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    Video recording:
+      - type: resource type
+        value: moving image
+        source:
+          value: MODS resource types
+    White paper:
+      # no value
+    Working paper:
+      # no value
+Video:
+  type:
+    - type: resource type
+      value: moving image
+      source:
+        value: MODS resource types
+  datacite_type: Audiovisual
+  subtypes:
+    3D model:
+      - type: resource type
+        value: three dimensional object
+        source:
+          value: MODS resource types
+    Animation:
+      # no value
+    Article:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Book chapter:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Broadcast:
+      # no value
+    CAD:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Capstone:
+      # no value
+    Code:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Conference session:
+      # no value
+    Correspondence:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Course/instructional materials:
+      # no value
+    Data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Database:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Documentary:
+      # no value
+    Documentation:
+      # no value
+    Dramatic performance:
+      # no value
+    Essay:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Ethnography:
+      # no value
+    Event:
+      # no value
+    Experimental audio/video:
+      # no value
+    Field recording:
+      # no value
+    Game:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Geospatial data:
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    Government document:
+      # no value
+    Image:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Interview:
+      # no value
+    Journal/periodical issue:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Manuscript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Map:
+      - type: resource type
+        value: cartographic
+        source:
+          value: MODS resource types
+    MIDI:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Musical transcription:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Notated music:
+      - type: resource type
+        value: notated music
+        source:
+          value: MODS resource types
+    Narrative film:
+      # no value
+    Oral history:
+      # no value
+    Other spoken word:
+      # no value
+    Performance:
+      # no value
+    Photograph:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Piano roll:
+      - type: resource type
+        value: sound recording-musical
+        source:
+          value: MODS resource types
+    Podcast:
+      - type: resource type
+        value: sound recording-nonmusical
+        source:
+          value: MODS resource types
+    Poetry reading:
+      # no value
+    Policy brief:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Portfolio:
+      # no value
+    Poster:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+    Preprint:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Presentation recording:
+      # no value
+    Presentation slides:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Questionnaire:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Remote sensing imagery:
+      - type: resource type
+        value: still image
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Software:
+      - type: resource type
+        value: software, multimedia
+        source:
+          value: MODS resource types
+    Sound recording:
+      - type: resource type
+        value: sound recording
+        source:
+          value: MODS resource types
+    Speaker notes:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Speech:
+      # no value
+    Statistical model:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Story:
+      # no value
+    Syllabus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Tabular data:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Technical report:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Text corpus:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+      - type: resource type
+        value: Dataset
+        uri: http://id.loc.gov/vocabulary/resourceTypes/dat
+        source:
+          uri: http://id.loc.gov/vocabulary/resourceTypes/
+    Text:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Thesis:
+      # no value
+    Transcript:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Unedited recording:
+      # no value
+    Video art:
+      # no value
+    Video recording:
+      # no value
+    White paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
+    Working paper:
+      - type: resource type
+        value: text
+        source:
+          value: MODS resource types
