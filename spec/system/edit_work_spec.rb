@@ -72,7 +72,12 @@ RSpec.describe 'Edit a work' do
     click_link_or_button('Deposit')
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
+    # Fillin in authors
+    fill_in('First name', with: authors_fixture.first['first_name'])
+    fill_in('Last name', with: authors_fixture.first['last_name'])
+
     # Filling in abstract
+    find('.nav-link', text: 'Abstract').click
     fill_in('work_abstract', with: updated_abstract)
 
     # Filling in related content, first related links
@@ -105,6 +110,7 @@ RSpec.describe 'Edit a work' do
     # On show page
     expect(page).to have_css('h1', text: updated_title)
     expect(page).to have_content(updated_abstract)
+    expect(page).to have_content('Stanford, Jane')
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
     expect(page).to have_content('https://purl.stanford.edu/fake (references)')
     expect(page).to have_css('.status', text: 'New version in draft')
