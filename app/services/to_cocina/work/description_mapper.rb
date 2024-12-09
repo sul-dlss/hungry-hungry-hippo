@@ -51,6 +51,7 @@ module ToCocina
           count += 1
           # First entered contributor is always status: "primary" (except for Publisher)
           primary = count == 1
+          debugger
           if contributor.role_type == 'person'
             CocinaDescriptionSupport.person_contributor(
               forename: contributor.first_name,

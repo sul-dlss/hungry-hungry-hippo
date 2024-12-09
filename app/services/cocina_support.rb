@@ -22,7 +22,6 @@ class CocinaSupport
 
   # Maps the value from the contributor field in the cocina object to the author attributes in the WorkForm
   def self.authors_for(cocina_object:)
-    debugger
     return nil if cocina_object.description.contributor.blank?
 
     cocina_object.description.contributor.filter_map do |contributor|

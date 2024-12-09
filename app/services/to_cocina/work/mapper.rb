@@ -21,6 +21,7 @@ module ToCocina
       def call
         if work_form.persisted?
           Cocina::Models.with_metadata(Cocina::Models.build(params), work_form.lock)
+          debugger
         else
           Cocina::Models.build_request(params)
         end
