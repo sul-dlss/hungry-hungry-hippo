@@ -20,7 +20,7 @@ class CocinaSupport
     end.presence
   end
 
-  # Maps the value from the contributor field in the cocina object to the author attributes in the WorkForm
+  # Maps the values from the contributor field in the cocina object to the author attributes in the WorkForm
   def self.authors_for(cocina_object:)
     return nil if cocina_object.description.contributor.blank?
 

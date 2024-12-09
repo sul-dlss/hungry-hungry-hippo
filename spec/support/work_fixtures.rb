@@ -104,3 +104,46 @@ def publication_date_fixture
     'day' => 10
   }
 end
+
+def authors_fixture
+  [
+    {
+      'role_type' => 'person',
+      'person_role' => 'author',
+      'organization_role' => 'author',
+      'first_name' => 'Jane',
+      'last_name' => 'Stanford',
+      'with_orcid' => true,
+      'orcid' => 'https://orcid.org/0001-0002-0003-0004',
+      'organization_name' => nil
+    },
+    {
+      'role_type' => 'organization',
+      'person_role' => 'author',
+      'organization_role' => 'host institution',
+      'with_orcid' => false,
+      'orcid' => nil,
+      'first_name' => nil,
+      'last_name' => nil,
+      'organization_name' => 'Stanford University Libraries'
+    }
+  ]
+end
+
+def person_contributor_fixture
+  {
+    surname: 'Stanford',
+    forename: 'Jane',
+    role: 'author',
+    primary: true,
+    orcid: 'https://orcid.org/0001-0002-0003-0004'
+  }
+end
+
+def organization_contributor_fixture
+  {
+    role: 'host institution',
+    org_name: 'Stanford University Libraries',
+    primary: false
+  }
+end
