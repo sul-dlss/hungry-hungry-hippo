@@ -8,18 +8,16 @@ RSpec.describe 'Edit a work' do
 
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
-
   let(:cocina_object) do
     dro_with_metadata_fixture
   end
-
   let(:version_status) do
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
                                                                          version: cocina_object.version)
   end
-
   let(:updated_title) { 'My new title' }
   let(:updated_abstract) { 'This is what my work is really about.' }
+  let(:updated_keywords) { ['First Keyword'] }
   let(:updated_related_links) do
     [
       {
@@ -66,7 +64,7 @@ RSpec.describe 'Edit a work' do
     fill_in('Title of deposit', with: updated_title)
 
     # Testing validation
-    find('.nav-link', text: 'Abstract').click
+    find('.nav-link', text: 'Abstract & keywords').click
     fill_in('work_abstract', with: '')
     find('.nav-link', text: 'Deposit').click
     click_link_or_button('Deposit')
@@ -74,6 +72,7 @@ RSpec.describe 'Edit a work' do
 
     # Filling in abstract
     fill_in('work_abstract', with: updated_abstract)
+    fill_in('work_keywords_attributes_1_text', with: updated_keywords.first)
 
     # Filling in related content, first related links
     find('.nav-link', text: 'Related content (optional)').click
@@ -105,6 +104,7 @@ RSpec.describe 'Edit a work' do
     # On show page
     expect(page).to have_css('h1', text: updated_title)
     expect(page).to have_content(updated_abstract)
+    expect(page).to have_content(updated_keywords.first)
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
     expect(page).to have_content('https://purl.stanford.edu/fake (references)')
     expect(page).to have_css('.status', text: 'New version in draft')

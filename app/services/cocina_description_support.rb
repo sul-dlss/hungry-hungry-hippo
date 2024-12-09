@@ -42,6 +42,17 @@ class CocinaDescriptionSupport
     end.compact_blank
   end
 
+  def self.keywords(keywords:)
+    keywords.map do |keyword|
+      # Since keyword is either a Hash or an instance of KeywordForm,
+      # we need to make it a hash of the attributes if it's a KeywordForm
+      keyword = keyword.attributes if keyword.respond_to?(:attributes)
+      next if keyword['text'].blank?
+
+      { value: keyword['text'] }
+    end.compact_blank
+  end
+
   def self.related_links(related_links:)
     related_links.map do |related_link|
       # NOTE: Sometimes this is an array of hashes and sometimes it's an array of RelatedLinkForm instances

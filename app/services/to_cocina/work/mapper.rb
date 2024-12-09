@@ -35,12 +35,12 @@ module ToCocina
           externalIdentifier: work_form.druid,
           type: Cocina::Models::ObjectType.object,
           label: work_form.title,
-          description: ToCocina::Work::DescriptionMapper.call(work_form:),
+          description: DescriptionMapper.call(work_form:),
           version: work_form.version,
           access:,
           identification: { sourceId: source_id },
           administrative: { hasAdminPolicy: Settings.apo },
-          structural: ToCocina::Work::StructuralMapper.call(work_form:, content:)
+          structural: StructuralMapper.call(work_form:, content:)
         }.compact
       end
 

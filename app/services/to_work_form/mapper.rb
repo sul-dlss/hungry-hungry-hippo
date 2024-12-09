@@ -28,6 +28,7 @@ module ToWorkForm
         contact_emails_attributes: CocinaSupport.contact_emails_for(cocina_object:),
         related_works_attributes: CocinaSupport.related_works_for(cocina_object:),
         related_links_attributes: CocinaSupport.related_links_for(cocina_object:),
+        keywords_attributes: CocinaSupport.keywords_for(cocina_object:),
         license: cocina_object.access.license,
         version: cocina_object.version,
         collection_druid: CocinaSupport.collection_druid_for(cocina_object:),

@@ -149,14 +149,16 @@ RSpec.describe 'Show a work' do
       expect(page).to have_css('tr', text: 'Title')
       expect(page).to have_css('td', text: work.title)
       expect(page).to have_css('tr', text: 'Contact emails')
-      expect(page).to have_css('td', text: contact_email_fixture.pluck(:email).join(', '))
+      expect(page).to have_css('td', text: contact_emails_fixture.pluck(:email).join(', '))
     end
 
     # Description table
     within('table#description-table') do
-      expect(page).to have_css('caption', text: 'Description')
+      expect(page).to have_css('caption', text: 'Abstract and keywords')
       expect(page).to have_css('tr', text: 'Abstract')
       expect(page).to have_css('td', text: abstract_fixture)
+      expect(page).to have_css('tr', text: 'Keywords')
+      expect(page).to have_css('td', text: keywords_fixture.pluck(:text).join(', '))
     end
 
     # Related Content table

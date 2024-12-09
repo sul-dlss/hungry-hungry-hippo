@@ -12,7 +12,8 @@ module WorkMappingFixtures
       license: license_fixture,
       collection_druid: collection_druid_fixture,
       publication_date_attributes: { year: '2024', month: '12' },
-      contact_emails_attributes: contact_email_fixture
+      contact_emails_attributes: contact_emails_fixture,
+      keywords_attributes: keywords_fixture
     )
   end
 
@@ -65,11 +66,12 @@ module WorkMappingFixtures
         label: title_fixture,
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
+          subject: CocinaDescriptionSupport.keywords(keywords: keywords_fixture),
           event: [CocinaDescriptionSupport.event_date(type: 'publication', date: '2024-12', primary: true)],
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
           relatedResource: CocinaDescriptionSupport.related_works(related_works: related_works_fixture) +
                            CocinaDescriptionSupport.related_links(related_links: related_links_fixture),
-          access: { accessContact: CocinaDescriptionSupport.contact_emails(contact_emails: contact_email_fixture) }
+          access: { accessContact: CocinaDescriptionSupport.contact_emails(contact_emails: contact_emails_fixture) }
         },
         version: 1,
         identification: { sourceId: source_id_fixture },
@@ -129,17 +131,17 @@ module WorkMappingFixtures
   def dro_fixture # rubocop:disable Metrics/AbcSize
     Cocina::Models.build(
       {
-
         externalIdentifier: druid_fixture,
         type: Cocina::Models::ObjectType.object,
         label: title_fixture,
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
+          subject: CocinaDescriptionSupport.keywords(keywords: keywords_fixture),
           event: [CocinaDescriptionSupport.event_date(type: 'publication', date: '2024-12', primary: true)],
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
           relatedResource: CocinaDescriptionSupport.related_works(related_works: related_works_fixture) +
                            CocinaDescriptionSupport.related_links(related_links: related_links_fixture),
-          access: { accessContact: CocinaDescriptionSupport.contact_emails(contact_emails: contact_email_fixture) },
+          access: { accessContact: CocinaDescriptionSupport.contact_emails(contact_emails: contact_emails_fixture) },
           purl: Sdr::Purl.from_druid(druid: druid_fixture)
         },
         version: 2,

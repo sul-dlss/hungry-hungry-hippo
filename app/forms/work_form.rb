@@ -2,7 +2,7 @@
 
 # Form for a Work
 class WorkForm < ApplicationForm
-  accepts_nested_attributes_for :related_links, :related_works, :publication_date, :contact_emails
+  accepts_nested_attributes_for :related_links, :related_works, :publication_date, :contact_emails, :keywords
 
   def self.immutable_attributes
     ['druid']

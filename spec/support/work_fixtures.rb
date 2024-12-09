@@ -46,13 +46,24 @@ def related_works_fixture
   ]
 end
 
-def contact_email_fixture
+def contact_emails_fixture
   [
     {
       'email' => 'aperson@example.com'
     },
     {
       'email' => 'anotherperson@example.com'
+    }
+  ]
+end
+
+def keywords_fixture
+  [
+    {
+      'text' => 'Biology'
+    },
+    {
+      'text' => 'Chemistry'
     }
   ]
 end
