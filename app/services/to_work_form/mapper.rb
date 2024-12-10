@@ -24,6 +24,7 @@ module ToWorkForm
         druid: cocina_object.externalIdentifier,
         lock: cocina_object.lock,
         title: CocinaSupport.title_for(cocina_object:),
+        authors_attributes: CocinaSupport.authors_for(cocina_object:),
         abstract: CocinaSupport.abstract_for(cocina_object:),
         contact_emails_attributes: CocinaSupport.contact_emails_for(cocina_object:),
         related_works_attributes: CocinaSupport.related_works_for(cocina_object:),

@@ -70,7 +70,13 @@ RSpec.describe 'Edit a work' do
     click_link_or_button('Deposit')
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
+    # Fill in in authors
+    find('label[for=work_authors_attributes_0_with_orcid_false]').click
+    fill_in('First name', with: authors_fixture.first['first_name'])
+    fill_in('Last name', with: authors_fixture.first['last_name'])
+
     # Filling in abstract
+    find('.nav-link', text: 'Abstract').click
     fill_in('work_abstract', with: updated_abstract)
     fill_in('work_keywords_attributes_1_text', with: updated_keywords.first)
 
@@ -105,6 +111,8 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_css('h1', text: updated_title)
     expect(page).to have_content(updated_abstract)
     expect(page).to have_content(updated_keywords.first)
+    expect(page).to have_content('Jane Stanford')
+    expect(page).to have_content('https://orcid.org/0001-0002-0003-0004')
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
     expect(page).to have_content('https://purl.stanford.edu/fake (references)')
     expect(page).to have_css('.status', text: 'New version in draft')
