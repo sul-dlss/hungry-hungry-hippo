@@ -79,3 +79,14 @@ table.table-show {
   }
 }
 
+// Following should be set in component library.
+.form-label {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: unset;
+}
+
+.form-control {
+  --bs-border-color: #979797;
+}
+
