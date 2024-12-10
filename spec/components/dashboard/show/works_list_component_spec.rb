@@ -13,8 +13,8 @@ RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
   let(:version_status) { instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1) }
   let(:status_map) do
     {
-      work.id => StatusPresenter.new(status: version_status),
-      work_without_druid.id => StatusPresenter.new
+      work.id => VersionStatus.new(status: version_status),
+      work_without_druid.id => VersionStatus::NilStatus.new
     }
   end
 

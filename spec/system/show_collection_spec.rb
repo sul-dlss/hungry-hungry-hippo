@@ -11,8 +11,9 @@ RSpec.describe 'Show a collection' do
   # Need multiple files to test pagination
   let(:cocina_object) { collection_with_metadata_fixture }
   let(:version_status) do
+    VersionStatus.new(status:
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
-                                                                         openable?: true, accessioning?: false)
+                                                                         openable?: true, accessioning?: false))
   end
 
   before do

@@ -7,8 +7,9 @@ RSpec.describe 'Create a work deposit' do
   let(:user) { create(:user) }
 
   let(:version_status) do
+    VersionStatus.new(status:
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, accessioning?: true,
-                                                                         openable?: false)
+                                                                         openable?: false, version: 1))
   end
 
   before do

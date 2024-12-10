@@ -12,8 +12,9 @@ RSpec.describe 'Create a collection deposit' do
   end
 
   let(:version_status) do
+    VersionStatus.new(status:
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, accessioning?: true,
-                                                                         openable?: false)
+                                                                         openable?: false))
   end
 
   before do

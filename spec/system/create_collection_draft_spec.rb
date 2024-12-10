@@ -13,8 +13,9 @@ RSpec.describe 'Create a collection draft' do
   end
 
   let(:version_status) do
+    VersionStatus.new(status:
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1,
-                                                                         openable?: false)
+                                                                         openable?: false))
   end
 
   before do

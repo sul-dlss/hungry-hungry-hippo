@@ -1,5 +1,5 @@
 <%= render Elements::HeaderComponent.new(level: :h1, variant: :h2, text: @work_form.title || 'Untitled deposit', classes: 'mb-3') %>
-<%= render Elements::AlertComponent.new(variant: :danger, value: t('works.edit.errors.validation')) if @work_form.errors.present? %>
+<%= render Elements::AlertComponent.new(variant: :danger, value: t('works.edit.messages.validation')) if @work_form.errors.present? %>
 <%= render Elements::TabForm::TabListComponent.new(model: @work_form, hidden_fields: %i[lock version collection_druid content_id]) do |component| %>
   <% component.with_tab(label: t('works.edit.panes.files.tab_label'), tab_name: :files, selected: true) %>
   <% component.with_tab(label: t('works.edit.panes.title.tab_label'), tab_name: :title) %>
