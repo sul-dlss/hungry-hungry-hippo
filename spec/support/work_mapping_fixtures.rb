@@ -67,13 +67,9 @@ module WorkMappingFixtures
         label: title_fixture,
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
-<<<<<<< HEAD
           subject: CocinaDescriptionSupport.keywords(keywords: keywords_fixture),
-||||||| parent of 9440a85 (Specs)
-=======
           contributor: [CocinaDescriptionSupport.person_contributor(**person_contributor_fixture),
                         CocinaDescriptionSupport.organization_contributor(**organization_contributor_fixture)],
->>>>>>> 9440a85 (Specs)
           event: [CocinaDescriptionSupport.event_date(type: 'publication', date: '2024-12', primary: true)],
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture)],
           relatedResource: CocinaDescriptionSupport.related_works(related_works: related_works_fixture) +

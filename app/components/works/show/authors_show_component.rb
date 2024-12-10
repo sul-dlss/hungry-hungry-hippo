@@ -36,10 +36,14 @@ module Works
       end
 
       def orcid_link(author)
-        link_to(author.orcid) if author.orcid.present?
+        return unless author.orcid
+
+        link_to(author.orcid)
       end
 
       def author_role_label(author)
+        return unless author.person_role || author.organization_role
+        
         author_role(author).sub('_', ' ').capitalize
       end
 

@@ -242,8 +242,8 @@ class CocinaDescriptionSupport
     end.compact_blank
   end
 
-  # @param forename [String] the forename of the person
   # @param surname [String] the surname of the person
+  # @param forename [String] the forename of the person
   # @param role [String] the role of the person from ROLES
   # @param primary [Boolean] whether this is the first author
   # @param orcid [String] the ORCID of the person

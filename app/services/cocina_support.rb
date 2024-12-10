@@ -42,7 +42,7 @@ class CocinaSupport
         'person_role' => (contributor.role.first.value.sub(' ', '_') if contributor.type == 'person'),
         'organization_role' => (contributor.role.first.value.sub(' ', '_') if contributor.type == 'organization'),
         'organization_name' => (contributor.name.first.value if contributor.type == 'organization'),
-        'orcid' => (contributor.identifier&.find { |id| id.type == 'ORCID' }&.value if contributor.type == 'person'),
+        'orcid' => orcid_for(contributor:),
         'with_orcid' => contributor.identifier&.find { |id| id.type == 'ORCID' }.present? }
     end.presence
   end
@@ -133,5 +133,12 @@ class CocinaSupport
       date_params[:month] = date.month if dash_count >= 1
       date_params[:day] = date.day if dash_count == 2
     end
+  end
+
+  def self.orcid_for(contributor:)
+    orcid = contributor.identifier&.find { |id| id.type == 'ORCID' }&.value
+    return unless orcid.presence
+
+    orcid.prepend('https://orcid.org/')
   end
 end

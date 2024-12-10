@@ -57,7 +57,7 @@ module ToCocina
               surname: contributor.last_name,
               role: contributor.person_role,
               primary:,
-              orcid: (contributor.orcid if contributor.with_orcid)
+              orcid: contributor.orcid
             )
           else
             CocinaDescriptionSupport.organization_contributor(
