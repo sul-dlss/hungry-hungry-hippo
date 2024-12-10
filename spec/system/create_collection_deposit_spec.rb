@@ -45,10 +45,11 @@ RSpec.describe 'Create a collection deposit' do
     # Manage files pane with form field is visible, abstract is not
     expect(page).to have_css('div.h4', text: 'Collection details')
 
-    # Filling in title and description
+    # Filling in title, description, and contact email
     find('.nav-link', text: 'Details').click
     fill_in('collection_title', with: collection_title_fixture)
     fill_in('collection_description', with: collection_description_fixture)
+    fill_in('Contact email', with: contact_emails_fixture.first['email'])
 
     # Clicking on Next to go to related content tab
     click_link_or_button('Next')

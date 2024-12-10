@@ -25,6 +25,7 @@ module ToCollectionForm
         lock: cocina_object.lock,
         title: CocinaSupport.title_for(cocina_object:),
         description: CocinaSupport.abstract_for(cocina_object:), # Cocina abstract maps to Collection description
+        contact_emails_attributes: CocinaSupport.contact_emails_for(cocina_object:),
         related_links_attributes: CocinaSupport.related_links_for(cocina_object:),
         version: cocina_object.version
       }

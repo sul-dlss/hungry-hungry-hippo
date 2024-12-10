@@ -2,7 +2,7 @@
 
 # Form for a Collection
 class CollectionForm < ApplicationForm
-  accepts_nested_attributes_for :related_links
+  accepts_nested_attributes_for :related_links, :contact_emails
 
   def self.immutable_attributes
     ['druid']

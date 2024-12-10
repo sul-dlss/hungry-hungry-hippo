@@ -34,18 +34,15 @@ RSpec.describe 'Show a collection' do
     expect(page).to have_css('.status', text: 'Deposited')
     expect(page).to have_link('Edit or deposit', href: edit_collection_path(druid))
 
-    # Title table
-    within('table#title-table') do
-      expect(page).to have_css('caption', text: 'Title')
+    # Details table
+    within('table#details-table') do
+      expect(page).to have_css('caption', text: 'Details')
       expect(page).to have_css('tr', text: 'Title')
       expect(page).to have_css('td', text: collection.title)
-    end
-
-    # Description table
-    within('table#description-table') do
-      expect(page).to have_css('caption', text: 'Description')
       expect(page).to have_css('tr', text: 'Description')
       expect(page).to have_css('td', text: collection_description_fixture)
+      expect(page).to have_css('tr', text: 'Contact emails')
+      expect(page).to have_css('td', text: contact_emails_fixture.pluck(:email).join(', '))
     end
 
     # Related Content table
