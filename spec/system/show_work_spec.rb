@@ -143,6 +143,21 @@ RSpec.describe 'Show a work' do
       expect(page).to have_no_css('td', text: 'my_file1.txt')
     end
 
+    # Details table
+    within('table#details-table') do
+      expect(page).to have_css('caption', text: 'Details')
+      expect(page).to have_css('tr', text: 'Persistent Link')
+      expect(page).to have_css('td', text: Sdr::Purl.from_druid(druid:))
+      expect(page).to have_css('tr', text: 'Collection')
+      expect(page).to have_css('td', text: collection.title)
+      expect(page).to have_css('tr', text: 'Depositor')
+      expect(page).to have_css('td', text: user.name)
+      expect(page).to have_css('tr', text: 'Version details')
+      expect(page).to have_css('td', text: '1')
+      expect(page).to have_css('tr', text: 'Deposit created')
+      expect(page).to have_css('td', text: I18n.l(Time.zone.now, format: :long))
+    end
+
     # Title table
     within('table#title-table') do
       expect(page).to have_css('caption', text: 'Title and contact')

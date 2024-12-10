@@ -39,6 +39,9 @@ en:
           attributes:
             email:
               format: '%{value} is not a valid email address'
+  time:
+    formats:
+      long: '%B %d, %Y'
   errors:
     not_authorized: 'You are not authorized to perform the requested action.'
   publication_date:
