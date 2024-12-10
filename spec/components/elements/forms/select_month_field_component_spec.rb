@@ -12,7 +12,7 @@ RSpec.describe Elements::Forms::SelectMonthFieldComponent, type: :component do
     render_inline(described_class.new(form: form, field_name:, required: false, label: 'Month'))
     expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'Month')
     expect(page).to have_css('select.form-select:not(.is-invalid)')
-    expect(page).to have_css('option[value=""]', text: 'Month')
+    expect(page).to have_css('option[value=""]', text: '')
     expect(page).to have_css('option[value="1"]', text: 'January')
     expect(page.all('option').length).to eq(13)
     expect(page).to have_no_css('small.form-text')
