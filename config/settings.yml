@@ -17,3 +17,9 @@ staging_location: '/dor/workspace'
 authorization_workgroup_names:
   administrators: 'dlss:hydrus-app-administrators'
   collection_creators: 'dlss:hydrus-app-collection-creators'
+
+# See https://www.oclc.org/developer/develop/web-services/fast-api/assign-fast.en.html for more information
+autocomplete_lookup:
+  url: http://fast.oclc.org/searchfast/fastsuggest
+  num_records: 10
+  identifier_prefix: 'http://id.worldcat.org/fast/'

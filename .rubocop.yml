@@ -20,7 +20,6 @@ AllCops:
   Exclude:
     - 'bin/**/*'
     - 'config/environments/*.rb'
-    - 'config/routes.rb'
     - 'db/**/*'
     - 'vendor/**/*'
 

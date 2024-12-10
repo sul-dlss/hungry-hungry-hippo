@@ -41,19 +41,18 @@ gem 'bootsnap', require: false
 
 # Additional gems
 gem 'action_policy'
+gem 'cocina-models'
 gem 'config'
+gem 'dor-services-client', '>= 15.2.1'
+gem 'dor-workflow-client', '>= 7.6.1'
+gem 'druid-tools'
+gem 'dry-monads'
 gem 'edtf'
 gem 'honeybadger'
 gem 'kaminari' # For pagination
 gem 'okcomputer'
 gem 'view_component'
 gem 'whenever', require: false
-
-# DLSS/domain-specific dependencies
-gem 'cocina-models'
-gem 'dor-services-client', '>= 15.2.1'
-gem 'dor-workflow-client', '>= 7.6.1'
-gem 'druid-tools'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
