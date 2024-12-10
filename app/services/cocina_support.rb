@@ -20,6 +20,16 @@ class CocinaSupport
     end.presence
   end
 
+  def self.keywords_for(cocina_object:)
+    return nil if cocina_object.description.subject.blank?
+
+    cocina_object.description.subject.filter_map do |subject|
+      next if subject.value.blank?
+
+      { 'text' => subject.value }
+    end.presence
+  end
+
   def self.related_links_for(cocina_object:) # rubocop:disable Metrics/AbcSize
     return nil if cocina_object.description.relatedResource.blank?
 

@@ -15,8 +15,9 @@
   <% component.with_row(label: 'Publication date', values: [@work_form.publication_date.to_s]) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'table-show mb-5', label: 'Description') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'table-show mb-5', label: 'Abstract and keywords') do |component| %>
   <% component.with_row(label: 'Abstract', values: [@work_form.abstract]) %>
+  <% component.with_row(label: 'Keywords', values: [@work_form.keywords_attributes.map(&:text).join(', ')]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'table-show mb-5', label: 'Related content') do |component| %>

@@ -35,6 +35,7 @@
     <% component.with_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), form:) do %>
       <p><%= t('works.edit.fields.abstract.help_text') %></p>
       <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: t('works.edit.fields.abstract.label')) %>
+      <%= render NestedComponentPresenter.for(form:, field_name: :keywords, model_class: KeywordForm, form_component: Keywords::EditComponent, hidden_label: false, bordered: false) %>
     <% end %>
 
     <% component.with_pane(tab_name: :dates, label: t('works.edit.panes.dates.label'), form:) do %>

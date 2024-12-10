@@ -49,7 +49,7 @@ RSpec.describe 'Create a work draft' do
 
     # Filling in title
     fill_in('work_title', with: title_fixture)
-    fill_in('Contact email', with: contact_email_fixture.first['email'])
+    fill_in('Contact email', with: contact_emails_fixture.first['email'])
 
     # This should work now.
     click_link_or_button('Save as draft')

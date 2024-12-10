@@ -56,15 +56,17 @@ RSpec.describe 'Create a work deposit' do
     # Filling in title
     find('.nav-link', text: 'Title & contact').click
     fill_in('work_title', with: title_fixture)
-    fill_in('Contact email', with: contact_email_fixture.first['email'])
+    fill_in('Contact email', with: contact_emails_fixture.first['email'])
 
     # Click Next to go to abstract tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Abstract')
-    expect(page).to have_text('Describe your deposit')
+    expect(page).to have_text('Abstract')
 
-    # Filling in abstract
+    # Filling in abstract & keywords
     fill_in('work_abstract', with: abstract_fixture)
+    expect(page).to have_text('Keywords')
+    fill_in('Keywords (one per box)', with: keywords_fixture.first['text'])
 
     # Clicking on Next to go to dates tab
     click_link_or_button('Next')

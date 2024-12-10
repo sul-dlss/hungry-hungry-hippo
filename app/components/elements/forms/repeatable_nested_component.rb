@@ -15,20 +15,18 @@ module Elements
         super()
       end
 
-      attr_reader :form, :model_class, :field_name, :form_component, :hidden_label
+      attr_reader :form, :model_class, :field_name, :form_component, :hidden_label, :bordered
 
       def add_button_label
         "+ Add another #{model_class.model_name.singular.humanize(capitalize: false)}"
       end
 
-      def classes
-        merge_classes(%w[mb-3 row], bordered_classes)
+      def container_classes
+        merge_classes(%w[mb-3 container], bordered ? [] : %w[p-0])
       end
 
-      def bordered_classes
-        return [] unless @bordered
-
-        %w[p-3 border border-3 border-light-subtle border-opacity-75]
+      def row_classes
+        merge_classes(%w[row], bordered ? %w[p-3 border border-3 border-light-subtle border-opacity-75 mb-3] : [])
       end
 
       def label_text

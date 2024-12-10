@@ -56,6 +56,11 @@ en:
       fields:
         email:
           label: 'Contact email'
+  keyword:
+    edit:
+      fields:
+        text:
+          label: 'Keywords (one per box)'
   related_links:
     edit:
       fields:
@@ -118,8 +123,8 @@ en:
           the left to correct the error(s) and then try depositing again.
       panes:
         abstract:
-          tab_label: 'Abstract'
-          label: 'Describe your deposit'
+          tab_label: 'Abstract & keywords'
+          label: 'Abstract'
         dates:
           tab_label: 'Dates (optional)'
           label: 'Enter dates related to your deposit'

@@ -17,7 +17,8 @@ RSpec.describe WorkFormSerializer do
       'related_works_attributes' => related_works_fixture,
       'license' => license_fixture,
       'publication_date_attributes' => publication_date_fixture,
-      'contact_emails_attributes' => contact_email_fixture,
+      'contact_emails_attributes' => contact_emails_fixture,
+      'keywords_attributes' => keywords_fixture,
       'content_id' => 5
     }
   end
@@ -25,7 +26,8 @@ RSpec.describe WorkFormSerializer do
     WorkForm.new(title: title_fixture, druid:, collection_druid: collection_druid_fixture, abstract: abstract_fixture,
                  related_links_attributes: related_links_fixture, related_works_attributes: related_works_fixture,
                  license: license_fixture, publication_date_attributes: publication_date_fixture,
-                 contact_emails_attributes: contact_email_fixture, content_id: 5)
+                 contact_emails_attributes: contact_emails_fixture, keywords_attributes: keywords_fixture,
+                 content_id: 5)
   end
 
   describe '.serialize?' do
