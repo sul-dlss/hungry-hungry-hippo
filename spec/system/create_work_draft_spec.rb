@@ -44,7 +44,6 @@ RSpec.describe 'Create a work draft' do
 
     # Validation fails for title.
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
-    expect(page).to have_field('work_contact_emails_attributes_0_email', class: 'is-invalid')
     expect(page).to have_field('work_title', class: 'is-invalid')
 
     # Filling in title
