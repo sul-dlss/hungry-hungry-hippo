@@ -7,6 +7,7 @@ module CollectionMappingFixtures
     CollectionForm.new(
       title: collection_title_fixture,
       description: collection_description_fixture,
+      contact_emails_attributes: contact_emails_fixture,
       related_links_attributes: related_links_fixture
     )
   end
@@ -27,7 +28,8 @@ module CollectionMappingFixtures
         description: {
           title: CocinaDescriptionSupport.title(title: collection_title_fixture),
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: collection_description_fixture)],
-          relatedResource: CocinaDescriptionSupport.related_links(related_links: related_links_fixture)
+          relatedResource: CocinaDescriptionSupport.related_links(related_links: related_links_fixture),
+          access: { accessContact: CocinaDescriptionSupport.contact_emails(contact_emails: contact_emails_fixture) }
         },
         version: 1,
         identification: { sourceId: collection_source_id_fixture },
@@ -47,6 +49,7 @@ module CollectionMappingFixtures
           title: CocinaDescriptionSupport.title(title: collection_title_fixture),
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: collection_description_fixture)],
           relatedResource: CocinaDescriptionSupport.related_links(related_links: related_links_fixture),
+          access: { accessContact: CocinaDescriptionSupport.contact_emails(contact_emails: contact_emails_fixture) },
           purl: Sdr::Purl.from_druid(druid: collection_druid_fixture)
         },
         version: 2,

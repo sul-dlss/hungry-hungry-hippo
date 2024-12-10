@@ -33,7 +33,12 @@ module ToCocina
           purl: Sdr::Purl.from_druid(druid: collection_form.druid),
           relatedResource: CocinaDescriptionSupport.related_links(
             related_links: collection_form.related_links_attributes
-          )
+          ),
+          access: {
+            accessContact: CocinaDescriptionSupport.contact_emails(
+              contact_emails: collection_form.contact_emails_attributes
+            )
+          }
         }.compact
       end
 
