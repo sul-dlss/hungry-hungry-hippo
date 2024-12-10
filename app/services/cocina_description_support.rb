@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 # Helpers for working with Cocina descriptions
 class CocinaDescriptionSupport
   SOURCE = {
@@ -300,7 +301,7 @@ class CocinaDescriptionSupport
   end
 
   def self.orcid_identifier(orcid)
-    return unless orcid
+    return unless orcid.presence
 
     {
       value: orcid.delete_prefix('https://orcid.org/'),
@@ -394,3 +395,4 @@ class CocinaDescriptionSupport
   #   }
   # end
 end
+# rubocop:enable Metrics/ClassLength

@@ -3,19 +3,19 @@
   <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :role_type,
                                                   label: t('works.edit.fields.contributors.role_type.label'),
                                                   options: role_type_options) %>
-  <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :person_role, 
+  <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :person_role,
                                                        options: PERSON_ROLES, label: t('works.edit.fields.contributors.role.label'),
-                                                       data: { contributors_target: 'selectPersonRole'}) %>
-  <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :organization_role, 
+                                                       data: { contributors_target: 'selectPersonRole' }) %>
+  <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :organization_role,
                                                        options: ORGANIZATION_ROLES, label: t('works.edit.fields.contributors.role.label'),
-                                                       data: { contributors_target: 'selectOrganizationRole'}) %>
+                                                       data: { contributors_target: 'selectOrganizationRole' }) %>
 
-  <!-- Contributor person name/orcid fields -->                                                  
+  <!-- Contributor person name/orcid fields -->
   <%= tag.div data: { contributors_target: 'personName' } do %>
     <%= render Elements::Forms::LabelComponent.new(form:, field_name: :with_orcid, label_text: t('works.edit.fields.contributors.orcid_or_name.label')) %><br>
     <%= tag.div class: 'form-check' do %>
       <%= form.radio_button :with_orcid, true, class: 'form-check-input' %>
-      <%= form.label :with_orcid_true, 'ORCID iD', class: 'form-check-label'%>
+      <%= form.label :with_orcid_true, 'ORCID iD', class: 'form-check-label' %>
       <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :orcid, hidden_label: true) %>
     <% end %>
     <%= tag.div class: 'form-check' do %>
@@ -34,7 +34,7 @@
     <% end %>
   <% end %>
 
-  <!-- Contributor organization name field -->  
+  <!-- Contributor organization name field -->
   <%= tag.div class: 'row', data: { contributors_target: 'organizationName' } do %>
     <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :organization_name, label: t('works.edit.fields.contributors.organization.label')) %>
   <% end %>

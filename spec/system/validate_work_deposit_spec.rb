@@ -52,7 +52,7 @@ RSpec.describe 'Validate a work deposit' do
     fill_in('Contact email', with: contact_emails_fixture.first['email'])
 
     # Authors is marked invalid
-    expect(page).to have_css('.nav-link.active', text: 'Authors')
+    find('.nav-link.is-invalid', text: 'Authors').click
     expect(page).to have_css('input.is-invalid#work_authors_attributes_0_first_name') # rubocop:disable Capybara/SpecificMatcher
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
     expect(page).to have_css('input.is-invalid#work_authors_attributes_0_last_name') # rubocop:disable Capybara/SpecificMatcher
@@ -63,7 +63,7 @@ RSpec.describe 'Validate a work deposit' do
 
     # Abstract is marked invalid
     find('.nav-link.is-invalid', text: 'Abstract').click
-    expect(page).to have_css('.nav-link.active', text: 'Abstract')
+    expect(page).to have_css('.nav-link', text: 'Abstract')
     expect(page).to have_css('textarea.is-invalid#work_abstract')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
 

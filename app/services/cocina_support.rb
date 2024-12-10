@@ -31,6 +31,9 @@ class CocinaSupport
   end
 
   # Maps the value from the contributor field in the cocina object to the author attributes
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def self.authors_for(cocina_object:)
     return nil if cocina_object.description.contributor.blank?
 
@@ -46,6 +49,9 @@ class CocinaSupport
         'with_orcid' => contributor.identifier&.find { |id| id.type == 'ORCID' }.present? }
     end.presence
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def self.related_links_for(cocina_object:) # rubocop:disable Metrics/AbcSize
     return nil if cocina_object.description.relatedResource.blank?

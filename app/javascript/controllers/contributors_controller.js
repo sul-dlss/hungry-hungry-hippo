@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = ['contributorTypePerson', 'contributorTypeOrganization', 'contributorTypePersonLabel', 'contributorTypeOrganizationLabel',
-                    'selectPersonRole', 'selectOrganizationRole', 'personName', 'organizationName']
+    'selectPersonRole', 'selectOrganizationRole', 'personName', 'organizationName']
 
   connect () {
     if (this.contributorTypeOrganizationTarget.checked) {
@@ -23,8 +23,8 @@ export default class extends Controller {
     this.selectOrganizationRoleTarget.hidden = true
     this.selectOrganizationRoleTarget.disabled = true
     this.displayPerson()
-  } 
-    
+  }
+  
   // Role type toggle Organization selection
   contributorTypeOrganizationSelected () {
     this.contributorTypeOrganizationTarget.checked = true
