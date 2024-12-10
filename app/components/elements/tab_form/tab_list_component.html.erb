@@ -4,14 +4,16 @@
       <%= tab %>
     <% end %>
   <% end %>
-  <%= form_with(model:, class: 'w-100') do |form| %>
-    <% hidden_fields.each do |field| %>
-      <%= form.hidden_field field %>
-    <% end %>
-    <div class="tab-content h-100">
-      <% panes.each do |pane| %>
-        <%= pane %>
+  <div class="w-100" style="max-width: 700px;">
+    <%= form_with(model:) do |form| %>
+      <% hidden_fields.each do |field| %>
+        <%= form.hidden_field field %>
       <% end %>
-    </div>
-  <% end %>
+      <div class="tab-content h-100">
+        <% panes.each do |pane| %>
+          <%= pane %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 <% end %>

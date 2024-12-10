@@ -53,8 +53,10 @@
 
     <% component.with_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), render_footer: false, form:) do %>
       <p><%= t('works.edit.panes.deposit.help_text') %></p>
-      <%= link_to 'Cancel', works_path %>
-      <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Deposit', classes: 'mt-2 ms-2') %>
+      <div class="d-flex align-items-baseline">
+        <%= link_to 'Cancel', works_path, class: 'me-4' %>
+        <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Deposit', classes: 'mt-2 ms-2') %>
+      </div>
     <% end %>
   <% end %>
 <% end %>
