@@ -6,11 +6,11 @@
             data: { tab_error_target: 'pane' }) do %>
             <div class="d-flex flex-column justify-content-between h-100">
                 <div>
-                    <div class="h4"><%= label %></div>
+                    <% if label %><div class="h4"><%= label %></div><% end %>
                     <%= content %>
                 </div>
                 <% if render_footer? %>
-                    <div>
+                    <div class="mt-4">
                         <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Save as draft', variant: :'outline-primary') %>
                         <%= render Elements::TabForm::NextButtonComponent.new(tab_id:) %>
                     </div>

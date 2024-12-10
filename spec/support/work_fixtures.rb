@@ -115,3 +115,11 @@ def publication_date_fixture
     'day' => 10
   }
 end
+
+def work_type_fixture
+  'Image'
+end
+
+def work_subtypes_fixture
+  %w[CAD Map]
+end

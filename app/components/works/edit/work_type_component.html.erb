@@ -1,0 +1,37 @@
+<div data-controller="work-type">
+  <div class="h4"><%= t('works.edit.fields.work_type.label') %></div>
+
+  <div class="row">
+    <%= render Elements::Forms::InputCollectionRadioButtonsComponent.new(form:, field_name: :work_type, input_collection: WorkType.all, div_classes: 'col-4', input_data: { work_type_target: 'workTypeRadio', action: 'work-type#showSubtypes' }) %>
+  </div>
+
+  <%# Text subtypes %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Text', more_options: true) %>
+
+  <%# Data subtypes %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Data', more_options: true) %>
+
+  <%# Software, multimedia subtypes %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Software/Code', more_options: true) %>
+
+  <%# Image %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Image', more_options: true) %>
+
+  <%# Sound %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Sound', more_options: true) %>
+
+  <%# Video %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Video', more_options: true) %>
+
+  <%# Music %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Music', more_options: true, minimum_terms: WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES) %>
+
+  <%# Mixed materials %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Mixed Materials', minimum_terms: WorkType::MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES) %>
+
+  <%# Other %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Other') do %>
+    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :other_work_subtype, label: 'Specify "Other" type*') %>
+  <% end %>
+
+</div>

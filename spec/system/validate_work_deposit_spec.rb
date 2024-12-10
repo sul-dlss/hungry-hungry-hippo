@@ -70,6 +70,15 @@ RSpec.describe 'Validate a work deposit' do
     # Make the abstract valid
     fill_in('Abstract', with: abstract_fixture)
 
+    # Work type is marked invalid
+    find('.nav-link', text: 'Type of deposit').click
+    expect(page).to have_css('.nav-link.active', text: 'Type of deposit')
+    expect(page).to have_field('work_work_type_text', class: 'is-invalid', type: :radio)
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
+
+    # Make the abstract valid
+    choose('Text')
+
     # Publication date is marked invalid
     find('.nav-link.is-invalid', text: 'Dates (optional)').click
     expect(page).to have_field('work_publication_date_attributes_year', class: 'is-invalid')

@@ -13,7 +13,7 @@ RSpec.describe Elements::Forms::InputCollectionCheckboxesComponent, type: :compo
 
   it 'renders the collection checkboxes' do
     render_inline(described_class.new(form:, field_name: :work_subtypes,
-                                      input_collection: WorkType.subtypes_for('text'),
+                                      input_collection: WorkType.subtypes_for('Text'),
                                       div_classes: %w[mt-2 mb-3]))
     expect(page).to have_css('div.form-check.mt-2.mb-3', count: 9)
     expect(page).to have_field('work_subtypes[]', type: 'checkbox', count: 9, class: 'form-check-input')

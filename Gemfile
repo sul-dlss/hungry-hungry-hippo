@@ -74,11 +74,6 @@ end
 
 group :development do
   gem 'overmind'
-  # For Ruby IDE purposes on Linux platforms
-  if RUBY_PLATFORM.match?('x86_64-linux')
-    gem 'solargraph'
-    gem 'solargraph-rails'
-  end
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 end

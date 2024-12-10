@@ -20,6 +20,11 @@
   <% component.with_row(label: 'Keywords', values: [@work_form.keywords_attributes.map(&:text).join(', ')]) %>
 <% end %>
 
+<%= render Elements::Tables::TableComponent.new(id: 'work-type-table', classes: 'table-show mb-5', label: 'Type of deposit') do |component| %>
+  <% component.with_row(label: 'Deposit type', values: [@work_form.work_type]) %>
+  <% component.with_row(label: 'Deposit subtypes', values: [(@work_form.work_subtypes + [@work_form.other_work_subtype]).compact.join(', ')]) %>
+<% end %>
+
 <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'table-show mb-5', label: 'Related content') do |component| %>
   <% component.with_row(label: 'Related published work', values: @work_form.related_works_attributes.map(&:to_s)) %>
   <% component.with_row(label: 'Related links', values: @work_form.related_links_attributes.map { |related_link| link_to(related_link.text || related_link.url, related_link.url) }) %>
