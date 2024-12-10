@@ -4,6 +4,8 @@
 class WorkForm < ApplicationForm
   accepts_nested_attributes_for :related_links, :related_works, :publication_date, :contact_emails, :keywords
 
+  validate :content_file_presence, if: :deposit?
+
   def self.immutable_attributes
     ['druid']
   end
@@ -41,5 +43,11 @@ class WorkForm < ApplicationForm
 
     selected_license = WorkForm.licenses.select { |_, v| v['uri'] == license }
     selected_license.keys.first
+  end
+
+  def content_file_presence
+    return if Content.find(content_id).content_files.exists?
+
+    errors.add(:content, 'must have at least one file')
   end
 end
