@@ -242,6 +242,30 @@ class CocinaDescriptionSupport
     end.compact_blank
   end
 
+  def self.contributors(contributors:) # rubocop:disable Metrics/AbcSize
+    count = 0
+    contributors.filter_map do |contributor|
+      count += 1
+      # First entered contributor is always status: "primary" (except for Publisher)
+      primary = count == 1
+      if contributor.role_type == 'person' && (contributor.last_name.presence || contributor.orcid.presence)
+        person_contributor(
+          forename: contributor.first_name,
+          surname: contributor.last_name,
+          role: contributor.person_role,
+          primary:,
+          orcid: contributor.orcid
+        )
+      elsif contributor.role_type == 'organization' && contributor.organization_name.presence
+        organization_contributor(
+          org_name: contributor.organization_name,
+          role: contributor.organization_role,
+          primary: primary
+        )
+      end
+    end
+  end
+
   # @param surname [String] the surname of the person
   # @param forename [String] the forename of the person
   # @param role [String] the role of the person from ROLES
@@ -253,11 +277,11 @@ class CocinaDescriptionSupport
       name: [
         {
           structuredValue: [
-            { value: forename, type: 'forename' },
-            { value: surname, type: 'surname' }
-          ]
-        }
-      ],
+            { value: forename, type: ('forename' if forename.presence) }.presence,
+            { value: surname, type: ('surname' if surname.presence) }.presence
+          ].compact
+        }.compact
+      ].compact,
       type: 'person',
       role: [ROLES.fetch(role.to_sym)].compact,
       status: ('primary' if primary),

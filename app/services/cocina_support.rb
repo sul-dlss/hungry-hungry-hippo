@@ -47,6 +47,16 @@ class CocinaSupport
     end.presence
   end
 
+  def self.related_links_for(cocina_object:) # rubocop:disable Metrics/AbcSize
+    return nil if cocina_object.description.relatedResource.blank?
+
+    cocina_object.description.relatedResource.filter_map do |related_resource|
+      next if related_resource.access&.url.blank?
+
+      { 'url' => related_resource.access.url.first[:value], 'text' => related_resource.title.first&.[](:value) }
+    end.presence
+  end
+
   def self.related_works_for(cocina_object:)
     return nil if cocina_object.description.relatedResource.blank?
 

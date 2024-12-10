@@ -43,7 +43,7 @@ module Works
 
       def author_role_label(author)
         return unless author.person_role || author.organization_role
-        
+
         author_role(author).sub('_', ' ').capitalize
       end
 

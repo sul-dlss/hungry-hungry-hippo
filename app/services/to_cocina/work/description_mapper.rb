@@ -30,7 +30,7 @@ module ToCocina
       def params
         {
           title: CocinaDescriptionSupport.title(title: work_form.title),
-          contributor: contributors_params.presence,
+          contributor: CocinaDescriptionSupport.contributors(contributors: work_form.authors_attributes),
           note: note_params,
           event: event_params,
           subject: CocinaDescriptionSupport.keywords(keywords: work_form.keywords_attributes),
@@ -43,31 +43,6 @@ module ToCocina
         }.compact
       end
       # rubocop:enable Metrics/AbcSize
-
-      def contributors_params
-        count = 0
-        # currently only mapping authors form
-        work_form.authors.map do |contributor|
-          count += 1
-          # First entered contributor is always status: "primary" (except for Publisher)
-          primary = count == 1
-          if contributor.role_type == 'person'
-            CocinaDescriptionSupport.person_contributor(
-              forename: contributor.first_name,
-              surname: contributor.last_name,
-              role: contributor.person_role,
-              primary:,
-              orcid: contributor.orcid
-            )
-          else
-            CocinaDescriptionSupport.organization_contributor(
-              org_name: contributor.organization_name,
-              role: contributor.organization_role,
-              primary: primary
-            )
-          end
-        end
-      end
 
       def note_params
         [].tap do |params|
