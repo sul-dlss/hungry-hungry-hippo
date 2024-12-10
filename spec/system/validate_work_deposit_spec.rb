@@ -16,6 +16,8 @@ RSpec.describe 'Validate a work deposit' do
 
     expect(page).to have_css('h1', text: 'Untitled deposit')
 
+    # File is required for deposit, but skipping.
+
     # Filling in title
     find('.nav-link', text: 'Title & contact').click
     fill_in('work_title', with: title_fixture)
@@ -45,8 +47,17 @@ RSpec.describe 'Validate a work deposit' do
     # Alert
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
+    # Manage file is marked invalid
+    expect(page).to have_css('.nav-link.active.is-invalid', text: 'Manage files')
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must have at least one file')
+
+    # This doesn't work in Cyperful
+    find('.dropzone').drop('spec/fixtures/files/hippo.png')
+
+    expect(page).to have_css('table#content-table td', text: 'hippo.png')
+
     # Contact email is marked invalid
-    expect(page).to have_css('.nav-link.active.is-invalid', text: 'Title & contact')
+    find('.nav-link.is-invalid', text: 'Title & contact').click
     expect(page).to have_field('Contact email', class: 'is-invalid')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
     fill_in('Contact email', with: contact_emails_fixture.first['email'])

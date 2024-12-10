@@ -14,6 +14,8 @@
     <% component.with_pane(tab_name: :files, label: t('works.edit.panes.files.label'), selected: true, form:) do %>
       <%= turbo_stream_from @content %>
 
+      <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
+
       <%# Using a turboframe otherwise having a form within a form is problematic. %>
       <%= turbo_frame_tag @content, 'edit', src: edit_content_path(@content) do %>
         <%= render Elements::SpinnerComponent.new %>

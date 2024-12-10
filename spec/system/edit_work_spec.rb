@@ -9,7 +9,7 @@ RSpec.describe 'Edit a work' do
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
   let(:cocina_object) do
-    dro_with_metadata_fixture
+    dro_with_structural_and_metadata_fixture
   end
   let(:version_status) do
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
