@@ -1,6 +1,16 @@
+// Override Bootstrap variables
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1140px // Limit width of xxl
+);
+
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 @import 'dropzone';
+
 
 .tabbable-panes {
   min-height: 500px;
