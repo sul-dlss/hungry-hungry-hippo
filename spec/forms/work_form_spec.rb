@@ -17,7 +17,7 @@ RSpec.describe WorkForm do
 
     context 'when saving draft with blank work type' do
       it 'is valid' do
-        expect(form.valid?).to be true
+        expect(form).to be_valid
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe WorkForm do
       let(:other_work_subtype) { 'baseball cards' }
 
       it 'is valid' do
-        expect(form.valid?).to be true
+        expect(form).to be_valid
       end
     end
 
@@ -50,7 +50,7 @@ RSpec.describe WorkForm do
       let(:work_type) { 'Music' }
 
       it 'is invalid' do
-        expect(form.valid?).to be false
+        expect(form).not_to be_valid
         expect(form.errors[:work_subtypes]).to include('1 term is the minimum allowed')
       end
     end
@@ -60,7 +60,7 @@ RSpec.describe WorkForm do
       let(:work_subtypes) { ['Album'] }
 
       it 'is valid' do
-        expect(form.valid?).to be true
+        expect(form).to be_valid
       end
     end
 
@@ -68,7 +68,7 @@ RSpec.describe WorkForm do
       let(:work_type) { 'Mixed Materials' }
 
       it 'is invalid' do
-        expect(form.valid?).to be false
+        expect(form).not_to be_valid
         expect(form.errors[:work_subtypes]).to include('2 terms is the minimum allowed')
       end
     end
@@ -78,7 +78,7 @@ RSpec.describe WorkForm do
       let(:work_subtypes) { %w[Animation Article] }
 
       it 'is valid' do
-        expect(form.valid?).to be true
+        expect(form).to be_valid
       end
     end
   end

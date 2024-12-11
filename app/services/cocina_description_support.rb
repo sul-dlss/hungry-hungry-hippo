@@ -42,14 +42,22 @@ class CocinaDescriptionSupport
     end.compact_blank
   end
 
-  def self.keywords(keywords:)
+  def self.keywords(keywords:) # rubocop:disable Metrics/AbcSize
     keywords.map do |keyword|
       # Since keyword is either a Hash or an instance of KeywordForm,
       # we need to make it a hash of the attributes if it's a KeywordForm
       keyword = keyword.attributes if keyword.respond_to?(:attributes)
       next if keyword['text'].blank?
 
-      { value: keyword['text'] }
+      {
+        value: keyword['text']
+      }.tap do |keyword_hash|
+        keyword_hash[:type] = keyword['cocina_type'] if keyword['cocina_type'].present?
+        next if keyword['uri'].blank?
+
+        keyword_hash[:uri] = keyword['uri']
+        keyword_hash[:source] = { code: 'fast', uri: 'http://id.worldcat.org/fast/' }
+      end
     end.compact_blank
   end
 

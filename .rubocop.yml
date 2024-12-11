@@ -20,7 +20,6 @@ AllCops:
   Exclude:
     - 'bin/**/*'
     - 'config/environments/*.rb'
-    - 'config/routes.rb'
     - 'db/**/*'
     - 'vendor/**/*'
 
@@ -54,6 +53,9 @@ RSpec/MultipleExpectations:
 
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
 
 RSpec/InstanceVariable:
   Exclude:

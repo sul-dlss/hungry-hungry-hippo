@@ -60,10 +60,14 @@ end
 def keywords_fixture
   [
     {
-      'text' => 'Biology'
+      'text' => 'Biology',
+      'uri' => 'http://id.worldcat.org/fast/832383/',
+      'cocina_type' => 'topic'
     },
     {
-      'text' => 'Chemistry'
+      'text' => 'MyBespokeKeyword',
+      'uri' => nil,
+      'cocina_type' => nil
     }
   ]
 end
