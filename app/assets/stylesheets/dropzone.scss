@@ -1,15 +1,15 @@
 @use "sass:math";
 
-
 @keyframes passing-through {
   0% {
     opacity: 0;
     transform: translateY(40px);
   }
 
-  30%, 70% {
+  30%,
+ 70% {
     opacity: 1;
-    transform: translateY(0px);
+    transform: translateY(0);
   }
 
   100% {
@@ -18,19 +18,17 @@
   }
 }
 
-
 @keyframes slide-in {
   0% {
     opacity: 0;
     transform: translateY(40px);
   }
+
   30% {
     opacity: 1;
-    transform: translateY(0px);
+    transform: translateY(0);
   }
 }
-
-
 
 @keyframes pulse {
   0% { transform: scale(1); }
@@ -38,16 +36,71 @@
   20% { transform: scale(1); }
 }
 
-
-
-.dropzone, .dropzone * {
+.dropzone,
+ .dropzone * {
   box-sizing: border-box;
 }
+
 .dropzone {
-
   $image-size: 120px;
-
   $image-border-radius: 20px;
+  $overlay-color: white;
+  $overlay-bg-color: rgb(0 0 0 / 80%);
+
+  min-height: 150px;
+  padding: 20px;
+  background-color: var(--stanford-10-black);
+  border: 1px dashed rgb(0 0 0 / 80%);
+  border-radius: 5px;
+
+  .dz-message {
+    margin: 1.5em 0;
+    text-align: center;
+
+    .dz-button {
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      background: none;
+      border: none;
+      outline: inherit;
+    }
+  }
+
+  .dz-error-message {
+    $width: $image-size + 20px;
+    $color: rgb(177 6 6);
+
+    position: absolute;
+    top: $image-size + 10px;
+    left: -10px;
+    z-index: 1000;
+    display: block;
+    display: none;
+    width: $width;
+    padding: .5em 1em;
+    font-size: 13px;
+    color: white;
+    pointer-events: none;
+    background: $color;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity .3s ease;
+
+    // The triangle pointing up
+    &::after {
+      position: absolute;
+      top: -6px;
+      left: math.div($width, 2) - 6px;
+      width: 0;
+      height: 0;
+      content: "";
+      border-right: 6px solid transparent;
+      border-bottom: 6px solid $color;
+      border-left: 6px solid transparent;
+    }
+  }
 
   &.dz-clickable {
     cursor: pointer;
@@ -55,6 +108,7 @@
     * {
       cursor: default;
     }
+
     .dz-message {
       &, * {
         cursor: pointer;
@@ -62,11 +116,124 @@
     }
   }
 
-  min-height: 150px;
-  border: 1px dashed rgba(0, 0, 0, 0.8);
-  border-radius: 5px;
-  padding: 20px 20px;
-  background-color: var(--stanford-10-black);
+  .dz-success-mark, .dz-error-mark {
+    $image-height: 54px;
+    $image-width: 54px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 500;
+    display: block;
+    margin-top: -(math.div($image-height, 2));
+    margin-left: -(math.div($image-width, 2));
+    pointer-events: none;
+    background: $overlay-bg-color;
+    border-radius: 50%;
+    opacity: 0;
+
+    svg {
+      display: block;
+      width: $image-width;
+      height: $image-height;
+      fill: $overlay-color;
+    }
+  }
+
+  .dz-details {
+    $background-color: #444;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 2em 1em;
+    font-size: 13px;
+    line-height: 150%;
+    color: rgb(0 0 0 / 90%);
+    text-align: center;
+    opacity: 0;
+
+    $width: 120px;
+
+    .dz-image {
+      position: relative;
+      z-index: 10;
+      display: block;
+      width: $image-size;
+      height: $image-size;
+      overflow: hidden;
+      border-radius: $image-border-radius;
+
+      img {
+        display: block;
+      }
+    }
+
+    .dz-size {
+      margin-bottom: 1em;
+      font-size: 16px;
+    }
+
+    .dz-filename, .dz-size {
+      span {
+        padding: 0 .4em;
+        background-color: rgb(255 255 255 / 40%);
+        border-radius: 3px;
+      }
+    }
+
+    .dz-filename {
+      white-space: nowrap;
+
+      &:hover {
+        span {
+          background-color: rgb(255 255 255 / 80%);
+          border: 1px solid rgb(200 200 200 / 80%);
+        }
+      }
+
+      &:not(:hover) {
+        span {
+          border: 1px solid transparent;
+        }
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .dz-progress {
+    $progress-height: 20px;
+    $progress-border-width: 3px;
+
+    position: absolute;
+    top: 50%;
+    right: 15%;
+    left: 15%;
+    z-index: 1000;
+    height: 20px;
+    margin-top: -10px;
+    overflow: hidden;
+    pointer-events: none;
+    background: $overlay-bg-color;
+    border: $progress-border-width solid $overlay-bg-color;
+    border-radius: 10px;
+    opacity: 1;
+
+    .dz-upload {
+      position: relative;
+      display: block;
+      width: 0;
+      height: 100%;
+      background: $overlay-color;
+      border-radius: $progress-height - $progress-border-width;
+      transition: width 300ms ease-in-out;
+    }
+  }
 
   &.dz-started {
     .dz-message {
@@ -76,50 +243,41 @@
 
   &.dz-drag-hover {
     border-style: solid;
+
     .dz-message {
-      opacity: 0.5;
+      opacity: .5;
     }
   }
-  .dz-message {
-    text-align: center;
-    margin: 1.5em 0;
-
-    .dz-button {
-      background: none;
-      color: inherit;
-      border: none;
-      padding: 0;
-      font: inherit;
-      cursor: pointer;
-      outline: inherit;
-    }
-  }
-
-
 
   .dz-preview {
     position: relative;
     display: inline-block;
-
-    vertical-align: top;
-
-    margin: 16px;
     min-height: 100px;
+    margin: 16px;
+    vertical-align: top;
 
     &:hover {
       // Making sure that always the hovered preview element is on top
       z-index: 1000;
+
       .dz-details {
         opacity: 1;
+      }
+
+      .dz-image {
+        // opacity: 0.8;
+        img {
+          filter: blur(8px); // Getting rid of that white bleed-in
+          transform: scale(1.05, 1.05); // Getting rid of that white bleed-in
+        }
       }
     }
 
     &.dz-file-preview {
-
       .dz-image {
-        border-radius: $image-border-radius;
         background: #999;
         background: linear-gradient(to bottom, #eee, #ddd);
+        border-radius: $image-border-radius;
       }
 
       .dz-details {
@@ -129,159 +287,38 @@
 
     &.dz-image-preview {
       background: white;
+
       .dz-details {
-        transition: opacity 0.2s linear;
+        transition: opacity .2s linear;
       }
     }
 
     .dz-remove {
+      display: block;
       font-size: 14px;
       text-align: center;
-      display: block;
       cursor: pointer;
       border: none;
+
       &:hover {
         text-decoration: underline;
       }
     }
 
-    &:hover .dz-details {
-      opacity: 1;
-    }
-    .dz-details {
-      $background-color: #444;
-
-      z-index: 20;
-
-      position: absolute;
-      top: 0;
-      left: 0;
-
-      opacity: 0;
-
-      font-size: 13px;
-      min-width: 100%;
-      max-width: 100%;
-      padding: 2em 1em;
-      text-align: center;
-      color: rgba(0, 0, 0, 0.9);
-
-      $width: 120px;
-
-      line-height: 150%;
-
-      .dz-size {
-        margin-bottom: 1em;
-        font-size: 16px;
-      }
-
-      .dz-filename {
-
-        white-space: nowrap;
-
-        &:hover {
-          span {
-            border: 1px solid rgba(200, 200, 200, 0.8);
-            background-color: rgba(255, 255, 255, 0.8);
-          }
-        }
-        &:not(:hover) {
-          span {
-            border: 1px solid transparent;
-          }
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-
-      }
-
-      .dz-filename, .dz-size {
-        span {
-          background-color: rgba(255, 255, 255, 0.4);
-          padding: 0 0.4em;
-          border-radius: 3px;
-        }
-      }
-
-    }
-
-    &:hover {
-      .dz-image {
-        // opacity: 0.8;
-        img {
-          transform: scale(1.05, 1.05); // Getting rid of that white bleed-in
-          filter: blur(8px); // Getting rid of that white bleed-in
-        }
-      }
-    }
-    .dz-image {
-      border-radius: $image-border-radius;
-      overflow: hidden;
-      width: $image-size;
-      height: $image-size;
-      position: relative;
-      display: block;
-      z-index: 10;
-
-      img {
-        display: block;
-      }
-    }
-
-
     &.dz-success {
       .dz-success-mark {
-        animation: passing-through 3s cubic-bezier(0.770, 0.000, 0.175, 1.000);
-      }
-    }
-    &.dz-error {
-      .dz-error-mark {
-        opacity: 1;
-        animation: slide-in 3s cubic-bezier(0.770, 0.000, 0.175, 1.000);
+        animation: passing-through 3s cubic-bezier(.77, 0.0, .175, 1);
       }
     }
 
-
-    $overlay-color: white;
-    $overlay-bg-color: rgba(0, 0, 0, 0.8);
-
-
-    .dz-success-mark, .dz-error-mark {
-
-      $image-height: 54px;
-      $image-width: 54px;
-
-      pointer-events: none;
-
-      opacity: 0;
-      z-index: 500;
-
-      position: absolute;
-      display: block;
-      top: 50%;
-      left: 50%;
-      margin-left: -(math.div($image-width, 2));
-      margin-top: -(math.div($image-height, 2));
-
-      background: $overlay-bg-color;
-      border-radius: 50%;
-
-      svg {
-        display: block;
-        width: $image-width;
-        height: $image-height;
-        fill: $overlay-color;
-      }
-    }
-    
-      
     &.dz-processing .dz-progress {
       opacity: 1;
-      transition: all 0.2s linear;
+      transition: all .2s linear;
     }
+
     &.dz-complete .dz-progress {
       opacity: 0;
-      transition: opacity 0.4s ease-in;
+      transition: opacity .4s ease-in;
     }
 
     &:not(.dz-processing) {
@@ -289,85 +326,21 @@
         animation: pulse 6s ease infinite;
       }
     }
-    .dz-progress {
-      $progress-height: 20px;
-      $progress-border-width: 3px;
-
-      opacity: 1;
-      z-index: 1000;
-
-      pointer-events: none;
-      position: absolute;
-      height: 20px;
-      top: 50%;
-      margin-top: -10px;
-      left: 15%;
-      right: 15%;
-
-      border: $progress-border-width solid $overlay-bg-color;
-      background: $overlay-bg-color;
-
-      border-radius: 10px;
-
-      overflow: hidden;
-
-      .dz-upload {
-        background: $overlay-color;
-
-        display: block;
-        position: relative;
-        height: 100%;
-        width: 0;
-        transition: width 300ms ease-in-out;
-
-        border-radius: $progress-height - $progress-border-width;
-      }
-
-    }
 
     &.dz-error {
+      .dz-error-mark {
+        opacity: 1;
+        animation: slide-in 3s cubic-bezier(.77, 0.0, .175, 1);
+      }
+
       .dz-error-message {
         display: block;
       }
+
       &:hover .dz-error-message {
-        opacity: 1;
         pointer-events: auto;
+        opacity: 1;
       }
     }
-
-    .dz-error-message {
-      $width: $image-size + 20px;
-      $color: rgb(177, 6, 6);
-
-      pointer-events: none;
-      z-index: 1000;
-      position: absolute;
-      display: block;
-      display: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      border-radius: 8px;
-      font-size: 13px;
-      top: $image-size + 10px;
-      left: -10px;
-      width: $width;
-      background: $color;
-      padding: 0.5em 1em;
-      color: white;
-
-      // The triangle pointing up
-      &:after {
-        content: '';
-        position: absolute;
-        top: -6px;
-        left: math.div($width, 2) - 6px;
-        width: 0; 
-        height: 0; 
-        border-left: 6px solid transparent;
-        border-right: 6px solid transparent;
-        border-bottom: 6px solid $color;
-      }
-    }
-
   }
 }
