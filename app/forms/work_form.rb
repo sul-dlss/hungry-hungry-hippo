@@ -37,14 +37,6 @@ class WorkForm < ApplicationForm
   attribute :license, :string
   validates :license, presence: true, if: :deposit?
 
-  # Shorter license label for the show page
-  def license_label
-    return unless license
-
-    selected_license = WorkForm.licenses.select { |_, v| v['uri'] == license }
-    selected_license.keys.first
-  end
-
   attribute :work_type, :string
   validates :work_type, presence: true, if: :deposit?
 

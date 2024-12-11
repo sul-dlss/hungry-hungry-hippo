@@ -10,11 +10,12 @@ class WorksController < ApplicationController
 
   def show
     authorize! @work
-    @purl_link_presenter = PurlLinkPresenter.new(druid: @work.druid)
 
     # This updates the Work with the latest metadata from the Cocina object.
     # Does not update the Work's collection if the collection cannot be found.
     ModelSync::Work.call(work: @work, cocina_object: @cocina_object, raise: false)
+
+    @work_presenter = WorkPresenter.new(work: @work, work_form: @work_form, version_status: @version_status)
   end
 
   def new

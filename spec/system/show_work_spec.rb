@@ -112,10 +112,6 @@ RSpec.describe 'Show a work' do
     allow(Sdr::Repository).to receive(:find).with(druid: druid).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid: druid).and_return(version_status)
 
-    Kaminari.configure do |config|
-      config.default_per_page = 2
-    end
-
     sign_in(user)
   end
 

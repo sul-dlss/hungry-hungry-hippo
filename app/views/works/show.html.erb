@@ -1,11 +1,11 @@
 <div class="d-flex justify-content-between">
   <div>
-    <%= render Elements::HeaderComponent.new(level: :h1, text: @work_form.title, classes: 'mb-4 d-inline-block') %>
-    <span class="ms-4 fst-italic status"><%= @version_status.status_message %></span>
+    <%= render Elements::HeaderComponent.new(level: :h1, text: @work_presenter.title, classes: 'mb-4 d-inline-block') %>
+    <span class="ms-4 fst-italic status"><%= @work_presenter.status_message %></span>
   </div>
   <div class="d-flex align-items-start">
-    <%= render Elements::ButtonLinkComponent.new(link: edit_work_path(@work_form.druid), label: 'Edit or deposit', variant: :'outline-primary') if @version_status.editable? %>
-    <%= render Elements::ButtonFormComponent.new(link: work_path(@work_form.druid), label: 'Discard draft', classes: 'ms-2', variant: :'outline-primary', confirm: 'Are you sure?', method: :delete) if @version_status.discardable? %>
+    <%= render Elements::ButtonLinkComponent.new(link: edit_work_path(@work_presenter.druid), label: 'Edit or deposit', variant: :'outline-primary') if @work_presenter.editable? %>
+    <%= render Elements::ButtonFormComponent.new(link: work_path(@work_presenter.druid), label: 'Discard draft', classes: 'ms-2', variant: :'outline-primary', confirm: 'Are you sure?', method: :delete) if @work_presenter.discardable? %>
   </div>
 </div>
 
@@ -14,41 +14,41 @@
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'table-show mb-5', label: 'Details') do |component| %>
-  <% component.with_row(label: 'Persistent Link', values: [@purl_link_presenter.link]) %>
+  <% component.with_row(label: 'Persistent Link', values: [@work_presenter.purl_link]) %>
   <%# TODO: Add DOIs when support is implemented for them %>
-  <% component.with_row(label: 'Collection', values: [link_to(@work.collection.title, collection_path(@work.collection))]) %>
-  <% component.with_row(label: 'Depositor', values: [@work.user.name]) %>
-  <% component.with_row(label: 'Version details', values: [@work_form.version]) %>
-  <% component.with_row(label: 'Deposit created', values: [l(@work.created_at, format: :long)]) %>
+  <% component.with_row(label: 'Collection', values: [@work_presenter.collection_link]) %>
+  <% component.with_row(label: 'Depositor', values: [@work_presenter.depositor]) %>
+  <% component.with_row(label: 'Version details', values: [@work_presenter.version]) %>
+  <% component.with_row(label: 'Deposit created', values: [@work_presenter.deposited_at]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'title-table', classes: 'table-show mb-5', label: 'Title and contact') do |component| %>
-  <% component.with_row(label: 'Title', values: [@work_form.title]) %>
-  <% component.with_row(label: 'Contact emails', values: [@work_form.contact_emails_attributes.map(&:email).join(', ')]) %>
+  <% component.with_row(label: 'Title', values: [@work_presenter.title]) %>
+  <% component.with_row(label: 'Contact emails', values: [@work_presenter.contact_emails]) %>
 <% end %>
 
-<%= render Works::Show::AuthorsShowComponent.new(work: @work_form) %>
+<%= render Works::Show::AuthorsShowComponent.new(work_presenter: @work_presenter) %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'table-work mb-5', label: 'Dates') do |component| %>
-  <% component.with_row(label: 'Publication date', values: [@work_form.publication_date.to_s]) %>
+  <% component.with_row(label: 'Publication date', values: [@work_presenter.publication_date]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'table-show mb-5', label: 'Abstract and keywords') do |component| %>
-  <% component.with_row(label: 'Abstract', values: [@work_form.abstract]) %>
-  <% component.with_row(label: 'Keywords', values: [@work_form.keywords_attributes.map(&:text).join(', ')]) %>
+  <% component.with_row(label: 'Abstract', values: [@work_presenter.abstract]) %>
+  <% component.with_row(label: 'Keywords', values: [@work_presenter.keywords]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'work-type-table', classes: 'table-show mb-5', label: 'Type of deposit') do |component| %>
-  <% component.with_row(label: 'Deposit type', values: [@work_form.work_type]) %>
-  <% component.with_row(label: 'Deposit subtypes', values: [(@work_form.work_subtypes + [@work_form.other_work_subtype]).compact.join(', ')]) %>
+  <% component.with_row(label: 'Deposit type', values: [@work_presenter.work_type]) %>
+  <% component.with_row(label: 'Deposit subtypes', values: [@work_presenter.all_work_subtypes]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'table-show mb-5', label: 'Related content') do |component| %>
-  <% component.with_row(label: 'Related published work', values: @work_form.related_works_attributes.map(&:to_s)) %>
-  <% component.with_row(label: 'Related links', values: @work_form.related_links_attributes.map { |related_link| link_to(related_link.text || related_link.url, related_link.url) }) %>
+  <% component.with_row(label: 'Related published work', values: @work_presenter.related_works) %>
+  <% component.with_row(label: 'Related links', values: @work_presenter.related_links) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'license-table', classes: 'table-show mb-5', label: 'License and additional terms of use') do |component| %>
-  <% component.with_row(label: 'License', values: [@work_form.license_label]) %>
+  <% component.with_row(label: 'License', values: [@work_presenter.license_label]) %>
   <% component.with_row(label: 'Terms of use', values: [t('works.edit.fields.license.terms_of_use')]) %>
 <% end %>
