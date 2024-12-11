@@ -54,7 +54,7 @@ module ToCocina
           type: Cocina::Models::ObjectType.file,
           version: work_form.version,
           label: content_file.label,
-          filename: content_file.filename,
+          filename: content_file.filepath,
           access: { view: 'world', download: 'world' },
           administrative: { publish: !content_file.hidden?, sdrPreserve: true, shelve: !content_file.hidden? },
           hasMimeType: content_file.mime_type,

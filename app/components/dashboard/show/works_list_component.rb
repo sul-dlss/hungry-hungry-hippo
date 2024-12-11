@@ -22,6 +22,10 @@ module Dashboard
         dom_id(work, id)
       end
 
+      def label
+        "Works in #{collection.title}"
+      end
+
       def values_for(work)
         [
           link_to(work.title, link_for(work)),

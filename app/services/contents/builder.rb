@@ -30,9 +30,13 @@ module Contents
     def content_file_params_for(content:) # rubocop:disable Metrics/AbcSize
       cocina_object.structural.contains.flat_map do |file_set|
         file_set.structural.contains.map do |file|
+          filepath = file.filename
           {
             file_type: :deposited,
-            filename: file.filename,
+            filepath:,
+            path_parts: FilenameSupport.path_parts(filepath:),
+            basename: FilenameSupport.basename(filepath:),
+            extname: FilenameSupport.extname(filepath:),
             label: file.label,
             external_identifier: file.externalIdentifier,
             fileset_external_identifier: file_set.externalIdentifier,

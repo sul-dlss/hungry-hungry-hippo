@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Elements::Tables::TableComponent, type: :component do
   context 'with no rows' do
     it 'does not render the table' do
-      render_inline(described_class.new(id: 'test-table'))
+      render_inline(described_class.new(id: 'test-table', label: 'Test Table'))
 
       expect(page).to have_no_table('test-table')
     end
@@ -14,7 +14,7 @@ RSpec.describe Elements::Tables::TableComponent, type: :component do
   context 'with headers' do
     it 'renders the table with headers' do
       render_inline(
-        described_class.new(id: 'test-table',
+        described_class.new(id: 'test-table', label: 'Test Table',
                             classes: 'table table-striped').tap do |component|
                               component.with_header(headers: ['Header 1', 'Header 2'])
                               component.with_row(values: ['Row 1', 'Row 2'])
@@ -32,7 +32,7 @@ RSpec.describe Elements::Tables::TableComponent, type: :component do
   context 'with rows' do
     it 'renders the table with rows' do
       render_inline(
-        described_class.new(id: 'test-table', classes: 'table table-striped').tap do |component|
+        described_class.new(id: 'test-table', label: 'Test Table', classes: 'table table-striped').tap do |component|
           component.with_row(values: ['Row 1', 'Row 2'])
           component.with_row(values: ['Row 3', 'Row 4'])
         end

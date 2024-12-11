@@ -1,26 +1,12 @@
 <tr style="vertical-align: middle;">
   <td><%= content_file.filename %></td>
   <td>
-    <%# turbo-frame and tables don't mix well: https://github.com/hotwired/turbo/issues/48 %>
-    <%= turbo_frame_tag content_file, 'description' do %>
-        <div class="d-flex align-items-center justify-content-between">
-            <span><%= content_file.label %></span>
-            <%= render Elements::ButtonLinkComponent.new(link: edit_content_file_path(content_file), variant: :'outline-secondary', size: :sm) do %>
-                <%= edit_icon %><span class="visually-hidden">Edit</span>
-            <% end %>
-        </div>
-    <% end %>
+    <%= render Works::Edit::ContentFileDescriptionComponent.new(content_file:) %>
   </td>
   <td>
-    <%= turbo_frame_tag content_file, 'hide' do %>
-        <%= form_with model: content_file do |form| %>
-            <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :hide, hidden_label: true, data: { controller: 'form-submit', action: 'form-submit#submit' }) %>
-        <% end %>
-    <% end %>
+    <%= render Works::Edit::ContentFileHideComponent.new(content_file:) %>
   </td>
   <td>
-    <%= render Elements::ButtonLinkComponent.new(link: content_file_path(content_file), variant: :'outline-secondary', size: :sm, data: { turbo_method: :delete, turbo_frame: dom_id(content_file.content, 'show') }) do %>
-      <%= delete_icon %><span class="visually-hidden">Remove</span>
-    <% end %>
+    <%= render Works::Edit::ContentFileDeleteComponent.new(content_file:) %>
   </td>
 </tr>

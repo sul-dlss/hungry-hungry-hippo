@@ -40,16 +40,16 @@ class ContentsController < ApplicationController
   end
 
   def set_content_files
-    @content_files = @content.content_files.order(filename: :asc).page(params[:page])
+    @content_files = @content.content_files.path_order.page(params[:page])
   end
 
   def update_files
     files = params[:content][:files]
     files.each do |index, file|
       # Dropzone controller is modified to provide the full path as content[:paths][index]
-      path = params[:content][:paths][index]
+      filepath = params[:content][:paths][index]
       content_file = ContentFile.create_with(file_type: :attached, size: file.size, label: '')
-                                .find_or_create_by!(content: @content, filename: path)
+                                .find_or_create_by!(content: @content, filepath:)
       content_file.file.attach(file)
     end
   end

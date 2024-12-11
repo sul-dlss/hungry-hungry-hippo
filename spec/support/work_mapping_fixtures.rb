@@ -36,7 +36,7 @@ module WorkMappingFixtures
     ContentFile.create(
       file_type: 'attached',
       content:,
-      filename: filename_fixture,
+      filepath: filename_fixture,
       label: file_label_fixture,
       size: file_size_fixture,
       mime_type: mime_type_fixture,
@@ -51,7 +51,7 @@ module WorkMappingFixtures
     ContentFile.create(
       file_type: 'deposited',
       content:,
-      filename: filename_fixture,
+      filepath: filename_fixture,
       label: file_label_fixture,
       size: file_size_fixture,
       mime_type: mime_type_fixture,

@@ -1,5 +1,5 @@
 <%= render Elements::Tables::TableComponent.new(
-      id:
+      id:, label:, show_label: false
     ) do |component| %>
   <% component.with_header(
        headers: ['Recent deposits in collection', 'Deposit status', 'Owner', 'Last modified', 'Persistent link']

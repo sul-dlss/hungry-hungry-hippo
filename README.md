@@ -61,6 +61,11 @@ RSpec.describe 'Create a work draft', :rack_test do
 CYPERFUL=1 bin/rspec spec/system/create_work_draft_spec.rb
 ```
 
+In cases in which Cyperful doesn't work, temporarily using a headed test might be useful for development. For example:
+```
+RSpec.describe 'Manage files for a work', :headed_test do
+```
+
 ### Code Linters
 
 To run all configured linters, run `bin/rake lint`.
