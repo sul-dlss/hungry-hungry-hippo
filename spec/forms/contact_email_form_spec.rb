@@ -9,7 +9,7 @@ RSpec.describe ContactEmailForm do
 
     context 'when nil' do
       it 'is valid' do
-        expect(form.valid?).to be true
+        expect(form).to be_valid
       end
     end
 
@@ -23,7 +23,7 @@ RSpec.describe ContactEmailForm do
       let(:email) { 'alfred@stanford.edu' }
 
       it 'is valid' do
-        expect(form.valid?).to be true
+        expect(form).to be_valid
       end
     end
 
@@ -31,7 +31,7 @@ RSpec.describe ContactEmailForm do
       let(:email) { 'alfred' }
 
       it 'is not valid' do
-        expect(form.valid?).to be false
+        expect(form).not_to be_valid
       end
     end
   end
