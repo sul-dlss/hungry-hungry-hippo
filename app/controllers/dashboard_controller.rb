@@ -10,9 +10,9 @@ class DashboardController < ApplicationController
     # Also, it processes all of a user's works, but not all may be rendered on the dashboard.
     @draft_works = []
     @status_map = current_user.works.to_h do |work|
-      status = work.druid ? Sdr::Repository.status(druid: work.druid) : nil
-      @draft_works << work if status&.open?
-      [work.id, StatusPresenter.new(status: status)]
+      version_status = work.druid ? Sdr::Repository.status(druid: work.druid) : VersionStatus::NilStatus.new
+      @draft_works << work if version_status.draft?
+      [work.id, version_status]
     end
   end
 end

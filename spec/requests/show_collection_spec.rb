@@ -12,7 +12,7 @@ RSpec.describe 'Show collection' do
       create(:collection, druid:)
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(collection_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status)
-        .with(druid:).and_return(instance_double(Dor::Services::Client::ObjectVersion::VersionStatus))
+        .with(druid:).and_return(instance_double(VersionStatus))
       sign_in(create(:user))
     end
 
@@ -47,8 +47,11 @@ RSpec.describe 'Show collection' do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status)
         .with(druid:)
-        .and_return(instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true,
-                                                                                         version: 1, openable?: true))
+        .and_return(
+          VersionStatus.new(status:
+          instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true,
+                                                                               version: 1, openable?: true))
+        )
       sign_in(user, groups: ['dlss:hydrus-app-administrators'])
     end
 

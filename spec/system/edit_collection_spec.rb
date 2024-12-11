@@ -25,8 +25,9 @@ RSpec.describe 'Edit a collection' do
   end
 
   let(:version_status) do
+    VersionStatus.new(status:
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
-                                                                         version: cocina_object.version)
+                                                                         version: cocina_object.version))
   end
 
   let(:updated_title) { 'My new title' }

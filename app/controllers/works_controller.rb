@@ -2,15 +2,14 @@
 
 # Controller for a Work
 class WorksController < ApplicationController
-  before_action :set_work, only: %i[show edit update]
+  before_action :set_work, only: %i[show edit update destroy]
   before_action :check_deposit_job_started, only: %i[show edit]
   before_action :set_work_form_from_cocina, only: %i[show edit]
   before_action :set_content, only: %i[show edit]
-  before_action :set_status, only: %i[show edit]
+  before_action :set_status, only: %i[show edit destroy]
 
   def show
     authorize! @work
-    @status_presenter = StatusPresenter.new(status: @status)
     @purl_link_presenter = PurlLinkPresenter.new(druid: @work.druid)
 
     # This updates the Work with the latest metadata from the Cocina object.
@@ -32,7 +31,7 @@ class WorksController < ApplicationController
     authorize! @work
 
     unless editable?
-      flash[:danger] = helpers.t('works.edit.errors.cannot_be_edited')
+      flash[:danger] = helpers.t('works.edit.messages.cannot_be_edited')
       return redirect_to work_path(druid: params[:druid])
     end
 
@@ -75,6 +74,21 @@ class WorksController < ApplicationController
     end
   end
 
+  def destroy
+    authorize! @work
+
+    Sdr::Repository.discard_draft(druid: @work.druid)
+    flash[:success] = helpers.t('works.edit.messages.draft_discarded')
+    # When version 1 SDR will purge the DRO. The Work record can be destroyed as well.
+    if @version_status.version == 1
+      collection_druid = @work.collection.druid
+      @work.destroy!
+      redirect_to collection_path(druid: collection_druid)
+    else
+      redirect_to work_path(druid: @work.druid)
+    end
+  end
+
   def wait
     work = Work.find(params[:id])
     authorize! work
@@ -110,7 +124,7 @@ class WorksController < ApplicationController
   end
 
   def set_status
-    @status = Sdr::Repository.status(druid: params[:druid])
+    @version_status = Sdr::Repository.status(druid: params[:druid])
   end
 
   def set_content
@@ -119,7 +133,7 @@ class WorksController < ApplicationController
   end
 
   def editable?
-    return false unless @status.open? || @status.openable?
+    return false unless @version_status.editable?
 
     # This handles the case in which the collection for the work was changed elsewhere
     # and there is not a Collection record for the collection_druid in the work.

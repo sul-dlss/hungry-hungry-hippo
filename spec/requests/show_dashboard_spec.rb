@@ -17,7 +17,8 @@ RSpec.describe 'Show dashboard' do
 
     context 'when there are drafts' do
       let(:version_status) do
-        instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 2)
+        VersionStatus.new(status:
+        instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 2))
       end
 
       before do
@@ -33,8 +34,9 @@ RSpec.describe 'Show dashboard' do
 
     context 'when there are no drafts' do
       let(:version_status) do
+        VersionStatus.new(status:
         instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
-                                                                             accessioning?: false)
+                                                                             accessioning?: false))
       end
 
       before do

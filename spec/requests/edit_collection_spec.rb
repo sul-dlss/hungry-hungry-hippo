@@ -44,8 +44,9 @@ RSpec.describe 'Edit collection' do
     let(:collection) { create(:collection, druid:, user:) }
     let(:cocina_object) { build(:collection_with_metadata, title: collection.title, id: druid) }
     let(:version_status) do
+      VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, openable?: false,
-                                                                           accessioning?: true)
+                                                                           accessioning?: true))
     end
 
     before do
@@ -73,8 +74,9 @@ RSpec.describe 'Edit collection' do
     let(:collection) { create(:collection, user: user, druid:) }
     let!(:cocina_object) { build(:collection_with_metadata, title: collection.title, id: druid) }
     let(:version_status) do
+      VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
-                                                                           version: cocina_object.version)
+                                                                           version: cocina_object.version))
     end
 
     before do

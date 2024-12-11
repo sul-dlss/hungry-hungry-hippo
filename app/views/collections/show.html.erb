@@ -1,6 +1,6 @@
 <%= render Elements::HeaderComponent.new(level: :h1, text: @collection_form.title, classes: 'mb-4 d-inline-block') %>
-<span class="ms-4 fst-italic status"><%= @status_presenter.status_message %></span>
-<%= render Elements::ButtonLinkComponent.new(link: edit_collection_path(@collection_form.druid), label: 'Edit or deposit', classes: 'float-end', variant: :'outline-primary') if @status_presenter.editable? %>
+<span class="ms-4 fst-italic status"><%= @version_status.status_message %></span>
+<%= render Elements::ButtonLinkComponent.new(link: edit_collection_path(@collection_form.druid), label: 'Edit or deposit', classes: 'float-end', variant: :'outline-primary') if @version_status.editable? %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'table-show mb-5', label: 'Details') do |component| %>
   <% component.with_row(label: 'Title', values: [@collection_form.title]) %>

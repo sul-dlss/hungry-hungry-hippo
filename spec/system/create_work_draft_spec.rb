@@ -7,8 +7,9 @@ RSpec.describe 'Create a work draft' do
   let(:user) { create(:user) }
 
   let(:version_status) do
+    VersionStatus.new(status:
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1,
-                                                                         openable?: false)
+                                                                         openable?: false))
   end
 
   before do

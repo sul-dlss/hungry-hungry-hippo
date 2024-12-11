@@ -119,7 +119,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'returns the status' do
-        expect(described_class.status(druid: druid)).to eq(version_status)
+        expect(described_class.status(druid: druid)).to be_a VersionStatus
         expect(Dor::Services::Client).to have_received(:object).with(druid)
       end
     end
@@ -223,6 +223,53 @@ RSpec.describe Sdr::Repository do
 
       it 'raises' do
         expect { described_class.update(cocina_object: cocina_object) }.to raise_error(Sdr::Repository::Error)
+      end
+    end
+  end
+
+  describe '#discard_draft' do
+    let(:object_client) { instance_double(Dor::Services::Client::Object, version: version_client, destroy: true) }
+    let(:version_client) do
+      instance_double(Dor::Services::Client::ObjectVersion, status: version_status, discard: true)
+    end
+
+    let(:version_status) do
+      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, version:, discardable?: discardable,
+                                                                           open?: true)
+    end
+
+    let(:version) { 2 }
+    let(:discardable) { true }
+
+    before do
+      allow(Dor::Services::Client).to receive(:object).and_return(object_client)
+    end
+
+    context 'when the draft is not discardable' do
+      let(:discardable) { false }
+
+      it 'raises' do
+        expect do
+          described_class.discard_draft(druid: druid)
+        end.to raise_error(Sdr::Repository::Error, 'Draft cannot be discarded')
+      end
+    end
+
+    context 'when the version is 1' do
+      let(:version) { 1 }
+
+      it 'destroys the object' do
+        described_class.discard_draft(druid: druid)
+
+        expect(object_client).to have_received(:destroy)
+      end
+    end
+
+    context 'when the version is not 1' do
+      it 'discards the version' do
+        described_class.discard_draft(druid: druid)
+
+        expect(version_client).to have_received(:discard)
       end
     end
   end
