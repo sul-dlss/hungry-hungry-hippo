@@ -7,10 +7,6 @@ RSpec.describe 'Manage files for a work' do
   let(:collection) { create(:collection, :with_druid, user:) }
 
   before do
-    Kaminari.configure do |config|
-      config.default_per_page = 2
-    end
-
     sign_in(user)
   end
 
