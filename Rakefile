@@ -19,14 +19,20 @@ begin
     system('bin/erb_lint --lint-all --format compact')
   end
 
-  desc 'Run Yarn linter against JS files'
+  desc 'Run linter against JS files'
   task eslint: :environment do
     puts 'Running JS linter...'
-    system('yarn lint')
+    system('yarn run lint')
+  end
+
+  desc 'Run linter against style files'
+  task stylelint: :environment do
+    puts 'Running style linter...'
+    system('yarn run stylelint')
   end
 
   desc 'Run all configured linters'
-  task lint: %i[rubocop erblint eslint]
+  task lint: %i[rubocop erblint eslint stylelint]
 rescue LoadError
   # should only be here when gem group development and test aren't installed
 end

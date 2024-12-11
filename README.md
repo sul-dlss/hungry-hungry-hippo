@@ -65,12 +65,13 @@ To run linters individually, run which ones you need:
 
 * Ruby code: `bin/rubocop` (add `-a` flag to autocorrect violations)
 * ERB templates: `bin/erb_lint --lint-all --format compact` (add `-a` flag to autocorrect violations)
-* JavaScript code: `yarn lint` (add `--fix` flag to autocorrect violations)
+* JavaScript code: `yarn run lint` (add `--fix` flag to autocorrect violations)
+* SCSS stylesheets: `yarn run stylelint` (add `--fix` flag to autocorrect violations)
 
 ### Adding a new simple, non-repeatable field
 
-A "simple" field is a single, non-repeatable value, such as a title (string) or a version 
-number (integer). If the field you're adding is repeatable or more complex, such as one that 
+A "simple" field is a single, non-repeatable value, such as a title (string) or a version
+number (integer). If the field you're adding is repeatable or more complex, such as one that
 has structure (e.g., a related link or work), see the following section.
 
 1. Add the field to the appropriate form object (e.g., `app/forms/work_form.rb`), including validation.
