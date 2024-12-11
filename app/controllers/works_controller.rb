@@ -11,6 +11,7 @@ class WorksController < ApplicationController
   def show
     authorize! @work
     @status_presenter = StatusPresenter.new(status: @status)
+    @purl_link_presenter = PurlLinkPresenter.new(druid: @work.druid)
 
     # This updates the Work with the latest metadata from the Cocina object.
     # Does not update the Work's collection if the collection cannot be found.
