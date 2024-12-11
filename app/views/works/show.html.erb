@@ -33,6 +33,10 @@
   <% component.with_row(label: 'Publication date', values: [@work_form.publication_date.to_s]) %>
 <% end %>
 
+<%= render Elements::Tables::TableComponent.new(id: 'citation-table', classes: 'table-show mb-5', label: 'Citation') do |component| %>
+  <% component.with_row(label: 'Preferred citation', values: [@work_form.citation]) %>
+<% end %>
+
 <%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'table-show mb-5', label: 'Abstract and keywords') do |component| %>
   <% component.with_row(label: 'Abstract', values: [@work_form.abstract]) %>
   <% component.with_row(label: 'Keywords', values: [@work_form.keywords_attributes.map(&:text).join(', ')]) %>

@@ -316,11 +316,13 @@ class CocinaDescriptionSupport
     }
   end
 
-  def self.note(type:, value:)
+  def self.note(type:, value:, label: nil)
     {
       type:,
       value:
-    }
+    }.tap do |note|
+      note[:displayLabel] = label if label
+    end
   end
 
   # @param date [String] the value of the date, e.g., '2024-03'

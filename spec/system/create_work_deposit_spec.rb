@@ -121,6 +121,14 @@ RSpec.describe 'Create a work deposit' do
       select('10', from: 'Day')
     end
 
+    # Clicking on Next to go to the citation tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Citation for this deposit (optional)')
+
+    # Filling in citation
+    expect(page).to have_text('Citation for this deposit')
+    fill_in('Custom citation', with: citation_fixture)
+
     # Clicking on Next to go to related content tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Related content (optional)')

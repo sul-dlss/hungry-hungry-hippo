@@ -51,6 +51,11 @@ module ToCocina
             params << CocinaDescriptionSupport.note(type: 'abstract',
                                                     value: work_form.abstract)
           end
+          if work_form.citation.present?
+            params << CocinaDescriptionSupport.note(type: 'preferred citation',
+                                                    value: work_form.citation,
+                                                    label: 'Preferred Citation')
+          end
         end.presence
       end
 

@@ -26,6 +26,7 @@ module ToWorkForm
         title: CocinaSupport.title_for(cocina_object:),
         authors_attributes: CocinaSupport.authors_for(cocina_object:),
         abstract: CocinaSupport.abstract_for(cocina_object:),
+        citation: CocinaSupport.citation_for(cocina_object:),
         contact_emails_attributes: CocinaSupport.contact_emails_for(cocina_object:),
         related_works_attributes: CocinaSupport.related_works_for(cocina_object:),
         related_links_attributes: CocinaSupport.related_links_for(cocina_object:),

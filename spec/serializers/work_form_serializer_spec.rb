@@ -14,6 +14,7 @@ RSpec.describe WorkFormSerializer do
       'lock' => nil,
       'abstract' => abstract_fixture,
       'authors_attributes' => authors_fixture,
+      'citation' => citation_fixture,
       'related_links_attributes' => related_links_fixture,
       'related_works_attributes' => related_works_fixture,
       'license' => license_fixture,
@@ -27,12 +28,20 @@ RSpec.describe WorkFormSerializer do
     }
   end
   let(:work_form) do
-    WorkForm.new(title: title_fixture, druid:, collection_druid: collection_druid_fixture, abstract: abstract_fixture,
-                 authors_attributes: authors_fixture, related_links_attributes: related_links_fixture,
+    WorkForm.new(title: title_fixture,
+                 druid:,
+                 collection_druid: collection_druid_fixture,
+                 abstract: abstract_fixture,
+                 authors_attributes: authors_fixture,
+                 citation: citation_fixture,
+                 related_links_attributes: related_links_fixture,
                  related_works_attributes: related_works_fixture,
-                 license: license_fixture, publication_date_attributes: publication_date_fixture,
-                 contact_emails_attributes: contact_emails_fixture, keywords_attributes: keywords_fixture,
-                 work_type: work_type_fixture, work_subtypes: work_subtypes_fixture,
+                 license: license_fixture,
+                 publication_date_attributes: publication_date_fixture,
+                 contact_emails_attributes: contact_emails_fixture,
+                 keywords_attributes: keywords_fixture,
+                 work_type: work_type_fixture,
+                 work_subtypes: work_subtypes_fixture,
                  content_id: 5)
   end
 

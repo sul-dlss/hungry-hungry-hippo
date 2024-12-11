@@ -1,0 +1,5 @@
+<div data-controller="citation">
+  <p><%= t('works.edit.fields.citation.help_text') %></p>
+
+  <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :citation, label: t('works.edit.fields.citation.label')) %>
+</div>
