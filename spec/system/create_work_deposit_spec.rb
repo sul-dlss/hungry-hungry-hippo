@@ -3,9 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Create a work deposit' do
+  include_context 'with FAST connection'
+
+  let(:query) { 'Biology' }
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
-
   let(:version_status) do
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, accessioning?: true,
                                                                          openable?: false)

@@ -26,7 +26,11 @@ class CocinaSupport
     cocina_object.description.subject.filter_map do |subject|
       next if subject.value.blank?
 
-      { 'text' => subject.value }
+      {
+        'text' => subject.value,
+        'cocina_type' => subject.type.presence,
+        'uri' => subject.uri.presence
+      }
     end.presence
   end
 
