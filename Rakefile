@@ -22,7 +22,7 @@ begin
   desc 'Run linter against JS files'
   task eslint: :environment do
     puts 'Running JS linter...'
-    system('yarn run eslint')
+    system('yarn run lint')
   end
 
   desc 'Run linter against style files'
