@@ -9,5 +9,9 @@ module Keywords
     end
 
     attr_reader :form
+
+    def unique_field_id
+      form.field_id('').delete_suffix('_')
+    end
   end
 end

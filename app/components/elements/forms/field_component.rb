@@ -28,7 +28,7 @@ module Elements
       end
 
       def field_aria
-        return if @help_text.blank?
+        return if help_text.blank?
 
         { describedby: help_text_id }
       end

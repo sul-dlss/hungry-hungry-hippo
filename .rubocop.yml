@@ -54,6 +54,9 @@ RSpec/MultipleExpectations:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
+RSpec/NestedGroups:
+  Max: 4
+
 RSpec/InstanceVariable:
   Exclude:
     - spec/system/**/* # We use instance variables in system specs to stub Cocina operations
