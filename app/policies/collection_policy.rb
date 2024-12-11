@@ -1,13 +1,26 @@
 # frozen_string_literal: true
 
 class CollectionPolicy < ApplicationPolicy
-  pre_check :collection_creator?
+  alias_rule :new?, :create?, :show?, :update?, :edit?, :wait?, to: :manage?
+
+  def manage?
+    record.user_id == user.id
+  end
+
+  def new?
+    collection_creator?
+  end
+
+  def create?
+    collection_creator?
+  end
+
   # TODO: Add a rule for collection managers & depositors
   # manage? will be based on the managers added to a collection
   # display? will be based on the depositors added to a collection
   # alias_rule :show?, :update?, :edit?, :wait?, to: :manage?
 
   def collection_creator?
-    allow! if Current.groups.include?(Settings.authorization_workgroup_names.collection_creators)
+    Current.groups.include?(Settings.authorization_workgroup_names.collection_creators)
   end
 end

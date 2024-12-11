@@ -1,9 +1,25 @@
-<%= render Elements::HeaderComponent.new(level: :h1, text: @work_form.title, classes: 'mb-4 d-inline-block') %>
-<span class="ms-4 fst-italic status"><%= @status_presenter.status_message %></span>
-<%= render Elements::ButtonLinkComponent.new(link: edit_work_path(@work_form.druid), label: 'Edit or deposit', classes: 'float-end', variant: :'outline-primary') if @status_presenter.editable? %>
+<div class="d-flex justify-content-between">
+  <div>
+    <%= render Elements::HeaderComponent.new(level: :h1, text: @work_form.title, classes: 'mb-4 d-inline-block') %>
+    <span class="ms-4 fst-italic status"><%= @version_status.status_message %></span>
+  </div>
+  <div class="d-flex align-items-start">
+    <%= render Elements::ButtonLinkComponent.new(link: edit_work_path(@work_form.druid), label: 'Edit or deposit', variant: :'outline-primary') if @version_status.editable? %>
+    <%= render Elements::ButtonFormComponent.new(link: work_path(@work_form.druid), label: 'Discard draft', classes: 'ms-2', variant: :'outline-primary', confirm: 'Are you sure?', method: :delete) if @version_status.discardable? %>
+  </div>
+</div>
 
 <%= turbo_frame_tag @content, src: show_table_content_path(@content) do %>
   <%= render Elements::SpinnerComponent.new %>
+<% end %>
+
+<%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'table-show mb-5', label: 'Details') do |component| %>
+  <% component.with_row(label: 'Persistent Link', values: [@purl_link_presenter.link]) %>
+  <%# TODO: Add DOIs when support is implemented for them %>
+  <% component.with_row(label: 'Collection', values: [link_to(@work.collection.title, collection_path(@work.collection))]) %>
+  <% component.with_row(label: 'Depositor', values: [@work.user.name]) %>
+  <% component.with_row(label: 'Version details', values: [@work_form.version]) %>
+  <% component.with_row(label: 'Deposit created', values: [l(@work.created_at, format: :long)]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'title-table', classes: 'table-show mb-5', label: 'Title and contact') do |component| %>

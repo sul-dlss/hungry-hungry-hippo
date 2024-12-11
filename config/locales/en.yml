@@ -39,6 +39,9 @@ en:
           attributes:
             email:
               format: '%{value} is not a valid email address'
+  time:
+    formats:
+      long: '%B %d, %Y'
   errors:
     not_authorized: 'You are not authorized to perform the requested action.'
   publication_date:
@@ -120,8 +123,9 @@ en:
           label: 'What type of content will you deposit?'
         work_subtypes:
           label: 'Which of the following terms further describe your deposit?'
-      errors:
+      messages:
         cannot_be_edited: 'This work cannot be edited.'
+        draft_discarded: 'Draft discarded.'
         validation: >
           Required fields have not been filled out. Click on the section(s) highlighted in red on
           the left to correct the error(s) and then try depositing again.

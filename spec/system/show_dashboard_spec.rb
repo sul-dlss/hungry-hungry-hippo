@@ -9,11 +9,13 @@ RSpec.describe 'Show dashboard', :rack_test do
   let(:collection) { create(:collection, :with_druid, user:) }
   let(:user) { create(:user) }
   let(:version_status) do
+    VersionStatus.new(status:
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, accessioning?: true,
-                                                                         openable?: false)
+                                                                         openable?: false))
   end
   let(:draft_version_status) do
-    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 2)
+    VersionStatus.new(status:
+    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 2))
   end
 
   before do

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 namespace :development do
-  desc 'Complete accession workflow for a work'
+  desc 'Complete accession workflow for a work or collection'
   task :accession, [:druid] => :environment do |_t, args|
     raise 'Only works in development mode!' unless Rails.env.development?
 

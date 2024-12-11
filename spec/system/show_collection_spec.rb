@@ -7,13 +7,13 @@ RSpec.describe 'Show a collection' do
 
   let(:druid) { collection_druid_fixture }
   let(:user) { create(:user) }
-  let(:groups) { ['dlss:hydrus-app-collection-creators'] }
   let!(:collection) { create(:collection, druid: druid, title: collection_title_fixture, user:) }
   # Need multiple files to test pagination
   let(:cocina_object) { collection_with_metadata_fixture }
   let(:version_status) do
+    VersionStatus.new(status:
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
-                                                                         openable?: true, accessioning?: false)
+                                                                         openable?: true, accessioning?: false))
   end
 
   before do
@@ -24,7 +24,7 @@ RSpec.describe 'Show a collection' do
       config.default_per_page = 2
     end
 
-    sign_in(user, groups:)
+    sign_in(user)
   end
 
   it 'shows a collection' do

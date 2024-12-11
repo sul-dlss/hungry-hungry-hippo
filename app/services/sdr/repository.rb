@@ -17,9 +17,9 @@ module Sdr
     end
 
     # @param [String] druid the druid of the object
-    # @return [Dor::Services::Client::ObjectVersion::VersionStatus]
+    # @return [VersionStatus]
     def self.status(druid:)
-      Dor::Services::Client.object(druid).version.status
+      VersionStatus.new(status: Dor::Services::Client.object(druid).version.status)
     rescue Dor::Services::Client::NotFoundResponse
       raise NotFoundResponse, "Object not found: #{druid}"
     end
@@ -72,6 +72,21 @@ module Sdr
     # @return [Cocina::Models::DRO] the updated cocina object
     def self.update(cocina_object:)
       Dor::Services::Client.object(cocina_object.externalIdentifier).update(params: cocina_object)
+    rescue Dor::Services::Client::Error => e
+      raise Error, "Updating failed: #{e.message}"
+    end
+
+    # @param [String] druid
+    # @raise [Error] if there is an error discarding the draft
+    def self.discard_draft(druid:)
+      status = Sdr::Repository.status(druid: druid)
+      raise Error, 'Draft cannot be discarded' unless status.discardable?
+
+      if status.version == 1
+        Dor::Services::Client.object(druid).destroy
+      else
+        Dor::Services::Client.object(druid).version.discard
+      end
     rescue Dor::Services::Client::Error => e
       raise Error, "Updating failed: #{e.message}"
     end

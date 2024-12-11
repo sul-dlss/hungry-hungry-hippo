@@ -28,8 +28,9 @@ RSpec.describe 'Edit work' do
     let(:admin_user) { create(:user) }
     let(:groups) { ['dlss:hydrus-app-administrators'] }
     let(:version_status) do
+      VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 1,
-                                                                           openable?: true)
+                                                                           openable?: true))
     end
 
     before do
@@ -67,8 +68,9 @@ RSpec.describe 'Edit work' do
       build(:dro_with_metadata, title: work.title, id: druid, collection_ids: [collection_druid_fixture])
     end
     let(:version_status) do
+      VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, openable?: false,
-                                                                           accessioning?: true)
+                                                                           accessioning?: true, version: 1))
     end
 
     before do
@@ -119,8 +121,9 @@ RSpec.describe 'Edit work' do
     let(:work) { create(:work, druid:, user:, collection:) }
     let(:cocina_object) { build(:dro_with_metadata, title: work.title, id: druid, collection_ids: [collection.druid]) }
     let(:version_status) do
+      VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
-                                                                           version: cocina_object.version)
+                                                                           version: cocina_object.version))
     end
 
     before do
@@ -149,8 +152,9 @@ RSpec.describe 'Edit work' do
       build(:dro_with_metadata, title: work.title, id: druid)
     end
     let(:version_status) do
+      VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
-                                                                           accessioning?: false, version: 1)
+                                                                           accessioning?: false, version: 1))
     end
 
     before do
@@ -179,8 +183,9 @@ RSpec.describe 'Edit work' do
       build(:dro_with_metadata, title: work.title, id: druid, collection_ids: ['druid:gj446wf8162'])
     end
     let(:version_status) do
+      VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
-                                                                           accessioning?: false, version: 1)
+                                                                           accessioning?: false, version: 1))
     end
 
     before do

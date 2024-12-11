@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :works, only: %i[new create show edit update], param: :druid do
+  resources :works, only: %i[new create show edit update destroy], param: :druid do
     collection do
       get 'wait/:id', to: 'works#wait', as: 'wait'
     end

@@ -9,7 +9,6 @@ class CollectionsController < ApplicationController
 
   def show
     authorize! @collection
-    @status_presenter = StatusPresenter.new(status: @status)
 
     # This updates the Collection with the latest metadata from the Cocina object.
     ModelSync::Collection.call(collection: @collection, cocina_object: @cocina_object)
@@ -101,11 +100,11 @@ class CollectionsController < ApplicationController
   end
 
   def set_status
-    @status = Sdr::Repository.status(druid: params[:druid])
+    @version_status = Sdr::Repository.status(druid: params[:druid])
   end
 
   def editable?
-    return false unless @status.open? || @status.openable?
+    return false unless @version_status.editable?
 
     ToCollectionForm::RoundtripValidator.roundtrippable?(collection_form: @collection_form,
                                                          cocina_object: @cocina_object)
