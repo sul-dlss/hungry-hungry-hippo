@@ -203,6 +203,10 @@ GEM
       concurrent-ruby (~> 1.0)
       dry-core (~> 1.0, < 2)
       zeitwerk (~> 2.6)
+    dry-monads (1.6.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 1.0, < 2)
+      zeitwerk (~> 2.6)
     dry-struct (1.6.0)
       dry-core (~> 1.0, < 2)
       dry-types (>= 1.7, < 2)
@@ -561,6 +565,7 @@ DEPENDENCIES
   dor-services-client (>= 15.2.1)
   dor-workflow-client (>= 7.6.1)
   druid-tools
+  dry-monads
   edtf
   erb_lint
   factory_bot_rails
