@@ -4,10 +4,10 @@
 module AuthenticationHelpers
   def authentication_headers_for(user, groups: [])
     {
-      Authentication::REMOTE_USER_HEADER => user.email_address,
-      Authentication::NAME_HEADER => user.name,
-      Authentication::FIRST_NAME_HEADER => user.first_name,
-      Authentication::GROUPS_HEADER => groups.join(';')
+      Settings.http_headers.remote_user => user.email_address,
+      Settings.http_headers.full_name => user.name,
+      Settings.http_headers.first_name => user.first_name,
+      Settings.http_headers.user_groups => groups.join(';')
     }
   end
 

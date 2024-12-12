@@ -10,7 +10,7 @@
 
 raise "Seeds are for development only" unless Rails.env.development?
 
-User.find_or_create_by!(email_address: Authentication::DEV_REMOTE_USER) do |user|
-  user.first_name = Authentication::DEV_FIRST_NAME
-  user.name = Authentication::DEV_NAME
+User.find_or_create_by!(email_address: Settings.seed_user.email_address) do |user|
+  user.first_name = Settings.seed_user.first_name
+  user.name = Settings.seed_user.name
 end

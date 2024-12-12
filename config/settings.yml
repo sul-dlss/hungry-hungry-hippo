@@ -26,3 +26,10 @@ autocomplete_lookup:
 
 orcid:
   url: 'https://orcid.org/'
+
+http_headers:
+  user_groups: 'X-Groups'
+  first_name: 'X-Person-Name'
+  full_name: 'X-Person-Formal-Name'
+  remote_user: 'X-Remote-User'
+  orcid_id: 'X-Orcid-Id'

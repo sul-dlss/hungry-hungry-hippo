@@ -25,9 +25,9 @@ RSpec.describe 'Login' do
       let(:user) { create(:user) }
       let(:headers) do
         {
-          Authentication::REMOTE_USER_HEADER => user.email_address,
-          Authentication::NAME_HEADER => 'New name',
-          Authentication::FIRST_NAME_HEADER => 'New first name'
+          Settings.http_headers.remote_user => user.email_address,
+          Settings.http_headers.full_name => 'New name',
+          Settings.http_headers.first_name => 'New first name'
         }
       end
 

@@ -1,5 +1,4 @@
-
-<div data-controller="contributors">
+<%= tag.div data: contributors_data do %>
   <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :role_type,
                                                   label: t('works.edit.fields.contributors.role_type.label')) do |component| %>
     <% component.with_toggle_option(form:,
@@ -30,8 +29,12 @@
     <%= render Elements::Forms::LabelComponent.new(form:, field_name: :with_orcid, label_text: t('works.edit.fields.contributors.orcid_or_name.label')) %><br>
     <div class="form-check">
       <%= form.radio_button :with_orcid, true, class: 'form-check-input' %>
-      <%= form.label :with_orcid_true, 'ORCID iD', class: 'form-check-label' %>
-      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :orcid, hidden_label: true) %>
+      <%= form.label :with_orcid_true, t('works.edit.fields.contributors.orcid.label'), class: 'form-check-label' %>
+      <%= tag.div class: orcid_container_classes do %>
+        <%= render Elements::ButtonComponent.new(label: t('works.edit.fields.contributors.use_orcid_button.label'), classes: 'btn btn-outline-primary', data: { action: 'contributors#useOrcid' }) if orcid.present? %>
+        <%= render Elements::Forms::LabelComponent.new(form:, field_name: :orcid, hidden_label: true) %>
+        <%= form.text_field :orcid, class: 'form-control', data: { contributors_target: 'orcidField' } %>
+      <% end %>
     </div>
     <div class="form-check">
       <%= form.radio_button :with_orcid, false, class: 'form-check-input', checked: true %>
@@ -52,4 +55,4 @@
   <div class="row" data-contributors-target="organizationName">
     <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :organization_name, label: t('works.edit.fields.contributors.organization.label')) %>
   </div>
-</div>
+<% end %>
