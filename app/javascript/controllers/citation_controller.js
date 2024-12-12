@@ -1,21 +1,21 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ['autoGenerateCitation', 'customCitation', 'citation']
+  static targets = ['autoGenerateCitation', 'citation']
 
   connect () {
     if (this.autoGenerateCitationTarget.checked) {
-      this.autoGenerateCitationSelected()
+      this.disableCustomCitation()
     } else {
-      this.customCitationSelected()
+      this.enableCustomCitation()
     }
   }
 
-  autoGenerateCitationSelected () {
+  disableCustomCitation () {
     this.citationTarget.disabled = true
   }
 
-  customCitationSelected () {
+  enableCustomCitation () {
     this.citationTarget.disabled = false
   }
 }

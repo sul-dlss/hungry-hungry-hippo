@@ -26,8 +26,7 @@ module ToCocina
 
       attr_reader :work_form
 
-      # rubocop:disable Metrics/AbcSize
-      def params
+      def params # rubocop:disable Metrics/AbcSize
         {
           title: CocinaDescriptionSupport.title(title: work_form.title),
           contributor: CocinaDescriptionSupport.contributors(contributors: work_form.authors_attributes),
@@ -43,10 +42,8 @@ module ToCocina
           }
         }.compact
       end
-      # rubocop:enable Metrics/AbcSize
 
-      # rubocop:disable Metrics/AbcSize
-      def note_params
+      def note_params # rubocop:disable Metrics/AbcSize
         [].tap do |params|
           if work_form.abstract.present?
             params << CocinaDescriptionSupport.note(type: 'abstract',
@@ -59,7 +56,6 @@ module ToCocina
           end
         end.presence
       end
-      # rubocop:enable Metrics/AbcSize
 
       def event_params
         [].tap do |params|
