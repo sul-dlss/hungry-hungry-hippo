@@ -1,27 +1,179 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 # Helpers for working with Cocina descriptions
 class CocinaDescriptionSupport
-  # ROLES = {
-  #   AUTHOR: {
-  #     value: 'author',
-  #     code: 'aut',
-  #     uri: 'http://id.loc.gov/vocabulary/relators/aut',
-  #     source: {
-  #       code: 'marcrelator',
-  #       uri: 'http://id.loc.gov/vocabulary/relators/'
-  #     }
-  #   },
-  #   PUBLISHER: {
-  #     value: 'publisher',
-  #     code: 'pbl',
-  #     uri: 'http://id.loc.gov/vocabulary/relators/pbl',
-  #     source: {
-  #       code: 'marcrelator',
-  #       uri: 'http://id.loc.gov/vocabulary/relators/'
-  #     }
-  #   }
-  # }.freeze
+  SOURCE = {
+    code: 'marcrelator',
+    uri: 'http://id.loc.gov/vocabulary/relators/'
+  }.freeze
+
+  ROLES = {
+    author: {
+      value: 'author',
+      code: 'aut',
+      uri: 'http://id.loc.gov/vocabulary/relators/aut',
+      source: SOURCE
+    },
+    advisor: {
+      value: 'advisor'
+    },
+    publisher: {
+      value: 'publisher',
+      code: 'pbl',
+      uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+      source: SOURCE
+    },
+    # person roles
+    composer: {
+      value: 'composer',
+      code: 'cmp',
+      uri: 'http://id.loc.gov/vocabulary/relators/cmp',
+      source: SOURCE
+    },
+    contributing_author: {
+      value: 'contributing author',
+      code: 'ctb',
+      uri: 'http://id.loc.gov/vocabulary/relators/ctb',
+      source: SOURCE
+    },
+    copyright_holder: {
+      value: 'copyright holder',
+      code: 'cph',
+      uri: 'http://id.loc.gov/vocabulary/relators/cph',
+      source: SOURCE
+    },
+    creator: {
+      value: 'creator',
+      code: 'cre',
+      uri: 'http://id.loc.gov/vocabulary/relators/cre',
+      source: SOURCE
+    },
+    data_collector: {
+      value: 'data collector',
+      code: 'com',
+
+      uri: 'http://id.loc.gov/vocabulary/relators/com',
+      source: SOURCE
+    },
+    data_contributor: {
+      value: 'data contributor',
+      code: 'dtc',
+      uri: 'http://id.loc.gov/vocabulary/relators/dtc',
+      source: SOURCE
+    },
+    editor: {
+      value: 'editor',
+      code: 'edt',
+      uri: 'http://id.loc.gov/vocabulary/relators/edt',
+      source: SOURCE
+    },
+    event_organizer: {
+      value: 'event organizer',
+      code: 'orm',
+      uri: 'http://id.loc.gov/vocabulary/relators/orm',
+      source: SOURCE
+    },
+    interviewee: {
+      value: 'interviewee',
+      code: 'ive',
+      uri: 'http://id.loc.gov/vocabulary/relators/ive',
+      source: SOURCE
+    },
+    interviewer: {
+      value: 'interviewer',
+      code: 'ivr',
+      uri: 'http://id.loc.gov/vocabulary/relators/ivr',
+      source: SOURCE
+    },
+    performer: {
+      value: 'performer',
+      code: 'prf',
+      uri: 'http://id.loc.gov/vocabulary/relators/prf',
+      source: SOURCE
+    },
+    photographer: {
+      value: 'photographer',
+      code: 'pht',
+      uri: 'http://id.loc.gov/vocabulary/relators/pht',
+      source: SOURCE
+    },
+    primary_thesis_advisor: {
+      value: 'primary thesis advisor',
+      code: 'ths',
+      uri: 'http://id.loc.gov/vocabulary/relators/ths',
+      source: SOURCE
+    },
+    principal_investigator: {
+      value: 'principal investigator',
+      code: 'rth',
+      uri: 'http://id.loc.gov/vocabulary/relators/rth',
+      source: SOURCE
+    },
+    researcher: {
+      value: 'researcher',
+      code: 'res',
+      uri: 'http://id.loc.gov/vocabulary/relators/res',
+      source: SOURCE
+    },
+    software_developer: {
+      value: 'software developer',
+      code: 'prg',
+      uri: 'http://id.loc.gov/vocabulary/relators/prg',
+      source: SOURCE
+    },
+    speaker: {
+      value: 'speaker',
+      code: 'spk',
+      uri: 'http://id.loc.gov/vocabulary/relators/spk',
+      source: SOURCE
+    },
+    thesis_advisor: {
+      value: 'thesis advisor',
+      code: 'ths',
+      uri: 'http://id.loc.gov/vocabulary/relators/ths',
+      source: SOURCE
+    },
+    # organization roles
+    # 'Conference' => '', # not a marcrelator role
+    degree_granting_institution: {
+      value: 'degree granting institution',
+      code: 'dgg',
+      uri: 'http://id.loc.gov/vocabulary/relators/dgg',
+      source: SOURCE
+    },
+    # 'Event' => '', # not a marcrelator role
+    funder: {
+      value: 'funder',
+      code: 'fnd',
+      uri: 'http://id.loc.gov/vocabulary/relators/fnd',
+      source: SOURCE
+    },
+    host_institution: {
+      value: 'host institution',
+      code: 'his',
+      uri: 'http://id.loc.gov/vocabulary/relators/his',
+      source: SOURCE
+    },
+    issuing_body: {
+      value: 'issuing body',
+      code: 'isb',
+      uri: 'http://id.loc.gov/vocabulary/relators/isb',
+      source: SOURCE
+    },
+    research_group: {
+      value: 'research group',
+      code: 'res',
+      uri: 'http://id.loc.gov/vocabulary/relators/res',
+      source: SOURCE
+    },
+    sponsor: {
+      value: 'sponsor',
+      code: 'spn',
+      uri: 'http://id.loc.gov/vocabulary/relators/spn',
+      source: SOURCE
+    }
+  }.freeze
 
   def self.title(title:)
     [{ value: title }]
@@ -99,25 +251,70 @@ class CocinaDescriptionSupport
     end.compact_blank
   end
 
-  # @param forename [String] the forename of the person
+  def self.contributors(contributors:) # rubocop:disable Metrics/AbcSize
+    contributors.filter_map.with_index do |contributor, index|
+      # First entered contributor is always status: "primary" (except for Publisher)
+      primary = index.zero?
+      if contributor.role_type == 'person' && (contributor.last_name.presence || contributor.orcid.presence)
+        person_contributor(
+          forename: contributor.first_name,
+          surname: contributor.last_name,
+          role: contributor.person_role,
+          primary:,
+          orcid: contributor.orcid
+        )
+      elsif contributor.role_type == 'organization' && contributor.organization_name.presence
+        organization_contributor(
+          org_name: contributor.organization_name,
+          role: contributor.organization_role,
+          primary: primary
+        )
+      end
+    end
+  end
+
   # @param surname [String] the surname of the person
-  # @param role [Symbol] the role of the person from ROLES
+  # @param forename [String] the forename of the person
+  # @param role [String] the role of the person from ROLES
+  # @param primary [Boolean] whether this is the first author
+  # @param orcid [String] the ORCID of the person
   # @param affiliations [Array<Hash>] the affiliations of the person that can be passed to affiliation()
-  # def self.person_contributor(surname:, forename: '', role: :AUTHOR, affiliations: [])
-  #   {
-  #     name: [
-  #       {
-  #         structuredValue: [
-  #           { value: forename, type: 'forename' },
-  #           { value: surname, type: 'surname' }
-  #         ]
-  #       }
-  #     ],
-  #     type: 'person',
-  #     role: [ROLES.fetch(role)],
-  #     note: affiliations.map { |affiliation_attrs| affiliation(**affiliation_attrs) }.presence
-  #   }.compact
-  # end
+  def self.person_contributor(surname:, forename:, role:, primary: false, orcid: nil)
+    {
+      name: [
+        {
+          structuredValue: [
+            { value: forename, type: ('forename' if forename.presence) }.compact,
+            { value: surname, type: ('surname' if surname.presence) }.compact
+          ].compact_blank
+        }.compact
+      ].compact_blank,
+      type: 'person',
+      role: [ROLES.fetch(role.to_sym)].compact,
+      status: ('primary' if primary),
+      identifier: [orcid_identifier(orcid)].compact
+      # NOTE: affiliations.map { |affiliation_attrs| affiliation(**affiliation_attrs) }.presence
+    }.compact
+  end
+
+  def self.organization_contributor(org_name:, role:, primary: false)
+    {
+      name: [{ value: org_name }.compact],
+      type: 'organization',
+      role: [role.presence ? ROLES.fetch(role.sub(' ', '_').to_sym) : nil].compact,
+      status: ('primary' if primary)
+    }.compact
+  end
+
+  def self.orcid_identifier(orcid)
+    return unless orcid.presence
+
+    {
+      value: orcid.delete_prefix(Settings.orcid.url),
+      type: 'ORCID',
+      source: { uri: Settings.orcid.url }
+    }
+  end
 
   def self.note(type:, value:)
     {
@@ -204,3 +401,4 @@ class CocinaDescriptionSupport
   #   }
   # end
 end
+# rubocop:enable Metrics/ClassLength

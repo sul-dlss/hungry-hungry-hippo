@@ -37,6 +37,7 @@ class DepositWorkJob < ApplicationJob
 
   def perform_persist
     cocina_object = ToCocina::Work::Mapper.call(work_form:, content:, source_id: "h3:object-#{work.id}")
+
     if work_form.persisted?
       Sdr::Repository.open_if_needed(cocina_object:)
                      .then { |cocina_object| Sdr::Repository.update(cocina_object:) }

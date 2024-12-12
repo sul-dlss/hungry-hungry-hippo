@@ -23,3 +23,6 @@ autocomplete_lookup:
   url: http://fast.oclc.org/searchfast/fastsuggest
   num_records: 10
   identifier_prefix: 'http://id.worldcat.org/fast/'
+
+orcid:
+  url: 'https://orcid.org/'

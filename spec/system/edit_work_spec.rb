@@ -20,6 +20,17 @@ RSpec.describe 'Edit a work' do
                                                                          version: cocina_object.version))
   end
   let(:updated_title) { 'My new title' }
+  let(:updated_authors) do
+    [
+      {
+        'first_name' => 'Leland',
+        'last_name' => 'Stanford Jr.'
+      },
+      {
+        'organization_name' => 'Some other organization'
+      }
+    ]
+  end
   let(:updated_abstract) { 'This is what my work is really about.' }
   let(:updated_keywords) { ['First Keyword'] }
   let(:updated_related_links) do
@@ -74,7 +85,14 @@ RSpec.describe 'Edit a work' do
     click_link_or_button('Deposit')
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
+    # Fill in in authors
+    find('.nav-link', text: 'Authors').click
+    fill_in('work_authors_attributes_0_first_name', with: updated_authors.first['first_name'])
+    fill_in('work_authors_attributes_0_last_name', with: updated_authors.first['last_name'])
+    fill_in('work_authors_attributes_1_organization_name', with: updated_authors.last['organization_name'])
+
     # Filling in abstract
+    find('.nav-link', text: 'Abstract').click
     fill_in('work_abstract', with: updated_abstract)
     fill_in('work_keywords_attributes_1_text', with: updated_keywords.first)
 
@@ -109,6 +127,9 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_css('h1', text: updated_title)
     expect(page).to have_content(updated_abstract)
     expect(page).to have_content(updated_keywords.first)
+    expect(page).to have_content('Leland Stanford Jr.')
+    expect(page).to have_content('Some other organization')
+    expect(page).to have_content('https://orcid.org/0001-0002-0003-0004')
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
     expect(page).to have_content('https://purl.stanford.edu/fake (references)')
     expect(page).to have_css('.status', text: 'New version in draft')

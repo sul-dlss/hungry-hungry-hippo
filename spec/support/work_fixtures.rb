@@ -127,3 +127,46 @@ end
 def work_subtypes_fixture
   %w[CAD Map]
 end
+
+def authors_fixture
+  [
+    {
+      'role_type' => 'person',
+      'person_role' => 'author',
+      'organization_role' => nil,
+      'first_name' => 'Jane',
+      'last_name' => 'Stanford',
+      'with_orcid' => true,
+      'orcid' => 'https://orcid.org/0001-0002-0003-0004',
+      'organization_name' => nil
+    },
+    {
+      'role_type' => 'organization',
+      'person_role' => nil,
+      'organization_role' => 'host_institution',
+      'with_orcid' => false,
+      'orcid' => nil,
+      'first_name' => nil,
+      'last_name' => nil,
+      'organization_name' => 'Stanford University Libraries'
+    }
+  ]
+end
+
+def person_contributor_fixture
+  {
+    surname: 'Stanford',
+    forename: 'Jane',
+    role: 'author',
+    primary: true,
+    orcid: 'https://orcid.org/0001-0002-0003-0004'
+  }
+end
+
+def organization_contributor_fixture
+  {
+    role: 'host_institution',
+    org_name: 'Stanford University Libraries',
+    primary: false
+  }
+end

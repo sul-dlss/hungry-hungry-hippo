@@ -34,6 +34,29 @@ class CocinaSupport
     end.presence
   end
 
+  # Maps the value from the contributor field in the cocina object to the author attributes
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+  def self.authors_for(cocina_object:)
+    return nil if cocina_object.description.contributor.blank?
+
+    cocina_object.description.contributor.filter_map do |contributor|
+      full_name = contributor.name.first&.structuredValue
+      { 'first_name' => full_name.find { |name| name.type == 'forename' }&.value,
+        'last_name' => full_name.find { |name| name.type == 'surname' }&.value,
+        'role_type' => contributor.type,
+        'person_role' => (contributor.role.first.value.sub(' ', '_') if contributor.type == 'person'),
+        'organization_role' => (contributor.role.first.value.sub(' ', '_') if contributor.type == 'organization'),
+        'organization_name' => (contributor.name.first.value if contributor.type == 'organization'),
+        'orcid' => orcid_for(contributor:),
+        'with_orcid' => contributor.identifier&.find { |id| id.type == 'ORCID' }.present? }
+    end.presence
+  end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
+
   def self.related_links_for(cocina_object:) # rubocop:disable Metrics/AbcSize
     return nil if cocina_object.description.relatedResource.blank?
 
@@ -145,5 +168,12 @@ class CocinaSupport
       date_params[:month] = date.month if dash_count >= 1
       date_params[:day] = date.day if dash_count == 2
     end
+  end
+
+  def self.orcid_for(contributor:)
+    orcid = contributor.identifier&.find { |id| id.type == 'ORCID' }&.value
+    return unless orcid.presence
+
+    "#{Settings.orcid.url}#{orcid}"
   end
 end
