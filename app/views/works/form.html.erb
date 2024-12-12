@@ -41,8 +41,8 @@
     <% end %>
 
     <% component.with_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), form:) do %>
-      <p><%= t('works.edit.fields.abstract.help_text') %></p>
-      <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: t('works.edit.fields.abstract.label')) %>
+      <p style="width: 700px;"><%= t('works.edit.fields.abstract.help_text') %></p>
+      <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: t('works.edit.fields.abstract.label'), width: '700') %>
       <%= render NestedComponentPresenter.for(form:, field_name: :keywords, model_class: KeywordForm, form_component: Keywords::EditComponent, hidden_label: false, bordered: false) %>
     <% end %>
 
