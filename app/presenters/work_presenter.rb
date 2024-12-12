@@ -11,7 +11,7 @@ class WorkPresenter < ApplicationPresenter
 
   attr_reader :work, :work_form, :version_status
 
-  delegate :abstract, :authors, :title, :version, :work_type, to: :work_form
+  delegate :abstract, :authors, :citation, :title, :version, :work_type, to: :work_form
   delegate :druid, to: :work
   delegate :discardable?, :editable?, :status_message, to: :version_status
 
