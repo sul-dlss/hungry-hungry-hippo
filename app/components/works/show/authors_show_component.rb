@@ -4,12 +4,12 @@ module Works
   module Show
     # Component for rendering a table of authors on the work show page.
     class AuthorsShowComponent < ApplicationComponent
-      def initialize(work:)
-        @work = work
+      def initialize(work_presenter:)
+        @work_presenter = work_presenter
         super()
       end
 
-      attr_reader :work
+      attr_reader :work_presenter
 
       def headers
         %w[Authors ORCID Role]

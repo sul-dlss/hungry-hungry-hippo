@@ -67,6 +67,10 @@ Style/Documentation:
     - '**/application_*.rb'
     - 'app/policies/**/*.rb'
 
+Lint/UselessAccessModifier:
+  MethodCreatingMethods:
+    - delegate
+
 Gemspec/AddRuntimeDependency: # new in 1.65
   Enabled: true
 Gemspec/DeprecatedAttributeAssignment: # new in 1.30
