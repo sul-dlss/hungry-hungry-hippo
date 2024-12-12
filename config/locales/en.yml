@@ -132,6 +132,10 @@ en:
             label: 'Role'
           role_type:
             label: 'Role type'
+            person:
+              label: 'Individual'
+            organization:
+              label: 'Organization'
           orcid_or_name:
             label: 'ORCID iD or Name'
           orcid:
