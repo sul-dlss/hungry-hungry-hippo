@@ -1,0 +1,15 @@
+<%= tag.div data: { controller: 'citation' } do %>
+  <p><%= t('works.edit.fields.citation.help_text') %></p>
+
+  <%= tag.div class: 'form-check mb-4' do %>
+    <%= form.radio_button :auto_generate_citation, true, class: 'form-check-input', checked: true, data: { citation_target: 'autoGenerateCitation', action: 'click->citation#disableCustomCitation' } %>
+    <%= form.label :auto_generate_citation_true, t('works.edit.fields.citation.auto_citation'), class: 'form-check-label' %>
+  <% end %>
+
+  <%= tag.div class: 'form-check mb-4' do %>
+    <%= form.radio_button :auto_generate_citation, false, class: 'form-check-input', data: { action: 'click->citation#enableCustomCitation' } %>
+    <%= form.label :auto_generate_citation_false, t('works.edit.fields.citation.custom_citation'), class: 'form-check-label' %>
+  <% end %>
+
+  <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :citation, label: t('works.edit.fields.citation.label'), hidden_label: true, data: { citation_target: 'citation' }) %>
+<% end %>

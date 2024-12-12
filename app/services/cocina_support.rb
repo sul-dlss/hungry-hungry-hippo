@@ -88,6 +88,10 @@ class CocinaSupport
     cocina_object.description.note.find { |note| note.type == 'abstract' }&.value
   end
 
+  def self.citation_for(cocina_object:)
+    cocina_object.description.note.find { |note| note.type == 'preferred citation' }&.value
+  end
+
   # @return [Array<String,Array<String>>] work_type, work_subtypes
   def self.work_type_and_subtypes_for(cocina_object:)
     self_deposit_values = self_deposit_form_for(cocina_object:)&.structuredValue || []

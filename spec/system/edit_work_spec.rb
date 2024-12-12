@@ -96,6 +96,12 @@ RSpec.describe 'Edit a work' do
     fill_in('work_abstract', with: updated_abstract)
     fill_in('work_keywords_attributes_1_text', with: updated_keywords.first)
 
+    # Filling in citation
+    find('.nav-link', text: 'Citation for this deposit (optional)').click
+    expect(page).to have_text('Citation for this deposit')
+    expect(page).to have_field('Custom citation', disabled: false)
+    expect(page).to have_field('Custom citation', with: citation_fixture)
+
     # Filling in related content, first related links
     find('.nav-link', text: 'Related content (optional)').click
     fill_in('Link text', with: 'delete')
@@ -130,6 +136,7 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_content('Leland Stanford Jr.')
     expect(page).to have_content('Some other organization')
     expect(page).to have_content('https://orcid.org/0001-0002-0003-0004')
+    expect(page).to have_content(citation_fixture)
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
     expect(page).to have_content('https://purl.stanford.edu/fake (references)')
     expect(page).to have_css('.status', text: 'New version in draft')

@@ -20,6 +20,10 @@ def abstract_fixture
   'This is what my work is about.'
 end
 
+def citation_fixture
+  'Dr. Pepper et al., 2024. https://purl.stanford.edu/bc123df4567'
+end
+
 def related_links_fixture
   [
     {

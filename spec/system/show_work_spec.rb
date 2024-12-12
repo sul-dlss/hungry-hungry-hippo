@@ -183,6 +183,13 @@ RSpec.describe 'Show a work' do
       expect(page).to have_css('td', text: work_subtypes_fixture.join(', '))
     end
 
+    # Preferred citation table
+    within('table#citation-table') do
+      expect(page).to have_css('caption', text: 'Citation')
+      expect(page).to have_css('tr', text: 'Preferred citation')
+      expect(page).to have_css('td', text: citation_fixture)
+    end
+
     # Related Content table
     within('table#related-content-table') do
       expect(page).to have_css('caption', text: 'Related content')

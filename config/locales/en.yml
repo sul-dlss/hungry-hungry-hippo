@@ -107,6 +107,14 @@ en:
           help_text: >
             Enter a summary statement (max 600 words) describing the work that you are depositing.
             A detailed statement may improve the discovery of your work in web searches.
+        citation:
+          label: 'Custom citation'
+          help_text: >
+            This is the text that others can use when they want to cite this deposit.
+            We highly recommend that you provide the text of that citation here to make it
+            easier for them to cite your work and give you proper credit.
+          auto_citation: Autogenerate citation
+          custom_citation: Enter custom citation
         title:
           label: 'Title of deposit'
           help_text: >
@@ -153,6 +161,13 @@ en:
           label: 'Author(s) to include in citation'
           help_text: >
             When there are multiple authors, list them in the order they should appear in the citation.
+        citation:
+          tab_label: 'Citation for this deposit (optional)'
+          label: 'Citation for this deposit'
+          help_text: >
+            This is the text that others can use when they want to cite this deposit.
+            We highly recommend that you provide the text of that citation here to make it
+            easier for them to cite your work and give you proper credit.
         dates:
           tab_label: 'Dates (optional)'
           label: 'Enter dates related to your deposit'
