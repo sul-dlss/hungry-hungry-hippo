@@ -2,14 +2,14 @@
   <p><%= t('works.edit.fields.citation.help_text') %></p>
 
   <%= tag.div class: 'form-check mb-4' do %>
-    <%= form.radio_button :generate_auto_citation, true, class: 'form-check-input', checked: true, data: { citation_target: 'autoGenerateCitation', action: 'click->citation#autoGenerateCitationSelected' } %>
-    <%= form.label :generate_auto_citation_true, t('works.edit.fields.citation.auto_citation'), class: 'form-check-label' %>
+    <%= form.radio_button :auto_generate_citation, true, class: 'form-check-input', checked: true, data: { citation_target: 'autoGenerateCitation', action: 'click->citation#autoGenerateCitationSelected' } %>
+    <%= form.label :auto_generate_citation_true, t('works.edit.fields.citation.auto_citation'), class: 'form-check-label' %>
   <% end %>
 
   <%= tag.div class: 'form-check mb-4' do %>
-    <%= form.radio_button :generate_auto_citation, false, class: 'form-check-input', data: { citation_target: 'customCitation', action: 'click->citation#customCitationSelected' } %>
-    <%= form.label :generate_auto_citation_false, t('works.edit.fields.citation.custom_citation') %>
+    <%= form.radio_button :auto_generate_citation, false, class: 'form-check-input', data: { citation_target: 'customCitation', action: 'click->citation#customCitationSelected' } %>
+    <%= form.label :auto_generate_citation_false, t('works.edit.fields.citation.custom_citation') %>
   <% end %>
 
-  <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :citation, label: t('works.edit.fields.citation.label'), data: { citation_target: 'citation' }) %>
+  <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :citation, label: t('works.edit.fields.citation.label'), hidden_label: true, data: { citation_target: 'citation' }) %>
 <% end %>

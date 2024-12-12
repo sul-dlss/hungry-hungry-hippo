@@ -9,6 +9,7 @@ module WorkMappingFixtures
       authors_attributes: authors_fixture,
       abstract: abstract_fixture,
       citation: citation_fixture,
+      auto_generate_citation: false,
       related_links_attributes: related_links_fixture,
       related_works_attributes: related_works_fixture,
       license: license_fixture,

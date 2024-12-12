@@ -127,6 +127,8 @@ RSpec.describe 'Create a work deposit' do
 
     # Filling in citation
     expect(page).to have_text('Citation for this deposit')
+    expect(page).to have_field('Custom citation', disabled: true)
+    choose('Enter custom citation')
     fill_in('Custom citation', with: citation_fixture)
 
     # Clicking on Next to go to related content tab

@@ -12,12 +12,10 @@ export default class extends Controller {
   }
 
   autoGenerateCitationSelected () {
-    console.log('autoGenerateCitation selected')
     this.citationTarget.disabled = true
   }
 
   customCitationSelected () {
-    console.log('customCitation selected')
     this.citationTarget.disabled = false
   }
 }

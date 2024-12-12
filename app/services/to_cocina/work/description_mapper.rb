@@ -45,19 +45,21 @@ module ToCocina
       end
       # rubocop:enable Metrics/AbcSize
 
+      # rubocop:disable Metrics/AbcSize
       def note_params
         [].tap do |params|
           if work_form.abstract.present?
             params << CocinaDescriptionSupport.note(type: 'abstract',
                                                     value: work_form.abstract)
           end
-          if work_form.citation.present?
+          if work_form.citation.present? && work_form.auto_generate_citation == false
             params << CocinaDescriptionSupport.note(type: 'preferred citation',
                                                     value: work_form.citation,
                                                     label: 'Preferred Citation')
           end
         end.presence
       end
+      # rubocop:enable Metrics/AbcSize
 
       def event_params
         [].tap do |params|

@@ -161,7 +161,6 @@ en:
           label: 'Author(s) to include in citation'
           help_text: >
             When there are multiple authors, list them in the order they should appear in the citation.
-          label: 'Abstract'
         citation:
           tab_label: 'Citation for this deposit (optional)'
           label: 'Citation for this deposit'
