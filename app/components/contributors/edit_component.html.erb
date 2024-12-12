@@ -1,8 +1,23 @@
 
 <div data-controller="contributors">
   <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :role_type,
-                                                  label: t('works.edit.fields.contributors.role_type.label'),
-                                                  options: role_type_options) %>
+                                                  label: t('works.edit.fields.contributors.role_type.label')) do |component| %>
+    <% component.with_toggle_option(form:,
+                                    field_name: :role_type,
+                                    label: t('works.edit.fields.contributors.role_type.person.label'),
+                                    value: 'person',
+                                    data: { contributors_target: 'contributorTypePerson' },
+                                    label_data: { contributors_target: 'contributorTypePersonLabel',
+                                                  action: 'click->contributors#contributorTypePersonSelected' }) %>
+    <% component.with_toggle_option(form:,
+                                    field_name: :role_type,
+                                    label: t('works.edit.fields.contributors.role_type.organization.label'),
+                                    value: 'organization',
+                                    data: { contributors_target: 'contributorTypeOrganization' },
+                                    label_data: { contributors_target: 'contributorTypeOrganizationLabel',
+                                                  action: 'click->contributors#contributorTypeOrganizationSelected' }) %>
+  <% end %>
+
   <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :person_role,
                                                        options: PERSON_ROLES, label: t('works.edit.fields.contributors.role.label'),
                                                        data: { contributors_target: 'selectPersonRole' }) %>
@@ -21,7 +36,6 @@
     <div class="form-check">
       <%= form.radio_button :with_orcid, false, class: 'form-check-input', checked: true %>
       <%= form.label :with_orcid_false, 'Name', class: 'form-check-label' %>
-      <!-- author name fields -->
     </div>
     <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :with_orcid) %>
     <div class="row">
