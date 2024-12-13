@@ -167,6 +167,8 @@ GEM
     csl (2.0.0)
       namae (~> 1.0)
       rexml
+    csl-styles (2.0.1)
+      csl (~> 2.0)
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
     cyperful (0.2.0)
@@ -576,6 +578,7 @@ DEPENDENCIES
   citeproc-ruby
   cocina-models
   config
+  csl-styles
   cssbundling-rails
   cyperful
   debug
