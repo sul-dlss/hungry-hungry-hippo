@@ -1,10 +1,12 @@
 <%= tag.div class: classes, 'data-controller': 'tab-error' do %>
-  <%= tag.div class: tab_classes, role: 'tablist', 'aria-orientation': 'vertical', style: 'height: 650px;' do |component| %>
-    <% tabs.each do |tab| %>
-      <%= tab %>
+  <div class="col-md-3">
+    <%= tag.div class: 'nav nav-pills d-flex flex-md-column px-2 py-1', role: 'tablist', 'aria-orientation': 'vertical' do |component| %>
+      <% tabs.each do |tab| %>
+        <%= tab %>
+      <% end %>
     <% end %>
-  <% end %>
-  <div class="w-100" style="max-width: 750px;">
+  </div>
+  <div class="col-md-9">
     <%= form_with(model:) do |form| %>
       <% hidden_fields.each do |field| %>
         <%= form.hidden_field field %>

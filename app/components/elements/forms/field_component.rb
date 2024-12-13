@@ -36,7 +36,7 @@ module Elements
       def styles
         return if width.blank?
 
-        "width: #{width}px;"
+        "max-width: #{width}px;"
       end
     end
   end

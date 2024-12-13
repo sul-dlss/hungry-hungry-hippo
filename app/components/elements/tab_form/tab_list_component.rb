@@ -7,9 +7,8 @@ module Elements
       renders_many :tabs, 'Elements::TabForm::TabComponent'
       renders_many :panes, 'Elements::TabForm::PaneComponent'
 
-      def initialize(model:, hidden_fields: [], classes: [], tab_classes: [])
+      def initialize(model:, hidden_fields: [], classes: [])
         @classes = classes
-        @tab_classes = tab_classes
         @model = model
         @hidden_fields = hidden_fields
         super()
@@ -20,11 +19,7 @@ module Elements
       def classes
         # Provides d-flex, tabbable-panes as the static default classes
         # merged with any additional classes passed in.
-        merge_classes(%w[d-flex tabbable-panes mb-5], @classes)
-      end
-
-      def tab_classes
-        merge_classes(%w[nav nav-pills flex-column px-2 py-1 me-5 col-3], @tab_classes)
+        merge_classes(%w[row tabbable-panes gx-4 gy-4 mb-5], @classes)
       end
 
       def render?
