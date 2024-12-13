@@ -42,6 +42,7 @@ gem 'bootsnap', require: false
 # Additional gems
 gem 'action_policy'
 gem 'bibtex-ruby'
+gem 'citeproc-ruby'
 gem 'cocina-models'
 gem 'config'
 gem 'dor-services-client', '>= 15.2.1'
