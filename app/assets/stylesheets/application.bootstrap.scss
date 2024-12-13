@@ -97,14 +97,6 @@ table.table-show {
   font-weight: 400;
 }
 
-.form-control {
-  --bs-border-color: #979797;
-}
-
-.form-check-input {
-  --bs-border-color: #979797;
-}
-
-.form-select {
+.form-control, .form-check-input, .form-select {
   --bs-border-color: #979797;
 }
