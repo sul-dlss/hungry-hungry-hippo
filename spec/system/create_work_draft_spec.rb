@@ -59,5 +59,6 @@ RSpec.describe 'Create a work draft' do
     expect(page).to have_css('h1', text: title_fixture)
     expect(page).to have_css('.status', text: 'Draft - Not deposited')
     expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
+    expect(page).to have_no_css('#authors-table td')
   end
 end
