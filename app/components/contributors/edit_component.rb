@@ -31,11 +31,13 @@ module Contributors
     end
 
     def contributors_data
-      { controller: 'contributors' }.tap do |contributors_hash|
+      {
+        controller: 'contributors',
+        contributors_orcid_prefix_value: Settings.orcid.url
+      }.tap do |contributors_hash|
         next unless orcid?
 
         contributors_hash[:contributors_orcid_value] = orcid
-        contributors_hash[:contributors_orcid_prefix_value] = Settings.orcid.url
       end
     end
 
