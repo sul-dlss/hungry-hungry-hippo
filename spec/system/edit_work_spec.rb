@@ -135,7 +135,7 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_content(updated_keywords.first)
     expect(page).to have_content('Leland Stanford Jr.')
     expect(page).to have_content('Some other organization')
-    expect(page).to have_content('https://orcid.org/0001-0002-0003-0004')
+    expect(page).to have_content('0001-0002-0003-0004')
     expect(page).to have_content(citation_fixture)
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
     expect(page).to have_content('https://purl.stanford.edu/fake (references)')

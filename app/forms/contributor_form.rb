@@ -18,8 +18,7 @@ class ContributorForm < ApplicationForm
   attribute :first_name, :string
   attribute :last_name, :string
 
-  validates :orcid, format: { with: %r{\Ahttps://(.*\.)?orcid.org/\d{4}-\d{4}-\d{4}-\d{3}[0-9X]\z},
-                              message: I18n.t('works.edit.fields.contributors.orcid.error') },
+  validates :orcid, format: { with: /\A\d{4}-\d{4}-\d{4}-\d{3}[0-9X]\z/ },
                     allow_blank: true,
                     if: :person?
 

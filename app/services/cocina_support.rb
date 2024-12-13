@@ -175,9 +175,6 @@ class CocinaSupport
   end
 
   def self.orcid_for(contributor:)
-    orcid = contributor.identifier&.find { |id| id.type == 'ORCID' }&.value
-    return unless orcid.presence
-
-    "#{Settings.orcid.url}#{orcid}"
+    contributor.identifier&.find { |id| id.type == 'ORCID' }&.value&.presence
   end
 end
