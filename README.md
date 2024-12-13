@@ -24,10 +24,14 @@ bin/dev
 
 Then browse to http://localhost:3000 to see the running application.
 
+### Mission Control
+
+A dashboard for Solid Queue background jobs is available at `http://localhost:3000/jobs`.
+
 ### Debugging locally
 
 1. Add a `debugger` statement in the code.
-2. Connect to the process (for example, `bin/overmind connect web`).
+2. Connect to the process (for example, `bin/overmind connect web` or `bin/overmind connect jobs`).
 
 See [overmind documentation](https://github.com/DarthSim/overmind) for more about how to control processes.
 
