@@ -1,11 +1,15 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ['contributorTypePerson', 'contributorTypeOrganization', 'contributorTypePersonLabel', 'contributorTypeOrganizationLabel',
-    'selectPersonRole', 'selectOrganizationRole', 'personName', 'organizationName', 'orcidField']
+  static targets = [
+    'contributorTypePerson', 'contributorTypeOrganization', 'contributorTypePersonLabel',
+    'contributorTypeOrganizationLabel', 'selectPersonRole', 'selectOrganizationRole', 'personName',
+    'organizationName', 'orcidField', 'useOrcidButton', 'resetOrcidButton'
+  ]
 
   static values = {
-    orcid: String
+    orcid: String,
+    orcidPrefix: String
   }
 
   connect () {
@@ -18,6 +22,21 @@ export default class extends Controller {
 
   useOrcid () {
     this.orcidFieldTarget.value = this.orcidValue
+    this.normalizeOrcid()
+    this.orcidFieldTarget.readOnly = true
+    this.useOrcidButtonTarget.hidden = true
+    this.resetOrcidButtonTarget.hidden = false
+  }
+
+  resetOrcid () {
+    this.resetOrcidButtonTarget.hidden = true
+    this.orcidFieldTarget.value = ''
+    this.orcidFieldTarget.readOnly = false
+    this.useOrcidButtonTarget.hidden = false
+  }
+
+  normalizeOrcid () {
+    this.orcidFieldTarget.value = this.orcidFieldTarget.value.replace(this.orcidPrefixValue, '')
   }
 
   // Role type toggle Individual selection

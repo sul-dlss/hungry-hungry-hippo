@@ -35,7 +35,7 @@ RSpec.describe ContributorForm do
 
     context 'when person with ORCID' do
       let(:with_orcid) { true }
-      let(:orcid) { 'https://orcid.org/0000-0000-0000-0000' }
+      let(:orcid) { '0000-0000-0000-0000' }
 
       it 'is valid' do
         expect(form).to be_valid
@@ -75,13 +75,13 @@ RSpec.describe ContributorForm do
       let(:orcid) { '0000-0000-0000-0000' }
       let(:with_orcid) { true }
 
-      it 'is not valid' do
-        expect(form).not_to be_valid
+      it 'is valid' do
+        expect(form).to be_valid
       end
     end
 
     context 'when ORCID format is not valid' do
-      let(:orcid) { 'https://orcid.org/ABCD' }
+      let(:orcid) { 'ABCD' }
 
       it 'is not valid' do
         expect(form).not_to be_valid

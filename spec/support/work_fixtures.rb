@@ -141,7 +141,7 @@ def authors_fixture
       'first_name' => 'Jane',
       'last_name' => 'Stanford',
       'with_orcid' => true,
-      'orcid' => 'https://orcid.org/0001-0002-0003-0004',
+      'orcid' => '0001-0002-0003-0004',
       'organization_name' => nil
     },
     {
@@ -163,7 +163,7 @@ def person_contributor_fixture
     forename: 'Jane',
     role: 'author',
     primary: true,
-    orcid: 'https://orcid.org/0001-0002-0003-0004'
+    orcid: '0001-0002-0003-0004'
   }
 end
 

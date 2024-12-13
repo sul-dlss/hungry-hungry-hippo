@@ -39,6 +39,10 @@ en:
           attributes:
             email:
               format: '%{value} is not a valid email address'
+        contributor:
+          attributes:
+            orcid:
+              invalid: 'must be formatted as "XXXX-XXXX-XXXX-XXXX"'
   time:
     formats:
       long: '%B %d, %Y'
@@ -139,10 +143,11 @@ en:
           orcid_or_name:
             label: 'ORCID iD or Name'
           orcid:
-            error: 'ORCID iD must be formatted as "https://orcid.org/XXXX-XXXX-XXXX-XXXX"'
             label: 'ORCID iD'
           use_orcid_button:
             label: 'Use My ORCID iD'
+          reset_orcid_button:
+            label: 'Reset ORCID iD'
           first_name:
             label: 'First name'
           last_name:

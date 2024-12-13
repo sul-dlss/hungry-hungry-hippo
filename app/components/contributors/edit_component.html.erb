@@ -28,19 +28,25 @@
   <div data-contributors-target="personName">
     <%= render Elements::Forms::LabelComponent.new(form:, field_name: :with_orcid, label_text: t('works.edit.fields.contributors.orcid_or_name.label')) %><br>
     <div class="form-check">
-      <%= form.radio_button :with_orcid, true, class: 'form-check-input' %>
+      <%= form.radio_button :with_orcid, true, class: 'form-check-input', checked: true %>
       <%= form.label :with_orcid_true, t('works.edit.fields.contributors.orcid.label'), class: 'form-check-label' %>
-      <%= tag.div class: orcid_container_classes do %>
-        <%= render Elements::ButtonComponent.new(label: t('works.edit.fields.contributors.use_orcid_button.label'), classes: 'btn btn-outline-primary', data: { action: 'contributors#useOrcid' }) if orcid.present? %>
+      <div class="mb-4 field-container input-group">
         <%= render Elements::Forms::LabelComponent.new(form:, field_name: :orcid, hidden_label: true) %>
-        <%= form.text_field :orcid, class: 'form-control', data: { contributors_target: 'orcidField' } %>
-      <% end %>
+        <span class="input-group-text">
+          <%= Settings.orcid.url %>
+        </span>
+        <%= form.text_field :orcid, class: 'form-control', data: { contributors_target: 'orcidField', action: 'change->contributors#normalizeOrcid' } %>
+        <%= render Elements::ButtonComponent.new(label: t('works.edit.fields.contributors.use_orcid_button.label'), classes: 'btn btn-outline-primary',
+                                                 data: { action: 'contributors#useOrcid', contributors_target: 'useOrcidButton' }, hidden: !render_use_orcid_button?) %>
+        <%= render Elements::ButtonComponent.new(label: t('works.edit.fields.contributors.reset_orcid_button.label'), classes: 'btn btn-outline-primary',
+                                                 data: { action: 'contributors#resetOrcid', contributors_target: 'resetOrcidButton' }, hidden: !render_reset_orcid_button?) %>
+        <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :orcid) %>
+      </div>
     </div>
     <div class="form-check">
-      <%= form.radio_button :with_orcid, false, class: 'form-check-input', checked: true %>
+      <%= form.radio_button :with_orcid, false, class: 'form-check-input', checked: false %>
       <%= form.label :with_orcid_false, 'Name', class: 'form-check-label' %>
     </div>
-    <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :with_orcid) %>
     <div class="row">
       <div class="col">
         <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :first_name, label: t('works.edit.fields.contributors.first_name.label')) %>

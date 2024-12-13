@@ -14,13 +14,30 @@ module Contributors
       Current.orcid
     end
 
-    def orcid_container_classes
-      merge_classes('mb-4 field-container', orcid.present? ? 'input-group' : nil)
+    def orcid?
+      orcid.present?
+    end
+
+    # Render the button to use the user's orcid if and only if the user has an
+    # orcid attr in Shibboleth and hasn't already entered it
+    def render_use_orcid_button?
+      orcid? && form.object.orcid.blank?
+    end
+
+    # Render the button to reset the user's orcid if and only if the user has an
+    # orcid attr in Shibboleth and *has* already entered it
+    def render_reset_orcid_button?
+      orcid? && form.object.orcid.present?
     end
 
     def contributors_data
-      { controller: 'contributors' }.tap do |contributors_hash|
-        contributors_hash[:contributors_orcid_value] = orcid if orcid.present?
+      {
+        controller: 'contributors',
+        contributors_orcid_prefix_value: Settings.orcid.url
+      }.tap do |contributors_hash|
+        next unless orcid?
+
+        contributors_hash[:contributors_orcid_value] = orcid
       end
     end
 
