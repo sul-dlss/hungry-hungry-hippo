@@ -31,7 +31,7 @@ module Elements
       end
 
       def classes
-        merge_classes('nav-link my-1', selected? ? 'active' : nil)
+        merge_classes('nav-link my-md-1', selected? ? 'active' : nil)
       end
 
       def id

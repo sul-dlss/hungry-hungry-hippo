@@ -12,9 +12,11 @@ $container-max-widths: (
 @import "dropzone";
 
 .tabbable-panes {
-  min-height: 500px;
-
   .nav-pills {
+    @include media-breakpoint-up(md) {
+      height: 650px;
+    }
+
     background-color: var(--stanford-10-black);
     border-radius: var(--bs-nav-pills-border-radius);
 
