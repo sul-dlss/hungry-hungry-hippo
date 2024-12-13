@@ -1,1 +1,6 @@
 staging_location: 'tmp/workspace'
+seed_user:
+  orcid_id: https://orcid.org/0000-0000-0000-0000
+  email_address: 'a.user@stanford.edu'
+  first_name: 'A.'
+  name: 'A. User'

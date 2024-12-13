@@ -10,6 +10,20 @@ module Contributors
 
     attr_reader :form
 
+    def orcid
+      Current.orcid
+    end
+
+    def orcid_container_classes
+      merge_classes('mb-4 field-container', orcid.present? ? 'input-group' : nil)
+    end
+
+    def contributors_data
+      { controller: 'contributors' }.tap do |contributors_hash|
+        contributors_hash[:contributors_orcid_value] = orcid if orcid.present?
+      end
+    end
+
     PERSON_ROLES = [
       ['Author', 'author'],
       ['Advisor', 'advisor'],

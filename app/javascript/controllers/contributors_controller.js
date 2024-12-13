@@ -2,7 +2,11 @@ import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = ['contributorTypePerson', 'contributorTypeOrganization', 'contributorTypePersonLabel', 'contributorTypeOrganizationLabel',
-    'selectPersonRole', 'selectOrganizationRole', 'personName', 'organizationName']
+    'selectPersonRole', 'selectOrganizationRole', 'personName', 'organizationName', 'orcidField']
+
+  static values = {
+    orcid: String
+  }
 
   connect () {
     if (this.contributorTypeOrganizationTarget.checked) {
@@ -10,6 +14,10 @@ export default class extends Controller {
     } else {
       this.contributorTypePersonSelected()
     }
+  }
+
+  useOrcid () {
+    this.orcidFieldTarget.value = this.orcidValue
   }
 
   // Role type toggle Individual selection

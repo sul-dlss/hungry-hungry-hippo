@@ -140,6 +140,9 @@ en:
             label: 'ORCID iD or Name'
           orcid:
             error: 'ORCID iD must be formatted as "https://orcid.org/XXXX-XXXX-XXXX-XXXX"'
+            label: 'ORCID iD'
+          use_orcid_button:
+            label: 'Use My ORCID iD'
           first_name:
             label: 'First name'
           last_name:
