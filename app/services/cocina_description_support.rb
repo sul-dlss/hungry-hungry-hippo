@@ -310,7 +310,7 @@ class CocinaDescriptionSupport
     return unless orcid.presence
 
     {
-      value: orcid.delete_prefix(Settings.orcid.url),
+      value: orcid,
       type: 'ORCID',
       source: { uri: Settings.orcid.url }
     }

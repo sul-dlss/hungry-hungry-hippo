@@ -9,7 +9,9 @@ RSpec.describe WorkForm do
         title: title_fixture,
         contact_emails_attributes: contact_emails_fixture,
         authors_attributes: authors_fixture,
-        work_type:, work_subtypes:, other_work_subtype:
+        work_type:,
+        work_subtypes:,
+        other_work_subtype:
       )
     end
     let(:work_type) { '' }
