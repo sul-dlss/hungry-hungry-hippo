@@ -1,19 +1,15 @@
-<%= tag.div(id:,
-            class: classes,
-            role: 'tabpanel',
-            'aria-labelledby': tab_id,
-            tabindex: '0',
-            data: { tab_error_target: 'pane' }) do %>
-            <div class="d-flex flex-column justify-content-between h-100">
-                <div>
-                    <% if label %><div class="h4"><%= label %></div><% end %>
-                    <%= content %>
-                </div>
-                <% if render_footer? %>
-                    <div class="mt-4">
-                        <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Save as draft', variant: :'outline-primary') %>
-                        <%= render Elements::TabForm::NextButtonComponent.new(tab_id:) %>
-                    </div>
-                <% end %>
-            </div>
+<%= tag.div(id:, class: classes, role: 'tabpanel', 'aria-labelledby': tab_id, tabindex: '0', data: { tab_error_target: 'pane' }) do %>
+  <div class="d-flex flex-column justify-content-between h-100">
+    <div>
+      <% if label %><div class="h4"><%= label %></div><% end %>
+      <% if help_text %><p><%= help_text %></p><% end %>
+      <%= content %>
+    </div>
+    <% if render_footer? %>
+      <div class="mt-4">
+        <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Save as draft', variant: :'outline-primary') %>
+        <%= render Elements::TabForm::NextButtonComponent.new(tab_id:) %>
+      </div>
+    <% end %>
+  </div>
 <% end %>

@@ -36,12 +36,11 @@
                                                          help_text: t('works.edit.fields.title.help_text'), width: 500) %>
       <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false) %>
     <% end %>
-    <% component.with_pane(tab_name: :authors, label: t('works.edit.panes.authors.label'), form:) do %>
-      <%= render NestedComponentPresenter.for(form:, field_name: :authors, model_class: AuthorForm, form_component: Contributors::EditComponent) %>
+    <% component.with_pane(tab_name: :authors, label: t('works.edit.panes.authors.label'), form:, help_text: t('works.edit.panes.authors.help_text')) do %>
+      <%= render NestedComponentPresenter.for(form:, field_name: :authors, model_class: AuthorForm, form_component: Contributors::EditComponent, hidden_label: true) %>
     <% end %>
 
-    <% component.with_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), form:) do %>
-      <p><%= t('works.edit.fields.abstract.help_text') %></p>
+    <% component.with_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), form:, help_text: t('works.edit.panes.abstract.help_text')) do %>
       <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: t('works.edit.fields.abstract.label')) %>
       <%= render NestedComponentPresenter.for(form:, field_name: :keywords, model_class: KeywordForm, form_component: Keywords::EditComponent, hidden_label: false, bordered: false) %>
     <% end %>
