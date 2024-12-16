@@ -3,7 +3,7 @@
 module Elements
   module Tables
     # Component for rendering a table row.
-    class TableRowComponent < ApplicationComponent
+    class RowComponent < ApplicationComponent
       renders_many :cells
 
       def initialize(label: nil, values: [], id: nil)

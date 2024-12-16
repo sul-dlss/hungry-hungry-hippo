@@ -11,13 +11,13 @@
             <%= content_file.filename %>
           <% end %>
           <% row_component.with_cell do %>
-            <%= render Works::Edit::ContentFileDescriptionComponent.new(content_file: content_file) %>
+            <%= render Works::Edit::ContentFileDescriptionComponent.new(content_file:) %>
           <% end %>
           <% row_component.with_cell do %>
-            <%= render Works::Edit::ContentFileHideComponent.new(content_file: content_file) %>
+            <%= render Works::Edit::ContentFileHideComponent.new(content_file:) %>
           <% end %>
           <% row_component.with_cell do %>
-            <%= render Works::Edit::ContentFileDeleteComponent.new(content_file: content_file) %>
+            <%= render Works::Edit::ContentFileDeleteComponent.new(content_file:) %>
           <% end %>
         <% end %>
       <% end %>
