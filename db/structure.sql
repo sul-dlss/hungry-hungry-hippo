@@ -166,7 +166,7 @@ ALTER SEQUENCE public.collections_id_seq OWNED BY public.collections.id;
 CREATE TABLE public.content_files (
     id bigint NOT NULL,
     file_type character varying NOT NULL,
-    filename character varying NOT NULL,
+    filepath character varying NOT NULL,
     label character varying NOT NULL,
     external_identifier character varying,
     fileset_external_identifier character varying,
@@ -177,7 +177,10 @@ CREATE TABLE public.content_files (
     content_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    hide boolean DEFAULT false NOT NULL
+    hide boolean DEFAULT false NOT NULL,
+    path_parts character varying[],
+    basename character varying,
+    extname character varying
 );
 
 
@@ -502,10 +505,10 @@ CREATE INDEX index_content_files_on_content_id ON public.content_files USING btr
 
 
 --
--- Name: index_content_files_on_content_id_and_filename; Type: INDEX; Schema: public; Owner: -
+-- Name: index_content_files_on_content_id_and_filepath; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_content_files_on_content_id_and_filename ON public.content_files USING btree (content_id, filename);
+CREATE UNIQUE INDEX index_content_files_on_content_id_and_filepath ON public.content_files USING btree (content_id, filepath);
 
 
 --
@@ -613,6 +616,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241211213303'),
 ('20241205212622'),
 ('20241205013747'),
 ('20241125181104'),

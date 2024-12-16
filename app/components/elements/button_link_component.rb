@@ -3,12 +3,13 @@
 module Elements
   # Component for a button that is a link
   class ButtonLinkComponent < ApplicationComponent
-    def initialize(link:, label: nil, variant: :primary, classes: [], **options)
+    def initialize(link:, label: nil, variant: :primary, classes: [], bordered: true, **options) # rubocop:disable Metrics/ParameterLists
       @link = link
       @label = label
       @variant = variant
       @options = options
       @classes = classes
+      @bordered = bordered
       super()
     end
 
@@ -21,7 +22,7 @@ module Elements
     end
 
     def classes
-      merge_classes(@classes)
+      merge_classes(@classes, @bordered ? nil : %w[border border-0])
     end
   end
 end

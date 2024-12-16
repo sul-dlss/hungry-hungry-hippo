@@ -1,0 +1,5 @@
+<%= tag.turbo_frame id: dom_id(content_file, 'hide') do %>
+  <%= form_with model: content_file do |form| %>
+    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :hide, hidden_label: true, data: { controller: 'form-submit', action: 'form-submit#submit' }) %>
+  <% end %>
+<% end %>

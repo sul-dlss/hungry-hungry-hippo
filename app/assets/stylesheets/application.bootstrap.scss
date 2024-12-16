@@ -90,6 +90,21 @@ table.table-show {
   }
 }
 
+table.table-treegrid { 
+  tr[aria-expanded] > td:first-child::before {
+    cursor: pointer;
+    font-family: bootstrap-icons;
+    content: "\F286"; // chevron-up
+    display: inline-block;
+    font-weight: 900;
+    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+  }
+
+  tr[aria-expanded="true"] > td:first-child::before {
+    transform: rotate(180deg);
+  }
+}
+
 // Following should be set in component library.
 .form-label {
   @extend .mb-0
@@ -97,4 +112,8 @@ table.table-show {
 
 .form-control, .form-check-input, .form-select {
   --bs-border-color: #979797;
+}
+
+.btn-link {
+  color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
 }

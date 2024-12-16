@@ -85,7 +85,7 @@ def license_label_fixture
 end
 
 def filename_fixture
-  'my_file.txt'
+  'my_dir/my_file.txt'
 end
 
 def file_label_fixture

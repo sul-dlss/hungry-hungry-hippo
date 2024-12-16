@@ -33,3 +33,5 @@ http_headers:
   full_name: 'X-Person-Formal-Name'
   remote_user: 'X-Remote-User'
   orcid_id: 'X-Orcid-Id'
+
+hierarchical_files_limit: 1000

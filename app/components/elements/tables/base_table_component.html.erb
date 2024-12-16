@@ -1,5 +1,5 @@
-<%= tag.table class: classes, id: do %>
-  <% if label.present? %>
+<%= tag.table class: classes, id:, 'aria-label': label, role:, data: do %>
+  <% if show_label? %>
     <caption><%= label %></caption>
   <% end %>
   <%= header %>

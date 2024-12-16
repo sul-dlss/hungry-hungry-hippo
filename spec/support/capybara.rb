@@ -2,7 +2,8 @@
 
 RSpec.configure do |config|
   config.prepend_before(:example, type: :system) do |example|
-    if ENV['CYPERFUL']
+    # If you can't use Cyperful, a headed test can be helpful for authoring system specs.
+    if ENV['CYPERFUL'] || example.metadata[:headed_test]
       # Cyperful only supports Selenium + Chrome
       driven_by :selenium, using: :chrome, screen_size: [1400, 1400]
     elsif example.metadata[:rack_test]
