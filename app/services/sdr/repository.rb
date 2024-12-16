@@ -79,7 +79,7 @@ module Sdr
     # @param [String] druid
     # @raise [Error] if there is an error discarding the draft
     def self.discard_draft(druid:)
-      status = Sdr::Repository.status(druid: druid)
+      status = Sdr::Repository.status(druid:)
       raise Error, 'Draft cannot be discarded' unless status.discardable?
 
       if status.version == 1

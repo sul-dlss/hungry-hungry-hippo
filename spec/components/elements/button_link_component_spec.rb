@@ -12,7 +12,7 @@ RSpec.describe Elements::ButtonLinkComponent, type: :component do
 
   context 'with a label content' do
     it 'renders the button link' do
-      render_inline(described_class.new(link: link).with_content('Button link'))
+      render_inline(described_class.new(link:).with_content('Button link'))
       expect(page).to have_css('a', text: 'Button link')
     end
   end

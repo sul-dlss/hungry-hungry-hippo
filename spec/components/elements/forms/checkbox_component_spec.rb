@@ -9,7 +9,7 @@ RSpec.describe Elements::Forms::CheckboxComponent, type: :component do
   let(:use_citation) { false }
 
   it 'creates field with label' do
-    render_inline(described_class.new(form: form, field_name:))
+    render_inline(described_class.new(form:, field_name:))
     expect(page).to have_css('label.form-check-label:not(.visually-hidden)', text: field_name)
     expect(page).to have_css('input.form-check-input[type="checkbox"]:not(.is-invalid)')
     expect(page).to have_no_css('small.form-text')

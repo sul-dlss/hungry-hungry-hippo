@@ -28,7 +28,7 @@ module ModelSync
 
     def update_params
       {
-        title: title
+        title:
       }.tap do |params|
         params[:object_updated_at] = cocina_object.try(:modified)
       end.compact

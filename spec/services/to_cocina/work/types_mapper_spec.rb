@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ToCocina::Work::TypesMapper do
-  subject(:forms) { described_class.call(work_form: work_form) }
+  subject(:forms) { described_class.call(work_form:) }
 
   let(:work_form) { WorkForm.new }
 

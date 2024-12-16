@@ -9,7 +9,7 @@ RSpec.describe Elements::Forms::SelectDayFieldComponent, type: :component do
   let(:help_text) { 'About this field' }
 
   it 'creates field with label' do
-    render_inline(described_class.new(form: form, field_name:, required: false, label: 'Day'))
+    render_inline(described_class.new(form:, field_name:, required: false, label: 'Day'))
     expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'Day')
     expect(page).to have_css('select.form-select:not(.is-invalid)')
     expect(page).to have_css('option[value=""]', text: '')
@@ -21,7 +21,7 @@ RSpec.describe Elements::Forms::SelectDayFieldComponent, type: :component do
 
   context 'when help text is provided' do
     it 'creates field with help text' do
-      render_inline(described_class.new(form: form, field_name:, help_text:, label: 'Day'))
+      render_inline(described_class.new(form:, field_name:, help_text:, label: 'Day'))
       expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'Day')
       expect(page).to have_css('select.form-select:not(.is-invalid)')
       expect(page).to have_css('small.form-text')

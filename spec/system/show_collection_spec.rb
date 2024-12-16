@@ -7,7 +7,7 @@ RSpec.describe 'Show a collection' do
 
   let(:druid) { collection_druid_fixture }
   let(:user) { create(:user) }
-  let!(:collection) { create(:collection, druid: druid, title: collection_title_fixture, user:) }
+  let!(:collection) { create(:collection, druid:, title: collection_title_fixture, user:) }
   # Need multiple files to test pagination
   let(:cocina_object) { collection_with_metadata_fixture }
   let(:version_status) do
@@ -17,8 +17,8 @@ RSpec.describe 'Show a collection' do
   end
 
   before do
-    allow(Sdr::Repository).to receive(:find).with(druid: druid).and_return(cocina_object)
-    allow(Sdr::Repository).to receive(:status).with(druid: druid).and_return(version_status)
+    allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
 
     sign_in(user)
   end

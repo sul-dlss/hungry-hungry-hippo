@@ -9,5 +9,5 @@
     <% label = capture do %>
       Last <%= last_icon %>
     <% end %>
-  <%= link_to_unless current_page.last?, label, url, { remote: remote, class: 'page-link' } %>
+  <%= link_to_unless current_page.last?, label, url, { remote:, class: 'page-link' } %>
 </li>

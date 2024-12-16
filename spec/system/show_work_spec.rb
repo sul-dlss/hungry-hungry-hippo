@@ -8,7 +8,7 @@ RSpec.describe 'Show a work' do
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
   let(:collection) { create(:collection, user:) }
-  let!(:work) { create(:work, druid: druid, title: title_fixture, collection:, user:) }
+  let!(:work) { create(:work, druid:, title: title_fixture, collection:, user:) }
   # Need multiple files to test pagination
   let(:cocina_object) do
     dro_with_metadata_fixture.new(structural: {
@@ -109,8 +109,8 @@ RSpec.describe 'Show a work' do
   end
 
   before do
-    allow(Sdr::Repository).to receive(:find).with(druid: druid).and_return(cocina_object)
-    allow(Sdr::Repository).to receive(:status).with(druid: druid).and_return(version_status)
+    allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
 
     sign_in(user)
   end

@@ -165,7 +165,7 @@ RSpec.describe CocinaSupport do
 
   describe '#update_version_and_lock' do
     subject(:updated_cocina_object) do
-      described_class.update_version_and_lock(cocina_object: cocina_object, version: version, lock: lock)
+      described_class.update_version_and_lock(cocina_object:, version:, lock:)
     end
 
     let(:cocina_object) do

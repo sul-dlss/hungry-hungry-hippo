@@ -62,8 +62,8 @@ RSpec.describe 'Edit a work' do
     allow(Sdr::Repository).to receive(:update) do |args|
       @updated_cocina_object = args[:cocina_object]
     end
-    collection = create(:collection, user: user, druid: collection_druid_fixture)
-    create(:work, druid: druid, user:, collection: collection)
+    collection = create(:collection, user:, druid: collection_druid_fixture)
+    create(:work, druid:, user:, collection:)
 
     sign_in(user)
   end
