@@ -69,6 +69,7 @@ module Authentication
   end
 
   def set_current_orcid
+    Rails.logger.info("current orcid is #{Current.orcid}")
     Current.orcid ||= orcid_from_session
   end
 
@@ -112,6 +113,8 @@ module Authentication
   # This looks first in the session for orcid ID, and then to the headers.
   # This allows the application session to outlive the shibboleth session
   def orcid_from_session
+    Rails.logger.info("looking for header: #{Settings.http_headers.orcid_id}")
+    Rails.logger.info("in headers: #{request.headers}")
     session['orcid'] ||= if Rails.env.development?
                            Settings.seed_user.orcid_id
                          else
