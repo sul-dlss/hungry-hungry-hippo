@@ -17,7 +17,7 @@ export default class extends Controller {
     this.dropzone.on('addedfiles', () => {
       this.progressTarget.classList.remove('d-none')
       // This shows the user that something is going on since there may be a paused before first progress.
-      this.updateProgress(2)
+      this.updateProgress(2, true)
     })
     this.dropzone.on('totaluploadprogress', (totalUploadProgress) => {
       const uploadProgress = Math.trunc(totalUploadProgress)
@@ -37,12 +37,13 @@ export default class extends Controller {
         const path = file.fullPath ? file.fullPath : file.name
         data.append(`content[paths][${i}]`, path)
       }
+      data.append('content[completed]', this.dropzone.getActiveFiles().length === files.length)
     })
   }
 
-  updateProgress (progress) {
+  updateProgress (progress, reset = false) {
     // For some reason progress bounces around a bit. This keeps the progress moving forward.
-    if (progress <= this.progress) return
+    if (progress <= this.progress && !reset) return
 
     this.progressTarget.setAttribute('aria-valuenow', progress)
     const barElement = this.progressTarget.querySelector('.progress-bar')
