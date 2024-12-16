@@ -1,6 +1,6 @@
 <%= tag.div data: contributors_data do %>
   <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :role_type, label_classes: 'fw-bold',
-                                                  label: t('works.edit.fields.contributors.role_type.label')) do |component| %>
+                                                  label: t('works.edit.fields.contributors.role_type.label'), container_classes: 'mb-4') do |component| %>
     <% component.with_toggle_option(form:,
                                     field_name: :role_type,
                                     label: t('works.edit.fields.contributors.role_type.person.label'),
@@ -19,10 +19,10 @@
 
   <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :person_role, label_classes: 'fw-bold',
                                                        options: PERSON_ROLES, label: t('works.edit.fields.contributors.role.label'),
-                                                       data: { contributors_target: 'selectPersonRole' }) %>
+                                                       data: { contributors_target: 'selectPersonRole' }, container_classes: 'mb-4') %>
   <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :organization_role, label_classes: 'fw-bold',
                                                        options: ORGANIZATION_ROLES, label: t('works.edit.fields.contributors.role.label'),
-                                                       data: { contributors_target: 'selectOrganizationRole' }) %>
+                                                       data: { contributors_target: 'selectOrganizationRole' }, container_classes: 'mb-4') %>
 
   <%# Contributor person name/orcid fields %>
   <fieldset data-contributors-target="personName">
@@ -48,10 +48,10 @@
       <%= form.label :with_orcid_false, 'Name', class: 'form-check-label visually-hidden' %>
       <div class="row">
         <div class="col">
-          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :first_name, label: t('works.edit.fields.contributors.first_name.label')) %>
+          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :first_name, label: t('works.edit.fields.contributors.first_name.label'), container_classes: 'mb-4') %>
         </div>
         <div class="col">
-          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :last_name, label: t('works.edit.fields.contributors.last_name.label')) %>
+          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :last_name, label: t('works.edit.fields.contributors.last_name.label'), container_classes: 'mb-4') %>
         </div>
       </div>
     </div>
@@ -59,6 +59,6 @@
 
   <%# Contributor organization name field %>
   <div class="row" data-contributors-target="organizationName">
-    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :organization_name, label: t('works.edit.fields.contributors.organization.label'), label_classes: 'fw-bold') %>
+    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :organization_name, label: t('works.edit.fields.contributors.organization.label'), label_classes: 'fw-bold', container_classes: 'mb-4') %>
   </div>
 <% end %>

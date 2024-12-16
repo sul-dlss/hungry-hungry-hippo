@@ -1,7 +1,7 @@
 <div class="row" data-controller="form-date">
   <div class="col-3 col-lg-2">
     <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :year, label: helpers.t('publication_date.edit.fields.year.label'),
-                                                       data: { form_date_target: 'year', action: 'form-date#update' }) %>
+                                                       data: { form_date_target: 'year', action: 'form-date#update' }, container_classes: 'mb-4') %>
   </div>
   <div class="col-3 col-lg-2">
     <%= render Elements::Forms::SelectMonthFieldComponent.new(form:, field_name: :month, label: helpers.t('publication_date.edit.fields.month.label'),

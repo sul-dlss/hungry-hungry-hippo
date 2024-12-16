@@ -8,7 +8,7 @@
   <%# TabListComponent will render the actual form. %>
   <% form_with(model: @collection_form) do |form| %>
     <% component.with_pane(tab_name: :details, label: I18n.t('collections.edit.panes.details.label'), selected: true, form:) do %>
-      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('collections.edit.fields.title.label')) %>
+      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('collections.edit.fields.title.label'), container_classes: 'mb-4') %>
       <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: I18n.t('collections.edit.fields.description.label')) %>
       <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false) %>
     <% end %>

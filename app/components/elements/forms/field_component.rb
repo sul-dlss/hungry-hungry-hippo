@@ -5,7 +5,8 @@ module Elements
     # Base component for all form fields.
     class FieldComponent < ApplicationComponent
       def initialize(form:, field_name:, required: false, hidden_label: false, label: nil, help_text: nil, # rubocop:disable Metrics/ParameterLists
-                     disabled: false, hidden: false, data: {}, placeholder: nil, width: nil, label_classes: [])
+                     disabled: false, hidden: false, data: {}, placeholder: nil, width: nil, label_classes: [],
+                     container_classes: [])
         @form = form
         @field_name = field_name
         @required = required
@@ -18,6 +19,7 @@ module Elements
         @placeholder = placeholder
         @width = width
         @label_classes = label_classes
+        @container_classes = container_classes
         super()
       end
 
@@ -38,6 +40,10 @@ module Elements
         return if width.blank?
 
         "max-width: #{width}px;"
+      end
+
+      def container_classes
+        merge_classes(@container_classes)
       end
     end
   end
