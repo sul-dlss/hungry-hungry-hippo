@@ -8,7 +8,7 @@ RSpec.describe Elements::Forms::TextFieldComponent, type: :component do
   let(:field_name) { 'title' }
 
   it 'creates field with label' do
-    render_inline(described_class.new(form: form, field_name:))
+    render_inline(described_class.new(form:, field_name:))
     expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'title')
     expect(page).to have_css('input.form-control[type="text"]:not(.is-invalid)')
     expect(page).to have_no_css('small.form-text')

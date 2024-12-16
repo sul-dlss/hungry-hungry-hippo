@@ -47,7 +47,7 @@ RSpec.describe 'Edit a collection' do
     # It is already open.
     allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
     allow(Sdr::Repository).to receive(:update)
-    create(:collection, druid: druid, user:)
+    create(:collection, druid:, user:)
 
     sign_in(user, groups:)
   end

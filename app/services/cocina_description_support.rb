@@ -267,7 +267,7 @@ class CocinaDescriptionSupport
         organization_contributor(
           org_name: contributor.organization_name,
           role: contributor.organization_role,
-          primary: primary
+          primary:
         )
       end
     end
@@ -335,7 +335,7 @@ class CocinaDescriptionSupport
       date: [
         {
           value: date,
-          type: type,
+          type:,
           encoding: { code: date_encoding_code }
 
         }.tap do |date_params|

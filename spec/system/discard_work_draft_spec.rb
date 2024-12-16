@@ -9,11 +9,11 @@ RSpec.describe 'Discard a work draft' do
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
   let(:collection) { create(:collection, :with_druid, user:) }
-  let!(:work) { create(:work, druid: druid, title: title_fixture, collection:, user:) }
+  let!(:work) { create(:work, druid:, title: title_fixture, collection:, user:) }
   let(:cocina_object) { dro_with_metadata_fixture }
 
   before do
-    allow(Sdr::Repository).to receive(:find).with(druid: druid).and_return(cocina_object)
+    allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:discard_draft)
 
     sign_in(user)
@@ -33,8 +33,8 @@ RSpec.describe 'Discard a work draft' do
     end
 
     before do
-      allow(Sdr::Repository).to receive(:status).with(druid: druid).and_return(version_status_discardable,
-                                                                               version_status_openable)
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status_discardable,
+                                                                         version_status_openable)
     end
 
     it 'discards a draft' do
@@ -64,7 +64,7 @@ RSpec.describe 'Discard a work draft' do
     let(:collection_cocina_object) { collection_with_metadata_fixture }
 
     before do
-      allow(Sdr::Repository).to receive(:status).with(druid: druid).and_return(version_status)
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
       allow(Sdr::Repository).to receive(:status).with(druid: collection.druid).and_return(version_status)
       allow(Sdr::Repository).to receive(:find).with(druid: collection.druid).and_return(collection_cocina_object)
     end
@@ -84,7 +84,7 @@ RSpec.describe 'Discard a work draft' do
       expect(page).to have_css('.alert-success', text: 'Draft discarded.')
       expect(page).to have_current_path(collection_path(druid: collection.druid))
 
-      expect(Work.find_by(druid: druid)).to be_nil
+      expect(Work.find_by(druid:)).to be_nil
     end
   end
 end

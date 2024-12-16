@@ -13,7 +13,7 @@ RSpec.describe ModelSync::Work do
   end
 
   it 'updates the work' do
-    expect { described_class.call(work: work, cocina_object: cocina_object) }
+    expect { described_class.call(work:, cocina_object:) }
       .to change { work.reload.title }.to(title_fixture)
       .and change(work, :collection).to(new_collection)
       .and change(work, :object_updated_at).to(cocina_object.modified)
@@ -25,7 +25,7 @@ RSpec.describe ModelSync::Work do
     end
 
     it 'raises an error' do
-      expect { described_class.call(work: work, cocina_object: cocina_object) }
+      expect { described_class.call(work:, cocina_object:) }
         .to raise_error(ModelSync::Work::Error)
     end
   end
@@ -36,7 +36,7 @@ RSpec.describe ModelSync::Work do
     end
 
     it 'does not raise an error' do
-      expect { described_class.call(work: work, cocina_object: cocina_object, raise: false) }
+      expect { described_class.call(work:, cocina_object:, raise: false) }
         .to change { work.reload.title }.to(title_fixture)
     end
   end

@@ -67,6 +67,9 @@ Style/Documentation:
     - '**/application_*.rb'
     - 'app/policies/**/*.rb'
 
+Style/HashSyntax:
+  EnforcedShorthandSyntax: always # This used to be the default but it changed to `either` in late 2024. We prefer consistency.
+
 Lint/UselessAccessModifier:
   MethodCreatingMethods:
     - delegate

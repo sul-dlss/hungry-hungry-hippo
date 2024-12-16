@@ -10,7 +10,7 @@ class DepositWorkJob < ApplicationJob
     @work = work
 
     # Add missing digests and mime types
-    Contents::Analyzer.call(content: content)
+    Contents::Analyzer.call(content:)
     new_cocina_object = perform_persist
     druid = new_cocina_object.externalIdentifier
 

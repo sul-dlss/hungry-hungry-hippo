@@ -21,7 +21,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'registers with SDR and creates registrationWF' do
-        expect(described_class.register(cocina_object: cocina_object)).to eq(registered_cocina_object)
+        expect(described_class.register(cocina_object:)).to eq(registered_cocina_object)
 
         expect(objects_client).to have_received(:register).with(params: cocina_object, assign_doi: false)
         expect(Sdr::Workflow).to have_received(:create_unless_exists).with(druid, 'registrationWF', version: 1)
@@ -36,7 +36,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'raises' do
-        expect { described_class.register(cocina_object: cocina_object) }.to raise_error(Sdr::Repository::Error)
+        expect { described_class.register(cocina_object:) }.to raise_error(Sdr::Repository::Error)
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'raises' do
-        expect { described_class.register(cocina_object: cocina_object) }.to raise_error(Sdr::Repository::Error)
+        expect { described_class.register(cocina_object:) }.to raise_error(Sdr::Repository::Error)
       end
     end
   end
@@ -91,7 +91,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'returns the object' do
-        expect(described_class.find(druid: druid)).to eq(cocina_object)
+        expect(described_class.find(druid:)).to eq(cocina_object)
         expect(Dor::Services::Client).to have_received(:object).with(druid)
       end
     end
@@ -102,7 +102,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'raises' do
-        expect { described_class.find(druid: druid) }.to raise_error(Sdr::Repository::NotFoundResponse)
+        expect { described_class.find(druid:) }.to raise_error(Sdr::Repository::NotFoundResponse)
       end
     end
   end
@@ -119,7 +119,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'returns the status' do
-        expect(described_class.status(druid: druid)).to be_a VersionStatus
+        expect(described_class.status(druid:)).to be_a VersionStatus
         expect(Dor::Services::Client).to have_received(:object).with(druid)
       end
     end
@@ -130,7 +130,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'raises' do
-        expect { described_class.status(druid: druid) }.to raise_error(Sdr::Repository::NotFoundResponse)
+        expect { described_class.status(druid:) }.to raise_error(Sdr::Repository::NotFoundResponse)
       end
     end
   end
@@ -208,7 +208,7 @@ RSpec.describe Sdr::Repository do
 
     context 'when successful' do
       it 'updates with SDR' do
-        expect(described_class.update(cocina_object: cocina_object)).to eq(updated_cocina_object)
+        expect(described_class.update(cocina_object:)).to eq(updated_cocina_object)
 
         expect(object_client).to have_received(:update).with(params: cocina_object)
       end
@@ -222,7 +222,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'raises' do
-        expect { described_class.update(cocina_object: cocina_object) }.to raise_error(Sdr::Repository::Error)
+        expect { described_class.update(cocina_object:) }.to raise_error(Sdr::Repository::Error)
       end
     end
   end
@@ -250,7 +250,7 @@ RSpec.describe Sdr::Repository do
 
       it 'raises' do
         expect do
-          described_class.discard_draft(druid: druid)
+          described_class.discard_draft(druid:)
         end.to raise_error(Sdr::Repository::Error, 'Draft cannot be discarded')
       end
     end
@@ -259,7 +259,7 @@ RSpec.describe Sdr::Repository do
       let(:version) { 1 }
 
       it 'destroys the object' do
-        described_class.discard_draft(druid: druid)
+        described_class.discard_draft(druid:)
 
         expect(object_client).to have_received(:destroy)
       end
@@ -267,7 +267,7 @@ RSpec.describe Sdr::Repository do
 
     context 'when the version is not 1' do
       it 'discards the version' do
-        described_class.discard_draft(druid: druid)
+        described_class.discard_draft(druid:)
 
         expect(version_client).to have_received(:discard)
       end

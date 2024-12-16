@@ -13,7 +13,7 @@ RSpec.describe Elements::ButtonFormComponent, type: :component do
 
   context 'with a label content' do
     it 'renders the button form' do
-      render_inline(described_class.new(link: link).with_content('Button form'))
+      render_inline(described_class.new(link:).with_content('Button form'))
       expect(page).to have_button('Button form')
     end
   end
@@ -34,14 +34,14 @@ RSpec.describe Elements::ButtonFormComponent, type: :component do
 
   context 'with a confirm message' do
     it 'renders the button form' do
-      render_inline(described_class.new(link: link, confirm: 'Are you sure?', label: 'Submit'))
+      render_inline(described_class.new(link:, confirm: 'Are you sure?', label: 'Submit'))
       expect(page).to have_css('form[data-turbo-confirm="Are you sure?"]')
     end
   end
 
   context 'with a method' do
     it 'renders the button form' do
-      render_inline(described_class.new(link: link, method: :post, label: 'Submit'))
+      render_inline(described_class.new(link:, method: :post, label: 'Submit'))
       expect(page).to have_css('form[method="post"]')
     end
   end

@@ -32,7 +32,7 @@ RSpec.describe 'Login' do
       end
 
       it 'updates the user and sets a cookie' do
-        expect { get '/webauth/login', headers: headers }
+        expect { get '/webauth/login', headers: }
           .to change { user.reload.name }
           .to('New name')
           .and change { user.reload.first_name }.to('New first name')

@@ -10,6 +10,6 @@
   <% if page.current? %>
     <span class="page-link"><%= page %></span>
   <% else %>
-    <%= link_to page, url, { remote: remote, rel: page.rel, class: 'page-link' } %>
+    <%= link_to page, url, { remote:, rel: page.rel, class: 'page-link' } %>
   <% end %>
 </li>

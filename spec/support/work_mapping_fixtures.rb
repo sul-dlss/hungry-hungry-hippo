@@ -35,7 +35,7 @@ module WorkMappingFixtures
     content = Content.create!(user: user || create(:user))
     ContentFile.create(
       file_type: 'attached',
-      content: content,
+      content:,
       filename: filename_fixture,
       label: file_label_fixture,
       size: file_size_fixture,
@@ -50,7 +50,7 @@ module WorkMappingFixtures
     content = Content.create!(user: user || create(:user))
     ContentFile.create(
       file_type: 'deposited',
-      content: content,
+      content:,
       filename: filename_fixture,
       label: file_label_fixture,
       size: file_size_fixture,

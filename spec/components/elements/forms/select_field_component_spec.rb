@@ -11,7 +11,7 @@ RSpec.describe Elements::Forms::SelectFieldComponent, type: :component do
   let(:help_text) { 'About this field' }
 
   it 'creates field with label' do
-    render_inline(described_class.new(form: form, field_name:, options:, required: false, label: 'license', prompt:))
+    render_inline(described_class.new(form:, field_name:, options:, required: false, label: 'license', prompt:))
     expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'license')
     expect(page).to have_css('select.form-select:not(.is-invalid)')
     expect(page).to have_no_css('small.form-text')
@@ -20,7 +20,7 @@ RSpec.describe Elements::Forms::SelectFieldComponent, type: :component do
 
   context 'when help text is provided' do
     it 'creates field with help text' do
-      render_inline(described_class.new(form: form, field_name:, options:, help_text:, label: 'license', prompt:))
+      render_inline(described_class.new(form:, field_name:, options:, help_text:, label: 'license', prompt:))
       expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'license')
       expect(page).to have_css('select.form-select:not(.is-invalid)')
       expect(page).to have_css('small.form-text')

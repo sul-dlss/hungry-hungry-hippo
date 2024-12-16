@@ -9,7 +9,7 @@ RSpec.describe Elements::Forms::SelectMonthFieldComponent, type: :component do
   let(:help_text) { 'About this field' }
 
   it 'creates field with label' do
-    render_inline(described_class.new(form: form, field_name:, required: false, label: 'Month'))
+    render_inline(described_class.new(form:, field_name:, required: false, label: 'Month'))
     expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'Month')
     expect(page).to have_css('select.form-select:not(.is-invalid)')
     expect(page).to have_css('option[value=""]', text: '')
@@ -21,7 +21,7 @@ RSpec.describe Elements::Forms::SelectMonthFieldComponent, type: :component do
 
   context 'when help text is provided' do
     it 'creates field with help text' do
-      render_inline(described_class.new(form: form, field_name:, help_text:, label: 'Month'))
+      render_inline(described_class.new(form:, field_name:, help_text:, label: 'Month'))
       expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'Month')
       expect(page).to have_css('select.form-select:not(.is-invalid)')
       expect(page).to have_css('small.form-text')

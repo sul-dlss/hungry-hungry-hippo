@@ -71,7 +71,7 @@ RSpec.describe 'Edit collection' do
   context 'when the collection is not roundtrippable' do
     let(:user) { create(:user) }
     let(:groups) { ['dlss:hydrus-app-collection-creators'] }
-    let(:collection) { create(:collection, user: user, druid:) }
+    let(:collection) { create(:collection, user:, druid:) }
     let!(:cocina_object) { build(:collection_with_metadata, title: collection.title, id: druid) }
     let(:version_status) do
       VersionStatus.new(status:

@@ -23,7 +23,7 @@ RSpec.describe DepositCollectionJob do
 
     it 'registers a new work' do
       described_class.perform_now(collection_form:, collection:, deposit: true)
-      expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form: collection_form,
+      expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form:,
                                                                         source_id: "h3:collection-#{collection.id}")
       expect(Sdr::Repository).to have_received(:register)
         .with(cocina_object: an_instance_of(Cocina::Models::RequestCollection))
@@ -42,12 +42,12 @@ RSpec.describe DepositCollectionJob do
     end
 
     it 'updates an existing collection' do
-      described_class.perform_now(collection_form: collection_form, collection: collection, deposit: false)
-      expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form: collection_form,
+      described_class.perform_now(collection_form:, collection:, deposit: false)
+      expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form:,
                                                                         source_id: "h3:collection-#{collection.id}")
       expect(Sdr::Repository).to have_received(:open_if_needed)
         .with(cocina_object: an_instance_of(Cocina::Models::CollectionWithMetadata))
-      expect(Sdr::Repository).to have_received(:update).with(cocina_object: cocina_object)
+      expect(Sdr::Repository).to have_received(:update).with(cocina_object:)
       expect(Sdr::Repository).not_to have_received(:accession)
 
       expect(collection.reload.title).to eq(collection_title_fixture)
