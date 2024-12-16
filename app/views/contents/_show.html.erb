@@ -3,21 +3,25 @@
   <% if content_files.empty? %>
     <p>Your files will appear here once they have been uploaded.</p>
   <% elsif content.content_files.count > Settings.hierarchical_files_limit %>
-    <table class="table table-hover table-sm" id="content-table">
-      <thead>
-        <tr>
-          <th scope="col">File Name</th>
-          <th scope="col">Description</th>
-          <th scope="col">Hide</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% content_files.each do |content_file| %>
-          <%= render partial: 'content_files/show', locals: { content_file: } %>
+    <%= render Elements::Tables::TableComponent.new(id: 'content-table', label: 'Files', show_label: false) do |component| %>
+      <% component.with_header(headers: ['File Name', 'Description', 'Hide', 'Action']) %>
+      <% content_files.each do |content_file| %>
+        <% component.with_row do |row_component| %>
+          <% row_component.with_cell do %>
+            <%= content_file.filename %>
+          <% end %>
+          <% row_component.with_cell do %>
+            <%= render Works::Edit::ContentFileDescriptionComponent.new(content_file: content_file) %>
+          <% end %>
+          <% row_component.with_cell do %>
+            <%= render Works::Edit::ContentFileHideComponent.new(content_file: content_file) %>
+          <% end %>
+          <% row_component.with_cell do %>
+            <%= render Works::Edit::ContentFileDeleteComponent.new(content_file: content_file) %>
+          <% end %>
         <% end %>
-      </tbody>
-    </table>
+      <% end %>
+    <% end %>
     <%= paginate content_files, params: { controller: 'contents', action: 'show', id: content.id } %>
   <% else %>
     <%= render Works::Edit::ContentHierarchyComponent.new(content_obj: content) %>

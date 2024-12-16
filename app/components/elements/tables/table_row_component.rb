@@ -4,9 +4,11 @@ module Elements
   module Tables
     # Component for rendering a table row.
     class TableRowComponent < ApplicationComponent
-      def initialize(label: nil, values: nil, id: nil)
+      renders_many :cells
+
+      def initialize(label: nil, values: [], id: nil)
         @label = label
-        # If value is not provided, content block will be rendered instead.
+        # Provide either values or cells.
         @values = values
         @id = id
         super()
