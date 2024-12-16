@@ -107,7 +107,13 @@ table.table-treegrid {
 
 // Following should be set in component library.
 .form-label {
-  @extend .mb-0
+  margin-bottom: 0;
+}
+
+.form-text {
+  margin-bottom: 0;
+  font-size: 1rem;
+  color: unset;
 }
 
 .form-control, .form-check-input, .form-select {

@@ -22,7 +22,7 @@ RSpec.describe Elements::Forms::ToggleComponent, type: :component do
     expect(page).to have_css('input[type="radio"]:not(.is-invalid)')
     expect(page).to have_css('input[data-test="test_data"]')
     expect(page).to have_css('label[data-action="label_test_data1"]')
-    expect(page).to have_no_css('small.form-text')
+    expect(page).to have_no_css('p.form-text')
     expect(page).to have_no_css('div.invalid-feedback.is-invalid')
   end
 end

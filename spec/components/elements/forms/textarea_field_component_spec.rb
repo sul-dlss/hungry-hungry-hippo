@@ -11,7 +11,7 @@ RSpec.describe Elements::Forms::TextareaFieldComponent, type: :component do
     render_inline(described_class.new(form:, field_name:))
     expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'title')
     expect(page).to have_css('textarea.form-control:not(.is-invalid)')
-    expect(page).to have_no_css('small.form-text')
+    expect(page).to have_no_css('p.form-text')
     expect(page).to have_no_css('div.invalid-feedback.is-invalid')
   end
 
@@ -26,7 +26,7 @@ RSpec.describe Elements::Forms::TextareaFieldComponent, type: :component do
     it 'creates field with help text' do
       render_inline(described_class.new(form:, field_name:, help_text: 'Helpful text'))
       expect(page).to have_css('textarea[aria-describedby="title_help"]')
-      expect(page).to have_css('small.form-text[id="title_help"]', text: 'Helpful text')
+      expect(page).to have_css('p.form-text[id="title_help"]', text: 'Helpful text')
     end
   end
 

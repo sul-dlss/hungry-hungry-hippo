@@ -12,7 +12,7 @@ RSpec.describe Elements::Forms::CheckboxComponent, type: :component do
     render_inline(described_class.new(form:, field_name:))
     expect(page).to have_css('label.form-check-label:not(.visually-hidden)', text: field_name)
     expect(page).to have_css('input.form-check-input[type="checkbox"]:not(.is-invalid)')
-    expect(page).to have_no_css('small.form-text')
+    expect(page).to have_no_css('p.form-text')
     expect(page).to have_no_css('div.invalid-feedback.is-invalid')
     expect(page.find('input.form-check-input[type="checkbox"]')).not_to be_checked
   end
@@ -37,7 +37,7 @@ RSpec.describe Elements::Forms::CheckboxComponent, type: :component do
     it 'creates field with help text' do
       render_inline(described_class.new(form:, field_name:, help_text: 'Helpful text'))
       expect(page).to have_css("input[aria-describedby='#{field_name}_help']")
-      expect(page).to have_css("small.form-text[id='#{field_name}_help']", text: 'Helpful text')
+      expect(page).to have_css("p.form-text[id='#{field_name}_help']", text: 'Helpful text')
     end
   end
 
