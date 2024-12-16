@@ -33,7 +33,7 @@
 
     <% component.with_pane(tab_name: :title, label: t('works.edit.panes.title.label'), form:) do %>
       <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: t('works.edit.fields.title.label'),
-                                                         help_text: t('works.edit.fields.title.help_text'), width: 500) %>
+                                                         help_text: t('works.edit.fields.title.help_text'), width: 500, container_classes: 'mb-4') %>
       <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false) %>
     <% end %>
     <% component.with_pane(tab_name: :authors, label: t('works.edit.panes.authors.label'), form:, help_text: t('works.edit.panes.authors.help_text')) do %>

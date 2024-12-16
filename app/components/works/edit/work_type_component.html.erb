@@ -31,7 +31,7 @@
 
   <%# Other %>
   <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Other') do %>
-    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :other_work_subtype, label: 'Specify "Other" type*') %>
+    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :other_work_subtype, label: 'Specify "Other" type*', container_classes: 'mb-4') %>
   <% end %>
 
 </div>
