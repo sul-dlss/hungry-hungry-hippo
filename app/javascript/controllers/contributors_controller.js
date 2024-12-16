@@ -4,12 +4,14 @@ export default class extends Controller {
   static targets = [
     'contributorTypePerson', 'contributorTypeOrganization', 'contributorTypePersonLabel',
     'contributorTypeOrganizationLabel', 'selectPersonRole', 'selectOrganizationRole', 'personName',
-    'organizationName', 'orcidField', 'useOrcidButton', 'resetOrcidButton'
+    'organizationName', 'orcidField', 'useOrcidButton', 'resetOrcidButton', 'firstNameField',
+    'lastNameField'
   ]
 
   static values = {
     orcid: String,
-    orcidPrefix: String
+    orcidPrefix: String,
+    orcidResolverPath: String
   }
 
   connect () {
@@ -22,7 +24,7 @@ export default class extends Controller {
 
   useOrcid () {
     this.orcidFieldTarget.value = this.orcidValue
-    this.normalizeOrcid()
+    this.normalizeAndResolveOrcid()
     this.orcidFieldTarget.readOnly = true
     this.useOrcidButtonTarget.hidden = true
     this.resetOrcidButtonTarget.hidden = false
@@ -35,8 +37,19 @@ export default class extends Controller {
     this.useOrcidButtonTarget.hidden = false
   }
 
-  normalizeOrcid () {
+  normalizeAndResolveOrcid () {
     this.orcidFieldTarget.value = this.orcidFieldTarget.value.replace(this.orcidPrefixValue, '')
+
+    fetch(`${this.orcidResolverPathValue}${this.orcidFieldTarget.value}`)
+      .then(response => {
+        if (!response.ok) throw new Error(response.status)
+        return response.json()
+      })
+      .then(data => {
+        if (this.firstNameFieldTarget.value === '') this.firstNameFieldTarget.value = data.first_name
+        if (this.lastNameFieldTarget.value === '') this.lastNameFieldTarget.value = data.last_name
+      })
+      .catch(error => console.dir(error))
   }
 
   // Role type toggle Individual selection

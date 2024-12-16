@@ -16,7 +16,7 @@ class OrcidResolver
   def call
     return orcid_result if orcid_result.failure?
 
-    response = Faraday.new.get(url, {}, headers)
+    response = Faraday.get(url, {}, headers)
     return Failure.new(response.status) unless response.success?
 
     response_hash = JSON.parse(response.body)
