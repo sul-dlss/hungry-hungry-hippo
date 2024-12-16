@@ -4,7 +4,7 @@ module Elements
   module Tables
     # Base component for rendering a table.
     class BaseTableComponent < ApplicationComponent
-      renders_one :header, 'Elements::Tables::TableHeaderComponent'
+      renders_one :header, 'Elements::Tables::HeaderComponent'
       # Subclasses should provide rows, e.g., renders_many :rows
 
       def initialize(id:, label:, classes: [], body_classes: [], show_label: true, role: nil, data: {}) # rubocop:disable Metrics/ParameterLists

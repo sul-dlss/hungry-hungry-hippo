@@ -3,7 +3,7 @@
 module Elements
   module Tables
     # Component for rendering a table header section.
-    class TableHeaderComponent < ApplicationComponent
+    class HeaderComponent < ApplicationComponent
       def initialize(headers:, classes: [], each_classes: [])
         @classes = classes
         @headers = headers
