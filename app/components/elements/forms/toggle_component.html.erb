@@ -1,9 +1,9 @@
 <div class="mb-4">
-  <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: label) %><br>
+  <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: label, classes: label_classes) %><br>
   <div class="btn-group" role="group">
-      <% toggle_options.each do |option| %>
-        <%= option %>
-      <% end %>
+    <% toggle_options.each do |option| %>
+      <%= option %>
+    <% end %>
   </div>
   <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name:) %>
 </div>

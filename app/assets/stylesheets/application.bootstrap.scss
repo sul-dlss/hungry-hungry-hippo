@@ -92,9 +92,7 @@ table.table-show {
 
 // Following should be set in component library.
 .form-label {
-  margin-bottom: unset;
-  font-size: 1rem;
-  font-weight: 400;
+  @extend .mb-0
 }
 
 .form-control, .form-check-input, .form-select {

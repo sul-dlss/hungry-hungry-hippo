@@ -108,9 +108,6 @@ en:
       fields:
         abstract:
           label: 'Abstract'
-          help_text: >
-            Enter a summary statement (max 600 words) describing the work that you are depositing.
-            A detailed statement may improve the discovery of your work in web searches.
         citation:
           label: 'Select citation'
           help_text: >
@@ -167,6 +164,9 @@ en:
         abstract:
           tab_label: 'Abstract & keywords'
           label: 'Describe your deposit'
+          help_text: >
+            Enter a summary statement (max 600 words) describing the work that you are depositing.
+            A detailed statement may improve the discovery of your work in web searches.
         authors:
           tab_label: 'Authors'
           label: 'Author(s) to include in citation'
