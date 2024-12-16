@@ -14,7 +14,7 @@ RSpec.describe Elements::Forms::SelectFieldComponent, type: :component do
     render_inline(described_class.new(form:, field_name:, options:, required: false, label: 'license', prompt:))
     expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'license')
     expect(page).to have_css('select.form-select:not(.is-invalid)')
-    expect(page).to have_no_css('small.form-text')
+    expect(page).to have_no_css('p.form-text')
     expect(page).to have_no_css('div.invalid-feedback.is-invalid')
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Elements::Forms::SelectFieldComponent, type: :component do
       render_inline(described_class.new(form:, field_name:, options:, help_text:, label: 'license', prompt:))
       expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'license')
       expect(page).to have_css('select.form-select:not(.is-invalid)')
-      expect(page).to have_css('small.form-text')
+      expect(page).to have_css('p.form-text')
       expect(page).to have_no_css('div.invalid-feedback.is-invalid')
     end
   end
