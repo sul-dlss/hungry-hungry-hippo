@@ -26,6 +26,7 @@ autocomplete_lookup:
 
 orcid:
   url: 'https://orcid.org/'
+  public_api_base_url: 'https://pub.orcid.org/v3.0/'
 
 http_headers:
   user_groups: 'X-Groups'
