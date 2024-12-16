@@ -12,15 +12,18 @@ module Works
       attr_reader :work_presenter
 
       def headers
-        %w[Authors ORCID Role]
+        %w[Author ORCID Role]
       end
 
       def values_for(author)
-        [
+        values = [
           author_name(author),
           orcid_link(author),
           author_role_label(author)
         ]
+        return [] unless values.any?
+
+        values
       end
 
       private
