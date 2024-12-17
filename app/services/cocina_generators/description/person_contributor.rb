@@ -52,7 +52,7 @@ module CocinaGenerators
       end
 
       def identifier_params
-        return if orcid.nil?
+        return if orcid.blank?
 
         [
           {
