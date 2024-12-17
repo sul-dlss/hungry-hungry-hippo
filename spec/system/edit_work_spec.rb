@@ -62,7 +62,7 @@ RSpec.describe 'Edit a work' do
     allow(Sdr::Repository).to receive(:update) do |args|
       @updated_cocina_object = args[:cocina_object]
     end
-    collection = create(:collection, user:, druid: collection_druid_fixture)
+    collection = create(:collection, user:, druid: collection_druid_fixture, title: collection_title_fixture)
     create(:work, druid:, user:, collection:)
 
     sign_in(user)
@@ -71,6 +71,9 @@ RSpec.describe 'Edit a work' do
   it 'edits a work' do
     visit edit_work_path(druid)
 
+    expect(page).to have_css('.breadcrumb-item', text: collection_title_fixture)
+    expect(page).to have_link(collection_title_fixture, href: collection_path(druid: collection_druid_fixture))
+    expect(page).to have_css('.breadcrumb-item', text: title_fixture)
     expect(page).to have_css('h1', text: title_fixture)
 
     find('.nav-link', text: 'Title').click

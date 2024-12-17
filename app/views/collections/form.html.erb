@@ -1,3 +1,16 @@
+<% content_for :breadcrumbs do %>
+  <%= render Elements::BreadcrumbNavComponent.new(dashboard: true, admin: false) do |component| %>
+    <% if (current_page?(action: :new) || (controller.action_name == 'create')) %>
+      <% component.with_breadcrumb(text: I18n.t('collections.edit.no_title')) %>
+    <% else %>
+      <% component.with_breadcrumb(text: @collection_form.title, link: collection_path(druid: @collection_form.druid)) %>
+    <% end %>
+    <%# include an Edit breadcrumb only if title exists %>
+    <% if @collection_form.title.present? %>
+      <% component.with_breadcrumb(text: t('collections.edit.breadcrumb'), active: true) %>
+    <% end %>
+  <% end %>
+<% end %>
 <%= render Elements::HeaderComponent.new(level: :h1, variant: :h2, text: @collection_form.title || 'Untitled collection', classes: 'mb-3') %>
 <%= render Elements::AlertComponent.new(variant: :danger, value: I18n.t('collections.edit.messages.validation')) if @collection_form.errors.present? %>
 <%= render Elements::TabForm::TabListComponent.new(model: @collection_form, hidden_fields: %i[lock version]) do |component| %>

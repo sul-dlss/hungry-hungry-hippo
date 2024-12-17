@@ -27,7 +27,7 @@ class WorkPresenter < ApplicationPresenter
   end
 
   def collection_link
-    link_to(collection.title, Rails.application.routes.url_helpers.collection_path(collection))
+    link_to(collection.title, Rails.application.routes.url_helpers.collection_path(druid: collection.druid))
   end
 
   def deposited_at
