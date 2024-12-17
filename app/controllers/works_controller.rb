@@ -67,6 +67,9 @@ class WorksController < ApplicationController
     @work_form = WorkForm.new(**update_work_params)
     # The deposit param determines whether extra validations for deposits are applied.
     if @work_form.valid?(deposit: deposit?)
+      # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
+      # should be "waiting".
+      @work.update!(deposit_job_started_at: Time.zone.now)
       DepositWorkJob.perform_later(work: @work, work_form: @work_form, deposit: deposit?)
       redirect_to wait_works_path(@work.id)
     else
