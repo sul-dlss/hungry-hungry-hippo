@@ -45,6 +45,8 @@ module Elements
       def container_classes
         merge_classes(@container_classes)
       end
+
+      delegate :id, to: :form, prefix: true
     end
   end
 end

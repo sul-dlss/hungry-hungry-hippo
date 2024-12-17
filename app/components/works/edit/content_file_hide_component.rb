@@ -10,6 +10,10 @@ module Works
       end
 
       attr_reader :content_file
+
+      def form_id
+        dom_id(content_file, 'hide_form')
+      end
     end
   end
 end
