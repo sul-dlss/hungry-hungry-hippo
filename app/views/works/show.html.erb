@@ -27,7 +27,7 @@
   <% component.with_row(label: 'Contact emails', values: [@work_presenter.contact_emails]) %>
 <% end %>
 
-<%= render Works::Show::AuthorsShowComponent.new(work_presenter: @work_presenter) %>
+<%= render Works::Show::AuthorsShowComponent.new(authors: @work_presenter.authors) %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'table-work mb-5', label: 'Dates') do |component| %>
   <% component.with_row(label: 'Publication date', values: [@work_presenter.publication_date]) %>
