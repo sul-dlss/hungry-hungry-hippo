@@ -136,14 +136,18 @@ module CocinaGenerators
           source: SOURCE
         },
         # organization roles
-        # 'Conference' => '', # not a marcrelator role
+        conference: {
+          value: 'conference'
+        },
         degree_granting_institution: {
           value: 'degree granting institution',
           code: 'dgg',
           uri: 'http://id.loc.gov/vocabulary/relators/dgg',
           source: SOURCE
         },
-        # 'Event' => '', # not a marcrelator role
+        event: {
+          value: 'event'
+        },
         funder: {
           value: 'funder',
           code: 'fnd',
