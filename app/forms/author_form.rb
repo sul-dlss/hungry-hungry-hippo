@@ -1,19 +1,56 @@
 # frozen_string_literal: true
 
-# Form for an author contributor
-class AuthorForm < ContributorForm
+# Form for an author
+class AuthorForm < ApplicationForm
   attribute :first_name, :string
   validates :first_name, presence: true, if: -> { person? && deposit? }
 
   attribute :last_name, :string
   validates :last_name, presence: true, if: -> { person? && deposit? }
 
+  validate :name_must_be_complete, if: :person?
+
   attribute :organization_name, :string
   validates :organization_name, presence: true, if: -> { organization? && deposit? }
 
+  attribute :person_role, :string
+  validates :person_role, presence: true, if: :person?
+
+  attribute :organization_role, :string
+  validates :organization_role, presence: true, unless: :person?
+
   attribute :role_type, :string
 
-  def organization?
-    role_type == 'organization'
+  attribute :with_orcid, :boolean, default: false
+  attribute :orcid, :string, default: nil
+  validates :orcid, format: { with: /\A\d{4}-\d{4}-\d{4}-\d{3}[0-9X]\z/ },
+                    allow_blank: true,
+                    if: :person?
+
+  def person?(with_names: false)
+    return false if role_type != 'person'
+    return true unless with_names
+
+    first_name.present? && last_name.present?
+  end
+
+  def organization?(with_names: false)
+    return false if role_type != 'organization'
+    return true unless with_names
+
+    organization_name.present?
+  end
+
+  # check that both name parts are provided
+  def name_must_be_complete
+    return if first_name.blank? && last_name.blank?
+
+    return if first_name.present? && last_name.present?
+
+    if first_name.blank?
+      errors.add(:first_name, "can't be blank")
+    else
+      errors.add(:last_name, "can't be blank")
+    end
   end
 end

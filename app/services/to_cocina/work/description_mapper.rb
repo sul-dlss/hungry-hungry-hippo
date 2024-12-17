@@ -29,7 +29,7 @@ module ToCocina
       def params # rubocop:disable Metrics/AbcSize
         {
           title: CocinaDescriptionSupport.title(title: work_form.title),
-          contributor: ContributorsMapper.call(contributor_forms: work_form.authors_attributes),
+          contributor: ContributorsMapper.call(author_forms: work_form.authors_attributes),
           note: note_params,
           event: event_params,
           subject: CocinaDescriptionSupport.keywords(keywords: work_form.keywords_attributes),

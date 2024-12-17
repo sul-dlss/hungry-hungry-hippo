@@ -2,34 +2,34 @@
 
 module ToCocina
   module Work
-    # Maps ContributorForms to a Cocina contributor parameters
+    # Maps AuthorForms to Cocina contributor parameters
     class ContributorsMapper
       def self.call(...)
         new(...).call
       end
 
-      # @param [Array<ContributorForm>] contributor_forms
-      def initialize(contributor_forms:)
-        @contributor_forms = contributor_forms
+      # @param [Array<AuthorForm>] author_forms
+      def initialize(author_forms:)
+        @author_forms = author_forms
       end
 
       # @return [Hash] the Cocina contributor parameters
       def call
-        contributor_forms.filter_map.with_index do |contributor, index|
-          # First entered contributor is always status: "primary" (except for Publisher)
+        author_forms.filter_map.with_index do |author, index|
+          # First entered author is always status: "primary" (except for Publisher)
           primary = index.zero?
-          if person?(contributor)
+          if author.person?(with_names: true)
             CocinaGenerators::Description.person_contributor(
-              forename: contributor.first_name,
-              surname: contributor.last_name,
-              role: contributor.person_role,
+              forename: author.first_name,
+              surname: author.last_name,
+              role: author.person_role,
               primary:,
-              orcid: contributor.orcid
+              orcid: author.orcid
             )
-          elsif organization?(contributor)
+          elsif author.organization?(with_names: true)
             CocinaGenerators::Description.organization_contributor(
-              name: contributor.organization_name,
-              role: contributor.organization_role,
+              name: author.organization_name,
+              role: author.organization_role,
               primary:
             )
           end
@@ -38,15 +38,7 @@ module ToCocina
 
       private
 
-      attr_reader :contributor_forms
-
-      def person?(contributor)
-        contributor.role_type == 'person' && contributor.first_name.present? && contributor.last_name.present?
-      end
-
-      def organization?(contributor)
-        contributor.role_type == 'organization' && contributor.organization_name.present?
-      end
+      attr_reader :author_forms
     end
   end
 end
