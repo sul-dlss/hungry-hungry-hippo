@@ -39,6 +39,9 @@ RSpec.describe 'Create a collection draft' do
     visit root_path
     click_link_or_button('Create a new collection')
 
+    # Breadcrumb
+    expect(page).to have_link('Dashboard', href: root_path)
+
     expect(page).to have_css('h1', text: 'Untitled collection')
 
     # Title is required.
