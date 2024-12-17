@@ -170,7 +170,7 @@ end
 def organization_contributor_fixture
   {
     role: 'host_institution',
-    org_name: 'Stanford University Libraries',
+    name: 'Stanford University Libraries',
     primary: false
   }
 end

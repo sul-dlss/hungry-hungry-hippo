@@ -72,8 +72,8 @@ module WorkMappingFixtures
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
           subject: CocinaDescriptionSupport.keywords(keywords: keywords_fixture),
-          contributor: [CocinaDescriptionSupport.person_contributor(**person_contributor_fixture),
-                        CocinaDescriptionSupport.organization_contributor(**organization_contributor_fixture)],
+          contributor: [CocinaGenerators::Description.person_contributor(**person_contributor_fixture),
+                        CocinaGenerators::Description.organization_contributor(**organization_contributor_fixture)],
           event: [CocinaDescriptionSupport.event_date(type: 'publication', date: '2024-12', primary: true)],
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture),
                  CocinaDescriptionSupport.note(type: 'preferred citation',
@@ -210,8 +210,8 @@ module WorkMappingFixtures
         description: {
           title: CocinaDescriptionSupport.title(title: title_fixture),
           subject: CocinaDescriptionSupport.keywords(keywords: keywords_fixture),
-          contributor: [CocinaDescriptionSupport.person_contributor(**person_contributor_fixture),
-                        CocinaDescriptionSupport.organization_contributor(**organization_contributor_fixture)],
+          contributor: [CocinaGenerators::Description.person_contributor(**person_contributor_fixture),
+                        CocinaGenerators::Description.organization_contributor(**organization_contributor_fixture)],
           event: [CocinaDescriptionSupport.event_date(type: 'publication', date: '2024-12', primary: true)],
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture),
                  CocinaDescriptionSupport.note(type: 'preferred citation',
