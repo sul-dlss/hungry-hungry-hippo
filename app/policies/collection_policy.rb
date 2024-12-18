@@ -1,17 +1,23 @@
 # frozen_string_literal: true
 
 class CollectionPolicy < ApplicationPolicy
-  alias_rule :new?, :create?, :show?, :update?, :edit?, :wait?, :destroy?, to: :manage?
+  alias_rule :show?, :update?, :edit?, :wait?, :destroy?, to: :manage?
 
   def manage?
+    return true if admin?
+
     record.user_id == user.id
   end
 
   def new?
+    return true if admin?
+
     collection_creator?
   end
 
   def create?
+    return true if admin?
+
     collection_creator?
   end
 
@@ -19,8 +25,4 @@ class CollectionPolicy < ApplicationPolicy
   # manage? will be based on the managers added to a collection
   # display? will be based on the depositors added to a collection
   # alias_rule :show?, :update?, :edit?, :wait?, to: :manage?
-
-  def collection_creator?
-    Current.groups.include?(Settings.authorization_workgroup_names.collection_creators)
-  end
 end

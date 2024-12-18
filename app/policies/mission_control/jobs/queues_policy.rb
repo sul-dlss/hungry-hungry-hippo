@@ -2,13 +2,9 @@
 
 module MissionControl
   module Jobs
-    class QueuesPolicy < ActionPolicy::Base
-      alias_rule :show?, :index?, to: :manage?
-
+    class QueuesPolicy < ApplicationPolicy
       def manage?
-        ::Current.groups.include?(
-          Settings.authorization_workgroup_names.administrators
-        )
+        admin?
       end
     end
   end

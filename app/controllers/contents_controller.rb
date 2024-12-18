@@ -7,20 +7,20 @@ class ContentsController < ApplicationController
 
   # Called from work edit/update form.
   def show
-    authorize! @content
+    authorize @content
   end
 
   # Called from work show page.
   def show_table
-    authorize! @content
+    authorize @content
   end
 
   def edit
-    authorize! @content
+    authorize @content
   end
 
   def update
-    authorize! @content
+    authorize @content
 
     update_files
 

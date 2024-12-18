@@ -40,7 +40,6 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 # Additional gems
-gem 'action_policy'
 gem 'cocina-models'
 gem 'config'
 gem 'dor-services-client', '>= 15.2.1'
@@ -51,6 +50,7 @@ gem 'edtf'
 gem 'honeybadger'
 gem 'kaminari' # For pagination
 gem 'okcomputer'
+gem 'pundit'
 gem 'view_component'
 gem 'whenever', require: false
 

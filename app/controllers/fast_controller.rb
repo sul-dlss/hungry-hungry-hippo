@@ -2,7 +2,7 @@
 
 # A proxy to Settings.autocomplete_lookup.url to get OCLC's FAST data for typeahead
 class FastController < ApplicationController
-  skip_verify_authorized only: %i[show]
+  before_action :skip_authorization, only: %i[show]
 
   def show
     result = KeywordResolver.call(query: params.require(:q))
