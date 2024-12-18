@@ -60,4 +60,11 @@ RSpec.describe Elements::Forms::CheckboxComponent, type: :component do
       expect(page).to have_css('input[data-test="test_data"]')
     end
   end
+
+  context 'when input classes are provided' do
+    it 'creates field with classes' do
+      render_inline(described_class.new(form:, field_name:, input_classes: 'test-class'))
+      expect(page).to have_field(:use_citation, class: 'form-check-input test-class')
+    end
+  end
 end

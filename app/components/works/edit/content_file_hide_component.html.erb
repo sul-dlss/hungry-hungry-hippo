@@ -1,6 +1,6 @@
 <%= tag.turbo_frame id: dom_id(content_file, 'hide') do %>
   <%# Using an ided form (all inputs have the form attribute) because this form is nested in the work form. %>
   <%= helpers.ided_form_with model: content_file, id: form_id do |form| %>
-    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :hide, hidden_label: true, data: { controller: 'form-submit', action: 'form-submit#submit' }, container_classes: 'mb-4') %>
+    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :hide, hidden_label: true, data: { controller: 'form-submit', action: 'form-submit#submit' }) %>
   <% end %>
 <% end %>
