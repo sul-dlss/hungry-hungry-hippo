@@ -20,7 +20,7 @@ module CocinaGenerators
       def call
         {
           name: [{ value: name }],
-          type: 'organization',
+          type: contributor_type,
           role: role_params,
           status: ('primary' if primary)
         }.compact
@@ -35,6 +35,12 @@ module CocinaGenerators
         return if cocina_role.nil?
 
         [cocina_role]
+      end
+
+      def contributor_type
+        return role if %w[event conference].include?(role)
+
+        'organization'
       end
     end
   end
