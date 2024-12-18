@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Elements
-  # Displays an item in the top bread crumb navigation
+  # Displays an item in the top breadcrumb navigation
   class BreadcrumbComponent < ApplicationComponent
     def initialize(text:, link: nil, active: false)
       @text = text
