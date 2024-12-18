@@ -37,6 +37,7 @@ class DepositCollectionJob < ApplicationJob
   end
 
   def set_managers
+    collection.managers.clear
     collection_form.managers_attributes.each do |manager|
       manager = manager.attributes if manager.respond_to?(:attributes)
       user = User.find_or_create_by(email_address: "#{manager['sunetid']}@stanford.edu")
@@ -45,6 +46,7 @@ class DepositCollectionJob < ApplicationJob
   end
 
   def set_depositors
+    collection.depositors.clear
     collection_form.depositors_attributes.each do |depositor|
       depositor = depositor.attributes if depositor.respond_to?(:attributes)
       user = User.find_or_create_by(email_address: "#{depositor['sunetid']}@stanford.edu")
