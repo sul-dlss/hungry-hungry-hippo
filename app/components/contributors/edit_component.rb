@@ -21,19 +21,20 @@ module Contributors
     # Render the button to use the user's orcid if and only if the user has an
     # orcid attr in Shibboleth and hasn't already entered it
     def render_use_orcid_button?
-      orcid? && form.object.orcid.blank?
+      orcid? && (form.object.orcid.blank? || !orcid.match?(form.object.orcid))
     end
 
     # Render the button to reset the user's orcid if and only if the user has an
-    # orcid attr in Shibboleth and *has* already entered it
+    # orcid attr in Shibboleth and *has* already entered it and it matches
     def render_reset_orcid_button?
-      orcid? && form.object.orcid.present?
+      orcid? && form.object.orcid.present? && orcid.match?(form.object.orcid)
     end
 
     def contributors_data
       {
         controller: 'contributors',
-        contributors_orcid_prefix_value: Settings.orcid.url
+        contributors_orcid_prefix_value: Settings.orcid.url,
+        contributors_orcid_resolver_path_value: orcid_path(id: '')
       }.tap do |contributors_hash|
         next unless orcid?
 

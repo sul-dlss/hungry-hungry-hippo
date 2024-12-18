@@ -35,7 +35,7 @@
         <span class="input-group-text">
           <%= Settings.orcid.url %>
         </span>
-        <%= form.text_field :orcid, class: 'form-control', data: { contributors_target: 'orcidField', action: 'change->contributors#normalizeOrcid' } %>
+        <%= form.text_field :orcid, class: 'form-control', data: { contributors_target: 'orcidField', action: 'change->contributors#normalizeAndResolveOrcid' }, readonly: render_reset_orcid_button? %>
         <%= render Elements::ButtonComponent.new(label: t('works.edit.fields.contributors.use_orcid_button.label'), classes: 'btn btn-outline-primary',
                                                  data: { action: 'contributors#useOrcid', contributors_target: 'useOrcidButton' }, hidden: !render_use_orcid_button?) %>
         <%= render Elements::ButtonComponent.new(label: t('works.edit.fields.contributors.reset_orcid_button.label'), classes: 'btn btn-outline-primary',
@@ -48,10 +48,12 @@
       <%= form.label :with_orcid_false, 'Name', class: 'form-check-label visually-hidden' %>
       <div class="row">
         <div class="col">
-          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :first_name, label: t('works.edit.fields.contributors.first_name.label'), container_classes: 'mb-4') %>
+          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :first_name, label: t('works.edit.fields.contributors.first_name.label'), container_classes: 'mb-4',
+                                                             data: { contributors_target: 'firstNameField' }) %>
         </div>
         <div class="col">
-          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :last_name, label: t('works.edit.fields.contributors.last_name.label'), container_classes: 'mb-4') %>
+          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :last_name, label: t('works.edit.fields.contributors.last_name.label'), container_classes: 'mb-4',
+                                                             data: { contributors_target: 'lastNameField' }) %>
         </div>
       </div>
     </div>
