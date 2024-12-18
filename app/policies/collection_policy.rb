@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CollectionPolicy < ApplicationPolicy
-  alias_rule :new?, :create?, :show?, :update?, :edit?, :wait?, :destroy?, to: :manage?
+  alias_rule :show?, :update?, :edit?, :wait?, :destroy?, to: :manage?
 
   def manage?
     record.user_id == user.id
