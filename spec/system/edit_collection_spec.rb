@@ -89,7 +89,7 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_text('Managers')
     fill_in('collection_managers_attributes_0_sunetid', with: 'stepking')
     fill_in('collection_depositors_attributes_0_sunetid', with: 'joehill')
-    
+
     click_link_or_button('Save as draft')
 
     # Waiting page may be too fast to catch so not testing.
