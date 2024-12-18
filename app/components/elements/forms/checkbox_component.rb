@@ -6,6 +6,7 @@ module Elements
     class CheckboxComponent < FieldComponent
       def initialize(**args)
         args[:container_classes] = merge_classes('form-check', args[:container_classes])
+        args[:input_classes] = merge_classes('form-check-input', args[:input_classes])
         super
       end
     end

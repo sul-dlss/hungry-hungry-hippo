@@ -3,11 +3,11 @@
   <% if content_file.label.present? %>
     <div class="d-flex align-items-center justify-content-between">
       <span><%= content_file.label %></span>
-      <%= render Elements::ButtonLinkComponent.new(link: edit_content_file_path(content_file), variant: :'outline-primary', bordered: false, classes: 'me-3') do %>
+      <%= render Elements::ButtonLinkComponent.new(link: edit_content_file_path(content_file), variant: :'outline-primary', bordered: false, classes: 'me-3 py-0') do %>
         <%= helpers.edit_icon %><span class="visually-hidden">Edit</span>
       <% end %>
     </div>
   <% else %>
-    <%= render Elements::ButtonLinkComponent.new(link: edit_content_file_path(content_file), variant: :link, label: 'Add description') %>
+    <%= render Elements::ButtonLinkComponent.new(link: edit_content_file_path(content_file), variant: :link, label: 'Add description', classes: 'py-0') %>
   <% end %>
 <% end %>
