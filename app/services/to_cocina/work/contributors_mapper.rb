@@ -13,10 +13,10 @@ module ToCocina
         @author_forms = author_forms
       end
 
-      # @return [Hash] the Cocina contributor parameters
+      # @return [Array] the Cocina contributor parameters
       def call
         author_forms.filter_map.with_index do |author, index|
-          # First entered author is always status: "primary" (except for Publisher)
+          # First is always status: "primary"
           primary = index.zero?
           if author.person?(with_names: true)
             CocinaGenerators::Description.person_contributor(

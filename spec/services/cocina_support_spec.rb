@@ -205,7 +205,7 @@ RSpec.describe CocinaSupport do
 
     context 'when event date is EDTF with year only' do
       let(:event) do
-        CocinaDescriptionSupport.event_date(type: 'publication', date: '2021')
+        CocinaGenerators::Description.event(type: 'publication', date: '2021')
       end
 
       it 'returns the event date' do
@@ -215,7 +215,7 @@ RSpec.describe CocinaSupport do
 
     context 'when event date is EDTF with year and month only' do
       let(:event) do
-        CocinaDescriptionSupport.event_date(type: 'publication', date: '2021-03')
+        CocinaGenerators::Description.event(type: 'publication', date: '2021-03')
       end
 
       it 'returns the event date' do
@@ -225,7 +225,7 @@ RSpec.describe CocinaSupport do
 
     context 'when event date is EDTF' do
       let(:event) do
-        CocinaDescriptionSupport.event_date(type: 'publication', date: '2021-03-05')
+        CocinaGenerators::Description.event(type: 'publication', date: '2021-03-05')
       end
 
       it 'returns the event date' do
@@ -235,7 +235,7 @@ RSpec.describe CocinaSupport do
 
     context 'when event date is not EDTF' do
       let(:event) do
-        CocinaDescriptionSupport.event_date(type: 'publication', date: '2021-03-05', date_encoding_code: 'iso8601')
+        CocinaGenerators::Description.event(type: 'publication', date: '2021-03-05', date_encoding_code: 'iso8601')
       end
 
       it 'returns nil' do
@@ -245,7 +245,7 @@ RSpec.describe CocinaSupport do
 
     context 'when event date is not correct type' do
       let(:event) do
-        CocinaDescriptionSupport.event_date(type: 'deposit', date: '2021-03-05')
+        CocinaGenerators::Description.event(type: 'deposit', date: '2021-03-05')
       end
 
       it 'returns nil' do

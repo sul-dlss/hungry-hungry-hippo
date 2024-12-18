@@ -10,5 +10,9 @@ module CocinaGenerators
     def self.organization_contributor(...)
       OrganizationContributor.call(...)
     end
+
+    def self.event(...)
+      Event.call(...)
+    end
   end
 end
