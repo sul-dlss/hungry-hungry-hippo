@@ -2,10 +2,10 @@
 
 # Controller for a Collection
 class CollectionsController < ApplicationController
-  before_action :set_collection, only: %i[show edit update]
+  before_action :set_collection, only: %i[show edit update destroy]
   before_action :check_deposit_job_started, only: %i[show edit]
   before_action :set_collection_form_from_cocina, only: %i[show edit]
-  before_action :set_status, only: %i[show edit]
+  before_action :set_status, only: %i[show edit destroy]
 
   def show
     authorize! @collection
@@ -28,7 +28,7 @@ class CollectionsController < ApplicationController
     authorize! @collection
 
     unless editable?
-      flash[:danger] = I18n.t('collections.edit.errors.cannot_be_edited')
+      flash[:danger] = I18n.t('collections.edit.messages.cannot_be_edited')
       return redirect_to collection_path(druid: params[:druid])
     end
 
@@ -68,6 +68,20 @@ class CollectionsController < ApplicationController
       redirect_to wait_collections_path(@collection.id)
     else
       render :form, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    authorize! @collection
+
+    Sdr::Repository.discard_draft(druid: @collection.druid)
+    flash[:success] = helpers.t('collections.edit.messages.draft_discarded')
+    # When version 1 SDR will purge the DRO. The Collection record can be destroyed as well.
+    if @version_status.version == 1
+      @collection.destroy!
+      redirect_to root_path
+    else
+      redirect_to collection_path(druid: @collection.druid)
     end
   end
 

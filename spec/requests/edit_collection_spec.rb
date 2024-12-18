@@ -46,7 +46,8 @@ RSpec.describe 'Edit collection' do
     let(:version_status) do
       VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, openable?: false,
-                                                                           accessioning?: true))
+                                                                           accessioning?: true, discardable?: false,
+                                                                           version: 1))
     end
 
     before do

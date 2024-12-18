@@ -13,7 +13,7 @@ class CollectionPresenter < ApplicationPresenter
 
   delegate :description, :title, to: :collection_form
   delegate :druid, to: :collection
-  delegate :editable?, :status_message, to: :version_status
+  delegate :discardable?, :editable?, :status_message, to: :version_status
 
   def contact_emails
     contact_emails_attributes.map(&:email).join(', ')

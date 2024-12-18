@@ -1,6 +1,4 @@
-<%= render Elements::HeaderComponent.new(level: :h1, text: @collection_presenter.title, classes: 'mb-4 d-inline-block') %>
-<span class="ms-4 fst-italic status"><%= @collection_presenter.status_message %></span>
-<%= render Elements::ButtonLinkComponent.new(link: edit_collection_path(@collection_presenter.druid), label: 'Edit or deposit', classes: 'float-end', variant: :'outline-primary') if @collection_presenter.editable? %>
+<%= render Show::HeaderComponent.new(title: @collection_presenter.title, status_message: @collection_presenter.status_message, edit_path: edit_collection_path(@collection_presenter.druid), destroy_path: collection_path(@collection_presenter.druid), editable: @collection_presenter.editable?, discardable: @collection_presenter.discardable?) %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'table-show mb-5', label: 'Details') do |component| %>
   <% component.with_row(label: 'Title', values: [@collection_presenter.title]) %>
