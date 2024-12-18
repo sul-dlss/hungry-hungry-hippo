@@ -9,6 +9,7 @@ module ToCollectionForm
 
     def initialize(cocina_object:)
       @cocina_object = cocina_object
+      @collection = Collection.find_by(druid: cocina_object.externalIdentifier)
     end
 
     def call
@@ -17,7 +18,7 @@ module ToCollectionForm
 
     private
 
-    attr_reader :cocina_object
+    attr_reader :cocina_object, :collection
 
     def params
       {
@@ -27,8 +28,26 @@ module ToCollectionForm
         description: CocinaSupport.abstract_for(cocina_object:), # Cocina abstract maps to Collection description
         contact_emails_attributes: CocinaSupport.contact_emails_for(cocina_object:),
         related_links_attributes: CocinaSupport.related_links_for(cocina_object:),
+        managers_attributes:,
+        depositors_attributes:,
         version: cocina_object.version
       }
+    end
+
+    def managers_attributes
+      return [] if collection&.managers.blank?
+
+      collection.managers.map do |manager|
+        { sunetid: manager.email_address.delete_suffix('@stanford.edu') }
+      end
+    end
+
+    def depositors_attributes
+      return [] if collection&.depositors.blank?
+
+      collection.depositors.map do |depositor|
+        { sunetid: depositor.email_address.delete_suffix('@stanford.edu') }
+      end
     end
   end
 end
