@@ -58,6 +58,9 @@ class CollectionsController < ApplicationController
     @collection_form = CollectionForm.new(**update_collection_params)
     # The deposit param determines whether extra validations for deposits are applied.
     if @collection_form.valid?(deposit: deposit?)
+      # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
+      # should be "waiting".
+      @collection.update!(deposit_job_started_at: Time.zone.now)
       DepositCollectionJob.perform_later(collection: @collection, collection_form: @collection_form, deposit: deposit?)
       redirect_to wait_collections_path(@collection.id)
     else

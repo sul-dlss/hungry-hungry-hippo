@@ -14,16 +14,6 @@ RSpec.describe 'Edit a collection' do
     collection_with_metadata_fixture
   end
 
-  let(:updated_cocina_object) do
-    cocina_object.new(
-      description: cocina_object.description.new(
-        title: CocinaDescriptionSupport.title(title: updated_title),
-        note: [CocinaDescriptionSupport.note(type: 'abstract', value: updated_description)],
-        relatedResource: CocinaDescriptionSupport.related_links(related_links: updated_related_links)
-      )
-    )
-  end
-
   let(:version_status) do
     VersionStatus.new(status:
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
@@ -42,11 +32,18 @@ RSpec.describe 'Edit a collection' do
   end
 
   before do
-    allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object, updated_cocina_object)
+    # On the second call, this will return the cocina object submitted to update.
+    # This will allow us to test the updated values.
+    allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { cocina_object }, lambda { |_arg|
+      @updated_cocina_object
+    })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     # It is already open.
     allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
-    allow(Sdr::Repository).to receive(:update)
+    allow(Sdr::Repository).to receive(:update) do |args|
+      @updated_cocina_object = args[:cocina_object]
+    end
+
     create(:collection, druid:, user:)
 
     sign_in(user, groups:)
