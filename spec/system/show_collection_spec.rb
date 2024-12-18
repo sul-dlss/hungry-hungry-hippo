@@ -13,7 +13,8 @@ RSpec.describe 'Show a collection' do
   let(:version_status) do
     VersionStatus.new(status:
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
-                                                                         openable?: true, accessioning?: false))
+                                                                         openable?: true, accessioning?: false,
+                                                                         discardable?: false))
   end
 
   before do

@@ -224,8 +224,9 @@ en:
             User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or
             confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to
             additional license and use restrictions applied by the depositor.
-      errors:
+      messages:
         cannot_be_edited: 'This collection cannot be edited.'
+        draft_discarded: 'Draft discarded.'
         validation: >
           Required fields have not been filled out. Click on the section(s) highlighted in red on
           the left to correct the error(s) and then try depositing again.
