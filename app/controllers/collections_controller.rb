@@ -12,6 +12,9 @@ class CollectionsController < ApplicationController
 
     # This updates the Collection with the latest metadata from the Cocina object.
     ModelSync::Collection.call(collection: @collection, cocina_object: @cocina_object)
+
+    @collection_presenter = CollectionPresenter.new(collection: @collection, collection_form: @collection_form,
+                                                    version_status: @version_status)
   end
 
   def new
