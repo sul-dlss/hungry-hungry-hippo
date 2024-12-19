@@ -9,7 +9,7 @@
 
 <div class="d-flex">
   <%= render Elements::HeaderComponent.new(level: :h3, text: 'Your collections', classes: 'mb-4 w-100 text-nowrap') %>
-  <%= render Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary, classes: 'ml-auto text-nowrap h-50') if allowed_to?(:new?, Collection) %>
+  <%= render Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary, classes: 'ml-auto text-nowrap h-50') if policy(Collection).new? %>
 </div>
 
 <% current_user.collections.each do |collection| %>

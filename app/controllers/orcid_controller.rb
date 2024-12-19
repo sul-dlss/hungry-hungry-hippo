@@ -2,7 +2,7 @@
 
 # Lookup a contributor in ORCID and return their name information
 class OrcidController < ApplicationController
-  skip_verify_authorized only: %i[search]
+  before_action :skip_authorization, only: %i[search]
 
   def search
     result = OrcidResolver.call(orcid_id: params[:id])

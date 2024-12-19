@@ -8,7 +8,7 @@ class CollectionsController < ApplicationController
   before_action :set_status, only: %i[show edit destroy]
 
   def show
-    authorize! @collection
+    authorize @collection
 
     # This updates the Collection with the latest metadata from the Cocina object.
     ModelSync::Collection.call(collection: @collection, cocina_object: @cocina_object)
@@ -18,14 +18,14 @@ class CollectionsController < ApplicationController
   end
 
   def new
-    authorize! Collection
+    authorize Collection
     @collection_form = CollectionForm.new
 
     render :form
   end
 
   def edit
-    authorize! @collection
+    authorize @collection
 
     unless editable?
       flash[:danger] = I18n.t('collections.edit.messages.cannot_be_edited')
@@ -39,7 +39,7 @@ class CollectionsController < ApplicationController
   end
 
   def create
-    authorize! Collection
+    authorize Collection
     @collection_form = CollectionForm.new(**collection_params)
     # The deposit param determines whether extra validations for deposits are applied.
     if @collection_form.valid?(deposit: deposit?)
@@ -56,7 +56,7 @@ class CollectionsController < ApplicationController
   end
 
   def update
-    authorize! @collection
+    authorize @collection
 
     @collection_form = CollectionForm.new(**update_collection_params)
     # The deposit param determines whether extra validations for deposits are applied.
@@ -72,7 +72,7 @@ class CollectionsController < ApplicationController
   end
 
   def destroy
-    authorize! @collection
+    authorize @collection
 
     Sdr::Repository.discard_draft(druid: @collection.druid)
     flash[:success] = helpers.t('collections.edit.messages.draft_discarded')
@@ -87,7 +87,7 @@ class CollectionsController < ApplicationController
 
   def wait
     collection = Collection.find(params[:id])
-    authorize! collection
+    authorize collection
 
     redirect_to collection_path(druid: collection.druid) if collection.deposit_job_finished?
   end

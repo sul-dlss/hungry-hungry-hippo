@@ -2,7 +2,7 @@
 
 # Controller for the user dashboard
 class DashboardController < ApplicationController
-  skip_verify_authorized only: :show
+  before_action :skip_authorization, only: %i[show]
 
   def show
     # This is going to be slow because it makes a call to DSA for each work.

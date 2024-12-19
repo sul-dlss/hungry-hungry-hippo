@@ -9,7 +9,7 @@ class WorksController < ApplicationController
   before_action :set_status, only: %i[show edit destroy]
 
   def show
-    authorize! @work
+    authorize @work
 
     # This updates the Work with the latest metadata from the Cocina object.
     # Does not update the Work's collection if the collection cannot be found.
@@ -20,7 +20,7 @@ class WorksController < ApplicationController
 
   def new
     collection = Collection.find_by!(druid: params.expect(:collection_druid))
-    authorize! collection, with: WorkPolicy
+    authorize collection, policy_class: WorkPolicy
 
     @content = Content.create!(user: current_user)
     @work_form = WorkForm.new(collection_druid: collection.druid, content_id: @content.id)
@@ -29,7 +29,7 @@ class WorksController < ApplicationController
   end
 
   def edit
-    authorize! @work
+    authorize @work
 
     unless editable?
       flash[:danger] = helpers.t('works.edit.messages.cannot_be_edited')
@@ -45,7 +45,7 @@ class WorksController < ApplicationController
   def create # rubocop:disable Metrics/AbcSize
     @work_form = WorkForm.new(**work_params)
     collection = Collection.find_by!(druid: @work_form.collection_druid)
-    authorize! collection, with: WorkPolicy
+    authorize collection, policy_class: WorkPolicy
 
     # The deposit param determines whether extra validations for deposits are applied.
     if @work_form.valid?(deposit: deposit?)
@@ -62,7 +62,7 @@ class WorksController < ApplicationController
   end
 
   def update
-    authorize! @work
+    authorize @work
 
     @work_form = WorkForm.new(**update_work_params)
     # The deposit param determines whether extra validations for deposits are applied.
@@ -79,7 +79,7 @@ class WorksController < ApplicationController
   end
 
   def destroy
-    authorize! @work
+    authorize @work
 
     Sdr::Repository.discard_draft(druid: @work.druid)
     flash[:success] = helpers.t('works.edit.messages.draft_discarded')
@@ -95,7 +95,7 @@ class WorksController < ApplicationController
 
   def wait
     work = Work.find(params[:id])
-    authorize! work
+    authorize work
 
     redirect_to work_path(druid: work.druid) if work.deposit_job_finished?
   end

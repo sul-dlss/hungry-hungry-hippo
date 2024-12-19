@@ -4,6 +4,8 @@ class WorkPolicy < ApplicationPolicy
   alias_rule :new?, :create?, :show?, :update?, :edit?, :wait?, :destroy?, to: :manage?
 
   def manage?
+    return true if admin?
+
     record.user_id == user.id
   end
 end

@@ -5,15 +5,15 @@ class ContentFilesController < ApplicationController
   before_action :set_content_file
 
   def show
-    authorize! @content_file
+    authorize @content_file
   end
 
   def edit
-    authorize! @content_file
+    authorize @content_file
   end
 
   def update
-    authorize! @content_file
+    authorize @content_file
 
     if @content_file.update(content_file_params)
       redirect_to content_file_path(@content_file)
@@ -23,7 +23,7 @@ class ContentFilesController < ApplicationController
   end
 
   def destroy
-    authorize! @content_file
+    authorize @content_file
 
     @content_file.destroy
     redirect_to content_path(@content_file.content)
