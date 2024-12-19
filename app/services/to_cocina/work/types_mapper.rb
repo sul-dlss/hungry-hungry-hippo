@@ -67,7 +67,7 @@ module ToCocina
       def genres
         return [] if work_type == 'Other'
 
-        # Uniq avoids adding dupe genres when same genre in from type and subtype.
+        # Uniq avoids adding dupe genres when same genre is from type and subtype.
         ([work_type_genre].compact + work_subtypes_genres).flatten.uniq
       end
 
