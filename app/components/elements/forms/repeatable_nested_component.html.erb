@@ -1,32 +1,40 @@
-<fieldset class="my-3" data-controller="nested-form" data-nested-form-selector-value=".row">
+<%= tag.fieldset class: 'my-3', data: fieldset_data do %>
   <legend class="h5">
     <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text:, hidden_label:) %>
   </legend>
-  <%= tag.div(class: container_classes, data: { nested_form_target: 'container' }) do %>
+  <%= tag.div(class: container_classes, data: { nested_form_target: 'container', nested_form_reorder_target: 'container' }) do %>
     <template data-nested-form-target="template">
       <%= form.fields_for field_name, model_class.new, child_index: 'NEW_RECORD' do |nested_form| %>
         <%# Note that this div is duplicated below. If making a change here, also make the change below. %>
-        <%= tag.div(class: row_classes, data: { index: nested_form.options[:child_index], nested_form_target: 'instance' }) do %>
+        <%= tag.div(class: row_classes, data: { index: nested_form.options[:child_index], nested_form_target: 'instance', nested_form_reorder_target: 'instance' }) do %>
           <div class="col">
             <%= render form_component.new(form: nested_form) %>
           </div>
-          <div class="col-md-auto">
-            <%= render Elements::DeleteButtonComponent.new(classes: 'float-end', data: { action: 'click->nested-form#delete' }) %>
+          <div class="col-md-auto d-flex flex-column">
+            <%= render Elements::DeleteButtonComponent.new(data: { action: 'click->nested-form#delete' }) %>
+            <% if reorderable? %>
+              <%= render Elements::MoveUpButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveUp' }) %>
+              <%= render Elements::MoveDownButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveDown' }) %>
+            <% end %>
           </div>
         <% end %>
       <% end %>
     </template>
     <%= form.fields_for field_name do |nested_form| %>
       <%# Note that this div is duplicated above. If making a change here, also make the change above. %>
-      <%= tag.div(class: row_classes, data: { index: nested_form.options[:child_index], nested_form_target: 'instance' }) do %>
+      <%= tag.div(class: row_classes, data: { index: nested_form.options[:child_index], nested_form_target: 'instance', nested_form_reorder_target: 'instance' }) do %>
         <div class="col">
           <%= render form_component.new(form: nested_form) %>
         </div>
-        <div class="col-md-auto">
-          <%= render Elements::DeleteButtonComponent.new(classes: 'float-end', data: { action: 'click->nested-form#delete' }) %>
+        <div class="col-md-auto d-flex flex-column">
+          <%= render Elements::DeleteButtonComponent.new(data: { action: 'click->nested-form#delete' }) %>
+          <% if reorderable? %>
+            <%= render Elements::MoveUpButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveUp' }) %>
+            <%= render Elements::MoveDownButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveDown' }) %>
+          <% end %>
         </div>
       <% end %>
     <% end %>
   <% end %>
   <%= render Elements::ButtonComponent.new(label: add_button_label, variant: :'outline-primary', classes: add_button_classes, data: { action: 'click->nested-form#add' }) %>
-</fieldset>
+<% end %>
