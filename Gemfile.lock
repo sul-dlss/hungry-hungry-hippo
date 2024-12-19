@@ -257,6 +257,10 @@ GEM
     hashdiff (1.1.2)
     honeybadger (5.26.0)
       logger
+    hotwire-spark (0.1.2)
+      listen
+      rails (>= 8.0.0)
+      zeitwerk
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -570,6 +574,7 @@ DEPENDENCIES
   erb_lint
   factory_bot_rails
   honeybadger
+  hotwire-spark
   importmap-rails
   jbuilder
   kaminari
