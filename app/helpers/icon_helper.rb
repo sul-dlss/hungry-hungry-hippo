@@ -60,4 +60,12 @@ module IconHelper
   def upload_icon(**)
     icon(icon_classes: 'bi bi-cloud-upload-fill', **)
   end
+
+  def move_up_icon(**)
+    icon(icon_classes: 'bi bi-arrow-up', **)
+  end
+
+  def move_down_icon(**)
+    icon(icon_classes: 'bi bi-arrow-down', **)
+  end
 end

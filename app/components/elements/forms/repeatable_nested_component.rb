@@ -5,13 +5,15 @@ module Elements
     # Encapsulates a repeatable nested form, including adding and removing nested models.
     # NOTE: Use the `NestedComponentPresenter` to invoke this component; do not directly instantiate it.
     class RepeatableNestedComponent < ApplicationComponent
-      def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true) # rubocop:disable Metrics/ParameterLists
+      def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists
+                     reorderable: false)
         @form = form
         @model_class = model_class
         @field_name = field_name
         @form_component = form_component
         @hidden_label = hidden_label
         @bordered = bordered
+        @reorderable = reorderable
         super()
       end
 
@@ -30,7 +32,8 @@ module Elements
       end
 
       def row_classes
-        merge_classes(%w[row], bordered? ? %w[p-3 border border-3 border-light-subtle border-opacity-75 mb-3] : [])
+        merge_classes(%w[row form-instance],
+                      bordered? ? %w[p-3 border border-3 border-light-subtle border-opacity-75 mb-3] : [])
       end
 
       def add_button_classes
@@ -39,6 +42,17 @@ module Elements
 
       def label_text
         model_class.model_name.plural.humanize
+      end
+
+      def reorderable?
+        @reorderable
+      end
+
+      def fieldset_data
+        {
+          controller: ['nested-form', reorderable? ? 'nested-form-reorder' : nil].compact.join(' '),
+          nested_form_selector_value: '.form-instance'
+        }
       end
     end
   end
