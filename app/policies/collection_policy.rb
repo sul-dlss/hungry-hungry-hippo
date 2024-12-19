@@ -4,7 +4,7 @@ class CollectionPolicy < ApplicationPolicy
   alias_rule :show?, :update?, :edit?, :wait?, :destroy?, to: :manage?
 
   def manage?
-    record.user_id == user.id
+    collection_manager? || record.user_id == user.id
   end
 
   def new?
@@ -22,5 +22,9 @@ class CollectionPolicy < ApplicationPolicy
 
   def collection_creator?
     Current.groups.include?(Settings.authorization_workgroup_names.collection_creators)
+  end
+
+  def collection_manager?
+    record.managers.include?(user)
   end
 end

@@ -39,6 +39,7 @@ class DepositCollectionJob < ApplicationJob
   def set_managers
     collection.managers.clear
     collection_form.managers_attributes.each do |manager|
+      # Sometimes this is a hash and sometimes it is a ManagerForm object.
       manager = manager.attributes if manager.respond_to?(:attributes)
       user = User.find_or_create_by(email_address: "#{manager['sunetid']}@stanford.edu")
       collection.managers.append(user)
@@ -48,6 +49,7 @@ class DepositCollectionJob < ApplicationJob
   def set_depositors
     collection.depositors.clear
     collection_form.depositors_attributes.each do |depositor|
+      # Sometimes this is a hash and sometimes it is a DepositorForm object.
       depositor = depositor.attributes if depositor.respond_to?(:attributes)
       user = User.find_or_create_by(email_address: "#{depositor['sunetid']}@stanford.edu")
       collection.depositors.append(user)
