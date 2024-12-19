@@ -1,5 +1,5 @@
 <%= turbo_frame_tag @content do %>
-  <% if @content.content_files.count > Settings.hierarchical_files_limit %>
+  <% if @content.content_files.count > Settings.file_upload.hierarchical_files_limit %>
     <%= render Elements::Tables::TableComponent.new(id: 'files-table', classes: 'table-work', label: 'Files') do |component| %>
       <% component.with_header(headers: ['File Name', 'Description', 'Hide'], each_classes: ['col-6']) %>
       <% @content_files.each do |content_file| %>

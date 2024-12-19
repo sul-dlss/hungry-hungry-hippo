@@ -2,7 +2,7 @@
   <% content_files ||= content.content_files.page(1) %>
   <% if content_files.empty? %>
     <p>Your files will appear here once they have been uploaded.</p>
-  <% elsif content.content_files.count > Settings.hierarchical_files_limit %>
+  <% elsif content.content_files.count > Settings.file_upload.hierarchical_files_limit %>
     <%= render Elements::Tables::TableComponent.new(id: 'content-table', label: 'Files', show_label: false) do |component| %>
       <% component.with_header(headers: ['File Name', 'Description', 'Hide', 'Action']) %>
       <% content_files.each do |content_file| %>
