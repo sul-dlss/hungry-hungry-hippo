@@ -19,12 +19,6 @@ module CocinaGenerators
         advisor: {
           value: 'advisor'
         },
-        publisher: {
-          value: 'publisher',
-          code: 'pbl',
-          uri: 'http://id.loc.gov/vocabulary/relators/pbl',
-          source: SOURCE
-        },
         # person roles
         composer: {
           value: 'composer',
