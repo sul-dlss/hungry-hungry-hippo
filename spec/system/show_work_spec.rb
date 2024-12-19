@@ -7,7 +7,7 @@ RSpec.describe 'Show a work' do
 
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
-  let(:collection) { create(:collection, user:) }
+  let(:collection) { create(:collection, :with_druid, user:) }
   let!(:work) { create(:work, druid:, title: title_fixture, collection:, user:) }
   # Need multiple files to test pagination
   let(:cocina_object) do
@@ -122,6 +122,11 @@ RSpec.describe 'Show a work' do
 
     it 'shows a work' do
       visit work_path(druid)
+
+      # Breadcrumbs
+      expect(page).to have_link('Dashboard', href: root_path)
+      expect(page).to have_link(collection.title, href: collection_path(collection.druid))
+      expect(page).to have_css('.breadcrumb-item', text: work.title)
 
       expect(page).to have_css('h1', text: work.title)
       expect(page).to have_css('.status', text: 'Deposited')

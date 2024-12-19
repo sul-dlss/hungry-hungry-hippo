@@ -124,3 +124,8 @@ table.table-treegrid {
 .btn-link {
   color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
 }
+
+// Breadcrumb custom divider
+.breadcrumb {
+  --bs-breadcrumb-divider: '>'
+}

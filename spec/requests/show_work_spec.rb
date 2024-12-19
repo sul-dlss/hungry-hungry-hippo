@@ -93,7 +93,7 @@ RSpec.describe 'Show work' do
   end
 
   context 'when the cocina does not have collection ids' do
-    let(:collection) { create(:collection) }
+    let(:collection) { create(:collection, :with_druid) }
     let!(:work) { create(:work, druid:, user:, collection:) }
     let(:user) { create(:user) }
     let(:cocina_object) { build(:dro_with_metadata, title: title_fixture, id: druid) }

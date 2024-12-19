@@ -1,3 +1,12 @@
+<% content_for :breadcrumbs do %>
+  <%= render Elements::BreadcrumbNavComponent.new(dashboard: true, admin: false) do |component| %>
+    <% if current_page?(action: :new) %>
+      <% component.with_breadcrumb(text: I18n.t('collections.edit.no_title')) %>
+    <% else %>
+      <% component.with_breadcrumb(text: @collection_form.title, active: true) %>
+    <% end %>
+  <% end %>
+<% end %>
 <%= render Show::HeaderComponent.new(title: @collection_presenter.title, status_message: @collection_presenter.status_message, edit_path: edit_collection_path(@collection_presenter.druid), destroy_path: collection_path(@collection_presenter.druid), editable: @collection_presenter.editable?, discardable: @collection_presenter.discardable?) %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'table-show mb-5', label: 'Details') do |component| %>

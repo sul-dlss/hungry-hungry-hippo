@@ -27,6 +27,10 @@ RSpec.describe 'Show a collection' do
   it 'shows a collection' do
     visit collection_path(druid)
 
+    # Breadcrumb
+    expect(page).to have_link('Dashboard', href: root_path)
+    expect(page).to have_css('.breadcrumb-item', text: collection.title)
+
     expect(page).to have_css('h1', text: collection.title)
     expect(page).to have_css('.status', text: 'Deposited')
     expect(page).to have_link('Edit or deposit', href: edit_collection_path(druid))

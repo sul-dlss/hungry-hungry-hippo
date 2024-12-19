@@ -25,8 +25,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sul-dlss/component-library@v2024-09-04/styles/sul.css">
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
+    <header>
+      <div class="breadcrumbs">
+        <nav id="breadcrumbs" aria-label="breadcrumb" class="container-xxl">
+          <%= yield :breadcrumbs %>
+        </nav>
+      </div>
+    </header>
     <main>
       <div class="container">
         <% flash.each do |flash_type, msg| %>

@@ -28,7 +28,7 @@ RSpec.describe 'Create a work draft' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
 
-    create(:collection, user:, druid: collection_druid_fixture)
+    create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture)
 
     sign_in(user)
   end
@@ -36,6 +36,11 @@ RSpec.describe 'Create a work draft' do
   it 'creates a work' do
     visit root_path
     click_link_or_button('Deposit to this collection')
+
+    # Breadcrumbs
+    expect(page).to have_link('Dashboard', href: root_path)
+    expect(page).to have_link(collection_title_fixture, href: collection_path(collection_druid_fixture))
+    expect(page).to have_css('.breadcrumb-item', text: 'Untitled deposit')
 
     expect(page).to have_css('h1', text: 'Untitled deposit')
 
