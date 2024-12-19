@@ -38,7 +38,7 @@ module ToCollectionForm
       return [] if collection&.managers.blank?
 
       collection.managers.map do |manager|
-        { sunetid: manager.email_address.delete_suffix('@stanford.edu') }
+        { sunetid: manager.sunetid }
       end
     end
 
@@ -46,7 +46,7 @@ module ToCollectionForm
       return [] if collection&.depositors.blank?
 
       collection.depositors.map do |depositor|
-        { sunetid: depositor.email_address.delete_suffix('@stanford.edu') }
+        { sunetid: depositor.sunetid }
       end
     end
   end

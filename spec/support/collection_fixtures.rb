@@ -15,3 +15,19 @@ end
 def collection_description_fixture
   'My first collection for testing'
 end
+
+def collection_manager_fixture
+  [
+    {
+      'sunetid' => 'stepking'
+    }
+  ]
+end
+
+def collection_depositor_fixture
+  [
+    {
+      'sunetid' => 'joehill'
+    }
+  ]
+end

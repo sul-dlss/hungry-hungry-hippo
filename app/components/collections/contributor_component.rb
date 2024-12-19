@@ -2,12 +2,11 @@
 
 module Collections
   # Component for editing collection contributors
-  class ContributorComponent < ApplicationComponent
-    def initialize(form:)
-      @form = form
-      super()
+  class ContributorComponent < Elements::Forms::TextFieldComponent
+    def initialize(**args)
+      args[:field_name] = :sunetid
+      args[:label] = 'SUNet ID'
+      super
     end
-
-    attr_reader :form
   end
 end
