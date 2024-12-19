@@ -32,7 +32,7 @@
 
     <% component.with_pane(tab_name: :deposit, label: I18n.t('collections.edit.panes.deposit.label'), form:, render_footer: false) do %>
       <p><%= t('collections.edit.panes.deposit.help_text') %></p>
-      <%= link_to 'Cancel', collections_path %>
+      <%= link_to 'Cancel', root_path %>
       <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Deposit', classes: 'mt-2 ms-2') %>
     <% end %>
   <% end %>
