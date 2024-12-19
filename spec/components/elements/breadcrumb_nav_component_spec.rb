@@ -23,7 +23,6 @@ RSpec.describe Elements::BreadcrumbNavComponent, type: :component do
   end
 
   context 'without dashboard' do
-    let(:component) { described_class.new(dashboard: false) }
     let(:dashboard) { false }
 
     it 'creates breadcrumb nav without dashboard link' do
