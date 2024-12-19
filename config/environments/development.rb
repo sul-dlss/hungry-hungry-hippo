@@ -3,6 +3,10 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Configure Hotwire-Spark live-reload gem
+  config.hotwire.spark.html_paths += %w[app/components app/forms app/jobs app/policies app/presenters app/serializers app/services config lib]
+  config.hotwire.spark.logging = true
+
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true
 
