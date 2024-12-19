@@ -31,7 +31,7 @@ module ToCocina
           title: CocinaDescriptionSupport.title(title: work_form.title),
           contributor: ContributorsMapper.call(author_forms: work_form.authors_attributes),
           note: note_params,
-          event: event_params,
+          event: EventsMapper.call(work_form:),
           subject: CocinaDescriptionSupport.keywords(keywords: work_form.keywords_attributes),
           form: TypesMapper.call(work_form:),
           purl: Sdr::Purl.from_druid(druid: work_form.druid),
@@ -53,15 +53,6 @@ module ToCocina
             params << CocinaDescriptionSupport.note(type: 'preferred citation',
                                                     value: work_form.citation,
                                                     label: 'Preferred Citation')
-          end
-        end.presence
-      end
-
-      def event_params
-        [].tap do |params|
-          if work_form.publication_date.year.present?
-            params << CocinaDescriptionSupport.event_date(type: 'publication', primary: true,
-                                                          date: work_form.publication_date.to_s)
           end
         end.presence
       end
