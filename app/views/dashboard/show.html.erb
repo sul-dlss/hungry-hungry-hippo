@@ -19,3 +19,19 @@
     <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary) %>
   </div>
 <% end %>
+
+<% current_user.manages_collections.each do |collection| %>
+  <div class="mb-3">
+    <%= render Collections::HeaderLinkComponent.new(collection:, level: :h4) %>
+    <%= render Dashboard::Show::WorksListComponent.new(collection:, status_map: @status_map) %>
+    <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary) %>
+  </div>
+<% end %>
+
+<% current_user.deposits_into.each do |collection| %>
+  <div class="mb-3">
+    <%= render Collections::HeaderLinkComponent.new(collection:, level: :h4) %>
+    <%= render Dashboard::Show::WorksListComponent.new(collection:, status_map: @status_map) %>
+    <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary) %>
+  </div>
+<% end %>

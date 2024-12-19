@@ -255,16 +255,6 @@ CREATE TABLE public.managers (
 
 
 --
--- Name: reviewers; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.reviewers (
-    collection_id bigint NOT NULL,
-    user_id bigint NOT NULL
-);
-
-
---
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -560,13 +550,6 @@ CREATE UNIQUE INDEX index_depositors_on_collection_id_and_user_id ON public.depo
 --
 
 CREATE UNIQUE INDEX index_managers_on_collection_id_and_user_id ON public.managers USING btree (collection_id, user_id);
-
-
---
--- Name: index_reviewers_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_reviewers_on_collection_id_and_user_id ON public.reviewers USING btree (collection_id, user_id);
 
 
 --
