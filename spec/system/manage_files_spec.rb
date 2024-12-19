@@ -111,6 +111,10 @@ RSpec.describe 'Manage files for a work' do
 
       # Edit the description
       all('a', text: 'Add description').first.click
+      click_link_or_button('Cancel')
+
+      expect(page).to have_link('Add description', count: 2)
+      all('a', text: 'Add description').first.click
       fill_in('Description', with: 'This is a hippo.')
       click_link_or_button('Update')
 
@@ -156,7 +160,7 @@ RSpec.describe 'Manage files for a work' do
     end
   end
 
-  context 'when too many files', :headed_test do
+  context 'when too many files' do
     before do
       allow(Settings.file_upload).to receive(:max_files).and_return(1)
     end
