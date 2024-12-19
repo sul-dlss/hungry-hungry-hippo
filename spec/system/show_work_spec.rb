@@ -117,7 +117,7 @@ RSpec.describe 'Show a work' do
 
   context 'without hierarchical display' do
     before do
-      allow(Settings).to receive(:hierarchical_files_limit).and_return(0)
+      allow(Settings.file_upload).to receive(:hierarchical_files_limit).and_return(0)
     end
 
     it 'shows a work' do

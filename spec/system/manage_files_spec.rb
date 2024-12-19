@@ -62,7 +62,7 @@ RSpec.describe 'Manage files for a work' do
 
   context 'when non-hierarchical display' do
     before do
-      allow(Settings).to receive(:hierarchical_files_limit).and_return(0)
+      allow(Settings.file_upload).to receive(:hierarchical_files_limit).and_return(0)
     end
 
     it 'creates a work' do
@@ -125,6 +125,57 @@ RSpec.describe 'Manage files for a work' do
       expect(page).to have_field('hide', checked: true)
       sleep 0.25 # Wait for the form to submit.
       expect(content_file.reload.hide).to be true
+    end
+  end
+
+  context 'when file is too large' do
+    before do
+      allow(Settings.file_upload).to receive(:max_filesize).and_return(1)
+    end
+
+    it 'does not accept the file' do
+      visit new_work_path(collection_druid: collection.druid)
+
+      expect(page).to have_css('h1', text: 'Untitled deposit')
+
+      # Add one file
+      # This doesn't work in Cyperful
+      find('.dropzone').drop('spec/fixtures/files/hippo.tiff')
+
+      expect(page).to have_text('hippo.tiff: File is too big (4.61MiB). Max filesize: 1MiB.')
+
+      expect(page).to have_text('Your files will appear here once they have been uploaded.')
+
+      # Upload a smaller file
+      find('.dropzone').drop('spec/fixtures/files/hippo.png')
+
+      within('table#content-table') do
+        expect(page).to have_css('td:nth-of-type(1)', text: 'hippo.png') # Filename
+      end
+      expect(page).to have_no_text('hippo.tiff: File is too big (4.61MiB). Max filesize: 1MiB.')
+    end
+  end
+
+  context 'when too many files', :headed_test do
+    before do
+      allow(Settings.file_upload).to receive(:max_files).and_return(1)
+    end
+
+    it 'does not accept the file' do
+      visit new_work_path(collection_druid: collection.druid)
+
+      expect(page).to have_css('h1', text: 'Untitled deposit')
+
+      # Add one file
+      # This doesn't work in Cyperful
+      find('.dropzone').drop('spec/fixtures/files/hippo.png')
+
+      within('table#content-table') do
+        expect(page).to have_css('td:nth-of-type(1)', text: 'hippo.png') # Filename
+      end
+
+      find('.dropzone').drop('spec/fixtures/files/hippo.svg')
+      expect(page).to have_text('hippo.svg: You can not upload any more files.')
     end
   end
 end

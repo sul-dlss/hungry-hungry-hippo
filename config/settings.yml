@@ -35,4 +35,7 @@ http_headers:
   remote_user: 'X-Remote-User'
   orcid_id: 'X-Orcid-Id'
 
-hierarchical_files_limit: 1000
+file_upload:
+  hierarchical_files_limit: 1000
+  max_filesize: 10000 # 10GB
+  max_files: 25000
