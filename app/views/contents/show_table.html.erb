@@ -3,7 +3,7 @@
     <%= render Elements::Tables::TableComponent.new(id: 'files-table', classes: 'table-work', label: 'Files') do |component| %>
       <% component.with_header(headers: ['File Name', 'Description', 'Hide'], each_classes: ['col-6']) %>
       <% @content_files.each do |content_file| %>
-        <% component.with_row(values: [content_file.filename, content_file.label, human_boolean(content_file.hide)]) %>
+        <% component.with_row(values: [content_file.filepath, content_file.label, human_boolean(content_file.hide)]) %>
       <% end %>
     <% end %>
     <div class="mb-5">
