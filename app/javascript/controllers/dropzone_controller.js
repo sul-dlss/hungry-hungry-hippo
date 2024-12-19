@@ -14,10 +14,13 @@ export default class extends Controller {
       maxFilesize: 10000 // 10GB
     })
     this.progress = 0
-    this.dropzone.on('addedfiles', () => {
+    this.dropzone.on('processingmultiple', () => {
+      // Using processingmultiple instead of addedfiles for showing the progress bar
+      // since addedfiles is triggered by dropping an empty directory.
+      // This is not.
       this.progressTarget.classList.remove('d-none')
       // This shows the user that something is going on since there may be a paused before first progress.
-      this.updateProgress(2, true)
+      this.updateProgress(2)
     })
     this.dropzone.on('totaluploadprogress', (totalUploadProgress) => {
       const uploadProgress = Math.trunc(totalUploadProgress)
@@ -28,7 +31,7 @@ export default class extends Controller {
       await new Promise(resolve => setTimeout(resolve, 1000))
       this.dropzone.element.classList.remove('dz-started')
       this.progressTarget.classList.add('d-none')
-      this.updateProgress(0)
+      this.updateProgress(0, true)
     })
     this.dropzone.on('sendingmultiple', (files, xhr, data) => {
       // Add the full path of each file to the form data
