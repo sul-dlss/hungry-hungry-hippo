@@ -20,6 +20,8 @@ class WorksController < ApplicationController
 
   def new
     collection = Collection.find_by!(druid: params.expect(:collection_druid))
+    @collection_title = collection.title
+
     authorize! collection, with: WorkPolicy
 
     @content = Content.create!(user: current_user)
@@ -38,6 +40,7 @@ class WorksController < ApplicationController
 
     # This updates the Work with the latest metadata from the Cocina object.
     ModelSync::Work.call(work: @work, cocina_object: @cocina_object)
+    @collection_title = @work.collection.title
 
     render :form
   end
@@ -45,6 +48,7 @@ class WorksController < ApplicationController
   def create # rubocop:disable Metrics/AbcSize
     @work_form = WorkForm.new(**work_params)
     collection = Collection.find_by!(druid: @work_form.collection_druid)
+    @collection_title = collection.title
     authorize! collection, with: WorkPolicy
 
     # The deposit param determines whether extra validations for deposits are applied.

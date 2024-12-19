@@ -105,6 +105,8 @@ en:
             has part: 'It consists of parts, one of which is this related work'
   works:
     edit:
+      breadcrumb: 'Edit'
+      no_title: 'Untitled deposit'
       fields:
         abstract:
           label: 'Abstract'
@@ -206,6 +208,8 @@ en:
           tab_label: 'Type of deposit'
   collections:
     edit:
+      breadcrumb: 'Edit'
+      no_title: 'Untitled collection'
       fields:
         description:
           label: 'Description'
