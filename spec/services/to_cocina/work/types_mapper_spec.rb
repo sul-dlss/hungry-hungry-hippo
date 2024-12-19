@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ToCocina::Work::TypesMapper do
-  subject(:forms) { described_class.call(work_form:) }
+  subject(:forms) { described_class.call(work_form:).map(&:deep_symbolize_keys) }
 
   let(:work_form) { WorkForm.new }
 
@@ -32,6 +32,45 @@ RSpec.describe ToCocina::Work::TypesMapper do
                               type: 'resource type'
                             }
                           ])
+    end
+  end
+
+  context 'when work type has multiple genres' do
+    let(:work_form) { WorkForm.new(work_type: 'Data') }
+
+    it 'maps to cocina' do
+      expect(forms).to eq(
+        [
+          {
+            structuredValue: [
+              { value: 'Data', type: 'type' }
+            ],
+            source: { value: 'Stanford self-deposit resource types' },
+            type: 'resource type'
+          },
+          {
+            type: 'genre',
+            value: 'Data sets',
+            uri: 'http://id.loc.gov/authorities/genreForms/gf2018026119',
+            source: { code: 'lcgft' }
+          },
+          {
+            type: 'genre',
+            value: 'dataset',
+            source: { code: 'local' }
+          },
+          {
+            type: 'resource type',
+            value: 'Dataset',
+            uri: 'http://id.loc.gov/vocabulary/resourceTypes/dat',
+            source: { uri: 'http://id.loc.gov/vocabulary/resourceTypes/' }
+          },
+          {
+            value: 'Dataset', source: { value: 'DataCite resource types' },
+            type: 'resource type'
+          }
+        ]
+      )
     end
   end
 end
