@@ -39,9 +39,11 @@ class DepositCollectionJob < ApplicationJob
   def set_managers
     collection.managers.clear
     collection_form.managers_attributes.each do |manager|
-      # Sometimes this is a hash and sometimes it is a ManagerForm object.
+      # Sometimes this is a hash and sometimes it is a CollectionParticipantForm object.
       manager = manager.attributes if manager.respond_to?(:attributes)
-      user = User.find_or_create_by(email_address: "#{manager['sunetid']}@stanford.edu")
+      next if manager['sunetid'].blank?
+
+      user = User.find_or_create_by(email_address: sunetid_to_email_address(manager['sunetid']))
       collection.managers.append(user)
     end
   end
@@ -49,10 +51,16 @@ class DepositCollectionJob < ApplicationJob
   def set_depositors
     collection.depositors.clear
     collection_form.depositors_attributes.each do |depositor|
-      # Sometimes this is a hash and sometimes it is a DepositorForm object.
+      # Sometimes this is a hash and sometimes it is a CollectionParticipantForm object.
       depositor = depositor.attributes if depositor.respond_to?(:attributes)
-      user = User.find_or_create_by(email_address: "#{depositor['sunetid']}@stanford.edu")
+      next if depositor['sunetid'].blank?
+
+      user = User.find_or_create_by(email_address: sunetid_to_email_address(depositor['sunetid']))
       collection.depositors.append(user)
     end
+  end
+
+  def sunetid_to_email_address(sunetid)
+    "#{sunetid}#{User::EMAIL_SUFFIX}"
   end
 end
