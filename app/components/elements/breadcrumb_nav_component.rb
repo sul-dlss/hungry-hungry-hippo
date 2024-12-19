@@ -11,6 +11,12 @@ module Elements
       super()
     end
 
-    attr_reader :dashboard, :admin
+    def dashboard?
+      @dashboard
+    end
+
+    def admin?
+      @admin
+    end
   end
 end

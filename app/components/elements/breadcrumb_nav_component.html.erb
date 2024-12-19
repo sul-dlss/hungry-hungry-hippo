@@ -1,7 +1,7 @@
 <div class="breadcrumbs">
   <nav id="breadcrumbs" aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <% if dashboard %>
+      <% if dashboard? %>
         <%= render Elements::BreadcrumbComponent.new(text: 'Dashboard', link: root_path) %>
       <% end %>
       <% breadcrumbs.each do |breadcrumb| %>
