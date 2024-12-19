@@ -1,7 +1,7 @@
 <% content_for :breadcrumbs do %>
   <%= render Elements::BreadcrumbNavComponent.new(dashboard: true, admin: false) do |component| %>
     <% component.with_breadcrumb(text: @work_presenter.collection.title, link: collection_path(druid: @work_presenter.collection.druid)) %>
-    <% component.with_breadcrumb(text: @work_form.title) %>
+    <% component.with_breadcrumb(text: @work_presenter.title) %>
   <% end %>
 <% end %>
 <%= render Show::HeaderComponent.new(title: @work_presenter.title, status_message: @work_presenter.status_message, edit_path: edit_work_path(@work_presenter.druid), destroy_path: work_path(@work_presenter.druid), editable: @work_presenter.editable?, discardable: @work_presenter.discardable?) %>
