@@ -1,3 +1,4 @@
+enable_live_reloading: false
 staging_location: 'tmp/workspace'
 seed_user:
   orcid_id: https://orcid.org/0000-0000-0000-0000
