@@ -34,8 +34,8 @@
 
     <% component.with_pane(tab_name: :participants, label: I18n.t('collections.edit.panes.participants.label'), form:) do %>
       <p><%= t('collections.edit.panes.participants.help_text') %></p>
-      <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: CollectionParticipantForm, label: 'Managers', form_component: Collections::ContributorComponent) %>
-      <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: CollectionParticipantForm, label: 'Depositors', form_component: Collections::ContributorComponent) %>
+      <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, label: 'Managers', form_component: Collections::ContributorComponent) %>
+      <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, label: 'Depositors', form_component: Collections::ContributorComponent) %>
     <% end %>
 
     <% component.with_after_form_pane(tab_name: :deposit, label: I18n.t('collections.edit.panes.deposit.label'), form_id:, render_footer: false) do %>
