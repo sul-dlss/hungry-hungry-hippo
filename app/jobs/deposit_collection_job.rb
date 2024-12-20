@@ -11,8 +11,9 @@ class DepositCollectionJob < ApplicationJob
 
     new_cocina_object = perform_persist
     druid = new_cocina_object.externalIdentifier
-    set_managers
-    set_depositors
+
+    assign_participants(:managers)
+    assign_participants(:depositors)
 
     Sdr::Repository.accession(druid:) if deposit
 
@@ -36,27 +37,14 @@ class DepositCollectionJob < ApplicationJob
     end
   end
 
-  def set_managers
-    collection.managers.clear
-    collection_form.managers_attributes.each do |manager|
-      # Sometimes this is a hash and sometimes it is a CollectionParticipantForm object.
-      manager = manager.attributes if manager.respond_to?(:attributes)
-      next if manager['sunetid'].blank?
+  def assign_participants(role)
+    collection.send(role).clear
+    collection_form.send(:"#{role}_attributes").each do |participant|
+      participant = participant.attributes if participant.respond_to?(:attributes)
+      next if participant['sunetid'].blank?
 
-      user = User.find_or_create_by(email_address: sunetid_to_email_address(manager['sunetid']))
-      collection.managers.append(user)
-    end
-  end
-
-  def set_depositors
-    collection.depositors.clear
-    collection_form.depositors_attributes.each do |depositor|
-      # Sometimes this is a hash and sometimes it is a CollectionParticipantForm object.
-      depositor = depositor.attributes if depositor.respond_to?(:attributes)
-      next if depositor['sunetid'].blank?
-
-      user = User.find_or_create_by(email_address: sunetid_to_email_address(depositor['sunetid']))
-      collection.depositors.append(user)
+      user = User.find_or_create_by(email_address: sunetid_to_email_address(participant['sunetid']))
+      collection.send(role).append(user)
     end
   end
 
