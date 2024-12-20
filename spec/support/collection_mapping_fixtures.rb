@@ -33,7 +33,7 @@ module CollectionMappingFixtures
         },
         version: 1,
         identification: { sourceId: collection_source_id_fixture },
-        administrative: { hasAdminPolicy: Settings.apo },
+        administrative: { hasAdminPolicy: Settings.apo, partOfProject: Settings.project_tag },
         access: { view: 'world' }
       }
     )

@@ -20,7 +20,7 @@ module ToCocina
         if collection_form.persisted?
           Cocina::Models.with_metadata(Cocina::Models.build(params), collection_form.lock)
         else
-          Cocina::Models.build_request(params)
+          Cocina::Models.build_request(request_params)
         end
       end
 
@@ -39,6 +39,12 @@ module ToCocina
           identification: { sourceId: source_id },
           administrative: { hasAdminPolicy: Settings.apo }
         }.compact
+      end
+
+      def request_params
+        params.tap do |params_hash|
+          params_hash[:administrative] = { hasAdminPolicy: Settings.apo, partOfProject: Settings.project_tag }
+        end
       end
     end
   end
