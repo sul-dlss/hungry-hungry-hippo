@@ -7,7 +7,7 @@
     <% end %>
   <% end %>
 <% end %>
-<%= render Show::HeaderComponent.new(title: @collection_presenter.title, status_message: @collection_presenter.status_message, edit_path: edit_collection_path(@collection_presenter.druid), destroy_path: collection_path(@collection_presenter.druid), editable: @collection_presenter.editable?, discardable: @collection_presenter.discardable?) %>
+<%= render Show::HeaderComponent.new(presenter: @collection_presenter) %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'table-show mb-5', label: 'Details') do |component| %>
   <% component.with_row(label: 'Title', values: [@collection_presenter.title]) %>
