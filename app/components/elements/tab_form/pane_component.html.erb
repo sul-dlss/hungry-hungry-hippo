@@ -7,7 +7,7 @@
     </div>
     <% if render_footer? %>
       <div class="mt-4">
-        <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Save as draft', variant: :'outline-primary') %>
+        <%= render Elements::Forms::SubmitComponent.new(form_id:, label: 'Save as draft', variant: :'outline-primary') %>
         <%= render Elements::TabForm::NextButtonComponent.new(tab_id:) %>
       </div>
     <% end %>
