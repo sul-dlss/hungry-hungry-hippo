@@ -32,7 +32,7 @@
       <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, hidden_label: true) %>
     <% end %>
 
-    <% component.with_pane(tab_name: :participants, label: I18n.t('collections.edit.panes.participants.label'), form:) do %>
+    <% component.with_pane(tab_name: :participants, label: I18n.t('collections.edit.panes.participants.label'), form_id:) do %>
       <p><%= t('collections.edit.panes.participants.help_text') %></p>
       <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, label: 'Managers', form_component: Collections::ContributorComponent) %>
       <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, label: 'Depositors', form_component: Collections::ContributorComponent) %>

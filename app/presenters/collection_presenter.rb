@@ -8,4 +8,8 @@ class CollectionPresenter < FormPresenter
   end
 
   attr_reader :collection
+
+  def participants(role)
+    collection.send(role).pluck(:email_address).join(', ')
+  end
 end
