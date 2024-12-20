@@ -43,7 +43,7 @@ module ToCocina
 
       def request_params
         params.tap do |params_hash|
-          params_hash[:administrative] = { hasAdminPolicy: Settings.apo, partOfProject: Settings.project_tag }
+          params_hash[:administrative][:partOfProject] = Settings.project_tag
         end
       end
     end
