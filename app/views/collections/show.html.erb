@@ -16,8 +16,8 @@
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'participants-table', classes: 'table-show mb-5', label: 'Collection participants') do |component| %>
-  <% component.with_row(label: 'Managers', values: [@collection.managers.pluck(:email_address).join(', ')]) %>
-  <% component.with_row(label: 'Depositors', values: [@collection.depositors.pluck(:email_address).join(', ')]) %>
+  <% component.with_row(label: 'Managers', values: [@collection_presenter.participants(:managers)]) %>
+  <% component.with_row(label: 'Depositors', values: [@collection_presenter.participants(:depositors)]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'table-show mb-5', label: 'Related content') do |component| %>
