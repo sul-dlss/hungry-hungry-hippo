@@ -11,7 +11,8 @@
 <% end %>
 <%= render Elements::HeaderComponent.new(level: :h1, variant: :h2, text: @work_form.title || t('works.edit.no_title'), classes: 'mb-3') %>
 <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if @work_form.errors.present? %>
-<%= render Elements::TabForm::TabListComponent.new(model: @work_form, hidden_fields: %i[lock version collection_druid content_id]) do |component| %>
+<% form_id = dom_id(@work_form, 'tabbed_form') %>
+<%= render Elements::TabForm::TabListComponent.new(model: @work_form, form_id:, hidden_fields: %i[lock version collection_druid content_id]) do |component| %>
   <% component.with_tab(label: t('works.edit.panes.files.tab_label'), tab_name: :files, selected: true) %>
   <% component.with_tab(label: t('works.edit.panes.title.tab_label'), tab_name: :title) %>
   <% component.with_tab(label: t('works.edit.panes.authors.tab_label'), tab_name: :authors) %>
@@ -25,15 +26,13 @@
   <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
   <%# TabListComponent will render the actual form. %>
   <% form_with(model: @work_form) do |form| %>
-    <% component.with_pane(tab_name: :files, label: t('works.edit.panes.files.label'), selected: true, form:) do %>
+    <%# This pane is outside the work form because it contains its own forms for files. %>
+    <% component.with_before_form_pane(tab_name: :files, label: t('works.edit.panes.files.label'), selected: true, form_id:) do %>
       <%= turbo_stream_from @content %>
 
       <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
 
-      <%# Using a turboframe otherwise having a form within a form is problematic. %>
-      <%= turbo_frame_tag @content, 'edit', src: edit_content_path(@content) do %>
-        <%= render Elements::SpinnerComponent.new %>
-      <% end %>
+      <%= render 'contents/edit', content: @content %>
 
       <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
       <div class="h5 mb-3"><%= t('works.edit.panes.files.list') %></div>
@@ -42,46 +41,47 @@
       </div>
     <% end %>
 
-    <% component.with_pane(tab_name: :title, label: t('works.edit.panes.title.label'), form:) do %>
+    <% component.with_pane(tab_name: :title, label: t('works.edit.panes.title.label'), form_id:) do %>
       <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: t('works.edit.fields.title.label'),
                                                          help_text: t('works.edit.fields.title.help_text'), width: 500, container_classes: 'mb-4') %>
       <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false) %>
     <% end %>
-    <% component.with_pane(tab_name: :authors, label: t('works.edit.panes.authors.label'), form:, help_text: t('works.edit.panes.authors.help_text')) do %>
+    <% component.with_pane(tab_name: :authors, label: t('works.edit.panes.authors.label'), form_id:, help_text: t('works.edit.panes.authors.help_text')) do %>
       <%= render NestedComponentPresenter.for(form:, field_name: :authors, model_class: AuthorForm, form_component: Contributors::EditComponent, hidden_label: true, reorderable: true) %>
     <% end %>
 
-    <% component.with_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), form:, help_text: t('works.edit.panes.abstract.help_text')) do %>
+    <% component.with_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), form_id:, help_text: t('works.edit.panes.abstract.help_text')) do %>
       <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: t('works.edit.fields.abstract.label')) %>
       <%= render NestedComponentPresenter.for(form:, field_name: :keywords, model_class: KeywordForm, form_component: Keywords::EditComponent, hidden_label: false, bordered: false) %>
     <% end %>
 
-    <% component.with_pane(tab_name: :types, form:) do %>
+    <% component.with_pane(tab_name: :types, form_id:) do %>
       <%= render Works::Edit::WorkTypeComponent.new(form:) %>
     <% end %>
 
-    <% component.with_pane(tab_name: :dates, label: t('works.edit.panes.dates.label'), form:) do %>
+    <% component.with_pane(tab_name: :dates, label: t('works.edit.panes.dates.label'), form_id:) do %>
       <%= render NestedComponentPresenter.for(form:, field_name: :publication_date, model_class: DateForm, form_component: PublicationDate::EditComponent) %>
     <% end %>
 
-    <% component.with_pane(tab_name: :citation, label: t('works.edit.panes.citation.label'), form:) do %>
+    <% component.with_pane(tab_name: :citation, label: t('works.edit.panes.citation.label'), form_id:) do %>
       <%= render Works::Edit::CitationComponent.new(form:) %>
     <% end %>
 
-    <% component.with_pane(tab_name: :related_content, label: t('works.edit.panes.related_content.label'), form:) do %>
+    <% component.with_pane(tab_name: :related_content, label: t('works.edit.panes.related_content.label'), form_id:) do %>
       <%= render NestedComponentPresenter.for(form:, field_name: :related_works, model_class: RelatedWorkForm, form_component: RelatedWorks::EditComponent) %>
       <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent) %>
     <% end %>
 
-    <% component.with_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form:) do %>
+    <% component.with_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:) do %>
       <%= render Works::Edit::LicenseComponent.new(form:) %>
     <% end %>
 
-    <% component.with_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), render_footer: false, form:) do %>
+    <%# This pane is outside the work form because it contains its own form for discarding the draft. %>
+    <% component.with_after_form_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), render_footer: false, form_id:) do %>
       <p><%= t('works.edit.panes.deposit.help_text') %></p>
       <div class="d-flex align-items-baseline">
         <%= render Elements::CancelButtonComponent.new(link: root_path, classes: 'me-4') %>
-        <%= render Elements::Forms::SubmitComponent.new(form:, label: 'Deposit', classes: 'mt-2 ms-2') %>
+        <%= render Elements::Forms::SubmitComponent.new(form_id:, label: 'Deposit', classes: 'mt-2 ms-2') %>
       </div>
     <% end %>
   <% end %>
