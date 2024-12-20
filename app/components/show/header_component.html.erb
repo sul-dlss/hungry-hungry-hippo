@@ -4,7 +4,7 @@
     <span class="ms-4 fst-italic status"><%= status_message %></span>
   </div>
   <div class="d-flex align-items-start">
-    <%= render Elements::ButtonLinkComponent.new(link: edit_path, label: 'Edit or deposit', variant: :'outline-primary') if editable? %>
-    <%= render Elements::ButtonFormComponent.new(link: destroy_path, label: 'Discard draft', classes: 'ms-2', variant: :'outline-primary', confirm: 'Are you sure?', method: :delete) if discardable? %>
+    <%= render Edit::EditDraftButtonComponent.new(presenter:) %>
+    <%= render Edit::DiscardDraftButtonComponent.new(presenter:, classes: 'ms-2') %>
   </div>
 </div>

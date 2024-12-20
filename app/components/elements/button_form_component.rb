@@ -13,9 +13,11 @@ module Elements
       super()
     end
 
+    attr_reader :link
+
     def call
-      button_to(@link, method: @method,
-                       class: ButtonSupport.classes(variant: @variant, classes:), form: { data: }) do
+      button_to(link, method: @method,
+                      class: ButtonSupport.classes(variant: @variant, classes:), form: { data: }) do
         @label || content
       end
     end
