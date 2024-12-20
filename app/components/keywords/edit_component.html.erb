@@ -1,6 +1,6 @@
 <div class="mb-4" data-controller="autocomplete autocomplete-edit" data-autocomplete-url-value="/fast" data-autocomplete-min-length-value="3" aria-label="autocomplete group" class="dropdown" role="combobox" aria-expanded="false">
   <%= render Elements::Forms::TextFieldComponent.new(field_name: :text, label: helpers.t('keyword.edit.fields.text.label'), form:, data: { autocomplete_target: 'input' }) %>
-  <ul class="list-group" data-autocomplete-target="results"></ul>
+  <ul class="list-group" data-autocomplete-target="results" style="overflow-y: scroll; max-height: 425px;"></ul>
   <!-- This input is populated by autocomplete controller.-->
   <!-- That triggers the autocomplete-edit controller, which populates the uri and cocina type inputs. -->
   <input type="hidden" data-autocomplete-target="hidden" data-autocomplete-edit-target="value" data-action="autocomplete-edit#change" aria-label="autocomplete">
