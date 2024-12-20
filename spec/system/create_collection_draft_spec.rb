@@ -19,11 +19,11 @@ RSpec.describe 'Create a collection draft' do
   end
 
   before do
-    # Stubbing out for Deposit Job
     allow(Sdr::Repository).to receive(:register) do |args|
       cocina_params = args[:cocina_object].to_h
       cocina_params[:externalIdentifier] = druid
       cocina_params[:description][:purl] = Sdr::Purl.from_druid(druid:)
+      cocina_params[:administrative] = { hasAdminPolicy: Settings.apo }
       cocina_object = Cocina::Models.build(cocina_params)
       Cocina::Models.with_metadata(cocina_object, 'abc123')
     end
@@ -35,7 +35,7 @@ RSpec.describe 'Create a collection draft' do
     sign_in(user, groups:)
   end
 
-  it 'creates a work' do
+  it 'creates a collection' do
     visit root_path
     click_link_or_button('Create a new collection')
 

@@ -22,7 +22,7 @@ module ToCocina
         if work_form.persisted?
           Cocina::Models.with_metadata(Cocina::Models.build(params), work_form.lock)
         else
-          Cocina::Models.build_request(params)
+          Cocina::Models.build_request(request_params)
         end
       end
 
@@ -47,6 +47,12 @@ module ToCocina
       def access
         { view: 'world', download: 'world', license: work_form.license.presence,
           useAndReproductionStatement: I18n.t('works.edit.fields.license.terms_of_use') }.compact
+      end
+
+      def request_params
+        params.tap do |params_hash|
+          params_hash[:administrative][:partOfProject] = Settings.project_tag
+        end
       end
     end
   end

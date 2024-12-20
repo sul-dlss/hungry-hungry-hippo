@@ -86,7 +86,7 @@ module WorkMappingFixtures
         },
         version: 1,
         identification: { sourceId: source_id_fixture },
-        administrative: { hasAdminPolicy: Settings.apo },
+        administrative: { hasAdminPolicy: Settings.apo, partOfProject: Settings.project_tag },
         access: { view: 'world', download: 'world', license: license_fixture,
                   useAndReproductionStatement: I18n.t('works.edit.fields.license.terms_of_use') },
         structural: { isMemberOf: [collection_druid_fixture] }

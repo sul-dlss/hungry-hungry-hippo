@@ -24,6 +24,7 @@ RSpec.describe 'Create a collection deposit' do
       cocina_params = args[:cocina_object].to_h
       cocina_params[:externalIdentifier] = druid
       cocina_params[:description][:purl] = Sdr::Purl.from_druid(druid:)
+      cocina_params[:administrative] = { hasAdminPolicy: Settings.apo }
       cocina_object = Cocina::Models.build(cocina_params)
       Cocina::Models.with_metadata(cocina_object, 'abc123')
     end
