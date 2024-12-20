@@ -33,9 +33,12 @@
 
     <% component.with_after_form_pane(tab_name: :deposit, label: I18n.t('collections.edit.panes.deposit.label'), form_id:, render_footer: false) do %>
       <p><%= t('collections.edit.panes.deposit.help_text') %></p>
-      <div class="d-flex align-items-baseline">
-        <%= render Elements::CancelButtonComponent.new(link: root_path, classes: 'me-4') %>
-        <%= render Elements::Forms::SubmitComponent.new(form_id:, label: 'Deposit', classes: 'mt-2 ms-2') %>
+      <div class="d-flex justify-content-between">
+        <div>
+          <%= render Elements::CancelButtonComponent.new(link: root_path, classes: 'me-4') %>
+          <%= render Elements::Forms::SubmitComponent.new(form_id:, label: 'Deposit', classes: 'ms-2') %>
+        </div>
+        <%= render Edit::DiscardDraftButtonComponent.new(presenter: @collection_presenter) if @collection_presenter %>
       </div>
     <% end %>
   <% end %>
