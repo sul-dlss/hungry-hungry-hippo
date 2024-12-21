@@ -21,7 +21,7 @@ RSpec.describe DepositCollectionJob do
       allow(Sdr::Repository).to receive(:register).and_return(cocina_object)
     end
 
-    it 'registers a new work' do
+    it 'registers a new collection' do
       described_class.perform_now(collection_form:, collection:, deposit: true)
       expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form:,
                                                                         source_id: "h3:collection-#{collection.id}")

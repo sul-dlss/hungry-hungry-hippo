@@ -62,6 +62,7 @@ RSpec.describe 'Discard a work draft' do
     end
 
     let(:collection_cocina_object) { collection_with_metadata_fixture }
+    let(:collection) { create(:collection, druid: collection_cocina_object.externalIdentifier, user:) }
 
     before do
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)

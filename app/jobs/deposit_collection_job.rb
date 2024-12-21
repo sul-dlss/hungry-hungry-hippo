@@ -12,6 +12,9 @@ class DepositCollectionJob < ApplicationJob
     new_cocina_object = perform_persist
     druid = new_cocina_object.externalIdentifier
 
+    assign_participants(:managers)
+    assign_participants(:depositors)
+
     Sdr::Repository.accession(druid:) if deposit
 
     ModelSync::Collection.call(collection:, cocina_object: new_cocina_object)
@@ -32,5 +35,20 @@ class DepositCollectionJob < ApplicationJob
     else
       Sdr::Repository.register(cocina_object:)
     end
+  end
+
+  def assign_participants(role)
+    collection.send(role).clear
+    collection_form.send(:"#{role}_attributes").each do |participant|
+      participant = participant.attributes if participant.respond_to?(:attributes)
+      next if participant['sunetid'].blank?
+
+      user = User.find_or_create_by(email_address: sunetid_to_email_address(participant['sunetid']))
+      collection.send(role).append(user)
+    end
+  end
+
+  def sunetid_to_email_address(sunetid)
+    "#{sunetid}#{User::EMAIL_SUFFIX}"
   end
 end
