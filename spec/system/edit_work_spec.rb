@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Edit a work' do
   # Using mapping fixtures because it provides a roundtrippable DRO.
   include WorkMappingFixtures
+
   include_context 'with FAST connection'
 
   let(:query) { 'First%20Keyword' }

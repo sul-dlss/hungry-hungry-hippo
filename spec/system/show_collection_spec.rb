@@ -7,7 +7,9 @@ RSpec.describe 'Show a collection' do
 
   let(:druid) { collection_druid_fixture }
   let(:user) { create(:user) }
-  let!(:collection) { create(:collection, druid:, title: collection_title_fixture, user:) }
+  let(:managers) { [create(:user, email_address: 'stepking@stanford.edu')] }
+  let(:depositors) { [create(:user, email_address: 'joehill@stanford.edu')] }
+  let!(:collection) { create(:collection, druid:, title: collection_title_fixture, user:, managers:, depositors:) }
   # Need multiple files to test pagination
   let(:cocina_object) { collection_with_metadata_fixture }
   let(:version_status) do
@@ -51,6 +53,15 @@ RSpec.describe 'Show a collection' do
       expect(page).to have_css('caption', text: 'Related content')
       expect(page).to have_css('tr', text: 'Related links')
       expect(page).to have_css('td', text: related_links_fixture.first['text'])
+    end
+
+    # Related Content table
+    within('table#participants-table') do
+      expect(page).to have_css('caption', text: 'Collection participants')
+      expect(page).to have_css('tr', text: 'Managers')
+      expect(page).to have_css('td', text: 'stepking@stanford.edu')
+      expect(page).to have_css('tr', text: 'Depositors')
+      expect(page).to have_css('td', text: 'joehill@stanford.edu')
     end
   end
 end
