@@ -7,15 +7,23 @@
     <% end %>
   </div>
   <div class="col-md-9">
-    <%= form_with(model:) do |form| %>
-      <% hidden_fields.each do |field| %>
-        <%= form.hidden_field field %>
+    <div class="tab-content h-100">
+      <% before_form_panes.each do |pane| %>
+        <%= pane %>
       <% end %>
-      <div class="tab-content h-100">
-        <% panes.each do |pane| %>
-          <%= pane %>
+
+      <%= form_with(model:, id: form_id) do |form| %>
+        <% hidden_fields.each do |field| %>
+          <%= form.hidden_field field %>
         <% end %>
-      </div>
-    <% end %>
+          <% panes.each do |pane| %>
+            <%= pane %>
+          <% end %>
+      <% end %>
+
+      <% after_form_panes.each do |pane| %>
+        <%= pane %>
+      <% end %>
+    </div>
   </div>
 <% end %>

@@ -67,6 +67,7 @@ RSpec.describe 'Create a collection deposit' do
     click_link_or_button('Next')
     find('.nav-link', text: 'Deposit').click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
+    expect(page).to have_no_text('Discard draft')
     click_link_or_button('Deposit')
 
     # Waiting page may be too fast to catch so not testing.
