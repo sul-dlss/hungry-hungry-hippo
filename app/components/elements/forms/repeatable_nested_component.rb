@@ -6,7 +6,7 @@ module Elements
     # NOTE: Use the `NestedComponentPresenter` to invoke this component; do not directly instantiate it.
     class RepeatableNestedComponent < ApplicationComponent
       def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists
-                     reorderable: false)
+                     reorderable: false, label: nil)
         @form = form
         @model_class = model_class
         @field_name = field_name
@@ -14,10 +14,11 @@ module Elements
         @hidden_label = hidden_label
         @bordered = bordered
         @reorderable = reorderable
+        @label = label
         super()
       end
 
-      attr_reader :form, :model_class, :field_name, :form_component, :hidden_label
+      attr_reader :form, :model_class, :field_name, :form_component, :hidden_label, :label
 
       def bordered?
         @bordered
@@ -41,7 +42,7 @@ module Elements
       end
 
       def label_text
-        model_class.model_name.plural.humanize
+        label || model_class.model_name.plural.humanize
       end
 
       def reorderable?

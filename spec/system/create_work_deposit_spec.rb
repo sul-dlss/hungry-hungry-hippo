@@ -30,13 +30,11 @@ RSpec.describe 'Create a work deposit' do
     # Stubbing out for show page
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
-
     create(:collection, user:, druid: collection_druid_fixture)
-
     sign_in(user)
   end
 
-  it 'creates a work' do
+  it 'creates and deposits a work' do
     visit root_path
     click_link_or_button('Deposit to this collection')
 

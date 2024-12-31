@@ -8,7 +8,9 @@ module CollectionMappingFixtures
       title: collection_title_fixture,
       description: collection_description_fixture,
       contact_emails_attributes: contact_emails_fixture,
-      related_links_attributes: related_links_fixture
+      related_links_attributes: related_links_fixture,
+      managers_attributes: collection_manager_fixture,
+      depositors_attributes: collection_depositor_fixture
     )
   end
 
