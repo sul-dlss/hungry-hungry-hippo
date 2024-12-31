@@ -4,8 +4,8 @@ module Elements
   module Forms
     # Component for a form submit button
     class SubmitComponent < ApplicationComponent
-      def initialize(form:, label: nil, variant: :primary, classes: [], **options)
-        @form = form
+      def initialize(form_id: nil, label: nil, variant: :primary, classes: [], **options)
+        @form_id = form_id
         @label = label
         @variant = variant
         @options = options
@@ -16,7 +16,7 @@ module Elements
       attr_reader :form, :label
 
       def call
-        form.submit(label, class: ButtonSupport.classes(variant: @variant, classes:), **@options)
+        submit_tag(label, form: @form_id, class: ButtonSupport.classes(variant: @variant, classes:), **@options)
       end
 
       def classes

@@ -6,15 +6,13 @@ class CollectionsController < ApplicationController
   before_action :check_deposit_job_started, only: %i[show edit]
   before_action :set_collection_form_from_cocina, only: %i[show edit]
   before_action :set_status, only: %i[show edit destroy]
+  before_action :set_presenter, only: %i[show edit]
 
   def show
     authorize! @collection
 
     # This updates the Collection with the latest metadata from the Cocina object.
     ModelSync::Collection.call(collection: @collection, cocina_object: @cocina_object)
-
-    @collection_presenter = CollectionPresenter.new(collection: @collection, collection_form: @collection_form,
-                                                    version_status: @version_status)
   end
 
   def new
@@ -128,5 +126,10 @@ class CollectionsController < ApplicationController
 
     ToCollectionForm::RoundtripValidator.roundtrippable?(collection_form: @collection_form,
                                                          cocina_object: @cocina_object)
+  end
+
+  def set_presenter
+    @collection_presenter = CollectionPresenter.new(collection: @collection, collection_form: @collection_form,
+                                                    version_status: @version_status)
   end
 end

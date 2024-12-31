@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :contents, only: %i[edit update show] do
+  resources :contents, only: %i[update show] do
     member do
       get 'show_table', to: 'contents#show_table', as: 'show_table'
     end
