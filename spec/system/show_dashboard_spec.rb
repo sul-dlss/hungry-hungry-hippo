@@ -19,8 +19,8 @@ RSpec.describe 'Show dashboard', :rack_test do
   end
 
   before do
-    allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
-    allow(Sdr::Repository).to receive(:status).with(druid: draft_work.druid).and_return(draft_version_status)
+    allow(Sdr::Repository).to receive(:statuses).and_return({ work.druid => version_status,
+                                                              draft_work.druid => draft_version_status })
     sign_in(user)
   end
 

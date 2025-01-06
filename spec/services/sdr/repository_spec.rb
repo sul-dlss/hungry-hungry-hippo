@@ -135,6 +135,29 @@ RSpec.describe Sdr::Repository do
     end
   end
 
+  describe '#statuses' do
+    context 'when successful' do
+      let(:objects_client) { instance_double(Dor::Services::Client::Objects, statuses: { druid => version_status }) }
+
+      let(:version_status) { instance_double(Dor::Services::Client::ObjectVersion::VersionStatus) }
+
+      before do
+        allow(Dor::Services::Client).to receive(:objects).and_return(objects_client)
+      end
+
+      it 'returns the map of statuses' do
+        expect(described_class.statuses(druids: [druid])).to match(druid => be_a(VersionStatus))
+        expect(objects_client).to have_received(:statuses).with(object_ids: [druid])
+      end
+    end
+
+    context 'when empty' do
+      it 'returns an empty hash' do
+        expect(described_class.statuses(druids: [])).to eq({})
+      end
+    end
+  end
+
   describe '#open_if_needed' do
     subject(:open_cocina_object) { described_class.open_if_needed(cocina_object:, version_description:) }
 

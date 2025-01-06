@@ -43,7 +43,7 @@ gem 'bootsnap', require: false
 gem 'action_policy'
 gem 'cocina-models'
 gem 'config'
-gem 'dor-services-client', '>= 15.2.1'
+gem 'dor-services-client', '>= 15.3.0'
 gem 'dor-workflow-client', '>= 7.6.1'
 gem 'druid-tools'
 gem 'dry-monads'

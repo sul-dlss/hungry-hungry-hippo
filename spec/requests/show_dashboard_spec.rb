@@ -12,7 +12,8 @@ RSpec.describe 'Show dashboard' do
     let(:drafts_header) { 'Drafts - please complete' }
 
     before do
-      allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
+      allow(Sdr::Repository).to receive(:statuses)
+        .with(druids: [work.druid]).and_return({ work.druid => version_status })
     end
 
     context 'when there are drafts' do
