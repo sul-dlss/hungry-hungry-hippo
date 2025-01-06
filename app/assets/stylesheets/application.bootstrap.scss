@@ -129,3 +129,13 @@ table.table-treegrid {
 .breadcrumb {
   --bs-breadcrumb-divider: '>'
 }
+
+// Some of our tab panes are inside a form. This hides them until the tab is active.
+.tab-content > form > .tab-pane {
+  display: none;
+}
+
+.tab-content > form > .active {
+  display: block;
+}
+

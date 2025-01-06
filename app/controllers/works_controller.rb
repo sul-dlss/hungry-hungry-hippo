@@ -7,6 +7,7 @@ class WorksController < ApplicationController
   before_action :set_work_form_from_cocina, only: %i[show edit]
   before_action :set_content, only: %i[show edit]
   before_action :set_status, only: %i[show edit destroy]
+  before_action :set_presenter, only: %i[show edit]
 
   def show
     authorize! @work
@@ -14,8 +15,6 @@ class WorksController < ApplicationController
     # This updates the Work with the latest metadata from the Cocina object.
     # Does not update the Work's collection if the collection cannot be found.
     ModelSync::Work.call(work: @work, cocina_object: @cocina_object, raise: false)
-
-    @work_presenter = WorkPresenter.new(work: @work, work_form: @work_form, version_status: @version_status)
   end
 
   def new
@@ -149,5 +148,9 @@ class WorksController < ApplicationController
 
     ToWorkForm::RoundtripValidator.roundtrippable?(work_form: @work_form, cocina_object: @cocina_object,
                                                    content: @content)
+  end
+
+  def set_presenter
+    @work_presenter = WorkPresenter.new(work: @work, work_form: @work_form, version_status: @version_status)
   end
 end

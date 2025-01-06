@@ -7,7 +7,7 @@ module Edit
       @presenter = presenter
       args[:label] = 'Discard draft'
       args[:variant] = 'outline-primary'
-      args[:confirm] = 'Are you sure?'
+      args[:confirm] = 'Are you sure you want to delete this draft? It cannot be undone.'
       args[:method] = :delete
       # polymorphic_path cannot be used in initializer, so overrriding link below
       args[:link] = nil

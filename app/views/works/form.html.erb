@@ -79,9 +79,12 @@
     <%# This pane is outside the work form because it contains its own form for discarding the draft. %>
     <% component.with_after_form_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), render_footer: false, form_id:) do %>
       <p><%= t('works.edit.panes.deposit.help_text') %></p>
-      <div class="d-flex align-items-baseline">
-        <%= render Elements::CancelButtonComponent.new(link: root_path, classes: 'me-4') %>
-        <%= render Elements::Forms::SubmitComponent.new(form_id:, label: 'Deposit', classes: 'mt-2 ms-2') %>
+      <div class="d-flex justify-content-between">
+        <div>
+          <%= render Elements::CancelButtonComponent.new(link: root_path, classes: 'me-4') %>
+          <%= render Elements::Forms::SubmitComponent.new(form_id:, label: 'Deposit', classes: 'ms-2') %>
+        </div>
+        <%= render Edit::DiscardDraftButtonComponent.new(presenter: @work_presenter) if @work_presenter %>
       </div>
     <% end %>
   <% end %>
