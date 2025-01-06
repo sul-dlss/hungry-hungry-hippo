@@ -24,6 +24,16 @@ module Sdr
       raise NotFoundResponse, "Object not found: #{druid}"
     end
 
+    # @param [Array<String>] druids the druids of the objects
+    # @return [Hash<String,VersionStatus>] map of druid to status
+    def self.statuses(druids:)
+      return {} if druids.empty?
+
+      Dor::Services::Client.objects.statuses(object_ids: druids).transform_values do |status|
+        VersionStatus.new(status:)
+      end
+    end
+
     # @param [Cocina::Models::RequestDRO] cocina_object
     # @param [Boolean] assign_doi true to assign a DOI; otherwise, false
     # @return [Cocina::Models::DRO] the registered cocina object
