@@ -2,7 +2,7 @@
 
 # Controller for a Work contents (files)
 class ContentsController < ApplicationController
-  before_action :set_content, only: %i[edit update show show_table]
+  before_action :set_content, only: %i[update show show_table]
   before_action :set_content_files, only: %i[show show_table]
 
   # Called from work edit/update form.
@@ -12,10 +12,6 @@ class ContentsController < ApplicationController
 
   # Called from work show page.
   def show_table
-    authorize! @content
-  end
-
-  def edit
     authorize! @content
   end
 
