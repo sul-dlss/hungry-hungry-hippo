@@ -76,8 +76,7 @@ en:
   license:
     edit:
       fields:
-        license:
-          label: 'License'
+        label: 'License'
       license_terms_of_use: In addition to the license, the following Terms of Use will also be displayed on your PURL page.
       terms_of_use: >
         User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or
