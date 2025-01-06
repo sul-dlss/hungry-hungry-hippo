@@ -75,7 +75,7 @@ class CollectionsController < ApplicationController
     authorize! @collection
 
     Sdr::Repository.discard_draft(druid: @collection.druid)
-    flash[:success] = helpers.t('collections.edit.messages.draft_discarded')
+    flash[:success] = helpers.t('messages.draft_discarded')
     # When version 1 SDR will purge the DRO. The Collection record can be destroyed as well.
     if @version_status.version == 1
       @collection.destroy!
