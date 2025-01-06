@@ -9,6 +9,8 @@ class CollectionPresenter < FormPresenter
 
   attr_reader :collection
 
+  # @param [Symbol] role :managers or :depositors
+  # @return [String] a comma-separated list of email addresses
   def participants(role)
     collection.send(role).pluck(:email_address).join(', ')
   end

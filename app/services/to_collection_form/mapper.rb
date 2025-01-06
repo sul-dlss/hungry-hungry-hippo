@@ -7,9 +7,9 @@ module ToCollectionForm
       new(...).call
     end
 
-    def initialize(cocina_object:)
+    def initialize(cocina_object:, collection:)
       @cocina_object = cocina_object
-      @collection = Collection.find_by(druid: cocina_object.externalIdentifier)
+      @collection = collection
     end
 
     def call
@@ -34,6 +34,9 @@ module ToCollectionForm
       }
     end
 
+    # @param [Symbol] role :managers or :depositors
+    # @return [Array<Hash>] an array of participant attributes
+    # Creates the attribute hash of sunetids for the given role to be used in the CollectionForm
     def participant_attributes(role)
       collection.send(role).map do |participant|
         { sunetid: participant.sunetid }

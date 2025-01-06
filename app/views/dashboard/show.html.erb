@@ -20,7 +20,7 @@
   </div>
 <% end %>
 
-<% current_user.manages_collections.each do |collection| %>
+<% current_user.manages.each do |collection| %>
   <div class="mb-3">
     <%= render Collections::HeaderLinkComponent.new(collection:, level: :h4) %>
     <%= render Dashboard::Show::WorksListComponent.new(collection:, status_map: @status_map) %>
@@ -28,7 +28,7 @@
   </div>
 <% end %>
 
-<% current_user.deposits_into.each do |collection| %>
+<% current_user.depositor_for.each do |collection| %>
   <div class="mb-3">
     <%= render Collections::HeaderLinkComponent.new(collection:, level: :h4) %>
     <%= render Dashboard::Show::WorksListComponent.new(collection:, status_map: @status_map) %>

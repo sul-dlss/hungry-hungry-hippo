@@ -255,6 +255,16 @@ CREATE TABLE public.managers (
 
 
 --
+-- Name: reviewers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.reviewers (
+    collection_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -270,7 +280,7 @@ CREATE TABLE public.schema_migrations (
 CREATE TABLE public.users (
     id bigint NOT NULL,
     email_address character varying NOT NULL,
-    name character varying,
+    name character varying NOT NULL,
     first_name character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -553,6 +563,13 @@ CREATE UNIQUE INDEX index_managers_on_collection_id_and_user_id ON public.manage
 
 
 --
+-- Name: index_reviewers_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_reviewers_on_collection_id_and_user_id ON public.reviewers USING btree (collection_id, user_id);
+
+
+--
 -- Name: index_users_on_email_address; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -650,6 +667,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250106212515'),
 ('20241211213303'),
 ('20241206021849'),
 ('20241205222413'),

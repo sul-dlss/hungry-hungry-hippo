@@ -14,8 +14,11 @@ RSpec.describe DepositCollectionJob do
   end
 
   context 'when a new collection' do
-    let(:collection_form) { CollectionForm.new(title: collection.title) }
+    let(:collection_form) { CollectionForm.new(title: collection.title, managers_attributes:, depositors_attributes:) }
     let(:collection) { create(:collection, :deposit_job_started) }
+    let(:managers_attributes) { [{ sunetid: manager.sunetid }, { sunetid: 'stepking' }] }
+    let(:depositors_attributes) { [{ sunetid: 'joehill' }] }
+    let(:manager) { create(:user) }
 
     before do
       allow(Sdr::Repository).to receive(:register).and_return(cocina_object)
@@ -23,6 +26,8 @@ RSpec.describe DepositCollectionJob do
 
     it 'registers a new collection' do
       described_class.perform_now(collection_form:, collection:, deposit: true)
+      new_manager = User.find_by(email_address: 'stepking@stanford.edu')
+      new_depositor = User.find_by(email_address: 'joehill@stanford.edu')
       expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form:,
                                                                         source_id: "h3:collection-#{collection.id}")
       expect(Sdr::Repository).to have_received(:register)
@@ -30,6 +35,17 @@ RSpec.describe DepositCollectionJob do
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
 
       expect(collection.reload.deposit_job_finished?).to be true
+
+      # These expectations verify that the new manager and depositor were created and associated with the collection.
+      # As well as verifying that an existing managers name is not overwritten.
+      expect(collection.managers).to include(manager, new_manager)
+      expect(collection.depositors).to include(new_depositor)
+      expect(manager.manages).to contain_exactly(collection)
+      expect(new_manager.manages).to contain_exactly(collection)
+      expect(new_depositor.depositor_for).to contain_exactly(collection)
+      expect(new_manager.name).to eq('stepking')
+      expect(new_depositor.name).to eq('joehill')
+      expect(manager.name).not_to eq(manager.sunetid)
     end
   end
 

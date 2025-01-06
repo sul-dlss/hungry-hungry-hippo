@@ -86,9 +86,23 @@ RSpec.describe 'Edit a collection' do
     # Clicking on Next to go to Participants tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Participants')
-    expect(page).to have_text('Managers')
-    fill_in('collection_managers_attributes_0_sunetid', with: 'stepking')
-    fill_in('collection_depositors_attributes_0_sunetid', with: 'joehill')
+    # expect(page).to have_text('Managers')
+
+    # There is a manager form and a depositor form
+    form_instances = all('.form-instance')
+    expect(form_instances.count).to eq(2)
+    expect(form_instances[0]).to have_text('SUNet ID') # Manager
+    expect(form_instances[1]).to have_text('SUNet ID') # Depositor
+
+    # Fill in the manager form
+    within form_instances[0] do
+      fill_in('SUNet ID', with: 'stepking')
+    end
+
+    # Fill in the depositor form
+    within form_instances[1] do
+      fill_in('SUNet ID', with: 'joehill')
+    end
 
     click_link_or_button('Save as draft')
 

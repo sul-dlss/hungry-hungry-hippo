@@ -37,16 +37,26 @@ class DepositCollectionJob < ApplicationJob
     end
   end
 
+  # @param [Symbol] role :managers or :depositors
+  #
+  # Based on the provided role (:managers or :depositors), first clears the existing participants
+  # in order to apply any deletes, then adds the participants from the form. If the added user
+  # does not exist, it will be created and the name set to the sunetid until they login for the first time.
+  # rubocop:disable Metrics/AbcSize
   def assign_participants(role)
     collection.send(role).clear
     collection_form.send(:"#{role}_attributes").each do |participant|
       participant = participant.attributes if participant.respond_to?(:attributes)
       next if participant['sunetid'].blank?
 
-      user = User.find_or_create_by(email_address: sunetid_to_email_address(participant['sunetid']))
+      user = User.find_or_initialize_by(email_address: sunetid_to_email_address(participant['sunetid']))
+      user.update!(name: participant['sunetid']) if user.name.blank?
+      user.save!
+
       collection.send(role).append(user)
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def sunetid_to_email_address(sunetid)
     "#{sunetid}#{User::EMAIL_SUFFIX}"

@@ -16,7 +16,6 @@ RSpec.describe 'Destroy collection' do
   context 'when the user is not authorized' do
     before do
       create(:collection, druid:)
-      # allow(Sdr::Repository).to receive(:find).with(druid:).and_return(collection_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status)
         .with(druid:).and_return(instance_double(Dor::Services::Client::ObjectVersion::VersionStatus))
       sign_in(create(:user))
