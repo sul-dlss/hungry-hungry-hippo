@@ -48,6 +48,11 @@ en:
       long: '%B %d, %Y'
   errors:
     not_authorized: 'You are not authorized to perform the requested action.'
+  messages:
+    draft_discarded: 'Draft discarded.'
+    validation: >
+      Required fields have not been filled out. Click on the section(s) highlighted in red on
+      the left to correct the error(s) and then try depositing again.
   publication_date:
     edit:
       legend: 'Previous publication date'
@@ -68,6 +73,16 @@ en:
       fields:
         text:
           label: 'Keywords (one per box)'
+  license:
+    edit:
+      fields:
+        license:
+          label: 'License'
+      license_terms_of_use: In addition to the license, the following Terms of Use will also be displayed on your PURL page.
+      terms_of_use: >
+        User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or
+        confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to
+        additional license and use restrictions applied by the depositor.
   related_links:
     edit:
       fields:
@@ -122,13 +137,7 @@ en:
           help_text: >
             A unique, descriptive title may improve discovery of your work in web searches.
         license:
-          label: 'License'
           help_text: Assigning a license may improve discovery of your work in web searches.
-          license_terms_of_use: In addition to the license, the following Terms of Use will also be displayed on your PURL page.
-          terms_of_use: >
-            User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or
-            confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to
-            additional license and use restrictions applied by the depositor.
         contributors:
           role:
             label: 'Role'
@@ -158,10 +167,6 @@ en:
           label: 'Which of the following terms further describe your deposit?'
       messages:
         cannot_be_edited: 'This work cannot be edited.'
-        draft_discarded: 'Draft discarded.'
-        validation: >
-          Required fields have not been filled out. Click on the section(s) highlighted in red on
-          the left to correct the error(s) and then try depositing again.
       panes:
         abstract:
           tab_label: 'Abstract & keywords'
@@ -221,19 +226,9 @@ en:
           help_text: >
             A unique, descriptive name may improve discovery of your collection in web searches.
         license:
-          label: 'License'
           help_text: Assigning a default license may improve discovery of your collection in web searches.
-          license_terms_of_use: In addition to the license, the following Terms of Use will also be displayed on your PURL page.
-          terms_of_use: >
-            User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or
-            confidentiality rights of individuals. Content distributed via the Stanford Digital Repository may be subject to
-            additional license and use restrictions applied by the depositor.
       messages:
         cannot_be_edited: 'This collection cannot be edited.'
-        draft_discarded: 'Draft discarded.'
-        validation: >
-          Required fields have not been filled out. Click on the section(s) highlighted in red on
-          the left to correct the error(s) and then try depositing again.
       panes:
         description:
           tab_label: 'Description'

@@ -12,7 +12,7 @@
   <% end %>
 <% end %>
 <%= render Elements::HeaderComponent.new(level: :h1, variant: :h2, text: @collection_form.title || 'Untitled collection', classes: 'mb-3') %>
-<%= render Elements::AlertComponent.new(variant: :danger, value: I18n.t('collections.edit.messages.validation')) if @collection_form.errors.present? %>
+<%= render Elements::AlertComponent.new(variant: :danger, value: I18n.t('messages.validation')) if @collection_form.errors.present? %>
 <%= render Elements::TabForm::TabListComponent.new(model: @collection_form, hidden_fields: %i[lock version]) do |component| %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.details.tab_label'), tab_name: :details, selected: true) %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.related_links.tab_label'), tab_name: :related_links) %>

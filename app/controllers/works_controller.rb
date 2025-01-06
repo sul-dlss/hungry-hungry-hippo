@@ -86,7 +86,7 @@ class WorksController < ApplicationController
     authorize! @work
 
     Sdr::Repository.discard_draft(druid: @work.druid)
-    flash[:success] = helpers.t('works.edit.messages.draft_discarded')
+    flash[:success] = helpers.t('messages.draft_discarded')
     # When version 1 SDR will purge the DRO. The Work record can be destroyed as well.
     if @version_status.version == 1
       collection_druid = @work.collection.druid

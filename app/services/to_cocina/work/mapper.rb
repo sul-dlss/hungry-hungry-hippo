@@ -46,7 +46,7 @@ module ToCocina
 
       def access
         { view: 'world', download: 'world', license: work_form.license.presence,
-          useAndReproductionStatement: I18n.t('works.edit.fields.license.terms_of_use') }.compact
+          useAndReproductionStatement: I18n.t('license.edit.terms_of_use') }.compact
       end
 
       def request_params

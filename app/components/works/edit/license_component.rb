@@ -16,7 +16,7 @@ module Works
       end
 
       def label
-        helpers.t('works.edit.fields.license.label')
+        helpers.t('license.edit.fields.license.label')
       end
 
       def help_text
