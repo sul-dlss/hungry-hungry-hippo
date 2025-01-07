@@ -9,9 +9,56 @@ class CollectionPresenter < FormPresenter
 
   attr_reader :collection
 
+  delegate :license, to: :collection
+
   # @param [Symbol] role :managers or :depositors
   # @return [String] a comma-separated list of email addresses
   def participants(role)
     collection.send(role).pluck(:email_address).join(', ')
+  end
+
+  def release
+    duration_text = Collection::RELEASE_DURATION_OPTIONS.invert[collection.release_duration]
+
+    case collection.release_option
+    when 'delay'
+      duration_text.capitalize
+    when 'depositor_selects'
+      "Depositor selects release date at no more than #{duration_text}"
+    else
+      'Immediately'
+    end
+  end
+
+  def visibility
+    collection.access&.humanize
+  end
+
+  def doi_assignment
+    collection.doi_option.humanize
+  end
+
+  def additional_terms_of_use
+    case collection.custom_rights_statement_option
+    when 'none'
+      'No'
+    when 'with_custom_rights_statement'
+      collection.provided_custom_rights_statement
+    else
+      "Allow user to enter with instructions: #{collection.custom_rights_statement_custom_instructions}"
+    end
+  end
+
+  def license_label
+    case collection.license_option
+    when 'required'
+      'Required license'
+    else
+      'Default license (depositor selects)'
+    end
+  end
+
+  def review_workflow_status
+    collection.review_enabled ? 'On' : 'Off'
   end
 end

@@ -11,6 +11,25 @@ $container-max-widths: (
 @import "bootstrap-icons/font/bootstrap-icons";
 @import "dropzone";
 
+// This is used on the collection show page
+.nav-underline {
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+
+  .nav-link {
+    width: 10.5rem;
+  }
+
+  .nav-link:not(.active) {
+    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+  }
+
+  .nav-link.active {
+    border-bottom: 3px solid black;
+    font-weight: bold;
+  }
+}
+
 .tabbable-panes {
   .nav-pills {
     @include media-breakpoint-up(md) {
@@ -143,4 +162,3 @@ table.table-treegrid {
 .tab-content > form > .active {
   display: block;
 }
-

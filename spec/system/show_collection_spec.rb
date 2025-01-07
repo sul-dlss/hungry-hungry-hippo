@@ -9,8 +9,9 @@ RSpec.describe 'Show a collection' do
   let(:user) { create(:user) }
   let(:managers) { [create(:user, email_address: 'stepking@stanford.edu')] }
   let(:depositors) { [create(:user, email_address: 'joehill@stanford.edu')] }
-  let!(:collection) { create(:collection, druid:, title: collection_title_fixture, user:, managers:, depositors:) }
-  # Need multiple files to test pagination
+  let!(:collection) do
+    create(:collection, :with_review_workflow, druid:, title: collection_title_fixture, user:, managers:, depositors:)
+  end
   let(:cocina_object) { collection_with_metadata_fixture }
   let(:version_status) do
     VersionStatus.new(status:
@@ -37,6 +38,9 @@ RSpec.describe 'Show a collection' do
     expect(page).to have_css('.status', text: 'Deposited')
     expect(page).to have_link('Edit or deposit', href: edit_collection_path(druid))
 
+    # Tabs
+    expect(page).to have_css('.nav-link.active', text: 'Collection details')
+
     # Details table
     within('table#details-table') do
       expect(page).to have_css('caption', text: 'Details')
@@ -55,13 +59,46 @@ RSpec.describe 'Show a collection' do
       expect(page).to have_css('td', text: related_links_fixture.first['text'])
     end
 
-    # Related Content table
+    # Change tab
+    click_link_or_button('Collection settings')
+    expect(page).to have_css('.nav-link.active', text: 'Collection settings')
+
+    # Release and visibility table
+    within('table#release-visibility-table') do
+      expect(page).to have_css('caption', text: 'Release and visibility')
+      expect(page).to have_css('tr', text: 'Release')
+      expect(page).to have_css('td', text: 'Depositor selects release date at no more than 1 year from date of deposit')
+      expect(page).to have_css('tr', text: 'Visibility')
+      expect(page).to have_css('td', text: 'Depositor selects')
+      expect(page).to have_css('tr', text: 'DOI Assignment')
+      expect(page).to have_css('td', text: 'Yes')
+    end
+
+    # Terms of use and licenses table
+    within('table#terms-licenses-table') do
+      expect(page).to have_css('caption', text: 'Terms of use and licenses')
+      expect(page).to have_css('tr', text: 'Terms of use')
+      expect(page).to have_css('td', text: 'User agrees that')
+      expect(page).to have_css('tr', text: 'Additional terms of use')
+      expect(page).to have_css('td', text: 'My custom rights statement')
+      expect(page).to have_css('tr', text: 'Required license')
+      expect(page).to have_css('td', text: 'CC0-1.0')
+    end
+
+    # Participants table
     within('table#participants-table') do
       expect(page).to have_css('caption', text: 'Collection participants')
       expect(page).to have_css('tr', text: 'Managers')
       expect(page).to have_css('td', text: 'stepking@stanford.edu')
       expect(page).to have_css('tr', text: 'Depositors')
       expect(page).to have_css('td', text: 'joehill@stanford.edu')
+    end
+
+    # Review workflow table
+    within('table#review-workflow-table') do
+      expect(page).to have_css('caption', text: 'Review workflow')
+      expect(page).to have_css('tr', text: 'Status')
+      expect(page).to have_css('td', text: 'On')
     end
   end
 end
