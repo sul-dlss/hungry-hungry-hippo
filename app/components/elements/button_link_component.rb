@@ -16,13 +16,10 @@ module Elements
     attr_reader :link, :label
 
     def call
-      link_to(link, class: ButtonSupport.classes(variant: @variant, classes:), **@options) do
+      link_to(link, class: ButtonSupport.classes(classes: @classes, variant: @variant, bordered: @bordered),
+                    **@options) do
         label || content
       end
-    end
-
-    def classes
-      merge_classes(@classes, @bordered ? nil : %w[border border-0])
     end
   end
 end

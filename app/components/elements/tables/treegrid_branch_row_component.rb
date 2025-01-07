@@ -4,6 +4,7 @@ module Elements
   module Tables
     # Component for rendering a row for a treegrid branch.
     class TreegridBranchRowComponent < ApplicationComponent
+      renders_many :cells
       def initialize(level:, label:, empty_cells: 0)
         @level = level
         @label = label

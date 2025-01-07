@@ -3,12 +3,13 @@
 module Elements
   # Generic button component
   class ButtonComponent < ViewComponent::Base
-    def initialize(label: nil, classes: [], variant: nil, size: nil, **options)
+    def initialize(label: nil, classes: [], variant: nil, size: nil, bordered: true, **options) # rubocop:disable Metrics/ParameterLists
       @label = label
       @classes = classes
       @variant = variant
       @size = size
       @options = options
+      @bordered = bordered
       super()
     end
 
@@ -16,7 +17,7 @@ module Elements
 
     def call
       tag.button(
-        class: ButtonSupport.classes(variant: @variant, size: @size, classes: @classes),
+        class: ButtonSupport.classes(variant: @variant, size: @size, classes: @classes, bordered: @bordered),
         type: 'button',
         **options
       ) do

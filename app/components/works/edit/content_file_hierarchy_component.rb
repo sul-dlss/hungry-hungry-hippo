@@ -13,7 +13,7 @@ module Works
 
       attr_reader :content_file, :component
 
-      delegate :path_parts, :filename, to: :content_file
+      delegate :path_parts, :filename, :path, to: :content_file
 
       def style_for(level)
         "padding-left: #{level * 25}px"

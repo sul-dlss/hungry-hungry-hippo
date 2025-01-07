@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 import Dropzone from 'dropzone'
 
 export default class extends Controller {
-  static targets = ['progress', 'error']
+  static targets = ['progress', 'error', 'folderAlert', 'folderAlertText']
   static values = {
     existingFiles: { type: Number, default: 0 },
     maxFiles: Number,
@@ -29,6 +29,7 @@ export default class extends Controller {
     })
     this.progress = 0
     this.shouldClearErrors = false
+    this.basePath = null
     this.dropzone.on('processingmultiple', () => {
       // Using processingmultiple instead of addedfiles for showing the progress bar
       // since addedfiles is triggered by dropping an empty directory.
@@ -55,7 +56,9 @@ export default class extends Controller {
       // Add the full path of each file to the form data
       for (let i = 0; i < files.length; i++) {
         const file = files[i]
-        const path = file.fullPath ? file.fullPath : file.name
+        let path = file.fullPath ? file.fullPath : file.name
+        // this.basePath is set when the user selects a folder to upload to.
+        if (this.basePath) path = `${this.basePath}/${path}`
         data.append(`content[paths][${i}]`, path)
       }
       data.append('content[completed]', this.dropzone.getActiveFiles().length === files.length)
@@ -87,5 +90,18 @@ export default class extends Controller {
     const barElement = this.progressTarget.querySelector('.progress-bar')
     barElement.style.width = `${progress}%`
     this.progress = progress
+  }
+
+  setBasePath (basePath) {
+    this.basePath = basePath
+    this.folderAlertTextTarget.textContent = `Files will be uploaded to ${basePath} folder.`
+    this.folderAlertTarget.classList.remove('d-none')
+    this.element.scrollIntoView()
+    this.element.focus()
+  }
+
+  clearBasePath () {
+    this.basePath = null
+    this.folderAlertTarget.classList.add('d-none')
   }
 }

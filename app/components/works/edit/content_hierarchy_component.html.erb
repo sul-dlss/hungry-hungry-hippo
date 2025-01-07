@@ -1,5 +1,5 @@
-<%= render Elements::Tables::TreegridTableComponent.new(id: 'content-table', label: 'File list', show_label: false, role: 'treegrid', data: { controller: 'treegrid', action: 'keydown->treegrid#navigate', treegrid_target: 'table' }) do |component| %>
-  <% component.with_header(headers: ['File Name', 'Description', 'Hide', 'Delete']) %>
+<%= render Elements::Tables::TreegridTableComponent.new(id: 'content-table', label: 'File list', show_label: false) do |component| %>
+  <% component.with_header(headers: ['File Name', 'Description', 'Hide', 'Action']) %>
   <% last_path_parts = [] %>
   <% content_files.each do |content_file| %>
     <%= render Works::Edit::ContentFileHierarchyComponent.new(content_file:, last_path_parts:, component:) %>

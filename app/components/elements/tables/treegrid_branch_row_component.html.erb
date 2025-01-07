@@ -3,6 +3,9 @@
       <span class="fw-bold"><%= label %></span>
     <% end %>
     <% for _ in 1..empty_cells %>
-        <td></td>
+      <td></td>
+    <% end %>
+    <% cells.each do |cell| %>
+      <td><%= cell %></td>
     <% end %>
   <% end %>
