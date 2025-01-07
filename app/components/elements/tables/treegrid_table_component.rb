@@ -10,7 +10,7 @@ module Elements
       }
 
       def initialize(**args)
-        args[:classes] = merge_classes(%w[table-treegrid table-sm], args[:classes])
+        args[:classes] = merge_classes(%w[table-treegrid table-sm mb-5], args[:classes])
         args[:role] = 'treegrid'
         args[:data] = { controller: 'treegrid', action: 'keydown->treegrid#navigate', treegrid_target: 'table' }
         super

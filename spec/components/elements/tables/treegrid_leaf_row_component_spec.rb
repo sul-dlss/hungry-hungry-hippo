@@ -9,7 +9,7 @@ RSpec.describe Elements::Tables::TreegridLeafRowComponent, type: :component do
     end)
     expect(page).to have_css('tr[role="row"][aria-level="3"][tabindex="0"][data-tree-role="leaf"]')
     expect(page).to have_css('td', count: 2)
-    expect(page).to have_css('td[role="gridcell"][style="padding-left: 40px;"]', text: 'My row')
+    expect(page).to have_css('td[role="gridcell"][style="padding-left: 48px;"]', text: 'My row')
     expect(page).to have_css('td', text: 'Cell 1')
   end
 end

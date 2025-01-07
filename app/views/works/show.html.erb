@@ -6,11 +6,7 @@
 <% end %>
 <%= render Show::HeaderComponent.new(presenter: @work_presenter) %>
 
-<%= turbo_frame_tag @content, src: show_table_content_path(@content) do %>
-  <%= render Elements::SpinnerComponent.new %>
-<% end %>
-
-<%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'table-show mb-5', label: 'Details') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'mb-5', label: 'Details') do |component| %>
   <% component.with_row(label: 'Persistent Link', values: [@work_presenter.purl_link]) %>
   <%# TODO: Add DOIs when support is implemented for them %>
   <% component.with_row(label: 'Collection', values: [@work_presenter.collection_link]) %>
@@ -19,37 +15,41 @@
   <% component.with_row(label: 'Deposit created', values: [@work_presenter.deposited_at]) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'title-table', classes: 'table-show mb-5', label: 'Title and contact') do |component| %>
+<%= turbo_frame_tag @content, src: show_table_content_path(@content) do %>
+  <%= render Elements::SpinnerComponent.new %>
+<% end %>
+
+<%= render Elements::Tables::TableComponent.new(id: 'title-table', classes: 'mb-5', label: 'Title and contact') do |component| %>
   <% component.with_row(label: 'Title', values: [@work_presenter.title]) %>
   <% component.with_row(label: 'Contact emails', values: [@work_presenter.contact_emails]) %>
 <% end %>
 
 <%= render Works::Show::AuthorsShowComponent.new(authors: @work_presenter.authors) %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'table-work mb-5', label: 'Dates') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'mb-5', label: 'Dates') do |component| %>
   <% component.with_row(label: 'Publication date', values: [@work_presenter.publication_date]) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'citation-table', classes: 'table-show mb-5', label: 'Citation') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'citation-table', classes: 'mb-5', label: 'Citation') do |component| %>
   <% component.with_row(label: 'Preferred citation', values: [@work_presenter.citation]) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'table-show mb-5', label: 'Abstract and keywords') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'mb-5', label: 'Abstract and keywords') do |component| %>
   <% component.with_row(label: 'Abstract', values: [@work_presenter.abstract]) %>
   <% component.with_row(label: 'Keywords', values: [@work_presenter.keywords]) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'work-type-table', classes: 'table-show mb-5', label: 'Type of deposit') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'work-type-table', classes: 'mb-5', label: 'Type of deposit') do |component| %>
   <% component.with_row(label: 'Deposit type', values: [@work_presenter.work_type]) %>
   <% component.with_row(label: 'Deposit subtypes', values: [@work_presenter.all_work_subtypes]) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'table-show mb-5', label: 'Related content') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'mb-5', label: 'Related content') do |component| %>
   <% component.with_row(label: 'Related published work', values: @work_presenter.related_works) %>
   <% component.with_row(label: 'Related links', values: @work_presenter.related_links) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'license-table', classes: 'table-show mb-5', label: 'License and additional terms of use') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'license-table', classes: 'mb-5', label: 'License and additional terms of use') do |component| %>
   <% component.with_row(label: 'License', values: [@work_presenter.license_label]) %>
   <% component.with_row(label: 'Terms of use', values: [t('license.edit.terms_of_use')]) %>
 <% end %>
