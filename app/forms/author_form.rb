@@ -3,15 +3,15 @@
 # Form for an author
 class AuthorForm < ApplicationForm
   attribute :first_name, :string
-  validates :first_name, presence: true, if: -> { person? && deposit? }
+  validates :first_name, presence: true, on: :deposit, if: -> { person? }
 
   attribute :last_name, :string
-  validates :last_name, presence: true, if: -> { person? && deposit? }
+  validates :last_name, presence: true, on: :deposit, if: -> { person? }
 
   validate :name_must_be_complete, if: :person?
 
   attribute :organization_name, :string
-  validates :organization_name, presence: true, if: -> { organization? && deposit? }
+  validates :organization_name, presence: true, on: :deposit, if: -> { organization? }
 
   attribute :person_role, :string
   validates :person_role, presence: true, if: :person?

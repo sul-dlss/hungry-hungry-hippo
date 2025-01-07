@@ -78,7 +78,7 @@ RSpec.describe AuthorForm do
       let(:organization_name) { '' }
 
       it 'is not valid' do
-        expect(form.valid?(deposit: true)).not_to be true
+        expect(form.valid?(:deposit)).not_to be true
       end
     end
 
@@ -104,7 +104,7 @@ RSpec.describe AuthorForm do
       let(:last_name) { '' }
 
       it 'is not valid' do
-        expect(form.valid?(deposit: true)).to be false
+        expect(form.valid?(:deposit)).to be false
       end
     end
   end

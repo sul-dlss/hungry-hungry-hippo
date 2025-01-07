@@ -3,7 +3,7 @@
 # Form for keywords
 class KeywordForm < ApplicationForm
   attribute :text, :string
-  validates :text, presence: true, if: :deposit?
+  validates :text, presence: true, on: :deposit
   # NOTE: These two attributes are parsed from the keyword resolution service
   #       response and injected into the form, and are entirely optional. If
   #       the resolution service fails or the user wants a keyword that cannot

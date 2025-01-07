@@ -21,4 +21,15 @@ class ApplicationController < ActionController::Base
     flash[:warning] = helpers.t('errors.not_authorized')
     redirect_to main_app.root_path
   end
+
+  def deposit?
+    params[:commit] == 'Deposit'
+  end
+
+  # NOTE: a `nil` validation context runs all validations without an explicit context
+  def validation_context
+    return :deposit if deposit?
+
+    nil
+  end
 end

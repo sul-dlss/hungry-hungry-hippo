@@ -12,7 +12,7 @@ RSpec.describe KeywordForm do
   end
 
   it 'is valid when depositing' do
-    expect(form.valid?(deposit: true)).to be true
+    expect(form.valid?(:deposit)).to be true
   end
 
   context 'with blank text' do
@@ -24,7 +24,7 @@ RSpec.describe KeywordForm do
 
     context 'when depositing' do
       it 'is not valid' do
-        expect(form.valid?(deposit: true)).to be false
+        expect(form.valid?(:deposit)).to be false
       end
     end
   end
