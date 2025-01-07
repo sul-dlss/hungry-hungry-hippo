@@ -83,6 +83,27 @@ RSpec.describe 'Edit a collection' do
       find('button[data-action="click->nested-form#delete"]').click
     end
 
+    # Clicking on Next to go to Participants tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Participants')
+    # expect(page).to have_text('Managers')
+
+    # There is a manager form and a depositor form
+    form_instances = all('.form-instance')
+    expect(form_instances.count).to eq(2)
+    expect(form_instances[0]).to have_text('SUNet ID') # Manager
+    expect(form_instances[1]).to have_text('SUNet ID') # Depositor
+
+    # Fill in the manager form
+    within form_instances[0] do
+      fill_in('SUNet ID', with: 'stepking')
+    end
+
+    # Fill in the depositor form
+    within form_instances[1] do
+      fill_in('SUNet ID', with: 'joehill')
+    end
+
     click_link_or_button('Save as draft')
 
     # Waiting page may be too fast to catch so not testing.
@@ -90,6 +111,8 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_css('h1', text: updated_title)
     expect(page).to have_content(updated_description)
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
+    expect(page).to have_content('stepking@stanford.edu')
+    expect(page).to have_content('joehill@stanford.edu')
     expect(page).to have_css('.status', text: 'New version in draft')
     expect(page).to have_link('Edit or deposit', href: edit_collection_path(druid))
   end

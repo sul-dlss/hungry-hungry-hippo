@@ -38,7 +38,7 @@ RSpec.describe 'Edit collection' do
     end
   end
 
-  context 'when the work is not open or openable' do
+  context 'when the collection is not open or openable' do
     let(:user) { create(:user) }
     let(:groups) { ['dlss:hydrus-app-collection-creators'] }
     let(:collection) { create(:collection, druid:, user:) }

@@ -248,3 +248,9 @@ en:
         details:
           tab_label: 'Details'
           label: 'Collection details'
+        participants:
+          tab_label: 'Participants'
+          label: 'Collection participants'
+          help_text: >
+            Select the appropriate option below to add a manager or depositor.
+            Enter one participant SUNet ID per box and then click "Add" to save the entry.

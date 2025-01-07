@@ -15,6 +15,11 @@
   <% component.with_row(label: 'Contact emails', values: [@collection_presenter.contact_emails]) %>
 <% end %>
 
+<%= render Elements::Tables::TableComponent.new(id: 'participants-table', classes: 'table-show mb-5', label: 'Collection participants') do |component| %>
+  <% component.with_row(label: 'Managers', values: [@collection_presenter.participants(:managers)]) %>
+  <% component.with_row(label: 'Depositors', values: [@collection_presenter.participants(:depositors)]) %>
+<% end %>
+
 <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'table-show mb-5', label: 'Related content') do |component| %>
   <% component.with_row(label: 'Related links', values: @collection_presenter.related_links) %>
 <% end %>

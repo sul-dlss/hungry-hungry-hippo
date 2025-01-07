@@ -7,8 +7,9 @@ module ToCollectionForm
       new(...).call
     end
 
-    def initialize(cocina_object:)
+    def initialize(cocina_object:, collection:)
       @cocina_object = cocina_object
+      @collection = collection
     end
 
     def call
@@ -17,7 +18,7 @@ module ToCollectionForm
 
     private
 
-    attr_reader :cocina_object
+    attr_reader :cocina_object, :collection
 
     def params
       {
@@ -27,8 +28,19 @@ module ToCollectionForm
         description: CocinaSupport.abstract_for(cocina_object:), # Cocina abstract maps to Collection description
         contact_emails_attributes: CocinaSupport.contact_emails_for(cocina_object:),
         related_links_attributes: CocinaSupport.related_links_for(cocina_object:),
+        managers_attributes: participant_attributes(:managers),
+        depositors_attributes: participant_attributes(:depositors),
         version: cocina_object.version
       }
+    end
+
+    # @param [Symbol] role :managers or :depositors
+    # @return [Array<Hash>] an array of participant attributes
+    # Creates the attribute hash of sunetids for the given role to be used in the CollectionForm
+    def participant_attributes(role)
+      collection.send(role).map do |participant|
+        { sunetid: participant.sunetid }
+      end
     end
   end
 end

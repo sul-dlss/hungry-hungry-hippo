@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Create a collection deposit' do
   let(:druid) { collection_druid_fixture }
   let(:user) { create(:user) }
+  let(:manager) { create(:user) }
   let(:groups) { ['dlss:hydrus-app-collection-creators'] }
   let(:cocina_object) do
     cocina_object = build(:collection, title: collection_title_fixture, id: druid)
@@ -62,6 +63,13 @@ RSpec.describe 'Create a collection deposit' do
     # Filling in related links
     fill_in('Link text', with: related_links_fixture.first['text'])
     fill_in('URL', with: related_links_fixture.first['url'])
+
+    # Clicking on Next to go to Participants tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Participants')
+    expect(page).to have_text('Managers')
+    fill_in('collection_managers_attributes_0_sunetid', with: 'stepking')
+    fill_in('collection_depositors_attributes_0_sunetid', with: 'joehill')
 
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
