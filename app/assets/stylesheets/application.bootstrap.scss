@@ -68,25 +68,22 @@ $container-max-widths: (
 table.table-h3 {
   caption {
     padding: .25rem;
-    font-size: large;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 600;
     line-height: 1.5;
     color: var(--stanford-black);
     caption-side: top;
-    background-color: var(--stanford-30-black);
+    border-bottom: 1px solid var(--stanford-black);
   }
-}
 
-table.table-show {
-  @extend .border;
-  @extend .table-striped;
-  @extend .table-light;
-  @extend .table-sm;
+  th {
+    font-size: 1.0rem;
+    font-weight: 600;
+    color: var(--stanford-black);
+  }
 
-  border: 1px solid var(--stanford-30-black);
-
-  tbody {
-    @extend .table-group-divider;
+  tr {
+    border-color: var(--stanford-30-black);
   }
 }
 
@@ -99,10 +96,18 @@ table.table-treegrid {
     font-weight: 900;
     font-size: .9rem;
     color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+    border-color: var(--stanford-30-black);
   }
 
   tr[aria-expanded="true"] > td:first-child::before {
     transform: rotate(180deg);
+    border-color: var(--stanford-30-black);
+  }
+
+  th {
+    font-size: 1.0rem;
+    font-weight: 600;
+    padding: 8px
   }
 }
 

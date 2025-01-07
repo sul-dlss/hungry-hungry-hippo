@@ -14,7 +14,7 @@ module Elements
       attr_reader :level, :label
 
       def styles
-        "padding-left: #{(level - 1) * 20}px;"
+        "padding-left: #{((level - 1) * 20) + 8}px;"
       end
     end
   end
