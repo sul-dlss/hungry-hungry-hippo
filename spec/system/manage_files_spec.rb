@@ -29,7 +29,11 @@ RSpec.describe 'Manage files for a work' do
       end
 
       # Add 2 more files
-      find('.dropzone').drop('spec/fixtures/files/hippo.svg', 'spec/fixtures/files/hippo.txt')
+      find('.dropzone').drop('spec/fixtures/files/hippo.svg')
+      sleep 0.25 # Wait for the form to submit.
+      # Make hippo.svg hierarchical. This is a kludge to allow later testing of adding a file to a folder.
+      ContentFile.find_by(filepath: 'hippo.svg').update(filepath: 'hippopotamus/hippo.svg')
+      find('.dropzone').drop('spec/fixtures/files/hippo.txt')
 
       # Delete the first file
       within('table#content-table tbody tr:nth-of-type(1)') do
@@ -42,6 +46,7 @@ RSpec.describe 'Manage files for a work' do
       expect(page).to have_css('table#content-table td', text: 'hippo.txt')
 
       # Edit the description
+      sleep 0.25
       all('a', text: 'Add description').first.click
       fill_in('Description', with: 'This is a hippo.')
       click_link_or_button('Update')
@@ -49,7 +54,7 @@ RSpec.describe 'Manage files for a work' do
       # The description is updated.
       expect(page).to have_css('table#content-table td', text: 'hippo.svg')
       expect(page).to have_css('table#content-table td', text: 'This is a hippo.')
-      content_file = ContentFile.find_by(filepath: 'hippo.svg')
+      content_file = ContentFile.find_by(filepath: 'hippo.txt')
       expect(content_file.label).to eq('This is a hippo.')
 
       # Hide the file
@@ -57,6 +62,13 @@ RSpec.describe 'Manage files for a work' do
       expect(page).to have_field('hide', checked: true)
       sleep 0.25 # Wait for the form to submit.
       expect(content_file.reload.hide).to be true
+
+      # Upload to an existing folder
+      click_link_or_button('Upload to this folder')
+      expect(page).to have_css('.alert', text: 'Files will be uploaded to hippopotamus folder.')
+      find('.dropzone').drop('spec/fixtures/files/hippo.png')
+      expect(page).to have_css('tr[aria-level="2"] td', text: 'hippo.png')
+      ContentFile.find_by!(filepath: 'hippopotamus/hippo.png')
     end
   end
 

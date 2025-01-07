@@ -4,20 +4,22 @@ module Elements
   # Component for rendering an alert.
   class AlertComponent < ApplicationComponent
     # Variants are :danger, :success, :note, :info, :warning
-    def initialize(title: nil, variant: :info, dismissible: false, value: nil)
+    def initialize(title: nil, variant: :info, dismissible: false, value: nil, data: {}, classes: []) # rubocop:disable Metrics/ParameterLists
       raise ArgumentError, 'Invalid variant' unless %i[danger success note info warning].include?(variant.to_sym)
 
       @title = title
       @variant = variant
       @dismissible = dismissible
       @value = value
+      @data = data
+      @classes = classes
       super()
     end
 
-    attr_reader :title, :variant, :value
+    attr_reader :title, :variant, :value, :data
 
     def classes
-      merge_classes(%w[alert d-flex shadow-sm align-items-center], variant_class, dismissible_class)
+      merge_classes(%w[alert d-flex shadow-sm align-items-center], variant_class, dismissible_class, @classes)
     end
 
     def variant_class

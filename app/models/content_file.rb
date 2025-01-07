@@ -23,4 +23,8 @@ class ContentFile < ApplicationRecord
   def filename
     FilenameSupport.filename(filepath:)
   end
+
+  def path
+    path_parts.join('/')
+  end
 end
