@@ -25,7 +25,7 @@ class RelatedWorkForm < ApplicationForm
   validates :relationship, inclusion: { in: RELATIONSHIP_TYPES }, allow_blank: true
   attribute :use_citation, :boolean
 
-  with_options(if: :deposit?) do |deposit|
+  with_options(on: :deposit) do |deposit|
     deposit.validates :citation, absence: true, if: ->(related_work) { related_work.identifier.present? }
     deposit.validates :identifier, absence: true, if: ->(related_work) { related_work.citation.present? }
     deposit.validates :relationship, presence: true, if: (lambda do |related_work|

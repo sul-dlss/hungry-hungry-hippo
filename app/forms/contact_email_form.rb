@@ -3,7 +3,7 @@
 # Form for contact emails
 class ContactEmailForm < ApplicationForm
   attribute :email, :string
-  validates :email, presence: true, if: :deposit?
+  validates :email, presence: true, on: :deposit
   validates :email, format: {
     with: URI::MailTo::EMAIL_REGEXP,
     allow_blank: true

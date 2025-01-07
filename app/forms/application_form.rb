@@ -19,16 +19,4 @@ class ApplicationForm
   def self.immutable_attributes
     []
   end
-
-  # @param deposit [Boolean] whether the form is being used for a deposit
-  def valid?(deposit: false)
-    @deposit = deposit
-    super
-  end
-
-  # This can be used to control validations specific to deposits.
-  # For example: validates :authors, presence: { message: 'requires at least one author' }, if: :deposit?
-  def deposit?
-    @deposit
-  end
 end

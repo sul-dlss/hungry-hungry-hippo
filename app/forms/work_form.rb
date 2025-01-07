@@ -4,7 +4,7 @@
 class WorkForm < ApplicationForm
   accepts_nested_attributes_for :related_links, :related_works, :publication_date, :contact_emails, :authors, :keywords
 
-  validate :content_file_presence, if: :deposit?
+  validate :content_file_presence, on: :deposit
 
   def self.immutable_attributes
     ['druid']
@@ -32,17 +32,17 @@ class WorkForm < ApplicationForm
   validates :title, presence: true
 
   attribute :abstract, :string
-  validates :abstract, presence: true, if: :deposit?
+  validates :abstract, presence: true, on: :deposit
 
   attribute :citation, :string
   attribute :auto_generate_citation, :boolean
   validates :citation, presence: true, if: -> { auto_generate_citation == false }
 
   attribute :license, :string
-  validates :license, presence: true, if: :deposit?
+  validates :license, presence: true, on: :deposit
 
   attribute :work_type, :string
-  validates :work_type, presence: true, if: :deposit?
+  validates :work_type, presence: true, on: :deposit
 
   attribute :work_subtypes, array: true, default: -> { [] }
   # Music and mixed materials have a minimum number of subtypes required

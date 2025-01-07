@@ -15,7 +15,7 @@ RSpec.describe ContactEmailForm do
 
     context 'when nil and depositing' do
       it 'is not valid' do
-        expect(form.valid?(deposit: true)).to be false
+        expect(form.valid?(:deposit)).to be false
       end
     end
 

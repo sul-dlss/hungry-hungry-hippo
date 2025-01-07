@@ -39,8 +39,8 @@ class CollectionsController < ApplicationController
   def create
     authorize! Collection
     @collection_form = CollectionForm.new(**collection_params)
-    # The deposit param determines whether extra validations for deposits are applied.
-    if @collection_form.valid?(deposit: deposit?)
+    # The validation_context param determines whether extra validations are applied, e.g., for deposits.
+    if @collection_form.valid?(validation_context)
       # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
       # should be "waiting".
       collection = Collection.create!(title: @collection_form.title,
@@ -57,8 +57,8 @@ class CollectionsController < ApplicationController
     authorize! @collection
 
     @collection_form = CollectionForm.new(**update_collection_params)
-    # The deposit param determines whether extra validations for deposits are applied.
-    if @collection_form.valid?(deposit: deposit?)
+    # The validation_context param determines whether extra validations are applied, e.g., for deposits.
+    if @collection_form.valid?(validation_context)
       # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
       # should be "waiting".
       @collection.update!(deposit_job_started_at: Time.zone.now)
@@ -98,10 +98,6 @@ class CollectionsController < ApplicationController
 
   def update_collection_params
     collection_params.merge(druid: params[:druid])
-  end
-
-  def deposit?
-    params[:commit] == 'Deposit'
   end
 
   def set_collection

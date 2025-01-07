@@ -26,7 +26,7 @@ RSpec.describe WorkForm do
 
     context 'when depositing with blank work type' do
       it 'is invalid' do
-        expect(form.valid?(deposit: true)).to be false
+        expect(form.valid?(:deposit)).to be false
         expect(form.errors[:work_type]).to include("can't be blank")
       end
     end
@@ -35,7 +35,7 @@ RSpec.describe WorkForm do
       let(:work_type) { 'Other' }
 
       it 'is invalid' do
-        expect(form.valid?(deposit: true)).to be false
+        expect(form.valid?(:deposit)).to be false
         expect(form.errors[:other_work_subtype]).to include("can't be blank")
       end
     end

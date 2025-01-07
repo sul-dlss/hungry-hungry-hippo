@@ -50,8 +50,8 @@ class WorksController < ApplicationController
     @collection_title = collection.title
     authorize! collection, with: WorkPolicy
 
-    # The deposit param determines whether extra validations for deposits are applied.
-    if @work_form.valid?(deposit: deposit?)
+    # The validation_context param determines whether extra validations are applied, e.g., for deposits.
+    if @work_form.valid?(validation_context)
       # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
       # should be "waiting".
       work = Work.create!(title: @work_form.title, user: current_user, deposit_job_started_at: Time.zone.now,
@@ -68,8 +68,8 @@ class WorksController < ApplicationController
     authorize! @work
 
     @work_form = WorkForm.new(**update_work_params)
-    # The deposit param determines whether extra validations for deposits are applied.
-    if @work_form.valid?(deposit: deposit?)
+    # The validation_context param determines whether extra validations are applied, e.g., for deposits.
+    if @work_form.valid?(validation_context)
       # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
       # should be "waiting".
       @work.update!(deposit_job_started_at: Time.zone.now)
@@ -111,10 +111,6 @@ class WorksController < ApplicationController
 
   def update_work_params
     work_params.merge(druid: params[:druid])
-  end
-
-  def deposit?
-    params[:commit] == 'Deposit'
   end
 
   def set_work
