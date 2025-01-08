@@ -88,7 +88,7 @@ module WorkMappingFixtures
         identification: { sourceId: source_id_fixture },
         administrative: { hasAdminPolicy: Settings.apo, partOfProject: Settings.project_tag },
         access: { view: 'world', download: 'world', license: license_fixture,
-                  useAndReproductionStatement: I18n.t('license.edit.terms_of_use') },
+                  useAndReproductionStatement: I18n.t('license.terms_of_use') },
         structural: { isMemberOf: [collection_druid_fixture] }
       }
     )
@@ -229,7 +229,7 @@ module WorkMappingFixtures
         access: { view: 'world',
                   download: 'world',
                   license: license_fixture,
-                  useAndReproductionStatement: I18n.t('license.edit.terms_of_use') },
+                  useAndReproductionStatement: I18n.t('license.terms_of_use') },
         structural: { isMemberOf: [collection_druid_fixture] }
       }
     )

@@ -7,19 +7,49 @@
     <% end %>
   <% end %>
 <% end %>
+
 <%= render Show::HeaderComponent.new(presenter: @collection_presenter) %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'mb-5', label: 'Details') do |component| %>
-  <% component.with_row(label: 'Title', values: [@collection_presenter.title]) %>
-  <% component.with_row(label: 'Description', values: [@collection_presenter.description]) %>
-  <% component.with_row(label: 'Contact emails', values: [@collection_presenter.contact_emails]) %>
-<% end %>
+<ul class="nav nav-underline mb-3" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details-pane" type="button" role="tab" aria-controls="details-pane" aria-selected="true">Collection details</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings-pane" type="button" role="tab" aria-controls="settings-pane" aria-selected="false">Collection settings</button>
+  </li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane fade show active" id="details-pane" role="tabpanel" aria-labelledby="details-tab" tabindex="0">
+    <%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'mb-5', label: 'Details') do |component| %>
+      <% component.with_row(label: 'Title', values: [@collection_presenter.title]) %>
+      <% component.with_row(label: 'Description', values: [@collection_presenter.description]) %>
+      <% component.with_row(label: 'Contact emails', values: [@collection_presenter.contact_emails]) %>
+    <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'participants-table', classes: 'mb-5', label: 'Collection participants') do |component| %>
-  <% component.with_row(label: 'Managers', values: [@collection_presenter.participants(:managers)]) %>
-  <% component.with_row(label: 'Depositors', values: [@collection_presenter.participants(:depositors)]) %>
-<% end %>
+    <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'mb-5', label: 'Related content') do |component| %>
+      <% component.with_row(label: 'Related links', values: @collection_presenter.related_links) %>
+    <% end %>
+  </div>
+  <div class="tab-pane fade" id="settings-pane" role="tabpanel" aria-labelledby="settings-tab" tabindex="0">
+    <%= render Elements::Tables::TableComponent.new(id: 'release-visibility-table', classes: 'mb-5', label: 'Release and visibility') do |component| %>
+      <% component.with_row(label: 'Release', values: [@collection_presenter.release]) %>
+      <% component.with_row(label: 'Visibility', values: [@collection_presenter.visibility]) %>
+      <% component.with_row(label: 'DOI Assignment', values: [@collection_presenter.doi_assignment]) %>
+    <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'mb-5', label: 'Related content') do |component| %>
-  <% component.with_row(label: 'Related links', values: @collection_presenter.related_links) %>
-<% end %>
+    <%= render Elements::Tables::TableComponent.new(id: 'terms-licenses-table', classes: 'mb-5', label: 'Terms of use and licenses') do |component| %>
+      <% component.with_row(label: 'Terms of use', values: [t('license.terms_of_use')]) %>
+      <% component.with_row(label: 'Additional terms of use', values: [@collection_presenter.additional_terms_of_use]) %>
+      <% component.with_row(label: @collection_presenter.license_label, values: [@collection_presenter.license]) %>
+    <% end %>
+
+    <%= render Elements::Tables::TableComponent.new(id: 'participants-table', classes: 'mb-5', label: 'Collection participants') do |component| %>
+      <% component.with_row(label: 'Managers', values: [@collection_presenter.participants(:managers)]) %>
+      <% component.with_row(label: 'Depositors', values: [@collection_presenter.participants(:depositors)]) %>
+    <% end %>
+
+    <%= render Elements::Tables::TableComponent.new(id: 'review-workflow-table', classes: 'mb-5', label: 'Review workflow') do |component| %>
+      <% component.with_row(label: 'Status', values: [@collection_presenter.review_workflow_status]) %>
+    <% end %>
+  </div>
+</div>

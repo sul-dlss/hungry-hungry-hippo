@@ -12,6 +12,12 @@ class Collection < ApplicationRecord
   enum :release_option, { immediate: 'immediate', delay: 'delay', depositor_selects: 'depositor_selects' }, suffix: true
   enum :release_duration, { six_months: '6 months', one_year: '1 year', two_years: '2 years', three_years: '3 years' },
        suffix: true
+
+  RELEASE_DURATION_OPTIONS = { '6 months from date of deposit': 'six_months',
+                               '1 year from date of deposit': 'one_year',
+                               '2 years from date of deposit': 'two_years',
+                               '3 years from date of deposit': 'three_years' }.freeze
+
   enum :access, { stanford: 'stanford', world: 'world', depositor_selects: 'depositor_selects' }, suffix: true
   enum :doi_option, { yes: 'yes', no: 'no', depositor_selects: 'depositor_selects' }, suffix: true
   enum :license_option, { required: 'required', depositor_selects: 'depositor_selects' }, suffix: true
