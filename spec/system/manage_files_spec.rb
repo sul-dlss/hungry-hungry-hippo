@@ -20,7 +20,6 @@ RSpec.describe 'Manage files for a work' do
 
       # Add one file
       # Can't test folder upload, so no hierarchy.
-      # This doesn't work in Cyperful
       find('.dropzone').drop('spec/fixtures/files/hippo.png')
 
       within('table#content-table') do
@@ -85,7 +84,6 @@ RSpec.describe 'Manage files for a work' do
       expect(page).to have_text('Your files will appear here once they have been uploaded.')
 
       # Add one file
-      # This doesn't work in Cyperful
       find('.dropzone').drop('spec/fixtures/files/hippo.png')
 
       within('table#content-table') do
@@ -155,7 +153,6 @@ RSpec.describe 'Manage files for a work' do
       expect(page).to have_css('h1', text: 'Untitled deposit')
 
       # Add one file
-      # This doesn't work in Cyperful
       find('.dropzone').drop('spec/fixtures/files/hippo.tiff')
 
       expect(page).to have_text('hippo.tiff: File is too big (4.61MiB). Max filesize: 1MiB.')
@@ -183,7 +180,6 @@ RSpec.describe 'Manage files for a work' do
       expect(page).to have_css('h1', text: 'Untitled deposit')
 
       # Add one file
-      # This doesn't work in Cyperful
       find('.dropzone').drop('spec/fixtures/files/hippo.png')
 
       within('table#content-table') do

@@ -51,7 +51,6 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('.nav-link.active.is-invalid', text: 'Manage files')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must have at least one file')
 
-    # This doesn't work in Cyperful
     find('.dropzone').drop('spec/fixtures/files/hippo.png')
 
     expect(page).to have_css('table#content-table td', text: 'hippo.png')

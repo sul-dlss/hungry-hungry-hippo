@@ -50,7 +50,6 @@ RSpec.describe 'Create a work deposit' do
     expect(page).to have_no_text('Describe your deposit')
 
     # Adding a file
-    # This doesn't work in Cyperful
     find('.dropzone').drop('spec/fixtures/files/hippo.png')
 
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
