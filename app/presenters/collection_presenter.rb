@@ -34,12 +34,16 @@ class CollectionPresenter < FormPresenter
 
   def additional_terms_of_use
     case collection.custom_rights_statement_option
-    when 'none'
+    when 'no'
       'No'
-    when 'with_custom_rights_statement'
+    when 'provided'
       collection.provided_custom_rights_statement
     else
-      "Allow user to enter with instructions: #{collection.custom_rights_statement_custom_instructions}"
+      if collection.custom_rights_statement_custom_instructions.present?
+        "Allow user to enter with instructions: #{collection.custom_rights_statement_custom_instructions}"
+      else
+        'Allow user to enter'
+      end
     end
   end
 
