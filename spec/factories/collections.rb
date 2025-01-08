@@ -15,7 +15,28 @@ FactoryBot.define do
     review_enabled { false }
 
     trait :with_review_workflow do
+      transient do
+        reviewers_count { 1 }
+      end
+
       review_enabled { true }
+      reviewers { create_list(:user, reviewers_count) }
+    end
+
+    trait :with_managers do
+      transient do
+        managers_count { 1 }
+      end
+
+      managers { create_list(:user, managers_count) }
+    end
+
+    trait :with_depositors do
+      transient do
+        depositors_count { 1 }
+      end
+
+      depositors { create_list(:user, depositors_count) }
     end
 
     trait :deposit_job_started do
