@@ -136,7 +136,19 @@ CREATE TABLE public.collections (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     deposit_job_started_at timestamp(6) without time zone,
-    object_updated_at timestamp(6) without time zone
+    object_updated_at timestamp(6) without time zone,
+    release_option character varying,
+    release_duration character varying,
+    access character varying,
+    doi_option character varying DEFAULT 'yes'::character varying,
+    license_option character varying DEFAULT 'required'::character varying NOT NULL,
+    license character varying,
+    custom_rights_statement_option character varying,
+    provided_custom_rights_statement character varying,
+    custom_rights_statement_custom_instructions character varying,
+    email_when_participants_changed boolean DEFAULT true NOT NULL,
+    email_depositors_status_changed boolean DEFAULT true NOT NULL,
+    review_enabled boolean DEFAULT false NOT NULL
 );
 
 
@@ -249,16 +261,6 @@ CREATE TABLE public.depositors (
 --
 
 CREATE TABLE public.managers (
-    collection_id bigint NOT NULL,
-    user_id bigint NOT NULL
-);
-
-
---
--- Name: reviewers; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.reviewers (
     collection_id bigint NOT NULL,
     user_id bigint NOT NULL
 );
@@ -563,13 +565,6 @@ CREATE UNIQUE INDEX index_managers_on_collection_id_and_user_id ON public.manage
 
 
 --
--- Name: index_reviewers_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_reviewers_on_collection_id_and_user_id ON public.reviewers USING btree (collection_id, user_id);
-
-
---
 -- Name: index_users_on_email_address; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -667,6 +662,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250107153556'),
 ('20250106212515'),
 ('20241211213303'),
 ('20241206021849'),
