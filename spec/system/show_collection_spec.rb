@@ -6,11 +6,10 @@ RSpec.describe 'Show a collection' do
   include CollectionMappingFixtures
 
   let(:druid) { collection_druid_fixture }
-  let(:user) { create(:user) }
-  let(:managers) { [create(:user, email_address: 'stepking@stanford.edu')] }
-  let(:depositors) { [create(:user, email_address: 'joehill@stanford.edu')] }
+  let(:user) { collection.user }
   let!(:collection) do
-    create(:collection, :with_review_workflow, druid:, title: collection_title_fixture, user:, managers:, depositors:)
+    create(:collection, :with_review_workflow, :with_depositors, :with_managers, reviewers_count: 2, druid:,
+                                                                                 title: collection_title_fixture)
   end
   let(:cocina_object) { collection_with_metadata_fixture }
   let(:version_status) do
@@ -89,9 +88,9 @@ RSpec.describe 'Show a collection' do
     within('table#participants-table') do
       expect(page).to have_css('caption', text: 'Collection participants')
       expect(page).to have_css('tr', text: 'Managers')
-      expect(page).to have_css('td', text: 'stepking@stanford.edu')
+      expect(page).to have_css('td', text: collection.managers.first.email_address)
       expect(page).to have_css('tr', text: 'Depositors')
-      expect(page).to have_css('td', text: 'joehill@stanford.edu')
+      expect(page).to have_css('td', text: collection.depositors.first.email_address)
     end
 
     # Review workflow table
@@ -99,6 +98,8 @@ RSpec.describe 'Show a collection' do
       expect(page).to have_css('caption', text: 'Review workflow')
       expect(page).to have_css('tr', text: 'Status')
       expect(page).to have_css('td', text: 'On')
+      expect(page).to have_css('tr', text: 'Reviewers')
+      expect(page).to have_css('td', text: collection.reviewers.pluck(:email_address).join(', '))
     end
   end
 end

@@ -50,6 +50,7 @@
 
     <%= render Elements::Tables::TableComponent.new(id: 'review-workflow-table', classes: 'mb-5', label: 'Review workflow') do |component| %>
       <% component.with_row(label: 'Status', values: [@collection_presenter.review_workflow_status]) %>
+      <% component.with_row(label: 'Reviewers', values: [@collection_presenter.participants(:reviewers)]) %>
     <% end %>
   </div>
 </div>
