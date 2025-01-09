@@ -49,13 +49,17 @@ class CollectionPresenter < FormPresenter
     end
   end
 
-  def license_label
+  def license_option_label
     case collection.license_option
     when 'required'
       'Required license'
     else
       'Default license (depositor selects)'
     end
+  end
+
+  def license_label
+    License.find_by(id: collection.license)&.label
   end
 
   def review_workflow_status

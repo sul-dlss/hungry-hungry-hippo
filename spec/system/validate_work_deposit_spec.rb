@@ -35,8 +35,6 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Related content (optional)')
     fill_in('Link text', with: related_links_fixture.first['text'])
 
-    # License is required for deposit, but skipping.
-
     # Depositing the work
     find('.nav-link', text: 'Deposit').click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
@@ -102,14 +100,6 @@ RSpec.describe 'Validate a work deposit' do
 
     # Make the related link valid
     fill_in('URL', with: related_links_fixture.first['url'])
-
-    # License is marked invalid
-    find('.nav-link.is-invalid', text: 'License').click
-    expect(page).to have_field('work_license', class: 'is-invalid')
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
-
-    # Select the license
-    select('CC-BY-4.0 Attribution International', from: 'work_license')
 
     # Try to deposit again
     find('.nav-link', text: 'Deposit').click

@@ -41,7 +41,7 @@ class WorkPresenter < FormPresenter
   end
 
   def license_label
-    License.find_by(id: license)&.label
+    license_presenter.label
   end
 
   def publication_date
@@ -51,4 +51,13 @@ class WorkPresenter < FormPresenter
   private
 
   delegate :collection, :created_at, :user, to: :work
+
+  def license_presenter
+    @license_presenter ||= LicensePresenter.new(work_form:, collection:)
+  end
+
+  def work_form
+    # Get the object being delegated to (since this is a SimpleDelegator)
+    __getobj__
+  end
 end

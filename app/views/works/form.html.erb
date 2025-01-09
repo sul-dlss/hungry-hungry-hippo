@@ -73,7 +73,7 @@
     <% end %>
 
     <% component.with_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:) do %>
-      <%= render Works::Edit::LicenseComponent.new(form:) %>
+      <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
     <% end %>
 
     <%# This pane is outside the work form because it contains its own form for discarding the draft. %>
