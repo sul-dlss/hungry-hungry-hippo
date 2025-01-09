@@ -247,6 +247,8 @@ GEM
       faraday (~> 2.0)
     ffi (1.17.1-arm64-darwin)
     ffi (1.17.1-x86_64-linux-gnu)
+    frozen_record (0.27.4)
+      activemodel
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -571,6 +573,7 @@ DEPENDENCIES
   edtf
   erb_lint
   factory_bot_rails
+  frozen_record
   honeybadger
   hotwire-spark
   importmap-rails
