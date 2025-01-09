@@ -48,6 +48,7 @@ gem 'dor-workflow-client', '>= 7.6.1'
 gem 'druid-tools'
 gem 'dry-monads'
 gem 'edtf'
+gem 'frozen_record' # For licenses
 gem 'honeybadger'
 gem 'kaminari' # For pagination
 gem 'okcomputer'

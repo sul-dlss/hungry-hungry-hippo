@@ -1,4 +1,116 @@
----
-CC-BY-4.0:
+- id: "https://www.gnu.org/licenses/agpl.txt"
+  deprecated: false
+  label: "AGPL-3.0-only GNU Affero General Public License"
+  group: "Software Licenses"
+- id: "https://www.apache.org/licenses/LICENSE-2.0"
+  deprecated: false
+  label: "Apache-2.0"
+  group: "Software Licenses"
+- id: "https://opensource.org/licenses/BSD-2-Clause"
+  deprecated: false
+  label: "BSD-2-Clause \"Simplified\" License"
+  group: "Software Licenses"
+- id: "https://opensource.org/licenses/BSD-3-Clause"
+  deprecated: false
+  label: "BSD-3-Clause \"New\" or \"Revised\" License"
+  group: "Software Licenses"
+- id: "https://creativecommons.org/licenses/by/4.0/legalcode"
+  deprecated: false
   label: "CC-BY-4.0 Attribution International"
-  uri: "https://creativecommons.org/licenses/by/4.0/legalcode"
+  group: "Creative Commons"
+- id: "https://creativecommons.org/licenses/by-nc/4.0/legalcode"
+  deprecated: false
+  label: "CC-BY-NC-4.0 Attribution-NonCommercial International"
+  group: "Creative Commons"
+- id: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode"
+  deprecated: false
+  label: "CC-BY-NC-ND-4.0 Attribution-NonCommercial-No Derivatives"
+  group: "Creative Commons"
+- id: "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode"
+  deprecated: false
+  label: "CC-BY-NC-SA-4.0 Attribution-NonCommercial-Share Alike International"
+  group: "Creative Commons"
+- id: "https://creativecommons.org/licenses/by-nd/4.0/legalcode"
+  deprecated: false
+  label: "CC-BY-ND-4.0 Attribution-No Derivatives International"
+  group: "Creative Commons"
+- id: "https://creativecommons.org/licenses/by-sa/4.0/legalcode"
+  deprecated: false
+  label: "CC-BY-SA-4.0 Attribution-Share Alike International"
+  group: "Creative Commons"
+- id: "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
+  deprecated: false
+  label: CC0-1.0
+  group: "Creative Commons"
+- id: "https://opensource.org/licenses/cddl1"
+  deprecated: false
+  label: "CDDL-1.1 Common Development and Distribution License"
+  group: "Software Licenses"
+- id: "https://www.eclipse.org/legal/epl-2.0"
+  deprecated: false
+  label: "EPL-2.0 Eclipse Public License"
+  group: "Software Licenses"
+- id: "https://www.gnu.org/licenses/gpl-3.0-standalone.html"
+  deprecated: false
+  label: "GPL-3.0-only GNU General Public License"
+  group: "Software Licenses"
+- id: "https://www.isc.org/downloads/software-support-policy/isc-license/"
+  deprecated: false
+  label: "ISC License"
+  group: "Software Licenses"
+- id: "https://www.gnu.org/licenses/lgpl-3.0-standalone.html"
+  deprecated: false
+  label: "LGPL-3.0-only Lesser GNU Public License"
+  group: "Software Licenses"
+- id: "https://opensource.org/licenses/MIT"
+  deprecated: false
+  label: "MIT License"
+  group: "Software Licenses"
+- id: "https://www.mozilla.org/MPL/2.0/"
+  deprecated: false
+  label: "MPL-2.0 Mozilla Public License"
+  group: "Software Licenses"
+- id: "https://opendatacommons.org/licenses/by/1-0/"
+  deprecated: false
+  label: "ODC-By-1.0 Attribution License"
+  group: "Open Data Commons (ODC) licenses"
+- id: "https://opendatacommons.org/licenses/odbl/1-0/"
+  deprecated: false
+  label: "ODbL-1.0 Open Database License"
+  group: "Open Data Commons (ODC) licenses"
+- id: "https://opendatacommons.org/licenses/pddl/1-0/"
+  deprecated: false
+  label: "PDDL-1.0 Public Domain Dedication and License"
+  group: "Open Data Commons (ODC) licenses"
+- id: ""
+  deprecated: false
+  label: "No License"
+  group: "Other"
+- id: "https://creativecommons.org/publicdomain/mark/1.0/"
+  deprecated: false
+  label: "Public Domain Mark 1.0"
+  group: "Other"
+- id: "https://creativecommons.org/licenses/by/3.0/legalcode"
+  deprecated: true
+  label: 'CC-BY-3.0 Attribution (Unsupported)'
+  group: "Creative Commons"
+- id: "https://creativecommons.org/licenses/by-sa/3.0/legalcode"
+  deprecated: true
+  label: 'CC-BY-SA-3.0 Attribution Share Alike (Unsupported)'
+  group: "Creative Commons"
+- id: "https://creativecommons.org/licenses/by-nd/3.0/legalcode"
+  deprecated: true
+  label: 'CC-BY-ND-3.0 Attribution No Derivatives (Unsupported)'
+  group: "Creative Commons"
+- id: "https://creativecommons.org/licenses/by-nc/3.0/legalcode"
+  deprecated: true
+  label: 'CC-BY-NC-3.0 Attribution Non Commercial (Unsupported)'
+  group: "Creative Commons"
+- id: "https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode"
+  deprecated: true
+  label: 'CC-BY-NC-SA-3.0 Attribution Non Commercial Share Alike (Unsupported)'
+  group: "Creative Commons"
+- id: "https://creativecommons.org/licenses/by-nc-nd/3.0/legalcode"
+  deprecated: true
+  label: 'CC-BY-NC-ND-3.0 Attribution Non Commercial No Derivatives (Unsupported)'
+  group: "Creative Commons"

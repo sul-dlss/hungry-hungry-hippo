@@ -10,10 +10,6 @@ class WorkForm < ApplicationForm
     ['druid']
   end
 
-  def self.licenses
-    @licenses ||= YAML.load_file('config/licenses.yml')
-  end
-
   attribute :druid, :string
   alias id druid
 

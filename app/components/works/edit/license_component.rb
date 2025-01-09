@@ -24,7 +24,8 @@ module Works
       end
 
       def license_options
-        WorkForm.licenses.values.map { |license| [license['label'], license['uri']] }
+        # Passing the current license so that it will be included if deprecated.
+        LicensePresenter.options(current_license: form.object.license)
       end
 
       def prompt

@@ -41,9 +41,7 @@ class WorkPresenter < FormPresenter
   end
 
   def license_label
-    return unless license
-
-    WorkForm.licenses.find { |_, v| v['uri'] == license }.first
+    License.find_by(id: license)&.label
   end
 
   def publication_date
