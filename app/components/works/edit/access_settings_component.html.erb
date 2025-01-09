@@ -1,0 +1,13 @@
+<%= render Works::Edit::SectionHeaderComponent.new(title: 'Individual file visibility') %>
+<p>
+  You can prevent individual files from being displayed on the PURL page,
+  meaning viewers of the page can neither see or download the files. All files
+  are still preserved in the SDR, whether they are visible or not. If a file was
+  available to viewers on a previous version of this work, it will continue to
+  be available on the pages for the older versions.
+</p>
+<p>
+  To prevent displaying a specific file, return to the "Manage files" page and select "Hide" to the right of the file name.
+</p>
+
+<%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>

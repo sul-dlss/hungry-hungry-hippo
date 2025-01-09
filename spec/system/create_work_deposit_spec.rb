@@ -144,6 +144,11 @@ RSpec.describe 'Create a work deposit' do
     fill_in('Link text', with: related_links_fixture.first['text'])
     fill_in('URL', with: related_links_fixture.first['url'])
 
+    # Clicking on Next to go to access settings tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Access settings')
+    expect(page).to have_css('.h5', text: 'Individual file visibility')
+
     # Clicking on Next to go to license tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'License')
