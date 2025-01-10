@@ -22,6 +22,7 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
       expect(page).to have_field('URL')
       expect(page).to have_no_css('label.visually-hidden')
       expect(page).to have_css('div.border-3')
+      expect(page).to have_no_css('div.align-items-stretch')
     end
   end
 
@@ -42,6 +43,22 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
     it 'does not include the border classes' do
       render_inline(component)
       expect(page).to have_no_css('div.border-3')
+    end
+  end
+
+  context 'when a single field' do
+    subject(:component) do
+      described_class.new(form:, field_name: :contact_emails, model_class: ContactEmailForm,
+                          form_component: ContactEmails::EditComponent, hidden_label:, bordered:, single_field:)
+    end
+
+    let(:single_field) { true }
+    let(:hidden_label) { false }
+    let(:bordered) { true }
+
+    it 'aligns the delete icon' do
+      render_inline(component)
+      expect(page).to have_css('div.align-items-stretch')
     end
   end
 end
