@@ -204,6 +204,13 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('td', text: work_subtypes_fixture.join(', '))
       end
 
+      # Dates table
+      within('table#dates-table') do
+        expect(page).to have_css('caption', text: 'Dates')
+        expect(page).to have_css('tr', text: 'Publication date')
+        expect(page).to have_css('td', text: '2024-12')
+      end
+
       # Preferred citation table
       within('table#citation-table') do
         expect(page).to have_css('caption', text: 'Citation')
@@ -221,6 +228,13 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('td', text: 'doi:10.7710/2162-3309.1059 (has part)')
       end
 
+      # Access settings table
+      within('table#access-table') do
+        expect(page).to have_css('caption', text: 'Access settings')
+        expect(page).to have_css('tr', text: 'Access')
+        expect(page).to have_css('td', text: 'Stanford Community')
+      end
+
       # License table
       within('table#license-table') do
         expect(page).to have_css('caption', text: 'License')
@@ -230,13 +244,6 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('td',
                                  text: 'Content distributed via the Stanford Digital Repository may be subject to ' \
                                        'additional license and use restrictions applied by the depositor.')
-      end
-
-      # Dates table
-      within('table#dates-table') do
-        expect(page).to have_css('caption', text: 'Dates')
-        expect(page).to have_css('tr', text: 'Publication date')
-        expect(page).to have_css('td', text: '2024-12')
       end
     end
   end

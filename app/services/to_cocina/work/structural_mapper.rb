@@ -29,6 +29,8 @@ module ToCocina
 
       attr_reader :work_form, :content
 
+      delegate :access, to: :work_form
+
       def params
         {
           contains: content.content_files.map { |content_file| fileset_params_for(content_file) },
@@ -55,7 +57,7 @@ module ToCocina
           version: work_form.version,
           label: content_file.label,
           filename: content_file.filepath,
-          access: { view: 'world', download: 'world' },
+          access: { view: access, download: access },
           administrative: { publish: !content_file.hidden?, sdrPreserve: true, shelve: !content_file.hidden? },
           hasMimeType: content_file.mime_type,
           hasMessageDigests: message_digests_for(content_file),

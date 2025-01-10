@@ -148,6 +148,8 @@ RSpec.describe 'Create a work deposit' do
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Access settings')
     expect(page).to have_css('.h5', text: 'Individual file visibility')
+    expect(page).to have_css('.h5', text: 'Download access')
+    select('Everyone', from: 'work_access')
 
     # Clicking on Next to go to license tab
     click_link_or_button('Next')

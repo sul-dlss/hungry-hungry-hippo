@@ -25,7 +25,8 @@ RSpec.describe WorkFormSerializer do
       'work_type' => work_type_fixture,
       'work_subtypes' => work_subtypes_fixture,
       'other_work_subtype' => nil,
-      'content_id' => 5
+      'content_id' => 5,
+      'access' => 'stanford'
     }
   end
   let(:work_form) do
@@ -44,7 +45,8 @@ RSpec.describe WorkFormSerializer do
                  keywords_attributes: keywords_fixture,
                  work_type: work_type_fixture,
                  work_subtypes: work_subtypes_fixture,
-                 content_id: 5)
+                 content_id: 5,
+                 access: 'stanford')
   end
 
   describe '.serialize?' do
