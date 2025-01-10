@@ -27,6 +27,7 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
+    <%= render Elements::SkipLinksComponent.new %>
     <header>
       <div class="breadcrumbs">
         <nav id="breadcrumbs" aria-label="breadcrumb" class="container-xxl">
@@ -34,7 +35,7 @@
         </nav>
       </div>
     </header>
-    <main>
+    <main id="main-container">
       <div class="container">
         <% flash.each do |flash_type, msg| %>
           <%= render Elements::AlertComponent.new(variant: flash_type) do %>
