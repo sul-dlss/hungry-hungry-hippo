@@ -10,8 +10,8 @@ FactoryBot.define do
     doi_option { 'yes' }
     custom_rights_statement_option { 'with_custom_rights_statement' }
     provided_custom_rights_statement { 'My custom rights statement' }
-    license_option { 'required' }
-    license { 'CC0-1.0' }
+    license_option { 'depositor_selects' }
+    license { 'https://www.apache.org/licenses/LICENSE-2.0' }
     review_enabled { false }
 
     trait :with_review_workflow do

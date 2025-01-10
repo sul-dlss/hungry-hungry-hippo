@@ -40,7 +40,7 @@
     <%= render Elements::Tables::TableComponent.new(id: 'terms-licenses-table', classes: 'mb-5', label: 'Terms of use and licenses') do |component| %>
       <% component.with_row(label: 'Terms of use', values: [t('license.terms_of_use')]) %>
       <% component.with_row(label: 'Additional terms of use', values: [@collection_presenter.additional_terms_of_use]) %>
-      <% component.with_row(label: @collection_presenter.license_label, values: [@collection_presenter.license]) %>
+      <% component.with_row(label: @collection_presenter.license_option_label, values: [@collection_presenter.license_label]) %>
     <% end %>
 
     <%= render Elements::Tables::TableComponent.new(id: 'participants-table', classes: 'mb-5', label: 'Collection participants') do |component| %>

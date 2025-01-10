@@ -80,8 +80,8 @@ RSpec.describe 'Show a collection' do
       expect(page).to have_css('td', text: 'User agrees that')
       expect(page).to have_css('tr', text: 'Additional terms of use')
       expect(page).to have_css('td', text: 'My custom rights statement')
-      expect(page).to have_css('tr', text: 'Required license')
-      expect(page).to have_css('td', text: 'CC0-1.0')
+      expect(page).to have_css('tr', text: 'Default license (depositor selects)')
+      expect(page).to have_css('td', text: 'Apache-2.0')
     end
 
     # Participants table

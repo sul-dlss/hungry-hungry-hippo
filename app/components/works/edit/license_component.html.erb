@@ -1,3 +1,9 @@
-<%= render Elements::Forms::SelectFieldComponent.new(form:, field_name:, options: license_options, required: true, label:, help_text:, prompt:, width: 500, container_classes: 'mb-4') %>
+<% if required_license_option? %>
+  <p>The license for this deposit is <%= license_label %></p>
+  <%= form.hidden_field :license %>
+<% else %>
+  <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name:, options: license_options, required: true, label:, help_text:, width: 500, container_classes: 'mb-4') %>
+<% end %>
+
 <p class="mt-4"><%= helpers.t('license.edit.license_terms_of_use') %></p>
 <p class="fst-italic"><%= helpers.t('license.terms_of_use') %></p>

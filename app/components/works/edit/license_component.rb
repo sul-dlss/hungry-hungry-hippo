@@ -4,12 +4,15 @@ module Works
   module Edit
     # Select field for license
     class LicenseComponent < ApplicationComponent
-      def initialize(form:)
+      def initialize(form:, license_presenter:)
         @form = form
+        @license_presenter = license_presenter
         super()
       end
 
       attr_reader :form
+
+      delegate :required_license_option?, to: :@license_presenter
 
       def field_name
         :license
@@ -24,12 +27,11 @@ module Works
       end
 
       def license_options
-        # Passing the current license so that it will be included if deprecated.
-        LicensePresenter.options(current_license: form.object.license)
+        @license_presenter.options
       end
 
-      def prompt
-        'Select...'
+      def license_label
+        @license_presenter.label
       end
     end
   end

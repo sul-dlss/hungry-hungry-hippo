@@ -154,6 +154,7 @@ RSpec.describe 'Create a work deposit' do
     expect(page).to have_css('.nav-link.active', text: 'License')
 
     # Selecting license
+    expect(page).to have_select('License', selected: 'Apache-2.0')
     select('CC-BY-4.0 Attribution International', from: 'work_license')
 
     # Clicking on Next to go to Deposit

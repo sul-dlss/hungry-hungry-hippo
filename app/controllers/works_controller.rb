@@ -19,12 +19,13 @@ class WorksController < ApplicationController
 
   def new
     collection = Collection.find_by!(druid: params.expect(:collection_druid))
-    @collection_title = collection.title
 
     authorize! collection, with: WorkPolicy
 
+    @collection_title = collection.title
     @content = Content.create!(user: current_user)
-    @work_form = WorkForm.new(collection_druid: collection.druid, content_id: @content.id)
+    @work_form = WorkForm.new(collection_druid: collection.druid, content_id: @content.id, license: collection.license)
+    @license_presenter = LicensePresenter.new(work_form: @work_form, collection:)
 
     render :form
   end
@@ -40,6 +41,7 @@ class WorksController < ApplicationController
     # This updates the Work with the latest metadata from the Cocina object.
     ModelSync::Work.call(work: @work, cocina_object: @cocina_object)
     @collection_title = @work.collection.title
+    @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @work.collection)
 
     render :form
   end
@@ -60,11 +62,12 @@ class WorksController < ApplicationController
       redirect_to wait_works_path(work.id)
     else
       @content = Content.find(@work_form.content_id)
+      @license_presenter = LicensePresenter.new(work_form: @work_form, collection:)
       render :form, status: :unprocessable_entity
     end
   end
 
-  def update
+  def update # rubocop:disable Metrics/AbcSize
     authorize! @work
 
     @work_form = WorkForm.new(**update_work_params)
@@ -77,6 +80,7 @@ class WorksController < ApplicationController
       redirect_to wait_works_path(@work.id)
     else
       @content = Content.find(@work_form.content_id)
+      @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @work.collection)
       render :form, status: :unprocessable_entity
     end
   end
