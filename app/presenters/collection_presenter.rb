@@ -21,7 +21,7 @@ class CollectionPresenter < FormPresenter
     return 'Immediately' if collection.immediate_release_option?
 
     duration_text = Collection::RELEASE_DURATION_OPTIONS.invert[collection.release_duration]
-    "Depositor selects release date at no more than #{duration_text}"
+    "Depositor selects release date no more than #{duration_text}"
   end
 
   def visibility
