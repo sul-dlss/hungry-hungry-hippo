@@ -173,6 +173,9 @@ en:
           help_text: >
             Enter a summary statement (max 600 words) describing the work that you are depositing.
             A detailed statement may improve the discovery of your work in web searches.
+        access:
+          tab_label: 'Access settings'
+          label: 'Access settings'
         authors:
           tab_label: 'Authors'
           label: 'Author(s) to include in citation'

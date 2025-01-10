@@ -21,6 +21,7 @@
   <% component.with_tab(label: t('works.edit.panes.dates.tab_label'), tab_name: :dates) %>
   <% component.with_tab(label: t('works.edit.panes.citation.tab_label'), tab_name: :citation) %>
   <% component.with_tab(label: t('works.edit.panes.related_content.tab_label'), tab_name: :related_content) %>
+  <% component.with_tab(label: t('works.edit.panes.access.tab_label'), tab_name: :access) %>
   <% component.with_tab(label: t('works.edit.panes.license.tab_label'), tab_name: :license) %>
   <% component.with_tab(label: t('works.edit.panes.deposit.tab_label'), tab_name: :deposit) %>
   <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
@@ -35,7 +36,7 @@
       <%= render 'contents/edit', content: @content %>
 
       <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
-      <div class="h5 mb-3"><%= t('works.edit.panes.files.list') %></div>
+      <%= render Works::Edit::SectionHeaderComponent.new(title: t('works.edit.panes.files.list')) %>
       <div id="content-files">
         <%= render partial: 'contents/show', locals: { content: @content, content_files: @content.content_files.page(1) } %>
       </div>
@@ -70,6 +71,10 @@
     <% component.with_pane(tab_name: :related_content, label: t('works.edit.panes.related_content.label'), form_id:) do %>
       <%= render NestedComponentPresenter.for(form:, field_name: :related_works, model_class: RelatedWorkForm, form_component: RelatedWorks::EditComponent) %>
       <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent) %>
+    <% end %>
+
+    <% component.with_pane(tab_name: :access, label: t('works.edit.panes.access.label'), form_id:) do %>
+      <%= render Works::Edit::AccessSettingsComponent.new(form:) %>
     <% end %>
 
     <% component.with_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:) do %>
