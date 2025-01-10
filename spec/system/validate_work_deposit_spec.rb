@@ -35,6 +35,12 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Related content (optional)')
     fill_in('Link text', with: related_links_fixture.first['text'])
 
+    # Providing an invalid release date
+    find('.nav-link', text: 'Access settings').click
+    expect(page).to have_css('.nav-link.active', text: 'Access settings')
+    choose('On this date')
+    fill_in('Release date', with: (Time.zone.today - 1.day).iso8601)
+
     # Depositing the work
     find('.nav-link', text: 'Deposit').click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
@@ -100,6 +106,12 @@ RSpec.describe 'Validate a work deposit' do
 
     # Make the related link valid
     fill_in('URL', with: related_links_fixture.first['url'])
+
+    # Access settings is marked invalid
+    find('.nav-link.is-invalid', text: 'Access settings').click
+    expect(page).to have_field('Release date', class: 'is-invalid')
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be today or later')
+    choose('Immediately')
 
     # Try to deposit again
     find('.nav-link', text: 'Deposit').click

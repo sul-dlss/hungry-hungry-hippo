@@ -130,6 +130,10 @@ RSpec.describe 'Edit a work' do
       end
     end
 
+    # Filling in access settings
+    find('.nav-link', text: 'Access settings').click
+    choose('Immediately')
+
     click_link_or_button('Save as draft')
 
     # Waiting page may be too fast to catch so not testing.
@@ -143,6 +147,7 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_content(citation_fixture)
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
     expect(page).to have_content('https://purl.stanford.edu/fake (references)')
+    expect(page).to have_content('Immediately')
     expect(page).to have_css('.status', text: 'New version in draft')
     expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
   end

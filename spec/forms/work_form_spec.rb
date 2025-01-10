@@ -85,4 +85,61 @@ RSpec.describe WorkForm do
       end
     end
   end
+
+  describe 'release date validations' do
+    let(:form) do
+      described_class.new(
+        title: title_fixture,
+        contact_emails_attributes: contact_emails_fixture,
+        authors_attributes: authors_fixture,
+        release_option:,
+        release_date:,
+        collection_druid: collection.druid
+      )
+    end
+
+    let(:release_option) { 'delay' }
+    let(:release_date) { '' }
+
+    let(:collection) { create(:collection, :with_druid) }
+
+    context 'when release option is immediate' do
+      let(:release_option) { 'immediate' }
+
+      it 'does not validate release date' do
+        expect(form).to be_valid
+      end
+    end
+
+    context 'when release option is delay and release date is blank' do
+      it 'is invalid' do
+        expect(form).not_to be_valid
+        expect(form.errors[:release_date]).to include("can't be blank")
+      end
+    end
+
+    context 'when release option is delay and release date is valid' do
+      let(:release_date) { 1.day.from_now }
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+    end
+
+    context 'when release option is delay and release date is before today' do
+      let(:release_date) { 1.day.ago }
+
+      it 'is invalid' do
+        expect(form).not_to be_valid
+      end
+    end
+
+    context 'when release option is delay and release date after max release date' do
+      let(:release_date) { 2.years.from_now }
+
+      it 'is invalid' do
+        expect(form).not_to be_valid
+      end
+    end
+  end
 end

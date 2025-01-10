@@ -16,18 +16,38 @@ module ToCocina
       # @return [Hash] the Cocina access parameters
       def call
         {
-          view: access,
-          download: access,
           license: license.presence,
           useAndReproductionStatement: I18n.t('license.terms_of_use')
-        }.compact
+        }.merge(access_params).compact
       end
 
       private
 
       attr_reader :work_form
 
-      delegate :access, :license, to: :work_form
+      delegate :access, :license, :release_option, :release_date, to: :work_form
+
+      def access_params
+        return access_params_with_embargo if release_option == 'delay'
+
+        {
+          view: access,
+          download: access
+        }
+      end
+
+      def access_params_with_embargo
+        {
+          view: 'citation-only',
+          download: 'none',
+          embargo:
+        {
+          view: access,
+          download: access,
+          releaseDate: release_date.to_datetime.iso8601
+        }
+        }
+      end
     end
   end
 end

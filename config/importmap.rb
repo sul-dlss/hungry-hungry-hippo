@@ -12,3 +12,4 @@ pin 'bootstrap', to: 'bootstrap.min.js'
 # Pins for dropzone
 pin 'dropzone' # @6.0.0
 pin 'just-extend' # @5.1.1
+pin 'stimulus-datepicker' # @1.0.9

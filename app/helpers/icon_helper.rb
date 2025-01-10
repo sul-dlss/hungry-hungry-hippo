@@ -68,4 +68,8 @@ module IconHelper
   def move_down_icon(**)
     icon(icon_classes: 'bi bi-arrow-down', **)
   end
+
+  def calendar_icon(**)
+    icon(icon_classes: 'bi bi-calendar', **)
+  end
 end

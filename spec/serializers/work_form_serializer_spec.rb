@@ -26,7 +26,9 @@ RSpec.describe WorkFormSerializer do
       'work_subtypes' => work_subtypes_fixture,
       'other_work_subtype' => nil,
       'content_id' => 5,
-      'access' => 'stanford'
+      'access' => 'stanford',
+      'release_option' => 'delay',
+      'release_date' => release_date_fixture.to_date
     }
   end
   let(:work_form) do
@@ -46,7 +48,9 @@ RSpec.describe WorkFormSerializer do
                  work_type: work_type_fixture,
                  work_subtypes: work_subtypes_fixture,
                  content_id: 5,
-                 access: 'stanford')
+                 access: 'stanford',
+                 release_option: 'delay',
+                 release_date: release_date_fixture.to_date)
   end
 
   describe '.serialize?' do

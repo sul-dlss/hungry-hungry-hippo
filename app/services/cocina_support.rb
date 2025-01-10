@@ -181,10 +181,15 @@ class CocinaSupport
   end
 
   def self.access_for(cocina_object:)
-    cocina_object.access.view
+    # When there is an embargo, the embargo view is the access view.
+    cocina_object.access&.embargo&.view || cocina_object.access.view
   end
 
   def self.license_for(cocina_object:)
     cocina_object.access.license
+  end
+
+  def self.release_date_for(cocina_object:)
+    cocina_object.access&.embargo&.releaseDate
   end
 end

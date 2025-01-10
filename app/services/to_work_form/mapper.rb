@@ -37,7 +37,7 @@ module ToWorkForm
         version: cocina_object.version,
         collection_druid: CocinaSupport.collection_druid_for(cocina_object:),
         publication_date_attributes: CocinaSupport.event_date_for(cocina_object:, type: 'publication')
-      }.merge(work_type_params)
+      }.merge(work_type_params).merge(release_date_params)
     end
 
     def work_type_params
@@ -48,6 +48,13 @@ module ToWorkForm
       end
 
       { work_type:, work_subtypes: }
+    end
+
+    def release_date_params
+      release_date = CocinaSupport.release_date_for(cocina_object:)
+      return { release_option: 'immediate' } if release_date.blank?
+
+      { release_date:, release_option: 'delay' }
     end
   end
 end

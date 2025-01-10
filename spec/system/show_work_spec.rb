@@ -231,6 +231,8 @@ RSpec.describe 'Show a work' do
       # Access settings table
       within('table#access-table') do
         expect(page).to have_css('caption', text: 'Access settings')
+        expect(page).to have_css('tr', text: 'Available')
+        expect(page).to have_css('td', text: 'June 10, 2027')
         expect(page).to have_css('tr', text: 'Access')
         expect(page).to have_css('td', text: 'Stanford Community')
       end

@@ -34,4 +34,18 @@ class Collection < ApplicationRecord
   def deposit_job_finished?
     deposit_job_started_at.nil?
   end
+
+  def max_release_date
+    duration = case release_duration
+               when 'six_months'
+                 6.months
+               when 'one_year'
+                 1.year
+               when 'two_years'
+                 2.years
+               else
+                 3.years
+               end
+    Time.zone.today + duration
+  end
 end
