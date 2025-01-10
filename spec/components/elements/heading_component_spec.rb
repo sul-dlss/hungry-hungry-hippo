@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Elements::HeaderComponent, type: :component do
+RSpec.describe Elements::HeadingComponent, type: :component do
   it 'renders an h1 header with provided class' do
     render_inline(described_class.new(level: :h1, text: 'Hello World!', classes: %w[mb-4]))
     expect(page).to have_css('h1.mb-4')

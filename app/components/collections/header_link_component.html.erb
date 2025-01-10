@@ -1,7 +1,7 @@
 <% if @collection.druid %>
   <%= link_to collection_path(@collection.druid) do %>
-    <%= render Elements::HeaderComponent.new(level: @level, text: @collection.title) %>
+    <%= render Elements::HeadingComponent.new(level: @level, text: @collection.title) %>
   <% end %>
 <% else %>
-  <%= render Elements::HeaderComponent.new(level: @level, text: @collection.title) %>
+  <%= render Elements::HeadingComponent.new(level: @level, text: @collection.title) %>
 <% end %>
