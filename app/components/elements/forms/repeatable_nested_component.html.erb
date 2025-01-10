@@ -10,13 +10,13 @@
           <div class="col">
             <%= render form_component.new(form: nested_form) %>
           </div>
-          <div class="col-md-auto d-flex flex-column">
+          <%= tag.div(class: nested_buttons_classes) do %>
             <%= render Elements::DeleteButtonComponent.new(data: { action: 'click->nested-form#delete' }) %>
             <% if reorderable? %>
               <%= render Elements::MoveUpButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveUp' }) %>
               <%= render Elements::MoveDownButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveDown' }) %>
             <% end %>
-          </div>
+          <% end %>
         <% end %>
       <% end %>
     </template>
@@ -26,13 +26,13 @@
         <div class="col">
           <%= render form_component.new(form: nested_form) %>
         </div>
-        <div class="col-md-auto d-flex flex-column">
+        <%= tag.div(class: nested_buttons_classes) do %>
           <%= render Elements::DeleteButtonComponent.new(data: { action: 'click->nested-form#delete' }) %>
           <% if reorderable? %>
             <%= render Elements::MoveUpButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveUp' }) %>
             <%= render Elements::MoveDownButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveDown' }) %>
           <% end %>
-        </div>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
