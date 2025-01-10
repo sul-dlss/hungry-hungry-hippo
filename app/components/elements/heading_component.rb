@@ -2,7 +2,7 @@
 
 module Elements
   # Applies an h# component with the expected styling.
-  class HeaderComponent < ApplicationComponent
+  class HeadingComponent < ApplicationComponent
     def initialize(level:, text:, variant: nil, classes: [])
       raise ArgumentError, 'Invalid level' unless %i[h1 h2 h3 h4 h5 h6].include?(level.to_sym)
 

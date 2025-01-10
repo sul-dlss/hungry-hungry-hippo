@@ -11,7 +11,7 @@
     <% end %>
   <% end %>
 <% end %>
-<%= render Elements::HeaderComponent.new(level: :h1, variant: :h2, text: @collection_form.title || 'Untitled collection', classes: 'mb-3') %>
+<%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: @collection_form.title || 'Untitled collection', classes: 'mb-3') %>
 <%= render Elements::AlertComponent.new(variant: :danger, value: I18n.t('messages.validation')) if @collection_form.errors.present? %>
 <% form_id = dom_id(@collection_form, 'tabbed_form') %>
 <%= render Elements::TabForm::TabListComponent.new(model: @collection_form, form_id:, hidden_fields: %i[lock version]) do |component| %>

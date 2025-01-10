@@ -9,7 +9,7 @@
     <% end %>
   <% end %>
 <% end %>
-<%= render Elements::HeaderComponent.new(level: :h1, variant: :h2, text: @work_form.title || t('works.edit.no_title'), classes: 'mb-3') %>
+<%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: @work_form.title || t('works.edit.no_title'), classes: 'mb-3') %>
 <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if @work_form.errors.present? %>
 <% form_id = dom_id(@work_form, 'tabbed_form') %>
 <%= render Elements::TabForm::TabListComponent.new(model: @work_form, form_id:, hidden_fields: %i[lock version collection_druid content_id]) do |component| %>

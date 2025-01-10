@@ -1,14 +1,14 @@
-<%= render Elements::HeaderComponent.new(level: :h2, text: "#{current_user.name} - Dashboard", classes: 'mb-4') %>
+<%= render Elements::HeadingComponent.new(level: :h2, text: "#{current_user.name} - Dashboard", classes: 'mb-4') %>
 
 <% if @draft_works.present? %>
   <div class="mb-4">
-    <%= render Elements::HeaderComponent.new(level: :h3, text: 'Drafts - please complete', classes: 'mb-4 w-100') %>
+    <%= render Elements::HeadingComponent.new(level: :h3, text: 'Drafts - please complete', classes: 'mb-4 w-100') %>
     <%= render Dashboard::Show::DraftsListComponent.new(works: @draft_works) %>
   </div>
 <% end %>
 
 <div class="d-flex">
-  <%= render Elements::HeaderComponent.new(level: :h3, text: 'Your collections', classes: 'mb-4 w-100 text-nowrap') %>
+  <%= render Elements::HeadingComponent.new(level: :h3, text: 'Your collections', classes: 'mb-4 w-100 text-nowrap') %>
   <%= render Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary, classes: 'ml-auto text-nowrap h-50') if allowed_to?(:new?, Collection) %>
 </div>
 
