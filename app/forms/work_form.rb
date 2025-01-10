@@ -56,6 +56,9 @@ class WorkForm < ApplicationForm
   # Other requires a work subtype string
   validates :other_work_subtype, presence: true, if: -> { work_type == WorkType::OTHER }
 
+  attribute :access, :string, default: 'world'
+  validates :access, inclusion: { in: %w[world stanford] }
+
   def content_file_presence
     return if content_id.nil? # This makes test configuration easier.
     return if Content.find(content_id).content_files.exists?

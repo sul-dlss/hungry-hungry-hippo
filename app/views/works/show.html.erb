@@ -49,6 +49,10 @@
   <% component.with_row(label: 'Related links', values: @work_presenter.related_links) %>
 <% end %>
 
+<%= render Elements::Tables::TableComponent.new(id: 'access-table', classes: 'mb-5', label: 'Access settings') do |component| %>
+  <% component.with_row(label: 'Access', values: [@work_presenter.access_label]) %>
+<% end %>
+
 <%= render Elements::Tables::TableComponent.new(id: 'license-table', classes: 'mb-5', label: 'License and additional terms of use') do |component| %>
   <% component.with_row(label: 'License', values: [@work_presenter.license_label]) %>
   <% component.with_row(label: 'Terms of use', values: [t('license.terms_of_use')]) %>

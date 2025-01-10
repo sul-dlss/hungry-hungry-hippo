@@ -1,6 +1,6 @@
 <% content_for :breadcrumbs do %>
   <%= render Elements::BreadcrumbNavComponent.new(dashboard: true, admin: false) do |component| %>
-    <% component.with_breadcrumb(text: @collection_title, link: collection_path(druid: @work_form.collection_druid)) %>
+    <% component.with_breadcrumb(text: @collection.title, link: collection_path(druid: @work_form.collection_druid)) %>
     <% if (current_page?(action: :new) || (controller.action_name == 'create')) %>
       <% component.with_breadcrumb(text: I18n.t('works.edit.no_title')) %>
     <% else %>
@@ -74,7 +74,7 @@
     <% end %>
 
     <% component.with_pane(tab_name: :access, label: t('works.edit.panes.access.label'), form_id:) do %>
-      <%= render Works::Edit::AccessSettingsComponent.new(form:) %>
+      <%= render Works::Edit::AccessSettingsComponent.new(form:, collection: @collection) %>
     <% end %>
 
     <% component.with_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:) do %>

@@ -29,6 +29,9 @@ module ToWorkForm
         Rails.logger.info("Roundtripped: #{pretty_roundtripped}")
         false
       end
+    rescue Cocina::Models::ValidationError
+      # Generating the roundtripped cocina object may create an invalid object
+      false
     end
 
     private

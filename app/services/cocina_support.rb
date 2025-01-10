@@ -179,4 +179,12 @@ class CocinaSupport
   def self.orcid_for(contributor:)
     contributor.identifier&.find { |id| id.type == 'ORCID' }&.value&.presence
   end
+
+  def self.access_for(cocina_object:)
+    cocina_object.access.view
+  end
+
+  def self.license_for(cocina_object:)
+    cocina_object.access.license
+  end
 end

@@ -48,6 +48,10 @@ class WorkPresenter < FormPresenter
     super.to_s
   end
 
+  def access_label
+    I18n.t("access.#{access}")
+  end
+
   private
 
   delegate :collection, :created_at, :user, to: :work

@@ -18,14 +18,13 @@ class WorksController < ApplicationController
   end
 
   def new
-    collection = Collection.find_by!(druid: params.expect(:collection_druid))
+    @collection = Collection.find_by!(druid: params.expect(:collection_druid))
 
-    authorize! collection, with: WorkPolicy
+    authorize! @collection, with: WorkPolicy
 
-    @collection_title = collection.title
     @content = Content.create!(user: current_user)
-    @work_form = WorkForm.new(collection_druid: collection.druid, content_id: @content.id, license: collection.license)
-    @license_presenter = LicensePresenter.new(work_form: @work_form, collection:)
+    @work_form = new_work_form
+    @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @collection)
 
     render :form
   end
@@ -40,7 +39,7 @@ class WorksController < ApplicationController
 
     # This updates the Work with the latest metadata from the Cocina object.
     ModelSync::Work.call(work: @work, cocina_object: @cocina_object)
-    @collection_title = @work.collection.title
+    @collection = @work.collection
     @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @work.collection)
 
     render :form
@@ -48,21 +47,20 @@ class WorksController < ApplicationController
 
   def create # rubocop:disable Metrics/AbcSize
     @work_form = WorkForm.new(**work_params)
-    collection = Collection.find_by!(druid: @work_form.collection_druid)
-    @collection_title = collection.title
-    authorize! collection, with: WorkPolicy
+    @collection = Collection.find_by!(druid: @work_form.collection_druid)
+    authorize! @collection, with: WorkPolicy
 
     # The validation_context param determines whether extra validations are applied, e.g., for deposits.
     if @work_form.valid?(validation_context)
       # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
       # should be "waiting".
       work = Work.create!(title: @work_form.title, user: current_user, deposit_job_started_at: Time.zone.now,
-                          collection:)
+                          collection: @collection)
       DepositWorkJob.perform_later(work:, work_form: @work_form, deposit: deposit?)
       redirect_to wait_works_path(work.id)
     else
       @content = Content.find(@work_form.content_id)
-      @license_presenter = LicensePresenter.new(work_form: @work_form, collection:)
+      @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @collection)
       render :form, status: :unprocessable_entity
     end
   end
@@ -80,6 +78,7 @@ class WorksController < ApplicationController
       redirect_to wait_works_path(@work.id)
     else
       @content = Content.find(@work_form.content_id)
+      @collection = @work.collection
       @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @work.collection)
       render :form, status: :unprocessable_entity
     end
@@ -152,5 +151,14 @@ class WorksController < ApplicationController
 
   def set_presenter
     @work_presenter = WorkPresenter.new(work: @work, work_form: @work_form, version_status: @version_status)
+  end
+
+  def new_work_form
+    WorkForm.new(
+      collection_druid: @collection.druid,
+      content_id: @content.id,
+      license: @collection.license,
+      access: @collection.stanford_access? ? 'stanford' : 'world'
+    )
   end
 end

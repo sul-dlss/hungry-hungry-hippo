@@ -18,7 +18,8 @@ module WorkMappingFixtures
       contact_emails_attributes: contact_emails_fixture,
       keywords_attributes: keywords_fixture,
       work_type: work_type_fixture,
-      work_subtypes: work_subtypes_fixture
+      work_subtypes: work_subtypes_fixture,
+      access: 'stanford'
     )
   end
 
@@ -87,7 +88,7 @@ module WorkMappingFixtures
         version: 1,
         identification: { sourceId: source_id_fixture },
         administrative: { hasAdminPolicy: Settings.apo, partOfProject: Settings.project_tag },
-        access: { view: 'world', download: 'world', license: license_fixture,
+        access: { view: 'stanford', download: 'stanford', license: license_fixture,
                   useAndReproductionStatement: I18n.t('license.terms_of_use') },
         structural: { isMemberOf: [collection_druid_fixture] }
       }
@@ -184,8 +185,8 @@ module WorkMappingFixtures
                                         }
                                       ],
                                       access: {
-                                        view: 'world',
-                                        download: 'world',
+                                        view: 'stanford',
+                                        download: 'stanford',
                                         controlledDigitalLending: false
                                       },
                                       administrative: {
@@ -226,8 +227,8 @@ module WorkMappingFixtures
         version: 2,
         identification: { sourceId: source_id_fixture },
         administrative: { hasAdminPolicy: Settings.apo },
-        access: { view: 'world',
-                  download: 'world',
+        access: { view: 'stanford',
+                  download: 'stanford',
                   license: license_fixture,
                   useAndReproductionStatement: I18n.t('license.terms_of_use') },
         structural: { isMemberOf: [collection_druid_fixture] }
@@ -266,8 +267,8 @@ module WorkMappingFixtures
                                   }
                                 ],
                                 access: {
-                                  view: 'world',
-                                  download: 'world',
+                                  view: 'stanford',
+                                  download: 'stanford',
                                   controlledDigitalLending: false
                                 },
                                 administrative: {

@@ -32,7 +32,8 @@ module ToWorkForm
         related_works_attributes: CocinaSupport.related_works_for(cocina_object:),
         related_links_attributes: CocinaSupport.related_links_for(cocina_object:),
         keywords_attributes: CocinaSupport.keywords_for(cocina_object:),
-        license: cocina_object.access.license,
+        license: CocinaSupport.license_for(cocina_object:),
+        access: CocinaSupport.access_for(cocina_object:),
         version: cocina_object.version,
         collection_druid: CocinaSupport.collection_druid_for(cocina_object:),
         publication_date_attributes: CocinaSupport.event_date_for(cocina_object:, type: 'publication')
