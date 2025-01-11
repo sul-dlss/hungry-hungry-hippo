@@ -18,16 +18,10 @@ class CollectionPresenter < FormPresenter
   end
 
   def release
-    duration_text = Collection::RELEASE_DURATION_OPTIONS.invert[collection.release_duration]
+    return 'Immediately' if collection.immediate_release_option?
 
-    case collection.release_option
-    when 'delay'
-      duration_text.capitalize
-    when 'depositor_selects'
-      "Depositor selects release date at no more than #{duration_text}"
-    else
-      'Immediately'
-    end
+    duration_text = Collection::RELEASE_DURATION_OPTIONS.invert[collection.release_duration]
+    "Depositor selects release date at no more than #{duration_text}"
   end
 
   def visibility
