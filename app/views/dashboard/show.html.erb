@@ -12,23 +12,7 @@
   <%= render Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary, classes: 'ml-auto text-nowrap h-50') if allowed_to?(:new?, Collection) %>
 </div>
 
-<% current_user.collections.each do |collection| %>
-  <div class="mb-3">
-    <%= render Collections::HeaderLinkComponent.new(collection:, level: :h4) %>
-    <%= render Dashboard::Show::WorksListComponent.new(collection:, status_map: @status_map) %>
-    <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary) %>
-  </div>
-<% end %>
-
-<% current_user.manages.each do |collection| %>
-  <div class="mb-3">
-    <%= render Collections::HeaderLinkComponent.new(collection:, level: :h4) %>
-    <%= render Dashboard::Show::WorksListComponent.new(collection:, status_map: @status_map) %>
-    <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary) %>
-  </div>
-<% end %>
-
-<% current_user.depositor_for.each do |collection| %>
+<% current_user.your_collections.each do |collection| %>
   <div class="mb-3">
     <%= render Collections::HeaderLinkComponent.new(collection:, level: :h4) %>
     <%= render Dashboard::Show::WorksListComponent.new(collection:, status_map: @status_map) %>

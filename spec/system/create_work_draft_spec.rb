@@ -29,7 +29,7 @@ RSpec.describe 'Create a work draft' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
 
-    create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture)
+    create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture, managers: [user])
 
     sign_in(user)
   end
