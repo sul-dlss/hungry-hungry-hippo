@@ -7,7 +7,7 @@ RSpec.describe 'Show dashboard' do
 
   describe 'drafts section' do
     let!(:work) { create(:work, :with_druid, user:, collection:) }
-    let(:collection) { create(:collection, :with_druid, user:) }
+    let(:collection) { create(:collection, :with_druid, user:, managers: [user]) }
 
     let(:drafts_header) { 'Drafts - please complete' }
 

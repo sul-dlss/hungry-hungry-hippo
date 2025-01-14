@@ -6,7 +6,7 @@ RSpec.describe 'Show dashboard', :rack_test do
   let!(:work) { create(:work, :with_druid, user:, collection:) }
   let!(:work_without_druid) { create(:work, user:, collection:) }
   let!(:draft_work) { create(:work, :with_druid, user:, collection:) }
-  let(:collection) { create(:collection, :with_druid, user:) }
+  let(:collection) { create(:collection, :with_druid, user:, managers: [user]) }
   let(:user) { create(:user) }
   let(:version_status) do
     VersionStatus.new(status:
