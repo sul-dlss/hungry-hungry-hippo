@@ -206,8 +206,8 @@ en:
           list: 'Your files'
           upload: 'Upload your files'
         license:
-          tab_label: 'License'
-          label: 'License'
+          tab_label: 'License and additional terms of use'
+          label: 'License and additional terms of use'
         related_content:
           tab_label: 'Related content (optional)'
           label: 'Related content'

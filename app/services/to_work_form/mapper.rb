@@ -36,7 +36,8 @@ module ToWorkForm
         access: CocinaSupport.access_for(cocina_object:),
         version: cocina_object.version,
         collection_druid: CocinaSupport.collection_druid_for(cocina_object:),
-        publication_date_attributes: CocinaSupport.event_date_for(cocina_object:, type: 'publication')
+        publication_date_attributes: CocinaSupport.event_date_for(cocina_object:, type: 'publication'),
+        custom_rights_statement:
       }.merge(work_type_params).merge(release_date_params)
     end
 
@@ -55,6 +56,19 @@ module ToWorkForm
       return { release_option: 'immediate' } if release_date.blank?
 
       { release_date:, release_option: 'delay' }
+    end
+
+    def custom_rights_statement
+      use_statement = CocinaSupport.use_reproduction_statement_for(cocina_object:)
+      return if use_statement.blank?
+      return if use_statement == default_terms_of_use
+
+      # Remove the default terms
+      use_statement.delete_suffix(default_terms_of_use)&.strip
+    end
+
+    def default_terms_of_use
+      I18n.t('license.terms_of_use')
     end
   end
 end

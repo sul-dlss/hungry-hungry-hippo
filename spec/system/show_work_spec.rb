@@ -244,8 +244,7 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('td', text: license_label_fixture)
         expect(page).to have_css('tr', text: 'Terms of use')
         expect(page).to have_css('td',
-                                 text: 'Content distributed via the Stanford Digital Repository may be subject to ' \
-                                       'additional license and use restrictions applied by the depositor.')
+                                 text: custom_rights_statement_fixture)
       end
     end
   end

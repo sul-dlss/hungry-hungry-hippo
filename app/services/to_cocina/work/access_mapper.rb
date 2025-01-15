@@ -17,7 +17,7 @@ module ToCocina
       def call
         {
           license: license.presence,
-          useAndReproductionStatement: I18n.t('license.terms_of_use')
+          useAndReproductionStatement: TermsOfUseSupport.full_statement(custom_rights_statement:)
         }.merge(access_params).compact
       end
 
@@ -25,7 +25,7 @@ module ToCocina
 
       attr_reader :work_form
 
-      delegate :access, :license, :release_option, :release_date, to: :work_form
+      delegate :access, :license, :release_option, :release_date, :custom_rights_statement, to: :work_form
 
       def access_params
         return access_params_with_embargo if release_option == 'delay'

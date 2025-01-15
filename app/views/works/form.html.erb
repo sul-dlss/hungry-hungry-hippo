@@ -79,6 +79,10 @@
 
     <% component.with_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:) do %>
       <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
+      <% unless @collection.no_custom_rights_statement_option? %>
+        <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
+        <%= render Works::Edit::TermsOfUseComponent.new(form:, collection: @collection) %>
+      <% end %>
     <% end %>
 
     <%# This pane is outside the work form because it contains its own form for discarding the draft. %>

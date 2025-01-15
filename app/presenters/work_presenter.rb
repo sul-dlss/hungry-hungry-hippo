@@ -58,6 +58,10 @@ class WorkPresenter < FormPresenter
     I18n.l(release_date, format: :long)
   end
 
+  def terms_of_use
+    TermsOfUseSupport.full_statement(custom_rights_statement:)
+  end
+
   private
 
   delegate :collection, :created_at, :user, to: :work
