@@ -33,7 +33,7 @@ $container-max-widths: (
 .tabbable-panes {
   .nav-pills {
     @include media-breakpoint-up(md) {
-      height: 650px;
+      height: 700px;
     }
 
     background-color: var(--stanford-10-black);

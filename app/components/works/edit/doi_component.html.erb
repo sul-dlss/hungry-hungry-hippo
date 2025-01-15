@@ -1,0 +1,24 @@
+<% if assigned? %>
+  <p>The DOI assigned to this work is <%= doi_link %>.</p>
+  <%= form.hidden_field :doi_option, value: 'assigned' %>
+<% elsif yes_doi_option? %>
+  <p>A DOI will be assigned.</p>
+  <%= form.hidden_field :doi_option, value: 'yes' %>
+<% elsif no_doi_option? %>
+  <p>DOI assignment is turned off for this collection.</p>
+  <%= form.hidden_field :doi_option, value: 'no' %>
+<% else %>
+  <p>Getting a DOI may improve discovery of your work in web searches and will enable Altmetric reporting.</p>
+
+  <fieldset class="row">
+    <legend class="form-label col-md-5">Do you want a DOI assigned to this work?</legend>
+    <div class="form-check col-md-2">
+      <%= form.radio_button :doi_option, 'yes', class: 'form-check-input' %>
+      <%= form.label :doi_option_yes, 'Yes', class: 'form-check-label' %>
+    </div>
+    <div class="form-check col-md-2">
+      <%= form.radio_button :doi_option, 'no', class: 'form-check-input' %>
+      <%= form.label :doi_option_no, 'No', class: 'form-check-label' %>
+    </div>
+  </fieldset>
+<% end %>

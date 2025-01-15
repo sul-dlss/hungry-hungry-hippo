@@ -59,6 +59,9 @@ class WorkForm < ApplicationForm
   attribute :access, :string, default: 'world'
   validates :access, inclusion: { in: %w[world stanford] }
 
+  attribute :doi_option, :string, default: 'yes'
+  validates :doi_option, inclusion: { in: %w[yes no assigned] }
+
   def content_file_presence
     return if content_id.nil? # This makes test configuration easier.
     return if Content.find(content_id).content_files.exists?

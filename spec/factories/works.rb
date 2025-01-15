@@ -6,6 +6,7 @@ FactoryBot.define do
     user
     collection factory: %i[collection with_druid]
     object_updated_at { Time.zone.now }
+    doi_assigned { true }
 
     trait :deposit_job_started do
       deposit_job_started_at { Time.zone.now }

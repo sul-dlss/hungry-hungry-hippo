@@ -3,11 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe ToWorkForm::Mapper, type: :mapping do
-  subject(:work_form) { described_class.call(cocina_object:) }
+  subject(:work_form) { described_class.call(cocina_object:, doi_assigned:) }
 
   let(:cocina_object) { dro_with_metadata_fixture }
+  let(:doi_assigned) { true }
 
-  it 'maps to cocina' do
+  it 'maps to work form' do
     expect(work_form).to equal_form(work_form_fixture)
   end
 
@@ -46,8 +47,26 @@ RSpec.describe ToWorkForm::Mapper, type: :mapping do
       end
     end
 
-    it 'maps to cocina' do
+    it 'maps to work form' do
       expect(work_form).to equal_form(expected_work_form)
+    end
+  end
+
+  context 'when the DOI does not exist' do
+    let(:doi_assigned) { false }
+
+    it 'maps to work form with yes doi_option' do
+      expect(work_form.doi_option).to eq('yes')
+    end
+  end
+
+  context 'when cocina does not have a DOI' do
+    let(:cocina_object) do
+      dro_with_metadata_fixture.new(identification: { sourceId: source_id_fixture })
+    end
+
+    it 'maps to work form with no doi_option' do
+      expect(work_form.doi_option).to eq('no')
     end
   end
 end

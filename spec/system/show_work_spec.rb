@@ -154,6 +154,8 @@ RSpec.describe 'Show a work' do
       # Details table
       within('table#details-table') do
         expect(page).to have_css('caption', text: 'Details')
+        expect(page).to have_css('tr', text: 'DOI')
+        expect(page).to have_css('td', text: Doi.url(druid:))
         expect(page).to have_css('tr', text: 'Persistent Link')
         expect(page).to have_css('td', text: Sdr::Purl.from_druid(druid:))
         expect(page).to have_css('tr', text: 'Collection')

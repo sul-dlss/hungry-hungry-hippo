@@ -52,6 +52,17 @@ class WorkPresenter < FormPresenter
     I18n.t("access.#{access}")
   end
 
+  def doi_value
+    case doi_option
+    when 'yes'
+      'A DOI will be assigned.'
+    when 'no'
+      'A DOI will not be assigned.'
+    else
+      link_to(nil, Doi.url(druid:))
+    end
+  end
+
   private
 
   delegate :collection, :created_at, :user, to: :work

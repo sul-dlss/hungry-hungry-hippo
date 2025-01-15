@@ -8,7 +8,7 @@
 
 <%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'mb-5', label: 'Details') do |component| %>
   <% component.with_row(label: 'Persistent Link', values: [@work_presenter.purl_link]) %>
-  <%# TODO: Add DOIs when support is implemented for them %>
+  <% component.with_row(label: 'DOI', values: [@work_presenter.doi_value]) %>
   <% component.with_row(label: 'Collection', values: [@work_presenter.collection_link]) %>
   <% component.with_row(label: 'Depositor', values: [@work_presenter.depositor]) %>
   <% component.with_row(label: 'Version details', values: [@work_presenter.version]) %>
