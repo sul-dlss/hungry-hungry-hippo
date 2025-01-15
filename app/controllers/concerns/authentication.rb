@@ -16,6 +16,7 @@ module Authentication
   #  - X-Person-Name (first name)
   #  - X-Person-Formal-Name (full name)
 
+  MAX_URL_SIZE = ActionDispatch::Cookies::MAX_COOKIE_SIZE / 2
   SHIBBOLETH_LOGOUT_PATH = '/Shibboleth.sso/Logout'
 
   included do
@@ -73,7 +74,11 @@ module Authentication
   end
 
   def request_authentication
-    session[:return_to_after_authenticating] = request.url
+    # Always check that we have enough space in the cookie to store the full return URL.
+    #
+    # This situation typically occurs when we are scanned for vulnerabilities and a
+    # CRLF Injection attack is attempted, see https://www.geeksforgeeks.org/crlf-injection-attack/
+    session[:return_to_after_authenticating] = request.url if request.url.size < MAX_URL_SIZE
     redirect_to login_path
   end
 
