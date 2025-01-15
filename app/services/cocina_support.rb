@@ -187,4 +187,8 @@ class CocinaSupport
   def self.license_for(cocina_object:)
     cocina_object.access.license
   end
+
+  def self.doi_for(cocina_object:)
+    cocina_object.identification.doi
+  end
 end

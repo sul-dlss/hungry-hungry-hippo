@@ -19,7 +19,8 @@ module WorkMappingFixtures
       keywords_attributes: keywords_fixture,
       work_type: work_type_fixture,
       work_subtypes: work_subtypes_fixture,
-      access: 'stanford'
+      access: 'stanford',
+      doi_option: 'yes'
     )
   end
 
@@ -28,6 +29,7 @@ module WorkMappingFixtures
       form.druid = druid_fixture
       form.version = 2
       form.lock = lock_fixture
+      form.doi_option = 'assigned'
     end
   end
 
@@ -225,7 +227,7 @@ module WorkMappingFixtures
           purl: Sdr::Purl.from_druid(druid: druid_fixture)
         },
         version: 2,
-        identification: { sourceId: source_id_fixture },
+        identification: { sourceId: source_id_fixture, doi: doi_fixture },
         administrative: { hasAdminPolicy: Settings.apo },
         access: { view: 'stanford',
                   download: 'stanford',

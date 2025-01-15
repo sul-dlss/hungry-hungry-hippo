@@ -30,7 +30,7 @@ module ToCocina
 
       attr_reader :work_form, :source_id, :content
 
-      def params
+      def params # rubocop:disable Metrics/AbcSize
         {
           externalIdentifier: work_form.druid,
           type: Cocina::Models::ObjectType.object,
@@ -38,7 +38,7 @@ module ToCocina
           description: DescriptionMapper.call(work_form:),
           version: work_form.version,
           access: AccessMapper.call(work_form:),
-          identification: { sourceId: source_id },
+          identification: IdentificationMapper.call(work_form:, source_id:),
           administrative: { hasAdminPolicy: Settings.apo },
           structural: StructuralMapper.call(work_form:, content:)
         }.compact

@@ -194,6 +194,9 @@ en:
         dates:
           tab_label: 'Dates (optional)'
           label: 'Enter dates related to your deposit'
+        doi:
+          tab_label: 'DOI'
+          label: 'DOI assignment'
         deposit:
           tab_label: 'Deposit'
           label: 'Submit your deposit'
