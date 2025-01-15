@@ -32,10 +32,27 @@ RSpec.describe DepositWorkJob do
                                                                   source_id: "h3:object-#{work.id}")
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
       expect(Sdr::Repository).to have_received(:register)
-        .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO))
+        .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true)
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
 
       expect(work.reload.deposit_job_finished?).to be true
+    end
+  end
+
+  context 'when a new work and not assigning a DOI' do
+    let(:work_form) do
+      WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid, doi_option: 'no')
+    end
+    let(:work) { create(:work, :deposit_job_started, collection:) }
+
+    before do
+      allow(Sdr::Repository).to receive(:register).and_return(cocina_object)
+    end
+
+    it 'registers a new work' do
+      described_class.perform_now(work_form:, work:, deposit: true)
+      expect(Sdr::Repository).to have_received(:register)
+        .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: false)
     end
   end
 

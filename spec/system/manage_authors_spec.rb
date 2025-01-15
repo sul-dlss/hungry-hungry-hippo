@@ -27,6 +27,7 @@ RSpec.describe 'Manage authors for a work deposit' do
     # Stubbing out for show page
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(Doi).to receive(:assigned?).with(druid:).and_return(false)
 
     create(:collection, user:, druid: collection_druid_fixture)
 

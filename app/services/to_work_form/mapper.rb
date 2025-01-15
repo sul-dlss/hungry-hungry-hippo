@@ -7,8 +7,9 @@ module ToWorkForm
       new(...).call
     end
 
-    def initialize(cocina_object:)
+    def initialize(cocina_object:, doi_assigned:)
       @cocina_object = cocina_object
+      @doi_assigned = doi_assigned
     end
 
     def call
@@ -17,7 +18,7 @@ module ToWorkForm
 
     private
 
-    attr_reader :cocina_object
+    attr_reader :cocina_object, :doi_assigned
 
     def params # rubocop:disable Metrics/AbcSize
       {
@@ -37,7 +38,8 @@ module ToWorkForm
         version: cocina_object.version,
         collection_druid: CocinaSupport.collection_druid_for(cocina_object:),
         publication_date_attributes: CocinaSupport.event_date_for(cocina_object:, type: 'publication'),
-        custom_rights_statement:
+        custom_rights_statement:,
+        doi_option:
       }.merge(work_type_params).merge(release_date_params)
     end
 
@@ -69,6 +71,21 @@ module ToWorkForm
 
     def default_terms_of_use
       I18n.t('license.terms_of_use')
+    end
+
+    def doi_option
+      # If the work has a DOI and that DOI exists in DataCite, then already assigned.
+      # If the work has a DOI and that DOI does not exist in DataCite, then yes.
+      # (It will be assigned as part of the registration request or when deposited.)
+      # If the work does not have a DOI, then no.
+      doi = CocinaSupport.doi_for(cocina_object:)
+      if doi.nil?
+        'no'
+      elsif doi_assigned
+        'assigned'
+      else
+        'yes'
+      end
     end
   end
 end
