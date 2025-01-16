@@ -76,6 +76,8 @@ class WorkForm < ApplicationForm
     }
   end
 
+  attribute :custom_rights_statement, :string
+
   def content_file_presence
     return if content_id.nil? # This makes test configuration easier.
     return if Content.find(content_id).content_files.exists?

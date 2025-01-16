@@ -78,4 +78,28 @@ RSpec.describe ToCocina::Work::AccessMapper do
       )
     end
   end
+
+  context 'when custom rights statement' do
+    let(:work_form) { WorkForm.new(custom_rights_statement: custom_rights_statement_fixture) }
+
+    it 'maps to cocina' do
+      expect(access).to match(
+        view: 'world',
+        download: 'world',
+        useAndReproductionStatement: full_custom_rights_statement_fixture
+      )
+    end
+  end
+
+  context 'without custom rights statement' do
+    let(:work_form) { WorkForm.new }
+
+    it 'maps to cocina' do
+      expect(access).to match(
+        view: 'world',
+        download: 'world',
+        useAndReproductionStatement: I18n.t('license.terms_of_use')
+      )
+    end
+  end
 end

@@ -192,4 +192,8 @@ class CocinaSupport
   def self.release_date_for(cocina_object:)
     cocina_object.access&.embargo&.releaseDate
   end
+
+  def self.use_reproduction_statement_for(cocina_object:)
+    cocina_object.access.useAndReproductionStatement
+  end
 end

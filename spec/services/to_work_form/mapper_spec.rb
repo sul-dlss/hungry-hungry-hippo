@@ -46,8 +46,18 @@ RSpec.describe ToWorkForm::Mapper, type: :mapping do
       end
     end
 
-    it 'maps to cocina' do
+    it 'maps to work form' do
       expect(work_form).to equal_form(expected_work_form)
+    end
+  end
+
+  context 'when default terms of use' do
+    let(:cocina_object) do
+      dro_with_metadata_fixture.new(access: { useAndReproductionStatement: I18n.t('license.terms_of_use') })
+    end
+
+    it 'maps to work form without custom rights statement' do
+      expect(work_form.custom_rights_statement).to be_nil
     end
   end
 end

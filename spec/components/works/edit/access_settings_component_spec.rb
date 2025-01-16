@@ -52,8 +52,8 @@ RSpec.describe Works::Edit::AccessSettingsComponent, type: :component do
       expect(page).to have_text('Select when the files in your deposit will be downloadable')
       expect(page).to have_field('release_option', type: 'radio', with: 'immediate', checked: true)
       expect(page).to have_field('release_option', type: 'radio', with: 'delay')
-      expect(page).to have_css("div[data-controller='datepicker'][data-datepicker-min-value='#{Time.zone.today.iso8601}']") # rubocop:disable Metrics/LineLength
-      expect(page).to have_css("div[data-controller='datepicker'][data-datepicker-max-value='#{max_release_date.iso8601}']") # rubocop:disable Metrics/LineLength
+      expect(page).to have_css("div[data-controller='datepicker'][data-datepicker-min-value='#{Time.zone.today.iso8601}']") # rubocop:disable Layout/LineLength
+      expect(page).to have_css("div[data-controller='datepicker'][data-datepicker-max-value='#{max_release_date.iso8601}']") # rubocop:disable Layout/LineLength
       expect(page).to have_text("Date must be before #{max_release_date.strftime('%B %d, %Y')}")
     end
   end

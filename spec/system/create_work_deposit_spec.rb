@@ -30,7 +30,8 @@ RSpec.describe 'Create a work deposit' do
     # Stubbing out for show page
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
-    create(:collection, user:, druid: collection_druid_fixture, managers: [user])
+    create(:collection, user:, druid: collection_druid_fixture, managers: [user],
+                        custom_rights_statement_option: 'depositor_selects')
     sign_in(user)
   end
 
@@ -157,11 +158,14 @@ RSpec.describe 'Create a work deposit' do
 
     # Clicking on Next to go to license tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'License')
+    expect(page).to have_css('.nav-link.active', text: 'License and additional terms of use')
 
     # Selecting license
     expect(page).to have_select('License', selected: 'Apache-2.0')
     select('CC-BY-4.0 Attribution International', from: 'work_license')
+
+    # Entering additional terms of use
+    fill_in('Additional terms of use (optional)', with: custom_rights_statement_fixture)
 
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')

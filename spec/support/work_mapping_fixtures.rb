@@ -21,7 +21,8 @@ module WorkMappingFixtures
       work_subtypes: work_subtypes_fixture,
       access: 'stanford',
       release_option: 'delay',
-      release_date: release_date_fixture
+      release_date: release_date_fixture,
+      custom_rights_statement: custom_rights_statement_fixture
     )
   end
 
@@ -91,7 +92,7 @@ module WorkMappingFixtures
         identification: { sourceId: source_id_fixture },
         administrative: { hasAdminPolicy: Settings.apo, partOfProject: Settings.project_tag },
         access: { view: 'citation-only', download: 'none', license: license_fixture,
-                  useAndReproductionStatement: I18n.t('license.terms_of_use'),
+                  useAndReproductionStatement: full_custom_rights_statement_fixture,
                   embargo: { view: 'stanford', download: 'stanford', releaseDate: release_date_fixture } },
         structural: { isMemberOf: [collection_druid_fixture] }
       }
@@ -233,7 +234,7 @@ module WorkMappingFixtures
         access: { view: 'citation-only',
                   download: 'none',
                   license: license_fixture,
-                  useAndReproductionStatement: I18n.t('license.terms_of_use'),
+                  useAndReproductionStatement: full_custom_rights_statement_fixture,
                   embargo: { view: 'stanford', download: 'stanford', releaseDate: release_date_fixture } },
         structural: { isMemberOf: [collection_druid_fixture] }
       }

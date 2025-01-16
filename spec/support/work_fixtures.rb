@@ -178,3 +178,11 @@ end
 def release_date_fixture
   DateTime.new(2027, 6, 10)
 end
+
+def custom_rights_statement_fixture
+  'Use at your own peril.'
+end
+
+def full_custom_rights_statement_fixture
+  "#{custom_rights_statement_fixture}\n\n#{I18n.t('license.terms_of_use')}"
+end
