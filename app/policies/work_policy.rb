@@ -1,10 +1,19 @@
 # frozen_string_literal: true
 
 class WorkPolicy < ApplicationPolicy
-  alias_rule :new?, :create?, :show?, :update?, :edit?, :wait?, :destroy?, to: :manage?
+  alias_rule :new?, :create?, :update?, :edit?, :destroy?, to: :manage?
+  alias_rule :wait?, to: :show?
 
   def manage?
     record.user_id == user.id || collection_manager? || collection_owner? || collection_depositor?
+  end
+
+  def show?
+    manage? || collection_reviewer?
+  end
+
+  def review?
+    collection_reviewer? || collection_manager?
   end
 
   def collection_manager?
@@ -21,5 +30,9 @@ class WorkPolicy < ApplicationPolicy
 
   def collection_owner?
     record.collection.user_id == user.id if record.is_a? Work
+  end
+
+  def collection_reviewer?
+    record.collection.reviewers.include?(user)
   end
 end

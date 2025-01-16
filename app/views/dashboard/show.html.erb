@@ -7,6 +7,11 @@
   </div>
 <% end %>
 
+<% if current_user.your_pending_review_works.exists? %>
+  <%= render Elements::HeadingComponent.new(level: :h3, text: 'Deposits that are pending review', classes: 'mb-4 w-100 text-nowrap') %>
+  <%= render Dashboard::Show::PendingReviewListComponent.new(works: current_user.your_pending_review_works) %>
+<% end %>
+
 <div class="d-flex">
   <%= render Elements::HeadingComponent.new(level: :h3, text: 'Your collections', classes: 'mb-4 w-100 text-nowrap') %>
   <%= render Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary, classes: 'ml-auto text-nowrap h-50') if allowed_to?(:new?, Collection) %>

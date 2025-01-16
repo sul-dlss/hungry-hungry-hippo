@@ -53,6 +53,7 @@ gem 'frozen_record' # For licenses
 gem 'honeybadger'
 gem 'kaminari' # For pagination
 gem 'okcomputer'
+gem 'state_machines-activerecord'
 gem 'view_component'
 gem 'whenever', require: false
 

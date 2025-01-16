@@ -332,7 +332,9 @@ CREATE TABLE public.works (
     updated_at timestamp(6) without time zone NOT NULL,
     collection_id bigint NOT NULL,
     object_updated_at timestamp(6) without time zone,
-    doi_assigned boolean DEFAULT false NOT NULL
+    doi_assigned boolean DEFAULT false NOT NULL,
+    review_state character varying DEFAULT 'none'::character varying NOT NULL,
+    review_rejected_reason character varying
 );
 
 
@@ -611,6 +613,13 @@ CREATE INDEX index_works_on_object_updated_at ON public.works USING btree (objec
 
 
 --
+-- Name: index_works_on_review_state; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_works_on_review_state ON public.works USING btree (review_state);
+
+
+--
 -- Name: index_works_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -680,6 +689,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250116173206'),
 ('20250114195340'),
 ('20250108112958'),
 ('20250107153556'),

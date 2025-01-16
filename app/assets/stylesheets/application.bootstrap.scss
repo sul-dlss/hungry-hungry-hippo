@@ -162,3 +162,8 @@ table.table-treegrid {
 textarea {
   resize: both;
 }
+
+// This is a custom alert variant that is used for the review alert.
+.alert.alert-input {
+  background-color: var(--stanford-10-black);
+}

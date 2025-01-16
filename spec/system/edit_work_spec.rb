@@ -51,6 +51,9 @@ RSpec.describe 'Edit a work' do
     ]
   end
 
+  let(:collection) { create(:collection, user:, druid: collection_druid_fixture, title: collection_title_fixture) }
+  let!(:work) { create(:work, druid:, user:, collection:) }
+
   before do
     # On the second call, this will return the cocina object submitted to update.
     # This will allow us to test the updated values.
@@ -63,8 +66,6 @@ RSpec.describe 'Edit a work' do
     allow(Sdr::Repository).to receive(:update) do |args|
       @updated_cocina_object = args[:cocina_object]
     end
-    collection = create(:collection, user:, druid: collection_druid_fixture, title: collection_title_fixture)
-    create(:work, druid:, user:, collection:)
 
     sign_in(user)
   end
@@ -150,5 +151,21 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_content('Immediately')
     expect(page).to have_css('.status', text: 'New version in draft')
     expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
+  end
+
+  context 'when rejected' do
+    before do
+      work.request_review!
+      work.reject_with_reason!(reason: 'Try harder.')
+    end
+
+    it 'shows a work with rejected alert' do
+      visit edit_work_path(druid)
+
+      within('.alert') do
+        expect(page).to have_text('The reviewer for this collection has returned the deposit')
+        expect(page).to have_css('blockquote', text: 'Try harder.')
+      end
+    end
   end
 end
