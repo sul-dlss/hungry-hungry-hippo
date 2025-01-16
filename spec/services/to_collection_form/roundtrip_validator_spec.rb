@@ -15,6 +15,14 @@ RSpec.describe ToCollectionForm::RoundtripValidator, type: :mapping do
     end
   end
 
+  context 'when roundtrippable but different cocina version' do
+    let(:cocina_object) { collection_with_metadata_fixture.new(cocinaVersion: '0.1.1') }
+
+    it 'returns true' do
+      expect(roundtrippable?).to be true
+    end
+  end
+
   context 'when not roundtrippable' do
     let(:cocina_object) { collection_with_metadata_fixture.new(type: Cocina::Models::ObjectType.curated_collection) }
 

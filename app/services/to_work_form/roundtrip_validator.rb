@@ -45,12 +45,9 @@ module ToWorkForm
     end
 
     def normalized_original_cocina_object
-      @normalized_original_cocina_object ||= begin
-        # Remove created_at and updated_at from the original cocina object
-        lock = @original_cocina_object&.lock
-        original_cocina_object_without_metadata = Cocina::Models.without_metadata(@original_cocina_object)
-        Cocina::Models.with_metadata(original_cocina_object_without_metadata, lock)
-      end
+      @normalized_original_cocina_object ||= RoundtripValidatorSupport.normalize_cocina_object(
+        cocina_object: @original_cocina_object
+      )
     end
   end
 end
