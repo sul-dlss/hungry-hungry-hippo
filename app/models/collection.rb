@@ -22,8 +22,8 @@ class Collection < ApplicationRecord
   enum :access, { stanford: 'stanford', world: 'world', depositor_selects: 'depositor_selects' }, suffix: true
   enum :doi_option, { yes: 'yes', no: 'no', depositor_selects: 'depositor_selects' }, suffix: true
   enum :license_option, { required: 'required', depositor_selects: 'depositor_selects' }, suffix: true
-  enum :custom_rights_statement_option, { none: 'none', with_custom_rights_statement: 'with_custom_rights_statement',
-                                          with_instructions: 'with_instructions' }, suffix: true
+  enum :custom_rights_statement_option, { no: 'no', provided: 'provided', depositor_selects: 'depositor_selects' },
+       suffix: true
 
   # deposit_job_started_at indicates that the job is queued or running.
   # User should be "waiting" until the job is completed.

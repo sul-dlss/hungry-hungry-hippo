@@ -8,7 +8,7 @@ FactoryBot.define do
     release_duration { 'one_year' }
     access { 'depositor_selects' }
     doi_option { 'yes' }
-    custom_rights_statement_option { 'with_custom_rights_statement' }
+    custom_rights_statement_option { 'provided' }
     provided_custom_rights_statement { 'My custom rights statement' }
     license_option { 'depositor_selects' }
     license { 'https://www.apache.org/licenses/LICENSE-2.0' }
