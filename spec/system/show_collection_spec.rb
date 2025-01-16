@@ -66,7 +66,7 @@ RSpec.describe 'Show a collection' do
     within('table#release-visibility-table') do
       expect(page).to have_css('caption', text: 'Release and visibility')
       expect(page).to have_css('tr', text: 'Release')
-      expect(page).to have_css('td', text: 'Depositor selects release date at no more than 1 year from date of deposit')
+      expect(page).to have_css('td', text: 'Depositor selects release date no more than 1 year in the future')
       expect(page).to have_css('tr', text: 'Visibility')
       expect(page).to have_css('td', text: 'Depositor selects')
       expect(page).to have_css('tr', text: 'DOI Assignment')
