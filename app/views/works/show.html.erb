@@ -4,6 +4,10 @@
     <% component.with_breadcrumb(text: @work_presenter.title) %>
   <% end %>
 <% end %>
+
+<%= render Works::Show::ReviewComponent.new(work: @work, review_form: @review_form) %>
+<%= render Works::Show::ReviewRejectedComponent.new(work: @work) %>
+
 <%= render Show::HeaderComponent.new(presenter: @work_presenter) %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'mb-5', label: 'Details') do |component| %>

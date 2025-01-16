@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 # Controller for a Work
-class WorksController < ApplicationController
-  before_action :set_work, only: %i[show edit update destroy]
+class WorksController < ApplicationController # rubocop:disable Metrics/ClassLength
+  before_action :set_work, only: %i[show edit update destroy review]
   before_action :check_deposit_job_started, only: %i[show edit]
-  before_action :set_work_form_from_cocina, only: %i[show edit]
-  before_action :set_content, only: %i[show edit]
-  before_action :set_status, only: %i[show edit destroy]
-  before_action :set_presenter, only: %i[show edit]
+  before_action :set_work_form_from_cocina, only: %i[show edit review]
+  before_action :set_content, only: %i[show edit review]
+  before_action :set_status, only: %i[show edit destroy review]
+  before_action :set_presenter, only: %i[show edit review]
 
   def show
     authorize! @work
@@ -15,6 +15,8 @@ class WorksController < ApplicationController
     # This updates the Work with the latest metadata from the Cocina object.
     # Does not update the Work's collection if the collection cannot be found.
     ModelSync::Work.call(work: @work, cocina_object: @cocina_object, raise: false)
+
+    @review_form = ReviewForm.new
   end
 
   def new
@@ -52,11 +54,9 @@ class WorksController < ApplicationController
 
     # The validation_context param determines whether extra validations are applied, e.g., for deposits.
     if @work_form.valid?(validation_context)
-      # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
-      # should be "waiting".
       work = Work.create!(title: @work_form.title, user: current_user, deposit_job_started_at: Time.zone.now,
                           collection: @collection)
-      DepositWorkJob.perform_later(work:, work_form: @work_form, deposit: deposit?)
+      perform_deposit(work:)
       redirect_to wait_works_path(work.id)
     else
       @content = Content.find(@work_form.content_id)
@@ -65,16 +65,13 @@ class WorksController < ApplicationController
     end
   end
 
-  def update # rubocop:disable Metrics/AbcSize
+  def update
     authorize! @work
 
     @work_form = WorkForm.new(**update_work_params)
     # The validation_context param determines whether extra validations are applied, e.g., for deposits.
     if @work_form.valid?(validation_context)
-      # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
-      # should be "waiting".
-      @work.update!(deposit_job_started_at: Time.zone.now)
-      DepositWorkJob.perform_later(work: @work, work_form: @work_form, deposit: deposit?)
+      perform_deposit(work: @work)
       redirect_to wait_works_path(@work.id)
     else
       @content = Content.find(@work_form.content_id)
@@ -106,10 +103,26 @@ class WorksController < ApplicationController
     redirect_to work_path(druid: work.druid) if work.deposit_job_finished?
   end
 
+  def review
+    authorize! @work
+
+    @review_form = ReviewForm.new(**review_form_params)
+    if @review_form.valid?
+      redirect_path = perform_review
+      redirect_to redirect_path
+    else
+      render :show, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def work_params
     params.expect(work: WorkForm.user_editable_attributes + [WorkForm.nested_attributes])
+  end
+
+  def review_form_params
+    params.expect(review: %i[review_option reject_reason])
   end
 
   def update_work_params
@@ -168,5 +181,31 @@ class WorksController < ApplicationController
       release_date: @collection.max_release_date,
       agree_to_terms: current_user.agree_to_terms?
     )
+  end
+
+  def perform_deposit(work:)
+    # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
+    # should be "waiting".
+    work.update!(deposit_job_started_at: Time.zone.now)
+    deposit = deposit?
+    if request_review?
+      work.request_review!
+      deposit = false # Will be saved, but not deposited until approved.
+    end
+    DepositWorkJob.perform_later(work:, work_form: @work_form, deposit:)
+  end
+
+  # @return [String] path to redirect to after review
+  def perform_review
+    if @review_form.review_option == 'approve'
+      # Deposit
+      @work.update!(deposit_job_started_at: Time.zone.now)
+      @work.approve!
+      DepositWorkJob.perform_later(work: @work, work_form: @work_form, deposit: true)
+      wait_works_path(@work.id)
+    else
+      @work.reject_with_reason!(reason: @review_form.reject_reason)
+      work_path(druid: @work.druid)
+    end
   end
 end

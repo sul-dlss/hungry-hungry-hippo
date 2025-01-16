@@ -26,6 +26,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     collection do
       get 'wait/:id', to: 'works#wait', as: 'wait'
     end
+
+    member do
+      put 'review', to: 'works#review', as: 'review'
+    end
   end
 
   resources :contents, only: %i[update show] do

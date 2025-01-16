@@ -57,4 +57,8 @@ class Collection < ApplicationRecord
   def add_user_as_manager
     managers << user if user.present? && managers.exclude?(user)
   end
+
+  def review_enabled?
+    review_enabled
+  end
 end

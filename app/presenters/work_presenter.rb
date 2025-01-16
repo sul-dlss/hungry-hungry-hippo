@@ -73,9 +73,20 @@ class WorkPresenter < FormPresenter
     end
   end
 
+  def status_message
+    case review_state
+    when 'pending_review'
+      'Pending review'
+    when 'rejected_review'
+      'Returned'
+    else
+      super
+    end
+  end
+
   private
 
-  delegate :collection, :created_at, :user, to: :work
+  delegate :collection, :created_at, :user, :review_state, to: :work
 
   def license_presenter
     @license_presenter ||= LicensePresenter.new(work_form:, collection:)

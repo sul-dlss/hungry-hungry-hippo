@@ -35,4 +35,8 @@ class User < ApplicationRecord
   def agree_to_terms?
     agreed_to_terms_at.present?
   end
+
+  def your_pending_review_works
+    Work.where(collection: reviewer_for).with_review_state(:pending_review)
+  end
 end

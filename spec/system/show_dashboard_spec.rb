@@ -6,7 +6,10 @@ RSpec.describe 'Show dashboard', :rack_test do
   let!(:work) { create(:work, :with_druid, user:, collection:) }
   let!(:work_without_druid) { create(:work, user:, collection:) }
   let!(:draft_work) { create(:work, :with_druid, user:, collection:) }
-  let(:collection) { create(:collection, :with_druid, user:, managers: [user]) }
+  let!(:pending_review_work) { create(:work, user:, collection:, review_state: 'pending_review') }
+  let(:collection) do
+    create(:collection, :with_druid, user:, managers: [user], reviewers: [user], review_enabled: true)
+  end
   let(:user) { create(:user) }
   let(:version_status) do
     VersionStatus.new(status:
@@ -24,7 +27,7 @@ RSpec.describe 'Show dashboard', :rack_test do
     sign_in(user)
   end
 
-  it 'displays the user name in the header' do
+  it 'displays the dashboard' do
     visit root_path
 
     expect(page).to have_css('h2', text: "#{user.name} - Dashboard")
@@ -33,6 +36,12 @@ RSpec.describe 'Show dashboard', :rack_test do
     expect(page).to have_css('h3', text: 'Drafts - please complete')
     within('table#drafts-table') do
       expect(page).to have_css('td', text: draft_work.title)
+    end
+
+    # Pending review section
+    expect(page).to have_css('h3', text: 'Deposits that are pending review')
+    within('table#pending-review-table') do
+      expect(page).to have_css('td', text: pending_review_work.title)
     end
 
     # Your collections section

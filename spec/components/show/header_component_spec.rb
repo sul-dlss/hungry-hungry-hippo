@@ -4,9 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Show::HeaderComponent, type: :component do
   let(:presenter) do
-    WorkPresenter.new(work_form:, version_status:, work: nil)
+    WorkPresenter.new(work_form:, version_status:, work:)
   end
   let(:work_form) { WorkForm.new(druid: druid_fixture, title:) }
+  let(:work) { instance_double(Work, review_state: 'none_review') }
   let(:version_status) do
     instance_double(VersionStatus, editable?: editable, discardable?: discardable, status_message:)
   end
