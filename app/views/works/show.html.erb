@@ -50,6 +50,7 @@
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'access-table', classes: 'mb-5', label: 'Access settings') do |component| %>
+  <% component.with_row(label: 'Available', values: [@work_presenter.release_date_label]) %>
   <% component.with_row(label: 'Access', values: [@work_presenter.access_label]) %>
 <% end %>
 

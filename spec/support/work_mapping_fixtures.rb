@@ -19,7 +19,9 @@ module WorkMappingFixtures
       keywords_attributes: keywords_fixture,
       work_type: work_type_fixture,
       work_subtypes: work_subtypes_fixture,
-      access: 'stanford'
+      access: 'stanford',
+      release_option: 'delay',
+      release_date: release_date_fixture
     )
   end
 
@@ -88,8 +90,9 @@ module WorkMappingFixtures
         version: 1,
         identification: { sourceId: source_id_fixture },
         administrative: { hasAdminPolicy: Settings.apo, partOfProject: Settings.project_tag },
-        access: { view: 'stanford', download: 'stanford', license: license_fixture,
-                  useAndReproductionStatement: I18n.t('license.terms_of_use') },
+        access: { view: 'citation-only', download: 'none', license: license_fixture,
+                  useAndReproductionStatement: I18n.t('license.terms_of_use'),
+                  embargo: { view: 'stanford', download: 'stanford', releaseDate: release_date_fixture } },
         structural: { isMemberOf: [collection_druid_fixture] }
       }
     )
@@ -227,10 +230,11 @@ module WorkMappingFixtures
         version: 2,
         identification: { sourceId: source_id_fixture },
         administrative: { hasAdminPolicy: Settings.apo },
-        access: { view: 'stanford',
-                  download: 'stanford',
+        access: { view: 'citation-only',
+                  download: 'none',
                   license: license_fixture,
-                  useAndReproductionStatement: I18n.t('license.terms_of_use') },
+                  useAndReproductionStatement: I18n.t('license.terms_of_use'),
+                  embargo: { view: 'stanford', download: 'stanford', releaseDate: release_date_fixture } },
         structural: { isMemberOf: [collection_druid_fixture] }
       }
     )

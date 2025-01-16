@@ -52,6 +52,12 @@ class WorkPresenter < FormPresenter
     I18n.t("access.#{access}")
   end
 
+  def release_date_label
+    return 'Immediately' if release_option == 'immediate'
+
+    I18n.l(release_date, format: :long)
+  end
+
   private
 
   delegate :collection, :created_at, :user, to: :work

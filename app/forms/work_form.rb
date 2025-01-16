@@ -59,10 +59,31 @@ class WorkForm < ApplicationForm
   attribute :access, :string, default: 'world'
   validates :access, inclusion: { in: %w[world stanford] }
 
+  attribute :release_option, :string, default: 'immediate'
+  validates :release_option, inclusion: { in: %w[immediate delay] }
+
+  attribute :release_date, :date
+  with_options if: -> { release_option == 'delay' } do |form|
+    form.validates :release_date, presence: true
+    form.validates :release_date, comparison: {
+      greater_than_or_equal_to: -> { Time.zone.today },
+      message: 'must be today or later' # rubocop:disable Rails/I18nLocaleTexts
+    }
+
+    form.validates :release_date, comparison: {
+      less_than_or_equal_to: :max_release_date,
+      message: 'must be on or before %<count>s' # rubocop:disable Rails/I18nLocaleTexts
+    }
+  end
+
   def content_file_presence
     return if content_id.nil? # This makes test configuration easier.
     return if Content.find(content_id).content_files.exists?
 
     errors.add(:content, 'must have at least one file')
+  end
+
+  def max_release_date
+    Collection.find_by(druid: collection_druid).max_release_date
   end
 end

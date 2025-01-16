@@ -12,7 +12,7 @@ module Works
 
       attr_reader :form
 
-      delegate :depositor_selects_access?, to: :@collection
+      delegate :depositor_selects_access?, :max_release_date, :immediate_release_option?, to: :@collection
 
       def access_options
         [
@@ -24,6 +24,14 @@ module Works
       def collection_selects_access_message
         access_text = form.object.access == 'stanford' ? 'the Stanford Community' : 'anyone'
         "The files in your deposit will be downloadable by #{access_text}."
+      end
+
+      def min_release_date
+        Time.zone.today
+      end
+
+      def datepicker_help_text
+        "Date must be before #{max_release_date.strftime('%B %d, %Y')}"
       end
     end
   end

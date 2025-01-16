@@ -174,3 +174,7 @@ def organization_contributor_fixture
     primary: false
   }
 end
+
+def release_date_fixture
+  DateTime.new(2027, 6, 10)
+end

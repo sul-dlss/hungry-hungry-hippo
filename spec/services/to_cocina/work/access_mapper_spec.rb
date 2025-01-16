@@ -53,4 +53,29 @@ RSpec.describe ToCocina::Work::AccessMapper do
       )
     end
   end
+
+  context 'when not embargoed' do
+    let(:work_form) { WorkForm.new(release_option: 'immediate') }
+
+    it 'maps to cocina' do
+      expect(access).not_to have_key(:embargo)
+    end
+  end
+
+  context 'when embargoed' do
+    let(:work_form) { WorkForm.new(release_option: 'delay', release_date: Date.new(2025, 1, 11)) }
+
+    it 'maps to cocina' do
+      expect(access).to match(
+        view: 'citation-only',
+        download: 'none',
+        useAndReproductionStatement: String,
+        embargo: {
+          view: 'world',
+          download: 'world',
+          releaseDate: '2025-01-11T00:00:00+00:00'
+        }
+      )
+    end
+  end
 end
