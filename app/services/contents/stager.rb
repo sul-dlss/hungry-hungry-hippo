@@ -32,7 +32,7 @@ module Contents
     end
 
     def staging_filepath_for(content_file)
-      File.join(staging_content_path, content_file.filename)
+      File.join(staging_content_path, content_file.filepath)
     end
 
     def staging_content_path
