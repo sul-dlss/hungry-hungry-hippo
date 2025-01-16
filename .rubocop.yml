@@ -519,3 +519,10 @@ Style/FileNull: # new in 1.69
   Enabled: true
 Style/FileTouch: # new in 1.69
   Enabled: true
+
+Lint/ConstantReassignment: # new in 1.70
+  Enabled: true
+Lint/SharedMutableDefault: # new in 1.70
+  Enabled: true
+Style/ItAssignment: # new in 1.70
+  Enabled: true
