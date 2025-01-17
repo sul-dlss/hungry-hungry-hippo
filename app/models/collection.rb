@@ -10,6 +10,8 @@ class Collection < ApplicationRecord
   has_and_belongs_to_many :managers, class_name: 'User', join_table: 'managers'
   has_and_belongs_to_many :reviewers, class_name: 'User', join_table: 'reviewers'
 
+  before_create :add_user_as_manager
+
   enum :release_option, { immediate: 'immediate', depositor_selects: 'depositor_selects' }, suffix: true
   enum :release_duration, { six_months: '6 months', one_year: '1 year', two_years: '2 years', three_years: '3 years' },
        suffix: true
@@ -47,5 +49,9 @@ class Collection < ApplicationRecord
                  3.years
                end
     Time.zone.today + duration
+  end
+
+  def add_user_as_manager
+    managers << user if user.present? && managers.exclude?(user)
   end
 end
