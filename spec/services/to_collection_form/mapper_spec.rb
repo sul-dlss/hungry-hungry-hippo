@@ -6,7 +6,7 @@ RSpec.describe ToCollectionForm::Mapper, type: :mapping do
   subject(:collection_form) { described_class.call(cocina_object: collection_with_metadata_fixture, collection:) }
 
   let(:collection) do
-    create(:collection, druid: collection_druid_fixture, managers: [manager], depositors: [depositor])
+    create(:collection, druid: collection_druid_fixture, user: manager, managers: [manager], depositors: [depositor])
   end
   let(:manager) { create(:user, email_address: 'stepking@stanford.edu') }
   let(:depositor) { create(:user, email_address: 'joehill@stanford.edu') }

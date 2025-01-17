@@ -4,15 +4,18 @@ require 'rails_helper'
 
 RSpec.describe User do
   let(:user) { create(:user) }
-  let!(:managed_collection) { create(:collection, managers: [user]) }
-  let!(:depositor_collection) { create(:collection, depositors: [user]) }
-  let!(:reviewed_collection) { create(:collection, reviewers: [user]) }
-  let!(:deduped_collection) { create(:collection, managers: [user], depositors: [user], reviewers: [user]) }
+  let(:owning_user) { create(:user) }
+  let!(:managed_collection) { create(:collection, user: owning_user, managers: [user]) }
+  let!(:depositor_collection) { create(:collection, user: owning_user, depositors: [user]) }
+  let!(:reviewed_collection) { create(:collection, user: owning_user, reviewers: [user]) }
+  let!(:deduped_collection) do
+    create(:collection, user: owning_user, managers: [user], depositors: [user], reviewers: [user])
+  end
 
   describe '.your_collections' do
     before do
       # Not your collection
-      create(:collection, user:)
+      create(:collection, user: owning_user)
     end
 
     it 'returns the collections for which the user is a manager, depositor, or reviewer' do
@@ -22,13 +25,13 @@ RSpec.describe User do
   end
 
   describe '.your_works' do
-    let!(:managed_work) { create(:work, collection: managed_collection) }
-    let!(:depositor_work) { create(:work, collection: depositor_collection) }
-    let!(:reviewed_work) { create(:work, collection: reviewed_collection) }
+    let!(:managed_work) { create(:work, user: owning_user, collection: managed_collection) }
+    let!(:depositor_work) { create(:work, user: owning_user, collection: depositor_collection) }
+    let!(:reviewed_work) { create(:work, user: owning_user, collection: reviewed_collection) }
 
     before do
       # Not your work
-      create(:work, collection: create(:collection, user:))
+      create(:work, collection: create(:collection, user: owning_user))
     end
 
     it 'returns the works that are part of the your collections' do
