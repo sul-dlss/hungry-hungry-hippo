@@ -10,5 +10,9 @@ module Show
     attr_reader :presenter
 
     delegate :title, :status_message, to: :presenter
+
+    def collection?
+      presenter.respond_to?(:collection)
+    end
   end
 end

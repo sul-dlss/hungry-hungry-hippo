@@ -63,4 +63,20 @@ class CollectionPresenter < FormPresenter
   def review_workflow_status
     collection.review_enabled ? 'On' : 'Off'
   end
+
+  def purl_link
+    # No druid yet, so there's no PURL link yet either. Collection is likely still depositing.
+    return if druid.blank?
+
+    link_to(nil, Sdr::Purl.from_druid(druid:), target: '_blank')
+  end
+
+  def created_by
+    collection.user.name
+  end
+
+  def created_datetime
+    collection.created_at.localtime.strftime('%b %d, %Y, %l:%M%p %Z')
+  end
+
 end

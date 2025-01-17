@@ -6,5 +6,10 @@
   <div class="d-flex align-items-start">
     <%= render Edit::EditDraftButtonComponent.new(presenter:) %>
     <%= render Edit::DiscardDraftButtonComponent.new(presenter:, classes: 'ms-2') %>
+    <% if collection? %>
+      <% if helpers.allowed_to?(:create_work?, presenter.collection) %>
+        <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: presenter.collection.druid), label: 'Deposit to this collection', variant: :primary) %>
+      <% end %>
+    <% end %>
   </div>
 </div>
