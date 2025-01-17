@@ -12,6 +12,10 @@ def druid_fixture
   'druid:bc123df4567'
 end
 
+def doi_fixture
+  '10.80343/bc123df4567'
+end
+
 def lock_fixture
   'abc123'
 end

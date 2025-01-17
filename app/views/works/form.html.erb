@@ -18,6 +18,7 @@
   <% component.with_tab(label: t('works.edit.panes.authors.tab_label'), tab_name: :authors) %>
   <% component.with_tab(label: t('works.edit.panes.abstract.tab_label'), tab_name: :abstract) %>
   <% component.with_tab(label: t('works.edit.panes.types.tab_label'), tab_name: :types) %>
+  <% component.with_tab(label: t('works.edit.panes.doi.tab_label'), tab_name: :doi) %>
   <% component.with_tab(label: t('works.edit.panes.dates.tab_label'), tab_name: :dates) %>
   <% component.with_tab(label: t('works.edit.panes.citation.tab_label'), tab_name: :citation) %>
   <% component.with_tab(label: t('works.edit.panes.related_content.tab_label'), tab_name: :related_content) %>
@@ -58,6 +59,10 @@
 
     <% component.with_pane(tab_name: :types, form_id:) do %>
       <%= render Works::Edit::WorkTypeComponent.new(form:) %>
+    <% end %>
+
+    <% component.with_pane(tab_name: :doi, form_id:, label: t('works.edit.panes.doi.label')) do %>
+      <%= render Works::Edit::DoiComponent.new(form:, collection: @collection) %>
     <% end %>
 
     <% component.with_pane(tab_name: :dates, label: t('works.edit.panes.dates.label'), form_id:) do %>

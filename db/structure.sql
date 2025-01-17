@@ -331,7 +331,8 @@ CREATE TABLE public.works (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     collection_id bigint NOT NULL,
-    object_updated_at timestamp(6) without time zone
+    object_updated_at timestamp(6) without time zone,
+    doi_assigned boolean DEFAULT false NOT NULL
 );
 
 
@@ -679,6 +680,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250114195340'),
 ('20250108112958'),
 ('20250107153556'),
 ('20250106212515'),

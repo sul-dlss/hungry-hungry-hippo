@@ -31,7 +31,7 @@ RSpec.describe 'Create a work deposit' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     create(:collection, user:, druid: collection_druid_fixture, managers: [user],
-                        custom_rights_statement_option: 'depositor_selects')
+                        custom_rights_statement_option: 'depositor_selects', doi_option: 'depositor_selects')
     sign_in(user)
   end
 
@@ -89,11 +89,16 @@ RSpec.describe 'Create a work deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Type of deposit')
     expect(page).to have_text('What type of content will you deposit?')
 
-    # Filling in abstract
     choose('Text')
     check('Thesis')
     click_link_or_button('See more options')
     check('3D model')
+
+    # Click Next to go to DOI tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'DOI')
+    expect(page).to have_text('Do you want a DOI assigned to this work?')
+    choose('No')
 
     # Clicking on Next to go to dates tab
     click_link_or_button('Next')

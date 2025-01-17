@@ -196,4 +196,8 @@ class CocinaSupport
   def self.use_reproduction_statement_for(cocina_object:)
     cocina_object.access.useAndReproductionStatement
   end
+
+  def self.doi_for(cocina_object:)
+    cocina_object.identification.doi
+  end
 end

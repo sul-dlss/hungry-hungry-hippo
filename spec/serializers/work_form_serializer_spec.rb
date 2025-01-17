@@ -29,7 +29,8 @@ RSpec.describe WorkFormSerializer do
       'access' => 'stanford',
       'release_option' => 'delay',
       'release_date' => release_date_fixture.to_date,
-      'custom_rights_statement' => custom_rights_statement_fixture
+      'custom_rights_statement' => custom_rights_statement_fixture,
+      'doi_option' => 'yes'
     }
   end
   let(:work_form) do
@@ -52,7 +53,8 @@ RSpec.describe WorkFormSerializer do
                  access: 'stanford',
                  release_option: 'delay',
                  release_date: release_date_fixture.to_date,
-                 custom_rights_statement: custom_rights_statement_fixture)
+                 custom_rights_statement: custom_rights_statement_fixture,
+                 doi_option: 'yes')
   end
 
   describe '.serialize?' do

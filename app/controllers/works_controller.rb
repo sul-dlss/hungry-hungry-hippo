@@ -126,8 +126,13 @@ class WorksController < ApplicationController
 
   def set_work_form_from_cocina
     @cocina_object = Sdr::Repository.find(druid: params[:druid])
-    @work_form = ToWorkForm::Mapper.call(cocina_object: @cocina_object)
+    @work_form = ToWorkForm::Mapper.call(cocina_object: @cocina_object,
+                                         doi_assigned: doi_assigned?)
     @work_form.release_date = @collection.max_release_date if @work_form.release_option.blank?
+  end
+
+  def doi_assigned?
+    DoiAssignedService.call(cocina_object: @cocina_object, work: @work)
   end
 
   def set_status
