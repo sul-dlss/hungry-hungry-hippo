@@ -26,7 +26,7 @@ RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
     expect(table).to have_css('th', text: 'Deposit status')
     expect(table).to have_css('th', text: 'Owner')
     expect(table).to have_css('th', text: 'Last modified')
-    expect(table).to have_css('th', text: 'Persistent link')
+    expect(table).to have_css('th', text: 'Link for sharing')
     table_body = table.find('tbody')
     expect(table_body).to have_css('tr', count: 2)
     first_row = table_body.find('tr:nth-of-type(1)')
