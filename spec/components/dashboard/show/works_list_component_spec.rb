@@ -4,24 +4,26 @@ require 'rails_helper'
 
 RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
   let(:work) do
-    create(:work, user:, collection:, druid: druid_fixture,
-                  object_updated_at: Time.zone.parse('2024-12-3'))
+    create(:work, user: current_user, collection:, druid: druid_fixture,
+                  object_updated_at: Time.zone.parse('2024-12-3'), doi_assigned: false)
   end
-  let(:work_without_druid) { create(:work, user:, collection:) }
+  let(:work_without_druid) { create(:work, user: current_user, collection:) }
   let(:work_in_collection) { create(:work, :with_druid, collection:) }
-  let(:collection) { create(:collection, depositors: [user]) }
-  let(:user) { create(:user) }
+  let(:work_with_doi) { create(:work, :with_druid, user: current_user, collection:) }
+  let(:collection) { create(:collection, depositors: [current_user]) }
+  let(:current_user) { create(:user) }
   let(:version_status) { instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1) }
   let(:status_map) do
     {
       work.id => VersionStatus.new(status: version_status),
       work_without_druid.id => VersionStatus::NilStatus.new,
-      work_in_collection.id => VersionStatus::NilStatus.new
+      work_in_collection.id => VersionStatus::NilStatus.new,
+      work_with_doi.id => VersionStatus::NilStatus.new
     }
   end
 
   before do
-    allow(vc_test_controller).to receive(:current_user).and_return(user)
+    allow(vc_test_controller).to receive(:current_user).and_return(current_user)
     allow(Current).to receive(:groups).and_return([])
   end
 
@@ -35,7 +37,7 @@ RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
     expect(table).to have_css('th', text: 'Last modified')
     expect(table).to have_css('th', text: 'Link for sharing')
     table_body = table.find('tbody')
-    expect(table_body).to have_css('tr', count: 2)
+    expect(table_body).to have_css('tr', count: 3)
     first_row = table_body.find('tr:nth-of-type(1)')
     expect(first_row).to have_css('td:nth-of-type(1)', text: work.title)
     expect(first_row).to have_link(work.title, href: "/works/#{work.druid}")
@@ -47,5 +49,7 @@ RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
     expect(second_row).to have_link(work_without_druid.title, href: "/works/wait/#{work_without_druid.id}")
     expect(second_row).to have_css('td:nth-of-type(2)', text: 'Saving')
     expect(second_row).to have_css('td:nth-of-type(5)', text: '') # No PURL
+    third_row = table_body.find('tr:nth-of-type(3)')
+    expect(third_row).to have_css('td:nth-of-type(5)', text: Doi.url(druid: work_with_doi.druid))
   end
 end
