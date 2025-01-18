@@ -288,4 +288,20 @@ RSpec.describe 'Show a work' do
       end
     end
   end
+
+  context 'when rejected' do
+    before do
+      work.request_review!
+      work.reject_with_reason!(reason: 'Try harder.')
+    end
+
+    it 'shows a work with rejected alert' do
+      visit work_path(druid)
+
+      within('.alert') do
+        expect(page).to have_text('The reviewer for this collection has returned the deposit')
+        expect(page).to have_css('blockquote', text: 'Try harder.')
+      end
+    end
+  end
 end

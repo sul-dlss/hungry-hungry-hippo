@@ -28,4 +28,8 @@ class User < ApplicationRecord
   def your_works
     Work.where(collection: your_collections)
   end
+
+  def your_pending_review_works
+    Work.where(collection: reviewer_for).with_review_state(:pending_review)
+  end
 end

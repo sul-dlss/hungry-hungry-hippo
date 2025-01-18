@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Rails.application.routes.draw do
+Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get '/webauth/login', to: 'authentication#login', as: 'login'
   get '/webauth/logout', to: 'authentication#logout', as: 'logout'
@@ -25,6 +25,10 @@ Rails.application.routes.draw do
   resources :works, only: %i[new create show edit update destroy], param: :druid do
     collection do
       get 'wait/:id', to: 'works#wait', as: 'wait'
+    end
+
+    member do
+      put 'review', to: 'works#review', as: 'review'
     end
   end
 

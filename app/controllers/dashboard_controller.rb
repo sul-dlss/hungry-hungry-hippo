@@ -19,6 +19,6 @@ class DashboardController < ApplicationController
   private
 
   def druids_for_works_for_current_user
-    current_user.works.where.not(druid: nil).pluck(:druid)
+    current_user.your_works.where.not(druid: nil).pluck(:druid)
   end
 end
