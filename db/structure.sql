@@ -125,6 +125,36 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: collection_depositors; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.collection_depositors (
+    collection_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+--
+-- Name: collection_managers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.collection_managers (
+    collection_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+--
+-- Name: collection_reviewers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.collection_reviewers (
+    collection_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+--
 -- Name: collections; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -247,36 +277,6 @@ ALTER SEQUENCE public.contents_id_seq OWNED BY public.contents.id;
 
 
 --
--- Name: depositors; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.depositors (
-    collection_id bigint NOT NULL,
-    user_id bigint NOT NULL
-);
-
-
---
--- Name: managers; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.managers (
-    collection_id bigint NOT NULL,
-    user_id bigint NOT NULL
-);
-
-
---
--- Name: reviewers; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.reviewers (
-    collection_id bigint NOT NULL,
-    user_id bigint NOT NULL
-);
-
-
---
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -332,7 +332,9 @@ CREATE TABLE public.works (
     updated_at timestamp(6) without time zone NOT NULL,
     collection_id bigint NOT NULL,
     object_updated_at timestamp(6) without time zone,
-    doi_assigned boolean DEFAULT false NOT NULL
+    doi_assigned boolean DEFAULT false NOT NULL,
+    review_state character varying DEFAULT 'none'::character varying NOT NULL,
+    review_rejected_reason character varying
 );
 
 
@@ -520,6 +522,27 @@ CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.ac
 
 
 --
+-- Name: index_collection_depositors_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_collection_depositors_on_collection_id_and_user_id ON public.collection_depositors USING btree (collection_id, user_id);
+
+
+--
+-- Name: index_collection_managers_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_collection_managers_on_collection_id_and_user_id ON public.collection_managers USING btree (collection_id, user_id);
+
+
+--
+-- Name: index_collection_reviewers_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_collection_reviewers_on_collection_id_and_user_id ON public.collection_reviewers USING btree (collection_id, user_id);
+
+
+--
 -- Name: index_collections_on_druid; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -562,27 +585,6 @@ CREATE INDEX index_contents_on_user_id ON public.contents USING btree (user_id);
 
 
 --
--- Name: index_depositors_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_depositors_on_collection_id_and_user_id ON public.depositors USING btree (collection_id, user_id);
-
-
---
--- Name: index_managers_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_managers_on_collection_id_and_user_id ON public.managers USING btree (collection_id, user_id);
-
-
---
--- Name: index_reviewers_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_reviewers_on_collection_id_and_user_id ON public.reviewers USING btree (collection_id, user_id);
-
-
---
 -- Name: index_users_on_email_address; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -608,6 +610,13 @@ CREATE UNIQUE INDEX index_works_on_druid ON public.works USING btree (druid);
 --
 
 CREATE INDEX index_works_on_object_updated_at ON public.works USING btree (object_updated_at);
+
+
+--
+-- Name: index_works_on_review_state; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_works_on_review_state ON public.works USING btree (review_state);
 
 
 --
@@ -680,6 +689,8 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250120142833'),
+('20250116173206'),
 ('20250114195340'),
 ('20250108112958'),
 ('20250107153556'),

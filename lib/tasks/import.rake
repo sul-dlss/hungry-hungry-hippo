@@ -9,6 +9,8 @@ namespace :import do
   # Importing is idempotent, so you can run this multiple times.
   # It will raise an error if the collection cannot be roundtripped.
   task :collections, [:filename] => :environment do |_t, args|
+    Rails.application.config.action_mailer.perform_deliveries = false
+
     collections_json = JSON.parse(File.read(args[:filename] || 'collections.json'))
     collections_json.each do |collection_json|
       next unless collection_json['druid']
