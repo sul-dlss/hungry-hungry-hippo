@@ -30,7 +30,8 @@ RSpec.describe WorkFormSerializer do
       'release_option' => 'delay',
       'release_date' => release_date_fixture.to_date,
       'custom_rights_statement' => custom_rights_statement_fixture,
-      'doi_option' => 'yes'
+      'doi_option' => 'yes',
+      'agree_to_terms' => true
     }
   end
   let(:work_form) do
@@ -54,7 +55,8 @@ RSpec.describe WorkFormSerializer do
                  release_option: 'delay',
                  release_date: release_date_fixture.to_date,
                  custom_rights_statement: custom_rights_statement_fixture,
-                 doi_option: 'yes')
+                 doi_option: 'yes',
+                 agree_to_terms: true)
   end
 
   describe '.serialize?' do

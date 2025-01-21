@@ -24,6 +24,7 @@
   <% component.with_tab(label: t('works.edit.panes.related_content.tab_label'), tab_name: :related_content) %>
   <% component.with_tab(label: t('works.edit.panes.access.tab_label'), tab_name: :access) %>
   <% component.with_tab(label: t('works.edit.panes.license.tab_label'), tab_name: :license) %>
+  <% component.with_tab(label: t('works.edit.panes.terms_of_deposit.tab_label'), tab_name: :terms_of_deposit) %>
   <% component.with_tab(label: t('works.edit.panes.deposit.tab_label'), tab_name: :deposit) %>
   <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
   <%# TabListComponent will render the actual form. %>
@@ -88,6 +89,10 @@
         <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
         <%= render Works::Edit::TermsOfUseComponent.new(form:, collection: @collection) %>
       <% end %>
+    <% end %>
+
+    <% component.with_pane(tab_name: :terms_of_deposit, label: t('works.edit.panes.terms_of_deposit.label'), form_id:) do %>
+      <%= render Works::Edit::TermsOfDepositComponent.new(form:) %>
     <% end %>
 
     <%# This pane is outside the work form because it contains its own form for discarding the draft. %>

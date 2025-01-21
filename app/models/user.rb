@@ -31,4 +31,8 @@ class User < ApplicationRecord
   def your_works
     Work.where(collection: your_collections)
   end
+
+  def agree_to_terms?
+    agreed_to_terms_at.present?
+  end
 end

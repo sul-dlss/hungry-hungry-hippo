@@ -81,6 +81,9 @@ class WorkForm < ApplicationForm
   attribute :doi_option, :string, default: 'yes'
   validates :doi_option, inclusion: { in: %w[yes no assigned] }
 
+  attribute :agree_to_terms, :boolean
+  validates :agree_to_terms, acceptance: true, on: :deposit
+
   def content_file_presence
     return if content_id.nil? # This makes test configuration easier.
     return if Content.find(content_id).content_files.exists?
