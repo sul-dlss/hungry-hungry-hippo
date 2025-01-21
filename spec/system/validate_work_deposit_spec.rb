@@ -102,7 +102,7 @@ RSpec.describe 'Validate a work deposit' do
     # Related content is marked invalid
     find('.nav-link.is-invalid', text: 'Related content (optional)').click
     expect(page).to have_field('work_related_links_attributes_0_url', class: 'is-invalid')
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'is not a valid URL')
 
     # Make the related link valid
     fill_in('URL', with: related_links_fixture.first['url'])
