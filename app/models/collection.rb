@@ -61,4 +61,8 @@ class Collection < ApplicationRecord
   def review_enabled?
     review_enabled
   end
+
+  def reviewers_and_managers
+    (reviewers + managers).uniq
+  end
 end

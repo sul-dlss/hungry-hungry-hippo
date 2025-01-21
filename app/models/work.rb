@@ -12,12 +12,24 @@ class Work < ApplicationRecord
       transition rejected_review: :pending_review
     end
 
+    before_transition any => :pending_review do |work|
+      Notifier.publish(Notifier::REVIEW_REQUESTED, work:)
+    end
+
     event :approve do
       transition pending_review: :none_review
     end
 
+    before_transition pending_review: :none_review do |work|
+      Notifier.publish(Notifier::REVIEW_APPROVED, work:)
+    end
+
     event :reject do
       transition pending_review: :rejected_review
+    end
+
+    before_transition pending_review: :rejected_review do |work|
+      Notifier.publish(Notifier::REVIEW_REJECTED, work:)
     end
   end
 

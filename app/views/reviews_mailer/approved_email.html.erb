@@ -1,0 +1,31 @@
+<%= render Emails::SalutationComponent.new(user: @user) %>
+
+<p>
+  Congratulations! Your deposit, "<%= @work.title %>" to the <%= @collection.title %> collection
+  in the Stanford Digital Repository, has been approved and is now published
+  in the Stanford Digital Repository.
+</p>
+
+<p>
+  If you did not recently submit your item for review, the submission was made by your collection manager or an SDR admin.
+</p>
+
+<p>
+  The persistent URL (PURL) for this deposit, <%= link_to nil, Sdr::Purl.from_druid(druid: @work.druid) %>,
+  is now active and available for sharing.
+</p>
+
+<p>
+  You selected the following options:<br>
+  License: <%= @work_presenter.license_label %><br>
+  Access level: <%= @work_presenter.access_label %><br>
+  Release: <%= @work_presenter.release_date_label %>
+</p>
+
+<% if @work.doi_assigned? %>
+  <p>Your work was assigned this DOI: <%= @work_presenter.doi_link %></p>
+<% end %>
+
+<%= render Emails::ContactComponent.new %>
+
+<%= render Emails::SignatureComponent.new %>

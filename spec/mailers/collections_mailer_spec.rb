@@ -33,10 +33,28 @@ RSpec.describe CollectionsMailer do
     end
 
     it 'renders the body' do
-      expect(mail.body).to include('Dear Maxwell,')
-      expect(mail.body).to match('You have been invited to be a Manager ' \
+      expect(mail).to match_body('Dear Maxwell,')
+      expect(mail).to match_body('You have been invited to be a Manager ' \
                                  'of the 20 Minutes into the Future collection')
-      expect(mail.body).to match('Subscribe to the SDR newsletter')
+      expect(mail).to match_body('Subscribe to the SDR newsletter')
+    end
+  end
+
+  describe '#review_access_granted_email' do
+    let(:mail) { described_class.with(user:, collection:).review_access_granted_email }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq 'You are invited to participate as a Reviewer in the 20 Minutes into the Future ' \
+                                 'collection in the SDR'
+      expect(mail.to).to eq [user.email_address]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders the body' do
+      expect(mail).to match_body('Dear Maxwell,')
+      expect(mail).to match_body('You have been invited to review new deposits ' \
+                                 'to the 20 Minutes into the Future collection')
+      expect(mail).to match_body('Subscribe to the SDR newsletter</a> for feature updates')
     end
   end
 end
