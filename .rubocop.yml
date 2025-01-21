@@ -528,3 +528,8 @@ Lint/SharedMutableDefault: # new in 1.70
   Enabled: true
 Style/ItAssignment: # new in 1.70
   Enabled: true
+
+Rails/MultipleRoutePaths: # new in 2.29
+  Enabled: true
+Rails/StrongParametersExpect: # new in 2.29
+  Enabled: true
