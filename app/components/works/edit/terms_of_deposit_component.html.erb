@@ -1,0 +1,10 @@
+<% if already_agreed? %>
+  <p>You agreed to the SDR Terms of Deposit.</p>
+  <%= form.hidden_field :agree_to_terms, value: true %>
+<% else %>
+  <div style="max-height: 500px; overflow-y: auto;" class="border border-3 border-light-subtle border-opacity-75 mb-5 p-3">
+    <%= tag.turbo_frame id: 'terms-of-deposit', src: terms_path %>
+  </div>
+
+  <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :agree_to_terms, label: 'I agree to the SDR Terms of Deposit', label_classes: 'fw-bold') %>
+<% end %>

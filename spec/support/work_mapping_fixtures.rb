@@ -23,7 +23,8 @@ module WorkMappingFixtures
       release_option: 'delay',
       release_date: release_date_fixture,
       custom_rights_statement: custom_rights_statement_fixture,
-      doi_option: 'yes'
+      doi_option: 'yes',
+      agree_to_terms: false
     )
   end
 
@@ -33,6 +34,7 @@ module WorkMappingFixtures
       form.version = 2
       form.lock = lock_fixture
       form.doi_option = 'assigned'
+      form.agree_to_terms = true
     end
   end
 

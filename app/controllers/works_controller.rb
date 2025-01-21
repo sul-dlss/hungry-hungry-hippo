@@ -127,7 +127,7 @@ class WorksController < ApplicationController
   def set_work_form_from_cocina
     @cocina_object = Sdr::Repository.find(druid: params[:druid])
     @work_form = ToWorkForm::Mapper.call(cocina_object: @cocina_object,
-                                         doi_assigned: doi_assigned?)
+                                         doi_assigned: doi_assigned?, agree_to_terms: current_user.agree_to_terms?)
     @work_form.release_date = @collection.max_release_date if @work_form.release_option.blank?
   end
 
@@ -165,7 +165,8 @@ class WorksController < ApplicationController
       content_id: @content.id,
       license: @collection.license,
       access: @collection.stanford_access? ? 'stanford' : 'world',
-      release_date: @collection.max_release_date
+      release_date: @collection.max_release_date,
+      agree_to_terms: current_user.agree_to_terms?
     )
   end
 end

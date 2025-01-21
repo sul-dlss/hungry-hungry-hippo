@@ -9,6 +9,7 @@ RSpec.describe DepositWorkJob do
   let(:cocina_object) { dro_with_metadata_fixture }
   let(:content) { create(:content) }
   let(:collection) { create(:collection, druid: collection_druid_fixture) }
+  let(:user) { create(:user) }
 
   before do
     allow(Contents::Analyzer).to receive(:call)
@@ -19,14 +20,16 @@ RSpec.describe DepositWorkJob do
 
   context 'when a new work' do
     let(:work_form) { WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid) }
-    let(:work) { create(:work, :deposit_job_started, collection:) }
+    let(:work) { create(:work, :deposit_job_started, collection:, user:) }
 
     before do
       allow(Sdr::Repository).to receive(:register).and_return(cocina_object)
     end
 
     it 'registers a new work' do
-      described_class.perform_now(work_form:, work:, deposit: true)
+      expect do
+        described_class.perform_now(work_form:, work:, deposit: true)
+      end.not_to change(user.reload, :agreed_to_terms_at)
       expect(Contents::Analyzer).to have_received(:call).with(content:)
       expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:, content:,
                                                                   source_id: "h3:object-#{work.id}")
@@ -83,6 +86,23 @@ RSpec.describe DepositWorkJob do
       expect(work.reload.title).to eq(title_fixture)
 
       expect(work.deposit_job_finished?).to be true
+    end
+  end
+
+  context 'when user has not previously agreed to terms of use' do
+    let(:user) { create(:user, agreed_to_terms_at: nil) }
+
+    let(:work_form) { WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid) }
+    let(:work) { create(:work, :deposit_job_started, collection:, user:) }
+
+    before do
+      allow(Sdr::Repository).to receive(:register).and_return(cocina_object)
+    end
+
+    it 'update the user' do
+      expect do
+        described_class.perform_now(work_form:, work:, deposit: true)
+      end.to change(user.reload, :agreed_to_terms_at)
     end
   end
 end

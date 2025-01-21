@@ -20,6 +20,8 @@ class DepositWorkJob < ApplicationJob
 
     ModelSync::Work.call(work:, cocina_object: new_cocina_object)
 
+    update_terms_of_deposit!
+
     # The wait page will refresh until deposit_job_started_at is nil.
     work.update!(deposit_job_started_at: nil, druid:)
 
@@ -48,5 +50,15 @@ class DepositWorkJob < ApplicationJob
 
   def assign_doi
     work_form.doi_option == 'yes'
+  end
+
+  def update_terms_of_deposit!
+    return if user.agree_to_terms?
+
+    user.update!(agreed_to_terms_at: Time.zone.now)
+  end
+
+  def user
+    work.user
   end
 end

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Validate a work deposit' do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, agreed_to_terms_at: nil) }
   let(:collection) { create(:collection, :with_druid, user:) }
   let(:work_path_with_collection) { new_work_path(collection_druid: collection.druid) }
 
@@ -40,6 +40,12 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Access settings')
     choose('On this date')
     fill_in('Release date', with: (Time.zone.today - 1.day).iso8601)
+
+    # Terms of deposit is required, but skipping.
+    find('.nav-link', text: 'Terms of deposit').click
+    expect(page).to have_css('.nav-link.active', text: 'Terms of deposit')
+    expect(page).to have_field('I agree to the SDR Terms of Deposit', checked: false)
+    expect(page).to have_text('In depositing content to the Stanford Digital Repository')
 
     # Depositing the work
     find('.nav-link', text: 'Deposit').click
@@ -112,6 +118,12 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_field('Release date', class: 'is-invalid')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be today or later')
     choose('Immediately')
+
+    # Terms of deposit is marked invalid
+    find('.nav-link.is-invalid', text: 'Terms of deposit').click
+    expect(page).to have_field('I agree to the SDR Terms of Deposit', class: 'is-invalid')
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be accepted')
+    check('I agree')
 
     # Try to deposit again
     find('.nav-link', text: 'Deposit').click

@@ -42,6 +42,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     { controller: 'dashboard', action: 'show', anchor: 'help' }
   end
 
+  resource :terms, only: :show
+
   root 'dashboard#show'
 
   mount MissionControl::Jobs::Engine, at: '/jobs'

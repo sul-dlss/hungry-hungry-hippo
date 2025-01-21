@@ -5,5 +5,6 @@ FactoryBot.define do
     sequence(:name) { |n| "A#{n}. User" }
     sequence(:first_name) { |n| "A#{n}. User" }
     sequence(:email_address) { |n| "a#{n}.user@stanford.edu" }
+    agreed_to_terms_at { Time.zone.now }
   end
 end

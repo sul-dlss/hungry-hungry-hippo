@@ -172,9 +172,14 @@ RSpec.describe 'Create a work deposit' do
     # Entering additional terms of use
     fill_in('Additional terms of use (optional)', with: custom_rights_statement_fixture)
 
+    # Clicking on Next to go to Terms of Deposit
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Terms of deposit')
+    expect(page).to have_css('.h4', text: 'Terms of deposit')
+    expect(page).to have_text('You agreed to the SDR Terms of Deposit.')
+
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
-    find('.nav-link', text: 'Deposit').click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
     click_link_or_button('Deposit')
 
