@@ -5,9 +5,12 @@ class User < ApplicationRecord
   has_many :works, dependent: :destroy
   has_many :collections, dependent: :destroy
 
-  has_and_belongs_to_many :manages, class_name: 'Collection', join_table: 'managers'
-  has_and_belongs_to_many :depositor_for, class_name: 'Collection', join_table: 'depositors'
-  has_and_belongs_to_many :reviewer_for, class_name: 'Collection', join_table: 'reviewers'
+  has_many :collection_managers, dependent: :destroy
+  has_many :collection_depositors, dependent: :destroy
+  has_many :collection_reviewers, dependent: :destroy
+  has_many :manages, through: :collection_managers, source: :collection
+  has_many :depositor_for, through: :collection_depositors, source: :collection
+  has_many :reviewer_for, through: :collection_reviewers, source: :collection
 
   EMAIL_SUFFIX = '@stanford.edu'
 

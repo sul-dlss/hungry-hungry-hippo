@@ -113,3 +113,13 @@ A "nested" field is one that is not "simple" (see prior section).
 1. Test editing the field in `spec/system/edit_work_spec.rb`.
 1. Add the field to the work show (`app/views/works/show.html.erb`).
 1. Test display of the field in `spec/system/show_work_spec.rb`.
+
+### Adding an email
+1. Publish a notification that would trigger the email. For example: `after_create -> { Notifier.publish(Notifier::DEPOSITOR_ADDED, user:, collection:) }`.
+1. Add an email to a mailer controller (for example, `app/mailers/collections_mailer.rb`) and a view (for example, `app/views/collections_mailer/invitation_to_deposit_email.html.erb`).
+1. Add a subscription to `config/initializers/subscriptions.rb`. For example: 
+```
+Notifier.subscribe_mailer(event_name: Notifier::DEPOSITOR_ADDED, mailer_class: CollectionsMailer, mailer_method: :invitation_to_deposit_email)
+```
+1. Test the triggering of the notification.
+2. Test the email.

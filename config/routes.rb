@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Rails.application.routes.draw do
+Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get '/webauth/login', to: 'authentication#login', as: 'login'
   get '/webauth/logout', to: 'authentication#logout', as: 'logout'
@@ -35,6 +35,12 @@ Rails.application.routes.draw do
   end
 
   resources :content_files, only: %i[edit update destroy show]
+
+  # This route is used by the emails for the contact the SDR team link.
+  # THIS IS JUST STUBBED OUT SO IT CAN BE USED IN THE EMAILS.
+  direct :contact_form do
+    { controller: 'dashboard', action: 'show', anchor: 'help' }
+  end
 
   root 'dashboard#show'
 

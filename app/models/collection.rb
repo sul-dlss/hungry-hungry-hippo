@@ -6,9 +6,12 @@ class Collection < ApplicationRecord
   belongs_to :user
   has_many :works, dependent: :destroy
 
-  has_and_belongs_to_many :depositors, class_name: 'User', join_table: 'depositors'
-  has_and_belongs_to_many :managers, class_name: 'User', join_table: 'managers'
-  has_and_belongs_to_many :reviewers, class_name: 'User', join_table: 'reviewers'
+  has_many :collection_depositors, dependent: :destroy
+  has_many :collection_managers, dependent: :destroy
+  has_many :collection_reviewers, dependent: :destroy
+  has_many :depositors, through: :collection_depositors, source: :user
+  has_many :managers, through: :collection_managers, source: :user
+  has_many :reviewers, through: :collection_reviewers, source: :user
 
   before_create :add_user_as_manager
 
