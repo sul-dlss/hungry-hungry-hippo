@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
 class WorkPolicy < ApplicationPolicy
-  alias_rule :new?, :create?, :update?, :edit?, :destroy?, to: :manage?
+  alias_rule :update?, :edit?, :destroy?, to: :manage?
   alias_rule :wait?, to: :show?
+  alias_rule :new?, to: :create?
+
+  def create?
+    manage? || collection_depositor?
+  end
 
   def manage?
-    record.user_id == user.id || collection_manager? || collection_owner? || collection_depositor?
+    record.user_id == user.id || collection_manager? || collection_owner?
   end
 
   def show?

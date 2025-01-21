@@ -11,7 +11,7 @@ class DashboardController < ApplicationController
     @draft_works = []
     @status_map = current_user.your_works.to_h do |work|
       version_status = druid_to_status_map[work.druid] || VersionStatus::NilStatus.new
-      @draft_works << work if version_status.draft?
+      @draft_works << work if version_status.draft? && work.user == current_user
       [work.id, version_status]
     end
   end
