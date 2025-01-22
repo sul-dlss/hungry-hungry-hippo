@@ -334,7 +334,7 @@ CREATE TABLE public.works (
     collection_id bigint NOT NULL,
     object_updated_at timestamp(6) without time zone,
     doi_assigned boolean DEFAULT false NOT NULL,
-    review_state character varying DEFAULT 'none'::character varying NOT NULL,
+    review_state character varying DEFAULT 'none_review'::character varying NOT NULL,
     review_rejected_reason character varying
 );
 
