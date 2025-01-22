@@ -9,17 +9,38 @@ RSpec.describe 'Show work' do
 
   context 'when the user is not authorized' do
     before do
-      create(:work, druid:)
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status)
         .with(druid:).and_return(instance_double(Dor::Services::Client::ObjectVersion::VersionStatus))
-      sign_in(create(:user))
     end
 
-    it 'redirects to root' do
-      get "/works/#{druid}"
+    context 'when just some user' do
+      before do
+        create(:work, druid:)
+        sign_in(create(:user))
+      end
 
-      expect(response).to redirect_to(root_path)
+      it 'redirects to root' do
+        get "/works/#{druid}"
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when the user is a collection depositor' do
+      let(:user) { create(:user) }
+      let(:collection) { create(:collection, depositors: [user]) }
+
+      before do
+        create(:work, druid:, collection:)
+        sign_in(user)
+      end
+
+      it 'redirects to root' do
+        get "/works/#{druid}"
+
+        expect(response).to redirect_to(root_path)
+      end
     end
   end
 

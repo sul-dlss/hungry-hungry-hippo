@@ -12,8 +12,6 @@ module Dashboard
 
       attr_reader :collection
 
-      delegate :works, to: :collection
-
       def id
         @id ||= dom_id(collection, 'table')
       end
@@ -34,6 +32,10 @@ module Dashboard
           work.object_updated_at ? I18n.l(work.object_updated_at, format: '%b %d, %Y') : nil,
           work.druid ? link_to(nil, Sdr::Purl.from_druid(druid: work.druid)) : nil
         ]
+      end
+
+      def works
+        collection.works.filter { |work| helpers.allowed_to?(:show, work) }
       end
 
       private

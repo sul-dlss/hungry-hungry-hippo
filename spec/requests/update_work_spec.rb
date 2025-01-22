@@ -8,29 +8,48 @@ RSpec.describe 'Update work' do
   let(:druid) { druid_fixture }
 
   context 'when the user is not authorized' do
-    before do
-      create(:work, druid:)
-      sign_in(create(:user))
+    context 'when just some user' do
+      before do
+        create(:work, druid:)
+        sign_in(create(:user))
+      end
+
+      it 'redirects to root' do
+        put "/works/#{druid}"
+
+        expect(response).to redirect_to(root_path)
+      end
     end
 
-    it 'redirects to root' do
-      put "/works/#{druid}"
+    context 'with the collection depositor role' do
+      let(:user) { create(:user) }
+      let(:collection) { create(:collection, depositors: [user]) }
 
-      expect(response).to redirect_to(root_path)
+      before do
+        create(:work, druid:, collection:)
+        sign_in(user)
+      end
+
+      it 'redirects to root' do
+        put "/works/#{druid}"
+
+        expect(response).to redirect_to(root_path)
+      end
     end
   end
 
   # The following tests verify that the user is properly authorized to perform
   # the action. The user must be authorized as either the collection owner,
-  # collection manager, or collection depositor to destroy a work in the collection
+  # collection manager, or work owner to destroy a work in the collection
   #
   # When valid, the return value is an http bad request because we aren't actually
   # sending any parameters to the controller
   context 'when the user is authorized' do
     let(:user) { create(:user) }
+    let!(:work) { create(:work, druid:, collection:) } # rubocop:disable RSpec/LetSetup
+    let(:collection) { create(:collection) }
 
     before do
-      create(:work, druid:, collection:)
       sign_in(user)
     end
 
@@ -54,8 +73,8 @@ RSpec.describe 'Update work' do
       end
     end
 
-    context 'with the collection depositor role' do
-      let(:collection) { create(:collection, depositors: [user]) }
+    context 'when the work owner' do
+      let!(:work) { create(:work, druid:, collection:, user:) } # rubocop:disable RSpec/LetSetup
 
       it 'redirects to root' do
         put "/works/#{druid}"
