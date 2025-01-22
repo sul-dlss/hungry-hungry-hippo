@@ -6,7 +6,7 @@ class DepositWorkJob < ApplicationJob
   # @param [Work] work
   # @param [Boolean] deposit if true and review is not requested, deposit the work; otherwise, leave as draft
   # @param [Boolean] request_review if true, request view of the work
-  def perform(work_form:, work:, deposit:, request_review:)
+  def perform(work_form:, work:, deposit:, request_review:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     @work_form = work_form
     @work = work
     @deposit = deposit
@@ -17,16 +17,20 @@ class DepositWorkJob < ApplicationJob
     new_cocina_object = perform_persist
     druid = new_cocina_object.externalIdentifier
 
-    Contents::Stager.call(content:, druid:)
+    work.update!(druid:)
 
-    Sdr::Repository.accession(druid:) if deposit?
+    Contents::Stager.call(content:, druid:)
 
     ModelSync::Work.call(work:, cocina_object: new_cocina_object)
 
     update_terms_of_deposit!
 
-    # The wait page will refresh until deposit_job_started_at is nil.
-    work.update!(deposit_job_started_at: nil, druid:)
+    if deposit?
+      Sdr::Repository.accession(druid:)
+      work.accession!
+    else
+      work.deposit_persist_complete!
+    end
     work.request_review! if request_review?
 
     # Content isn't needed anymore

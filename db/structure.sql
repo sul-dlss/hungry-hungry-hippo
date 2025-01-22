@@ -165,7 +165,6 @@ CREATE TABLE public.collections (
     user_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    deposit_job_started_at timestamp(6) without time zone,
     object_updated_at timestamp(6) without time zone,
     release_option character varying,
     release_duration character varying,
@@ -178,7 +177,8 @@ CREATE TABLE public.collections (
     custom_rights_statement_custom_instructions character varying,
     email_when_participants_changed boolean DEFAULT true NOT NULL,
     email_depositors_status_changed boolean DEFAULT true NOT NULL,
-    review_enabled boolean DEFAULT false NOT NULL
+    review_enabled boolean DEFAULT false NOT NULL,
+    deposit_state character varying DEFAULT 'deposit_none'::character varying NOT NULL
 );
 
 
@@ -328,14 +328,14 @@ CREATE TABLE public.works (
     druid character varying,
     title character varying NOT NULL,
     user_id bigint,
-    deposit_job_started_at timestamp(6) without time zone,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     collection_id bigint NOT NULL,
     object_updated_at timestamp(6) without time zone,
     doi_assigned boolean DEFAULT false NOT NULL,
     review_state character varying DEFAULT 'none_review'::character varying NOT NULL,
-    review_rejected_reason character varying
+    review_rejected_reason character varying,
+    deposit_state character varying DEFAULT 'deposit_none'::character varying NOT NULL
 );
 
 
@@ -544,6 +544,13 @@ CREATE UNIQUE INDEX index_collection_reviewers_on_collection_id_and_user_id ON p
 
 
 --
+-- Name: index_collections_on_deposit_state; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_collections_on_deposit_state ON public.collections USING btree (deposit_state);
+
+
+--
 -- Name: index_collections_on_druid; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -597,6 +604,13 @@ CREATE UNIQUE INDEX index_users_on_email_address ON public.users USING btree (em
 --
 
 CREATE INDEX index_works_on_collection_id ON public.works USING btree (collection_id);
+
+
+--
+-- Name: index_works_on_deposit_state; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_works_on_deposit_state ON public.works USING btree (deposit_state);
 
 
 --
@@ -690,6 +704,8 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250122145633'),
+('20250122135332'),
 ('20250121174735'),
 ('20250120142833'),
 ('20250116173206'),

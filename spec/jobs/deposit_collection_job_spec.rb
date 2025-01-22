@@ -15,7 +15,7 @@ RSpec.describe DepositCollectionJob do
 
   context 'when a new collection' do
     let(:collection_form) { CollectionForm.new(title: collection.title, managers_attributes:, depositors_attributes:) }
-    let(:collection) { create(:collection, :deposit_job_started) }
+    let(:collection) { create(:collection, :persisting) }
     let(:managers_attributes) { [{ sunetid: manager.sunetid }, { sunetid: 'stepking' }] }
     let(:depositors_attributes) { [{ sunetid: 'joehill' }] }
     let(:manager) { create(:user) }
@@ -34,7 +34,7 @@ RSpec.describe DepositCollectionJob do
         .with(cocina_object: an_instance_of(Cocina::Models::RequestCollection))
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
 
-      expect(collection.reload.deposit_job_finished?).to be true
+      expect(collection.reload.accessioning?).to be true
 
       # These expectations verify that the new manager and depositor were created and associated with the collection.
       # As well as verifying that an existing managers name is not overwritten.
@@ -51,7 +51,7 @@ RSpec.describe DepositCollectionJob do
 
   context 'when an existing collection' do
     let(:collection_form) { CollectionForm.new(title: collection_title_fixture, druid:, lock: 'abc123') }
-    let(:collection) { create(:collection, :deposit_job_started, druid:) }
+    let(:collection) { create(:collection, :persisting, druid:) }
 
     before do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
@@ -67,7 +67,7 @@ RSpec.describe DepositCollectionJob do
       expect(Sdr::Repository).not_to have_received(:accession)
 
       expect(collection.reload.title).to eq(collection_title_fixture)
-      expect(collection.deposit_job_finished?).to be true
+      expect(collection.deposit_none?).to be true
     end
   end
 end

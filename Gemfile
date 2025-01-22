@@ -41,6 +41,7 @@ gem 'bootsnap', require: false
 
 # Additional gems
 gem 'action_policy'
+gem 'bunny' # RabbitMQ client
 gem 'cocina-models'
 gem 'config'
 gem 'datacite'
@@ -52,6 +53,7 @@ gem 'edtf'
 gem 'frozen_record' # For licenses
 gem 'honeybadger'
 gem 'kaminari' # For pagination
+gem 'kicks' # Background processing of rabbitMQ messages. (Formerly sneakers.)
 gem 'okcomputer'
 gem 'state_machines-activerecord'
 gem 'validate_url'

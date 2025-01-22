@@ -24,7 +24,7 @@ RSpec.describe 'Show collection' do
   end
 
   context 'when the deposit job started' do
-    let!(:collection) { create(:collection, :deposit_job_started, druid:, user:) }
+    let!(:collection) { create(:collection, :persisting, druid:, user:) }
     let(:user) { create(:user) }
 
     before do

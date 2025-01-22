@@ -3,7 +3,7 @@
 # Controller for a Collection
 class CollectionsController < ApplicationController
   before_action :set_collection, only: %i[show edit update destroy]
-  before_action :check_deposit_job_started, only: %i[show edit]
+  before_action :check_deposit_persisting, only: %i[show edit]
   before_action :set_collection_form_from_cocina, only: %i[show edit]
   before_action :set_status, only: %i[show edit destroy]
   before_action :set_presenter, only: %i[show edit]
@@ -41,11 +41,9 @@ class CollectionsController < ApplicationController
     @collection_form = CollectionForm.new(**collection_params)
     # The validation_context param determines whether extra validations are applied, e.g., for deposits.
     if @collection_form.valid?(validation_context)
-      # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
-      # should be "waiting".
       collection = Collection.create!(title: @collection_form.title,
                                       user: current_user,
-                                      deposit_job_started_at: Time.zone.now)
+                                      deposit_state_event: 'deposit_persist')
       DepositCollectionJob.perform_later(collection:, collection_form: @collection_form, deposit: deposit?)
       redirect_to wait_collections_path(collection.id)
     else
@@ -59,9 +57,7 @@ class CollectionsController < ApplicationController
     @collection_form = CollectionForm.new(**update_collection_params)
     # The validation_context param determines whether extra validations are applied, e.g., for deposits.
     if @collection_form.valid?(validation_context)
-      # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
-      # should be "waiting".
-      @collection.update!(deposit_job_started_at: Time.zone.now)
+      @collection.deposit_persist! # Sets the deposit state
       DepositCollectionJob.perform_later(collection: @collection, collection_form: @collection_form, deposit: deposit?)
       redirect_to wait_collections_path(@collection.id)
     else
@@ -87,7 +83,7 @@ class CollectionsController < ApplicationController
     collection = Collection.find(params[:id])
     authorize! collection
 
-    redirect_to collection_path(druid: collection.druid) if collection.deposit_job_finished?
+    redirect_to collection_path(druid: collection.druid) unless collection.deposit_persisting?
   end
 
   private
@@ -104,8 +100,8 @@ class CollectionsController < ApplicationController
     @collection = Collection.find_by!(druid: params[:druid])
   end
 
-  def check_deposit_job_started
-    redirect_to wait_collections_path(@collection.id) if @collection.deposit_job_started?
+  def check_deposit_persisting
+    redirect_to wait_collections_path(@collection.id) if @collection.deposit_persisting?
   end
 
   def set_collection_form_from_cocina
