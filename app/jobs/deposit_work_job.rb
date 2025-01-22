@@ -4,11 +4,13 @@
 class DepositWorkJob < ApplicationJob
   # @param [WorkForm] work_form
   # @param [Work] work
-  # @param [Boolean] deposit if true, deposit the work; otherwise, leave as draft
+  # @param [Boolean] deposit if true and review is not requested, deposit the work; otherwise, leave as draft
   # @param [Boolean] request_review if true, request view of the work
   def perform(work_form:, work:, deposit:, request_review:)
     @work_form = work_form
     @work = work
+    @deposit = deposit
+    @request_review = request_review
 
     # Add missing digests and mime types
     Contents::Analyzer.call(content:)
@@ -17,7 +19,7 @@ class DepositWorkJob < ApplicationJob
 
     Contents::Stager.call(content:, druid:)
 
-    Sdr::Repository.accession(druid:) if deposit
+    Sdr::Repository.accession(druid:) if deposit?
 
     ModelSync::Work.call(work:, cocina_object: new_cocina_object)
 
@@ -25,7 +27,7 @@ class DepositWorkJob < ApplicationJob
 
     # The wait page will refresh until deposit_job_started_at is nil.
     work.update!(deposit_job_started_at: nil, druid:)
-    work.request_review! if request_review
+    work.request_review! if request_review?
 
     # Content isn't needed anymore
     content.destroy!
@@ -62,5 +64,14 @@ class DepositWorkJob < ApplicationJob
 
   def user
     work.user
+  end
+
+  # If request review, deposit will be saved, but not deposited until approved.
+  def deposit?
+    request_review? ? false : @deposit
+  end
+
+  def request_review?
+    @request_review
   end
 end

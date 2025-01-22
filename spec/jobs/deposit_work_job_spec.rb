@@ -108,6 +108,7 @@ RSpec.describe DepositWorkJob do
       described_class.perform_now(work_form:, work:, deposit: true, request_review: true)
 
       expect(work.reload.pending_review?).to be true
+      expect(Sdr::Repository).not_to have_received(:accession)
     end
   end
 end
