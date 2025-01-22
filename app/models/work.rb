@@ -6,6 +6,27 @@ class Work < ApplicationRecord
   belongs_to :user
   belongs_to :collection
 
+  state_machine :review_state, initial: :none_review do
+    event :request_review do
+      transition none_review: :pending_review
+      transition rejected_review: :pending_review
+    end
+
+    event :approve do
+      transition pending_review: :none_review
+    end
+
+    event :reject do
+      transition pending_review: :rejected_review
+    end
+  end
+
+  def reject_with_reason!(reason:)
+    self.review_rejected_reason = reason
+    self.review_state_event = 'reject'
+    save!
+  end
+
   # deposit_job_started_at indicates that the job is queued or running.
   # User should be "waiting" until the job is completed.
   def deposit_job_started?

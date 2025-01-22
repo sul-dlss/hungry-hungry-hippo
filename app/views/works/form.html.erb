@@ -10,6 +10,7 @@
   <% end %>
 <% end %>
 <%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: @work_form.title || t('works.edit.no_title'), classes: 'mb-3') %>
+<%= render Works::Show::ReviewRejectedComponent.new(work: @work) if @work %>
 <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if @work_form.errors.present? %>
 <% form_id = dom_id(@work_form, 'tabbed_form') %>
 <%= render Elements::TabForm::TabListComponent.new(model: @work_form, form_id:, hidden_fields: %i[lock version collection_druid content_id]) do |component| %>
@@ -101,7 +102,7 @@
       <div class="d-flex justify-content-between">
         <div>
           <%= render Elements::CancelButtonComponent.new(link: root_path, classes: 'me-4') %>
-          <%= render Elements::Forms::SubmitComponent.new(form_id:, label: 'Deposit', classes: 'ms-2') %>
+          <%= render Works::Edit::SubmitComponent.new(form_id:, work: @work, collection: @collection, classes: 'ms-2') %>
         </div>
         <%= render Edit::DiscardDraftButtonComponent.new(presenter: @work_presenter) if @work_presenter %>
       </div>

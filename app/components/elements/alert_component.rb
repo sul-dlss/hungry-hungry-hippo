@@ -3,9 +3,10 @@
 module Elements
   # Component for rendering an alert.
   class AlertComponent < ApplicationComponent
-    # Variants are :danger, :success, :note, :info, :warning
+    # Variants are :danger, :success, :note, :info, :warning, :input
+    # input is not part of the component library
     def initialize(title: nil, variant: :info, dismissible: false, value: nil, data: {}, classes: []) # rubocop:disable Metrics/ParameterLists
-      raise ArgumentError, 'Invalid variant' unless %i[danger success note info warning].include?(variant.to_sym)
+      raise ArgumentError, 'Invalid variant' unless %i[danger success note info warning input].include?(variant.to_sym)
 
       @title = title
       @variant = variant
@@ -32,6 +33,10 @@ module Elements
 
     def dismissible?
       @dismissible
+    end
+
+    def icon?
+      helpers.respond_to?(:"#{variant}_icon")
     end
 
     def icon
