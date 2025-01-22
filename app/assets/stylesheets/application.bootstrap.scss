@@ -11,6 +11,11 @@ $container-max-widths: (
 @import "bootstrap-icons/font/bootstrap-icons";
 @import "dropzone";
 
+// Stop the page from jumping when switching, e.g., to a tab containing a scrollbar
+html {
+  margin-left: calc(100vw - 100%);
+}
+
 // This is used on the collection show page
 .nav-underline {
   border-bottom: 1px solid black;
@@ -33,42 +38,64 @@ $container-max-widths: (
 .tabbable-panes {
   .nav-pills {
     background-color: var(--stanford-10-black);
-    border-radius: var(--bs-nav-pills-border-radius);
 
-    .nav-link:not(.active) {
-      color: var(--stanford-black);
-      border-bottom: 1px solid var(--stanford-10-black);
+    .nav-link {
+      --bs-nav-link-padding-x: 0.5rem;
+
       border-radius: unset;
-    }
 
-    .nav-link.active {
-      font-weight: 700;
-      color: var(--stanford-10-black);
-      background-color: var(--stanford-black);
-
-      &::before {
-        display: inline-block;
-        margin-right: 6px;
-        font-family: bootstrap-icons;
-        vertical-align: -10%;
-        content: "\F138"; // right arrow
+      &:not(:first-child) {
+        border-top: var(--bs-border-width) var(--bs-border-style) rgba(var(--bs-white-rgb), 1);
       }
-    }
 
-    .nav-link.is-invalid {
-      color: var(--bs-danger-text-emphasis);
+      &:first-child {
+        border-top-left-radius: var(--bs-border-radius);
+        border-top-right-radius: var(--bs-border-radius);
+      }
+
+      &:last-child {
+        border-bottom-left-radius: var(--bs-border-radius);
+        border-bottom-right-radius: var(--bs-border-radius);
+      }
+
+      &:not(.active) {
+        color: var(--stanford-black);
+        padding-left: 1.7rem; // Align the text of inactive nav items with the active one, roughly
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
 
       &.active {
-        background-color: white;
-        border: 3px solid var(--stanford-black);
+        background-color: var(--stanford-black);
+        color: var(--bs-white);
+        font-weight: 700;
+
+        &::before {
+          display: inline-block;
+          margin-right: 2px;
+          font-family: bootstrap-icons;
+          vertical-align: -15%;
+          content: "\F138"; // right arrow
+        }
       }
 
-      &::after {
-        display: inline-block;
-        margin-left: 10px;
-        font-family: bootstrap-icons;
-        vertical-align: -10%;
-        content: "\F33A"; // exclamation triangle fill
+      &.is-invalid {
+        color: var(--bs-danger-text-emphasis);
+
+        &.active {
+          background-color: white;
+          border: 2px solid var(--stanford-black);
+        }
+
+        &::after {
+          margin-left: 10px;
+          display: inline-block;
+          font-family: bootstrap-icons;
+          vertical-align: -15%;
+          content: "\F33A"; // exclamation triangle fill
+        }
       }
     }
   }
@@ -102,7 +129,7 @@ table.table-h3 {
   }
 }
 
-table.table-treegrid { 
+table.table-treegrid {
   tr[aria-expanded] > td:first-child::before {
     cursor: pointer;
     font-family: bootstrap-icons;
