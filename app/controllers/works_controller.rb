@@ -187,9 +187,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
     # should be "waiting".
     work.update!(deposit_job_started_at: Time.zone.now)
-    # If request review, deposit will be saved, but not deposited until approved.
-    deposit = request_review? ? false : deposit?
-    DepositWorkJob.perform_later(work:, work_form: @work_form, deposit:, request_review: request_review?)
+    DepositWorkJob.perform_later(work:, work_form: @work_form, deposit: deposit?, request_review: request_review?)
   end
 
   # @return [String] path to redirect to after review
