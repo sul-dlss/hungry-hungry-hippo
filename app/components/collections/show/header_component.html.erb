@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-between">
+  <div>
+    <%= render Elements::HeadingComponent.new(level: :h1, text: title, classes: 'mb-4 d-inline-block') %>
+    <%= render Elements::ButtonLinkComponent.new(link: edit_collection_path(presenter.druid), variant: :'outline-primary', bordered: false, classes: 'mx-2 py-0 mb-2') do %>
+      <%= helpers.edit_icon(classes: 'h4') %><span class="visually-hidden">Edit</span>
+    <% end %>
+    <span class="ms-4 fst-italic status"><%= status_message %></span>
+  </div>
+  <div class="d-flex align-items-start">
+    <%= render Edit::EditDraftButtonComponent.new(presenter:) %>
+    <%= render Edit::DiscardDraftButtonComponent.new(presenter:, classes: 'ms-2') %>
+    <% if helpers.allowed_to?(:create_work?, presenter.collection) %>
+      <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: presenter.druid), label: 'Deposit to this collection', variant: :primary, classes: 'ms-2') %>
+    <% end %>
+  </div>
+</div>

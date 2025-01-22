@@ -5,10 +5,11 @@ module Elements
     # Component for rendering a table row.
     class RowComponent < ApplicationComponent
       renders_many :cells
+      renders_many :items
 
       def initialize(label: nil, values: [], id: nil)
         @label = label
-        # Provide either values or cells.
+        # Provide either values, cells, or items.
         @values = values
         @id = id
         super()

@@ -17,7 +17,7 @@
   </li>
 </ul>
 
-<%= render Show::HeaderComponent.new(presenter: @collection_presenter) %>
+<%= render Collections::Show::HeaderComponent.new(presenter: @collection_presenter) %>
 
 <div class="tab-content">
   <div class="tab-pane fade show active" id="details-pane" role="tabpanel" aria-labelledby="details-tab" tabindex="0">
@@ -34,7 +34,14 @@
     <% end %>
 
     <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'mb-5', label: 'Links to related information') do |component| %>
-      <% component.with_row(label: 'Related links', values: @collection_presenter.related_links) %>
+      <%# component.with_row(label: 'Related links', items: @collection_presenter.related_links) %>
+        <% component.with_row(label: 'Related links') do |row_component| %>
+          <% @collection_presenter.related_links.each do |related_link| %>
+          <% row_component.with_item do %>
+            <%= related_link %>
+          <% end %>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
   <div class="tab-pane fade" id="settings-pane" role="tabpanel" aria-labelledby="settings-tab" tabindex="0">
