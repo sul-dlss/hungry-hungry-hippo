@@ -7,6 +7,10 @@ class Notifier
   REVIEWER_ADDED = 'reviewer_added'
   DEPOSITOR_ADDED = 'depositor_added'
 
+  REVIEW_REQUESTED = 'review_requested'
+  REVIEW_APPROVED = 'review_approved'
+  REVIEW_REJECTED = 'review_rejected'
+
   # Publishes an event with the given name and payload
   # @param event_name [String] the name of the event
   # @param payload [Hash] the payload to include with the event
@@ -17,6 +21,12 @@ class Notifier
   def self.subscribe_mailer(event_name:, mailer_class:, mailer_method:)
     ActiveSupport::Notifications.subscribe(event_name) do |event|
       mailer_class.with(**event.payload).send(mailer_method).deliver_later
+    end
+  end
+
+  def self.subscribe_action(event_name:, action_class:)
+    ActiveSupport::Notifications.subscribe(event_name) do |event|
+      action_class.call(**event.payload)
     end
   end
 end

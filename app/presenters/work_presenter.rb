@@ -69,8 +69,12 @@ class WorkPresenter < FormPresenter
     when 'no'
       'A DOI will not be assigned.'
     else
-      link_to(nil, Doi.url(druid:))
+      doi_link
     end
+  end
+
+  def doi_link
+    link_to(nil, Doi.url(druid:))
   end
 
   def status_message

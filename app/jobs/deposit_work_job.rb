@@ -5,7 +5,8 @@ class DepositWorkJob < ApplicationJob
   # @param [WorkForm] work_form
   # @param [Work] work
   # @param [Boolean] deposit if true, deposit the work; otherwise, leave as draft
-  def perform(work_form:, work:, deposit:)
+  # @param [Boolean] request_review if true, request view of the work
+  def perform(work_form:, work:, deposit:, request_review:)
     @work_form = work_form
     @work = work
 
@@ -24,6 +25,7 @@ class DepositWorkJob < ApplicationJob
 
     # The wait page will refresh until deposit_job_started_at is nil.
     work.update!(deposit_job_started_at: nil, druid:)
+    work.request_review! if request_review
 
     # Content isn't needed anymore
     content.destroy!

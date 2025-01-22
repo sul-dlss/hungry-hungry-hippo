@@ -15,6 +15,11 @@ class CollectionsMailer < ApplicationMailer
                                            'collection in the SDR')
   end
 
+  def review_access_granted_email
+    mail(to: @user.email_address, subject: "You are invited to participate as a Reviewer in the #{@collection.title} " \
+                                           'collection in the SDR')
+  end
+
   private
 
   def set_user
