@@ -1,6 +1,6 @@
 <%= tag.div class: classes, 'data-controller': 'tab-error' do %>
   <div class="col-md-3">
-    <%= tag.div class: 'nav nav-pills d-flex flex-md-column px-2 py-1', role: 'tablist', 'aria-orientation': 'vertical' do |component| %>
+    <%= tag.div class: 'nav nav-pills d-flex flex-md-column rounded-top rounded-bottom', role: 'tablist', 'aria-orientation': 'vertical' do |component| %>
       <% tabs.each do |tab| %>
         <%= tab %>
       <% end %>
@@ -16,9 +16,10 @@
         <% hidden_fields.each do |field| %>
           <%= form.hidden_field field %>
         <% end %>
-          <% panes.each do |pane| %>
-            <%= pane %>
-          <% end %>
+
+        <% panes.each do |pane| %>
+          <%= pane %>
+        <% end %>
       <% end %>
 
       <% after_form_panes.each do |pane| %>
