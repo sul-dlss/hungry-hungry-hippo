@@ -1,0 +1,6 @@
+<div class="tab-pane fade" id="deposits-pane" role="tabpanel" aria-labelledby="deposits-tab" tabindex="0">
+  <%= render Elements::Tables::TableComponent.new(id: 'deposits-table', classes: 'mb-5', label: nil, show_label: false) do |component| %>
+    <% component.with_header(headers: ['Deposit', 'Owner', 'Status', 'Modified', 'Link for sharing']) %>
+    <% component.with_rows(collection_deposits) %>
+  <% end %>
+</div>
