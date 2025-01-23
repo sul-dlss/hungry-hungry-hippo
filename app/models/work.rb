@@ -44,4 +44,8 @@ class Work < ApplicationRecord
   def doi_assigned?
     doi_assigned
   end
+
+  def first_version?
+    version == 1
+  end
 end
