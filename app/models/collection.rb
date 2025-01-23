@@ -47,6 +47,7 @@ class Collection < ApplicationRecord
   end
 
   def add_user_as_manager
+    Rails.logger.info("Adding user #{user} as manager of collection #{id}: #{user.present?}, #{managers.exclude?(user)}")
     managers << user if user.present? && managers.exclude?(user)
   end
 
