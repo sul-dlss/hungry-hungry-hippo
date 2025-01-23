@@ -68,7 +68,8 @@ RSpec.describe 'Create a collection deposit' do
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Participants')
     expect(page).to have_text('Managers')
-    fill_in('collection_managers_attributes_0_sunetid', with: 'stepking')
+    expect(page).to have_field('SUNet ID', with: user.sunetid)
+    fill_in('collection_managers_attributes_1_sunetid', with: 'stepking')
     fill_in('collection_depositors_attributes_0_sunetid', with: 'joehill')
 
     # Clicking on Next to go to Deposit

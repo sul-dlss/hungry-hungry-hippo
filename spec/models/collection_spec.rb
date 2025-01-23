@@ -9,32 +9,13 @@ RSpec.describe Collection do
     allow(Notifier).to receive(:publish)
   end
 
-  describe 'add user to collection' do
-    it 'adds the collection owner to the collection' do
-      collection = described_class.create(title: collection_title_fixture, user:)
-      expect(collection.managers).to eq([user])
-      expect(Notifier).to have_received(:publish).with(Notifier::MANAGER_ADDED, collection:, user:)
-    end
+  describe 'Add manager to collection' do
+    let(:collection) { described_class.create(title: collection_title_fixture, user:) }
 
-    context 'when collection owner is already a manager' do
-      it 'does not add the collection owner to the collection' do
-        collection = described_class.create(title: collection_title_fixture, user:, managers: [user])
-        expect(collection.managers).to eq([user])
-      end
-    end
-
-    context 'when no collection owner' do
-      it 'does not add the collection owner to the collection' do
-        collection = described_class.create(title: collection_title_fixture)
-        expect(collection.managers).to be_empty
-      end
-    end
-
-    context 'when a collection owner id is provided' do
-      it 'adds the collection owner to the collection' do
-        collection = described_class.create(title: collection_title_fixture, user_id: user.id)
-        expect(collection.managers).to eq([user])
-      end
+    it 'sends an event' do
+      collection.managers << user
+      expect(Notifier).to have_received(:publish).with(Notifier::MANAGER_ADDED, collection:,
+                                                                                user:)
     end
   end
 
