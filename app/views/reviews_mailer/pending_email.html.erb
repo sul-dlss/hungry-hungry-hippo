@@ -1,8 +1,10 @@
 <%= render Emails::SalutationComponent.new(user: @user) %>
 
 <p>
-  The Depositor <%= @work.user.name %> has submitted the deposit "<%= @work.title %>" for
-  review in the <%= @collection.title %> collection. You can access this item directly at <%= link_to nil, work_url(druid: @work.druid) %>
+  The item "<%= @work.title %>" has been submitted for review in the
+  <%= @collection.title %> collection by <%= @work.user.name %>,
+  a collection manager, or an SDR admin. You can access this item directly
+  at <%= link_to nil, work_url(druid: @work.druid) %>.
 </p>
 
 <p>

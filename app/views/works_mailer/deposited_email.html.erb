@@ -2,9 +2,12 @@
 
 <p>
   Your deposit, "<%= @work.title %>" is now published in the <%= @collection.title %> collection
-  in the Stanford Digital Repository. The persistent URL (PURL) for this deposit is
-  <%= link_to nil, Sdr::Purl.from_druid(druid: @work.druid) %>. Please use this when citing your work.
+  in the Stanford Digital Repository.
 </p>
+
+<%= render Emails::Works::SubmitClarificationComponent.new %>
+
+<%= render Emails::Works::PurlComponent.new(work: @work) %>
 
 <%= render Emails::Works::OptionsComponent.new(work_presenter: @work_presenter) %>
 

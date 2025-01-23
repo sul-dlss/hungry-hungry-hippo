@@ -30,6 +30,7 @@ RSpec.describe ReviewsMailer do
       expect(mail).to match_body('Your deposit, "S1.E1: Blipverts" to the ' \
                                  '20 Minutes into the Future collection in the Stanford Digital Repository, ' \
                                  'is now waiting for review by a collection Manager.')
+      expect(mail).to match_body('If you did not recently submit')
     end
   end
 
@@ -72,10 +73,9 @@ RSpec.describe ReviewsMailer do
 
     it 'renders the body' do
       expect(mail).to match_body('Dear Maxwell,')
-      expect(mail).to match_body('Your deposit, "S1.E1: Blipverts" to the ' \
-                                 '20 Minutes into the Future collection in the Stanford Digital Repository, ' \
-                                 'has been approved')
-
+      expect(mail).to match_body('Your deposit, "S1.E1: Blipverts", to the ' \
+                                 '20 Minutes into the Future collection has been approved')
+      expect(mail).to match_body('If you did not recently submit')
       expect(mail).to match_body('License: CC-BY-4.0 Attribution International')
       expect(mail).to match_body('Access level: Stanford Community')
       expect(mail).to match_body('Release: June 10, 2027')
@@ -94,8 +94,8 @@ RSpec.describe ReviewsMailer do
 
     it 'renders the body' do
       expect(mail).to match_body('Dear Maxwell,')
-      expect(mail).to match_body('The Depositor Max Headroom has submitted the deposit "S1.E1: Blipverts" for ' \
-                                 'review in the 20 Minutes into the Future collection.')
+      expect(mail).to match_body('The item "S1.E1: Blipverts" has been submitted for review ' \
+                                 'in the 20 Minutes into the Future collection by Max Headroom')
     end
   end
 end
