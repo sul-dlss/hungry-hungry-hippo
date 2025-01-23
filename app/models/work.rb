@@ -8,9 +8,9 @@ class Work < ApplicationRecord
   belongs_to :user
   belongs_to :collection
 
-  state_machine :review_state, initial: :none_review do
+  state_machine :review_state, initial: :review_not_in_progress do
     event :request_review do
-      transition none_review: :pending_review
+      transition review_not_in_progress: :pending_review
       transition rejected_review: :pending_review
     end
 
@@ -19,10 +19,10 @@ class Work < ApplicationRecord
     end
 
     event :approve do
-      transition pending_review: :none_review
+      transition pending_review: :review_not_in_progress
     end
 
-    before_transition pending_review: :none_review do |work|
+    before_transition pending_review: :review_not_in_progress do |work|
       Notifier.publish(Notifier::REVIEW_APPROVED, work:)
     end
 

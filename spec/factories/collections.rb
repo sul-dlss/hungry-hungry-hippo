@@ -39,8 +39,8 @@ FactoryBot.define do
       depositors { create_list(:user, depositors_count) }
     end
 
-    trait :persisting do
-      deposit_state { 'deposit_persisting' }
+    trait :registering_or_updating do
+      deposit_state { 'deposit_registering_or_updating' }
     end
 
     trait :with_druid do

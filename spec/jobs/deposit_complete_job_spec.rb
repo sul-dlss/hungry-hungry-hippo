@@ -24,7 +24,7 @@ RSpec.describe DepositCompleteJob do
     it 'marks the accessioning as complete' do
       expect { job.work(message) }.to change {
         object.reload.deposit_state
-      }.from('accessioning').to('deposit_none')
+      }.from('accessioning').to('deposit_not_in_progress')
     end
 
     it 'syncs and returns ack' do
@@ -39,7 +39,7 @@ RSpec.describe DepositCompleteJob do
     it 'marks the accessioning as complete' do
       expect { job.work(message) }.to change {
         object.reload.deposit_state
-      }.from('accessioning').to('deposit_none')
+      }.from('accessioning').to('deposit_not_in_progress')
     end
 
     it 'syncs and returns ack' do

@@ -3,7 +3,7 @@
 # Controller for a Work
 class WorksController < ApplicationController
   before_action :set_work, only: %i[show edit update destroy review]
-  before_action :check_deposit_persisting, only: %i[show edit]
+  before_action :check_deposit_registering_or_updating, only: %i[show edit]
   before_action :set_work_form_from_cocina, only: %i[show edit review]
   before_action :set_content, only: %i[show edit review]
   before_action :set_status, only: %i[show edit destroy review]
@@ -99,7 +99,7 @@ class WorksController < ApplicationController
     work = Work.find(params[:id])
     authorize! work
 
-    redirect_to work_path(druid: work.druid) unless work.deposit_persisting?
+    redirect_to work_path(druid: work.druid) unless work.deposit_registering_or_updating?
   end
 
   def review
@@ -132,8 +132,8 @@ class WorksController < ApplicationController
     @work = Work.find_by!(druid: params[:druid])
   end
 
-  def check_deposit_persisting
-    redirect_to wait_works_path(@work.id) if @work.deposit_persisting?
+  def check_deposit_registering_or_updating
+    redirect_to wait_works_path(@work.id) if @work.deposit_registering_or_updating?
   end
 
   def set_work_form_from_cocina

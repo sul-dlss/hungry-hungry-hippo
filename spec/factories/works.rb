@@ -8,8 +8,8 @@ FactoryBot.define do
     object_updated_at { Time.zone.now }
     doi_assigned { true }
 
-    trait :persisting do
-      deposit_state { 'deposit_persisting' }
+    trait :registering_or_updating do
+      deposit_state { 'deposit_registering_or_updating' }
     end
 
     trait :with_druid do
