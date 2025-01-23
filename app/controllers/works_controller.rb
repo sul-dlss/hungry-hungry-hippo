@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 # Controller for a Work
-class WorksController < ApplicationController # rubocop:disable Metrics/ClassLength
+class WorksController < ApplicationController
   before_action :set_work, only: %i[show edit update destroy review]
-  before_action :check_deposit_job_started, only: %i[show edit]
+  before_action :check_deposit_persisting, only: %i[show edit]
   before_action :set_work_form_from_cocina, only: %i[show edit review]
   before_action :set_content, only: %i[show edit review]
   before_action :set_status, only: %i[show edit destroy review]
@@ -54,8 +54,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
     # The validation_context param determines whether extra validations are applied, e.g., for deposits.
     if @work_form.valid?(validation_context)
-      work = Work.create!(title: @work_form.title, user: current_user, deposit_job_started_at: Time.zone.now,
-                          collection: @collection)
+      work = Work.create!(title: @work_form.title, user: current_user, collection: @collection)
       perform_deposit(work:)
       redirect_to wait_works_path(work.id)
     else
@@ -100,7 +99,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     work = Work.find(params[:id])
     authorize! work
 
-    redirect_to work_path(druid: work.druid) if work.deposit_job_finished?
+    redirect_to work_path(druid: work.druid) unless work.deposit_persisting?
   end
 
   def review
@@ -133,8 +132,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     @work = Work.find_by!(druid: params[:druid])
   end
 
-  def check_deposit_job_started
-    redirect_to wait_works_path(@work.id) if @work.deposit_job_started?
+  def check_deposit_persisting
+    redirect_to wait_works_path(@work.id) if @work.deposit_persisting?
   end
 
   def set_work_form_from_cocina
@@ -184,9 +183,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def perform_deposit(work:)
-    # Setting the deposit_job_started_at to the current time to indicate that the deposit job has started and user
-    # should be "waiting".
-    work.update!(deposit_job_started_at: Time.zone.now)
+    work.deposit_persist! # Sets the deposit state
     DepositWorkJob.perform_later(work:, work_form: @work_form, deposit: deposit?, request_review: request_review?)
   end
 
@@ -194,7 +191,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   def perform_review
     if @review_form.review_option == 'approve'
       # Deposit
-      @work.update!(deposit_job_started_at: Time.zone.now)
+      @work.deposit_persist! # Sets the deposit state
       @work.approve!
       DepositWorkJob.perform_later(work: @work, work_form: @work_form, deposit: true, request_review: false)
       wait_works_path(@work.id)

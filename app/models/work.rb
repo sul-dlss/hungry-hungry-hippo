@@ -3,6 +3,8 @@
 # Model for a work.
 # Note that this model does not contain any cocina data.
 class Work < ApplicationRecord
+  include DepositStateMachine
+
   belongs_to :user
   belongs_to :collection
 
@@ -37,16 +39,6 @@ class Work < ApplicationRecord
     self.review_rejected_reason = reason
     self.review_state_event = 'reject'
     save!
-  end
-
-  # deposit_job_started_at indicates that the job is queued or running.
-  # User should be "waiting" until the job is completed.
-  def deposit_job_started?
-    deposit_job_started_at.present?
-  end
-
-  def deposit_job_finished?
-    deposit_job_started_at.nil?
   end
 
   def doi_assigned?

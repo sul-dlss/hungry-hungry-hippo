@@ -21,7 +21,7 @@ RSpec.describe DepositWorkJob do
 
   context 'when a new work' do
     let(:work_form) { WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid) }
-    let(:work) { create(:work, :deposit_job_started, collection:, user:) }
+    let(:work) { create(:work, :persisting, collection:, user:) }
 
     it 'registers a new work' do
       expect do
@@ -35,7 +35,7 @@ RSpec.describe DepositWorkJob do
         .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true)
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
 
-      expect(work.reload.deposit_job_finished?).to be true
+      expect(work.reload.accessioning?).to be true
       expect(work.pending_review?).to be false
     end
   end
@@ -44,7 +44,7 @@ RSpec.describe DepositWorkJob do
     let(:work_form) do
       WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid, doi_option: 'no')
     end
-    let(:work) { create(:work, :deposit_job_started, collection:) }
+    let(:work) { create(:work, :persisting, collection:) }
 
     it 'registers a new work' do
       described_class.perform_now(work_form:, work:, deposit: true, request_review: false)
@@ -58,7 +58,7 @@ RSpec.describe DepositWorkJob do
       WorkForm.new(title: title_fixture, druid:, content_id: content.id, lock: 'abc123',
                    collection_druid: collection.druid)
     end
-    let(:work) { create(:work, :deposit_job_started, druid:) }
+    let(:work) { create(:work, :persisting, druid:) }
 
     before do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
@@ -79,7 +79,7 @@ RSpec.describe DepositWorkJob do
 
       expect(work.reload.title).to eq(title_fixture)
 
-      expect(work.deposit_job_finished?).to be true
+      expect(work.deposit_none?).to be true
     end
   end
 
@@ -87,7 +87,7 @@ RSpec.describe DepositWorkJob do
     let(:user) { create(:user, agreed_to_terms_at: nil) }
 
     let(:work_form) { WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid) }
-    let(:work) { create(:work, :deposit_job_started, collection:, user:) }
+    let(:work) { create(:work, :persisting, collection:, user:) }
 
     before do
       allow(Sdr::Repository).to receive(:register).and_return(cocina_object)
@@ -102,7 +102,7 @@ RSpec.describe DepositWorkJob do
 
   context 'when review requested' do
     let(:work_form) { WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid) }
-    let(:work) { create(:work, :deposit_job_started, collection:) }
+    let(:work) { create(:work, :persisting, collection:) }
 
     it 'registers a new work' do
       described_class.perform_now(work_form:, work:, deposit: true, request_review: true)

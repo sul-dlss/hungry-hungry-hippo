@@ -39,8 +39,8 @@ FactoryBot.define do
       depositors { create_list(:user, depositors_count) }
     end
 
-    trait :deposit_job_started do
-      deposit_job_started_at { Time.zone.now }
+    trait :persisting do
+      deposit_state { 'deposit_persisting' }
     end
 
     trait :with_druid do

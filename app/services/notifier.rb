@@ -11,6 +11,8 @@ class Notifier
   REVIEW_APPROVED = 'review_approved'
   REVIEW_REJECTED = 'review_rejected'
 
+  ACCESSIONING_COMPLETE = 'accessioning_complete'
+
   # Publishes an event with the given name and payload
   # @param event_name [String] the name of the event
   # @param payload [Hash] the payload to include with the event

@@ -12,15 +12,19 @@ class DepositCollectionJob < ApplicationJob
     new_cocina_object = perform_persist
     druid = new_cocina_object.externalIdentifier
 
+    collection.update!(druid:)
+
     assign_participants(:managers)
     assign_participants(:depositors)
 
-    Sdr::Repository.accession(druid:) if deposit
-
     ModelSync::Collection.call(collection:, cocina_object: new_cocina_object)
 
-    # The wait page will refresh until deposit_job_started_at is nil.
-    collection.update!(deposit_job_started_at: nil, druid:)
+    if deposit
+      Sdr::Repository.accession(druid:)
+      collection.accession!
+    else
+      collection.deposit_persist_complete!
+    end
   end
 
   private

@@ -33,4 +33,13 @@ RSpec.describe Work do
       expect(Notifier).to have_received(:publish).with(Notifier::REVIEW_REJECTED, work:)
     end
   end
+
+  describe '.accession_complete!' do
+    let(:work) { create(:work, deposit_state: 'accessioning') }
+
+    it 'changes state and sends a notification' do
+      expect { work.accession_complete! }.to change(work, :deposit_state).from('accessioning').to('deposit_none')
+      expect(Notifier).to have_received(:publish).with(Notifier::ACCESSIONING_COMPLETE, object: work)
+    end
+  end
 end
