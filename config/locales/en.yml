@@ -28,6 +28,7 @@
 #       enabled: "ON"
 
 en:
+  app_name: 'Stanford Digital Repository'
   activemodel:
     errors:
       models:
