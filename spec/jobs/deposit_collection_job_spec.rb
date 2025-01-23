@@ -15,7 +15,7 @@ RSpec.describe DepositCollectionJob do
 
   context 'when a new collection' do
     let(:collection_form) { CollectionForm.new(title: collection.title, managers_attributes:, depositors_attributes:) }
-    let(:collection) { create(:collection, :persisting) }
+    let(:collection) { create(:collection, :registering_or_updating) }
     let(:managers_attributes) { [{ sunetid: manager.sunetid }, { sunetid: 'stepking' }] }
     let(:depositors_attributes) { [{ sunetid: 'joehill' }] }
     let(:manager) { create(:user) }
@@ -51,7 +51,7 @@ RSpec.describe DepositCollectionJob do
 
   context 'when an existing collection' do
     let(:collection_form) { CollectionForm.new(title: collection_title_fixture, druid:, lock: 'abc123') }
-    let(:collection) { create(:collection, :persisting, druid:) }
+    let(:collection) { create(:collection, :registering_or_updating, druid:) }
 
     before do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
@@ -67,7 +67,7 @@ RSpec.describe DepositCollectionJob do
       expect(Sdr::Repository).not_to have_received(:accession)
 
       expect(collection.reload.title).to eq(collection_title_fixture)
-      expect(collection.deposit_none?).to be true
+      expect(collection.deposit_not_in_progress?).to be true
     end
   end
 end

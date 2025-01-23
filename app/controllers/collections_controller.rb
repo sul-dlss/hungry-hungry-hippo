@@ -3,7 +3,7 @@
 # Controller for a Collection
 class CollectionsController < ApplicationController
   before_action :set_collection, only: %i[show edit update destroy]
-  before_action :check_deposit_persisting, only: %i[show edit]
+  before_action :check_deposit_registering_or_updating, only: %i[show edit]
   before_action :set_collection_form_from_cocina, only: %i[show edit]
   before_action :set_status, only: %i[show edit destroy]
   before_action :set_presenter, only: %i[show edit]
@@ -83,7 +83,7 @@ class CollectionsController < ApplicationController
     collection = Collection.find(params[:id])
     authorize! collection
 
-    redirect_to collection_path(druid: collection.druid) unless collection.deposit_persisting?
+    redirect_to collection_path(druid: collection.druid) unless collection.deposit_registering_or_updating?
   end
 
   private
@@ -100,8 +100,8 @@ class CollectionsController < ApplicationController
     @collection = Collection.find_by!(druid: params[:druid])
   end
 
-  def check_deposit_persisting
-    redirect_to wait_collections_path(@collection.id) if @collection.deposit_persisting?
+  def check_deposit_registering_or_updating
+    redirect_to wait_collections_path(@collection.id) if @collection.deposit_registering_or_updating?
   end
 
   def set_collection_form_from_cocina

@@ -69,7 +69,7 @@ RSpec.describe 'Show work' do
   end
 
   context 'when the deposit job started' do
-    let!(:work) { create(:work, :persisting, druid:, user:) }
+    let!(:work) { create(:work, :registering_or_updating, druid:, user:) }
     let(:user) { create(:user) }
 
     before do

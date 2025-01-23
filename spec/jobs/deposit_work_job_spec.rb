@@ -21,7 +21,7 @@ RSpec.describe DepositWorkJob do
 
   context 'when a new work' do
     let(:work_form) { WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid) }
-    let(:work) { create(:work, :persisting, collection:, user:) }
+    let(:work) { create(:work, :registering_or_updating, collection:, user:) }
 
     it 'registers a new work' do
       expect do
@@ -44,7 +44,7 @@ RSpec.describe DepositWorkJob do
     let(:work_form) do
       WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid, doi_option: 'no')
     end
-    let(:work) { create(:work, :persisting, collection:) }
+    let(:work) { create(:work, :registering_or_updating, collection:) }
 
     it 'registers a new work' do
       described_class.perform_now(work_form:, work:, deposit: true, request_review: false)
@@ -58,7 +58,7 @@ RSpec.describe DepositWorkJob do
       WorkForm.new(title: title_fixture, druid:, content_id: content.id, lock: 'abc123',
                    collection_druid: collection.druid)
     end
-    let(:work) { create(:work, :persisting, druid:) }
+    let(:work) { create(:work, :registering_or_updating, druid:) }
 
     before do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
@@ -79,7 +79,7 @@ RSpec.describe DepositWorkJob do
 
       expect(work.reload.title).to eq(title_fixture)
 
-      expect(work.deposit_none?).to be true
+      expect(work.deposit_not_in_progress?).to be true
     end
   end
 
@@ -87,7 +87,7 @@ RSpec.describe DepositWorkJob do
     let(:user) { create(:user, agreed_to_terms_at: nil) }
 
     let(:work_form) { WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid) }
-    let(:work) { create(:work, :persisting, collection:, user:) }
+    let(:work) { create(:work, :registering_or_updating, collection:, user:) }
 
     before do
       allow(Sdr::Repository).to receive(:register).and_return(cocina_object)
@@ -102,7 +102,7 @@ RSpec.describe DepositWorkJob do
 
   context 'when review requested' do
     let(:work_form) { WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid) }
-    let(:work) { create(:work, :persisting, collection:) }
+    let(:work) { create(:work, :registering_or_updating, collection:) }
 
     it 'registers a new work' do
       described_class.perform_now(work_form:, work:, deposit: true, request_review: true)

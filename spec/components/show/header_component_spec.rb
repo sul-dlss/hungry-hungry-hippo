@@ -7,7 +7,7 @@ RSpec.describe Show::HeaderComponent, type: :component do
     WorkPresenter.new(work_form:, version_status:, work:)
   end
   let(:work_form) { WorkForm.new(druid: druid_fixture, title:) }
-  let(:work) { instance_double(Work, review_state: 'none_review') }
+  let(:work) { instance_double(Work, review_state: 'review_not_in_progress') }
   let(:version_status) do
     instance_double(VersionStatus, editable?: editable, discardable?: discardable, status_message:)
   end
