@@ -44,6 +44,7 @@ class CollectionsController < ApplicationController
       collection = Collection.create!(title: @collection_form.title,
                                       user: current_user,
                                       deposit_state_event: 'deposit_persist')
+      Rails.logger.info("Managers from controller: #{collection.managers.to_a}")
       DepositCollectionJob.perform_later(collection:, collection_form: @collection_form, deposit: deposit?)
       redirect_to wait_collections_path(collection.id)
     else

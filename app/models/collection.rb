@@ -15,7 +15,7 @@ class Collection < ApplicationRecord
   has_many :managers, through: :collection_managers, source: :user
   has_many :reviewers, through: :collection_reviewers, source: :user
 
-  after_create :add_user_as_manager
+  before_create :add_user_as_manager
 
   enum :release_option, { immediate: 'immediate', depositor_selects: 'depositor_selects' }, suffix: true
   enum :release_duration, { six_months: '6 months', one_year: '1 year', two_years: '2 years', three_years: '3 years' },
@@ -49,6 +49,7 @@ class Collection < ApplicationRecord
   def add_user_as_manager
     Rails.logger.info("Adding user #{user} as manager of collection #{id}: #{user.present?}, #{managers.exclude?(user)}")
     managers << user if user.present? && managers.exclude?(user)
+    Rails.logger.info("Managers: #{managers.to_a}")
   end
 
   def review_enabled?
