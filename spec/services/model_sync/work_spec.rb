@@ -8,7 +8,8 @@ RSpec.describe ModelSync::Work do
   let(:new_collection) { create(:collection, :with_druid) }
   let(:work) { create(:work, druid:, collection:) }
   let(:cocina_object) do
-    Cocina::Models.with_metadata(build(:dro, id: druid, title: title_fixture, collection_ids: [new_collection.druid]),
+    Cocina::Models.with_metadata(build(:dro, id: druid, title: title_fixture, collection_ids: [new_collection.druid],
+                                             version: 2),
                                  lock_fixture, modified: Time.current)
   end
 
@@ -17,6 +18,7 @@ RSpec.describe ModelSync::Work do
       .to change { work.reload.title }.to(title_fixture)
       .and change(work, :collection).to(new_collection)
       .and change(work, :object_updated_at).to(cocina_object.modified)
+      .and change(work, :version).to(2)
   end
 
   context 'when the collection is not found' do

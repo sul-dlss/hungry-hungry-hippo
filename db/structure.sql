@@ -178,7 +178,8 @@ CREATE TABLE public.collections (
     email_when_participants_changed boolean DEFAULT true NOT NULL,
     email_depositors_status_changed boolean DEFAULT true NOT NULL,
     review_enabled boolean DEFAULT false NOT NULL,
-    deposit_state character varying DEFAULT 'deposit_none'::character varying NOT NULL
+    deposit_state character varying DEFAULT 'deposit_none'::character varying NOT NULL,
+    version integer DEFAULT 1 NOT NULL
 );
 
 
@@ -335,7 +336,8 @@ CREATE TABLE public.works (
     doi_assigned boolean DEFAULT false NOT NULL,
     review_state character varying DEFAULT 'none_review'::character varying NOT NULL,
     review_rejected_reason character varying,
-    deposit_state character varying DEFAULT 'deposit_none'::character varying NOT NULL
+    deposit_state character varying DEFAULT 'deposit_none'::character varying NOT NULL,
+    version integer DEFAULT 1 NOT NULL
 );
 
 
@@ -704,6 +706,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250123120038'),
 ('20250122145633'),
 ('20250122135332'),
 ('20250121174735'),

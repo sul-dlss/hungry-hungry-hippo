@@ -33,7 +33,8 @@ module ModelSync
     def update_params
       {
         title:,
-        collection:
+        collection:,
+        version:
       }.tap do |params|
         params[:object_updated_at] = cocina_object.try(:modified)
       end.compact
@@ -41,6 +42,10 @@ module ModelSync
 
     def title
       CocinaSupport.title_for(cocina_object:)
+    end
+
+    def version
+      CocinaSupport.version_for(cocina_object:)
     end
 
     def collection_druid
