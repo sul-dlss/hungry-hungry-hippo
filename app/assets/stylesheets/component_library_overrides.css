@@ -1,0 +1,5 @@
+:root {
+  /* Use dark identity bar */
+  --identity-bar-color: white;
+  --identity-bar-bg-color: var(--stanford-cardinal);
+}
