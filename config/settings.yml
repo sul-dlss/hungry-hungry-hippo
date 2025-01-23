@@ -56,3 +56,6 @@ rabbitmq:
   vhost: /
   username: guest
   password: guest
+
+notifications:
+  enabled: true

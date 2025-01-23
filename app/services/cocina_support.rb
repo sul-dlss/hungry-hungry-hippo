@@ -200,4 +200,8 @@ class CocinaSupport
   def self.doi_for(cocina_object:)
     cocina_object.identification.doi
   end
+
+  def self.version_for(cocina_object:)
+    cocina_object.version
+  end
 end

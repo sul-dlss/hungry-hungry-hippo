@@ -18,4 +18,8 @@ Rails.application.config.after_initialize do
                             mailer_method: :approved_email)
   Notifier.subscribe_action(event_name: Notifier::REVIEW_REQUESTED,
                             action_class: SubscriptionActions::ReviewRequest)
+
+  # Subscriptions for WorksMailer
+  Notifier.subscribe_action(event_name: Notifier::ACCESSIONING_COMPLETE,
+                            action_class: SubscriptionActions::WorkAccessioningCompleted)
 end

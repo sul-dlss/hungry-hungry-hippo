@@ -1,0 +1,21 @@
+<%= render Emails::SalutationComponent.new(user: @user) %>
+
+<p>
+  Your deposit, "<%= @work.title %>" is now published in the <%= @collection.title %> collection
+  in the Stanford Digital Repository. The persistent URL (PURL) for this deposit is
+  <%= link_to nil, Sdr::Purl.from_druid(druid: @work.druid) %>. Please use this when citing your work.
+</p>
+
+<%= render Emails::Works::OptionsComponent.new(work_presenter: @work_presenter) %>
+
+<%= render Emails::Works::DoiComponent.new(work_presenter: @work_presenter, work: @work) %>
+
+<%= render Emails::Works::ChangesComponent.new %>
+
+<%= render Emails::Works::SearchworksComponent.new %>
+
+<%= render Emails::ContactComponent.new %>
+
+<%= render Emails::SignatureComponent.new %>
+
+<%= render Emails::NewsletterComponent.new %>

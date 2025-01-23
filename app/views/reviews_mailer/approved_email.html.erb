@@ -15,16 +15,9 @@
   is now active and available for sharing.
 </p>
 
-<p>
-  You selected the following options:<br>
-  License: <%= @work_presenter.license_label %><br>
-  Access level: <%= @work_presenter.access_label %><br>
-  Release: <%= @work_presenter.release_date_label %>
-</p>
+<%= render Emails::Works::OptionsComponent.new(work_presenter: @work_presenter) %>
 
-<% if @work.doi_assigned? %>
-  <p>Your work was assigned this DOI: <%= @work_presenter.doi_link %></p>
-<% end %>
+<%= render Emails::Works::DoiComponent.new(work_presenter: @work_presenter, work: @work) %>
 
 <%= render Emails::ContactComponent.new %>
 

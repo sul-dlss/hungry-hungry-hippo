@@ -13,19 +13,41 @@ class DepositCompleteJob
   # these messages in addition to those that result from depositing in h3.
   from_queue 'h3.deposit_complete', env: nil
 
-  def work(msg)
-    druid = parse_message(msg)
+  def work(msg_str)
+    @msg_str = msg_str
     Honeybadger.context(druid:)
     Rails.logger.info("Deposit complete on #{druid}")
 
     object = Work.find_by(druid:) || Collection.find_by!(druid:)
+
+    sync(object:)
+
+    # This will ignore accessioning that was initiated outside of H3, since
+    # the deposit state will not be accessioning.
     object.accession_complete! if object.accessioning?
 
     ack!
   end
 
-  def parse_message(msg)
-    json = JSON.parse(msg)
-    json.fetch('druid')
+  private
+
+  def message
+    @message ||= JSON.parse(@msg_str)
+  end
+
+  def druid
+    message.fetch('druid')
+  end
+
+  def sync(object:)
+    if object.is_a? Work
+      ModelSync::Work.call(work: object, cocina_object:, raise: false)
+    else
+      ModelSync::Collection.call(collection: object, cocina_object:)
+    end
+  end
+
+  def cocina_object
+    Sdr::Repository.find(druid:)
   end
 end
