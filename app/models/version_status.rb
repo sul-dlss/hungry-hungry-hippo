@@ -35,6 +35,10 @@ class VersionStatus
     status.open?
   end
 
+  def first_draft?
+    status.open? && status.version == 1
+  end
+
   def discardable?
     # SDR does not consider version 1 of an object to be discardable. (It can be purged, however.)
     if status.version == 1
