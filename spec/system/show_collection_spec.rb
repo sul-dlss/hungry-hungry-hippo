@@ -6,6 +6,7 @@ RSpec.describe 'Show a collection' do
   include CollectionMappingFixtures
 
   let(:druid) { collection_druid_fixture }
+  let(:bare_druid) { collection_bare_druid_fixture }
   let(:user) { collection.user }
   let!(:collection) do
     create(:collection, :with_review_workflow, :with_depositors, :with_managers, reviewers_count: 2, druid:,
@@ -33,17 +34,31 @@ RSpec.describe 'Show a collection' do
     expect(page).to have_link('Dashboard', href: root_path)
     expect(page).to have_css('.breadcrumb-item', text: collection.title)
 
-    expect(page).to have_css('h1', text: collection.title)
-    expect(page).to have_css('.status', text: 'Deposited')
-    expect(page).to have_link('Edit or deposit', href: edit_collection_path(druid))
-
     # Tabs
     expect(page).to have_css('.nav-link.active', text: 'Collection details')
+    expect(page).to have_css('.nav-link', text: 'Collection settings')
+
+    # Header
+    expect(page).to have_css('h1', text: collection.title)
+    expect(page).to have_css('i.bi-pencil')
+    expect(page).to have_css('.status', text: 'Deposited')
+    expect(page).to have_link('Edit or deposit', href: edit_collection_path(druid))
+    expect(page).to have_link('Deposit to this collection', href: new_work_path(collection_druid: druid))
+
+    # Collection information
+    within('table#info-table') do
+      expect(page).to have_css('caption', text: 'Collection information')
+      expect(page).to have_css('th', text: 'PURL')
+      expect(page).to have_link("https://sul-purl-stage.stanford.edu/#{bare_druid}", href: "https://sul-purl-stage.stanford.edu/#{bare_druid}")
+      expect(page).to have_css('th', text: 'Created by')
+      expect(page).to have_css('td', text: collection.user.name)
+      expect(page).to have_css('th', text: 'Collection created')
+    end
 
     # Details table
     within('table#details-table') do
       expect(page).to have_css('caption', text: 'Details')
-      expect(page).to have_css('tr', text: 'Title')
+      expect(page).to have_css('tr', text: 'Collection name')
       expect(page).to have_css('td', text: collection.title)
       expect(page).to have_css('tr', text: 'Description')
       expect(page).to have_css('td', text: collection_description_fixture)
@@ -53,7 +68,7 @@ RSpec.describe 'Show a collection' do
 
     # Related Content table
     within('table#related-content-table') do
-      expect(page).to have_css('caption', text: 'Related content')
+      expect(page).to have_css('caption', text: 'Links to related information')
       expect(page).to have_css('tr', text: 'Related links')
       expect(page).to have_css('td', text: related_links_fixture.first['text'])
     end

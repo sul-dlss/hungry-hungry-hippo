@@ -72,7 +72,7 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
     end
   end
 
-  context 'the user is not allowed to deposit' do
+  context 'when the user is not allowed to deposit' do
     let(:manager) { create(:user) }
     let(:first_draft) { true }
     let(:collection) { create(:collection, user: manager, druid: druid_fixture) }
