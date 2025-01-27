@@ -9,7 +9,8 @@ module Elements
 
       def initialize(label: nil, values: [], id: nil)
         @label = label
-        # Provide either values, cells, or items.
+        # Provide either values, cells (e.g. for content files),
+        # or items (list of values for a field such as related links )
         @values = values
         @id = id
         super()
