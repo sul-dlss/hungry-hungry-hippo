@@ -8,8 +8,6 @@
   <% end %>
 <% end %>
 
-<%= render Show::HeaderComponent.new(presenter: @collection_presenter) %>
-
 <ul class="nav nav-underline mb-3" role="tablist">
   <li class="nav-item" role="presentation">
     <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details-pane" type="button" role="tab" aria-controls="details-pane" aria-selected="true">Collection details</button>
@@ -18,16 +16,31 @@
     <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings-pane" type="button" role="tab" aria-controls="settings-pane" aria-selected="false">Collection settings</button>
   </li>
 </ul>
+
+<%= render Collections::Show::HeaderComponent.new(presenter: @collection_presenter) %>
+
 <div class="tab-content">
   <div class="tab-pane fade show active" id="details-pane" role="tabpanel" aria-labelledby="details-tab" tabindex="0">
+    <%= render Elements::Tables::TableComponent.new(id: 'info-table', classes: 'mb-5', label: 'Collection information') do |component| %>
+      <% component.with_row(label: 'PURL', values: [@collection_presenter.purl_link]) %>
+      <% component.with_row(label: 'Created by', values: [@collection_presenter.created_by]) %>
+      <% component.with_row(label: 'Collection created', values: [@collection_presenter.created_datetime]) %>
+    <% end %>
+
     <%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'mb-5', label: 'Details') do |component| %>
-      <% component.with_row(label: 'Title', values: [@collection_presenter.title]) %>
+      <% component.with_row(label: 'Collection name', values: [@collection_presenter.title]) %>
       <% component.with_row(label: 'Description', values: [@collection_presenter.description]) %>
       <% component.with_row(label: 'Contact emails', values: [@collection_presenter.contact_emails]) %>
     <% end %>
 
-    <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'mb-5', label: 'Related content') do |component| %>
-      <% component.with_row(label: 'Related links', values: @collection_presenter.related_links) %>
+    <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'mb-5', label: 'Links to related information') do |component| %>
+      <% component.with_row(label: 'Related links') do |row_component| %>
+        <% @collection_presenter.related_links.each do |related_link| %>
+          <% row_component.with_item do %>
+            <%= related_link %>
+          <% end %>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
   <div class="tab-pane fade" id="settings-pane" role="tabpanel" aria-labelledby="settings-tab" tabindex="0">

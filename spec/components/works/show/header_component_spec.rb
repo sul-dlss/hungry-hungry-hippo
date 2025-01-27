@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Show::HeaderComponent, type: :component do
+RSpec.describe Works::Show::HeaderComponent, type: :component do
   let(:presenter) do
     WorkPresenter.new(work_form:, version_status:, work:)
   end

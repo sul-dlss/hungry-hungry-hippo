@@ -127,6 +127,13 @@ table.table-h3 {
   tr {
     border-color: var(--stanford-30-black);
   }
+
+  // used for item lists
+  .list-unstyled {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
 }
 
 table.table-treegrid {

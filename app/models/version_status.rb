@@ -20,7 +20,7 @@ class VersionStatus
   end
 
   def status_message
-    return 'Draft - Not deposited' if status.open? && status.version == 1
+    return 'Draft - Not deposited' if first_draft?
     return 'New version in draft' if status.open?
     return 'Depositing' if status.accessioning?
 
@@ -33,6 +33,10 @@ class VersionStatus
 
   def draft?
     status.open?
+  end
+
+  def first_draft?
+    status.open? && status.version == 1
   end
 
   def discardable?

@@ -4,6 +4,10 @@ def collection_druid_fixture
   'druid:cc234dd5678'
 end
 
+def collection_bare_druid_fixture
+  'cc234dd5678'
+end
+
 def collection_title_fixture
   'My Collection'
 end

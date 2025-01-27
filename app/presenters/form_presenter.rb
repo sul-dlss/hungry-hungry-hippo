@@ -12,9 +12,11 @@ class FormPresenter < SimpleDelegator
 
   attr_reader :version_status
 
-  delegate :discardable?, :editable?, :status_message, to: :version_status
+  delegate :discardable?, :editable?, :status_message, :first_draft?, to: :version_status
 
   def related_links
+    return 'None provided' if related_links_attributes.blank?
+
     related_links_attributes.filter_map do |related_link|
       next if related_link.url.blank?
 
