@@ -23,7 +23,7 @@ RSpec.describe 'Create a work that requires review' do
       cocina_params[:structural] = { isMemberOf: [collection_druid_fixture] }
       cocina_params[:administrative] = { hasAdminPolicy: Settings.apo }
       cocina_object = Cocina::Models.build(cocina_params)
-      (@registered_cocina_object = Cocina::Models.with_metadata(cocina_object, 'abc123'))
+      @registered_cocina_object = Cocina::Models.with_metadata(cocina_object, 'abc123')
     end
     allow(Sdr::Repository).to receive(:accession)
 
