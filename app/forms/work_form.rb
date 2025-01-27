@@ -29,6 +29,7 @@ class WorkForm < ApplicationForm
 
   attribute :abstract, :string
   validates :abstract, presence: true, on: :deposit
+  before_validation ->(work_form) { work_form.abstract = LinebreakSupport.normalize(work_form.abstract) }
 
   attribute :citation, :string
   attribute :auto_generate_citation, :boolean
