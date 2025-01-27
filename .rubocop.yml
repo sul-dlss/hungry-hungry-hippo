@@ -8,7 +8,7 @@ require:
   - rubocop-factory_bot
 
 AllCops:
-  TargetRubyVersion: 3.3
+  TargetRubyVersion: 3.4
   DisplayCopNames: true
   Include:
     - 'Capfile'
@@ -47,7 +47,7 @@ Metrics/ModuleLength:
 
 Rails/HasAndBelongsToMany:
   Enabled: false
-  
+
 RSpec/ExampleLength:
   Enabled: false
 
