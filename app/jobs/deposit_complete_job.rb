@@ -32,7 +32,7 @@ class DepositCompleteJob
   private
 
   def message
-    @message ||= JSON.parse(@msg_str)
+    JSON.parse(@msg_str)
   end
 
   def druid
