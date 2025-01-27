@@ -6,7 +6,7 @@
 # optimize for a smaller size at the cost of a slower build.
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version
-ARG RUBY_VERSION=3.3.4
+ARG RUBY_VERSION=3.4.1
 FROM docker.io/library/ruby:$RUBY_VERSION-slim
 
 # Install base packages
