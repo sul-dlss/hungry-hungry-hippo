@@ -20,7 +20,7 @@ class User < ApplicationRecord
 
   # Returns all collections that the user manages, deposits to, or reviews.
   def your_collections
-    Collection.left_outer_joins(:managers, :depositors, :reviewers).where(managers: { id: }).or(
+    @your_collections ||= Collection.left_outer_joins(:managers, :depositors, :reviewers).where(managers: { id: }).or(
       Collection.left_outer_joins(:managers, :depositors, :reviewers).where(depositors: { id: })
     ).or(
       Collection.left_outer_joins(:managers, :depositors, :reviewers).where(reviewers: { id: })
@@ -29,7 +29,7 @@ class User < ApplicationRecord
 
   # Returns all works for collections that the user manages, deposits to, or reviews.
   def your_works
-    Work.where(collection: your_collections)
+    @your_works ||= Work.where(collection: your_collections)
   end
 
   def agree_to_terms?
@@ -37,6 +37,6 @@ class User < ApplicationRecord
   end
 
   def your_pending_review_works
-    Work.where(collection: reviewer_for).with_review_state(:pending_review)
+    @your_pending_review_works ||= Work.where(collection: reviewer_for + manages).with_review_state(:pending_review)
   end
 end
