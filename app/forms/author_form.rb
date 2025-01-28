@@ -19,7 +19,8 @@ class AuthorForm < ApplicationForm
   attribute :organization_role, :string
   validates :organization_role, presence: true, unless: :person?
 
-  attribute :role_type, :string
+  attribute :role_type, :string, default: 'person'
+  validates :role_type, inclusion: { in: %w[person organization] }
 
   attribute :with_orcid, :boolean, default: false
   attribute :orcid, :string, default: nil

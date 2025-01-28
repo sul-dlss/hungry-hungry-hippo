@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = [
-    'contributorTypePerson', 'contributorTypeOrganization', 'contributorTypePersonLabel',
+    'contributorTypePerson', 'contributorTypeOrganization',
     'contributorTypeOrganizationLabel', 'selectPersonRole', 'selectOrganizationRole', 'personName',
     'organizationName', 'orcidField', 'useOrcidButton', 'resetOrcidButton', 'firstNameField',
     'lastNameField'
@@ -54,10 +54,6 @@ export default class extends Controller {
 
   // Role type toggle Individual selection
   contributorTypePersonSelected () {
-    this.contributorTypeOrganizationTarget.checked = false
-    this.contributorTypePersonTarget.checked = true
-    this.contributorTypePersonLabelTarget.classList.replace('btn-outline-primary', 'btn-primary')
-    this.contributorTypeOrganizationLabelTarget.classList.replace('btn-primary', 'btn-outline-primary')
     this.selectPersonRoleTarget.hidden = false
     this.selectPersonRoleTarget.disabled = false
     this.selectOrganizationRoleTarget.hidden = true
@@ -67,10 +63,6 @@ export default class extends Controller {
 
   // Role type toggle Organization selection
   contributorTypeOrganizationSelected () {
-    this.contributorTypeOrganizationTarget.checked = true
-    this.contributorTypePersonTarget.checked = false
-    this.contributorTypeOrganizationLabelTarget.classList.replace('btn-outline-primary', 'btn-primary')
-    this.contributorTypePersonLabelTarget.classList.replace('btn-primary', 'btn-outline-primary')
     this.selectPersonRoleTarget.hidden = true
     this.selectPersonRoleTarget.disabled = true
     this.selectOrganizationRoleTarget.hidden = false
