@@ -27,5 +27,11 @@ RSpec.describe EdtfSupport do
         expect(described_class.to_edtf_s(year: 2021)).to eq('2021')
       end
     end
+
+    context 'when approximate' do
+      it 'returns an approximate EDTF date string' do
+        expect(described_class.to_edtf_s(year: 2021, month: 1, approximate: true)).to eq('2021-01~')
+      end
+    end
   end
 end

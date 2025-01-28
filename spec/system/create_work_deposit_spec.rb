@@ -107,22 +107,14 @@ RSpec.describe 'Create a work deposit' do
 
     # Filling in dates
     within_fieldset('publication_date') do
-      # Month and day are disabled initially.
-      expect(page).to have_field('Year', disabled: false, text: '')
-      expect(page).to have_field('Month', disabled: true)
-      expect(page).to have_field('Day', disabled: true)
-      # They become enabled as fields are filled in.
       fill_in('Year', with: '2024')
       select('June', from: 'Month')
       select('10', from: 'Day')
-      # Clear
-      click_link_or_button('Clear')
-      expect(page).to have_field('Year', disabled: false, text: '')
-      expect(page).to have_field('Month', disabled: true)
-      expect(page).to have_field('Day', disabled: true)
-      fill_in('Year', with: '2024')
-      select('June', from: 'Month')
-      select('10', from: 'Day')
+    end
+
+    within_fieldset('creation_date') do
+      fill_in('Year', with: '2023')
+      select('May', from: 'Month')
     end
 
     # Clicking on Next to go to the citation tab

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Helpers for working with Cocina objects
-class CocinaSupport
+class CocinaSupport # rubocop:disable Metrics/ClassLength
   def self.title_for(cocina_object:)
     cocina_object.description.title.first.value
   end
@@ -156,25 +156,48 @@ class CocinaSupport
     cocina_object.structural.isMemberOf.first
   end
 
+  EventDate = Struct.new('EventDate', :single_params, :from_params, :to_params, keyword_init: true)
+
   # Returns the event date parsed from an EDTF date value.
   # @param [Cocina::Models::DRO] cocina_object
   # @param [String] type, e.g., 'publication'
-  # @return [Hash, Nil] with keys for year, month, and day
-  def self.event_date_for(cocina_object:, type:) # rubocop:disable Metrics/AbcSize
+  # @return [EventDate, Nil] with keys for year, month, and day
+  def self.first_event_date_for(cocina_object:, type:)
     event = cocina_object.description.event.find { |e| e.type == type }
     return if event.blank?
 
     cocina_date = event.date.first
-    return unless cocina_date.encoding&.code == 'edtf'
+    return unless cocina_date&.encoding&.code == 'edtf'
 
+    if cocina_date.structuredValue.present?
+      interval_event_date_for(cocina_date:)
+    else
+      EventDate.new(single_params: event_params_for(cocina_date:))
+    end
+  end
+
+  def self.interval_event_date_for(cocina_date:)
+    from_params = event_params_for(cocina_date: cocina_date.structuredValue.find { |date| date.type == 'start' })
+    to_params = event_params_for(cocina_date: cocina_date.structuredValue.find { |date| date.type == 'end' })
+    if cocina_date.qualifier == 'approximate'
+      from_params[:approximate] = true
+      to_params[:approximate] = true
+    end
+    EventDate.new(from_params:, to_params:)
+  end
+  private_class_method :interval_event_date_for
+
+  def self.event_params_for(cocina_date:)
     date = Date.edtf!(cocina_date.value)
     # Using count of dashes to determine the date parts present
     dash_count = cocina_date.value.count('-')
     { year: date.year }.tap do |date_params|
       date_params[:month] = date.month if dash_count >= 1
       date_params[:day] = date.day if dash_count == 2
+      date_params[:approximate] = cocina_date.qualifier == 'approximate'
     end
   end
+  private_class_method :event_params_for
 
   def self.orcid_for(contributor:)
     contributor.identifier&.find { |id| id.type == 'ORCID' }&.value&.presence

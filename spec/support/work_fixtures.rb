@@ -124,7 +124,35 @@ def publication_date_fixture
   {
     'year' => 2024,
     'month' => 6,
-    'day' => 10
+    'day' => 10,
+    'approximate' => false
+  }
+end
+
+def creation_date_single_fixture
+  {
+    'year' => 2023,
+    'month' => 5,
+    'day' => 9,
+    'approximate' => false
+  }
+end
+
+def creation_date_range_to_fixture
+  {
+    'year' => 2022,
+    'month' => 4,
+    'day' => nil,
+    'approximate' => true
+  }
+end
+
+def creation_date_range_from_fixture
+  {
+    'year' => 2021,
+    'month' => 3,
+    'day' => 7,
+    'approximate' => false
   }
 end
 

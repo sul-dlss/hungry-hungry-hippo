@@ -48,6 +48,15 @@ class WorkPresenter < FormPresenter
     super.to_s
   end
 
+  def creation_date
+    case create_date_type
+    when 'single'
+      create_date_single.to_s
+    when 'range'
+      "#{create_date_range_from} - #{create_date_range_to}"
+    end
+  end
+
   def access_label
     I18n.t("access.#{access}")
   end

@@ -31,6 +31,7 @@
 
 <%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'mb-5', label: 'Dates') do |component| %>
   <% component.with_row(label: 'Publication date', values: [@work_presenter.publication_date]) %>
+  <% component.with_row(label: 'Creation date', values: [@work_presenter.creation_date]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'citation-table', classes: 'mb-5', label: 'Citation') do |component| %>

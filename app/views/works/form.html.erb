@@ -68,7 +68,7 @@
     <% end %>
 
     <% component.with_pane(tab_name: :dates, label: t('works.edit.panes.dates.label'), form_id:) do %>
-      <%= render NestedComponentPresenter.for(form:, field_name: :publication_date, model_class: DateForm, form_component: PublicationDate::EditComponent) %>
+      <%= render Works::Edit::DatesComponent.new(form:) %>
     <% end %>
 
     <% component.with_pane(tab_name: :citation, label: t('works.edit.panes.citation.label'), form_id:) do %>

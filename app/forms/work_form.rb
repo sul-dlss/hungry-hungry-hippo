@@ -2,9 +2,11 @@
 
 # Form for a Work
 class WorkForm < ApplicationForm
-  accepts_nested_attributes_for :related_links, :related_works, :publication_date, :contact_emails, :authors, :keywords
+  accepts_nested_attributes_for :related_links, :related_works, :publication_date, :contact_emails, :authors, :keywords,
+                                :create_date_single, :create_date_range_from, :create_date_range_to
 
   validate :content_file_presence, on: :deposit
+  validate :create_date_range_complete, if: -> { create_date_type == 'range' }
 
   def self.immutable_attributes
     ['druid']
@@ -84,6 +86,9 @@ class WorkForm < ApplicationForm
   attribute :agree_to_terms, :boolean
   validates :agree_to_terms, acceptance: true, on: :deposit
 
+  attribute :create_date_type, :string, default: 'single'
+  validates :create_date_type, inclusion: { in: %w[single range] }
+
   def content_file_presence
     return if content_id.nil? # This makes test configuration easier.
     return if Content.find(content_id).content_files.exists?
@@ -93,5 +98,12 @@ class WorkForm < ApplicationForm
 
   def max_release_date
     Collection.find_by(druid: collection_druid).max_release_date
+  end
+
+  def create_date_range_complete
+    return if create_date_range_from.year.present? && create_date_range_to.year.present?
+    return if create_date_range_from.year.blank? && create_date_range_to.year.blank?
+
+    errors.add(:create_date_range_from, 'must have both a start and end date')
   end
 end

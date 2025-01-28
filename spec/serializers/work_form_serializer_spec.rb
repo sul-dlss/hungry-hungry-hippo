@@ -31,7 +31,11 @@ RSpec.describe WorkFormSerializer do
       'release_date' => release_date_fixture.to_date,
       'custom_rights_statement' => custom_rights_statement_fixture,
       'doi_option' => 'yes',
-      'agree_to_terms' => true
+      'agree_to_terms' => true,
+      'create_date_single_attributes' => creation_date_single_fixture,
+      'create_date_range_from_attributes' => creation_date_range_from_fixture,
+      'create_date_range_to_attributes' => creation_date_range_to_fixture,
+      'create_date_type' => 'single'
     }
   end
   let(:work_form) do
@@ -56,7 +60,11 @@ RSpec.describe WorkFormSerializer do
                  release_date: release_date_fixture.to_date,
                  custom_rights_statement: custom_rights_statement_fixture,
                  doi_option: 'yes',
-                 agree_to_terms: true)
+                 agree_to_terms: true,
+                 create_date_single_attributes: creation_date_single_fixture,
+                 create_date_range_from_attributes: creation_date_range_from_fixture,
+                 create_date_range_to_attributes: creation_date_range_to_fixture,
+                 create_date_type: 'single')
   end
 
   describe '.serialize?' do

@@ -211,6 +211,8 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('caption', text: 'Dates')
         expect(page).to have_css('tr', text: 'Publication date')
         expect(page).to have_css('td', text: '2024-12')
+        expect(page).to have_css('tr', text: 'Creation date')
+        expect(page).to have_css('td', text: '2021-03-07 - 2022-04~')
       end
 
       # Preferred citation table
