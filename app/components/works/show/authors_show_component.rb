@@ -17,7 +17,7 @@ module Works
 
       def values_for(author)
         values = [
-          author_name(author),
+          author_name(author).presence,
           orcid_link(author),
           author_role_label(author)
         ]

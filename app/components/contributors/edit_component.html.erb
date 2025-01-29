@@ -1,20 +1,18 @@
 <%= tag.div data: contributors_data do %>
   <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :role_type, label_classes: 'fw-bold',
                                                   label: t('works.edit.fields.contributors.role_type.label'), container_classes: 'mb-4') do |component| %>
-    <% component.with_toggle_option(form:,
-                                    field_name: :role_type,
-                                    label: t('works.edit.fields.contributors.role_type.person.label'),
-                                    value: 'person',
-                                    data: { contributors_target: 'contributorTypePerson' },
-                                    label_data: { contributors_target: 'contributorTypePersonLabel',
-                                                  action: 'click->contributors#contributorTypePersonSelected' }) %>
-    <% component.with_toggle_option(form:,
-                                    field_name: :role_type,
-                                    label: t('works.edit.fields.contributors.role_type.organization.label'),
-                                    value: 'organization',
-                                    data: { contributors_target: 'contributorTypeOrganization' },
-                                    label_data: { contributors_target: 'contributorTypeOrganizationLabel',
-                                                  action: 'click->contributors#contributorTypeOrganizationSelected' }) %>
+    <% component.with_left_toggle_option(form:,
+                                         field_name: :role_type,
+                                         label: t('works.edit.fields.contributors.role_type.person.label'),
+                                         value: 'person',
+                                         data: { contributors_target: 'contributorTypePerson' },
+                                         label_data: { action: 'click->contributors#contributorTypePersonSelected' }) %>
+    <% component.with_right_toggle_option(form:,
+                                          field_name: :role_type,
+                                          label: t('works.edit.fields.contributors.role_type.organization.label'),
+                                          value: 'organization',
+                                          data: { contributors_target: 'contributorTypeOrganization' },
+                                          label_data: { action: 'click->contributors#contributorTypeOrganizationSelected' }) %>
   <% end %>
 
   <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :person_role, label_classes: 'fw-bold',
