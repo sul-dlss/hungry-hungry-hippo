@@ -56,6 +56,7 @@ en:
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
+    depositor_selects: 'Depositor selects'
   date:
     fields:
       year:
@@ -240,6 +241,15 @@ en:
           label: 'Collection name'
           help_text: >
             A unique, descriptive name may improve discovery of your collection in web searches.
+        access:
+          world: 'Everyone -- anyone in the world will be able to download the files for all deposits in this collection.'
+          stanford: 'Stanford Community -- only members of the Stanford community will be able to download the files for all deposits in this collection.'
+          depositor_selects: 'Depositor selects -- default for all deposits will be that everyone can download the files, but Depositor can choose to 
+            restrict file download for their deposit to the Stanford community.'
+        doi_option:
+          doi_yes: 'Yes, a DOI will be assigned to each deposit in this collection.'
+          doi_no: 'No, DOIs will not be assigned to any deposits in this collection.'
+          depositor_selects: 'Depositor selects: all deposits will be assigned a DOI by default unless the depositor chooses not to have a DOI assigned.'
         license:
           help_text: Assigning a default license may improve discovery of your collection in web searches.
       messages:
@@ -261,6 +271,9 @@ en:
         related_links:
           tab_label: 'Related links'
           label: 'Links to related content (optional)'
+        access:
+          tab_label: 'Access settings'
+          label: 'Manage release of deposits for discovery and download'
         details:
           tab_label: 'Details'
           label: 'Collection details'
