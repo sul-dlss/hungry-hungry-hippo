@@ -38,7 +38,7 @@
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'mb-5', label: 'Abstract and keywords') do |component| %>
-  <% component.with_row(label: 'Abstract', values: [@work_presenter.abstract]) %>
+  <% component.with_row(label: 'Abstract', values: [simple_format(@work_presenter.abstract).html_safe]) %> <%# erb_lint:disable ErbSafety %>
   <% component.with_row(label: 'Keywords', values: [@work_presenter.keywords]) %>
 <% end %>
 

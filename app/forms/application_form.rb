@@ -3,6 +3,7 @@
 class ApplicationForm
   include ActiveModel::Model # Include this one first!
   include ActiveModel::NestedAttributes
+  include ActiveModel::Validations::Callbacks
 
   FORM_CLASS_SUFFIX = 'Form'
 

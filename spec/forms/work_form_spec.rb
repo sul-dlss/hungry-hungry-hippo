@@ -11,12 +11,14 @@ RSpec.describe WorkForm do
         authors_attributes: authors_fixture,
         work_type:,
         work_subtypes:,
-        other_work_subtype:
+        other_work_subtype:,
+        abstract:
       )
     end
     let(:work_type) { '' }
     let(:work_subtypes) { [] }
     let(:other_work_subtype) { '' }
+    let(:abstract) { abstract_fixture }
 
     context 'when saving draft with blank work type' do
       it 'is valid' do
@@ -140,6 +142,23 @@ RSpec.describe WorkForm do
       it 'is invalid' do
         expect(form).not_to be_valid
       end
+    end
+  end
+
+  describe 'Abstract linefeed normalization' do
+    let(:form) do
+      described_class.new(
+        title: title_fixture,
+        contact_emails_attributes: contact_emails_fixture,
+        authors_attributes: authors_fixture,
+        abstract:
+      )
+    end
+    let(:abstract) { "This is a test.\n\nThis is a second paragraph." }
+
+    it 'normalizes linefeeds' do
+      expect(form).to be_valid
+      expect(form.abstract).to eq("This is a test.\r\n\r\nThis is a second paragraph.")
     end
   end
 end
