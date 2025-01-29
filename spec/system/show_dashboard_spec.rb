@@ -39,7 +39,7 @@ RSpec.describe 'Show dashboard', :rack_test do
     end
 
     # Pending review section
-    expect(page).to have_css('h3', text: 'Deposits that are pending review')
+    expect(page).to have_css('h3', text: 'Items waiting for collection manager or reviewer to approve')
     within('table#pending-review-table') do
       expect(page).to have_css('td', text: pending_review_work.title)
     end
