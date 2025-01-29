@@ -37,7 +37,7 @@ module Works
       def orcid_link(author)
         return unless author.orcid
 
-        link_to(author.orcid, author.orcid, target: '_blank', rel: 'noopener')
+        helpers.link_to_new_tab(author.orcid, author.orcid)
       end
 
       def author_role_label(author)
