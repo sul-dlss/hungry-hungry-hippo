@@ -25,4 +25,19 @@ class CollectionForm < ApplicationForm
   # The Collection description maps to the cocina abstract
   attribute :description, :string
   validates :description, presence: true, on: :deposit
+
+  attribute :access, :string, default: 'world'
+  validates :access, inclusion: { in: %w[world stanford depositor_selects] }
+
+  attribute :release_option, :string, default: 'immediate'
+  validates :release_option, inclusion: { in: %w[immediate depositor_selects] }
+
+  attribute :release_duration, :string
+  with_options if: -> { release_option == 'depositor_selects' } do
+    validates :release_duration, presence: true
+    validates :release_duration, inclusion: { in: %w[six_months one_year two_years three_years] }
+  end
+
+  attribute :doi_option, :string, default: 'yes'
+  validates :doi_option, inclusion: { in: %w[yes no depositor_selects] }
 end

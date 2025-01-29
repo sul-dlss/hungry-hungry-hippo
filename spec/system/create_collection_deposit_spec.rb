@@ -64,6 +64,14 @@ RSpec.describe 'Create a collection deposit' do
     fill_in('Link text', with: related_links_fixture.first['text'])
     fill_in('URL', with: related_links_fixture.first['url'])
 
+    # Clicking on Next to go to access settings tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Access settings')
+    expect(page).to have_text('Manage release of deposits for discovery and download')
+    expect(page).to have_checked_field('Immediately')
+    expect(page).to have_field('everyone', checked: true)
+    expect(page).to have_css('#collection_doi_option_yes')
+
     # Clicking on Next to go to Participants tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Participants')
