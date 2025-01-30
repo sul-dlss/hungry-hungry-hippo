@@ -1,25 +1,19 @@
 # frozen_string_literal: true
 
 module Edit
-  # Component for a button to discard a draft
-  class DiscardDraftButtonComponent < Elements::ButtonFormComponent
-    def initialize(presenter:, **args)
+  # Component for a button to discard a draft.
+  # This includes the form and the submit button.
+  class DiscardDraftButtonComponent < ApplicationComponent
+    def initialize(presenter:, classes: [])
       @presenter = presenter
-      args[:label] = 'Discard draft'
-      args[:variant] = 'outline-primary'
-      args[:confirm] = 'Are you sure you want to delete this draft? It cannot be undone.'
-      args[:method] = :delete
-      # polymorphic_path cannot be used in initializer, so overrriding link below
-      args[:link] = nil
-      super(**args)
+      @classes = classes
+      super()
     end
 
-    def link
-      polymorphic_path(@presenter)
-    end
+    attr_reader :presenter, :classes
 
     def render?
-      @presenter.discardable?
+      presenter.discardable?
     end
   end
 end

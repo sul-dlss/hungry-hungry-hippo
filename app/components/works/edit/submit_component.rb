@@ -4,7 +4,7 @@ module Works
   module Edit
     # Component for rendering a submit button
     class SubmitComponent < ApplicationComponent
-      def initialize(form_id:, work:, collection:, classes: [])
+      def initialize(work:, collection:, form_id: nil, classes: [])
         @form_id = form_id
         @work = work
         @collection = collection

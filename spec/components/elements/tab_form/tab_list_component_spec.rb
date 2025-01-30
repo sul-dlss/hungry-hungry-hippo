@@ -16,7 +16,7 @@ RSpec.describe Elements::TabForm::TabListComponent, type: :component do
     component.with_tab(label: 'Tab 3', tab_name: :tab_two)
     component.with_before_form_pane(tab_name: :tab_one, label: 'Tab 1', form_id:, selected: true)
     component.with_pane(tab_name: :tab_two, label: 'Tab 2', form_id:)
-    component.with_after_form_pane(tab_name: :tab_three, label: 'Tab 3', form_id:)
+    component.with_pane(tab_name: :tab_three, label: 'Tab 3', form_id:)
   end
 
   it 'renders the tabbed form with tabs' do
@@ -29,7 +29,6 @@ RSpec.describe Elements::TabForm::TabListComponent, type: :component do
     expect(page).to have_css('.tab-pane', text: 'Tab 1')
     expect(page).to have_no_css('form .tab-pane', text: 'Tab 1')
     expect(page).to have_css('form .tab-pane', text: 'Tab 2')
-    expect(page).to have_css('.tab-pane', text: 'Tab 3')
-    expect(page).to have_no_css('form .tab-pane', text: 'Tab 3')
+    expect(page).to have_css('form .tab-pane', text: 'Tab 3')
   end
 end
