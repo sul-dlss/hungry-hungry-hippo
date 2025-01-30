@@ -21,7 +21,7 @@ RSpec.describe 'Edit a work' do
                                                                          version: cocina_object.version))
   end
   let(:updated_title) { 'My new title' }
-  let(:updated_authors) do
+  let(:updated_contributors) do
     [
       {
         'first_name' => 'Leland',
@@ -91,10 +91,10 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
     # Fill in in authors
-    find('.nav-link', text: 'Authors').click
-    fill_in('work_authors_attributes_0_first_name', with: updated_authors.first['first_name'])
-    fill_in('work_authors_attributes_0_last_name', with: updated_authors.first['last_name'])
-    fill_in('work_authors_attributes_1_organization_name', with: updated_authors.last['organization_name'])
+    find('.nav-link', text: 'Contributors').click
+    fill_in('work_contributors_attributes_0_first_name', with: updated_contributors.first['first_name'])
+    fill_in('work_contributors_attributes_0_last_name', with: updated_contributors.first['last_name'])
+    fill_in('work_contributors_attributes_1_organization_name', with: updated_contributors.last['organization_name'])
 
     # Filling in abstract
     find('.nav-link', text: 'Abstract').click

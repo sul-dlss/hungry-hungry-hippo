@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Manage authors for a work deposit' do
+RSpec.describe 'Manage contributors for a work deposit' do
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
   let(:version_status) do
@@ -34,7 +34,7 @@ RSpec.describe 'Manage authors for a work deposit' do
     sign_in(user)
   end
 
-  it 'manages authors' do
+  it 'manages contributors' do
     visit new_work_path(collection_druid: collection_druid_fixture)
 
     expect(page).to have_css('h1', text: 'Untitled deposit')
@@ -43,26 +43,26 @@ RSpec.describe 'Manage authors for a work deposit' do
     find('.nav-link', text: 'Title & contact').click
     fill_in('work_title', with: title_fixture)
 
-    # Go to authors tab
-    find('.nav-link', text: 'Authors').click
-    expect(page).to have_text('Author(s) to include in citation')
+    # Go to contributors tab
+    find('.nav-link', text: 'Contributors').click
+    expect(page).to have_css('.h4', text: 'Contributors')
 
-    # There is a single author form
+    # There is a single contributor form
     form_instances = all('.form-instance')
     expect(form_instances.count).to eq(1)
     expect(form_instances[0]).to have_no_css('.move-up')
     expect(form_instances[0]).to have_no_css('.move-down')
 
-    # Fill in the author form
+    # Fill in the contributor form
     within form_instances[0] do
       select('Creator', from: 'Role')
       fill_in('First name', with: 'Jane')
       fill_in('Last name', with: 'Stanford')
     end
 
-    click_link_or_button('Add another author')
+    click_link_or_button('Add another contributor')
 
-    # There are now two author forms
+    # There are now two contributor forms
     form_instances = all('.form-instance')
     expect(form_instances.count).to eq(2)
     expect(form_instances[0]).to have_no_css('.move-up')
@@ -70,14 +70,14 @@ RSpec.describe 'Manage authors for a work deposit' do
     expect(form_instances[1]).to have_css('.move-up')
     expect(form_instances[1]).to have_no_css('.move-down')
 
-    # Fill in the second author form
+    # Fill in the second contributor form
     within form_instances[1] do
       find('label', text: 'Organization').click
       select('Author', from: 'Role')
       fill_in('Organization name', with: 'Stanford University')
     end
 
-    click_link_or_button('Add another author')
+    click_link_or_button('Add another contributor')
     form_instances = all('.form-instance')
     expect(form_instances.count).to eq(3)
     expect(form_instances[0]).to have_no_css('.move-up')
@@ -87,7 +87,7 @@ RSpec.describe 'Manage authors for a work deposit' do
     expect(form_instances[2]).to have_css('.move-up')
     expect(form_instances[2]).to have_no_css('.move-down')
 
-    # Move down the first author form
+    # Move down the first contributor form
     within form_instances.first do
       click_link_or_button('Move down')
     end
@@ -101,7 +101,7 @@ RSpec.describe 'Manage authors for a work deposit' do
     expect(form_instances[2]).to have_css('.move-up')
     expect(form_instances[2]).to have_no_css('.move-down')
 
-    # Move up the last author form
+    # Move up the last contributor form
     within form_instances.last do
       click_link_or_button('Move up')
     end
@@ -109,7 +109,7 @@ RSpec.describe 'Manage authors for a work deposit' do
     form_instances = all('.form-instance')
     expect(form_instances.pluck('data-index')).to eq %w[1 2 0]
 
-    # Delete the (empty) second author form
+    # Delete the (empty) second contributor form
     within form_instances[1] do
       click_link_or_button('Clear')
     end
@@ -127,7 +127,7 @@ RSpec.describe 'Manage authors for a work deposit' do
     # On show page
     expect(page).to have_css('h1', text: title_fixture)
 
-    within('table#authors-table') do
+    within('table#contributors-table') do
       expect(page).to have_css('td', text: 'Jane Stanford')
       expect(page).to have_css('td', text: 'Stanford University')
     end

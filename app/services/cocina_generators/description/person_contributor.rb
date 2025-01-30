@@ -11,7 +11,7 @@ module CocinaGenerators
       # @param surname [String] the surname of the person
       # @param forename [String] the forename of the person
       # @param role [String] the role of the person from ROLES
-      # @param primary [Boolean] whether this is the first author
+      # @param primary [Boolean] whether this is the first contributor
       # @param orcid [String] the ORCID of the person
       def initialize(surname:, forename:, role:, primary: false, orcid: nil)
         @surname = surname

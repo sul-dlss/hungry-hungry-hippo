@@ -8,7 +8,7 @@ RSpec.describe WorkForm do
       described_class.new(
         title: title_fixture,
         contact_emails_attributes: contact_emails_fixture,
-        authors_attributes: authors_fixture,
+        contributors_attributes: contributors_fixture,
         work_type:,
         work_subtypes:,
         other_work_subtype:,
@@ -93,7 +93,7 @@ RSpec.describe WorkForm do
       described_class.new(
         title: title_fixture,
         contact_emails_attributes: contact_emails_fixture,
-        authors_attributes: authors_fixture,
+        contributors_attributes: contributors_fixture,
         release_option:,
         release_date:,
         collection_druid: collection.druid
@@ -150,7 +150,7 @@ RSpec.describe WorkForm do
       described_class.new(
         title: title_fixture,
         contact_emails_attributes: contact_emails_fixture,
-        authors_attributes: authors_fixture,
+        contributors_attributes: contributors_fixture,
         abstract:
       )
     end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AuthorForm do
+RSpec.describe ContributorForm do
   describe 'validations' do
     let(:form) do
       described_class.new(role_type:, person_role:, organization_role:, first_name:, last_name:,

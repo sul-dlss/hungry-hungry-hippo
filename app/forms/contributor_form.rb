@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Form for an author
-class AuthorForm < ApplicationForm
+# Form for a contributor
+class ContributorForm < ApplicationForm
   attribute :first_name, :string
   validates :first_name, presence: true, on: :deposit, if: -> { person? }
 

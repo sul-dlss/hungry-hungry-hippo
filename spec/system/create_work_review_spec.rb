@@ -50,12 +50,12 @@ RSpec.describe 'Create a work that requires review' do
     fill_in('work_title', with: title_fixture)
     fill_in('Contact email', with: contact_emails_fixture.first['email'])
 
-    # Click Next to go to authors tab
+    # Click Next to go to contributors tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Authors')
+    expect(page).to have_css('.nav-link.active', text: 'Contributors')
 
-    # Enter an authors
-    select('Creator', from: 'work_authors_attributes_0_person_role')
+    # Enter a contributor
+    select('Creator', from: 'work_contributors_attributes_0_person_role')
     fill_in('First name', with: 'Jane')
     fill_in('Last name', with: 'Stanford')
 

@@ -34,11 +34,11 @@ class CocinaSupport # rubocop:disable Metrics/ClassLength
     end.presence
   end
 
-  # Maps the value from the contributor field in the cocina object to the author attributes
+  # Maps the value from the contributor field in the cocina object to the contributor attributes
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
-  def self.authors_for(cocina_object:)
+  def self.contributors_for(cocina_object:)
     return nil if cocina_object.description.contributor.blank?
 
     cocina_object.description.contributor.filter_map do |contributor|

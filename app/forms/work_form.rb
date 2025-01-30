@@ -2,8 +2,8 @@
 
 # Form for a Work
 class WorkForm < ApplicationForm
-  accepts_nested_attributes_for :related_links, :related_works, :publication_date, :contact_emails, :authors, :keywords,
-                                :create_date_single, :create_date_range_from, :create_date_range_to
+  accepts_nested_attributes_for :related_links, :related_works, :publication_date, :contact_emails, :contributors,
+                                :keywords, :create_date_single, :create_date_range_from, :create_date_range_to
 
   validate :content_file_presence, on: :deposit
   validate :create_date_range_complete, if: -> { create_date_type == 'range' }
