@@ -1,6 +1,5 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/sul-dlss/hungry-hungry-hippo/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/sul-dlss/hungry-hungry-hippo/tree/main)
-[![Maintainability](https://api.codeclimate.com/v1/badges/31c5ec4d948fc6e97d12/maintainability)](https://codeclimate.com/github/sul-dlss/hungry-hungry-hippo/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/31c5ec4d948fc6e97d12/test_coverage)](https://codeclimate.com/github/sul-dlss/hungry-hungry-hippo/test_coverage)
+[![Test Coverage](https://codecov.io/github/sul-dlss/hungry-hungry-hippo/graph/badge.svg?token=A90V28UV39)](https://codecov.io/github/sul-dlss/hungry-hungry-hippo)
 
 # Hungry Hungry Hippo (H3)
 
@@ -117,7 +116,7 @@ A "nested" field is one that is not "simple" (see prior section).
 ### Adding an email
 1. Publish a notification that would trigger the email. For example: `after_create -> { Notifier.publish(Notifier::DEPOSITOR_ADDED, user:, collection:) }`.
 1. Add an email to a mailer controller (for example, `app/mailers/collections_mailer.rb`) and a view (for example, `app/views/collections_mailer/invitation_to_deposit_email.html.erb`).
-1. Add a subscription to `config/initializers/subscriptions.rb`. For example: 
+1. Add a subscription to `config/initializers/subscriptions.rb`. For example:
 ```
 Notifier.subscribe_mailer(event_name: Notifier::DEPOSITOR_ADDED, mailer_class: CollectionsMailer, mailer_method: :invitation_to_deposit_email)
 ```
