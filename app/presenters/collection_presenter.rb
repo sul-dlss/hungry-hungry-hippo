@@ -68,7 +68,7 @@ class CollectionPresenter < FormPresenter
     # No druid yet, so there's no PURL link yet either. Collection is likely still depositing.
     return if druid.blank?
 
-    link_to(nil, Sdr::Purl.from_druid(druid:), target: '_blank', rel: 'noopener')
+    link_to_new_tab(nil, Sdr::Purl.from_druid(druid:))
   end
 
   def created_by

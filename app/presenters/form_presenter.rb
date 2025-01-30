@@ -3,6 +3,7 @@
 # Base class for all form presenters
 class FormPresenter < SimpleDelegator
   include ActionView::Helpers::UrlHelper
+  include LinkHelper
 
   def initialize(form:, version_status:)
     # By default, everything delegates to the form object
@@ -20,7 +21,7 @@ class FormPresenter < SimpleDelegator
     related_links_attributes.filter_map do |related_link|
       next if related_link.url.blank?
 
-      link_to(related_link.text || related_link.url, related_link.url)
+      link_to_new_tab(related_link.text || related_link.url, related_link.url)
     end
   end
 
