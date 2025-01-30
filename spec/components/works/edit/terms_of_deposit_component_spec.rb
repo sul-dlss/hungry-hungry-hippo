@@ -9,10 +9,9 @@ RSpec.describe Works::Edit::TermsOfDepositComponent, type: :component do
   context 'when the user has already agreed to terms of deposit' do
     let(:agree_to_terms) { true }
 
-    it 'notifies the user' do
+    it 'includes a hidden field' do
       render_inline(described_class.new(form:))
 
-      expect(page).to have_css('p', text: 'You agreed to the SDR Terms of Deposit.')
       expect(page).to have_field('agree_to_terms', type: 'hidden', with: 'true')
     end
   end

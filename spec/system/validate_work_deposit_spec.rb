@@ -53,14 +53,12 @@ RSpec.describe 'Validate a work deposit' do
     fill_in('Release date', with: (Time.zone.today - 1.day).iso8601)
 
     # Terms of deposit is required, but skipping.
-    find('.nav-link', text: 'Terms of deposit').click
-    expect(page).to have_css('.nav-link.active', text: 'Terms of deposit')
+    find('.nav-link', text: 'Deposit').click
+    expect(page).to have_css('.nav-link.active', text: 'Deposit')
     expect(page).to have_field('I agree to the SDR Terms of Deposit', checked: false)
     expect(page).to have_text('In depositing content to the Stanford Digital Repository')
 
     # Depositing the work
-    find('.nav-link', text: 'Deposit').click
-    expect(page).to have_css('.nav-link.active', text: 'Deposit')
     click_link_or_button('Deposit')
     expect(page).to have_css('h1', text: title_fixture)
     expect(page).to have_current_path(work_path_with_collection)
@@ -140,14 +138,13 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be today or later')
     choose('Immediately')
 
-    # Terms of deposit is marked invalid
-    find('.nav-link.is-invalid', text: 'Terms of deposit').click
+    # Deposit is marked invalid
+    find('.nav-link.is-invalid', text: 'Deposit').click
     expect(page).to have_field('I agree to the SDR Terms of Deposit', class: 'is-invalid')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be accepted')
     check('I agree')
 
     # Try to deposit again
-    find('.nav-link', text: 'Deposit').click
     click_link_or_button('Deposit')
     expect(page).to have_css('h1', text: title_fixture)
     expect(page).to have_current_path(work_path_with_collection)
