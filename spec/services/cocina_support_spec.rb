@@ -5,14 +5,6 @@ require 'rails_helper'
 RSpec.describe CocinaSupport do
   include WorkMappingFixtures
 
-  describe '#title_for' do
-    let(:cocina_object) { build(:dro, title: title_fixture) }
-
-    it 'returns the title' do
-      expect(described_class.title_for(cocina_object:)).to eq title_fixture
-    end
-  end
-
   describe '#keywords_for' do
     context 'when object has keywords' do
       let(:cocina_object) do

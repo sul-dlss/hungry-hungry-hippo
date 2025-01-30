@@ -24,9 +24,9 @@ module ToCollectionForm
       {
         druid: cocina_object.externalIdentifier,
         lock: cocina_object.lock,
-        title: CocinaSupport.title_for(cocina_object:),
+        title: cocina_description.title,
         description: CocinaSupport.abstract_for(cocina_object:), # Cocina abstract maps to Collection description
-        contact_emails_attributes: CocinaSupport.contact_emails_for(cocina_object:),
+        contact_emails_attributes:,
         related_links_attributes: CocinaSupport.related_links_for(cocina_object:),
         managers_attributes: participant_attributes(:managers),
         depositors_attributes: participant_attributes(:depositors),
@@ -41,6 +41,14 @@ module ToCollectionForm
       collection.send(role).map do |participant|
         { sunetid: participant.sunetid }
       end
+    end
+
+    def contact_emails_attributes
+      cocina_description.contact_emails.map { |email| { email: } }
+    end
+
+    def cocina_description
+      @cocina_description ||= CocinaParsers::Description.new(cocina_object:)
     end
   end
 end

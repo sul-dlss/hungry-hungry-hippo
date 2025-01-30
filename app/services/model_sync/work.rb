@@ -41,7 +41,7 @@ module ModelSync
     end
 
     def title
-      CocinaSupport.title_for(cocina_object:)
+      CocinaParsers::Description.title(cocina_object:)
     end
 
     def version

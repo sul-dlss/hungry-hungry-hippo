@@ -25,12 +25,12 @@ module ToWorkForm
       {
         druid: cocina_object.externalIdentifier,
         lock: cocina_object.lock,
-        title: CocinaSupport.title_for(cocina_object:),
+        title: cocina_description.title,
         contributors_attributes: CocinaSupport.contributors_for(cocina_object:),
         abstract: CocinaSupport.abstract_for(cocina_object:),
         citation: CocinaSupport.citation_for(cocina_object:),
         auto_generate_citation: CocinaSupport.citation_for(cocina_object:).blank?,
-        contact_emails_attributes: CocinaSupport.contact_emails_for(cocina_object:),
+        contact_emails_attributes:,
         related_works_attributes: CocinaSupport.related_works_for(cocina_object:),
         related_links_attributes: CocinaSupport.related_links_for(cocina_object:),
         keywords_attributes: CocinaSupport.keywords_for(cocina_object:),
@@ -111,6 +111,14 @@ module ToWorkForm
           create_date_type: 'range'
         }
       end
+    end
+
+    def contact_emails_attributes
+      cocina_description.contact_emails.map { |email| { email: } }
+    end
+
+    def cocina_description
+      @cocina_description ||= CocinaParsers::Description.new(cocina_object:)
     end
   end
 end
