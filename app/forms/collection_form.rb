@@ -34,10 +34,15 @@ class CollectionForm < ApplicationForm
 
   attribute :release_duration, :string
   with_options if: -> { release_option == 'depositor_selects' } do
-    validates :release_duration, presence: true
-    validates :release_duration, inclusion: { in: %w[six_months one_year two_years three_years] }
+    validate :duration_must_be_present
   end
 
   attribute :doi_option, :string, default: 'yes'
   validates :doi_option, inclusion: { in: %w[yes no depositor_selects] }
+end
+
+def duration_must_be_present
+  return if release_duration.present?
+
+  errors.add(:release_duration, 'select a valid duration for release')
 end

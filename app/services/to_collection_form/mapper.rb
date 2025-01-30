@@ -20,6 +20,7 @@ module ToCollectionForm
 
     attr_reader :cocina_object, :collection
 
+    # rubocop:disable Metrics/AbcSize
     def params
       {
         druid: cocina_object.externalIdentifier,
@@ -28,11 +29,16 @@ module ToCollectionForm
         description: ToForm::NoteMapper.abstract(cocina_object:), # Cocina abstract maps to Collection description
         contact_emails_attributes: ToForm::ContactEmailsMapper.call(cocina_object:),
         related_links_attributes: ToForm::RelatedLinksMapper.call(cocina_object:),
+        release_option: collection.release_option,
+        release_duration: collection.release_duration,
+        access: collection.access,
+        doi_option: collection.doi_option,
         managers_attributes: participant_attributes(:managers),
         depositors_attributes: participant_attributes(:depositors),
         version: cocina_object.version
       }
     end
+    # rubocop:enable Metrics/AbcSize
 
     # @param [Symbol] role :managers or :depositors
     # @return [Array<Hash>] an array of participant attributes

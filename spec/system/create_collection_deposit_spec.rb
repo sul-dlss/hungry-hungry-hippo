@@ -69,8 +69,7 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Access settings')
     expect(page).to have_text('Manage release of deposits for discovery and download')
     expect(page).to have_checked_field('Immediately')
-    expect(page).to have_field('everyone', checked: true)
-    expect(page).to have_css('#collection_doi_option_yes')
+    expect(page).to have_select('Release duration', selected: 'Select an option')
 
     # Clicking on Next to go to Participants tab
     click_link_or_button('Next')

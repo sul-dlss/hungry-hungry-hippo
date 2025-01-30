@@ -1,21 +1,29 @@
 <%= render Elements::SectionHeaderComponent.new(title: 'When will files on deposits to this collection be downloadable?') %>
-<fieldset >
-  <div class="form-check">
-    <div class="ps-2">
-      <%= form.radio_button :release_option, 'immediate', class: 'form-check-input' %>
-      <%= form.label :release_option_immediate, 'Immediately', class: 'form-check-label' %>
+<div data-controller="release">
+  <fieldset>
+    <div class="form-check">
+      <div class="ps-2">
+        <%= form.radio_button :release_option, 'immediate',
+                              class: 'form-check-input',
+                              data: { release_target: 'releaseImmediate', action: 'click->release#resetReleaseDuration' } %>
+        <%= form.label :release_option_immediate, 'Immediately', class: 'form-check-label' %>
+      </div>
     </div>
-  </div>
-  <div class="form-check d-flex pt-2">
-    <div class="ps-2">
-      <%= form.radio_button :release_option, 'depositor_selects', class: 'form-check-input' %>
-      <%= form.label :release_option_depositor_selects, 'Depositor selects a date up to', class: 'form-check-label' %>
+    <div class="form-check d-flex pt-2">
+      <div class="ps-2">
+        <%= form.radio_button :release_option, 'depositor_selects', class: 'form-check-input' %>
+        <%= form.label :release_option_depositor_selects, 'Depositor selects a date up to', class: 'form-check-label' %>
+      </div>
+      <div class="ps-2">
+        <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :release_duration,
+                                                             options: release_duration_options,
+                                                             label: 'Release duration',
+                                                             hidden_label: true,
+                                                             data: { release_target: 'releaseDuration' }) %>
+      </div>
     </div>
-    <div class="ps-2">
-      <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :release_duration, options: release_duration_options, label: 'Release duration', prompt: 'Select an option', hidden_label: true) %> 
-    </div>
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
 <%= render Elements::SectionHeaderComponent.new(title: 'Who will have permission to download files for deposits to this collection?') %>
 <fieldset>
