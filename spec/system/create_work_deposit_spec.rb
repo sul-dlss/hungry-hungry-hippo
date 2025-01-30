@@ -60,19 +60,19 @@ RSpec.describe 'Create a work deposit' do
     fill_in('work_title', with: title_fixture)
     fill_in('Contact email', with: contact_emails_fixture.first['email'])
 
-    # Click Next to go to authors tab
+    # Click Next to go to contributors tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Authors')
-    expect(page).to have_text('Author(s) to include in citation')
+    expect(page).to have_css('.nav-link.active', text: 'Contributors')
+    expect(page).to have_css('.h4', text: 'Contributors')
 
-    # Enter two authors
-    select('Creator', from: 'work_authors_attributes_0_person_role')
+    # Enter two contributors
+    select('Creator', from: 'work_contributors_attributes_0_person_role')
     fill_in('First name', with: 'Jane')
     fill_in('Last name', with: 'Stanford')
-    click_link_or_button('Add another author')
-    find('label[for=work_authors_attributes_1_role_type_organization]').click
-    select('Author', from: 'work_authors_attributes_1_organization_role')
-    fill_in(id: 'work_authors_attributes_1_organization_name', with: 'Stanford University')
+    click_link_or_button('Add another contributor')
+    find('label[for=work_contributors_attributes_1_role_type_organization]').click
+    select('Author', from: 'work_contributors_attributes_1_organization_role')
+    fill_in(id: 'work_contributors_attributes_1_organization_name', with: 'Stanford University')
 
     # Click Next to go to abstract tab
     click_link_or_button('Next')

@@ -164,7 +164,7 @@ def work_subtypes_fixture
   %w[CAD Map]
 end
 
-def authors_fixture
+def contributors_fixture
   [
     {
       'role_type' => 'person',

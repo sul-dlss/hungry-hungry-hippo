@@ -18,7 +18,7 @@
 <%= render Elements::TabForm::TabListComponent.new(model: @work_form, form_id:, hidden_fields: %i[lock version collection_druid content_id]) do |component| %>
   <% component.with_tab(label: t('works.edit.panes.files.tab_label'), tab_name: :files, selected: true) %>
   <% component.with_tab(label: t('works.edit.panes.title.tab_label'), tab_name: :title) %>
-  <% component.with_tab(label: t('works.edit.panes.authors.tab_label'), tab_name: :authors) %>
+  <% component.with_tab(label: t('works.edit.panes.contributors.tab_label'), tab_name: :contributors) %>
   <% component.with_tab(label: t('works.edit.panes.abstract.tab_label'), tab_name: :abstract) %>
   <% component.with_tab(label: t('works.edit.panes.types.tab_label'), tab_name: :types) %>
   <% component.with_tab(label: t('works.edit.panes.doi.tab_label'), tab_name: :doi) %>
@@ -51,8 +51,8 @@
                                                          help_text: t('works.edit.fields.title.help_text'), width: 500, container_classes: 'mb-4') %>
       <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false, single_field: true) %>
     <% end %>
-    <% component.with_pane(tab_name: :authors, label: t('works.edit.panes.authors.label'), help_text: t('works.edit.panes.authors.help_text')) do %>
-      <%= render NestedComponentPresenter.for(form:, field_name: :authors, model_class: AuthorForm, form_component: Contributors::EditComponent, hidden_label: true, reorderable: true) %>
+    <% component.with_pane(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text')) do %>
+      <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Contributors::EditComponent, hidden_label: true, reorderable: true) %>
     <% end %>
 
     <% component.with_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), help_text: t('works.edit.panes.abstract.help_text')) do %>

@@ -2,7 +2,7 @@
 
 module ToCocina
   module Work
-    # Maps AuthorForms to Cocina contributor parameters
+    # Maps WorkForm to Cocina event parameters
     class EventsMapper
       def self.call(...)
         new(...).call

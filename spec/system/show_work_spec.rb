@@ -178,14 +178,14 @@ RSpec.describe 'Show a work' do
       end
 
       # Authors
-      within('table#authors-table') do
-        expect(page).to have_css('caption', text: 'Author(s)')
-        expect(page).to have_css('th', text: 'Author')
+      within('table#contributors-table') do
+        expect(page).to have_css('caption', text: 'Contributors')
+        expect(page).to have_css('th', text: 'Contributor')
         expect(page).to have_css('th', text: 'ORCID')
         expect(page).to have_css('th', text: 'Role')
-        expect(page).to have_css('td', text: authors_fixture.first['first_name'])
-        expect(page).to have_css('td', text: authors_fixture.first['last_name'])
-        expect(page).to have_css('td', text: authors_fixture.first['orcid'])
+        expect(page).to have_css('td', text: contributors_fixture.first['first_name'])
+        expect(page).to have_css('td', text: contributors_fixture.first['last_name'])
+        expect(page).to have_css('td', text: contributors_fixture.first['orcid'])
       end
 
       # Description table

@@ -10,7 +10,7 @@ module CocinaGenerators
 
       # @param name [String] the name of the organization
       # @param role [String] the role of the organization from ROLES
-      # @param primary [Boolean] whether this is the first author
+      # @param primary [Boolean] whether this is the first contributor
       def initialize(name:, role:, primary: false)
         @name = name
         @role = role

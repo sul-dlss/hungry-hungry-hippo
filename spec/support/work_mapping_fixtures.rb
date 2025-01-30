@@ -6,7 +6,7 @@ module WorkMappingFixtures
   def new_work_form_fixture
     WorkForm.new(
       title: title_fixture,
-      authors_attributes: authors_fixture,
+      contributors_attributes: contributors_fixture,
       abstract: abstract_fixture,
       citation: citation_fixture,
       auto_generate_citation: false,

@@ -51,8 +51,8 @@ en:
   messages:
     draft_discarded: 'Draft discarded.'
     validation: >
-      Required fields have not been filled out. Click on the section(s) highlighted in red on
-      the left to correct the error(s) and then try depositing again.
+      Required fields have not been filled out. Click on the sections highlighted in red on
+      the left to correct the errors and then try depositing again.
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
@@ -185,11 +185,6 @@ en:
         access:
           tab_label: 'Access settings'
           label: 'Access settings'
-        authors:
-          tab_label: 'Authors'
-          label: 'Author(s) to include in citation'
-          help_text: >
-            When there are multiple authors, list them in the order they should appear in the citation.
         citation:
           tab_label: 'Citation for this deposit (optional)'
           label: 'Citation for this deposit'
@@ -197,6 +192,12 @@ en:
             This is the text that others can use when they want to cite this deposit.
             We highly recommend that you provide the text of that citation here to make it
             easier for them to cite your work and give you proper credit.
+        contributors:
+          tab_label: 'Contributors'
+          label: 'Contributors'
+          help_text: >
+            List contributors in they order they should appear in the citation.
+            Use the arrows on the right to move entries up or down in the list.
         dates:
           tab_label: 'Dates (optional)'
           label: 'Enter dates related to your deposit'
