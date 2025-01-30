@@ -24,6 +24,8 @@ module ToWorkForm
           'person_role' => (role if person?),
           'organization_role' => (role if organization?),
           'organization_name' => organization_name,
+          'suborganization_name' => suborganization_name,
+          'stanford_degree_granting_institution' => stanford_degree_granting_institution?,
           'orcid' => orcid,
           'with_orcid' => orcid.present? }
       end
@@ -43,7 +45,7 @@ module ToWorkForm
       def organization_name
         return nil unless organization?
 
-        contributor.name.first.value
+        contributor.name.first&.value || contributor.name.first.structuredValue.first.value
       end
 
       def orcid
@@ -63,7 +65,18 @@ module ToWorkForm
       end
 
       def role
-        contributor.role.first.value.sub(' ', '_')
+        contributor.role.first.value.tr(' ', '_')
+      end
+
+      def stanford_degree_granting_institution?
+        @stanford_degree_granting_institution ||= organization_name == WorkForm::STANFORD_UNIVERSITY \
+         && role == 'degree_granting_institution'
+      end
+
+      def suborganization_name
+        return unless stanford_degree_granting_institution?
+
+        contributor.name.first.structuredValue&.second&.value
       end
     end
   end

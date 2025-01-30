@@ -4,9 +4,9 @@ module Elements
   module Forms
     # Base component for all form fields.
     class FieldComponent < ApplicationComponent
-      def initialize(form:, field_name:, required: false, hidden_label: false, label: nil, help_text: nil, # rubocop:disable Metrics/ParameterLists
-                     disabled: false, hidden: false, data: {}, placeholder: nil, width: nil, label_classes: [],
-                     container_classes: [], input_classes: [])
+      def initialize(form:, field_name:, required: false, hidden_label: false, label: nil, help_text: nil, # rubocop:disable Metrics/ParameterLists, Metric/MethodLength
+                     disabled: false, hidden: false, data: {}, input_data: {}, placeholder: nil, width: nil,
+                     label_classes: [], container_classes: [], input_classes: [])
         @form = form
         @field_name = field_name
         @required = required
@@ -16,6 +16,7 @@ module Elements
         @hidden = hidden
         @disabled = disabled
         @data = data
+        @input_data = input_data
         @placeholder = placeholder
         @width = width
         @label_classes = label_classes
@@ -25,7 +26,7 @@ module Elements
       end
 
       attr_reader :form, :field_name, :required, :help_text, :hidden_label, :label, :hidden, :disabled, :data,
-                  :placeholder, :width, :label_classes
+                  :placeholder, :width, :label_classes, :input_data
 
       def help_text_id
         @help_text_id ||= form.field_id(field_name, 'help')

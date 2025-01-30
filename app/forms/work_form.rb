@@ -2,6 +2,8 @@
 
 # Form for a Work
 class WorkForm < ApplicationForm
+  STANFORD_UNIVERSITY = 'Stanford University'
+
   accepts_nested_attributes_for :related_links, :related_works, :publication_date, :contact_emails, :contributors,
                                 :keywords, :create_date_single, :create_date_range_from, :create_date_range_to
 

@@ -30,6 +30,7 @@ module ToCocina
             CocinaGenerators::Description.organization_contributor(
               name: contributor.organization_name,
               role: contributor.organization_role,
+              suborganization_name: contributor.suborganization_name,
               primary:
             )
           end

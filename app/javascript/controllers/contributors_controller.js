@@ -2,10 +2,13 @@ import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = [
-    'contributorTypePerson', 'contributorTypeOrganization',
-    'contributorTypeOrganizationLabel', 'selectPersonRole', 'selectOrganizationRole', 'personName',
-    'organizationName', 'orcidField', 'useOrcidButton', 'resetOrcidButton', 'firstNameField',
-    'lastNameField'
+    'personOption', 'organizationOption',
+    'personSection', 'organizationSection',
+    'degreeGrantingSection', 'notDegreeGrantingSection',
+    'orcidField', 'useOrcidButton', 'resetOrcidButton',
+    'firstNameField', 'lastNameField',
+    'organizationRoleSelect', 'yesStanfordOption',
+    'degreeGrantingSuborganizationSection', 'degreeGrantingOrganizationSection'
   ]
 
   static values = {
@@ -15,10 +18,10 @@ export default class extends Controller {
   }
 
   connect () {
-    if (this.contributorTypeOrganizationTarget.checked) {
-      this.contributorTypeOrganizationSelected()
+    if (this.organizationOptionTarget.checked) {
+      this.showOrganizationSection()
     } else {
-      this.contributorTypePersonSelected()
+      this.showPersonSection()
     }
   }
 
@@ -52,33 +55,59 @@ export default class extends Controller {
       .catch(error => console.dir(error))
   }
 
-  // Role type toggle Individual selection
-  contributorTypePersonSelected () {
-    this.selectPersonRoleTarget.hidden = false
-    this.selectPersonRoleTarget.disabled = false
-    this.selectOrganizationRoleTarget.hidden = true
-    this.selectOrganizationRoleTarget.disabled = true
-    this.displayPerson()
+  // Role type toggle Person selection
+  showPersonSection () {
+    this.toggleInputs(this.personSectionTarget, false)
+    this.toggleInputs(this.organizationSectionTarget, true)
+    this.personSectionTarget.classList.remove('d-none')
+    this.organizationSectionTarget.classList.add('d-none')
   }
 
   // Role type toggle Organization selection
-  contributorTypeOrganizationSelected () {
-    this.selectPersonRoleTarget.hidden = true
-    this.selectPersonRoleTarget.disabled = true
-    this.selectOrganizationRoleTarget.hidden = false
-    this.selectOrganizationRoleTarget.disabled = false
-    this.displayOrganization()
+  showOrganizationSection () {
+    this.toggleInputs(this.personSectionTarget, true)
+    this.toggleInputs(this.organizationSectionTarget, false)
+    this.personSectionTarget.classList.add('d-none')
+    this.organizationSectionTarget.classList.remove('d-none')
+    this.showDegreeGrantingSection()
   }
 
-  // Person role in toggle is selected.
-  displayPerson () {
-    this.personNameTarget.hidden = false
-    this.organizationNameTarget.hidden = true
+  showDegreeGrantingSection () {
+    if (this.organizationRoleSelectTarget.value === 'degree_granting_institution') {
+      this.degreeGrantingSectionTarget.classList.remove('d-none')
+      this.notDegreeGrantingSectionTarget.classList.add('d-none')
+      this.toggleInputs(this.degreeGrantingSectionTarget, false)
+      this.toggleInputs(this.notDegreeGrantingSectionTarget, true)
+      if (this.yesStanfordOptionTarget.checked) {
+        this.showDegreeGrantingSuborganizationSection()
+      } else {
+        this.showDegreeGrantingOrganizationSection()
+      }
+    } else {
+      this.degreeGrantingSectionTarget.classList.add('d-none')
+      this.notDegreeGrantingSectionTarget.classList.remove('d-none')
+      this.toggleInputs(this.degreeGrantingSectionTarget, true)
+      this.toggleInputs(this.notDegreeGrantingSectionTarget, false)
+    }
   }
 
-  // Organization role in toggle is selected.
-  displayOrganization () {
-    this.organizationNameTarget.hidden = false
-    this.personNameTarget.hidden = true
+  showDegreeGrantingOrganizationSection () {
+    this.degreeGrantingOrganizationSectionTarget.classList.remove('d-none')
+    this.degreeGrantingSuborganizationSectionTarget.classList.add('d-none')
+    this.toggleInputs(this.degreeGrantingOrganizationSectionTarget, false)
+    this.toggleInputs(this.degreeGrantingSuborganizationSectionTarget, true)
+  }
+
+  showDegreeGrantingSuborganizationSection () {
+    this.degreeGrantingOrganizationSectionTarget.classList.add('d-none')
+    this.degreeGrantingSuborganizationSectionTarget.classList.remove('d-none')
+    this.toggleInputs(this.degreeGrantingOrganizationSectionTarget, true)
+    this.toggleInputs(this.degreeGrantingSuborganizationSectionTarget, false)
+  }
+
+  toggleInputs (sectionEl, disabled) {
+    sectionEl.querySelectorAll('input, select').forEach(input => {
+      input.disabled = disabled
+    })
   }
 }
