@@ -5,10 +5,12 @@ module Elements
     # Component for a tab pane.
     # Based on https://getbootstrap.com/docs/5.3/components/navs-tabs/#javascript-behavior
     class PaneComponent < ApplicationComponent
-      def initialize(tab_name:, form_id:, label: nil, selected: false, render_footer: true, help_text: nil) # rubocop:disable Metrics/ParameterLists
+      def initialize(tab_name:, form_id: nil, label: nil, selected: false, render_footer: true, help_text: nil) # rubocop:disable Metrics/ParameterLists
         @tab_name = tab_name
         @label = label
         @selected = selected
+        # Provide the form_id to associate the save draft button with the main
+        # form if this pane is outside the main form.
         @form_id = form_id
         @render_footer = render_footer
         @help_text = help_text
