@@ -5,9 +5,14 @@ namespace :development do
   task :accession, [:druid] => :environment do |_t, args|
     raise 'Only works in development mode!' unless Rails.env.development?
 
-    client = Dor::Workflow::Client.new(url: Settings.workflow.url)
-    client.skip_all(druid: args[:druid], workflow: 'accessionWF', note: 'Testing')
+    druid = args[:druid]
 
-    puts "Completed accessionWF for #{args[:druid]}"
+    client = Dor::Workflow::Client.new(url: Settings.workflow.url)
+    client.skip_all(druid:, workflow: 'accessionWF', note: 'Testing')
+
+    object = Work.find_by(druid:) || Collection.find_by!(druid:)
+    object.accession_complete!
+
+    puts "Completed accession for #{druid}"
   end
 end
