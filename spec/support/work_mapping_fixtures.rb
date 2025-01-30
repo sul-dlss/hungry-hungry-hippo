@@ -24,7 +24,10 @@ module WorkMappingFixtures
       release_date: release_date_fixture,
       custom_rights_statement: custom_rights_statement_fixture,
       doi_option: 'yes',
-      agree_to_terms: false
+      agree_to_terms: false,
+      create_date_range_from_attributes: creation_date_range_from_fixture,
+      create_date_range_to_attributes: creation_date_range_to_fixture,
+      create_date_type: 'range'
     )
   end
 
@@ -82,7 +85,10 @@ module WorkMappingFixtures
           subject: CocinaDescriptionSupport.keywords(keywords: keywords_fixture),
           contributor: [CocinaGenerators::Description.person_contributor(**person_contributor_fixture),
                         CocinaGenerators::Description.organization_contributor(**organization_contributor_fixture)],
-          event: [CocinaGenerators::Description.event(type: 'publication', date: '2024-12', primary: true)],
+          event: [
+            CocinaGenerators::Description.event(type: 'creation', date: '2021-03-07/2022-04~'),
+            CocinaGenerators::Description.event(type: 'publication', date: '2024-12', primary: true)
+          ],
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture),
                  CocinaDescriptionSupport.note(type: 'preferred citation',
                                                value: citation_fixture,
@@ -221,7 +227,10 @@ module WorkMappingFixtures
           subject: CocinaDescriptionSupport.keywords(keywords: keywords_fixture),
           contributor: [CocinaGenerators::Description.person_contributor(**person_contributor_fixture),
                         CocinaGenerators::Description.organization_contributor(**organization_contributor_fixture)],
-          event: [CocinaGenerators::Description.event(type: 'publication', date: '2024-12', primary: true)],
+          event: [
+            CocinaGenerators::Description.event(type: 'creation', date: '2021-03-07/2022-04~'),
+            CocinaGenerators::Description.event(type: 'publication', date: '2024-12', primary: true)
+          ],
           note: [CocinaDescriptionSupport.note(type: 'abstract', value: abstract_fixture),
                  CocinaDescriptionSupport.note(type: 'preferred citation',
                                                value: citation_fixture,

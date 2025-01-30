@@ -56,16 +56,22 @@ en:
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
+  date:
+    fields:
+      year:
+        label: 'Year'
+      month:
+        label: 'Month'
+      day:
+        label: 'Day'
+      approximate:
+        label: 'Approximate'
   publication_date:
     edit:
       legend: 'Previous publication date'
-      fields:
-        year:
-          label: 'Year'
-        month:
-          label: 'Month'
-        day:
-          label: 'Day'
+  create_date_single:
+    edit:
+      legend: 'Creation date'
   contact_email:
     edit:
       fields:

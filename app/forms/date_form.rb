@@ -11,8 +11,9 @@ class DateForm < ApplicationForm
   validates :month, presence: true, if: -> { day.present? }
   attribute :day, :integer
   validates :day, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 31, allow_nil: true }
+  attribute :approximate, :boolean, default: false
 
   def to_s
-    EdtfSupport.to_edtf_s(year:, month:, day:)
+    EdtfSupport.to_edtf_s(year:, month:, day:, approximate:)
   end
 end

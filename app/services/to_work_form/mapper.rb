@@ -38,11 +38,11 @@ module ToWorkForm
         access: CocinaSupport.access_for(cocina_object:),
         version: cocina_object.version,
         collection_druid: CocinaSupport.collection_druid_for(cocina_object:),
-        publication_date_attributes: CocinaSupport.event_date_for(cocina_object:, type: 'publication'),
+        publication_date_attributes: publication_date_params,
         custom_rights_statement:,
         doi_option:,
         agree_to_terms:
-      }.merge(work_type_params).merge(release_date_params)
+      }.merge(work_type_params).merge(release_date_params).merge(creation_date_params)
     end
 
     def work_type_params
@@ -87,6 +87,29 @@ module ToWorkForm
         'assigned'
       else
         'yes'
+      end
+    end
+
+    def publication_date_params
+      event_date = CocinaSupport.first_event_date_for(cocina_object:, type: 'publication')
+      return {} if event_date.nil?
+
+      # Publication date is always a single date
+      event_date.single_params
+    end
+
+    def creation_date_params
+      event_date = CocinaSupport.first_event_date_for(cocina_object:, type: 'creation')
+      return {} if event_date.nil?
+
+      if event_date.single_params.present?
+        { create_date_single_attributes: event_date.single_params, create_date_type: 'single' }
+      else
+        {
+          create_date_range_from_attributes: event_date.from_params,
+          create_date_range_to_attributes: event_date.to_params,
+          create_date_type: 'range'
+        }
       end
     end
   end

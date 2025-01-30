@@ -183,8 +183,8 @@ RSpec.describe CocinaSupport do
     end
   end
 
-  describe '#event_date_for' do
-    subject(:event_date) { described_class.event_date_for(cocina_object:, type: 'publication') }
+  describe '#first_event_date_for' do
+    subject(:event_date) { described_class.first_event_date_for(cocina_object:, type: 'publication') }
 
     let(:cocina_object) do
       # NOTE: the :dro factory in the cocina-models gem does not have a seam
@@ -209,7 +209,7 @@ RSpec.describe CocinaSupport do
       end
 
       it 'returns the event date' do
-        expect(event_date).to eq(year: 2021)
+        expect(event_date.single_params).to eq(year: 2021, approximate: false)
       end
     end
 
@@ -219,7 +219,39 @@ RSpec.describe CocinaSupport do
       end
 
       it 'returns the event date' do
-        expect(event_date).to eq(year: 2021, month: 3)
+        expect(event_date.single_params).to eq(year: 2021, month: 3, approximate: false)
+      end
+    end
+
+    context 'when event date is approximate EDTF' do
+      let(:event) do
+        CocinaGenerators::Description.event(type: 'publication', date: '2021-03~')
+      end
+
+      it 'returns the event date' do
+        expect(event_date.single_params).to eq(year: 2021, month: 3, approximate: true)
+      end
+    end
+
+    context 'when event date is EDTF interval' do
+      let(:event) do
+        CocinaGenerators::Description.event(type: 'publication', date: '2021-03~/2021-04-21')
+      end
+
+      it 'returns the event date' do
+        expect(event_date.from_params).to eq(year: 2021, month: 3, approximate: true)
+        expect(event_date.to_params).to eq(year: 2021, month: 4, day: 21, approximate: false)
+      end
+    end
+
+    context 'when event date is EDTF interval with both dates approximate' do
+      let(:event) do
+        CocinaGenerators::Description.event(type: 'publication', date: '2021-03~/2021-04~')
+      end
+
+      it 'returns the event date' do
+        expect(event_date.from_params).to eq(year: 2021, month: 3, approximate: true)
+        expect(event_date.to_params).to eq(year: 2021, month: 4, approximate: true)
       end
     end
 
@@ -229,7 +261,7 @@ RSpec.describe CocinaSupport do
       end
 
       it 'returns the event date' do
-        expect(event_date).to eq(year: 2021, month: 3, day: 5)
+        expect(event_date.single_params).to eq(year: 2021, month: 3, day: 5, approximate: false)
       end
     end
 

@@ -25,10 +25,21 @@ RSpec.describe 'Validate a work deposit' do
 
     # Abstract is required for deposit, but skipping.
 
-    # Bad date
+    # Bad publication date
     find('.nav-link', text: 'Dates (optional)').click
     expect(page).to have_css('.nav-link.active', text: 'Dates (optional)')
-    fill_in('Year', with: 'abc')
+    within('fieldset#publication_date') do
+      fill_in('Year', with: 'abc')
+    end
+
+    # Bad creation date
+    find('label', text: 'Date range').click
+    # Not completing range from
+    within_fieldset('create_date_range_to') do
+      fill_in('Year', with: '2024')
+      select('January', from: 'Month')
+      check('Approximate')
+    end
 
     # Clicking on related content tab & filling in related link text and *not* URL (which is required for deposit)
     find('.nav-link', text: 'Related content (optional)').click
@@ -101,9 +112,19 @@ RSpec.describe 'Validate a work deposit' do
 
     # Publication date is marked invalid
     find('.nav-link.is-invalid', text: 'Dates (optional)').click
-    expect(page).to have_field('work_publication_date_attributes_year', class: 'is-invalid')
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be greater than or equal to 1000')
-    fill_in('Year', with: '2024')
+    within('fieldset#publication_date') do
+      expect(page).to have_field('work_publication_date_attributes_year', class: 'is-invalid')
+      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be greater than or equal to 1000')
+      fill_in('Year', with: '2024')
+    end
+
+    # Creation date is marked invalid
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must have both a start and end date')
+    within_fieldset('create_date_range_from') do
+      fill_in('Year', with: '2022')
+      select('August', from: 'Month')
+      select('2', from: 'Day')
+    end
 
     # Related content is marked invalid
     find('.nav-link.is-invalid', text: 'Related content (optional)').click
