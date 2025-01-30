@@ -220,9 +220,6 @@ en:
         related_content:
           tab_label: 'Related content (optional)'
           label: 'Related content'
-        terms_of_deposit:
-          tab_label: 'Terms of deposit'
-          label: 'Terms of deposit'
         title:
           tab_label: 'Title & contact'
           label: 'Title of deposit and contact information'

@@ -27,7 +27,6 @@
   <% component.with_tab(label: t('works.edit.panes.related_content.tab_label'), tab_name: :related_content) %>
   <% component.with_tab(label: t('works.edit.panes.access.tab_label'), tab_name: :access) %>
   <% component.with_tab(label: t('works.edit.panes.license.tab_label'), tab_name: :license) %>
-  <% component.with_tab(label: t('works.edit.panes.terms_of_deposit.tab_label'), tab_name: :terms_of_deposit) %>
   <% component.with_tab(label: t('works.edit.panes.deposit.tab_label'), tab_name: :deposit) %>
   <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
   <%# TabListComponent will render the actual form. %>
@@ -94,13 +93,12 @@
       <% end %>
     <% end %>
 
-    <% component.with_pane(tab_name: :terms_of_deposit, label: t('works.edit.panes.terms_of_deposit.label')) do %>
-      <%= render Works::Edit::TermsOfDepositComponent.new(form:) %>
-    <% end %>
-
     <% component.with_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), render_footer: false) do %>
       <p><%= t('works.edit.panes.deposit.help_text') %></p>
-      <div class="d-flex justify-content-between">
+
+      <%= render Works::Edit::TermsOfDepositComponent.new(form:) %>
+
+      <div class="d-flex justify-content-between mt-5">
         <div>
           <%= render Elements::CancelButtonComponent.new(link: root_path, classes: 'me-4') %>
           <%= render Works::Edit::SubmitComponent.new(work: @work, collection: @collection, classes: 'ms-2') %>
