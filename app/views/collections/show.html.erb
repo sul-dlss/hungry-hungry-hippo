@@ -15,6 +15,9 @@
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings-pane" type="button" role="tab" aria-controls="settings-pane" aria-selected="false">Collection settings</button>
   </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="deposits-tab" data-bs-toggle="tab" data-bs-target="#deposits-pane" type="button" role="tab" aria-controls="deposits-pane" aria-selected="false">Deposits</button>
+  </li>
 </ul>
 
 <%= render Collections::Show::HeaderComponent.new(presenter: @collection_presenter) %>
@@ -66,4 +69,6 @@
       <% component.with_row(label: 'Reviewers', values: [@collection_presenter.participants(:reviewers)]) %>
     <% end %>
   </div>
+
+  <%= render Collections::Show::DepositsComponent.new(presenter: @collection_presenter) %>
 </div>

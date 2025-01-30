@@ -122,6 +122,12 @@ class CollectionsController < ApplicationController
 
   def set_presenter
     @collection_presenter = CollectionPresenter.new(collection: @collection, collection_form: @collection_form,
-                                                    version_status: @version_status)
+                                                    version_status: @version_status, work_statuses:)
+  end
+
+  def work_statuses
+    @work_statuses ||= Sdr::Repository.statuses(
+      druids: @collection.works.where.not(druid: nil).pluck(:druid)
+    )
   end
 end

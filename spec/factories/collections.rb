@@ -39,6 +39,14 @@ FactoryBot.define do
       depositors { create_list(:user, depositors_count) }
     end
 
+    trait :with_works do
+      transient do
+        works_count { 3 }
+      end
+
+      works { create_list(:work, works_count - 1, :with_druid) + create_list(:work, 1) }
+    end
+
     trait :registering_or_updating do
       deposit_state { 'deposit_registering_or_updating' }
     end

@@ -9,20 +9,24 @@ RSpec.describe 'Show a collection' do
   let(:bare_druid) { collection_bare_druid_fixture }
   let(:user) { collection.user }
   let!(:collection) do
-    create(:collection, :with_review_workflow, :with_depositors, :with_managers, reviewers_count: 2, druid:,
-                                                                                 title: collection_title_fixture)
+    create(:collection, :with_review_workflow, :with_depositors, :with_managers, :with_works,
+           works_count:, reviewers_count: 2, druid:, title: collection_title_fixture)
   end
+  let(:works_count) { 3 }
   let(:cocina_object) { collection_with_metadata_fixture }
   let(:version_status) do
-    VersionStatus.new(status:
-    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
-                                                                         openable?: true, accessioning?: false,
-                                                                         discardable?: false))
+    VersionStatus.new(
+      status: instance_double(Dor::Services::Client::ObjectVersion::VersionStatus,
+                              open?: false, version: 2,
+                              openable?: true, accessioning?: false, discardable?: false)
+    )
   end
 
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(Sdr::Repository).to receive(:statuses)
+      .and_return(collection.works.where.not(druid: nil).to_h { |work| [work.druid, version_status] })
 
     sign_in(user)
   end
@@ -115,6 +119,30 @@ RSpec.describe 'Show a collection' do
       expect(page).to have_css('td', text: 'On')
       expect(page).to have_css('tr', text: 'Reviewers')
       expect(page).to have_css('td', text: collection.reviewers.pluck(:email_address).join(', '))
+    end
+
+    # Change tab
+    click_link_or_button('Deposits')
+    expect(page).to have_css('.nav-link.active', text: 'Deposits')
+
+    # Deposits table
+    within('table#deposits-table') do
+      expect(page).to have_css('tr', text: 'Deposit')
+      expect(page).to have_css('tr', text: 'Owner')
+      expect(page).to have_css('tr', text: 'Status')
+      expect(page).to have_css('tr', text: 'Modified')
+      expect(page).to have_css('tr', text: 'Link for sharing')
+      collection.works.each do |work|
+        expect(page).to have_css('td', text: work.title)
+        expect(page).to have_css('td', text: work.user.name)
+        expect(page).to have_css('td', text: 'Saving')
+        expect(page).to have_css('td', text: I18n.l(work.object_updated_at, format: '%b %d, %Y'))
+        if work.druid
+          expect(page).to have_css('td', text: "https://doi.org/10.80343/#{work.druid.delete_prefix('druid:')}")
+        else
+          expect(page).to have_css('td', text: 'N/A (still depositing)')
+        end
+      end
     end
   end
 end

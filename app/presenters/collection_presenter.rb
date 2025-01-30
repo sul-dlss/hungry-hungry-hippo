@@ -2,12 +2,13 @@
 
 # Presents a collection
 class CollectionPresenter < FormPresenter
-  def initialize(collection:, collection_form:, version_status:)
+  def initialize(collection:, collection_form:, version_status:, work_statuses:)
     @collection = collection
+    @work_statuses = work_statuses
     super(form: collection_form, version_status:)
   end
 
-  attr_reader :collection
+  attr_reader :collection, :work_statuses
 
   delegate :license, to: :collection
 

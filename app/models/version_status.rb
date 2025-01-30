@@ -5,13 +5,13 @@
 class VersionStatus
   # Nil status for when there is no status yet since H3 is still depositing.
   class NilStatus
-    def status_message
-      'Saving'
-    end
+    def status_message = 'Saving'
 
-    def draft?
-      false
-    end
+    def draft? = false
+
+    def editable? = false
+
+    def discardable? = false
   end
 
   # @param [Dor::Services::Client::ObjectVersion::VersionStatus] status status
