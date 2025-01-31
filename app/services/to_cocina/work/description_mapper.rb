@@ -28,17 +28,16 @@ module ToCocina
 
       def params # rubocop:disable Metrics/AbcSize
         {
-          title: CocinaDescriptionSupport.title(title: work_form.title),
+          title: CocinaGenerators::Description.title(title: work_form.title),
           contributor: ContributorsMapper.call(contributor_forms: work_form.contributors_attributes),
           note: note_params,
           event: EventsMapper.call(work_form:),
-          subject: CocinaDescriptionSupport.keywords(keywords: work_form.keywords_attributes),
+          subject: CocinaGenerators::Description.keywords(keywords: work_form.keywords_attributes),
           form: TypesMapper.call(work_form:),
           purl: Sdr::Purl.from_druid(druid: work_form.druid),
-          relatedResource: CocinaDescriptionSupport.related_works(related_works: work_form.related_works_attributes) +
-            CocinaDescriptionSupport.related_links(related_links: work_form.related_links_attributes),
+          relatedResource: related_resource_params,
           access: {
-            accessContact: CocinaDescriptionSupport.contact_emails(contact_emails: work_form.contact_emails_attributes)
+            accessContact: access_contact_params
           }
         }.compact
       end
@@ -46,15 +45,24 @@ module ToCocina
       def note_params # rubocop:disable Metrics/AbcSize
         [].tap do |params|
           if work_form.abstract.present?
-            params << CocinaDescriptionSupport.note(type: 'abstract',
-                                                    value: work_form.abstract)
+            params << CocinaGenerators::Description.note(type: 'abstract',
+                                                         value: work_form.abstract)
           end
           if work_form.citation.present? && work_form.auto_generate_citation == false
-            params << CocinaDescriptionSupport.note(type: 'preferred citation',
-                                                    value: work_form.citation,
-                                                    label: 'Preferred Citation')
+            params << CocinaGenerators::Description.note(type: 'preferred citation',
+                                                         value: work_form.citation,
+                                                         label: 'Preferred Citation')
           end
         end.presence
+      end
+
+      def related_resource_params
+        CocinaGenerators::Description.related_works(related_works: work_form.related_works_attributes) +
+          CocinaGenerators::Description.related_links(related_links: work_form.related_links_attributes)
+      end
+
+      def access_contact_params
+        CocinaGenerators::Description.contact_emails(contact_emails: work_form.contact_emails_attributes)
       end
     end
   end

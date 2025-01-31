@@ -28,10 +28,12 @@ module CollectionMappingFixtures
         type: Cocina::Models::ObjectType.collection,
         label: collection_title_fixture,
         description: {
-          title: CocinaDescriptionSupport.title(title: collection_title_fixture),
-          note: [CocinaDescriptionSupport.note(type: 'abstract', value: collection_description_fixture)],
-          relatedResource: CocinaDescriptionSupport.related_links(related_links: related_links_fixture),
-          access: { accessContact: CocinaDescriptionSupport.contact_emails(contact_emails: contact_emails_fixture) }
+          title: CocinaGenerators::Description.title(title: collection_title_fixture),
+          note: [CocinaGenerators::Description.note(type: 'abstract', value: collection_description_fixture)],
+          relatedResource: CocinaGenerators::Description.related_links(related_links: related_links_fixture),
+          access: {
+            accessContact: CocinaGenerators::Description.contact_emails(contact_emails: contact_emails_fixture)
+          }
         },
         version: 1,
         identification: { sourceId: collection_source_id_fixture },
@@ -48,10 +50,12 @@ module CollectionMappingFixtures
         type: Cocina::Models::ObjectType.collection,
         label: collection_title_fixture,
         description: {
-          title: CocinaDescriptionSupport.title(title: collection_title_fixture),
-          note: [CocinaDescriptionSupport.note(type: 'abstract', value: collection_description_fixture)],
-          relatedResource: CocinaDescriptionSupport.related_links(related_links: related_links_fixture),
-          access: { accessContact: CocinaDescriptionSupport.contact_emails(contact_emails: contact_emails_fixture) },
+          title: CocinaGenerators::Description.title(title: collection_title_fixture),
+          note: [CocinaGenerators::Description.note(type: 'abstract', value: collection_description_fixture)],
+          relatedResource: CocinaGenerators::Description.related_links(related_links: related_links_fixture),
+          access: {
+            accessContact: CocinaGenerators::Description.contact_emails(contact_emails: contact_emails_fixture)
+          },
           purl: Sdr::Purl.from_druid(druid: collection_druid_fixture)
         },
         version: 2,
