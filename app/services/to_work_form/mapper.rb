@@ -25,45 +25,38 @@ module ToWorkForm
       {
         druid: cocina_object.externalIdentifier,
         lock: cocina_object.lock,
-        title: CocinaSupport.title_for(cocina_object:),
-        contributors_attributes: CocinaSupport.contributors_for(cocina_object:),
-        abstract: CocinaSupport.abstract_for(cocina_object:),
-        citation: CocinaSupport.citation_for(cocina_object:),
-        auto_generate_citation: CocinaSupport.citation_for(cocina_object:).blank?,
-        contact_emails_attributes: CocinaSupport.contact_emails_for(cocina_object:),
-        related_works_attributes: CocinaSupport.related_works_for(cocina_object:),
-        related_links_attributes: CocinaSupport.related_links_for(cocina_object:),
-        keywords_attributes: CocinaSupport.keywords_for(cocina_object:),
-        license: CocinaSupport.license_for(cocina_object:),
-        access: CocinaSupport.access_for(cocina_object:),
+        title: Cocina::Parser.title_for(cocina_object:),
+        contributors_attributes: ToWorkForm::ContributorsMapper.call(cocina_object:),
+        abstract: ToForm::NoteMapper.abstract(cocina_object:),
+        citation:,
+        auto_generate_citation: citation.blank?,
+        contact_emails_attributes: ToForm::ContactEmailsMapper.call(cocina_object:),
+        related_works_attributes: ToWorkForm::RelatedWorksMapper.call(cocina_object:),
+        related_links_attributes: ToForm::RelatedLinksMapper.call(cocina_object:),
+        keywords_attributes: ToWorkForm::KeywordsMapper.call(cocina_object:),
+        license:,
+        access:,
         version: cocina_object.version,
-        collection_druid: CocinaSupport.collection_druid_for(cocina_object:),
-        publication_date_attributes: publication_date_params,
+        collection_druid: Cocina::Parser.collection_druid_for(cocina_object:),
+        publication_date_attributes: ToWorkForm::PublicationDateMapper.call(cocina_object:),
         custom_rights_statement:,
         doi_option:,
         agree_to_terms:
-      }.merge(work_type_params).merge(release_date_params).merge(creation_date_params)
+      }.merge(ToWorkForm::WorkTypeMapper.call(cocina_object:))
+        .merge(ToWorkForm::ReleaseDateMapper.call(cocina_object:))
+        .merge(ToWorkForm::CreationDateMapper.call(cocina_object:))
     end
 
-    def work_type_params
-      work_type, work_subtypes = CocinaSupport.work_type_and_subtypes_for(cocina_object:)
-      if work_type == WorkType::OTHER
-        return { work_type:, work_subtypes: [],
-                 other_work_subtype: work_subtypes.first }
-      end
-
-      { work_type:, work_subtypes: }
+    def citation
+      @citation ||= ToForm::NoteMapper.citation(cocina_object:)
     end
 
-    def release_date_params
-      release_date = CocinaSupport.release_date_for(cocina_object:)
-      return { release_option: 'immediate' } if release_date.blank?
-
-      { release_date:, release_option: 'delay' }
+    def license
+      cocina_object.access.license
     end
 
     def custom_rights_statement
-      use_statement = CocinaSupport.use_reproduction_statement_for(cocina_object:)
+      use_statement = cocina_object.access.useAndReproductionStatement
       return if use_statement.blank?
       return if use_statement == default_terms_of_use
 
@@ -80,7 +73,7 @@ module ToWorkForm
       # If the work has a DOI and that DOI does not exist in DataCite, then yes.
       # (It will be assigned as part of the registration request or when deposited.)
       # If the work does not have a DOI, then no.
-      doi = CocinaSupport.doi_for(cocina_object:)
+      doi = Cocina::Parser.doi_for(cocina_object:)
       if doi.nil?
         'no'
       elsif doi_assigned
@@ -90,27 +83,9 @@ module ToWorkForm
       end
     end
 
-    def publication_date_params
-      event_date = CocinaSupport.first_event_date_for(cocina_object:, type: 'publication')
-      return {} if event_date.nil?
-
-      # Publication date is always a single date
-      event_date.single_params
-    end
-
-    def creation_date_params
-      event_date = CocinaSupport.first_event_date_for(cocina_object:, type: 'creation')
-      return {} if event_date.nil?
-
-      if event_date.single_params.present?
-        { create_date_single_attributes: event_date.single_params, create_date_type: 'single' }
-      else
-        {
-          create_date_range_from_attributes: event_date.from_params,
-          create_date_range_to_attributes: event_date.to_params,
-          create_date_type: 'range'
-        }
-      end
+    def access
+      # When there is an embargo, the embargo view is the access view.
+      cocina_object.access&.embargo&.view || cocina_object.access.view
     end
   end
 end

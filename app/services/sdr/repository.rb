@@ -71,8 +71,8 @@ module Sdr
 
       open_cocina_object = Dor::Services::Client.object(cocina_object.externalIdentifier)
                                                 .version.open(description: version_description)
-      CocinaSupport.update_version_and_lock(cocina_object:, version: open_cocina_object.version,
-                                            lock: open_cocina_object.lock)
+      Cocina::VersionAndLockUpdater.call(cocina_object:, version: open_cocina_object.version,
+                                         lock: open_cocina_object.lock)
     rescue Dor::Services::Client::Error => e
       raise Error, "Opening failed: #{e.message}"
     end

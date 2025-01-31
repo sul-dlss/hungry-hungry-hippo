@@ -31,7 +31,7 @@ module Importers
     def collection # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       @collection ||= ::Collection.find_or_create_by!(druid:) do |collection|
         collection.user = User.call(user_json: collection_json['creator'])
-        collection.title = CocinaSupport.title_for(cocina_object:)
+        collection.title = Cocina::Parser.title_for(cocina_object:)
         collection.object_updated_at = cocina_object.modified
         collection.release_option = release_option
         collection.release_duration = collection_json['release_duration']

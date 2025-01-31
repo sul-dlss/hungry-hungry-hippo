@@ -24,10 +24,10 @@ module ToCollectionForm
       {
         druid: cocina_object.externalIdentifier,
         lock: cocina_object.lock,
-        title: CocinaSupport.title_for(cocina_object:),
-        description: CocinaSupport.abstract_for(cocina_object:), # Cocina abstract maps to Collection description
-        contact_emails_attributes: CocinaSupport.contact_emails_for(cocina_object:),
-        related_links_attributes: CocinaSupport.related_links_for(cocina_object:),
+        title: Cocina::Parser.title_for(cocina_object:),
+        description: ToForm::NoteMapper.abstract(cocina_object:), # Cocina abstract maps to Collection description
+        contact_emails_attributes: ToForm::ContactEmailsMapper.call(cocina_object:),
+        related_links_attributes: ToForm::RelatedLinksMapper.call(cocina_object:),
         managers_attributes: participant_attributes(:managers),
         depositors_attributes: participant_attributes(:depositors),
         version: cocina_object.version
