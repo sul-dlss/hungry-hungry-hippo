@@ -93,7 +93,9 @@ RSpec.describe 'Manage files for a work' do
       expect(page).to have_no_css('ul.pagination')
 
       # Add 2 more files
-      find('.dropzone').drop('spec/fixtures/files/hippo.svg', 'spec/fixtures/files/hippo.txt')
+      find('.dropzone').drop('spec/fixtures/files/hippo.svg')
+      expect(page).to have_css('table#content-table td', text: 'hippo.svg')
+      find('.dropzone').drop('spec/fixtures/files/hippo.txt')
 
       # First 2 are listed on page.
       expect(page).to have_css('ul.pagination')
