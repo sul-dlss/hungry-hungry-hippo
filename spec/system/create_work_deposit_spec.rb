@@ -50,6 +50,11 @@ RSpec.describe 'Create a work deposit' do
     expect(page).to have_css('.dropzone', text: 'Select files to upload')
     expect(page).to have_no_text('Describe your deposit')
 
+    # Footer buttons
+    expect(page).to have_button('Save as draft')
+    expect(page).to have_button('Next')
+    expect(page).to have_link('Cancel')
+
     # Adding a file
     find('.dropzone').drop('spec/fixtures/files/hippo.png')
 
@@ -168,6 +173,12 @@ RSpec.describe 'Create a work deposit' do
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
     expect(page).to have_no_text('Terms of deposit')
+
+    # Footer buttons
+    expect(page).to have_button('Save as draft')
+    expect(page).to have_no_button('Next')
+    expect(page).to have_link('Cancel')
+
     click_link_or_button('Deposit')
 
     # Waiting page may be too fast to catch so not testing.

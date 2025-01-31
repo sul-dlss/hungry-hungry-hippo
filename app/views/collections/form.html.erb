@@ -15,7 +15,7 @@
 <%= render Elements::AlertComponent.new(variant: :danger, value: I18n.t('messages.validation')) if @collection_form.errors.present? %>
 <% discard_draft_form_id = dom_id(@collection_form, 'discard_form') %>
 <%= render Edit::DiscardDraftFormComponent.new(presenter: @collection_presenter, id: discard_draft_form_id) if @collection_presenter %>
-<%= render Elements::TabForm::TabListComponent.new(model: @collection_form, hidden_fields: %i[lock version]) do |component| %>
+<%= render Edit::TabForm::TabListComponent.new(model: @collection_form, hidden_fields: %i[lock version]) do |component| %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.details.tab_label'), tab_name: :details, selected: true) %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.related_links.tab_label'), tab_name: :related_links) %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.access.tab_label'), tab_name: :access) %>
@@ -24,35 +24,42 @@
   <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
   <%# TabListComponent will render the actual form. %>
   <% form_with(model: @collection_form) do |form| %>
-    <% component.with_pane(tab_name: :details, label: I18n.t('collections.edit.panes.details.label'), selected: true) do %>
-      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('collections.edit.fields.title.label'), container_classes: 'mb-4') %>
-      <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: I18n.t('collections.edit.fields.description.label')) %>
-      <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false, single_field: true) %>
+    <% component.with_pane do %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :details, label: I18n.t('collections.edit.panes.details.label'), selected: true) do %>
+        <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('collections.edit.fields.title.label'), container_classes: 'mb-4') %>
+        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: I18n.t('collections.edit.fields.description.label')) %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false, single_field: true) %>
+      <% end %>
     <% end %>
 
-    <% component.with_pane(tab_name: :related_links, label: I18n.t('collections.edit.panes.related_links.label')) do %>
-      <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, hidden_label: true) %>
+    <% component.with_pane do %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :related_links, label: I18n.t('collections.edit.panes.related_links.label')) do %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, hidden_label: true) %>
+      <% end %>
     <% end %>
 
-    <% component.with_pane(tab_name: :access, label: I18n.t('collections.edit.panes.access.label')) do %>
-      <%= render Collections::Edit::AccessSettingsComponent.new(form:) %>
+    <% component.with_pane do %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :access, label: I18n.t('collections.edit.panes.access.label')) do %>
+        <%= render Collections::Edit::AccessSettingsComponent.new(form:) %>
+      <% end %>
     <% end %>
 
-    <% component.with_pane(tab_name: :participants, label: I18n.t('collections.edit.panes.participants.label')) do %>
-      <p><%= t('collections.edit.panes.participants.help_text') %></p>
-      <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, label: 'Managers', form_component: Collections::ContributorComponent) %>
-      <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, label: 'Depositors', form_component: Collections::ContributorComponent) %>
+    <% component.with_pane do %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :participants, label: I18n.t('collections.edit.panes.participants.label')) do %>
+        <p><%= t('collections.edit.panes.participants.help_text') %></p>
+        <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, label: 'Managers', form_component: Collections::ContributorComponent) %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, label: 'Depositors', form_component: Collections::ContributorComponent) %>
+      <% end %>
     <% end %>
 
-    <% component.with_pane(tab_name: :deposit, label: I18n.t('collections.edit.panes.deposit.label'), render_footer: false) do %>
-      <p><%= t('collections.edit.panes.deposit.help_text') %></p>
-      <div class="d-flex justify-content-between">
-        <div>
-          <%= render Elements::CancelButtonComponent.new(link: root_path, classes: 'me-4') %>
-          <%= render Elements::Forms::SubmitComponent.new(label: 'Deposit', classes: 'ms-2') %>
-        </div>
-        <%= render Edit::DiscardDraftSubmitButtonComponent.new(presenter: @collection_presenter, form_id: discard_draft_form_id) if @collection_presenter %>
-      </div>
+    <% component.with_pane do %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :deposit, label: I18n.t('collections.edit.panes.deposit.label')) do |component| %>
+        <p><%= t('collections.edit.panes.deposit.help_text') %></p>
+
+        <% component.with_deposit_button do %>
+          <%= render Elements::Forms::SubmitComponent.new(label: 'Deposit') %>
+        <% end %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
