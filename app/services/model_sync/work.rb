@@ -41,15 +41,15 @@ module ModelSync
     end
 
     def title
-      CocinaSupport.title_for(cocina_object:)
+      Cocina::Parser.title_for(cocina_object:)
     end
 
     def version
-      CocinaSupport.version_for(cocina_object:)
+      Cocina::Parser.version_for(cocina_object:)
     end
 
     def collection_druid
-      @collection_druid ||= CocinaSupport.collection_druid_for(cocina_object:)
+      @collection_druid ||= Cocina::Parser.collection_druid_for(cocina_object:)
     end
 
     def collection

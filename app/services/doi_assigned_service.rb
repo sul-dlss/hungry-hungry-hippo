@@ -39,6 +39,6 @@ class DoiAssignedService
   attr_reader :cocina_object, :work
 
   def doi_in_cocina?
-    CocinaSupport.doi_for(cocina_object:).present?
+    Cocina::Parser.doi_for(cocina_object:).present?
   end
 end
