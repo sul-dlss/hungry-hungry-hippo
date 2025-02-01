@@ -1,0 +1,65 @@
+<header>
+  <!-- Stanford bar -->
+  <div class="identity-bar">
+    <div class="container">
+      <a class="su-brand-bar__logo" href="https://www.stanford.edu">Stanford University</a>
+    </div>
+  </div>
+
+  <!-- SUL bar & user util links -->
+  <nav class="navbar navbar-expand-md">
+    <div class="container">
+      <a
+        class="mb-0 navbar-brand navbar-logo polychrome"
+        href="https://library.stanford.edu">Stanford University Libraries</a>
+      <button
+        class="navbar-toggler navbar-toggler-right collapsed"
+        type="button"
+        data-toggle="collapse"
+        data-bs-toggle="collapse"
+        data-target="#user-util-collapse"
+        data-bs-target="#user-util-collapse"
+        aria-controls="user-util-collapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="d-md-block d-none">
+        <ul class="navbar-nav">
+          <%= render Elements::LoginMenuComponent.new %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- App masthead -->
+  <div class="masthead border-bottom">
+    <div class="container">
+      <div
+        class="d-flex flex-wrap align-items-end justify-content-between pt-3 pb-1 pb-md-3 gap-3">
+        <div>
+          <div class="h1 my-0">
+            <%= link_to helpers.t('app_name'), root_path %>
+          </div>
+        </div>
+        <div class="navbars ms-md-auto">
+          <nav
+            class="collapse navbar-collapse align-items-start justify-content-md-end navbar-expand-md d-md-flex flex-column flex-md-row"
+            aria-label="browse"
+            id="user-util-collapse">
+            <hr class="d-md-none vw-100 my-0">
+            <ul
+              class="navbar-nav justify-content-md-end gap-0 gap-md-4 w-100 fw-semibold">
+              <%= render Elements::NavLinkComponent.with_collection(nav_links) %>
+            </ul>
+            <hr class="d-md-none vw-100 my-0">
+            <ul class="navbar-nav d-md-none gap-0 w-100">
+              <%= render Elements::LoginMenuComponent.new %>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
