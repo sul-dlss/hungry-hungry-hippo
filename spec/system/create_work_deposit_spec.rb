@@ -174,6 +174,10 @@ RSpec.describe 'Create a work deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
     expect(page).to have_no_text('Terms of deposit')
 
+    within('#main-container') do
+      expect(page).to have_no_text('Terms of deposit')
+    end
+
     # Footer buttons
     expect(page).to have_button('Save as draft')
     expect(page).to have_no_button('Next')
