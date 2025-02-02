@@ -27,6 +27,11 @@ RSpec.describe 'Validate a collection deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Related links')
     fill_in('Link text', with: 'foo.com')
 
+    # Clicking on access settings & selecting depositor selects without a release duration
+    find('.nav-link', text: 'Access settings').click
+    find_by_id('collection_release_option_depositor_selects').click
+    expect(page).to have_select('Release duration', selected: 'Select an option')
+
     # Depositing the work
     find('.nav-link', text: 'Deposit').click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
@@ -54,6 +59,12 @@ RSpec.describe 'Validate a collection deposit' do
     # Make the related link valid
     fill_in('Link text', with: related_links_fixture.first['text'])
     fill_in('URL', with: related_links_fixture.first['url'])
+
+    # Access setting for release duration is marked invalid
+    find('.nav-link', text: 'Access settings').click
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'select a valid duration for release')
+    select('3 years in the future', from: 'collection_release_duration')
+    expect(page).to have_select('Release duration', selected: '3 years in the future')
 
     # Try to deposit again
     find('.nav-link', text: 'Deposit').click
