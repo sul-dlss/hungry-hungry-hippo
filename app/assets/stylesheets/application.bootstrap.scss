@@ -206,3 +206,19 @@ textarea {
 .masthead {
   margin-bottom: 1rem;
 }
+
+// Ensure the footer is at the bottom of the page
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#main-container {
+  flex: auto;
+}
+
+// "Subscribe to SDR news" button in footer
+#pre-footer .btn.subscribe {
+  height: fit-content;
+}
