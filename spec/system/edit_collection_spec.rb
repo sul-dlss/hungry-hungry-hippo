@@ -83,6 +83,21 @@ RSpec.describe 'Edit a collection' do
       find('button[data-action="click->nested-form#delete"]').click
     end
 
+    # Clicking on Next to go to access settings tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Access settings')
+    expect(page).to have_content('Manage release of deposits for discovery and download')
+    expect(page).to have_checked_field('Depositor selects a date up to')
+    expect(page).to have_select('Release duration', selected: '1 year in the future')
+    expect(page).to have_checked_field('Yes, a DOI will be assigned to each deposit in this collection.')
+    # change the release duration to Immediately
+    find_by_id('collection_release_option_immediate').click
+    expect(page).to have_select('Release duration', selected: 'Select an option')
+    # change it back to set a release duration
+    find_by_id('collection_release_option_depositor_selects').click
+    select('3 years in the future', from: 'collection_release_duration')
+    expect(page).to have_select('Release duration', selected: '3 years in the future')
+
     # Clicking on Next to go to Participants tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Participants')
@@ -112,6 +127,9 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_content(updated_description)
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
     click_link_or_button('Collection settings')
+    # Access settings
+    expect(page).to have_content('3 years in the future')
+    # Participants
     expect(page).to have_content('stepking@stanford.edu')
     expect(page).to have_content('joehill@stanford.edu')
     expect(page).to have_css('.status', text: 'New version in draft')

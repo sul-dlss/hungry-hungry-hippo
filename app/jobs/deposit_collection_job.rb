@@ -12,7 +12,11 @@ class DepositCollectionJob < ApplicationJob
     new_cocina_object = perform_persist
     druid = new_cocina_object.externalIdentifier
 
-    collection.update!(druid:)
+    collection.update!(druid:,
+                       release_option: @collection_form.release_option,
+                       release_duration: @collection_form.release_duration,
+                       access: @collection_form.access,
+                       doi_option: @collection_form.doi_option)
 
     assign_participants(:managers)
     assign_participants(:depositors)

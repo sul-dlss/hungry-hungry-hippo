@@ -36,12 +36,17 @@ class CollectionsController < ApplicationController
     render :form
   end
 
+  # rubocop:disable Metrics/AbcSize
   def create
     authorize! Collection
     @collection_form = CollectionForm.new(**collection_params)
     # The validation_context param determines whether extra validations are applied, e.g., for deposits.
     if @collection_form.valid?(validation_context)
       collection = Collection.create!(title: @collection_form.title,
+                                      release_option: @collection_form.release_option,
+                                      release_duration: @collection_form.release_duration,
+                                      access: @collection_form.access,
+                                      doi_option: @collection_form.doi_option,
                                       user: current_user,
                                       deposit_state_event: 'deposit_persist')
       DepositCollectionJob.perform_later(collection:, collection_form: @collection_form, deposit: deposit?)
@@ -50,6 +55,7 @@ class CollectionsController < ApplicationController
       render :form, status: :unprocessable_entity
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def update
     authorize! @collection

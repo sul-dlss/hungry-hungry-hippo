@@ -7,6 +7,10 @@ module CollectionMappingFixtures
     CollectionForm.new(
       title: collection_title_fixture,
       description: collection_description_fixture,
+      release_option: 'depositor_selects',
+      release_duration: 'one_year',
+      access: 'depositor_selects',
+      doi_option: 'yes',
       contact_emails_attributes: contact_emails_fixture,
       related_links_attributes: related_links_fixture,
       managers_attributes: collection_manager_fixture,
