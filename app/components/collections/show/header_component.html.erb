@@ -6,8 +6,7 @@
     <span class="ms-4 fst-italic status"><%= status_message %></span>
   </div>
   <div class="d-flex align-items-start">
-    <%= render Edit::EditDraftButtonComponent.new(presenter:) %>
-    <%= render Edit::DiscardDraftButtonComponent.new(presenter:, classes: 'ms-2') %>
+    <%= render Edit::EditDraftButtonComponent.new(presenter:, label: 'Edit') %>
     <% if !presenter.first_draft? && allowed_to_create_work? %>
       <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: presenter.druid),
                                                    label: 'Deposit to this collection',

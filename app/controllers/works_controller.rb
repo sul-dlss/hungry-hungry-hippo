@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Controller for a Work
-class WorksController < ApplicationController
+class WorksController < ApplicationController # rubocop:disable Metrics/ClassLength
   before_action :set_work, only: %i[show edit update destroy review]
   before_action :check_deposit_registering_or_updating, only: %i[show edit]
   before_action :set_work_form_from_cocina, only: %i[show edit review]
@@ -199,5 +199,16 @@ class WorksController < ApplicationController
       @work.reject_with_reason!(reason: @review_form.reject_reason)
       work_path(druid: @work.druid)
     end
+  end
+
+  def deposit?
+    params[:commit] == 'Deposit'
+  end
+
+  # NOTE: a `nil` validation context runs all validations without an explicit context
+  def validation_context
+    return :deposit if deposit? || request_review?
+
+    nil
   end
 end

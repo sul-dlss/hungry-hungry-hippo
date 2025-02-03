@@ -22,18 +22,7 @@ class ApplicationController < ActionController::Base
     redirect_to main_app.root_path
   end
 
-  def deposit?
-    params[:commit] == 'Deposit'
-  end
-
   def request_review?
     params[:commit] == 'Submit for review'
-  end
-
-  # NOTE: a `nil` validation context runs all validations without an explicit context
-  def validation_context
-    return :deposit if deposit? || request_review?
-
-    nil
   end
 end

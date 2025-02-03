@@ -10,13 +10,12 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
   let(:collection) { create(:collection, user:, druid: druid_fixture) }
   let(:user) { create(:user) }
   let(:version_status) do
-    instance_double(VersionStatus, editable?: editable, discardable?: discardable, first_draft?: first_draft,
+    instance_double(VersionStatus, editable?: editable, first_draft?: first_draft,
                                    status_message:)
   end
   let(:title) { 'My Collection Title' }
   let(:status_message) { 'Depositing' }
   let(:editable) { false }
-  let(:discardable) { false }
   let(:first_draft) { false }
 
   before do
@@ -28,7 +27,7 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
     render_inline(described_class.new(presenter:))
     expect(page).to have_css('h1', text: title)
     expect(page).to have_css('.status', text: status_message)
-    expect(page).to have_no_link('Edit or deposit')
+    expect(page).to have_no_link('Edit')
     expect(page).to have_no_button('Discard draft')
     expect(page).to have_no_button('Deposit to this collection')
     expect(page).to have_no_css('i.bi-pencil')
@@ -39,20 +38,9 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
 
     it 'renders the edit button' do
       render_inline(described_class.new(presenter:))
-      expect(page).to have_link('Edit or deposit', href: "/collections/#{druid_fixture}/edit")
+      expect(page).to have_link('Edit', href: "/collections/#{druid_fixture}/edit")
       expect(page).to have_css('i.bi-pencil.h4')
       expect(page).to have_link(href: "/collections/#{druid_fixture}/edit")
-    end
-  end
-
-  context 'when discardable' do
-    let(:discardable) { true }
-
-    it 'renders the discard button' do
-      render_inline(described_class.new(presenter:))
-      expect(page).to have_button('Discard draft')
-      expect(page).to have_css("form[action=\"/collections/#{druid_fixture}\"]")
-      expect(page).to have_field('_method', with: 'delete', type: :hidden)
     end
   end
 
@@ -85,7 +73,7 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
     it 'does not show the Deposit to this collection button' do
       render_inline(described_class.new(presenter:))
       expect(page).to have_css('h1', text: title)
-      expect(page).to have_no_link('Edit or deposit')
+      expect(page).to have_no_link('Edit')
       expect(page).to have_no_button('Discard draft')
       expect(page).to have_no_button('Deposit to this collection')
       expect(page).to have_no_css('i.bi-pencil')

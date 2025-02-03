@@ -5,7 +5,7 @@ module Edit
   class EditDraftButtonComponent < Elements::ButtonLinkComponent
     def initialize(presenter:, **args)
       @presenter = presenter
-      args[:label] = 'Edit or deposit'
+      args[:label] ||= 'Edit or deposit'
       args[:variant] = 'outline-primary'
       # polymorphic_path cannot be used in initializer, so overrriding link below
       args[:link] = nil
