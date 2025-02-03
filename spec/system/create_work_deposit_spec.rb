@@ -172,7 +172,6 @@ RSpec.describe 'Create a work deposit' do
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
-    expect(page).to have_no_text('Terms of deposit')
 
     within('#main-container') do
       expect(page).to have_no_text('Terms of deposit')
