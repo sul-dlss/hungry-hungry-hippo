@@ -31,7 +31,7 @@ module Works
       def contributor_name(contributor)
         return "#{contributor.first_name} #{contributor.last_name}" if contributor.role_type == 'person'
 
-        contributor.organization_name
+        [contributor.suborganization_name, contributor.organization_name].compact.join(', ')
       end
 
       def orcid_link(contributor)
@@ -43,7 +43,7 @@ module Works
       def contributor_role_label(contributor)
         return unless contributor.person_role || contributor.organization_role
 
-        contributor_role(contributor).sub('_', ' ').capitalize
+        contributor_role(contributor).tr('_', ' ').capitalize
       end
 
       def contributor_role(contributor)

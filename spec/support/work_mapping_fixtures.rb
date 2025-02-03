@@ -84,7 +84,8 @@ module WorkMappingFixtures
           title: CocinaGenerators::Description.title(title: title_fixture),
           subject: CocinaGenerators::Description.keywords(keywords: keywords_fixture),
           contributor: [CocinaGenerators::Description.person_contributor(**person_contributor_fixture),
-                        CocinaGenerators::Description.organization_contributor(**organization_contributor_fixture)],
+                        CocinaGenerators::Description.organization_contributor(**organization_contributor_fixture),
+                        CocinaGenerators::Description.organization_contributor(**degree_granting_contributor_fixture)],
           event: [
             CocinaGenerators::Description.event(type: 'creation', date: '2021-03-07/2022-04~'),
             CocinaGenerators::Description.event(type: 'publication', date: '2024-12', primary: true)
@@ -228,7 +229,8 @@ module WorkMappingFixtures
           title: CocinaGenerators::Description.title(title: title_fixture),
           subject: CocinaGenerators::Description.keywords(keywords: keywords_fixture),
           contributor: [CocinaGenerators::Description.person_contributor(**person_contributor_fixture),
-                        CocinaGenerators::Description.organization_contributor(**organization_contributor_fixture)],
+                        CocinaGenerators::Description.organization_contributor(**organization_contributor_fixture),
+                        CocinaGenerators::Description.organization_contributor(**degree_granting_contributor_fixture)],
           event: [
             CocinaGenerators::Description.event(type: 'creation', date: '2021-03-07/2022-04~'),
             CocinaGenerators::Description.event(type: 'publication', date: '2024-12', primary: true)

@@ -19,6 +19,14 @@ class ContributorForm < ApplicationForm
   attribute :organization_role, :string
   validates :organization_role, presence: true, unless: :person?
 
+  # True when the organization_role is degree_granting_institution
+  # and organization_name is Stanford University
+  attribute :stanford_degree_granting_institution, :boolean, default: false
+
+  # Department, institute, center
+  # Only when stanford_degree_granting_institution is true
+  attribute :suborganization_name, :string
+
   attribute :role_type, :string, default: 'person'
   validates :role_type, inclusion: { in: %w[person organization] }
 

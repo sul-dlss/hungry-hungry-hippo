@@ -74,7 +74,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
     within form_instances[1] do
       find('label', text: 'Organization').click
       select('Author', from: 'Role')
-      fill_in('Organization name', with: 'Stanford University')
+      fill_in('Organization name', with: 'Stanford Research Institute')
     end
 
     click_link_or_button('Add another contributor')
@@ -121,6 +121,28 @@ RSpec.describe 'Manage contributors for a work deposit' do
     expect(form_instances[1]).to have_css('.move-up')
     expect(form_instances[1]).to have_no_css('.move-down')
 
+    # Add a degree granting institution that is Stanford.
+    click_link_or_button('Add another contributor')
+    form_instances = all('.form-instance')
+    within form_instances[2] do
+      find('label', text: 'Organization').click
+      expect(page).to have_no_text('Is Stanford the institution?')
+      select('Degree granting institution', from: 'Role')
+      expect(page).to have_text('Is Stanford the institution?')
+      find('label', text: 'Yes').click
+      fill_in('Department / Institute / Center', with: 'Department of Philosophy')
+    end
+
+    # Add a degree granting institution that is not Stanford.
+    click_link_or_button('Add another contributor')
+    form_instances = all('.form-instance')
+    within form_instances[3] do
+      find('label', text: 'Organization').click
+      select('Degree granting institution', from: 'Role')
+      find('label', text: 'No').click
+      fill_in('Organization name', with: 'Foothill College')
+    end
+
     click_link_or_button('Save as draft')
 
     # Waiting page may be too fast to catch so not testing.
@@ -128,8 +150,22 @@ RSpec.describe 'Manage contributors for a work deposit' do
     expect(page).to have_css('h1', text: title_fixture)
 
     within('table#contributors-table') do
-      expect(page).to have_css('td', text: 'Jane Stanford')
-      expect(page).to have_css('td', text: 'Stanford University')
+      within('tbody tr:nth-child(1)') do
+        expect(page).to have_css('td:nth-child(1)', text: 'Stanford Research Institute')
+        expect(page).to have_css('td:nth-child(3)', text: 'Author')
+      end
+      within('tbody tr:nth-child(2)') do
+        expect(page).to have_css('td:nth-child(1)', text: 'Jane Stanford')
+        expect(page).to have_css('td:nth-child(3)', text: 'Creator')
+      end
+      within('tbody tr:nth-child(3)') do
+        expect(page).to have_css('td:nth-child(1)', text: 'Department of Philosophy, Stanford University')
+        expect(page).to have_css('td:nth-child(3)', text: 'Degree granting institution')
+      end
+      within('tbody tr:nth-child(4)') do
+        expect(page).to have_css('td:nth-child(1)', text: 'Foothill College')
+        expect(page).to have_css('td:nth-child(3)', text: 'Degree granting institution')
+      end
     end
   end
 end

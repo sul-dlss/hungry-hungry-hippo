@@ -125,6 +125,7 @@ RSpec.describe 'Edit a work' do
         find('button[data-action="click->nested-form#delete"]').click
       end
     end
+
     # Then add a related work
     click_link_or_button('+ Add another related work')
     within_fieldset('Related works') do
@@ -138,7 +139,6 @@ RSpec.describe 'Edit a work' do
     # Filling in access settings
     find('.nav-link', text: 'Access settings').click
     choose('Immediately')
-
     click_link_or_button('Save as draft')
 
     # Waiting page may be too fast to catch so not testing.

@@ -5,26 +5,23 @@
                                          field_name: :role_type,
                                          label: t('works.edit.fields.contributors.role_type.person.label'),
                                          value: 'person',
-                                         data: { contributors_target: 'contributorTypePerson' },
-                                         label_data: { action: 'click->contributors#contributorTypePersonSelected' }) %>
+                                         label_data: { action: 'click->contributors#showPersonSection' }) %>
     <% component.with_right_toggle_option(form:,
                                           field_name: :role_type,
                                           label: t('works.edit.fields.contributors.role_type.organization.label'),
                                           value: 'organization',
-                                          data: { contributors_target: 'contributorTypeOrganization' },
-                                          label_data: { action: 'click->contributors#contributorTypeOrganizationSelected' }) %>
+                                          data: { contributors_target: 'organizationOption' },
+                                          label_data: { action: 'click->contributors#showOrganizationSection' }) %>
   <% end %>
 
-  <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :person_role, label_classes: 'fw-bold',
-                                                       options: PERSON_ROLES, label: t('works.edit.fields.contributors.role.label'),
-                                                       data: { contributors_target: 'selectPersonRole' }, container_classes: 'mb-4') %>
-  <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :organization_role, label_classes: 'fw-bold',
-                                                       options: ORGANIZATION_ROLES, label: t('works.edit.fields.contributors.role.label'),
-                                                       data: { contributors_target: 'selectOrganizationRole' }, container_classes: 'mb-4') %>
-
   <%# Contributor person name/orcid fields %>
-  <fieldset data-contributors-target="personName">
-    <legend class="form-label fw-bold"><%= t('works.edit.fields.contributors.orcid_or_name.label') %></legend>
+  <fieldset data-contributors-target="personSection">
+    <legend class="visually-hidden">Person</legend>
+
+    <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :person_role, label_classes: 'fw-bold',
+                                                         options: PERSON_ROLES, label: t('works.edit.fields.contributors.role.label'), container_classes: 'mb-4') %>
+
+    <div class="form-label fw-bold"><%= t('works.edit.fields.contributors.orcid_or_name.label') %></div>
     <div class="form-check">
       <%= form.radio_button :with_orcid, true, class: 'form-check-input', checked: true %>
       <%= form.label :with_orcid_true, t('works.edit.fields.contributors.orcid.label'), class: 'form-check-label' %>
@@ -58,7 +55,39 @@
   </fieldset>
 
   <%# Contributor organization name field %>
-  <div class="row" data-contributors-target="organizationName">
-    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :organization_name, label: t('works.edit.fields.contributors.organization.label'), label_classes: 'fw-bold', container_classes: 'mb-4') %>
-  </div>
+  <fieldset data-contributors-target="organizationSection">
+    <legend class="visually-hidden">Organization</legend>
+
+    <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :organization_role, label_classes: 'fw-bold',
+                                                         options: ORGANIZATION_ROLES, label: t('works.edit.fields.contributors.role.label'), container_classes: 'mb-4',
+                                                         input_data: { contributors_target: 'organizationRoleSelect', action: 'change->contributors#showDegreeGrantingSection' }) %>
+
+    <div data-contributors-target="degreeGrantingSection">
+      <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :stanford_degree_granting_institution, label_classes: 'fw-bold',
+                                                      label: 'Is Stanford the institution?', container_classes: 'mb-4') do |component| %>
+        <% component.with_left_toggle_option(form:,
+                                             field_name: :stanford_degree_granting_institution,
+                                             label: 'Yes',
+                                             data: { contributors_target: 'yesStanfordOption', action: 'click->contributors#showDegreeGrantingSuborganizationSection' },
+                                             value: 'yes') %>
+        <% component.with_right_toggle_option(form:,
+                                              field_name: :stanford_degree_granting_institution,
+                                              label: 'No',
+                                              data: { action: 'click->contributors#showDegreeGrantingOrganizationSection' },
+                                              value: 'no') %>
+      <% end %>
+
+      <div data-contributors-target="degreeGrantingSuborganizationSection">
+        <%= form.hidden_field :organization_name, value: WorkForm::STANFORD_UNIVERSITY %>
+        <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :suborganization_name, label: 'Department / Institute / Center', label_classes: 'fw-bold', container_classes: 'mb-4') %>
+      </div>
+      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :organization_name, label: t('works.edit.fields.contributors.organization.label'), label_classes: 'fw-bold', container_classes: 'mb-4', data: { contributors_target: 'degreeGrantingOrganizationSection' }) %>
+
+    </div>
+
+    <div data-contributors-target="notDegreeGrantingSection">
+      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :organization_name, label: t('works.edit.fields.contributors.organization.label'), label_classes: 'fw-bold', container_classes: 'mb-4') %>
+    </div>
+
+  </fieldset>
 <% end %>
