@@ -21,6 +21,14 @@ RSpec.describe 'Edit a collection' do
                                                                          discardable?: false))
   end
 
+  let(:accessioning_version_status) do
+    VersionStatus.new(status:
+    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, openable?: false,
+                                                                         version: cocina_object.version,
+                                                                         accessioning?: true,
+                                                                         discardable?: false))
+  end
+
   let(:updated_title) { 'My new title' }
   let(:updated_description) { 'This is what my collection is really about.' }
   let(:updated_related_links) do
@@ -38,12 +46,13 @@ RSpec.describe 'Edit a collection' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { cocina_object }, lambda { |_arg|
       @updated_cocina_object
     })
-    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status, accessioning_version_status)
     # It is already open.
     allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
     allow(Sdr::Repository).to receive(:update) do |args|
       @updated_cocina_object = args[:cocina_object]
     end
+    allow(Sdr::Repository).to receive(:accession)
 
     create(:collection, druid:, user:)
 
@@ -119,7 +128,10 @@ RSpec.describe 'Edit a collection' do
       fill_in('SUNet ID', with: 'joehill')
     end
 
-    click_link_or_button('Save as draft')
+    click_link_or_button('Next')
+
+    expect(page).to have_css('.nav-link.active', text: 'Deposit')
+    click_link_or_button('Deposit')
 
     # Waiting page may be too fast to catch so not testing.
     # On show page
@@ -132,7 +144,6 @@ RSpec.describe 'Edit a collection' do
     # Participants
     expect(page).to have_content('stepking@stanford.edu')
     expect(page).to have_content('joehill@stanford.edu')
-    expect(page).to have_css('.status', text: 'New version in draft')
-    expect(page).to have_link('Edit or deposit', href: edit_collection_path(druid))
+    expect(page).to have_css('.status', text: 'Depositing')
   end
 end

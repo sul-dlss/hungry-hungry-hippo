@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Elements::TabForm::TabListComponent, type: :component do
+RSpec.describe Edit::TabForm::TabListComponent, type: :component do
   include WorkMappingFixtures
 
   let(:work_form) { WorkForm.new }
@@ -13,22 +13,18 @@ RSpec.describe Elements::TabForm::TabListComponent, type: :component do
   before do
     component.with_tab(label: 'Tab 1', tab_name: :tab_one, selected: true)
     component.with_tab(label: 'Tab 2', tab_name: :tab_two)
-    component.with_tab(label: 'Tab 3', tab_name: :tab_two)
-    component.with_before_form_pane(tab_name: :tab_one, label: 'Tab 1', form_id:, selected: true)
-    component.with_pane(tab_name: :tab_two, label: 'Tab 2', form_id:)
-    component.with_pane(tab_name: :tab_three, label: 'Tab 3', form_id:)
+    component.with_before_form_pane { '<div class="tab-pane">Tab 1</div>'.html_safe }
+    component.with_pane { '<div class="tab-pane">Tab 2</div>'.html_safe }
   end
 
   it 'renders the tabbed form with tabs' do
     render_inline(component)
     expect(page).to have_css('.tabbable-panes')
-    expect(page).to have_css('.nav-link', count: 3)
+    expect(page).to have_css('.nav-link', count: 2)
     expect(page).to have_css('.nav-link.active', text: 'Tab 1')
     expect(page).to have_css('.nav-link', text: 'Tab 2')
-    expect(page).to have_css('.nav-link', text: 'Tab 3')
     expect(page).to have_css('.tab-pane', text: 'Tab 1')
     expect(page).to have_no_css('form .tab-pane', text: 'Tab 1')
     expect(page).to have_css('form .tab-pane', text: 'Tab 2')
-    expect(page).to have_css('form .tab-pane', text: 'Tab 3')
   end
 end

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Elements
+module Edit
   module TabForm
     # Component for rendering tabbed navigation for the provided form.
     class TabListComponent < ApplicationComponent
-      renders_many :tabs, 'Elements::TabForm::TabComponent'
+      renders_many :tabs, 'Edit::TabForm::TabComponent'
       # The reason for the before_form_panes is to
       # avoid nested form tags, which aren't allowed in HTML.
       # Note that to reference the main form from elements in the before_form_pane,
@@ -12,8 +12,8 @@ module Elements
       # The form_id can then be provided as the form attribute to an input element to
       # connect it to the main form.
       # This approach is used to allow submit buttons to be outside the main form.
-      renders_many :before_form_panes, 'Elements::TabForm::PaneComponent'
-      renders_many :panes, 'Elements::TabForm::PaneComponent'
+      renders_many :before_form_panes
+      renders_many :panes
 
       def initialize(model:, form_id: nil, hidden_fields: [], classes: [])
         @classes = classes

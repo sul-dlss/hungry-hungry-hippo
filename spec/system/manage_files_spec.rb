@@ -122,13 +122,15 @@ RSpec.describe 'Manage files for a work' do
       expect(page).to have_css('table#content-table td', text: 'hippo.txt')
 
       # Edit the description
-      all('a', text: 'Add description').first.click
-      click_link_or_button('Cancel')
+      within('table#content-table') do
+        all('a', text: 'Add description').first.click
+        click_link_or_button('Cancel')
 
-      expect(page).to have_link('Add description', count: 2)
-      all('a', text: 'Add description').first.click
-      fill_in('Description', with: 'This is a hippo.')
-      click_link_or_button('Update')
+        expect(page).to have_link('Add description', count: 2)
+        all('a', text: 'Add description').first.click
+        fill_in('Description', with: 'This is a hippo.')
+        click_link_or_button('Update')
+      end
 
       # The description is updated.
       expect(page).to have_css('table#content-table td', text: 'hippo.svg')

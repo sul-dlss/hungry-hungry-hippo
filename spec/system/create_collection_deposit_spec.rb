@@ -43,6 +43,10 @@ RSpec.describe 'Create a collection deposit' do
 
     expect(page).to have_css('h1', text: 'Untitled collection')
 
+    # Footer buttons
+    expect(page).to have_button('Next')
+    expect(page).to have_link('Cancel')
+
     # Testing tabs
     expect(page).to have_css('.nav-link.active', text: 'Details')
     expect(page).to have_css('.nav-link:not(.active)', text: 'Related links')
@@ -83,7 +87,11 @@ RSpec.describe 'Create a collection deposit' do
     click_link_or_button('Next')
     find('.nav-link', text: 'Deposit').click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
-    expect(page).to have_no_text('Discard draft')
+
+    # Footer buttons
+    expect(page).to have_no_button('Next')
+    expect(page).to have_link('Cancel')
+
     click_link_or_button('Deposit')
 
     # Waiting page may be too fast to catch so not testing.

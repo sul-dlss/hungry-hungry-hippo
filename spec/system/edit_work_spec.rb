@@ -78,6 +78,10 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_css('.breadcrumb-item', text: title_fixture)
     expect(page).to have_css('h1', text: title_fixture)
 
+    expect(page).to have_button('Save as draft')
+    expect(page).to have_button('Next')
+    expect(page).to have_button('Discard draft')
+
     find('.nav-link', text: 'Title').click
     expect(page).to have_field('Title of deposit', with: title_fixture)
 

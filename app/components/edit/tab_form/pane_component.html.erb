@@ -5,11 +5,6 @@
       <% if help_text %><p><%= help_text %></p><% end %>
       <%= content %>
     </div>
-    <% if render_footer? %>
-      <div class="mt-4">
-        <%= render Elements::Forms::SubmitComponent.new(form_id:, label: 'Save as draft', variant: :'outline-primary') %>
-        <%= render Elements::TabForm::NextButtonComponent.new(tab_id:) %>
-      </div>
-    <% end %>
+    <%= footer %>
   </div>
 <% end %>

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Elements
+module Edit
   module TabForm
     # Component for a tab in a tabbed pane.
     class TabComponent < ApplicationComponent
