@@ -4,8 +4,7 @@
 class DepositCollectionJob < ApplicationJob
   # @param [CollectionForm] collection_form
   # @param [Collection] collection
-  # @param [Boolean] deposit if true, deposit the work; otherwise, leave as draft
-  def perform(collection_form:, collection:, deposit:)
+  def perform(collection_form:, collection:)
     @collection_form = collection_form
     @collection = collection
 
@@ -23,12 +22,8 @@ class DepositCollectionJob < ApplicationJob
 
     ModelSync::Collection.call(collection:, cocina_object: new_cocina_object)
 
-    if deposit
-      Sdr::Repository.accession(druid:)
-      collection.accession!
-    else
-      collection.deposit_persist_complete!
-    end
+    Sdr::Repository.accession(druid:)
+    collection.accession!
   end
 
   private

@@ -46,7 +46,7 @@ RSpec.describe 'Show a collection' do
     expect(page).to have_css('h1', text: collection.title)
     expect(page).to have_css('i.bi-pencil')
     expect(page).to have_css('.status', text: 'Deposited')
-    expect(page).to have_link('Edit or deposit', href: edit_collection_path(druid))
+    expect(page).to have_link('Edit', href: edit_collection_path(druid))
     expect(page).to have_link('Deposit to this collection', href: new_work_path(collection_druid: druid))
 
     # Collection information

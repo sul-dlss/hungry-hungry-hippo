@@ -2,10 +2,10 @@
 
 # Controller for a Collection
 class CollectionsController < ApplicationController
-  before_action :set_collection, only: %i[show edit update destroy]
+  before_action :set_collection, only: %i[show edit update]
   before_action :check_deposit_registering_or_updating, only: %i[show edit]
   before_action :set_collection_form_from_cocina, only: %i[show edit]
-  before_action :set_status, only: %i[show edit destroy]
+  before_action :set_status, only: %i[show edit]
   before_action :set_presenter, only: %i[show edit]
 
   def show
@@ -36,12 +36,10 @@ class CollectionsController < ApplicationController
     render :form
   end
 
-  # rubocop:disable Metrics/AbcSize
   def create
     authorize! Collection
     @collection_form = CollectionForm.new(**collection_params)
-    # The validation_context param determines whether extra validations are applied, e.g., for deposits.
-    if @collection_form.valid?(validation_context)
+    if @collection_form.valid?
       collection = Collection.create!(title: @collection_form.title,
                                       release_option: @collection_form.release_option,
                                       release_duration: @collection_form.release_duration,
@@ -49,39 +47,24 @@ class CollectionsController < ApplicationController
                                       doi_option: @collection_form.doi_option,
                                       user: current_user,
                                       deposit_state_event: 'deposit_persist')
-      DepositCollectionJob.perform_later(collection:, collection_form: @collection_form, deposit: deposit?)
+      DepositCollectionJob.perform_later(collection:, collection_form: @collection_form)
       redirect_to wait_collections_path(collection.id)
     else
       render :form, status: :unprocessable_entity
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   def update
     authorize! @collection
 
     @collection_form = CollectionForm.new(**update_collection_params)
     # The validation_context param determines whether extra validations are applied, e.g., for deposits.
-    if @collection_form.valid?(validation_context)
+    if @collection_form.valid?
       @collection.deposit_persist! # Sets the deposit state
-      DepositCollectionJob.perform_later(collection: @collection, collection_form: @collection_form, deposit: deposit?)
+      DepositCollectionJob.perform_later(collection: @collection, collection_form: @collection_form)
       redirect_to wait_collections_path(@collection.id)
     else
       render :form, status: :unprocessable_entity
-    end
-  end
-
-  def destroy
-    authorize! @collection
-
-    Sdr::Repository.discard_draft(druid: @collection.druid)
-    flash[:success] = helpers.t('messages.draft_discarded')
-    # When version 1 SDR will purge the DRO. The Collection record can be destroyed as well.
-    if @version_status.version == 1
-      @collection.destroy!
-      redirect_to root_path
-    else
-      redirect_to collection_path(druid: @collection.druid)
     end
   end
 

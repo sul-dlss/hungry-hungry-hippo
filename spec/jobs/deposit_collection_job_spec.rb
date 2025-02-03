@@ -25,7 +25,7 @@ RSpec.describe DepositCollectionJob do
     end
 
     it 'registers a new collection' do
-      described_class.perform_now(collection_form:, collection:, deposit: true)
+      described_class.perform_now(collection_form:, collection:)
       new_manager = User.find_by(email_address: 'stepking@stanford.edu')
       new_depositor = User.find_by(email_address: 'joehill@stanford.edu')
       expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form:,
@@ -58,16 +58,16 @@ RSpec.describe DepositCollectionJob do
     end
 
     it 'updates an existing collection' do
-      described_class.perform_now(collection_form:, collection:, deposit: false)
+      described_class.perform_now(collection_form:, collection:)
       expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form:,
                                                                         source_id: "h3:collection-#{collection.id}")
       expect(Sdr::Repository).to have_received(:open_if_needed)
         .with(cocina_object: an_instance_of(Cocina::Models::CollectionWithMetadata))
       expect(Sdr::Repository).to have_received(:update).with(cocina_object:)
-      expect(Sdr::Repository).not_to have_received(:accession)
+      expect(Sdr::Repository).to have_received(:accession)
 
       expect(collection.reload.title).to eq(collection_title_fixture)
-      expect(collection.deposit_not_in_progress?).to be true
+      expect(collection.deposit_not_in_progress?).to be false
     end
   end
 end

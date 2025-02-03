@@ -8,6 +8,7 @@ RSpec.describe 'Validate a collection deposit' do
   let(:collection_path) { new_collection_path }
 
   before do
+    allow(DepositCollectionJob).to receive(:perform_later)
     sign_in(user, groups:)
   end
 
@@ -75,5 +76,6 @@ RSpec.describe 'Validate a collection deposit' do
 
     # No Alert!
     expect(page).to have_no_css('.alert-danger', text: 'Required fields have not been filled out.')
+    expect(DepositCollectionJob).to have_received(:perform_later)
   end
 end
