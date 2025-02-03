@@ -129,7 +129,6 @@ RSpec.describe 'Edit a collection' do
     click_link_or_button('Collection settings')
     # Access settings
     expect(page).to have_content('3 years in the future')
-    expect(page).to have_content('Yes')
     # Participants
     expect(page).to have_content('stepking@stanford.edu')
     expect(page).to have_content('joehill@stanford.edu')

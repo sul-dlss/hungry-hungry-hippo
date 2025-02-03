@@ -35,3 +35,19 @@ def collection_depositor_fixture
     }
   ]
 end
+
+def release_option_fixture
+  'depositor_selects'
+end
+
+def release_duration_fixture
+  'one_year'
+end
+
+def access_fixture
+  'depositor_selects'
+end
+
+def doi_option_fixture
+  'yes'
+end
