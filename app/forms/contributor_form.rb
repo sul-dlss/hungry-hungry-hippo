@@ -39,6 +39,8 @@ class ContributorForm < ApplicationForm
                     if: -> { person? && with_orcid }
   validates :orcid, presence: true, on: :deposit, if: -> { person? && with_orcid? }
 
+  attribute :cited, :boolean, default: true
+
   def person?(with_names: false)
     return false if role_type != 'person'
     return true unless with_names

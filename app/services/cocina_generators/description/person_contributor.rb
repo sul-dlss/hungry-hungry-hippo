@@ -13,12 +13,14 @@ module CocinaGenerators
       # @param role [String] the role of the person from ROLES
       # @param primary [Boolean] whether this is the first contributor
       # @param orcid [String] the ORCID of the person
-      def initialize(surname:, forename:, role:, primary: false, orcid: nil)
+      # @param cited [Boolean] whether the person should be cited
+      def initialize(surname:, forename:, role:, primary: false, orcid: nil, cited: true) # rubocop:disable Metrics/ParameterLists
         @surname = surname
         @forename = forename
         @role = role
         @primary = primary
         @orcid = orcid
+        @cited = cited
       end
 
       def call
@@ -34,7 +36,8 @@ module CocinaGenerators
           type: 'person',
           role: role_params,
           identifier: identifier_params,
-          status: ('primary' if primary)
+          status: ('primary' if primary),
+          note: note_params
 
           # NOTE: affiliations.map { |affiliation_attrs| affiliation(**affiliation_attrs) }.presence
         }.compact
@@ -42,7 +45,7 @@ module CocinaGenerators
 
       private
 
-      attr_reader :forename, :surname, :role, :primary, :orcid
+      attr_reader :forename, :surname, :role, :primary, :orcid, :cited
 
       def role_params
         cocina_role = ContributorRole.call(role:)
@@ -61,6 +64,12 @@ module CocinaGenerators
             source: { uri: Settings.orcid.url }
           }
         ]
+      end
+
+      def note_params
+        return if cited
+
+        [{ type: 'citation status', value: 'false' }]
       end
     end
   end

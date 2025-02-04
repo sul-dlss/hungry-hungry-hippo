@@ -85,7 +85,9 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank", visible: :all)
 
     # Fill in the author name
-    find('label', text: 'No').click
+    within('.orcid-section') do
+      find('label', text: 'No').click
+    end
     fill_in('First name', with: contributors_fixture.first['first_name'])
     fill_in('Last name', with: contributors_fixture.first['last_name'])
 

@@ -79,7 +79,9 @@ RSpec.describe 'Manage contributors for a work deposit' do
 
     # Fill in the contributor form
     within form_instances[0] do
-      find('label', text: 'No').click
+      within('.orcid-section') do
+        find('label', text: 'No').click
+      end
       select('Creator', from: 'Role')
       fill_in('First name', with: 'Jane')
       fill_in('Last name', with: 'Stanford')
@@ -154,7 +156,9 @@ RSpec.describe 'Manage contributors for a work deposit' do
       expect(page).to have_no_text('Is Stanford the institution?')
       select('Degree granting institution', from: 'Role')
       expect(page).to have_text('Is Stanford the institution?')
-      find('label', text: 'Yes').click
+      within('.stanford-degree-granting-institution-section') do
+        find('label', text: 'Yes').click
+      end
       fill_in('Department / Institute / Center', with: 'Department of Philosophy')
     end
 
@@ -164,7 +168,9 @@ RSpec.describe 'Manage contributors for a work deposit' do
     within form_instances[3] do
       find('label', text: 'Organization').click
       select('Degree granting institution', from: 'Role')
-      find('label', text: 'No').click
+      within('.stanford-degree-granting-institution-section') do
+        find('label', text: 'No').click
+      end
       fill_in('Organization name', with: 'Foothill College')
     end
 

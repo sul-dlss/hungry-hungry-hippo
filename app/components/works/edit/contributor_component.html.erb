@@ -14,6 +14,21 @@
                                           label_data: { action: 'click->contributors#showOrganizationSection' }) %>
   <% end %>
 
+  <%= render Elements::Forms::LabelComponent.new(form:, field_name: :cited, label_text: 'Include contributor in citation?', classes: 'fw-bold') %>
+  <div class="cited-section row mb-3">
+    <div class="col-md-3 form-check">
+      <div class="ps-3">
+        <%= form.radio_button :cited, 'true', class: 'form-check-input' %>
+        <%= form.label :cited_true, 'Yes', class: 'form-check-label' %>
+      </div>
+    </div>
+
+    <div class="col-md-3 form-check">
+      <%= form.radio_button :cited, 'false', class: 'form-check-input' %>
+      <%= form.label :cited_false, 'No', class: 'form-check-label' %>
+    </div>
+  </div>
+
   <%# Contributor person name/orcid fields %>
   <fieldset data-contributors-target="personSection">
     <legend class="visually-hidden">Person</legend>
@@ -22,7 +37,7 @@
                                                          options: PERSON_ROLES, label: role_label, container_classes: 'mb-4') %>
 
     <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :with_orcid, label_classes: 'fw-bold',
-                                                    label: 'Do you want to use a contributor\'s ORCID iD?', container_classes: 'mb-4') do |component| %>
+                                                    label: 'Do you want to use a contributor\'s ORCID iD?', container_classes: 'orcid-section mb-4') do |component| %>
       <% component.with_left_toggle_option(form:,
                                            field_name: :with_orcid,
                                            label: 'Yes',
@@ -96,7 +111,7 @@
     <%# Degree granting institution fields %>
     <div data-contributors-target="degreeGrantingSection">
       <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :stanford_degree_granting_institution, label_classes: 'fw-bold',
-                                                      label: 'Is Stanford the institution?', container_classes: 'mb-4') do |component| %>
+                                                      label: 'Is Stanford the institution?', container_classes: 'stanford-degree-granting-institution-section mb-4') do |component| %>
         <% component.with_left_toggle_option(form:,
                                              field_name: :stanford_degree_granting_institution,
                                              label: 'Yes',

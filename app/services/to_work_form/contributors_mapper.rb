@@ -27,7 +27,8 @@ module ToWorkForm
           'suborganization_name' => suborganization_name,
           'stanford_degree_granting_institution' => stanford_degree_granting_institution?,
           'orcid' => orcid,
-          'with_orcid' => orcid.present? }
+          'with_orcid' => orcid.present?,
+          'cited' => cited? }
       end
 
       private
@@ -77,6 +78,10 @@ module ToWorkForm
         return unless stanford_degree_granting_institution?
 
         contributor.name.first.structuredValue&.second&.value
+      end
+
+      def cited?
+        contributor.note&.none? { |note| note.type == 'citation status' && note.value == 'false' }
       end
     end
   end
