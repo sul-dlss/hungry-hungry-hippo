@@ -36,6 +36,8 @@ RSpec.describe ContributorForm do
     context 'when person with ORCID' do
       let(:with_orcid) { true }
       let(:orcid) { '0000-0000-0000-0000' }
+      let(:first_name) { 'Jane' }
+      let(:last_name) { 'Stanford' }
 
       it 'is valid' do
         expect(form).to be_valid
@@ -82,17 +84,9 @@ RSpec.describe ContributorForm do
       end
     end
 
-    context 'when ORCID is not a URL' do
-      let(:orcid) { '0000-0000-0000-0000' }
-      let(:with_orcid) { true }
-
-      it 'is valid' do
-        expect(form).to be_valid
-      end
-    end
-
     context 'when ORCID format is not valid' do
       let(:orcid) { 'ABCD' }
+      let(:with_orcid) { true }
 
       it 'is not valid' do
         expect(form).not_to be_valid
@@ -100,6 +94,40 @@ RSpec.describe ContributorForm do
     end
 
     context 'when depositing and missing name' do
+      let(:first_name) { '' }
+      let(:last_name) { '' }
+
+      it 'is not valid' do
+        expect(form.valid?(:deposit)).to be false
+      end
+    end
+
+    context 'when depositing with orcid and missing orcid' do
+      let(:with_orcid) { true }
+      let(:first_name) { '' }
+      let(:last_name) { '' }
+
+      it 'is not valid' do
+        expect(form.valid?(:deposit)).to be false
+        expect(form.errors.size).to eq(1)
+        error = form.errors.first
+        expect(error.attribute).to eq(:orcid)
+        expect(error.message).to eq("can't be blank")
+        # Note that not validating first and last name because orcid is not present.
+      end
+    end
+
+    context 'when with orcid and missing orcid' do
+      let(:with_orcid) { true }
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+    end
+
+    context 'when with orcid and missing names' do
+      let(:with_orcid) { true }
+      let(:orcid) { '0000-0000-0000-0000' }
       let(:first_name) { '' }
       let(:last_name) { '' }
 

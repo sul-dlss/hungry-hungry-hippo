@@ -148,29 +148,6 @@ en:
             A unique, descriptive title may improve discovery of your work in web searches.
         license:
           help_text: Assigning a license may improve discovery of your work in web searches.
-        contributors:
-          role:
-            label: 'Role'
-          role_type:
-            label: 'Role type'
-            person:
-              label: 'Individual'
-            organization:
-              label: 'Organization'
-          orcid_or_name:
-            label: 'ORCID iD or Name'
-          orcid:
-            label: 'ORCID iD'
-          use_orcid_button:
-            label: 'Use My ORCID iD'
-          reset_orcid_button:
-            label: 'Reset ORCID iD'
-          first_name:
-            label: 'First name'
-          last_name:
-            label: 'Last name'
-          organization:
-            label: 'Organization name'
         work_type:
           label: 'What type of content will you deposit?'
         work_subtypes:

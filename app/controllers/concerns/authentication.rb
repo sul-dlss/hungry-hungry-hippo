@@ -120,7 +120,8 @@ module Authentication
     session['orcid'] ||= if Rails.env.development?
                            Settings.seed_user.orcid_id
                          else
-                           request.headers[Settings.http_headers.orcid_id]
+                           orcid = request.headers[Settings.http_headers.orcid_id]
+                           orcid == '(null)' ? nil : orcid
                          end
   end
 

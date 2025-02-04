@@ -222,3 +222,8 @@ body {
 #pre-footer .btn.subscribe {
   height: fit-content;
 }
+
+// Provide invalid feedback without having to be sibling to the input
+.is-invalid.invalid-feedback {
+  display: block;
+}

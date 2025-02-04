@@ -96,6 +96,27 @@ RSpec.describe 'Edit a work' do
 
     # Fill in in authors
     find('.nav-link', text: 'Contributors').click
+    form_instances = all('.form-instance')
+    expect(form_instances.count).to eq(3)
+    within(form_instances[0]) do
+      expect(page).to have_checked_field('Individual', with: 'person')
+      expect(page).to have_select('Role', selected: 'Author')
+      expect(page).to have_checked_field('Yes')
+      expect(page).to have_field('ORCID iD', with: '0001-0002-0003-0004')
+      expect(page).to have_field('First name', with: 'Jane')
+      expect(page).to have_field('Last name', with: 'Stanford')
+    end
+    within(form_instances[1]) do
+      expect(page).to have_checked_field('Organization', with: 'organization')
+      expect(page).to have_select('Role', selected: 'Host institution')
+      expect(page).to have_field('Organization name', with: 'Stanford University Libraries')
+    end
+    within(form_instances[2]) do
+      expect(page).to have_checked_field('Organization', with: 'organization')
+      expect(page).to have_select('Role', selected: 'Degree granting institution')
+      expect(page).to have_checked_field('Yes')
+      expect(page).to have_field('Department / Institute / Center', with: 'Department of Philosophy')
+    end
     fill_in('work_contributors_attributes_0_first_name', with: updated_contributors.first['first_name'])
     fill_in('work_contributors_attributes_0_last_name', with: updated_contributors.first['last_name'])
     fill_in('work_contributors_attributes_1_organization_name', with: updated_contributors.last['organization_name'])

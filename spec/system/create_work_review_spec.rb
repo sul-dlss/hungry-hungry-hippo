@@ -56,6 +56,7 @@ RSpec.describe 'Create a work that requires review' do
 
     # Enter a contributor
     select('Creator', from: 'work_contributors_attributes_0_person_role')
+    find('label', text: 'No').click
     fill_in('First name', with: 'Jane')
     fill_in('Last name', with: 'Stanford')
 

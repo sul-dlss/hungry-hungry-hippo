@@ -82,11 +82,10 @@ RSpec.describe 'Validate a work deposit' do
 
     # Authors is marked invalid
     find('.nav-link.is-invalid', text: 'Contributors').click
-    expect(page).to have_css('input.is-invalid#work_contributors_attributes_0_first_name') # rubocop:disable Capybara/SpecificMatcher
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
-    expect(page).to have_css('input.is-invalid#work_contributors_attributes_0_last_name') # rubocop:disable Capybara/SpecificMatcher
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank", visible: :all)
 
     # Fill in the author name
+    find('label', text: 'No').click
     fill_in('First name', with: contributors_fixture.first['first_name'])
     fill_in('Last name', with: contributors_fixture.first['last_name'])
 
