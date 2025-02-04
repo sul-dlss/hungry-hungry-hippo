@@ -72,6 +72,7 @@ RSpec.describe 'Create a work deposit' do
 
     # Enter two contributors
     select('Creator', from: 'work_contributors_attributes_0_person_role')
+    find('label', text: 'No').click
     fill_in('First name', with: 'Jane')
     fill_in('Last name', with: 'Stanford')
     click_link_or_button('Add another contributor')

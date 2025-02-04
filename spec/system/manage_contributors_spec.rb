@@ -31,6 +31,30 @@ RSpec.describe 'Manage contributors for a work deposit' do
 
     create(:collection, user:, druid: collection_druid_fixture)
 
+    allow(Current).to receive(:orcid).and_return('0000-0002-5902-3077')
+
+    stub_request(:get, 'https://pub.orcid.org/v3.0/0000-0002-5902-3077/personal-details')
+      .with(
+        headers: { 'Accept' => 'application/json' }
+      )
+      .to_return(status: 200,
+                 body: '{"last-modified-date":{"value":1460760329525},"name":{"created-date":{"value":1460760329525},"last-modified-date":{"value":1460760329525},"given-names":{"value":"Amy E."},"family-name":{"value":"Hodge"},"credit-name":null,"source":null,"visibility":"public","path":"0000-0002-5902-3077"},"other-names":{"last-modified-date":{"value":1406092755312},"other-name":[{"created-date":{"value":1406092755312},"last-modified-date":{"value":1406092755312},"source":{"source-orcid":{"uri":"https://orcid.org/0000-0002-5902-3077","path":"0000-0002-5902-3077","host":"orcid.org"},"source-client-id":null,"source-name":{"value":"Amy E. Hodge"},"assertion-origin-orcid":null,"assertion-origin-client-id":null,"assertion-origin-name":null},"content":"A. Hodge, A.E. Hodge","visibility":"public","path":"/0000-0002-5902-3077/other-names/242944","put-code":242944,"display-index":0}],"path":"/0000-0002-5902-3077/other-names"},"biography":null,"path":"/0000-0002-5902-3077/personal-details"}', # rubocop:disable Layout/LineLength
+                 headers: { 'Content-Type': 'application/json;charset=UTF-8' })
+
+    stub_request(:get, 'https://pub.orcid.org/v3.0/0000-0001-7756-243X/personal-details')
+      .with(
+        headers: { 'Accept' => 'application/json' }
+      )
+      .to_return(status: 200,
+                 body: '{"last-modified-date":{"value":1581186663825},"name":{"created-date":{"value":1581186663824},"last-modified-date":{"value":1581186663825},"given-names":{"value":"Michael A."},"family-name":{"value":"Keller"},"credit-name":null,"source":null,"visibility":"public","path":"0000-0001-7756-243X"},"other-names":{"last-modified-date":null,"other-name":[],"path":"/0000-0001-7756-243X/other-names"},"biography":null,"path":"/0000-0001-7756-243X/personal-details"}', # rubocop:disable Layout/LineLength
+                 headers: { 'Content-Type': 'application/json;charset=UTF-8' })
+
+    stub_request(:get, 'https://pub.orcid.org/v3.0/0000-0001-7756-0000/personal-details')
+      .with(
+        headers: { 'Accept' => 'application/json' }
+      )
+      .to_return(status: 404)
+
     sign_in(user)
   end
 
@@ -55,6 +79,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
 
     # Fill in the contributor form
     within form_instances[0] do
+      find('label', text: 'No').click
       select('Creator', from: 'Role')
       fill_in('First name', with: 'Jane')
       fill_in('Last name', with: 'Stanford')
@@ -141,6 +166,32 @@ RSpec.describe 'Manage contributors for a work deposit' do
       select('Degree granting institution', from: 'Role')
       find('label', text: 'No').click
       fill_in('Organization name', with: 'Foothill College')
+    end
+
+    # Add a contributor with an ORCID
+    click_link_or_button('Add another contributor')
+    form_instances = all('.form-instance')
+    within form_instances[4] do
+      expect(page).to have_field('First name', disabled: true)
+      expect(page).to have_field('Last name', disabled: true)
+
+      # Invalid ORCID
+      fill_in('ORCID iD', with: '0000-0001-7756-243Y')
+      expect(page).to have_css('.invalid-feedback', text: 'invalid ORCID iD')
+
+      # Not found ORCID
+      fill_in('ORCID iD', with: '0000-0001-7756-0000')
+      expect(page).to have_css('.invalid-feedback', text: 'not found')
+
+      # Use my ORCID
+      click_link_or_button('Use my ORCID')
+      expect(page).to have_field('ORCID iD', with: '0000-0002-5902-3077')
+      expect(page).to have_field('First name', with: 'Amy E.')
+      expect(page).to have_field('Last name', with: 'Hodge')
+
+      fill_in('ORCID iD', with: 'https://orcid.org/0000-0001-7756-243X')
+      expect(page).to have_field('First name', with: 'Michael A.')
+      expect(page).to have_field('Last name', with: 'Keller')
     end
 
     click_link_or_button('Save as draft')

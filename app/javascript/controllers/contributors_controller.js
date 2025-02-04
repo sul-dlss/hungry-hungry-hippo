@@ -5,10 +5,11 @@ export default class extends Controller {
     'personOption', 'organizationOption',
     'personSection', 'organizationSection',
     'degreeGrantingSection', 'notDegreeGrantingSection',
-    'orcidField', 'useOrcidButton', 'resetOrcidButton',
-    'firstNameField', 'lastNameField',
+    'orcidInput', 'orcidFirstNameInput', 'orcidLastNameInput',
+    'orcidMessage', 'orcidFeedback',
     'organizationRoleSelect', 'yesStanfordOption',
-    'degreeGrantingSuborganizationSection', 'degreeGrantingOrganizationSection'
+    'degreeGrantingSuborganizationSection', 'degreeGrantingOrganizationSection',
+    'orcidSection', 'notOrcidSection', 'yesOrcidOption'
   ]
 
   static values = {
@@ -25,88 +26,115 @@ export default class extends Controller {
     }
   }
 
-  useOrcid () {
-    this.orcidFieldTarget.value = this.orcidValue
-    this.normalizeAndResolveOrcid()
-    this.orcidFieldTarget.readOnly = true
-    this.useOrcidButtonTarget.hidden = true
-    this.resetOrcidButtonTarget.hidden = false
+  useMyOrcid () {
+    this.orcidInputTarget.value = this.orcidValue
+    this.resolveOrcid()
   }
 
-  resetOrcid () {
-    this.resetOrcidButtonTarget.hidden = true
-    this.orcidFieldTarget.value = ''
-    this.orcidFieldTarget.readOnly = false
-    this.useOrcidButtonTarget.hidden = false
-  }
+  resolveOrcid () {
+    // Clear existing.
+    this.orcidFeedbackTarget.textContent = ''
+    this.orcidFeedbackTarget.classList.remove('is-invalid')
+    this.orcidFirstNameInputTarget.disabled = true
+    this.orcidFirstNameInputTarget.dataset.disabled = 'true'
+    this.orcidFirstNameInputTarget.value = ''
+    this.orcidLastNameInputTarget.disabled = true
+    this.orcidLastNameInputTarget.dataset.disabled = 'true'
+    this.orcidLastNameInputTarget.value = ''
 
-  normalizeAndResolveOrcid () {
-    this.orcidFieldTarget.value = this.orcidFieldTarget.value.replace(this.orcidPrefixValue, '')
+    // Normalize
+    const orcid = this.orcidInputTarget.value.replace(this.orcidPrefixValue, '')
+    // 0000-0003-1527-0030
+    if (orcid.length !== 19) return
 
-    fetch(`${this.orcidResolverPathValue}${this.orcidFieldTarget.value}`)
+    if (!/^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(orcid)) {
+      this.orcidFeedbackTarget.classList.add('is-invalid')
+      this.orcidFeedbackTarget.textContent = 'invalid ORCID iD'
+      return
+    }
+    this.orcidInputTarget.value = orcid
+
+    console.log('orcid', orcid)
+    fetch(`${this.orcidResolverPathValue}${orcid}`)
       .then(response => {
+        console.log('response', response)
+        if (response.status === 404) {
+          this.orcidFeedbackTarget.classList.add('is-invalid')
+          this.orcidFeedbackTarget.textContent = 'not found'
+          return null
+        }
         if (!response.ok) throw new Error(response.status)
         return response.json()
       })
       .then(data => {
-        if (this.firstNameFieldTarget.value === '') this.firstNameFieldTarget.value = data.first_name
-        if (this.lastNameFieldTarget.value === '') this.lastNameFieldTarget.value = data.last_name
+        if (!data) return
+        this.orcidFirstNameInputTarget.disabled = false
+        this.orcidFirstNameInputTarget.dataset.disabled = 'false'
+        this.orcidFirstNameInputTarget.value = data.first_name
+        this.orcidLastNameInputTarget.disabled = false
+        this.orcidLastNameInputTarget.dataset.disabled = 'false'
+        this.orcidLastNameInputTarget.value = data.last_name
+        this.orcidMessageTarget.textContent = `Name associated with this ORCID iD is ${data.first_name} ${data.last_name}.`
       })
       .catch(error => console.dir(error))
   }
 
   // Role type toggle Person selection
   showPersonSection () {
-    this.toggleInputs(this.personSectionTarget, false)
-    this.toggleInputs(this.organizationSectionTarget, true)
-    this.personSectionTarget.classList.remove('d-none')
-    this.organizationSectionTarget.classList.add('d-none')
+    this.toggleDisplay(this.personSectionTarget, this.organizationSectionTarget)
+    if (this.yesOrcidOptionTarget.checked) {
+      this.showOrcidSection()
+    } else {
+      this.showNotOrcidSection()
+    }
   }
 
   // Role type toggle Organization selection
   showOrganizationSection () {
-    this.toggleInputs(this.personSectionTarget, true)
-    this.toggleInputs(this.organizationSectionTarget, false)
-    this.personSectionTarget.classList.add('d-none')
-    this.organizationSectionTarget.classList.remove('d-none')
+    this.toggleDisplay(this.organizationSectionTarget, this.personSectionTarget)
     this.showDegreeGrantingSection()
   }
 
   showDegreeGrantingSection () {
     if (this.organizationRoleSelectTarget.value === 'degree_granting_institution') {
-      this.degreeGrantingSectionTarget.classList.remove('d-none')
-      this.notDegreeGrantingSectionTarget.classList.add('d-none')
-      this.toggleInputs(this.degreeGrantingSectionTarget, false)
-      this.toggleInputs(this.notDegreeGrantingSectionTarget, true)
+      this.toggleDisplay(this.degreeGrantingSectionTarget, this.notDegreeGrantingSectionTarget)
       if (this.yesStanfordOptionTarget.checked) {
         this.showDegreeGrantingSuborganizationSection()
       } else {
         this.showDegreeGrantingOrganizationSection()
       }
     } else {
-      this.degreeGrantingSectionTarget.classList.add('d-none')
-      this.notDegreeGrantingSectionTarget.classList.remove('d-none')
-      this.toggleInputs(this.degreeGrantingSectionTarget, true)
-      this.toggleInputs(this.notDegreeGrantingSectionTarget, false)
+      this.toggleDisplay(this.notDegreeGrantingSectionTarget, this.degreeGrantingSectionTarget)
     }
   }
 
   showDegreeGrantingOrganizationSection () {
-    this.degreeGrantingOrganizationSectionTarget.classList.remove('d-none')
-    this.degreeGrantingSuborganizationSectionTarget.classList.add('d-none')
-    this.toggleInputs(this.degreeGrantingOrganizationSectionTarget, false)
-    this.toggleInputs(this.degreeGrantingSuborganizationSectionTarget, true)
+    this.toggleDisplay(this.degreeGrantingOrganizationSectionTarget, this.degreeGrantingSuborganizationSectionTarget)
   }
 
   showDegreeGrantingSuborganizationSection () {
-    this.degreeGrantingOrganizationSectionTarget.classList.add('d-none')
-    this.degreeGrantingSuborganizationSectionTarget.classList.remove('d-none')
-    this.toggleInputs(this.degreeGrantingOrganizationSectionTarget, true)
-    this.toggleInputs(this.degreeGrantingSuborganizationSectionTarget, false)
+    this.toggleDisplay(this.degreeGrantingSuborganizationSectionTarget, this.degreeGrantingOrganizationSectionTarget)
+  }
+
+  showOrcidSection () {
+    this.toggleDisplay(this.orcidSectionTarget, this.notOrcidSectionTarget)
+  }
+
+  showNotOrcidSection () {
+    this.toggleDisplay(this.notOrcidSectionTarget, this.orcidSectionTarget)
+  }
+
+  toggleDisplay (showTarget, hideTarget) {
+    showTarget.classList.remove('d-none')
+    hideTarget.classList.add('d-none')
+    this.toggleInputs(showTarget, false)
+    this.toggleInputs(hideTarget, true)
   }
 
   toggleInputs (sectionEl, disabled) {
     sectionEl.querySelectorAll('input, select').forEach(input => {
+      // This provides a way to keep intentionally disabled inputs disabled.
+      if (!disabled && input.disabled && input.dataset.disabled === 'true') return
       input.disabled = disabled
     })
   }
