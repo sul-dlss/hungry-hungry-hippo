@@ -103,6 +103,7 @@ RSpec.describe 'Create a work deposit' do
     # Click Next to go to DOI tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'DOI')
+    expect(page).to have_link('What is a DOI?')
     expect(page).to have_text('Do you want a DOI assigned to this work?')
     choose('No')
 
