@@ -22,6 +22,7 @@
   <% component.with_tab(label: I18n.t('collections.edit.panes.access.tab_label'), tab_name: :access) %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.license.tab_label'), tab_name: :license) %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.participants.tab_label'), tab_name: :participants) %>
+  <% component.with_tab(label: I18n.t('collections.edit.panes.workflow.tab_label'), tab_name: :workflow) %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.deposit.tab_label'), tab_name: :deposit) %>
   <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
   <%# TabListComponent will render the actual form. %>
@@ -58,6 +59,13 @@
         <p><%= t('collections.edit.panes.participants.help_text') %></p>
         <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, label: 'Managers', form_component: Collections::ContributorComponent) %>
         <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, label: 'Depositors', form_component: Collections::ContributorComponent) %>
+      <% end %>
+    <% end %>
+
+    <% component.with_pane do %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :workflow, label: I18n.t('collections.edit.panes.workflow.label')) do %>
+        <p><%= t('collections.edit.panes.workflow.help_text') %></p>
+        <%= render Collections::Edit::WorkflowComponent.new(form:) %>
       <% end %>
     <% end %>
 

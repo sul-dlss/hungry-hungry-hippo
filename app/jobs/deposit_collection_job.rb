@@ -17,10 +17,12 @@ class DepositCollectionJob < ApplicationJob
                        access: @collection_form.access,
                        license_option: @collection_form.license_option,
                        license:,
-                       doi_option: @collection_form.doi_option)
+                       doi_option: @collection_form.doi_option,
+                       review_enabled: @collection_form.review_enabled)
 
     assign_participants(:managers)
     assign_participants(:depositors)
+    assign_participants(:reviewers)
 
     ModelSync::Collection.call(collection:, cocina_object: new_cocina_object)
 

@@ -262,3 +262,10 @@ en:
           help_text: >
             Select the appropriate option below to add a manager or depositor.
             Enter one participant SUNet ID per box and then click "Add" to save the entry.
+        workflow:
+          tab_label: 'Workflow'
+          label: 'Review workflow'
+          help_text: >
+            A Reviewer checks a deposit for clarity, accuracy, and completeness before approving the publication.
+            Only one Reviewer is required to review each deposit. A Reviewer can edit a deposit or return it to the
+            Depositor with a request for changes. The Depositor will receive a notification when their deposit is returned or approved.
