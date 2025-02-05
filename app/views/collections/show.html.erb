@@ -1,5 +1,6 @@
 <% content_for :breadcrumbs do %>
-  <%= render Elements::BreadcrumbNavComponent.new(dashboard: true, admin: false) do |component| %>
+  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: root_path) %>
     <% if current_page?(action: :new) %>
       <% component.with_breadcrumb(text: I18n.t('collections.edit.no_title')) %>
     <% else %>

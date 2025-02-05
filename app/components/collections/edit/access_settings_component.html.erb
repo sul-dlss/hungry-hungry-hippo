@@ -1,4 +1,4 @@
-<%= render Elements::SectionHeaderComponent.new(title: 'When will files on deposits to this collection be downloadable?') %>
+<%= render Edit::SectionHeaderComponent.new(title: 'When will files on deposits to this collection be downloadable?') %>
 <div data-controller="release">
   <fieldset>
     <div class="form-check">
@@ -25,7 +25,7 @@
   </fieldset>
 </div>
 <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
-<%= render Elements::SectionHeaderComponent.new(title: 'Who will have permission to download files for deposits to this collection?') %>
+<%= render Edit::SectionHeaderComponent.new(title: 'Who will have permission to download files for deposits to this collection?') %>
 <fieldset>
   <div class="form-check">
     <div class="ps-2">
@@ -47,7 +47,7 @@
   </div>
 </fieldset>
 <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
-<%= render Elements::SectionHeaderComponent.new(title: 'Will a DOI be assigned to the deposits in this collection?') %>
+<%= render Edit::SectionHeaderComponent.new(title: 'Will a DOI be assigned to the deposits in this collection?') %>
 <fieldset>
   <div class="form-check">
     <div class="ps-2">

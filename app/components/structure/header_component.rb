@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Elements
+module Structure
   # SUL application header, taken from component library
   class HeaderComponent < ViewComponent::Base
     # List of links to display in the header
