@@ -222,7 +222,7 @@ en:
         access:
           world: 'Everyone -- anyone in the world will be able to download the files for all deposits in this collection.'
           stanford: 'Stanford Community -- only members of the Stanford community will be able to download the files for all deposits in this collection.'
-          depositor_selects: 'Depositor selects -- default for all deposits will be that everyone can download the files, but Depositor can choose to 
+          depositor_selects: 'Depositor selects -- default for all deposits will be that everyone can download the files, but Depositor can choose to
             restrict file download for their deposit to the Stanford community.'
         doi_option:
           doi_yes: 'Yes, a DOI will be assigned to each deposit in this collection.'
@@ -245,7 +245,8 @@ en:
           tab_label: 'License'
           label: 'License'
           help_text: >
-            More text here.
+            We highly recommend every deposit be assigned a license when possible. A license helps other who access the
+            content to understand what the Depositor is allowing them to do with the work and under what conditions.
         related_links:
           tab_label: 'Related links'
           label: 'Links to related content (optional)'

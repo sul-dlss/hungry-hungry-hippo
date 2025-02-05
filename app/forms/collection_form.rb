@@ -29,6 +29,19 @@ class CollectionForm < ApplicationForm
   attribute :access, :string, default: 'world'
   validates :access, inclusion: { in: %w[world stanford depositor_selects] }
 
+  attribute :license_option, :string, default: 'required'
+  validates :license_option, inclusion: { in: %w[required depositor_selects] }
+
+  attribute :license, :string
+  with_options if: -> { license_option == 'required' } do
+    validate :license_present
+  end
+
+  attribute :suggested_license
+  with_options if: -> { license_option == 'depositor_selects' } do
+    validate :suggested_license_present
+  end
+
   attribute :release_option, :string, default: 'immediate'
   validates :release_option, inclusion: { in: %w[immediate depositor_selects] }
 
@@ -45,4 +58,16 @@ def duration_must_be_present
   return if release_duration.present?
 
   errors.add(:release_duration, 'select a valid duration for release')
+end
+
+def license_present
+  return if license.present?
+
+  errors.add(:license, 'select a valid license')
+end
+
+def suggested_license_present
+  return if suggested_license.present?
+
+  errors.add(:suggested_license, 'select a valid license')
 end

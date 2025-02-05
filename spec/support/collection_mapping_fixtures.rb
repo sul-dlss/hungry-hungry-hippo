@@ -10,6 +10,8 @@ module CollectionMappingFixtures
       release_option: 'depositor_selects',
       release_duration: 'one_year',
       access: 'depositor_selects',
+      license_option: 'required',
+      license: collection_license_fixture,
       doi_option: 'yes',
       contact_emails_attributes: contact_emails_fixture,
       related_links_attributes: related_links_fixture,
@@ -42,7 +44,7 @@ module CollectionMappingFixtures
         version: 1,
         identification: { sourceId: collection_source_id_fixture },
         administrative: { hasAdminPolicy: Settings.apo, partOfProject: Settings.project_tag },
-        access: { view: 'world' }
+        access: { view: 'world', license: collection_license_fixture }
       }
     )
   end
@@ -65,7 +67,7 @@ module CollectionMappingFixtures
         version: 2,
         identification: { sourceId: collection_source_id_fixture },
         administrative: { hasAdminPolicy: Settings.apo },
-        access: { view: 'world' }
+        access: { view: 'world', license: collection_license_fixture }
       }
     )
   end

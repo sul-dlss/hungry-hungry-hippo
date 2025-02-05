@@ -15,6 +15,8 @@ class DepositCollectionJob < ApplicationJob
                        release_option: @collection_form.release_option,
                        release_duration: @collection_form.release_duration,
                        access: @collection_form.access,
+                       license_option: @collection_form.license_option,
+                       license:,
                        doi_option: @collection_form.doi_option)
 
     assign_participants(:managers)
@@ -63,5 +65,9 @@ class DepositCollectionJob < ApplicationJob
 
   def sunetid_to_email_address(sunetid)
     "#{sunetid}#{User::EMAIL_SUFFIX}"
+  end
+
+  def license
+    @collection_form.license_option == 'depositor_selects' ? @collection_form.suggested_license : @collection_form.license
   end
 end

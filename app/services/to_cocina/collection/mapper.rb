@@ -35,7 +35,7 @@ module ToCocina
           label: collection_form.title,
           description: ToCocina::Collection::DescriptionMapper.call(collection_form:),
           version: collection_form.version,
-          access: { view: 'world' },
+          access:,
           identification: { sourceId: source_id },
           administrative: { hasAdminPolicy: Settings.apo }
         }.compact
@@ -45,6 +45,12 @@ module ToCocina
         params.tap do |params_hash|
           params_hash[:administrative][:partOfProject] = Settings.project_tag
         end
+      end
+
+      def access
+        return { view: 'world' } unless collection_form.license.present?
+
+        { view: 'world', license: collection_form.license }
       end
     end
   end

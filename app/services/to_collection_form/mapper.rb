@@ -32,6 +32,8 @@ module ToCollectionForm
         release_option: collection.release_option,
         release_duration: collection.release_duration,
         access: collection.access,
+        license_option: collection.license_option,
+        license: collection.license,
         doi_option: collection.doi_option,
         managers_attributes: participant_attributes(:managers),
         depositors_attributes: participant_attributes(:depositors),
