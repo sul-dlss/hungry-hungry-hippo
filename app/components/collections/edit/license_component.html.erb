@@ -17,7 +17,7 @@
       <%= form.label :license_option_depositor_selects, 'Depositor selects license', class: 'form-check-label' %>
     </div>
     <div class="ps-2">
-      <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :suggested_license, options: license_options, required: true, hidden_label: true, label:, width: 250, container_classes: 'mb-4', label_classes: 'h5') %>
+      <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :default_license, options: license_options, required: true, hidden_label: true, label:, width: 250, container_classes: 'mb-4', label_classes: 'h5') %>
     </div>
   </div>
 </fieldset>

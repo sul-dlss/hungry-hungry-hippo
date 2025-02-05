@@ -53,7 +53,7 @@ module ToCollectionForm
     def license
       return { license: collection.license } if collection.license_option == 'required'
 
-      { suggested_license: collection.license }
+      { default_license: collection.license }
     end
   end
 end

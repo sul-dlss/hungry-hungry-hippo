@@ -31,7 +31,8 @@ RSpec.describe 'Create a work deposit' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     create(:collection, user:, druid: collection_druid_fixture, managers: [user],
-                        custom_rights_statement_option: 'depositor_selects', doi_option: 'depositor_selects')
+                        custom_rights_statement_option: 'depositor_selects', doi_option: 'depositor_selects',
+                        license_option: 'depositor_selects', license: 'https://www.apache.org/licenses/LICENSE-2.0')
     sign_in(user)
   end
 

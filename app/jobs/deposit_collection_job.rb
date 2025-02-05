@@ -70,6 +70,6 @@ class DepositCollectionJob < ApplicationJob
   def license
     return @collection_form.license if @collection_form.license_option == 'required'
 
-    @collection_form.suggested_license
+    @collection_form.default_license
   end
 end

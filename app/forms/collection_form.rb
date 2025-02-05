@@ -37,9 +37,9 @@ class CollectionForm < ApplicationForm
     validate :license_present
   end
 
-  attribute :suggested_license
+  attribute :default_license
   with_options if: -> { license_option == 'depositor_selects' } do
-    validate :suggested_license_present
+    validate :default_license_present
   end
 
   attribute :release_option, :string, default: 'immediate'
@@ -66,8 +66,8 @@ def license_present
   errors.add(:license, 'select a valid license')
 end
 
-def suggested_license_present
-  return if suggested_license.present?
+def default_license_present
+  return if default_license.present?
 
-  errors.add(:suggested_license, 'select a valid license')
+  errors.add(:default_license, 'select a valid license')
 end
