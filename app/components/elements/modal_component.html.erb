@@ -1,0 +1,20 @@
+<%= tag.div class: classes, tabindex: '-1', id: do %>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <% if header? %>
+          <%= header %>
+        <% end %>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= body %>
+      </div>
+      <% if footer? %>
+        <div class="modal-footer">
+          <%= footer %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

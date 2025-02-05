@@ -82,7 +82,7 @@ RSpec.describe 'Create a work that requires review' do
     check('Thesis')
 
     # Clicking on Next to go to Deposit
-    find('.nav-link', text: 'Deposit').click
+    find('.nav-link', text: 'Deposit', exact_text: true).click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
     click_link_or_button('Submit for review')
 

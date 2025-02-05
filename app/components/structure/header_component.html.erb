@@ -51,7 +51,13 @@
             <hr class="d-md-none vw-100 my-0">
             <ul
               class="navbar-nav justify-content-md-end gap-0 gap-md-4 w-100 fw-semibold">
-              <%= render Elements::NavLinkComponent.with_collection(nav_links) %>
+              <%# TODO: #15 %>
+              <%= render Elements::NavLinkComponent.new(title: 'Contact us', path: root_path) %>
+              <%= render Elements::NavLinkComponent.new(title: 'Help', path: 'https://sdr.library.stanford.edu/documentation') %>
+              <%= render Elements::NavLinkComponent.new(title: 'Why SDR?', path: 'https://sdr.library.stanford.edu/') %>
+              <li class="nav-item">
+                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#tod-modal">Terms of Deposit</a>
+              </li>
             </ul>
             <hr class="d-md-none vw-100 my-0">
             <ul class="navbar-nav d-md-none gap-0 w-100">
@@ -63,3 +69,4 @@
     </div>
   </div>
 </header>
+<%= render Structure::TermsOfDepositModalComponent.new %>
