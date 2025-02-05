@@ -3,10 +3,12 @@
 module Elements
   # A single link in the header nav, bootstrap-style
   class NavLinkComponent < ViewComponent::Base
-    def initialize(nav_link:)
+    def initialize(title:, path:)
+      @title = title
+      @path = path
       super
-      @title = nav_link[:title]
-      @path = nav_link[:path]
     end
+
+    attr_reader :title, :path
   end
 end

@@ -72,7 +72,7 @@ RSpec.describe 'Edit a collection' do
     # Testing validation
     find('.nav-link', text: 'Details').click
     fill_in('collection_description', with: '')
-    find('.nav-link', text: 'Deposit').click
+    find('.nav-link', text: 'Deposit', exact_text: true).click
     click_link_or_button('Deposit')
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 

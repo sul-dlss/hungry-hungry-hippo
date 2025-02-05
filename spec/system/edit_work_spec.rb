@@ -90,7 +90,7 @@ RSpec.describe 'Edit a work' do
     # Testing validation
     find('.nav-link', text: 'Abstract & keywords').click
     fill_in('work_abstract', with: '')
-    find('.nav-link', text: 'Deposit').click
+    find('.nav-link', text: 'Deposit', exact_text: true).click
     click_link_or_button('Deposit')
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 

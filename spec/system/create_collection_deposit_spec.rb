@@ -85,7 +85,7 @@ RSpec.describe 'Create a collection deposit' do
 
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
-    find('.nav-link', text: 'Deposit').click
+    find('.nav-link', text: 'Deposit', exact_text: true).click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
 
     # Footer buttons

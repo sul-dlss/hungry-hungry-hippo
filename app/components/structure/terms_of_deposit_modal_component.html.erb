@@ -1,0 +1,19 @@
+<%= render Elements::ModalComponent.new(id: 'tod-modal') do |component| %>
+  <% component.with_header do %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-7">
+          <h1>Terms of Deposit</h1>
+        </div>
+        <div class="col-5">
+          <%= helpers.link_to_new_tab('FAQs and download Terms of Deposit', Settings.terms_url) %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <% component.with_body do %>
+    <%= tag.turbo_frame id: 'terms-of-deposit', src: terms_path do %>
+      <%= render Elements::SpinnerComponent.new %>
+    <% end %>
+  <% end %>
+<% end %>
