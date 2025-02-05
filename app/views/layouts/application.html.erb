@@ -38,6 +38,12 @@
       </div>
     </header>
     <main id="main-container">
+      <% if content_for?(:fluid_body) %>
+        <div class="fluid-container">
+          <%= yield :fluid_body %>
+        </div>
+      <% end %>
+
       <div class="container">
         <% flash.each do |flash_type, msg| %>
           <%= render Elements::AlertComponent.new(variant: flash_type) do %>

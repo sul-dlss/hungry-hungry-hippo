@@ -227,3 +227,47 @@ body {
 .is-invalid.invalid-feedback {
   display: block;
 }
+
+.hero {
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: -1.5rem;
+  border-bottom: #F9A44A 20px solid;
+
+  .row {
+    min-height: 450px;
+  }
+
+  .card {
+    min-height: 225px;
+  }
+}
+
+.opacity-85 {
+  opacity: 0.85;
+}  
+
+i.icon-lg {
+  font-size: 2rem;
+}
+
+i.icon-xl {
+  font-size: 3rem;
+}
+
+.secondary-card {
+  min-height: 175px;
+}
+
+.quote-card {
+  background-color: #FFF0E0;
+  min-height: 185px;
+}
+
+.quote-card, .secondary-card {
+  i {
+    color: #D1660F;
+  }
+}

@@ -41,9 +41,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :content_files, only: %i[edit update destroy show]
 
   # This route is used by the emails for the contact the SDR team link.
-  # THIS IS JUST STUBBED OUT SO IT CAN BE USED IN THE EMAILS.
   direct :contact_form do
-    { controller: 'dashboard', action: 'show', anchor: 'help' }
+    { controller: 'home', action: 'show', anchor: 'help' }
   end
 
   resource :terms, only: :show
@@ -54,7 +53,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  root 'dashboard#show'
+  get 'dashboard', to: 'dashboard#show'
+
+  root 'home#show'
 
   mount MissionControl::Jobs::Engine, at: '/jobs'
 end
