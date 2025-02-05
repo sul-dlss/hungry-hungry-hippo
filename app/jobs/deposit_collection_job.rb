@@ -68,6 +68,8 @@ class DepositCollectionJob < ApplicationJob
   end
 
   def license
-    @collection_form.license_option == 'depositor_selects' ? @collection_form.suggested_license : @collection_form.license
+    return @collection_form.license if @collection_form.license_option == 'required'
+
+    @collection_form.suggested_license
   end
 end

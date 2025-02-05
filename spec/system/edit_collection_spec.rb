@@ -107,6 +107,16 @@ RSpec.describe 'Edit a collection' do
     select('3 years in the future', from: 'collection_release_duration')
     expect(page).to have_select('Release duration', selected: '3 years in the future')
 
+    # Clicking on Next to go to License tab
+    # click_link_or_button('Next')
+    # expect(page).to have_css('.nav-link.active', text: 'License')
+    # expect(page).to have_text('License')
+    # expect(page).to have_checked_field('Require license for all deposits')
+    # expect(page).to have_select('License', selected: 'No License')
+    # find_by_id('collection_license').click
+    # select('CC-BY-4.0 Attribution International', from: 'collection_license')
+    # expect(page).to have_select('License', selected: 'CC-BY-4.0 Attribution International')
+
     # Clicking on Next to go to Participants tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Participants')

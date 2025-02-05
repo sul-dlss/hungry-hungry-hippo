@@ -33,12 +33,11 @@ module ToCollectionForm
         release_duration: collection.release_duration,
         access: collection.access,
         license_option: collection.license_option,
-        license: collection.license,
         doi_option: collection.doi_option,
         managers_attributes: participant_attributes(:managers),
         depositors_attributes: participant_attributes(:depositors),
         version: cocina_object.version
-      }
+      }.merge(license)
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -49,6 +48,12 @@ module ToCollectionForm
       collection.send(role).map do |participant|
         { sunetid: participant.sunetid }
       end
+    end
+
+    def license
+      return { license: collection.license } if collection.license_option == 'required'
+
+      { suggested_license: collection.license }
     end
   end
 end

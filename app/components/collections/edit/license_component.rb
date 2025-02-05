@@ -24,7 +24,7 @@ module Collections
       end
 
       def license_options
-        License::GROUPS.to_h do |group |
+        License::GROUPS.to_h do |group|
           licenses = License.where(group:).filter_map do |license|
             # Include all non-deprecated licenses and the current license (even if deprecated).
             [license.label, license.id] if !license.deprecated || license.id == current_license

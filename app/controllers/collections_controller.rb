@@ -36,7 +36,7 @@ class CollectionsController < ApplicationController
     render :form
   end
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize
     authorize! Collection
     @collection_form = CollectionForm.new(**collection_params)
     if @collection_form.valid?
