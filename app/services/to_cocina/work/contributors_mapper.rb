@@ -19,20 +19,9 @@ module ToCocina
           # First is always status: "primary"
           primary = index.zero?
           if contributor.person?(with_names: true)
-            CocinaGenerators::Description.person_contributor(
-              forename: contributor.first_name,
-              surname: contributor.last_name,
-              role: contributor.person_role,
-              primary:,
-              orcid: contributor.orcid
-            )
+            person_for(contributor:, primary:)
           elsif contributor.organization?(with_names: true)
-            CocinaGenerators::Description.organization_contributor(
-              name: contributor.organization_name,
-              role: contributor.organization_role,
-              suborganization_name: contributor.suborganization_name,
-              primary:
-            )
+            organization_for(contributor:, primary:)
           end
         end
       end
@@ -40,6 +29,27 @@ module ToCocina
       private
 
       attr_reader :contributor_forms
+
+      def person_for(contributor:, primary:)
+        CocinaGenerators::Description.person_contributor(
+          forename: contributor.first_name,
+          surname: contributor.last_name,
+          role: contributor.person_role,
+          primary:,
+          orcid: contributor.orcid,
+          cited: contributor.cited
+        )
+      end
+
+      def organization_for(contributor:, primary:)
+        CocinaGenerators::Description.organization_contributor(
+          name: contributor.organization_name,
+          role: contributor.organization_role,
+          suborganization_name: contributor.suborganization_name,
+          primary:,
+          cited: contributor.cited
+        )
+      end
     end
   end
 end

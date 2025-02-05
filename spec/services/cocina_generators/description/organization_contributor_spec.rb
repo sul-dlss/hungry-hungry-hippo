@@ -126,4 +126,34 @@ RSpec.describe CocinaGenerators::Description::OrganizationContributor do
       )
     end
   end
+
+  context 'when not cited' do
+    subject(:cocina_params) { described_class.call(name: 'Stanford University', role: 'creator', cited: false) }
+
+    it 'creates Cocina::Models::Contributor params with note' do
+      expect(cocina_params).to eq(
+        {
+          name: [{ value: 'Stanford University' }],
+          type: 'organization',
+          role: [
+            {
+              value: 'creator',
+              code: 'cre',
+              uri: 'http://id.loc.gov/vocabulary/relators/cre',
+              source: {
+                code: 'marcrelator',
+                uri: 'http://id.loc.gov/vocabulary/relators/'
+              }
+            }
+          ],
+          note: [
+            {
+              type: 'citation status',
+              value: 'false'
+            }
+          ]
+        }
+      )
+    end
+  end
 end

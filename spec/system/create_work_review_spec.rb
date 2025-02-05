@@ -55,10 +55,15 @@ RSpec.describe 'Create a work that requires review' do
     expect(page).to have_css('.nav-link.active', text: 'Contributors')
 
     # Enter a contributor
-    select('Creator', from: 'work_contributors_attributes_0_person_role')
-    find('label', text: 'No').click
-    fill_in('First name', with: 'Jane')
-    fill_in('Last name', with: 'Stanford')
+    form_instances = all('.form-instance')
+    within(form_instances.first) do
+      select('Creator', from: 'Role')
+      within('.orcid-section') do
+        find('label', text: 'No').click
+      end
+      fill_in('First name', with: 'Jane')
+      fill_in('Last name', with: 'Stanford')
+    end
 
     # Click Next to go to abstract tab
     click_link_or_button('Next')

@@ -12,11 +12,13 @@ module CocinaGenerators
       # @param role [String] the role of the organization from ROLES
       # @param suborganization_name [String] the name of the suborganization (e.g., department)
       # @param primary [Boolean] whether this is the first contributor
-      def initialize(name:, role:, suborganization_name: nil, primary: false)
+      # @param cited [Boolean] whether the organization should be cited
+      def initialize(name:, role:, suborganization_name: nil, primary: false, cited: true)
         @name = name
         @suborganization_name = suborganization_name
         @role = role
         @primary = primary
+        @cited = cited
       end
 
       def call
@@ -29,7 +31,7 @@ module CocinaGenerators
 
       private
 
-      attr_reader :name, :role, :primary, :suborganization_name
+      attr_reader :name, :role, :primary, :suborganization_name, :cited
 
       def organization_params
         {
@@ -37,7 +39,8 @@ module CocinaGenerators
           type: contributor_type,
           role: role_params,
           status: status_value,
-          identifier: identifier_params
+          identifier: identifier_params,
+          note: note_params
         }.compact
       end
 
@@ -54,7 +57,8 @@ module CocinaGenerators
           }],
           type: contributor_type,
           role: role_params,
-          status: status_value
+          status: status_value,
+          note: note_params
         }.compact
       end
 
@@ -91,6 +95,12 @@ module CocinaGenerators
             }
           }
         ]
+      end
+
+      def note_params
+        return if cited
+
+        [{ type: 'citation status', value: 'false' }]
       end
     end
   end
