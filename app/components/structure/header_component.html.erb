@@ -51,8 +51,9 @@
             <hr class="d-md-none vw-100 my-0">
             <ul
               class="navbar-nav justify-content-md-end gap-0 gap-md-4 w-100 fw-semibold">
-              <%# TODO: #15 %>
-              <%= render Elements::NavLinkComponent.new(title: 'Contact us', path: root_path) %>
+              <li class="nav-item">
+                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#contact-form-modal">Contact us</a>
+              </li>
               <%= render Elements::NavLinkComponent.new(title: 'Help', path: 'https://sdr.library.stanford.edu/documentation') %>
               <%= render Elements::NavLinkComponent.new(title: 'Why SDR?', path: 'https://sdr.library.stanford.edu/') %>
               <li class="nav-item">
@@ -70,3 +71,4 @@
   </div>
 </header>
 <%= render Structure::TermsOfDepositModalComponent.new %>
+<%= render Structure::ContactFormModalComponent.new %>
