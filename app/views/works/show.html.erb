@@ -1,5 +1,6 @@
 <% content_for :breadcrumbs do %>
-  <%= render Elements::BreadcrumbNavComponent.new(dashboard: true, admin: false) do |component| %>
+  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: root_path) %>
     <% component.with_breadcrumb(text: @work_presenter.collection.title, link: collection_path(druid: @work_presenter.collection.druid)) %>
     <% component.with_breadcrumb(text: @work_presenter.title) %>
   <% end %>

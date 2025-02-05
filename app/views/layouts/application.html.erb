@@ -29,7 +29,7 @@
   </head>
   <body>
     <%= render Elements::SkipLinksComponent.new %>
-    <%= render Elements::HeaderComponent.new %>
+    <%= render Structure::HeaderComponent.new %>
     <header>
       <div class="breadcrumbs">
         <nav id="breadcrumbs" aria-label="breadcrumb" class="container">
@@ -47,6 +47,6 @@
         <%= yield %>
       </div>
     </main>
-    <%= render Elements::FooterComponent.new %>
+    <%= render Structure::FooterComponent.new %>
   </body>
 </html>
