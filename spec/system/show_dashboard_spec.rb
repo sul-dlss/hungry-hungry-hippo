@@ -28,7 +28,7 @@ RSpec.describe 'Show dashboard', :rack_test do
   end
 
   it 'displays the dashboard' do
-    visit root_path
+    visit dashboard_path
 
     expect(page).to have_css('h2', text: "#{user.name} - Dashboard")
 

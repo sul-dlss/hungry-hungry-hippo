@@ -37,7 +37,7 @@ RSpec.describe 'Create a work deposit' do
   end
 
   it 'creates and deposits a work' do
-    visit root_path
+    visit dashboard_path
     click_link_or_button('Deposit to this collection')
 
     expect(page).to have_css('h1', text: 'Untitled deposit')

@@ -27,7 +27,7 @@ RSpec.describe 'Show dashboard' do
       end
 
       it 'includes the drafts section' do
-        get '/'
+        get '/dashboard'
 
         expect(response.body).to include(drafts_header)
       end
@@ -45,7 +45,7 @@ RSpec.describe 'Show dashboard' do
       end
 
       it 'excludes the drafts section' do
-        get '/'
+        get '/dashboard'
 
         expect(response.body).not_to include(drafts_header)
       end
@@ -61,7 +61,7 @@ RSpec.describe 'Show dashboard' do
       end
 
       it 'renders the create a new collection button' do
-        get '/'
+        get '/dashboard'
 
         expect(response.body).to include(button_text)
       end
@@ -73,7 +73,7 @@ RSpec.describe 'Show dashboard' do
       end
 
       it 'does not render the create a new collection button' do
-        get '/'
+        get '/dashboard'
 
         expect(response.body).not_to include(button_text)
       end

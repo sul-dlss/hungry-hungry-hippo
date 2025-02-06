@@ -35,7 +35,7 @@ RSpec.describe 'Create a work draft' do
   end
 
   it 'creates a work' do
-    visit root_path
+    visit dashboard_path
     click_link_or_button('Deposit to this collection')
 
     # Breadcrumbs

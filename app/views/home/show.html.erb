@@ -1,0 +1,123 @@
+<% content_for :fluid_body do %>
+  <%= tag.div class: 'hero', style: "background-image: url(#{image_path(@hero_image)});" do %>
+    <div class="row align-items-center justify-content-center h-100 gy-2">
+      <div class="col-md-3 col-sm-12">
+        <%= render Elements::CardComponent.new(classes: 'text-center mx-4 mx-md-2 opacity-85') do |component| %>
+          <% component.with_body do %>
+            <div class="mb-3">
+              <%= info_icon(fill: false, classes: 'icon-lg') %>
+            </div>
+            <p class="card-text">Learn more about how the Stanford Digital Repository supports long term preservation of scholarly works.</p>
+            <%# Can't find a non-hacky way to make this non-transparent. %>
+            <%= render Elements::ButtonLinkComponent.new(link: 'https://sdr.sites.stanford.edu/', label: 'Learn more', variant: 'outline-primary') %>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="col-md-3 col-sm-12">
+        <%= render Elements::CardComponent.new(classes: 'text-center mx-4 mx-md-2') do |component| %>
+          <% component.with_body do %>
+            <div class="mb-2">
+              <%= upload_icon(fill: false, classes: 'icon-xl') %>
+            </div>
+            <p class="h5 card-text mb-3">Create or manage your deposits</p>
+            <%= render Elements::ButtonLinkComponent.new(link: dashboard_path, label: 'Enter here', variant: 'primary', size: 'lg') %>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="col-md-3 col-sm-12">
+        <%= render Elements::CardComponent.new(classes: 'text-center mx-4 mx-md-2 opacity-85') do |component| %>
+          <% component.with_body do %>
+            <div class="mb-3">
+              <%= search_icon(fill: false, classes: 'icon-lg') %>
+            </div>
+            <form action="https://searchworks.stanford.edu/" method="get" target="_blank">
+              <label for="search" class="card-text mb-3">Search for items in the repository.</label>
+              <input type="hidden" name="f[building_facet][]" value="Stanford Digital Repository">
+              <div class="input-group">
+                <input name="q" type="text" id="search" class="form-control" placeholder="Search..." autocomplete="off">
+                <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+            </form>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row mt-5 justify-content-center gy-2">
+    <div class="col-md-4 col-sm-12">
+      <%= render Elements::CardComponent.new(classes: 'text-center align-items-center mx-4 mx-md-2 secondary-card', style: 'border: 1px solid #D1660F;') do |component| %>
+        <% component.with_body do %>
+          <div class="mb-2">
+            <%= bulb_icon(classes: 'icon-lg') %>
+          </div>
+          <p class="card-text">
+            Stanford Libraries will be closed for winter break from close of
+            business on December 20 until the morning of January 6.
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="col-md-4 col-sm-12">
+      <%= render Elements::CardComponent.new(classes: 'align-items-center mx-4 mx-md-2 border-0 secondary-card') do |component| %>
+        <% component.with_body(classes: 'd-flex flex-column justify-content-center') do %>
+          <div class="d-flex">
+            <div>
+              <%= image_tag 'home_news.jpg', height: 54, width: 185, alt: 'News' %>
+            </div>
+            <p class="ms-3">
+              Sign up for our newsletter to learn about the latest SDR features
+            </p>
+          </div>
+          <%= tag.form action: Settings.newsletter_url, method: 'post', data: { turbo: false },
+                       id: 'mc-embedded-subscribe-form', name: 'mc-embedded-subscribe-form', class: 'validate', target: '_blank', novalidate: true do %>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+              <input type="text" name="b_139e1b2d3df8f8cacd77c8160_4f4148a871" tabindex="-1" autocomplete="off" value="" aria-label="hidden">
+            </div>
+            <label for="mce-EMAIL" class="visually-hidden">Sign up for our newsletter</label>
+            <div class="input-group">
+              <input type="email" value="" name="EMAIL" class="form-control" id="mce-EMAIL" autocomplete="on" placeholder="Enter your email address" required>
+              <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary">
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mt-5 justify-content-center gy-2">
+    <div class="col-md-4 col-sm-12">
+      <%= render Home::QuoteCardComponent.new do %>
+        "I am definitely hearing more and more appreciation for the flexibility of SDR from my faculty colleagues who are racing to keep up with data sharing mandates from journals and funders. Way to be ahead of the curve!"
+      <% end %>
+    </div>
+
+    <div class="col-md-4 col-sm-12">
+      <%= render Home::QuoteCardComponent.new do %>
+        "I have recommended SDR to other folks, including those running capstone options. Overall, I have been really happy with this service! Your support over the years has been very appreciated!"
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mt-2 mb-5 justify-content-center gy-2">
+    <div class="col-md-3 col-sm-12">
+      <%= render Home::QuoteCardComponent.new do %>
+        "This dataset is really important for my research, and having it online gives credibility to the work we are accomplishing."
+      <% end %>
+    </div>
+
+    <div class="col-md-3 col-sm-12">
+      <%= render Home::QuoteCardComponent.new do %>
+        "Making deposits into the repository has been very convenient and helpful to our research and teaching here at Stanford."
+      <% end %>
+    </div>
+
+    <div class="col-md-3 col-sm-12">
+      <%= render Home::QuoteCardComponent.new do %>
+        "Congratulations to your SDR team for such a well-designed and intuitive-to-use deposit interface. It is a joy to work with!"
+      <% end %>
+    </div>
+  </div>
+<% end %>

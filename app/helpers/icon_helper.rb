@@ -5,7 +5,7 @@ module IconHelper
   extend ActionView::Helpers::TagHelper
 
   def icon(icon_classes:, classes: nil, **)
-    all_classes = [icon_classes, classes].compact.join(' ')
+    all_classes = ComponentSupport::CssClasses.merge(icon_classes, classes)
     content_tag(:i, nil, class: all_classes, **)
   end
 
@@ -25,8 +25,8 @@ module IconHelper
     icon(icon_classes: 'bi bi-check-circle-fill', **)
   end
 
-  def info_icon(**)
-    icon(icon_classes: 'bi bi-info-circle-fill', **)
+  def info_icon(fill: true, **)
+    icon(icon_classes: ['bi', fill ? 'bi-info-circle-fill' : 'bi-info-circle'], **)
   end
 
   def warning_icon(**)
@@ -57,8 +57,8 @@ module IconHelper
     icon(icon_classes: 'bi bi-chevron-left', **)
   end
 
-  def upload_icon(**)
-    icon(icon_classes: 'bi bi-cloud-upload-fill', **)
+  def upload_icon(fill: true, **)
+    icon(icon_classes: ['bi', fill ? 'bi-cloud-upload-fill' : 'bi-cloud-upload'], **)
   end
 
   def move_up_icon(**)
@@ -71,5 +71,17 @@ module IconHelper
 
   def calendar_icon(**)
     icon(icon_classes: 'bi bi-calendar', **)
+  end
+
+  def search_icon(**)
+    icon(icon_classes: 'bi bi-search', **)
+  end
+
+  def bulb_icon(**)
+    icon(icon_classes: 'bi bi-lightbulb', **)
+  end
+
+  def quote_icon(**)
+    icon(icon_classes: 'bi bi-quote', **)
   end
 end
