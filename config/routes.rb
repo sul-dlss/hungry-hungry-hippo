@@ -53,6 +53,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
 
+  get 'accounts/search', to: 'accounts#search'
+
   get 'dashboard', to: 'dashboard#show'
 
   root 'home#show'

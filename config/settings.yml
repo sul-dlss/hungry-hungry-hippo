@@ -63,3 +63,7 @@ rabbitmq:
 
 notifications:
   enabled: true
+
+accountws:
+  pem_file: /etc/pki/tls/certs/sul-h3-qa.stanford.edu.pem
+  host: accountws-uat.stanford.edu

@@ -16,6 +16,6 @@
 
   <fieldset data-workflow-target="reviewersSection" class="d-none">
     <p class="fw-bold">Enter one reviewer SUNet ID per box and then click "Add" to save the entry.</p>
-    <%= render NestedComponentPresenter.for(form:, field_name: :reviewers, model_class: ReviewerForm, label: 'Reviewers', form_component: Collections::ContributorComponent) %>
+    <%= render NestedComponentPresenter.for(form:, field_name: :reviewers, model_class: ReviewerForm, label: 'Reviewers', form_component: Collections::Edit::ParticipantComponent) %>
   </fieldset>
 <% end %>
