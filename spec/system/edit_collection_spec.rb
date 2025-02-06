@@ -138,6 +138,14 @@ RSpec.describe 'Edit a collection' do
       fill_in('SUNet ID', with: 'joehill')
     end
 
+    # Clicking on Next to go to Workflow
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Workflow')
+    expect(page).to have_text('Review workflow')
+    expect(page).to have_checked_field('No', with: false)
+    find('label', text: 'Yes').click
+    fill_in('collection_reviewers_attributes_0_sunetid', with: 'pennywise')
+
     click_link_or_button('Next')
 
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
@@ -154,6 +162,7 @@ RSpec.describe 'Edit a collection' do
     # Participants
     expect(page).to have_content('stepking@stanford.edu')
     expect(page).to have_content('joehill@stanford.edu')
+    expect(page).to have_content('pennywise@stanford.edu')
     expect(page).to have_css('.status', text: 'Depositing')
   end
 end

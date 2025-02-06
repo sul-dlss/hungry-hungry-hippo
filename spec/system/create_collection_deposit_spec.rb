@@ -93,6 +93,14 @@ RSpec.describe 'Create a collection deposit' do
     fill_in('collection_managers_attributes_1_sunetid', with: 'stepking')
     fill_in('collection_depositors_attributes_0_sunetid', with: 'joehill')
 
+    # Clicking on Next to go to Workflow
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Workflow')
+    expect(page).to have_text('Review workflow')
+    expect(page).to have_checked_field('No', with: false)
+    find('label', text: 'Yes').click
+    fill_in('collection_reviewers_attributes_0_sunetid', with: 'pennywise')
+
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
     find('.nav-link', text: 'Deposit', exact_text: true).click
