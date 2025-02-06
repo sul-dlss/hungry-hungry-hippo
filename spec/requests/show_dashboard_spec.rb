@@ -8,7 +8,6 @@ RSpec.describe 'Show dashboard' do
   describe 'drafts section' do
     let!(:work) { create(:work, :with_druid, user:, collection:) }
     let(:collection) { create(:collection, :with_druid, user:, managers: [user]) }
-
     let(:drafts_header) { 'Drafts - please complete' }
 
     before do
@@ -76,6 +75,84 @@ RSpec.describe 'Show dashboard' do
         get '/dashboard'
 
         expect(response.body).not_to include(button_text)
+      end
+    end
+  end
+
+  describe 'policy' do
+    let(:groups) { [] }
+
+    before do
+      sign_in(user, groups:)
+    end
+
+    context 'when user is an administrator' do
+      let(:groups) { [Settings.authorization_workgroup_names.administrators] }
+
+      it 'renders the dashboard' do
+        get '/dashboard'
+
+        expect(response.body).to include('Dashboard')
+        expect(response.body).not_to include('Welcome')
+      end
+    end
+
+    context 'when user is a collection creator' do
+      let(:groups) { [Settings.authorization_workgroup_names.collection_creators] }
+
+      it 'renders the dashboard' do
+        get '/dashboard'
+
+        expect(response.body).to include('Dashboard')
+        expect(response.body).not_to include('Welcome')
+      end
+    end
+
+    context 'when user is a collection depositor' do
+      before do
+        create(:collection, :with_druid, user:, depositors: [user])
+      end
+
+      it 'renders the dashboard' do
+        get '/dashboard'
+
+        expect(response.body).to include('Dashboard')
+        expect(response.body).not_to include('Welcome')
+      end
+    end
+
+    context 'when user is a collection reviewer' do
+      before do
+        create(:collection, :with_druid, user:, reviewers: [user])
+      end
+
+      it 'renders the dashboard' do
+        get '/dashboard'
+
+        expect(response.body).to include('Dashboard')
+        expect(response.body).not_to include('Welcome')
+      end
+    end
+
+    context 'when user is a collection manager' do
+      before do
+        create(:collection, :with_druid, user:, managers: [user])
+      end
+
+      it 'renders the dashboard' do
+        get '/dashboard'
+
+        expect(response.body).to include('Dashboard')
+        expect(response.body).not_to include('Welcome')
+      end
+    end
+
+    context 'when user has none of the above roles' do
+      it 'renders the new user form' do
+        get '/dashboard'
+
+        expect(response.body).not_to include('Dashboard')
+        expect(response.body).to include('Welcome')
       end
     end
   end

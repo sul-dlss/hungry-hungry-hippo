@@ -4,16 +4,18 @@
 class ContactsController < ApplicationController
   skip_verify_authorized
 
-  def new
-    @contact_form = ContactForm.new
-  end
+  def new; end
 
   def create
     contact_form = ContactForm.new(contact_form_params)
 
     ContactsMailer.with(contact_form.attributes.symbolize_keys).jira_email.deliver_later
 
-    redirect_to success_contacts_path
+    redirect_to success_contacts_path(bounce_location: params.dig('contact', 'bounce_location'))
+  end
+
+  def success
+    @bounce_location = params[:bounce_location]
   end
 
   private
