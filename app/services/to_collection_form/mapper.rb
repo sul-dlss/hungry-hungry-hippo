@@ -37,7 +37,7 @@ module ToCollectionForm
         managers_attributes: participant_attributes(:managers),
         depositors_attributes: participant_attributes(:depositors),
         version: cocina_object.version
-      }.merge(license)
+      }.merge(license_params)
     end
     # rubocop:enable Metrics/AbcSize
 
@@ -50,7 +50,7 @@ module ToCollectionForm
       end
     end
 
-    def license
+    def license_params
       return { license: collection.license } if collection.license_option == 'required'
 
       { default_license: collection.license }

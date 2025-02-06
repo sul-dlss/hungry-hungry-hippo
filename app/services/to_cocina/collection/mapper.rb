@@ -48,9 +48,7 @@ module ToCocina
       end
 
       def access
-        return { view: 'world' } if collection_form.license.blank?
-
-        { view: 'world', license: collection_form.license }
+        { view: 'world', license: collection_form.license }.compact
       end
     end
   end

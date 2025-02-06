@@ -36,7 +36,7 @@ class CollectionsController < ApplicationController
     render :form
   end
 
-  def create # rubocop:disable Metrics/AbcSize
+  def create
     authorize! Collection
     @collection_form = CollectionForm.new(**collection_params)
     if @collection_form.valid?
@@ -45,8 +45,6 @@ class CollectionsController < ApplicationController
                                       release_duration: @collection_form.release_duration,
                                       access: @collection_form.access,
                                       doi_option: @collection_form.doi_option,
-                                      license_option: @collection_form.license_option,
-                                      license: @collection_form.license,
                                       user: current_user,
                                       deposit_state_event: 'deposit_persist')
       DepositCollectionJob.perform_later(collection:, collection_form: @collection_form)

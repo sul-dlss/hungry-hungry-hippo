@@ -33,14 +33,10 @@ class CollectionForm < ApplicationForm
   validates :license_option, inclusion: { in: %w[required depositor_selects] }
 
   attribute :license, :string
-  with_options if: -> { license_option == 'required' } do
-    validate :license_present
-  end
+  validates :license, presence: true, if: -> { license_option == 'required' }
 
   attribute :default_license
-  with_options if: -> { license_option == 'depositor_selects' } do
-    validate :default_license_present
-  end
+  validates :default_license, presence: true, if: -> { license_option == 'depositor_selects' }
 
   attribute :release_option, :string, default: 'immediate'
   validates :release_option, inclusion: { in: %w[immediate depositor_selects] }
@@ -58,16 +54,4 @@ def duration_must_be_present
   return if release_duration.present?
 
   errors.add(:release_duration, 'select a valid duration for release')
-end
-
-def license_present
-  return if license.present?
-
-  errors.add(:license, 'select a valid license')
-end
-
-def default_license_present
-  return if default_license.present?
-
-  errors.add(:default_license, 'select a valid license')
 end
