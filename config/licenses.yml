@@ -40,7 +40,7 @@
   group: "Creative Commons"
 - id: "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
   deprecated: false
-  label: CC0-1.0
+  label: "CC0-1.0"
   group: "Creative Commons"
 - id: "https://opensource.org/licenses/cddl1"
   deprecated: false
