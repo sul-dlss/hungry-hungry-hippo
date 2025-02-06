@@ -39,7 +39,7 @@ RSpec.describe 'Create a work draft' do
     click_link_or_button('Deposit to this collection')
 
     # Breadcrumbs
-    expect(page).to have_link('Dashboard', href: root_path)
+    expect(page).to have_link('Dashboard', href: dashboard_path)
     expect(page).to have_link(collection_title_fixture, href: collection_path(collection_druid_fixture))
     expect(page).to have_css('.breadcrumb-item', text: 'Untitled deposit')
 
