@@ -11,6 +11,8 @@ module Elements
         @maxlength = maxlength
         @size = size
         args[:container_classes] = merge_classes('field-container', args[:container_classes])
+        args[:input_classes] =
+          merge_classes(args[:readonly] ? 'form-control-plaintext' : 'form-control', args[:input_classes])
         super(**args)
       end
 
