@@ -17,7 +17,7 @@ Spin up containers and the app, and then set up the application and solid-* data
 
 ```shell
 docker compose up -d
-bin/rails db:prepare db:seed
+bin/rails db:prepare db:seed spec:prepare
 bin/dev
 ```
 

@@ -29,5 +29,5 @@ workflows:
           use-codecov: true
           before-test:
             - run:
-                name: Install javascript dependencies and build assets
-                command: bin/rake css:build
+                name: Prepare for running specs (install JS dependencies and build assets)
+                command: bin/rake spec:prepare
