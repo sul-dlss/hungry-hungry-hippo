@@ -1,0 +1,21 @@
+<%= tag.div data: { controller: 'workflow' } do %>
+  <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :review_enabled, label_classes: 'fw-bold',
+                                                  label: 'Enable Review Workflow', container_classes: 'mb-4') do |component| %>
+    <% component.with_left_toggle_option(form:,
+                                         field_name: :review_enabled,
+                                         label: 'Yes',
+                                         value: true,
+                                         data: { workflow_target: 'enabledOption' },
+                                         label_data: { action: 'click->workflow#showReviewersSection' }) %>
+    <% component.with_right_toggle_option(form:,
+                                          field_name: :review_enabled,
+                                          label: 'No',
+                                          value: false,
+                                          label_data: { action: 'click->workflow#hideReviewersSection' }) %>
+  <% end %>
+
+  <fieldset data-workflow-target="reviewersSection" class="d-none">
+    <p class="fw-bold">Enter one reviewer SUNet ID per box and then click "Add" to save the entry.</p>
+    <%= render NestedComponentPresenter.for(form:, field_name: :reviewers, model_class: ReviewerForm, label: 'Reviewers', form_component: Collections::ContributorComponent) %>
+  </fieldset>
+<% end %>

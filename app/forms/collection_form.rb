@@ -2,7 +2,7 @@
 
 # Form for a Collection
 class CollectionForm < ApplicationForm
-  accepts_nested_attributes_for :related_links, :contact_emails, :managers, :depositors
+  accepts_nested_attributes_for :related_links, :contact_emails, :managers, :depositors, :reviewers
 
   def self.immutable_attributes
     ['druid']
@@ -45,6 +45,8 @@ class CollectionForm < ApplicationForm
 
   attribute :doi_option, :string, default: 'yes'
   validates :doi_option, inclusion: { in: %w[yes no depositor_selects] }
+
+  attribute :review_enabled, :boolean, default: false
 end
 
 def duration_must_be_present
