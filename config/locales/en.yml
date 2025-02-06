@@ -44,12 +44,6 @@ en:
           attributes:
             orcid:
               invalid: 'must be formatted as "XXXX-XXXX-XXXX-XXXX"'
-        collection:
-          attributes:
-            license:
-              blank: 'select a valid license'
-            default_license:
-              blank: 'select a valid license'
   time:
     formats:
       long: '%B %d, %Y'

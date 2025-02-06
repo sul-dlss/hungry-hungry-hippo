@@ -48,7 +48,7 @@ module ToCocina
       end
 
       def access
-        { view: 'world', license: collection_form.license }.compact
+        { view: 'world', license: collection_form.license }.compact_blank!
       end
     end
   end
