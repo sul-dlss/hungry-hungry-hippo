@@ -23,6 +23,30 @@ RSpec.describe 'Show collection' do
     end
   end
 
+  context 'when the user is a collection depositor' do
+    let(:depositor) { create(:user) }
+    let(:cocina_object) { collection_with_metadata_fixture }
+
+    before do
+      create(:collection, druid:, depositors: [depositor])
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:status)
+        .with(druid:)
+        .and_return(
+          VersionStatus.new(status:
+          instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true,
+                                                                               version: 1, openable?: true))
+        )
+      sign_in(depositor)
+    end
+
+    it 'shows the collection' do
+      get "/collections/#{druid}"
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   context 'when the deposit job started' do
     let!(:collection) { create(:collection, :registering_or_updating, druid:, user:) }
     let(:user) { create(:user) }
