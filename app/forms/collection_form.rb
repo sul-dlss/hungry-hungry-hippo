@@ -29,6 +29,15 @@ class CollectionForm < ApplicationForm
   attribute :access, :string, default: 'world'
   validates :access, inclusion: { in: %w[world stanford depositor_selects] }
 
+  attribute :license_option, :string, default: 'required'
+  validates :license_option, inclusion: { in: %w[required depositor_selects] }
+
+  attribute :license, :string
+  validates :license, presence: true, if: -> { license_option == 'required' }
+
+  attribute :default_license
+  validates :default_license, presence: true, if: -> { license_option == 'depositor_selects' }
+
   attribute :release_option, :string, default: 'immediate'
   validates :release_option, inclusion: { in: %w[immediate depositor_selects] }
 

@@ -15,7 +15,7 @@ RSpec.describe Importers::Collection do
       access: 'stanford',
       doi_option: 'yes',
       license_option: 'required',
-      required_license: 'CC0-1.0',
+      required_license: 'https://creativecommons.org/licenses/by/4.0/legalcode',
       default_license: nil,
       allow_custom_rights_statement: true,
       provided_custom_rights_statement: nil,

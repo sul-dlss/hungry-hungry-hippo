@@ -20,6 +20,7 @@
   <% component.with_tab(label: I18n.t('collections.edit.panes.details.tab_label'), tab_name: :details, selected: true) %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.related_links.tab_label'), tab_name: :related_links) %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.access.tab_label'), tab_name: :access) %>
+  <% component.with_tab(label: I18n.t('collections.edit.panes.license.tab_label'), tab_name: :license) %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.participants.tab_label'), tab_name: :participants) %>
   <% component.with_tab(label: I18n.t('collections.edit.panes.deposit.tab_label'), tab_name: :deposit) %>
   <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
@@ -42,6 +43,13 @@
     <% component.with_pane do %>
       <%= render Collections::Edit::PaneComponent.new(tab_name: :access, label: I18n.t('collections.edit.panes.access.label')) do %>
         <%= render Collections::Edit::AccessSettingsComponent.new(form:) %>
+      <% end %>
+    <% end %>
+
+    <% component.with_pane do %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :license, label: I18n.t('collections.edit.panes.license.label')) do %>
+        <p><%= t('collections.edit.panes.license.help_text') %></p>
+        <%= render Collections::Edit::LicenseComponent.new(form:) %>
       <% end %>
     <% end %>
 

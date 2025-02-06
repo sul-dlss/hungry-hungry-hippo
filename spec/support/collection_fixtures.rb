@@ -51,3 +51,7 @@ end
 def doi_option_fixture
   'yes'
 end
+
+def collection_license_fixture
+  'https://creativecommons.org/licenses/by/4.0/legalcode'
+end

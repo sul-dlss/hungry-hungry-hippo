@@ -12,7 +12,7 @@ RSpec.describe 'Validate a collection deposit' do
     sign_in(user, groups:)
   end
 
-  it 'validates a work' do
+  it 'validates a collection' do
     visit collection_path
 
     expect(page).to have_css('h1', text: 'Untitled collection')
@@ -33,7 +33,7 @@ RSpec.describe 'Validate a collection deposit' do
     find_by_id('collection_release_option_depositor_selects').click
     expect(page).to have_select('Release duration', selected: 'Select an option')
 
-    # Depositing the work
+    # Depositing the collection
     find('.nav-link', text: 'Deposit', exact_text: true).click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
     click_link_or_button('Deposit')
@@ -66,6 +66,28 @@ RSpec.describe 'Validate a collection deposit' do
     expect(page).to have_css('.invalid-feedback.is-invalid', text: 'select a valid duration for release')
     select('3 years in the future', from: 'collection_release_duration')
     expect(page).to have_select('Release duration', selected: '3 years in the future')
+
+    # License is marked invalid
+    find('.nav-link', text: 'License').click
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'select a valid license')
+    find_by_id('collection_license_option_depositor_selects').click
+
+    # Try to deposit again
+    find('.nav-link', text: 'Deposit', exact_text: true).click
+    expect(page).to have_css('.nav-link.active', text: 'Deposit')
+    click_link_or_button('Deposit')
+    expect(page).to have_css('h1', text: collection_title_fixture)
+    expect(page).to have_current_path(collection_path)
+
+    # Alert
+    expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+
+    # License is still marked invalid
+    find('.nav-link', text: 'License').click
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'select a valid license')
+    find_by_id('collection_license_option_depositor_selects').click
+    select('CC-BY-4.0 Attribution International', from: 'collection_default_license')
+    expect(page).to have_select('License', selected: 'CC-BY-4.0 Attribution International')
 
     # Try to deposit again
     find('.nav-link', text: 'Deposit', exact_text: true).click
