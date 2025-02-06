@@ -48,6 +48,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   resource :terms, only: :show
 
+  resource :contacts, only: %i[new create] do
+    member do
+      get 'success', to: 'contacts#success'
+    end
+  end
+
   root 'dashboard#show'
 
   mount MissionControl::Jobs::Engine, at: '/jobs'
