@@ -7,6 +7,11 @@ class ContactForm < ApplicationForm
   attribute :affiliation, :string
   attribute :help_how, :string
   attribute :message, :string
+  attribute :welcome, :boolean, default: false
+
+  def welcome?
+    welcome
+  end
 
   HELP_HOW_CHOICES = [
     'I want to become an SDR depositor',
