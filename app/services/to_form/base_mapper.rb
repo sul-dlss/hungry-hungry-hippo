@@ -15,7 +15,7 @@ module ToForm
       raise NotImplementedError
     end
 
-    protected
+    private
 
     attr_reader :cocina_object
   end

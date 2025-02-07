@@ -3,7 +3,7 @@
 module ToWorkForm
   # Base class for mapping date from Cocina to WorkForm
   class BaseDateMapper < ToForm::BaseMapper
-    protected
+    private
 
     def first_cocina_event_date_of(type:)
       event = cocina_object.description.event.find { |e| e.type == type }
