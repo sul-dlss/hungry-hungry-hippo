@@ -20,10 +20,6 @@ class CollectionPolicy < ApplicationPolicy
   # display? will be based on the depositors added to a collection
   # alias_rule :show?, :update?, :edit?, :wait?, to: :manage?
 
-  def collection_creator?
-    Current.groups.include?(Settings.authorization_workgroup_names.collection_creators)
-  end
-
   def collection_manager?
     record.managers.include?(user)
   end

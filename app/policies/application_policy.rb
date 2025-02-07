@@ -7,4 +7,8 @@ class ApplicationPolicy < ActionPolicy::Base
   def allow_admins
     allow! if Current.groups.include?(Settings.authorization_workgroup_names.administrators)
   end
+
+  def collection_creator?
+    Current.groups.include?(Settings.authorization_workgroup_names.collection_creators)
+  end
 end
