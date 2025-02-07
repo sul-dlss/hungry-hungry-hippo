@@ -152,7 +152,7 @@ RSpec.describe 'Show dashboard' do
         get '/dashboard'
 
         expect(response.body).not_to include('Dashboard')
-        expect(response.body).to include('Welcome')
+        expect(response.body).to include('<turbo-frame id="contact-form" src="/contacts/new?welcome=true">')
       end
     end
   end

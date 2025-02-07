@@ -5,7 +5,7 @@ class DashboardController < ApplicationController
   skip_verify_authorized only: :show
 
   def show
-    return render :new_user_contact_form unless allowed_to?(:show?, :dashboard)
+    return render :welcome_form unless allowed_to?(:show?, :dashboard)
 
     # This is going to be slow because it is going to block rendering since it is synchronous.
     # Also, it processes all of a user's works, but not all may be rendered on the dashboard.
