@@ -3,33 +3,25 @@
 module Structure
   # Component for rendering the contact form response
   class ContactFormSuccessComponent < ApplicationComponent
-    def initialize(bounce_location: nil)
-      @bounce_location = bounce_location
+    def initialize(modal: false)
+      @modal = modal
       super()
     end
 
     private
 
-    def bounce_location?
-      @bounce_location.present?
+    def modal?
+      @modal
     end
 
     def close_button_params
-      return { link: @bounce_location, label: 'Close', variant: :link } if bounce_location?
+      return { data: { bs_dismiss: 'modal' }, link: '#', label: 'Close', variant: :link } if modal?
 
-      { data: { bs_dismiss: 'modal' }, link: '#', label: 'Close', variant: :link }
+      { link: root_path, target: '_top', label: 'Close', variant: :link }
     end
 
-    def containing_tag_name
-      return :div if bounce_location?
-
-      :turbo_frame
-    end
-
-    def containing_tag_args
-      return {} if bounce_location?
-
-      { id: 'contact-form' }
+    def turbo_frame_id
+      modal? ? 'contact-form' : 'welcome-form'
     end
   end
 end

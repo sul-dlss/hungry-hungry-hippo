@@ -11,7 +11,7 @@ class ContactsController < ApplicationController
 
     ContactsMailer.with(contact_form.attributes.symbolize_keys).jira_email.deliver_later
 
-    @bounce_location = params.dig(:contact, :bounce_location)
+    @modal = ActiveModel::Type::Boolean.new.cast(params.dig(:contact, :modal))
 
     render :success, status: :created
   end
