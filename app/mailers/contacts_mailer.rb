@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Mailer for sending contact us emails
+# Mailer for sending contact SDR emails
 class ContactsMailer < ApplicationMailer
   def jira_email
     @name = params[:name]
