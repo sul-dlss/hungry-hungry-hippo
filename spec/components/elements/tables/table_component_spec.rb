@@ -3,11 +3,26 @@
 require 'rails_helper'
 
 RSpec.describe Elements::Tables::TableComponent, type: :component do
-  context 'with no rows' do
+  context 'with no rows and no empty message' do
     it 'does not render the table' do
       render_inline(described_class.new(id: 'test-table', label: 'Test Table'))
 
       expect(page).to have_no_table('test-table')
+    end
+  end
+
+  context 'with no rows and empty message' do
+    it 'does renders table headers and the empty message' do
+      render_inline(
+        described_class.new(id: 'test-table', label: 'Test Table', empty_message: 'Empty').tap do |component|
+          component.with_header(headers: ['Header 1', 'Header 2'])
+        end
+      )
+
+      table = page.find('table#test-table')
+      expect(table).to have_css('thead')
+      expect(table).to have_css('th', count: 2)
+      expect(page).to have_css('p', text: 'Empty')
     end
   end
 

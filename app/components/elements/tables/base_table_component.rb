@@ -7,7 +7,8 @@ module Elements
       renders_one :header, 'Elements::Tables::HeaderComponent'
       # Subclasses should provide rows, e.g., renders_many :rows
 
-      def initialize(id:, label:, classes: [], body_classes: [], show_label: true, role: nil, data: {}) # rubocop:disable Metrics/ParameterLists
+      def initialize(id:, label:, classes: [], body_classes: [], show_label: true, role: nil, data: {}, # rubocop:disable Metrics/ParameterLists
+                     empty_message: nil)
         @id = id
         @classes = classes
         @body_classes = body_classes
@@ -15,10 +16,11 @@ module Elements
         @show_label = show_label
         @role = role
         @data = data
+        @empty_message = empty_message
         super()
       end
 
-      attr_reader :label, :id, :role, :data
+      attr_reader :label, :id, :role, :data, :empty_message
 
       def classes
         # Provides table, table-striped, and table-sm as the static default classes
@@ -35,7 +37,7 @@ module Elements
       end
 
       def render?
-        rows?
+        rows? || empty_message.present?
       end
     end
   end
