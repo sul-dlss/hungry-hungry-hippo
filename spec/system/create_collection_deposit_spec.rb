@@ -41,6 +41,10 @@ RSpec.describe 'Create a collection deposit' do
     visit dashboard_path
     click_link_or_button('Create a new collection')
 
+    # Breadcrumb
+    expect(page).to have_link('Dashboard', href: dashboard_path)
+    expect(page).to have_css('.breadcrumb-item', text: 'Untitled collection')
+
     expect(page).to have_css('h1', text: 'Untitled collection')
 
     # Footer buttons

@@ -30,7 +30,7 @@ RSpec.describe 'Create a work deposit' do
     # Stubbing out for show page
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
-    create(:collection, user:, druid: collection_druid_fixture, managers: [user],
+    create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture, managers: [user],
                         custom_rights_statement_option: 'depositor_selects', doi_option: 'depositor_selects',
                         license_option: 'depositor_selects', license: 'https://www.apache.org/licenses/LICENSE-2.0')
     sign_in(user)
@@ -39,6 +39,11 @@ RSpec.describe 'Create a work deposit' do
   it 'creates and deposits a work' do
     visit dashboard_path
     click_link_or_button('Deposit to this collection')
+
+    # Breadcrumb
+    expect(page).to have_link('Dashboard', href: dashboard_path)
+    expect(page).to have_link(collection_title_fixture, href: collection_path(collection_druid_fixture))
+    expect(page).to have_css('.breadcrumb-item', text: 'Untitled deposit')
 
     expect(page).to have_css('h1', text: 'Untitled deposit')
 

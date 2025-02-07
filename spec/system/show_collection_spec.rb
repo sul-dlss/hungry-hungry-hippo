@@ -35,7 +35,7 @@ RSpec.describe 'Show a collection' do
     visit collection_path(druid)
 
     # Breadcrumb
-    expect(page).to have_link('Dashboard', href: root_path)
+    expect(page).to have_link('Dashboard', href: dashboard_path)
     expect(page).to have_css('.breadcrumb-item', text: collection.title)
 
     # Tabs
