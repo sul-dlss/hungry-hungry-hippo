@@ -47,11 +47,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   resource :terms, only: :show
 
-  resource :contacts, only: %i[new create] do
-    member do
-      get 'success', to: 'contacts#success'
-    end
-  end
+  resource :contacts, only: %i[new create]
 
   get 'dashboard', to: 'dashboard#show'
 
