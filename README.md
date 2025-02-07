@@ -23,6 +23,25 @@ bin/dev
 
 Then browse to http://localhost:3000 to see the running application.
 
+#### Change default user role
+
+You can change your abilities within the app by setting the `ROLES` environment
+variable. By default you will be granted administrative abilities. (NOTE: you
+may need to clear your browser session cookies to pick up the new roles, as they
+may be cached from a previous session.)
+
+To remove administrative capabilities and view the site as a collection creator:
+
+```shell
+ROLES=dlss:hydrus-app-collection-creators bin/dev
+```
+
+To view the site as a first-time user, use a bogus role:
+
+```shell
+ROLES=foobar bin/dev
+```
+
 ### Mission Control
 
 A dashboard for Solid Queue background jobs is available at `http://localhost:3000/jobs`.
@@ -117,8 +136,8 @@ A "nested" field is one that is not "simple" (see prior section).
 1. Publish a notification that would trigger the email. For example: `after_create -> { Notifier.publish(Notifier::DEPOSITOR_ADDED, user:, collection:) }`.
 1. Add an email to a mailer controller (for example, `app/mailers/collections_mailer.rb`) and a view (for example, `app/views/collections_mailer/invitation_to_deposit_email.html.erb`).
 1. Add a subscription to `config/initializers/subscriptions.rb`. For example:
-```
-Notifier.subscribe_mailer(event_name: Notifier::DEPOSITOR_ADDED, mailer_class: CollectionsMailer, mailer_method: :invitation_to_deposit_email)
-```
+    ```
+    Notifier.subscribe_mailer(event_name: Notifier::DEPOSITOR_ADDED, mailer_class: CollectionsMailer, mailer_method: :invitation_to_deposit_email)
+    ```
 1. Test the triggering of the notification.
-2. Test the email.
+1. Test the email.

@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 
-bin/overmind start -f Procfile.dev
+# Provide an override-able default ROLES value that allows the developer full access.
+# In a production-like environment, these are provided by the webserver/Shibboleth/LDAP
+ROLES="${ROLES:=dlss:hydrus-app-administrators}" bin/overmind start -f Procfile.dev
