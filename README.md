@@ -26,17 +26,9 @@ Then browse to http://localhost:3000 to see the running application.
 #### Change default user role
 
 You can change your abilities within the app by setting the `ROLES` environment
-variable. By default you will be granted administrative abilities.
-
-Note that you may need to clear your browser session cookies to pick up the new
-roles set here, as they may be cached from a previous session. If you want to
-avoid clearing _all_ your cookies, e.g. to prevent logging out of various
-services, you may be able to clear cookies for specific top-level domains (e.g.
-stanford.edu) by using your browser's settings (e.g. `Privacy and Security >
-Cookies and Site Data > Manage Data` in Firefox). You may be able to clear
-specific cookies for specific subdomains (e.g. sdr.stanford.edu) by visiting a
-page at that subdomain, and using the storage inspector tool in dev tools (e.g.
-`Web Developer Tools > Storage > Cookies` in Firefox).
+variable. By default you will be granted administrative abilities. (NOTE: you
+may need to clear your browser session cookies to pick up the new roles, as they
+may be cached from a previous session.)
 
 To remove administrative capabilities and view the site as a collection creator:
 
@@ -44,10 +36,10 @@ To remove administrative capabilities and view the site as a collection creator:
 ROLES=dlss:hydrus-app-collection-creators bin/dev
 ```
 
-To view the site as a first-time user:
+To view the site as a first-time user, use a bogus role:
 
 ```shell
-ROLES=foo:bar:whatever bin/dev
+ROLES=foobar bin/dev
 ```
 
 ### Mission Control
