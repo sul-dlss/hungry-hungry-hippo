@@ -9,3 +9,6 @@
     <% end %>
   <% end %>
 <% end %>
+<% if empty_message && !rows? %>
+  <p class="fst-italic"><%= empty_message %></p>
+<% end %>
