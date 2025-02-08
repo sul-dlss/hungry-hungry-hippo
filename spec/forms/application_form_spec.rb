@@ -30,9 +30,9 @@ RSpec.describe ApplicationForm do
   describe '.user_editable_attributes' do
     let(:test_form_class) do
       Class.new(described_class) do
-        def self.attribute_names
-          %i[foo bar baz]
-        end
+        attribute :foo, :string
+        attribute :bar, array: true
+        attribute :baz, :string
 
         def self.immutable_attributes
           [:baz]
@@ -45,7 +45,7 @@ RSpec.describe ApplicationForm do
     end
 
     it 'returns attributes not declared as immutable' do
-      expect(TestForm.user_editable_attributes).to eq(%i[foo bar])
+      expect(TestForm.user_editable_attributes).to eq([:foo, { bar: [] }])
     end
   end
 

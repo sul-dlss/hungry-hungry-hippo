@@ -14,7 +14,12 @@ class ApplicationForm
   end
 
   def self.user_editable_attributes
-    (attribute_names - immutable_attributes).map(&:to_sym)
+    (attribute_names.map(&:to_sym) - immutable_attributes.map(&:to_sym)).map do |attribute_name|
+      # Could not find a way to determine when attribute is an array.
+      # This approach is based on the assumption that every attribute will
+      # have a type EXCEPT for arrays.
+      type_for_attribute(attribute_name).type.nil? ? { attribute_name => [] } : attribute_name
+    end
   end
 
   def self.immutable_attributes
