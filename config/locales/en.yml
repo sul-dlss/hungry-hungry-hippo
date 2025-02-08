@@ -128,6 +128,8 @@ en:
             succeeded by: 'It precedes or is continued by this related work'
             part of: "It's one part of this related work"
             has part: 'It consists of parts, one of which is this related work'
+  terms_of_deposit:
+    faq: 'FAQs and download Terms of Deposit'
   works:
     edit:
       breadcrumb: 'Edit'
