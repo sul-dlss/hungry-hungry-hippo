@@ -15,6 +15,10 @@ module Collections
       def allowed_to_create_work?
         helpers.allowed_to?(:create_work?, presenter.collection)
       end
+
+      def edit?
+        helpers.allowed_to?(:edit?, presenter.collection)
+      end
     end
   end
 end
