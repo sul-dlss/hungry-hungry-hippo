@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class CollectionPolicy < ApplicationPolicy
-  alias_rule :show?, :update?, :edit?, :wait?, :destroy?, to: :manage?
+  alias_rule :update?, :edit?, :wait?, :destroy?, to: :manage?
+
+  def show?
+    collection_depositor? || manage?
+  end
 
   def manage?
     collection_manager? || record.user_id == user.id
@@ -22,5 +26,9 @@ class CollectionPolicy < ApplicationPolicy
 
   def collection_manager?
     record.managers.include?(user)
+  end
+
+  def collection_depositor?
+    record.depositors.include?(user)
   end
 end
