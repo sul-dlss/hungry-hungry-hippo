@@ -181,7 +181,7 @@ en:
             Use the arrows on the right to move entries up or down in the list.
         dates:
           tab_label: 'Dates (optional)'
-          label: 'Enter dates related to your deposit'
+          label: 'Enter dates related to your deposit (optional)'
         doi:
           tab_label: 'DOI'
           label: 'DOI assignment'

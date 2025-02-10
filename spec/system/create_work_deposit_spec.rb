@@ -118,7 +118,7 @@ RSpec.describe 'Create a work deposit' do
     # Clicking on Next to go to dates tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Dates (optional)')
-    expect(page).to have_text('Enter dates related to your deposit')
+    expect(page).to have_text('Enter dates related to your deposit (optional)')
 
     # Filling in dates
     within_fieldset('publication_date') do
