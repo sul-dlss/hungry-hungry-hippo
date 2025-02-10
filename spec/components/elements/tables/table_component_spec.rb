@@ -68,4 +68,18 @@ RSpec.describe Elements::Tables::TableComponent, type: :component do
       expect(row2).to have_css('td', text: 'Row 4')
     end
   end
+
+  context 'with caption' do
+    it 'renders the table with caption' do
+      render_inline(
+        described_class.new(id: 'test-table').tap do |component|
+          component.with_caption { '<h1>Test Table</h1>'.html_safe }
+          component.with_row(values: ['Row 1', 'Row 2'])
+        end
+      )
+
+      table = page.find('table#test-table')
+      expect(table).to have_css('caption h1', text: 'Test Table')
+    end
+  end
 end

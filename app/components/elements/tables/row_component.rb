@@ -17,6 +17,10 @@ module Elements
       end
 
       attr_reader :label, :values, :id
+
+      def empty_cell?
+        label.present? && values.empty? && !items? && !cells?
+      end
     end
   end
 end
