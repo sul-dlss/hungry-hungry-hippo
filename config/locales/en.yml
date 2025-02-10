@@ -256,7 +256,7 @@ en:
             We highly recommend every deposit be assigned a license when possible. A license helps other who access the
             content to understand what the Depositor is allowing them to do with the work and under what conditions.
         related_links:
-          tab_label: 'Related links'
+          tab_label: 'Related links (optional)'
           label: 'Links to related content (optional)'
         access:
           tab_label: 'Access settings'
