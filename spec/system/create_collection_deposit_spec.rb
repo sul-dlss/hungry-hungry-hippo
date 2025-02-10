@@ -55,7 +55,7 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Details')
     expect(page).to have_css('.nav-link:not(.active)', text: 'Related links')
     # Manage files pane with form field is visible, abstract is not
-    expect(page).to have_css('div.h4', text: 'Collection details')
+    expect(page).to have_css('h2', text: 'Collection details')
 
     # Filling in title, description, and contact email
     find('.nav-link', text: 'Details').click

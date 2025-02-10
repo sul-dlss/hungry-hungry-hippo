@@ -52,7 +52,7 @@ RSpec.describe 'Create a work deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Manage files')
     expect(page).to have_css('.nav-link:not(.active)', text: 'Abstract')
     # Manage files pane with form field is visible, abstract is not
-    expect(page).to have_css('div.h4', text: 'Manage files')
+    expect(page).to have_css('h2', text: 'Manage files')
     expect(page).to have_css('.dropzone', text: 'Select files to upload')
     expect(page).to have_no_text('Describe your deposit')
 
