@@ -166,6 +166,15 @@ RSpec.describe 'Create a work deposit' do
     fill_in 'Release date', with: (Time.zone.today + 1.day).iso8601
 
     expect(page).to have_css('.h5', text: 'Individual file visibility')
+
+    # Manage files link
+    click_link_or_button('Manage files')
+    # Switched to manage files tab
+    expect(page).to have_css('.nav-link.active', text: 'Manage files')
+    # Return
+    find('.nav-link', text: 'Access settings').click
+    expect(page).to have_css('.nav-link.active', text: 'Access settings')
+
     expect(page).to have_css('.h5', text: 'Download access')
     select('Everyone', from: 'work_access')
 
