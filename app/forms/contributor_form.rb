@@ -3,14 +3,10 @@
 # Form for a contributor
 class ContributorForm < ApplicationForm
   attribute :first_name, :string
-  validates :first_name, presence: true, on: :deposit, if: :validate_name_on_deposit?
-  validates :first_name, presence: true, if: :validate_name?
-
   attribute :last_name, :string
-  validates :last_name, presence: true, on: :deposit, if: :validate_name_on_deposit?
-  validates :last_name, presence: true, if: :validate_name?
 
   validate :name_must_be_complete, if: :person?
+  validate :name_must_be_complete_on_deposit, on: :deposit, if: :person?
 
   attribute :organization_name, :string
   validates :organization_name, presence: true, on: :deposit, if: -> { organization? }
@@ -59,28 +55,29 @@ class ContributorForm < ApplicationForm
     with_orcid
   end
 
-  # If any part of a name is provided, then first and last must be provided.
-  def name_must_be_complete
+  private
+
+  # Name validation:
+  # If part of a name is provided the whole name must be provided.
+  # If depositing, the whole name must be provided.
+  def name_must_be_complete_on_deposit
+    return unless first_name.blank? && last_name.blank?
+    # orcid validation will report an error, so we don't need to report an error here.
+    return if with_orcid? && orcid.blank?
+
+    errors.add(:first_name, I18n.t('contributors.validation.first_name.blank'))
+    errors.add(:last_name, I18n.t('contributors.validation.last_name.blank'))
+  end
+
+  def name_must_be_complete # rubocop:disable Metrics/AbcSize
     return if first_name.blank? && last_name.blank?
 
     return if first_name.present? && last_name.present?
 
     if first_name.blank?
-      errors.add(:first_name, "can't be blank")
+      errors.add(:first_name, I18n.t('contributors.validation.first_name.blank'))
     else
-      errors.add(:last_name, "can't be blank")
+      errors.add(:last_name, I18n.t('contributors.validation.last_name.blank'))
     end
-  end
-
-  def validate_name_on_deposit?
-    person? && !with_orcid?
-  end
-
-  def validate_name?
-    return false unless person?
-
-    return false unless with_orcid?
-
-    orcid.present?
   end
 end
