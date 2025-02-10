@@ -64,6 +64,7 @@ en:
         blank: 'must provide a first name'
       last_name:
         blank: 'must provide a last name'
+  contact_sdr: 'Contact SDR staff'
   date:
     fields:
       year:
