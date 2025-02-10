@@ -14,24 +14,26 @@ class DepositWorkJob < ApplicationJob
 
     # Add missing digests and mime types
     Contents::Analyzer.call(content:)
+
+    # If new_cocina_object then persist not performed since not changed.
     new_cocina_object = perform_persist
-    druid = new_cocina_object.externalIdentifier
+    druid = work_form.druid || new_cocina_object.externalIdentifier
 
     work.update!(druid:)
 
     Contents::Stager.call(content:, druid:)
 
-    ModelSync::Work.call(work:, cocina_object: new_cocina_object)
+    ModelSync::Work.call(work:, cocina_object: mapped_cocina_object)
 
     update_terms_of_deposit!
 
-    if deposit?
+    if deposit? && new_cocina_object
       Sdr::Repository.accession(druid:)
       work.accession!
     else
       work.deposit_persist_complete!
     end
-    work.request_review! if request_review?
+    work.request_review! if request_review? && new_cocina_object
 
     # Content isn't needed anymore
     content.destroy!
@@ -45,14 +47,17 @@ class DepositWorkJob < ApplicationJob
     @content ||= Content.find(work_form.content_id)
   end
 
-  def perform_persist
-    cocina_object = ToCocina::Work::Mapper.call(work_form:, content:, source_id: "h3:object-#{work.id}")
+  def mapped_cocina_object
+    @mapped_cocina_object ||= ToCocina::Work::Mapper.call(work_form:, content:, source_id: "h3:object-#{work.id}")
+  end
 
-    if work_form.persisted?
-      Sdr::Repository.open_if_needed(cocina_object:)
+  def perform_persist
+    if !work_form.persisted?
+      Sdr::Repository.register(cocina_object: mapped_cocina_object, assign_doi:)
+    elsif RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
+
+      Sdr::Repository.open_if_needed(cocina_object: mapped_cocina_object)
                      .then { |cocina_object| Sdr::Repository.update(cocina_object:) }
-    else
-      Sdr::Repository.register(cocina_object:, assign_doi:)
     end
   end
 

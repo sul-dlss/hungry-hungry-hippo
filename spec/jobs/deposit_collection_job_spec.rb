@@ -49,12 +49,13 @@ RSpec.describe DepositCollectionJob do
     end
   end
 
-  context 'when an existing collection' do
+  context 'when an existing collection with changed cocina object' do
     let(:collection_form) { CollectionForm.new(title: collection_title_fixture, druid:, lock: 'abc123') }
     let(:collection) { create(:collection, :registering_or_updating, druid:) }
 
     before do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
+      allow(RoundtripSupport).to receive(:changed?).and_return(true)
     end
 
     it 'updates an existing collection' do
@@ -65,9 +66,32 @@ RSpec.describe DepositCollectionJob do
         .with(cocina_object: an_instance_of(Cocina::Models::CollectionWithMetadata))
       expect(Sdr::Repository).to have_received(:update).with(cocina_object:)
       expect(Sdr::Repository).to have_received(:accession)
+      expect(RoundtripSupport).to have_received(:changed?)
 
       expect(collection.reload.title).to eq(collection_title_fixture)
       expect(collection.deposit_not_in_progress?).to be false
+    end
+  end
+
+  context 'when an existing collection with unchanged cocina object' do
+    let(:collection_form) { CollectionForm.new(title: collection_title_fixture, druid:, lock: 'abc123') }
+    let(:collection) { create(:collection, :registering_or_updating, druid:) }
+
+    before do
+      allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
+      allow(RoundtripSupport).to receive(:changed?).and_return(false)
+    end
+
+    it 'updates an existing collection' do
+      described_class.perform_now(collection_form:, collection:)
+      expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form:,
+                                                                        source_id: "h3:collection-#{collection.id}")
+      expect(Sdr::Repository).not_to have_received(:open_if_needed)
+      expect(Sdr::Repository).not_to have_received(:update)
+      expect(Sdr::Repository).not_to have_received(:accession)
+      expect(RoundtripSupport).to have_received(:changed?)
+
+      expect(collection.deposit_not_in_progress?).to be true
     end
   end
 end

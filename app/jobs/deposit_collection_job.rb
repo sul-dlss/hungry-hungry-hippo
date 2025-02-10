@@ -8,23 +8,18 @@ class DepositCollectionJob < ApplicationJob
     @collection_form = collection_form
     @collection = collection
 
+    # If new_cocina_object then persist not performed since not changed.
     new_cocina_object = perform_persist
-    druid = new_cocina_object.externalIdentifier
+    druid = collection.druid || new_cocina_object.externalIdentifier
 
-    collection.update!(druid:,
-                       release_option: @collection_form.release_option,
-                       release_duration: @collection_form.release_duration,
-                       access: @collection_form.access,
-                       license_option: @collection_form.license_option,
-                       license:,
-                       doi_option: @collection_form.doi_option,
-                       review_enabled: @collection_form.review_enabled)
+    update_collection_record(druid:)
 
-    assign_participants(:managers)
-    assign_participants(:depositors)
-    assign_participants(:reviewers)
+    unless new_cocina_object
+      collection.deposit_persist_complete!
+      return
+    end
 
-    ModelSync::Collection.call(collection:, cocina_object: new_cocina_object)
+    ModelSync::Collection.call(collection:, cocina_object: mapped_cocina_object)
 
     Sdr::Repository.accession(druid:)
     collection.accession!
@@ -34,13 +29,32 @@ class DepositCollectionJob < ApplicationJob
 
   attr_reader :collection_form, :collection
 
+  def mapped_cocina_object
+    @mapped_cocina_object ||= ToCocina::Collection::Mapper.call(collection_form:,
+                                                                source_id: "h3:collection-#{collection.id}")
+  end
+
+  def update_collection_record(druid:) # rubocop:disable Metrics/AbcSize
+    collection.update!(druid:,
+                       release_option: collection_form.release_option,
+                       release_duration: collection_form.release_duration,
+                       access: collection_form.access,
+                       license_option: collection_form.license_option,
+                       license:,
+                       doi_option: collection_form.doi_option,
+                       review_enabled: collection_form.review_enabled)
+
+    assign_participants(:managers)
+    assign_participants(:depositors)
+    assign_participants(:reviewers)
+  end
+
   def perform_persist
-    cocina_object = ToCocina::Collection::Mapper.call(collection_form:, source_id: "h3:collection-#{collection.id}")
-    if collection_form.persisted?
-      Sdr::Repository.open_if_needed(cocina_object:)
+    if !collection_form.persisted?
+      Sdr::Repository.register(cocina_object: mapped_cocina_object)
+    elsif RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
+      Sdr::Repository.open_if_needed(cocina_object: mapped_cocina_object)
                      .then { |cocina_object| Sdr::Repository.update(cocina_object:) }
-    else
-      Sdr::Repository.register(cocina_object:)
     end
   end
 
@@ -70,8 +84,8 @@ class DepositCollectionJob < ApplicationJob
   end
 
   def license
-    return @collection_form.license if @collection_form.license_option == 'required'
+    return collection_form.license if collection_form.license_option == 'required'
 
-    @collection_form.default_license
+    collection_form.default_license
   end
 end

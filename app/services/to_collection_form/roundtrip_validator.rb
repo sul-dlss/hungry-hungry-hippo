@@ -42,7 +42,7 @@ module ToCollectionForm
     end
 
     def normalized_original_cocina_object
-      @normalized_original_cocina_object ||= RoundtripValidatorSupport.normalize_cocina_object(
+      @normalized_original_cocina_object ||= RoundtripSupport.normalize_cocina_object(
         cocina_object: @original_cocina_object
       )
     end
