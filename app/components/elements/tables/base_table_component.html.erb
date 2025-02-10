@@ -1,6 +1,6 @@
 <%= tag.table class: classes, id:, 'aria-label': label, role:, data: do %>
   <% if show_label? %>
-    <caption><%= label %></caption>
+    <caption><%= label || caption %></caption>
   <% end %>
   <%= header %>
   <%= tag.tbody class: body_classes do %>

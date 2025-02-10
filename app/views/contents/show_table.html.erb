@@ -1,6 +1,7 @@
 <%= turbo_frame_tag @content do %>
   <% if @content.content_files.count > Settings.file_upload.hierarchical_files_limit %>
-    <%= render Elements::Tables::TableComponent.new(id: 'files-table', classes: 'table-work', label: 'Files') do |component| %>
+    <%= render Elements::Tables::TableComponent.new(id: 'files-table', classes: 'table-work') do |component| %>
+      <% component.with_caption do %><%= render Elements::HeadingComponent.new(level: :h3, text: 'Files') %><% end %>
       <% component.with_header(headers: ['File Name', 'Description', 'Hide'], each_classes: ['col-6']) %>
       <% @content_files.each do |content_file| %>
         <% component.with_row(values: [content_file.filepath, content_file.label, human_boolean(content_file.hide)]) %>

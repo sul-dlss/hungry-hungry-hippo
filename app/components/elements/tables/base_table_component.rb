@@ -5,9 +5,10 @@ module Elements
     # Base component for rendering a table.
     class BaseTableComponent < ApplicationComponent
       renders_one :header, 'Elements::Tables::HeaderComponent'
+      renders_one :caption
       # Subclasses should provide rows, e.g., renders_many :rows
 
-      def initialize(id:, label:, classes: [], body_classes: [], show_label: true, role: nil, data: {}, # rubocop:disable Metrics/ParameterLists
+      def initialize(id:, label: nil, classes: [], body_classes: [], show_label: true, role: nil, data: {}, # rubocop:disable Metrics/ParameterLists
                      empty_message: nil)
         @id = id
         @classes = classes
@@ -17,10 +18,16 @@ module Elements
         @role = role
         @data = data
         @empty_message = empty_message
+        raise ArgumentError, 'Subclasses must provide rows' unless respond_to?(:rows)
+
         super()
       end
 
       attr_reader :label, :id, :role, :data, :empty_message
+
+      def before_render
+        raise ArgumentError, 'Must provide label or caption' unless label.present? || caption?
+      end
 
       def classes
         # Provides table, table-striped, and table-sm as the static default classes
