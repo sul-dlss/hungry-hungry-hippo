@@ -11,10 +11,7 @@
 
 <ul class="nav nav-underline mb-3" role="tablist">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details-pane" type="button" role="tab" aria-controls="details-pane" aria-selected="true">Collection details</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings-pane" type="button" role="tab" aria-controls="settings-pane" aria-selected="false">Collection settings</button>
+    <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details-pane" type="button" role="tab" aria-controls="details-pane" aria-selected="true">Collection information</button>
   </li>
   <li class="nav-item" role="presentation">
     <button class="nav-link" id="deposits-tab" data-bs-toggle="tab" data-bs-target="#deposits-pane" type="button" role="tab" aria-controls="deposits-pane" aria-selected="false">Deposits</button>
@@ -49,8 +46,7 @@
         <% end %>
       <% end %>
     <% end %>
-  </div>
-  <div class="tab-pane fade" id="settings-pane" role="tabpanel" aria-labelledby="settings-tab" tabindex="0">
+
     <%= render Elements::Tables::TableComponent.new(id: 'release-visibility-table', classes: 'mb-5') do |component| %>
       <% component.with_caption do %><%= render Elements::HeadingComponent.new(level: :h3, text: 'Release and visibility') %><% end %>
       <% component.with_row(label: 'Release', values: [@collection_presenter.release]) %>

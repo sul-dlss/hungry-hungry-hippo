@@ -10,11 +10,9 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
   let(:collection) { create(:collection, user:, druid: druid_fixture) }
   let(:user) { create(:user) }
   let(:version_status) do
-    instance_double(VersionStatus, editable?: editable, first_draft?: first_draft,
-                                   status_message:)
+    instance_double(VersionStatus, editable?: editable, first_draft?: first_draft)
   end
   let(:title) { 'My Collection Title' }
-  let(:status_message) { 'Depositing' }
   let(:editable) { false }
   let(:first_draft) { false }
 
@@ -26,7 +24,6 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
   it 'renders the header' do
     render_inline(described_class.new(presenter:))
     expect(page).to have_css('h1', text: title)
-    expect(page).to have_css('.status', text: status_message)
     expect(page).to have_no_link('Edit')
     expect(page).to have_no_button('Discard draft')
     expect(page).to have_no_button('Deposit to this collection')
@@ -49,8 +46,7 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
     let(:editable) { true }
     let(:discardable) { true }
     let(:version_status) do
-      instance_double(VersionStatus, editable?: editable, discardable?: discardable, first_draft?: first_draft,
-                                     status_message:)
+      instance_double(VersionStatus, editable?: editable, discardable?: discardable, first_draft?: first_draft)
     end
 
     it 'does not show the Deposit to collection button' do

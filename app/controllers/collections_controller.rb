@@ -41,10 +41,6 @@ class CollectionsController < ApplicationController
     @collection_form = CollectionForm.new(**collection_params)
     if @collection_form.valid?
       collection = Collection.create!(title: @collection_form.title,
-                                      release_option: @collection_form.release_option,
-                                      release_duration: @collection_form.release_duration,
-                                      access: @collection_form.access,
-                                      doi_option: @collection_form.doi_option,
                                       user: current_user,
                                       deposit_state_event: 'deposit_persist')
       DepositCollectionJob.perform_later(collection:, collection_form: @collection_form)

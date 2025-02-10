@@ -39,13 +39,11 @@ RSpec.describe 'Show a collection' do
     expect(page).to have_css('.breadcrumb-item', text: collection.title)
 
     # Tabs
-    expect(page).to have_css('.nav-link.active', text: 'Collection details')
-    expect(page).to have_css('.nav-link', text: 'Collection settings')
+    expect(page).to have_css('.nav-link.active', text: 'Collection information')
 
     # Header
     expect(page).to have_css('h1', text: collection.title)
     expect(page).to have_css('i.bi-pencil')
-    expect(page).to have_css('.status', text: 'Deposited')
     expect(page).to have_link('Edit', href: edit_collection_path(druid))
     expect(page).to have_link('Deposit to this collection', href: new_work_path(collection_druid: druid))
 
@@ -76,10 +74,6 @@ RSpec.describe 'Show a collection' do
       expect(page).to have_css('tr', text: 'Related links')
       expect(page).to have_css('td', text: related_links_fixture.first['text'])
     end
-
-    # Change tab
-    click_link_or_button('Collection settings')
-    expect(page).to have_css('.nav-link.active', text: 'Collection settings')
 
     # Release and visibility table
     within('table#release-visibility-table') do

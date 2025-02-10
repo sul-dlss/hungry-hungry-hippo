@@ -158,13 +158,11 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_css('h1', text: updated_title)
     expect(page).to have_content(updated_description)
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
-    click_link_or_button('Collection settings')
     # Access settings
     expect(page).to have_content('3 years in the future')
     # Participants
     expect(page).to have_content('stepking@stanford.edu')
     expect(page).to have_content('joehill@stanford.edu')
     expect(page).to have_content('pennywise@stanford.edu')
-    expect(page).to have_css('.status', text: 'Depositing')
   end
 end

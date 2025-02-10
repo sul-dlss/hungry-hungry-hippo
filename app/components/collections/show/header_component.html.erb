@@ -2,8 +2,6 @@
   <div>
     <%= render Elements::HeadingComponent.new(level: :h1, text: title, classes: 'mb-4 d-inline-block') %>
     <%= render Edit::EditIconButtonComponent.new(presenter:, classes: 'mx-2 py-0 mb-2', icon_classes: 'h4') if edit? %>
-
-    <span class="ms-4 fst-italic status"><%= status_message %></span>
   </div>
   <div class="d-flex align-items-start">
     <%= render Edit::EditDraftButtonComponent.new(presenter:, label: 'Edit') if edit? %>
