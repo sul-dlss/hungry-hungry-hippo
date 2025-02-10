@@ -24,8 +24,8 @@ RSpec.describe 'Validate a collection deposit' do
     # Description is required for deposit, but skipping.
 
     # Clicking on related content tab & filling in invalid related link
-    find('.nav-link', text: 'Related links').click
-    expect(page).to have_css('.nav-link.active', text: 'Related links')
+    find('.nav-link', text: 'Related links (optional)').click
+    expect(page).to have_css('.nav-link.active', text: 'Related links (optional)')
     fill_in('Link text', with: 'foo.com')
 
     # Clicking on access settings & selecting depositor selects without a release duration
@@ -52,8 +52,8 @@ RSpec.describe 'Validate a collection deposit' do
     fill_in('Description', with: collection_description_fixture)
 
     # Related content is marked invalid
-    expect(page).to have_css('.nav-link', text: 'Related links')
-    find('.nav-link', text: 'Related links').click
+    expect(page).to have_css('.nav-link', text: 'Related links (optional)')
+    find('.nav-link', text: 'Related links (optional)').click
     expect(page).to have_field('collection_related_links_attributes_0_url', class: 'is-invalid')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: 'is not a valid URL')
 

@@ -82,7 +82,7 @@ RSpec.describe 'Edit a collection' do
     fill_in('collection_description', with: updated_description)
 
     # Filling in related content
-    find('.nav-link', text: 'Related links').click
+    find('.nav-link', text: 'Related links (optional)').click
     fill_in('Link text', with: 'delete')
     fill_in('URL', with: 'me')
     # Test adding a new nested field
