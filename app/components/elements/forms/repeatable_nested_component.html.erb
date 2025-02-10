@@ -1,6 +1,6 @@
-<%= tag.fieldset class: 'my-3', data: fieldset_data do %>
-  <legend class="h5">
-    <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text:, hidden_label:) %>
+<%= tag.fieldset class: 'form-fieldset my-3', data: fieldset_data do %>
+  <legend>
+    <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text:, hidden_label:, classes: 'form-label fw-bold') %>
   </legend>
   <%= tag.div(class: container_classes, data: { nested_form_target: 'container', nested_form_reorder_target: 'container' }) do %>
     <template data-nested-form-target="template">
