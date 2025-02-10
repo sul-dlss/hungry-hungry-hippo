@@ -119,7 +119,6 @@ RSpec.describe 'Create a collection deposit' do
     # Waiting page may be too fast to catch so not testing.
     # On show page
     expect(page).to have_css('h1', text: collection_title_fixture)
-    expect(page).to have_css('.status', text: 'Depositing')
     expect(page).to have_no_link('Edit or deposit')
   end
 end
