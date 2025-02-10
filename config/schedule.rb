@@ -21,5 +21,5 @@
 
 # Learn more: http://github.com/javan/whenever
 every 1.day do
-  runner 'Content.where("created_at < ?", 3.days.ago).destroy_all'
+  runner 'Content.where("created_at < ?", 3.days.ago).destroy_all', output: { standard: '/dev/null' }
 end
