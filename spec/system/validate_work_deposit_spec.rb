@@ -19,7 +19,7 @@ RSpec.describe 'Validate a work deposit' do
     # File is required for deposit, but skipping.
 
     # Filling in title
-    find('.nav-link', text: 'Title & contact').click
+    find('.nav-link', text: 'Title and contact').click
     fill_in('work_title', with: title_fixture)
     # Contact email is required, but skipping.
 
@@ -75,7 +75,7 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
 
     # Contact email is marked invalid
-    find('.nav-link.is-invalid', text: 'Title & contact').click
+    find('.nav-link.is-invalid', text: 'Title and contact').click
     expect(page).to have_field('Contact email', class: 'is-invalid')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
     fill_in('Contact email', with: contact_emails_fixture.first['email'])

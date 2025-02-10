@@ -46,7 +46,7 @@ RSpec.describe 'Create a work that requires review' do
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
 
     # Filling in title
-    find('.nav-link', text: 'Title & contact').click
+    find('.nav-link', text: 'Title and contact').click
     fill_in('work_title', with: title_fixture)
     fill_in('Contact email', with: contact_emails_fixture.first['email'])
 
@@ -69,7 +69,7 @@ RSpec.describe 'Create a work that requires review' do
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Abstract')
 
-    # Filling in abstract & keywords
+    # Filling in Abstract and keywords
     fill_in('work_abstract', with: abstract_fixture)
     fill_in('Keywords (one per box)', with: keywords_fixture.first['text'])
 

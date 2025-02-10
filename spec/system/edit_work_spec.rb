@@ -90,7 +90,7 @@ RSpec.describe 'Edit a work' do
     fill_in('Title of deposit', with: updated_title)
 
     # Testing validation
-    find('.nav-link', text: 'Abstract & keywords').click
+    find('.nav-link', text: 'Abstract and keywords').click
     fill_in('work_abstract', with: '')
     find('.nav-link', text: 'Deposit', exact_text: true).click
     click_link_or_button('Deposit')

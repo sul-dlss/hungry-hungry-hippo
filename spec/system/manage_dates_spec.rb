@@ -40,7 +40,7 @@ RSpec.describe 'Manage dates for a work deposit' do
     expect(page).to have_css('h1', text: 'Untitled deposit')
 
     # Filling in title
-    find('.nav-link', text: 'Title & contact').click
+    find('.nav-link', text: 'Title and contact').click
     fill_in('work_title', with: title_fixture)
 
     # Go to dates tab

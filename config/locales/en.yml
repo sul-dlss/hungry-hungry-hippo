@@ -164,7 +164,7 @@ en:
         cannot_be_edited: 'This work cannot be edited.'
       panes:
         abstract:
-          tab_label: 'Abstract & keywords'
+          tab_label: 'Abstract and keywords'
           label: 'Describe your deposit'
           help_text: >
             Enter a summary statement (max 600 words) describing the work that you are depositing.
@@ -209,7 +209,7 @@ en:
           tab_label: 'Related content (optional)'
           label: 'Related content (optional)'
         title:
-          tab_label: 'Title & contact'
+          tab_label: 'Title and contact'
           label: 'Title of deposit and contact information'
         types:
           tab_label: 'Type of deposit'
