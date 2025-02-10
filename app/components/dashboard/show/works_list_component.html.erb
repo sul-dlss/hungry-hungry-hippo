@@ -1,5 +1,6 @@
 <%= render Elements::Tables::TableComponent.new(
-      id:, label:, show_label: false
+      id:, label:, show_label: false,
+      empty_message: 'You have not made any deposits to this collection.'
     ) do |component| %>
   <% component.with_header(
        headers: ['Recent deposits in collection', 'Deposit status', 'Owner', 'Last modified', 'Link for sharing']
