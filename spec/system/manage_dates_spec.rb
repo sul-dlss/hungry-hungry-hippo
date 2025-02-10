@@ -45,7 +45,7 @@ RSpec.describe 'Manage dates for a work deposit' do
 
     # Go to dates tab
     find('.nav-link', text: 'Dates (optional)').click
-    expect(page).to have_text('Enter dates related to your deposit')
+    expect(page).to have_text('Enter dates related to your deposit (optional)')
 
     within_fieldset('publication_date') do
       # Month and day are disabled initially.
