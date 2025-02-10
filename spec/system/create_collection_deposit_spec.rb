@@ -53,7 +53,7 @@ RSpec.describe 'Create a collection deposit' do
 
     # Testing tabs
     expect(page).to have_css('.nav-link.active', text: 'Details')
-    expect(page).to have_css('.nav-link:not(.active)', text: 'Related links')
+    expect(page).to have_css('.nav-link:not(.active)', text: 'Related links (optional)')
     # Manage files pane with form field is visible, abstract is not
     expect(page).to have_css('div.h4', text: 'Collection details')
 
@@ -65,7 +65,7 @@ RSpec.describe 'Create a collection deposit' do
 
     # Clicking on Next to go to related content tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Related links')
+    expect(page).to have_css('.nav-link.active', text: 'Related links (optional)')
     expect(page).to have_text('Links to related content (optional)')
 
     # Filling in related links
