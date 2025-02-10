@@ -67,7 +67,7 @@ RSpec.describe 'Create a work deposit' do
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
 
     # Filling in title
-    find('.nav-link', text: 'Title & contact').click
+    find('.nav-link', text: 'Title and contact').click
     fill_in('work_title', with: title_fixture)
     fill_in('Contact email', with: contact_emails_fixture.first['email'])
 
@@ -93,7 +93,7 @@ RSpec.describe 'Create a work deposit' do
     expect(page).to have_css('.nav-link.active', text: 'Abstract')
     expect(page).to have_text('Abstract')
 
-    # Filling in abstract & keywords
+    # Filling in Abstract and keywords
     fill_in('work_abstract', with: abstract_fixture)
     expect(page).to have_text('Keywords')
     fill_in('Keywords (one per box)', with: keywords_fixture.first['text'])
