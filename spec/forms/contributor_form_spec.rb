@@ -93,12 +93,26 @@ RSpec.describe ContributorForm do
       end
     end
 
+    context 'when depositing and missing part of a name' do
+      let(:first_name) { 'Jane' }
+      let(:last_name) { '' }
+
+      it 'is not valid' do
+        expect(form.valid?(:deposit)).to be false
+        expect(form.errors.size).to eq(1)
+        expect(form.errors[:last_name]).to eq(['must provide a last name'])
+      end
+    end
+
     context 'when depositing and missing name' do
       let(:first_name) { '' }
       let(:last_name) { '' }
 
       it 'is not valid' do
         expect(form.valid?(:deposit)).to be false
+        expect(form.errors.size).to eq(2)
+        expect(form.errors[:first_name]).to eq(['must provide a first name'])
+        expect(form.errors[:last_name]).to eq(['must provide a last name'])
       end
     end
 

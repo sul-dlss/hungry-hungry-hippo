@@ -58,6 +58,12 @@ en:
     stanford: 'Stanford Community'
     world: 'Everyone'
     depositor_selects: 'Depositor selects'
+  contributors:
+    validation:
+      first_name:
+        blank: 'must provide a first name'
+      last_name:
+        blank: 'must provide a last name'
   date:
     fields:
       year:
