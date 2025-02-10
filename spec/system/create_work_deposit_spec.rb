@@ -145,6 +145,7 @@ RSpec.describe 'Create a work deposit' do
     # Clicking on Next to go to related content tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Related content (optional)')
+    expect(page).to have_css('.h4', text: 'Related content (optional)')
 
     # Filling in related works
     expect(page).to have_text('Related works')

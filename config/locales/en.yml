@@ -201,7 +201,7 @@ en:
           label: 'License and additional terms of use'
         related_content:
           tab_label: 'Related content (optional)'
-          label: 'Related content'
+          label: 'Related content (optional)'
         title:
           tab_label: 'Title & contact'
           label: 'Title of deposit and contact information'
