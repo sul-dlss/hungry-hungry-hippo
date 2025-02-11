@@ -6,6 +6,7 @@ class ContactEmailForm < ApplicationForm
   validates :email, presence: true, on: :deposit
   validates :email, format: {
     with: URI::MailTo::EMAIL_REGEXP,
-    allow_blank: true
+    allow_blank: true,
+    message: 'must provide a valid email address' # rubocop:disable Rails/I18nLocaleTexts
   }
 end

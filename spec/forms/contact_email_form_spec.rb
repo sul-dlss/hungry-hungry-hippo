@@ -32,6 +32,7 @@ RSpec.describe ContactEmailForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
+        expect(form.errors[:email]).to eq(['must provide a valid email address'])
       end
     end
   end
