@@ -48,31 +48,26 @@
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Collections::Edit::PaneComponent.new(tab_name: :license, label: I18n.t('collections.edit.panes.license.label')) do %>
-        <p><%= t('collections.edit.panes.license.help_text') %></p>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :license, label: I18n.t('collections.edit.panes.license.label'), help_text: t('collections.edit.panes.license.help_text')) do %>
         <%= render Collections::Edit::LicenseComponent.new(form:) %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Collections::Edit::PaneComponent.new(tab_name: :participants, label: I18n.t('collections.edit.panes.participants.label')) do %>
-        <p><%= t('collections.edit.panes.participants.help_text') %></p>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :participants, label: I18n.t('collections.edit.panes.participants.label'), help_text: t('collections.edit.panes.participants.help_text')) do %>
         <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, label: 'Managers', form_component: Collections::ContributorComponent) %>
         <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, label: 'Depositors', form_component: Collections::ContributorComponent) %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Collections::Edit::PaneComponent.new(tab_name: :workflow, label: I18n.t('collections.edit.panes.workflow.label')) do %>
-        <p><%= t('collections.edit.panes.workflow.help_text') %></p>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :workflow, label: I18n.t('collections.edit.panes.workflow.label'), help_text: t('collections.edit.panes.workflow.help_text')) do %>
         <%= render Collections::Edit::WorkflowComponent.new(form:) %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Collections::Edit::PaneComponent.new(tab_name: :deposit, label: I18n.t('collections.edit.panes.deposit.label')) do |component| %>
-        <p><%= t('collections.edit.panes.deposit.help_text') %></p>
-
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :deposit, label: I18n.t('collections.edit.panes.deposit.label'), help_text: t('collections.edit.panes.deposit.help_text')) do |component| %>
         <% component.with_deposit_button do %>
           <%= render Elements::Forms::SubmitComponent.new(label: 'Deposit') %>
         <% end %>
