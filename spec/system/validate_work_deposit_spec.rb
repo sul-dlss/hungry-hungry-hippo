@@ -59,7 +59,7 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_text('In depositing content to the Stanford Digital Repository')
 
     # Depositing the work
-    click_link_or_button('Deposit')
+    click_link_or_button('Deposit', class: 'btn-primary')
     expect(page).to have_css('h1', text: title_fixture)
     expect(page).to have_current_path(work_path_with_collection)
 
@@ -146,7 +146,7 @@ RSpec.describe 'Validate a work deposit' do
     check('I agree')
 
     # Try to deposit again
-    click_link_or_button('Deposit')
+    click_link_or_button('Deposit', class: 'btn-primary')
     expect(page).to have_css('h1', text: title_fixture)
     expect(page).to have_current_path(work_path_with_collection)
 

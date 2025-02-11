@@ -93,7 +93,7 @@ RSpec.describe 'Edit a work' do
     find('.nav-link', text: 'Abstract and keywords').click
     fill_in('work_abstract', with: '')
     find('.nav-link', text: 'Deposit', exact_text: true).click
-    click_link_or_button('Deposit')
+    click_link_or_button('Deposit', class: 'btn-primary')
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
     # Fill in in authors
