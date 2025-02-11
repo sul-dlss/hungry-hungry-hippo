@@ -1,8 +1,5 @@
-<%= tag.fieldset(id: field_name) do %>
-  <%= tag.legend class: legend_classes do %>
-    <%= header_label %>
-  <% end %>
-  <%= tag.div(class: 'mb-3') do %>
+<%= render Elements::Forms::FieldsetComponent.new(label: header_label, id:, hidden_label:) do %>
+  <%= tag.div class: 'mb-3' do %>
     <%= form.fields_for field_name do |nested_form| %>
       <%= render form_component.new(form: nested_form, **form_component_args) %>
     <% end %>

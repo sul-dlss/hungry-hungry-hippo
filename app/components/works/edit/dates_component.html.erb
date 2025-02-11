@@ -1,11 +1,11 @@
-  <div class="row">
+  <div class="row pane-section">
     <div class="col-lg-5">
-      <%= render NestedComponentPresenter.for(form:, field_name: :publication_date, model_class: DateForm, form_component: Works::Edit::DateInputComponent, legend_classes: 'my-3') %>
+      <%= render NestedComponentPresenter.for(form:, field_name: :publication_date, model_class: DateForm, form_component: Works::Edit::DateInputComponent) %>
     </div>
   </div>
 
-<%= render Elements::Forms::FieldsetComponent.new(label: 'Creation date', classes: 'mt-4', data: { controller: 'dates' }, id: 'creation_date') do %>
-  <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :create_date_type, hidden_label: true, container_classes: 'mb-3',
+<%= render Elements::Forms::FieldsetComponent.new(label: 'Creation date', classes: 'pane-section', data: { controller: 'dates' }, id: 'creation_date') do %>
+  <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :create_date_type, hidden_label: true,
                                                   label: 'Creation date') do |component| %>
     <% component.with_left_toggle_option(form:,
                                          field_name: :create_date_type,

@@ -1,4 +1,4 @@
-<div data-controller="release">
+<div data-controller="release" class="pane-section">
   <%= render Elements::Forms::FieldsetComponent.new(label: 'When will files on deposits to this collection be downloadable?') do %>
     <div class="form-check">
       <div class="ps-2">
@@ -23,8 +23,7 @@
     </div>
   <% end %>
 </div>
-<%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
-<%= render Elements::Forms::FieldsetComponent.new(label: 'Who will have permission to download files for deposits to this collection?') do %>
+<%= render Elements::Forms::FieldsetComponent.new(label: 'Who will have permission to download files for deposits to this collection?', classes: 'pane-section') do %>
   <div class="form-check">
     <div class="ps-2">
       <%= form.radio_button :access, 'world', class: 'form-check-input' %>
@@ -44,8 +43,7 @@
     </div>
   </div>
 <% end %>
-<%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
-<%= render Elements::Forms::FieldsetComponent.new(label: 'Will a DOI be assigned to the deposits in this collection?') do %>
+<%= render Elements::Forms::FieldsetComponent.new(label: 'Will a DOI be assigned to the deposits in this collection?', classes: 'pane-section') do %>
   <div class="form-check">
     <div class="ps-2">
       <%= form.radio_button :doi_option, 'yes', class: 'form-check-input' %>

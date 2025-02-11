@@ -1,8 +1,10 @@
 <div data-controller="work-type">
-  <div class="h4"><%= t('works.edit.fields.work_type.label') %></div>
-
-  <div class="row">
-    <%= render Elements::Forms::InputCollectionRadioButtonsComponent.new(form:, field_name: :work_type, input_collection: WorkType.all, div_classes: 'col-4', input_data: { work_type_target: 'workTypeRadio', action: 'work-type#showSubtypes' }) %>
+  <div class="pane-section pb-0">
+    <%= render Elements::Forms::FieldsetComponent.new(label: t('works.edit.fields.work_type.label')) do %>
+      <div class="row">
+        <%= render Elements::Forms::InputCollectionRadioButtonsComponent.new(form:, field_name: :work_type, input_collection: WorkType.all, div_classes: 'col-4', input_data: { work_type_target: 'workTypeRadio', action: 'work-type#showSubtypes' }) %>
+      </div>
+    <% end %>
   </div>
 
   <%# Text subtypes %>
@@ -31,7 +33,10 @@
 
   <%# Other %>
   <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Other') do %>
-    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :other_work_subtype, label: 'Specify "Other" type*', container_classes: 'mb-4') %>
+    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :other_work_subtype, label: 'Specify "Other" type*') %>
   <% end %>
+
+  <%# For bottom spacing %>
+  <div class="pane-section"></div>
 
 </div>

@@ -43,7 +43,7 @@
 
         <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
         <%= render Edit::SectionHeaderComponent.new(title: t('works.edit.panes.files.list')) %>
-        <div id="content-files">
+        <div id="content-files" class="pane-section">
           <%= render partial: 'contents/show', locals: { content: @content, content_files: @content.content_files.page(1) } %>
         </div>
       <% end %>
@@ -52,33 +52,37 @@
     <% component.with_pane do %>
       <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: t('works.edit.panes.title.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
         <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: t('works.edit.fields.title.label'),
-                                                           help_text: t('works.edit.fields.title.help_text'), width: 500, container_classes: 'mb-4') %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false, single_field: true) %>
+                                                           help_text: t('works.edit.fields.title.help_text'), width: 500, container_classes: 'pane-section') %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
       <%= render Works::Edit::PaneComponent.new(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Works::Edit::ContributorComponent, hidden_label: true, reorderable: true) %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Works::Edit::ContributorComponent, hidden_label: true, reorderable: true, fieldset_classes: 'pane-section') %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
       <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), help_text: t('works.edit.panes.abstract.help_text'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
-        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: t('works.edit.fields.abstract.label')) %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :keywords, model_class: KeywordForm, form_component: Works::Edit::KeywordComponent, hidden_label: false, bordered: false, single_field: true) %>
+        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: t('works.edit.fields.abstract.label'), container_classes: 'pane-section') %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :keywords, model_class: KeywordForm, form_component: Works::Edit::KeywordComponent, hidden_label: false, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Works::Edit::PaneComponent.new(tab_name: :types, form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
+      <%= render Works::Edit::PaneComponent.new(tab_name: :types, label: t('works.edit.panes.types.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
         <%= render Works::Edit::WorkTypeComponent.new(form:) %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Works::Edit::PaneComponent.new(tab_name: :doi, label: t('works.edit.panes.doi.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
+      <%= render Works::Edit::PaneComponent.new(tab_name: :doi, label: t('works.edit.panes.doi.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do |component| %>
         <%= render Works::Edit::DoiComponent.new(form:, collection: @collection) %>
+
+        <% component.with_help do %>
+          <%= link_to_new_tab('What is a DOI?', 'https://sdr.library.stanford.edu/documentation/purls-dois-and-orcid-ids') %>
+        <% end %>
       <% end %>
     <% end %>
 
@@ -96,8 +100,8 @@
 
     <% component.with_pane do %>
       <%= render Works::Edit::PaneComponent.new(tab_name: :related_content, label: t('works.edit.panes.related_content.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :related_works, model_class: RelatedWorkForm, form_component: RelatedWorks::EditComponent) %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent) %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :related_works, model_class: RelatedWorkForm, form_component: RelatedWorks::EditComponent, fieldset_classes: 'pane-section') %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, fieldset_classes: 'pane-section') %>
       <% end %>
     <% end %>
 
@@ -111,7 +115,6 @@
       <%= render Works::Edit::PaneComponent.new(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
         <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
         <% unless @collection.no_custom_rights_statement_option? %>
-          <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
           <%= render Works::Edit::TermsOfUseComponent.new(form:, collection: @collection) %>
         <% end %>
       <% end %>
@@ -120,7 +123,8 @@
     <% component.with_pane do %>
       <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.deposit.help_text')) do |component| %>
         <%= render Works::Edit::TermsOfDepositComponent.new(form:) %>
-
+        <%# For spacing %>
+        <div class="pane-section"></div>
         <% component.with_deposit_button do %>
           <%= render Works::Edit::SubmitComponent.new(work: @work, collection: @collection) %>
         <% end %>

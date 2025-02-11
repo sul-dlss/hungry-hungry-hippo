@@ -29,15 +29,15 @@
   <% form_with(model: @collection_form) do |form| %>
     <% component.with_pane do %>
       <%= render Collections::Edit::PaneComponent.new(tab_name: :details, label: I18n.t('collections.edit.panes.details.label'), selected: true) do %>
-        <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('collections.edit.fields.title.label'), container_classes: 'mb-4') %>
-        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: I18n.t('collections.edit.fields.description.label')) %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false, single_field: true) %>
+        <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: I18n.t('collections.edit.fields.title.label'), container_classes: 'pane-section') %>
+        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: I18n.t('collections.edit.fields.description.label'), container_classes: 'pane-section') %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
       <%= render Collections::Edit::PaneComponent.new(tab_name: :related_links, label: I18n.t('collections.edit.panes.related_links.label')) do %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, hidden_label: true) %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, hidden_label: true, fieldset_classes: 'pane-section') %>
       <% end %>
     <% end %>
 
@@ -55,8 +55,8 @@
 
     <% component.with_pane do %>
       <%= render Collections::Edit::PaneComponent.new(tab_name: :participants, label: I18n.t('collections.edit.panes.participants.label'), help_text: t('collections.edit.panes.participants.help_text')) do %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, label: 'Managers', form_component: Collections::ContributorComponent) %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, label: 'Depositors', form_component: Collections::ContributorComponent) %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, label: 'Managers', form_component: Collections::ContributorComponent, fieldset_classes: 'pane-section') %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, label: 'Depositors', form_component: Collections::ContributorComponent, fieldset_classes: 'pane-section') %>
       <% end %>
     <% end %>
 
@@ -68,6 +68,7 @@
 
     <% component.with_pane do %>
       <%= render Collections::Edit::PaneComponent.new(tab_name: :deposit, label: I18n.t('collections.edit.panes.deposit.label'), help_text: t('collections.edit.panes.deposit.help_text')) do |component| %>
+        <div class="pane-section"></div>
         <% component.with_deposit_button do %>
           <%= render Elements::Forms::SubmitComponent.new(label: 'Deposit') %>
         <% end %>
