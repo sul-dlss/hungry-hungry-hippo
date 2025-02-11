@@ -1,17 +1,13 @@
 <%= render Edit::TabForm::PaneComponent.new(**pane_args) do |component| %>
   <%= content %>
   <% component.with_footer do %>
-    <div class="d-flex justify-content-between">
-      <div>
-        <% if deposit_button? %>
-          <%= deposit_button %>
-        <% else %>
-          <%= render Edit::TabForm::NextButtonComponent.new(tab_id:) %>
-        <% end %>
-      </div>
-      <div>
-        <%= render Elements::CancelButtonComponent.new(link: dashboard_path) %>
-      </div>
+    <div class="d-flex">
+      <%= render Elements::CancelButtonComponent.new(link: dashboard_path, classes: 'me-2') %>
+      <% if deposit_button? %>
+        <%= deposit_button %>
+      <% else %>
+        <%= render Edit::TabForm::NextButtonComponent.new(tab_id:) %>
+      <% end %>
     </div>
   <% end %>
 <% end %>
