@@ -9,7 +9,7 @@ module Edit
     end
 
     def call
-      tag.h2(@title, class: 'h5 my-3')
+      tag.h2(@title, class: 'h5 mb-3 mt-0')
     end
   end
 end
