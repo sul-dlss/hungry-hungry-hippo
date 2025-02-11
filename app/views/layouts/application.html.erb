@@ -30,13 +30,11 @@
   <body>
     <%= render Elements::SkipLinksComponent.new %>
     <%= render Structure::HeaderComponent.new %>
-    <header>
-      <div class="breadcrumbs">
-        <nav id="breadcrumbs" aria-label="breadcrumb" class="container">
-          <%= yield :breadcrumbs %>
-        </nav>
-      </div>
-    </header>
+    <div class="breadcrumbs">
+      <nav id="breadcrumbs" aria-label="breadcrumb" class="container">
+        <%= yield :breadcrumbs %>
+      </nav>
+    </div>
     <main id="main-container">
       <% if content_for?(:fluid_body) %>
         <div class="fluid-container">
