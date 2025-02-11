@@ -123,8 +123,6 @@
     <% component.with_pane do %>
       <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.deposit.help_text')) do |component| %>
         <%= render Works::Edit::TermsOfDepositComponent.new(form:) %>
-        <%# For spacing %>
-        <div class="pane-section"></div>
         <% component.with_deposit_button do %>
           <%= render Works::Edit::SubmitComponent.new(work: @work, collection: @collection) %>
         <% end %>
