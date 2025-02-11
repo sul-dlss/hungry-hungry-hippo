@@ -6,10 +6,10 @@
 
 <%= render Elements::Forms::FieldsetComponent.new(label: 'Creation date', classes: 'pane-section', data: { controller: 'dates' }, id: 'creation_date') do %>
   <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :create_date_type, hidden_label: true,
-                                                  label: 'Creation date') do |component| %>
+                                                  label: 'Date type') do |component| %>
     <% component.with_left_toggle_option(form:,
                                          field_name: :create_date_type,
-                                         label: 'Singe date',
+                                         label: 'Single date',
                                          value: 'single',
                                          data: { action: 'click->dates#selectSingle', dates_target: 'singleDateRadio' }) %>
     <% component.with_right_toggle_option(form:,
