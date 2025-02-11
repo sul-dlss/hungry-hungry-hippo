@@ -1,6 +1,4 @@
 <%= tag.div data: { controller: 'citation' } do %>
-  <p><%= t('works.edit.fields.citation.help_text') %></p>
-
   <%= render Elements::Forms::FieldsetComponent.new(label: t('works.edit.fields.citation.label')) do %>
     <%= tag.div class: 'form-check mb-4' do %>
       <%= form.radio_button :auto_generate_citation, true, class: 'form-check-input', checked: true, data: { citation_target: 'autoGenerateCitation', action: 'click->citation#disableCustomCitation' } %>

@@ -89,7 +89,7 @@
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Works::Edit::PaneComponent.new(tab_name: :citation, label: t('works.edit.panes.citation.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
+      <%= render Works::Edit::PaneComponent.new(tab_name: :citation, label: t('works.edit.panes.citation.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.fields.citation.help_text')) do %>
         <%= render Works::Edit::CitationComponent.new(form:) %>
       <% end %>
     <% end %>
@@ -118,9 +118,7 @@
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do |component| %>
-        <p><%= t('works.edit.panes.deposit.help_text') %></p>
-
+      <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.deposit.help_text')) do |component| %>
         <%= render Works::Edit::TermsOfDepositComponent.new(form:) %>
 
         <% component.with_deposit_button do %>
