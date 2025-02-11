@@ -214,6 +214,7 @@ en:
           label: 'Title of deposit and contact information'
         types:
           tab_label: 'Type of deposit'
+          label: 'Type of deposit'
   collections:
     edit:
       breadcrumb: 'Edit'

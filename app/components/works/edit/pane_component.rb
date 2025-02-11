@@ -5,6 +5,7 @@ module Works
     # Component for rendering a tab pane for a work edit form.
     class PaneComponent < ApplicationComponent
       renders_one :deposit_button # If not provided will render Next button
+      renders_one :help
 
       def initialize(form_id:, work_presenter:, discard_draft_form_id:, **pane_args)
         @pane_args = pane_args

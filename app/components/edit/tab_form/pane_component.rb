@@ -6,6 +6,7 @@ module Edit
     # Based on https://getbootstrap.com/docs/5.3/components/navs-tabs/#javascript-behavior
     class PaneComponent < ApplicationComponent
       renders_one :footer
+      renders_one :help
 
       def initialize(tab_name:, label: nil, selected: false, help_text: nil)
         @tab_name = tab_name

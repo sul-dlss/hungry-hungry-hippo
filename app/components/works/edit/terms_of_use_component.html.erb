@@ -1,7 +1,9 @@
-<% if provided_custom_rights_statement_option? %>
-  <div class="h5"><%= label %></div>
-  <p><%= provided_custom_rights_statement %></p>
-  <%= form.hidden_field :custom_rights_statement, value: provided_custom_rights_statement %>
-<% else %>
-  <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :custom_rights_statement, help_text: instructions, label: "#{label} (optional)", label_classes: 'h5') %>
-<% end %>
+<div class="pane-section">
+  <% if provided_custom_rights_statement_option? %>
+    <label class="form-label fw-bold"><%= label %></label>
+    <p><%= provided_custom_rights_statement %></p>
+    <%= form.hidden_field :custom_rights_statement, value: provided_custom_rights_statement %>
+  <% else %>
+    <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :custom_rights_statement, help_text: instructions, label: "#{label} (optional)", label_classes: 'fw-bold') %>
+  <% end %>
+</div>

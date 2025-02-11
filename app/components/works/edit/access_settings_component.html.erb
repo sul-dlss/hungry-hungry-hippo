@@ -9,7 +9,7 @@
     deposit this item. Or you may specify a specific date in the future.
   </p>
 
-  <div class="row">
+  <div class="row pane-section">
     <div class="col-md-4 form-check pt-2">
       <div class="ps-2">
         <%= form.radio_button :release_option, 'immediate', class: 'form-check-input' %>
@@ -27,26 +27,26 @@
   </div>
 <% end %>
 
-<%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
+<div class="pane-section">
+  <%= render Edit::SectionHeaderComponent.new(title: 'Individual file visibility') %>
+  <p>
+    You can prevent individual files from being displayed on the PURL page,
+    meaning viewers of the page can neither see or download the files. All files
+    are still preserved in the SDR, whether they are visible or not. If a file was
+    available to viewers on a previous version of this work, it will continue to
+    be available on the pages for the older versions.
+  </p>
+  <p>
+    To prevent displaying a specific file, return to <a href="#files-tab" data-controller="tab-link" data-action="tab-link#show">Manage files</a> and select "Hide" to the right of the file name.
+  </p>
+</div>
 
-<%= render Edit::SectionHeaderComponent.new(title: 'Individual file visibility') %>
-<p>
-  You can prevent individual files from being displayed on the PURL page,
-  meaning viewers of the page can neither see or download the files. All files
-  are still preserved in the SDR, whether they are visible or not. If a file was
-  available to viewers on a previous version of this work, it will continue to
-  be available on the pages for the older versions.
-</p>
-<p>
-  To prevent displaying a specific file, return to <a href="#files-tab" data-controller="tab-link" data-action="tab-link#show">Manage files</a> and select "Hide" to the right of the file name.
-</p>
-
-<%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
-
-<%= render Edit::SectionHeaderComponent.new(title: 'Download access') %>
-<% if depositor_selects_access? %>
-  <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :access, options: access_options, width: 250, label: 'Who can download the files?') %>
-<% else %>
-  <%= collection_selects_access_message %>
-  <%= form.hidden_field :access %>
-<% end %>
+<div class="pane-section">
+  <%= render Edit::SectionHeaderComponent.new(title: 'Download access') %>
+  <% if depositor_selects_access? %>
+    <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :access, options: access_options, width: 250, label: 'Who can download the files?') %>
+  <% else %>
+    <%= collection_selects_access_message %>
+    <%= form.hidden_field :access %>
+  <% end %>
+</div>

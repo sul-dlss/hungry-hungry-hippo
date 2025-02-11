@@ -1,4 +1,4 @@
-<%= tag.fieldset class: 'form-fieldset my-3', data: fieldset_data do %>
+<%= tag.fieldset class: fieldset_classes, data: fieldset_data do %>
   <legend>
     <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text:, hidden_label:, classes: 'form-label fw-bold') %>
   </legend>

@@ -15,7 +15,7 @@ RSpec.describe Works::Edit::TermsOfUseComponent, type: :component do
     it 'renders the terms' do
       render_inline(described_class.new(form:, collection:))
 
-      expect(page).to have_css('.h5', text: 'Additional terms of use')
+      expect(page).to have_css('label', text: 'Additional terms of use')
       expect(page).to have_css('p', text: custom_rights_statement_fixture)
       expect(page).to have_field('custom_rights_statement', type: 'hidden', with: custom_rights_statement_fixture)
     end
@@ -30,7 +30,7 @@ RSpec.describe Works::Edit::TermsOfUseComponent, type: :component do
     it 'renders the default instructions and input' do
       render_inline(described_class.new(form:, collection:))
 
-      expect(page).to have_css('.h5', text: 'Additional terms of use (optional)')
+      expect(page).to have_css('label', text: 'Additional terms of use (optional)')
       expect(page).to have_css('.form-text', text: 'Enter additional terms of use not covered')
       expect(page).to have_field('custom_rights_statement', type: 'textarea')
     end
@@ -47,7 +47,7 @@ RSpec.describe Works::Edit::TermsOfUseComponent, type: :component do
     it 'renders the provided instructions and input' do
       render_inline(described_class.new(form:, collection:))
 
-      expect(page).to have_css('.h5', text: 'Additional terms of use (optional)')
+      expect(page).to have_css('label', text: 'Additional terms of use (optional)')
       expect(page).to have_css('.form-text', text: instructions)
       expect(page).to have_field('custom_rights_statement', type: 'textarea')
     end

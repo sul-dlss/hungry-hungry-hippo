@@ -6,7 +6,7 @@ module Elements
     # NOTE: Use the `NestedComponentPresenter` to invoke this component; do not directly instantiate it.
     class RepeatableNestedComponent < ApplicationComponent
       def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists
-                     reorderable: false, single_field: false, label: nil)
+                     reorderable: false, single_field: false, label: nil, fieldset_classes: [])
         @form = form
         @model_class = model_class
         @field_name = field_name
@@ -16,6 +16,7 @@ module Elements
         @reorderable = reorderable
         @single_field = single_field
         @label = label
+        @fieldset_classes = fieldset_classes
         super()
       end
 
@@ -30,7 +31,7 @@ module Elements
       end
 
       def container_classes
-        merge_classes(%w[mb-3 container], bordered? ? [] : %w[p-0])
+        merge_classes(%w[container], bordered? ? [] : %w[p-0])
       end
 
       def row_classes
@@ -44,7 +45,7 @@ module Elements
       end
 
       def add_button_classes
-        bordered? ? 'my-4' : 'mb-4 mt-0'
+        'my-0'
       end
 
       def label_text
@@ -65,6 +66,10 @@ module Elements
       def single_field?
         # whether there is a single visible field in the form, to determine button placement
         @single_field
+      end
+
+      def fieldset_classes
+        merge_classes('form-fieldset', @fieldset_classes)
       end
     end
   end

@@ -17,6 +17,11 @@ module Elements
         Elements::Forms::ToggleOptionComponent.new(form:, field_name:, label:, value:, data:, label_data:)
       }
 
+      def initialize(**args)
+        args[:label_classes] = merge_classes('d-block', args[:label_classes])
+        super
+      end
+
       def data
         { controller: 'toggle' }
       end

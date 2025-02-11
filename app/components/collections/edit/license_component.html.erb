@@ -1,4 +1,4 @@
-<%= render Elements::Forms::FieldsetComponent.new(label: 'License settings', hidden_label: true) do %>
+<%= render Elements::Forms::FieldsetComponent.new(label: 'License settings', hidden_label: true, classes: 'pane-section') do %>
   <div class="form-check d-flex pt-2">
     <div class="ps-2">
       <%= form.radio_button :license_option, 'required', class: 'form-check-input' %>

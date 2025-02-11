@@ -1,8 +1,13 @@
 <%= tag.div(id:, class: classes, role: 'tabpanel', 'aria-labelledby': tab_id, tabindex: '0', data: { tab_error_target: 'pane' }) do %>
   <div class="d-flex flex-column justify-content-between h-100">
     <div>
-      <% if label %><h2 class="h4"><%= label %></h2><% end %>
-      <% if help_text %><p><%= help_text %></p><% end %>
+      <% if label || help_text || help? %>
+        <div class="pane-header">
+          <% if label %><h2 class="h4"><%= label %></h2><% end %>
+          <% if help_text %><p><%= help_text || help %></p><% end %>
+          <%= help if help? %>
+        </div>
+      <% end %>
       <%= content %>
     </div>
     <%= footer %>
