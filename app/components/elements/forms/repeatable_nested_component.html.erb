@@ -1,7 +1,9 @@
-<%= tag.fieldset class: fieldset_classes, data: fieldset_data do %>
-  <legend>
-    <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text:, hidden_label:, classes: 'form-label fw-bold') %>
-  </legend>
+<%= render Elements::Forms::FieldsetComponent.new(data: fieldset_data, classes: fieldset_classes) do |component| %>
+  <% component.with_legend do %>
+    <h3>
+      <%= render Edit::LabelComponent.new(label_text:, hidden_label:) %>
+    </h3>
+  <% end %>
   <%= tag.div(class: container_classes, data: { nested_form_target: 'container', nested_form_reorder_target: 'container' }) do %>
     <template data-nested-form-target="template">
       <%= form.fields_for field_name, model_class.new, child_index: 'NEW_RECORD' do |nested_form| %>

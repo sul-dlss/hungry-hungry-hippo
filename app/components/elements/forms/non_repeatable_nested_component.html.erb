@@ -1,4 +1,9 @@
-<%= render Elements::Forms::FieldsetComponent.new(label: header_label, id:, hidden_label:) do %>
+<%= render Elements::Forms::FieldsetComponent.new(id:) do |component| %>
+  <% component.with_legend do %>
+    <h3>
+      <%= render Edit::LabelComponent.new(label_text:, hidden_label:) %>
+    </h3>
+  <% end %>
   <%= tag.div class: 'mb-3' do %>
     <%= form.fields_for field_name do |nested_form| %>
       <%= render form_component.new(form: nested_form, **form_component_args) %>

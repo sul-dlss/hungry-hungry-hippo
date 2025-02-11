@@ -4,7 +4,10 @@ module Elements
   module Forms
     # Component for rendering a form fieldset.
     class FieldsetComponent < ApplicationComponent
-      def initialize(label:, hidden_label: false, classes: [], label_classes: [], legend_classes: [], data: {}, id: nil) # rubocop:disable Metrics/ParameterLists
+      renders_one :legend # Provide legend or label
+
+      def initialize(label: nil, hidden_label: false, classes: [], label_classes: [], legend_classes: [], # rubocop:disable Metrics/ParameterLists
+                     data: {}, id: nil)
         @label = label
         @hidden_label = hidden_label
         @classes = classes
