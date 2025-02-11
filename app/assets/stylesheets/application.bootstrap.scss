@@ -116,6 +116,11 @@ html {
   legend.form-label {
     font-size: unset;
   }
+
+  // Legend labels are wrapped in h3 for accessibility, but don't want h3 styling.
+  legend h3 {
+    all: unset;
+  }
 }
 
 // Common to styled tables

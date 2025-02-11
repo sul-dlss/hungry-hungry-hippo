@@ -1,6 +1,6 @@
 <div class="pane-section">
   <% if required_license_option? %>
-    <label class="form-label fw-bold">License</label>
+    <%= render Edit::LabelComponent.new(label_text: 'License') %>
     <p>The license for this deposit is <%= license_label %></p>
     <%= form.hidden_field :license %>
   <% else %>

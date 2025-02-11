@@ -4,7 +4,7 @@ module Elements
   module Forms
     # Base component for all form fields.
     class FieldComponent < ApplicationComponent
-      def initialize(form:, field_name:, required: false, hidden_label: false, label: nil, help_text: nil, # rubocop:disable Metrics/ParameterLists, Metric/MethodLength
+      def initialize(form:, field_name:, required: false, hidden_label: false, label: nil, help_text: nil, # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength
                      disabled: false, hidden: false, data: {}, input_data: {}, placeholder: nil, width: nil,
                      label_classes: [], container_classes: [], input_classes: [])
         @form = form

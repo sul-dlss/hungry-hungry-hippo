@@ -1,6 +1,6 @@
 <div class="pane-section">
   <% if provided_custom_rights_statement_option? %>
-    <label class="form-label fw-bold"><%= label %></label>
+    <%= render Edit::LabelComponent.new(label_text: label) %>
     <p><%= provided_custom_rights_statement %></p>
     <%= form.hidden_field :custom_rights_statement, value: provided_custom_rights_statement %>
   <% else %>

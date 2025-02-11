@@ -59,6 +59,8 @@ en:
     world: 'Everyone'
     depositor_selects: 'Depositor selects'
   contributors:
+    edit:
+      legend: 'Contributor'
     validation:
       first_name:
         blank: 'must provide a first name'
@@ -75,6 +77,9 @@ en:
         label: 'Day'
       approximate:
         label: 'Approximate'
+  depositors:
+    edit:
+      legend: 'Depositors'
   publication_date:
     edit:
       legend: 'Previous publication date'
@@ -100,8 +105,12 @@ en:
       fields:
         label: 'License'
       license_terms_of_use: In addition to the license, the following Terms of Use will also be displayed on your PURL page.
+  managers:
+    edit:
+      legend: 'Managers'
   related_links:
     edit:
+      legend: 'Related links'
       fields:
         text:
           label: 'Link text'
@@ -109,6 +118,7 @@ en:
           label: 'URL'
   related_works:
     edit:
+      legend: 'Related works'
       fields:
         citation:
           label: 'Full citation for work'
@@ -135,6 +145,9 @@ en:
             succeeded by: 'It precedes or is continued by this related work'
             part of: "It's one part of this related work"
             has part: 'It consists of parts, one of which is this related work'
+  reviewers:
+    edit:
+      legend: 'Reviewers'
   terms_of_deposit:
     faq: 'FAQs and download Terms of Deposit'
   works:

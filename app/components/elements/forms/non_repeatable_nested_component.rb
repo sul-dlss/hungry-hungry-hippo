@@ -20,21 +20,13 @@ module Elements
 
       attr_reader :form, :model_class, :field_name, :form_component, :form_component_args, :hidden_label
 
-      def header_label
+      def label_text
         helpers.t("#{field_name}.edit.legend")
       end
 
       def id
         field_name
       end
-
-      # def legend_classes
-      #   merge_classes('form-label', @legend_classes, @hidden_label ? 'visually-hidden' : nil)
-      # end
-
-      # def fieldset_classes
-      #   merge_classes('form-fieldset', @fieldset_classes)
-      # end
     end
   end
 end
