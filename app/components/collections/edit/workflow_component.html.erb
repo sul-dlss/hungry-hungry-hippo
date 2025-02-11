@@ -14,8 +14,7 @@
                                           label_data: { action: 'click->workflow#hideReviewersSection' }) %>
   <% end %>
 
-  <fieldset data-workflow-target="reviewersSection" class="d-none">
-    <p class="fw-bold">Enter one reviewer SUNet ID per box and then click "Add" to save the entry.</p>
+  <%= render Elements::Forms::FieldsetComponent.new(label: 'Enter one reviewer SUNet ID per box.', data: { workflow_target: 'reviewersSection' }, classes: 'd-none') do %>
     <%= render NestedComponentPresenter.for(form:, field_name: :reviewers, model_class: ReviewerForm, label: 'Reviewers', form_component: Collections::ContributorComponent) %>
-  </fieldset>
+  <% end %>
 <% end %>

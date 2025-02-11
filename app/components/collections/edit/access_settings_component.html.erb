@@ -1,6 +1,5 @@
-<%= render Edit::SectionHeaderComponent.new(title: 'When will files on deposits to this collection be downloadable?') %>
 <div data-controller="release">
-  <fieldset>
+  <%= render Elements::Forms::FieldsetComponent.new(label: 'When will files on deposits to this collection be downloadable?') do %>
     <div class="form-check">
       <div class="ps-2">
         <%= form.radio_button :release_option, 'immediate',
@@ -22,11 +21,10 @@
                                                              data: { release_target: 'releaseDuration' }) %>
       </div>
     </div>
-  </fieldset>
+  <% end %>
 </div>
 <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
-<%= render Edit::SectionHeaderComponent.new(title: 'Who will have permission to download files for deposits to this collection?') %>
-<fieldset>
+<%= render Elements::Forms::FieldsetComponent.new(label: 'Who will have permission to download files for deposits to this collection?') do %>
   <div class="form-check">
     <div class="ps-2">
       <%= form.radio_button :access, 'world', class: 'form-check-input' %>
@@ -45,10 +43,9 @@
       <%= form.label :access_world, I18n.t('collections.edit.fields.access.depositor_selects'), class: 'form-check-label' %>
     </div>
   </div>
-</fieldset>
+<% end %>
 <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
-<%= render Edit::SectionHeaderComponent.new(title: 'Will a DOI be assigned to the deposits in this collection?') %>
-<fieldset>
+<%= render Elements::Forms::FieldsetComponent.new(label: 'Will a DOI be assigned to the deposits in this collection?') do %>
   <div class="form-check">
     <div class="ps-2">
       <%= form.radio_button :doi_option, 'yes', class: 'form-check-input' %>
@@ -67,4 +64,4 @@
       <%= form.label :doi_option_depositor_selects, I18n.t('collections.edit.fields.doi_option.depositor_selects'), class: 'form-check-label' %>
     </div>
   </div>
-</fieldset>
+<% end %>
