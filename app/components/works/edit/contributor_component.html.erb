@@ -30,9 +30,7 @@
   </div>
 
   <%# Contributor person name/orcid fields %>
-  <fieldset data-contributors-target="personSection">
-    <legend class="visually-hidden">Person</legend>
-
+  <%= render Elements::Forms::FieldsetComponent.new(label: 'Person', hidden_label: true, data: { contributors_target: 'personSection' }) do %>
     <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :person_role, label_classes: 'fw-bold',
                                                          options: PERSON_ROLES, label: role_label, container_classes: 'mb-4') %>
 
@@ -98,12 +96,10 @@
         </div>
       </div>
     </div>
-  </fieldset>
+  <% end %>
 
   <%# Contributor organization name field %>
-  <fieldset data-contributors-target="organizationSection">
-    <legend class="visually-hidden">Organization</legend>
-
+  <%= render Elements::Forms::FieldsetComponent.new(label: 'Organization', hidden_label: true, data: { contributors_target: 'organizationSection' }) do %>
     <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :organization_role, label_classes: 'fw-bold',
                                                          options: ORGANIZATION_ROLES, label: role_label, container_classes: 'mb-4',
                                                          input_data: { contributors_target: 'organizationRoleSelect', action: 'change->contributors#showDegreeGrantingSection' }) %>
@@ -139,5 +135,5 @@
       <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :organization_name, label: organization_label, label_classes: 'fw-bold', container_classes: 'mb-4') %>
     </div>
 
-  </fieldset>
+  <% end %>
 <% end %>

@@ -4,8 +4,7 @@
     </div>
   </div>
 
-<fieldset class="mt-4" data-controller="dates" id="creation_date">
-  <legend class="form-label">Creation date</legend>
+<%= render Elements::Forms::FieldsetComponent.new(label: 'Creation date', classes: 'mt-4', data: { controller: 'dates' }, id: 'creation_date') do %>
   <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :create_date_type, hidden_label: true, container_classes: 'mb-3',
                                                   label: 'Creation date') do |component| %>
     <% component.with_left_toggle_option(form:,
@@ -41,4 +40,4 @@
       <div class="is-invalid">
       <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :create_date_range_from) %>
     <% end %>
-</fieldset>
+<% end %>

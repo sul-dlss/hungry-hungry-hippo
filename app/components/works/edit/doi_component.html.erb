@@ -13,8 +13,7 @@
 <% else %>
   <p>Getting a DOI (Digital Object Identifier) may improve discovery of your work in web searches and will enable Altmetric reporting.</p>
 
-  <fieldset class="row">
-    <legend class="form-label col-md-5">Do you want a DOI assigned to this work?</legend>
+  <%= render Elements::Forms::FieldsetComponent.new(label: 'Do you want a DOI assigned to this work?', classes: 'row', legend_classes: 'col-md-5') do %>
     <div class="form-check col-md-2">
       <%= form.radio_button :doi_option, 'yes', class: 'form-check-input' %>
       <%= form.label :doi_option_yes, 'Yes', class: 'form-check-label' %>
@@ -23,5 +22,5 @@
       <%= form.radio_button :doi_option, 'no', class: 'form-check-input' %>
       <%= form.label :doi_option_no, 'No', class: 'form-check-label' %>
     </div>
-  </fieldset>
+  <% end %>
 <% end %>
