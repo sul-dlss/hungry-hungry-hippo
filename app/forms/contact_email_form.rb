@@ -7,6 +7,6 @@ class ContactEmailForm < ApplicationForm
   validates :email, format: {
     with: URI::MailTo::EMAIL_REGEXP,
     allow_blank: true,
-    message: 'must provide a valid email address' # rubocop:disable Rails/I18nLocaleTexts
+    message: I18n.t('contact_email.validation.email.invalid')
   }
 end
