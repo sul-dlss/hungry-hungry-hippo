@@ -90,6 +90,7 @@ RSpec.describe ContributorForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
+        expect(form.errors[:orcid]).to eq(['must be formatted as "XXXX-XXXX-XXXX-XXXX"'])
       end
     end
 

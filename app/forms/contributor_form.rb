@@ -30,7 +30,8 @@ class ContributorForm < ApplicationForm
 
   attribute :with_orcid, :boolean, default: true
   attribute :orcid, :string, default: nil
-  validates :orcid, format: { with: /\A\d{4}-\d{4}-\d{4}-\d{3}[0-9X]\z/ },
+  validates :orcid, format: { with: /\A\d{4}-\d{4}-\d{4}-\d{3}[0-9X]\z/,
+                              message: I18n.t('contributors.validation.orcid.invalid') },
                     allow_blank: true,
                     if: -> { person? && with_orcid }
   validates :orcid, presence: true, on: :deposit, if: -> { person? && with_orcid? }
