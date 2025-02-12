@@ -6,6 +6,7 @@ module Elements
     class TextareaFieldComponent < FieldComponent
       def initialize(rows: nil, **args)
         @rows = rows
+        args[:container_classes] = merge_classes('field-container', args[:container_classes])
         super(**args)
       end
 
