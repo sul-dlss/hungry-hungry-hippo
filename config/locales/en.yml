@@ -165,7 +165,7 @@ en:
         work_subtypes:
           label: 'Which of the following terms further describe your deposit?'
       messages:
-        cannot_be_edited: 'This work cannot be edited.'
+        cannot_be_edited_html: "If you need to make a change to this work, contact <a href=\"mailto:%{support_email}\">%{support_email}</a>."
       panes:
         abstract:
           tab_label: 'Abstract and keywords'

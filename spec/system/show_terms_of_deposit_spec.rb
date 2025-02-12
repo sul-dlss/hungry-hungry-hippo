@@ -12,6 +12,9 @@ RSpec.describe 'Show terms of deposit' do
 
     click_link_or_button 'Terms of Deposit'
 
+    # The lazy loading of the modal fails sporadically without this sleep.
+    sleep 0.25
+
     within('.modal#tod-modal') do
       expect(page).to have_css('h1', text: 'Terms of Deposit')
       expect(page).to have_text('In depositing content to the Stanford Digital Repository')

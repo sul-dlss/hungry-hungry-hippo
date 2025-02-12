@@ -45,7 +45,7 @@
       <div class="container">
         <% flash.each do |flash_type, msg| %>
           <%= render Elements::AlertComponent.new(variant: flash_type) do %>
-            <div><%= msg %></div>
+            <div><%= msg.html_safe %></div><%# erb_lint:disable ErbSafety %>
           <% end %>
         <% end %>
         <%= yield %>

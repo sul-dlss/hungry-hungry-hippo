@@ -35,8 +35,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     authorize! @work
 
     unless editable?
-      flash[:danger] = helpers.t('works.edit.messages.cannot_be_edited')
-      return redirect_to work_path(druid: params[:druid])
+      flash[:warning] = helpers.t('works.edit.messages.cannot_be_edited_html', support_email: Settings.support_email)
+      return redirect_to work_path(druid: params[:druid]), status: :see_other
     end
 
     # This updates the Work with the latest metadata from the Cocina object.
