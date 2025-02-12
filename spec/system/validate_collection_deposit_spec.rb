@@ -36,7 +36,7 @@ RSpec.describe 'Validate a collection deposit' do
     # Depositing the collection
     find('.nav-link', text: 'Deposit', exact_text: true).click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
-    click_link_or_button('Deposit')
+    click_link_or_button('Deposit', class: 'btn-primary')
     expect(page).to have_css('h1', text: collection_title_fixture)
     expect(page).to have_current_path(collection_path)
 
@@ -70,7 +70,7 @@ RSpec.describe 'Validate a collection deposit' do
     # Try to deposit again
     find('.nav-link', text: 'Deposit', exact_text: true).click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
-    click_link_or_button('Deposit')
+    click_link_or_button('Deposit', class: 'btn-primary')
     expect(page).to have_css('h1', text: collection_title_fixture)
     expect(page).to have_current_path(collection_path)
 

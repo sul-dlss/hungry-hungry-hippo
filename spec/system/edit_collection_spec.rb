@@ -75,7 +75,7 @@ RSpec.describe 'Edit a collection' do
     find('.nav-link', text: 'Details').click
     fill_in('collection_description', with: '')
     find('.nav-link', text: 'Deposit', exact_text: true).click
-    click_link_or_button('Deposit')
+    click_link_or_button('Deposit', class: 'btn-primary')
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
     # Filling in abstract
@@ -151,7 +151,7 @@ RSpec.describe 'Edit a collection' do
     click_link_or_button('Next')
 
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
-    click_link_or_button('Deposit')
+    click_link_or_button('Deposit', class: 'btn-primary')
 
     # Waiting page may be too fast to catch so not testing.
     # On show page

@@ -114,7 +114,7 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_no_button('Next')
     expect(page).to have_link('Cancel')
 
-    click_link_or_button('Deposit')
+    click_link_or_button('Deposit', class: 'btn-primary')
 
     # Waiting page may be too fast to catch so not testing.
     # On show page

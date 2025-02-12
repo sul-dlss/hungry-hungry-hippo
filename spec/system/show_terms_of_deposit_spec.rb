@@ -12,12 +12,12 @@ RSpec.describe 'Show terms of deposit' do
 
     click_link_or_button 'Terms of Deposit'
 
-    within('.modal') do
+    within('.modal#tod-modal') do
       expect(page).to have_css('h1', text: 'Terms of Deposit')
       expect(page).to have_text('In depositing content to the Stanford Digital Repository')
       find('.btn-close').click
     end
 
-    expect(page).to have_no_css('.modal')
+    expect(page).to have_css('.modal#tod-modal[aria-hidden="true"]', visible: :hidden)
   end
 end
