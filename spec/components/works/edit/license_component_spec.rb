@@ -16,6 +16,7 @@ RSpec.describe Works::Edit::LicenseComponent, type: :component do
     it 'renders the select' do
       render_inline(described_class.new(form:, license_presenter:))
 
+      expect(page).to have_link('Get help selecting a license', href: 'https://sdr.library.stanford.edu/documentation/license-options')
       expect(page).to have_select('license')
       expect(page).to have_css('optgroup[label="Creative Commons"]')
       expect(page).to have_css('option[value="https://creativecommons.org/licenses/by/4.0/legalcode"]',
@@ -41,6 +42,8 @@ RSpec.describe Works::Edit::LicenseComponent, type: :component do
 
     it 'states the license and renders a hidden field' do
       render_inline(described_class.new(form:, license_presenter:))
+
+      expect(page).to have_link('Get help selecting a license', href: 'https://sdr.library.stanford.edu/documentation/license-options')
 
       expect(page).to have_text('The license for this deposit is CC-BY-4.0 Attribution International')
       expect(page).to have_field('license', type: 'hidden', with: 'https://creativecommons.org/licenses/by/4.0/legalcode')
