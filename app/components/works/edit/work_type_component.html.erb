@@ -1,5 +1,5 @@
 <div data-controller="work-type">
-  <div class="pane-section pb-0">
+  <div class="pane-section">
     <%= render Elements::Forms::FieldsetComponent.new(label: t('works.edit.fields.work_type.label')) do %>
       <div class="row">
         <%= render Elements::Forms::InputCollectionRadioButtonsComponent.new(form:, field_name: :work_type, input_collection: WorkType.all, div_classes: 'col-4', input_data: { work_type_target: 'workTypeRadio', action: 'work-type#showSubtypes' }) %>
@@ -26,10 +26,12 @@
   <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Video', more_options: true) %>
 
   <%# Music %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Music', more_options: true, minimum_terms: WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES) %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Music', more_options: true,
+                                                    minimum_terms: WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES, error_field_name: :work_subtypes_music) %>
 
   <%# Mixed materials %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Mixed Materials', minimum_terms: WorkType::MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES) %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Mixed Materials',
+                                                    minimum_terms: WorkType::MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES, error_field_name: :work_subtypes_mixed_materials) %>
 
   <%# Other %>
   <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Other') do %>

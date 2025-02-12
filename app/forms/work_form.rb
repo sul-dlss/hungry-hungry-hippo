@@ -45,17 +45,7 @@ class WorkForm < ApplicationForm
   validates :work_type, presence: true, on: :deposit
 
   attribute :work_subtypes, array: true, default: -> { [] }
-  # Music and mixed materials have a minimum number of subtypes required
-  validates :work_subtypes, length: { minimum: WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES,
-                                      too_short: '%<count>s term is the minimum allowed' },
-                            if: lambda {
-                              work_type == WorkType::MUSIC
-                            }
-  validates :work_subtypes, length: { minimum: WorkType::MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES,
-                                      too_short: '%<count>s terms is the minimum allowed' },
-                            if: lambda {
-                              work_type == WorkType::MIXED_MATERIALS
-                            }
+  validate :correct_work_subtype_length
 
   attribute :other_work_subtype, :string
   # Other requires a work subtype string
@@ -108,5 +98,17 @@ class WorkForm < ApplicationForm
     return if create_date_range_from.year.blank? && create_date_range_to.year.blank?
 
     errors.add(:create_date_range_from, 'must have both a start and end date')
+  end
+
+  def correct_work_subtype_length
+    # Doing custom validation because need to set custom error keys.
+    length = work_subtypes.compact_blank.length
+    if work_type == WorkType::MUSIC && length < WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES
+      errors.add(:work_subtypes_music,
+                 "#{WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES} term is the minimum allowed")
+    elsif work_type == WorkType::MIXED_MATERIALS && length < WorkType::MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES
+      errors.add(:work_subtypes_mixed_materials,
+                 "#{WorkType::MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES} terms are the minimum allowed")
+    end
   end
 end

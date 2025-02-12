@@ -3,6 +3,8 @@
     <%= content %>
   <% else %>
     <%= render Elements::Forms::FieldsetComponent.new(label: t('works.edit.fields.work_subtypes.label')) do %>
+      <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: error_field_name) %>
+
       <% if minimum_terms.positive? %>
         <p>Select at least <%= term_phrase %> below:</p>
       <% end %>
