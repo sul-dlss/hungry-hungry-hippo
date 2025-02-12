@@ -12,7 +12,7 @@
     </div>
   <% end %>
   <% component.with_body do %>
-    <%= tag.turbo_frame id: 'terms-of-deposit', src: terms_path, loading: 'lazy' do %>
+    <%= tag.turbo_frame id: 'terms-of-deposit', src: terms_path, loading: do %>
       <%= render Elements::SpinnerComponent.new %>
     <% end %>
   <% end %>

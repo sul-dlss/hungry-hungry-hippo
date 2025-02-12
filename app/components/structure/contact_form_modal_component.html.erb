@@ -3,7 +3,7 @@
     <h1><%= contact_sdr %></h1>
   <% end %>
   <% component.with_body do %>
-    <%= tag.turbo_frame id: 'contact-form', src: new_contacts_path, loading: 'lazy' do %>
+    <%= tag.turbo_frame id: 'contact-form', src: new_contacts_path, loading: do %>
       <%= render Elements::SpinnerComponent.new %>
     <% end %>
   <% end %>
