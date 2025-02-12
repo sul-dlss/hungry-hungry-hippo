@@ -2,6 +2,6 @@
   <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :identifier, label: helpers.t('related_works.edit.fields.identifier.label.html'), data: { related_work_target: 'identifier' }, container_classes: 'mb-4') %>
   <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :use_citation, label: helpers.t('related_works.edit.fields.use_citation.label'),
                                                     data: { action: 'related-work#toggleCitation', related_work_target: 'useCitation' }, container_classes: 'mb-4') %>
-  <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :citation, label: helpers.t('related_works.edit.fields.citation.label'), data: { related_work_target: 'citation' }, container_classes: 'mb-4') %>
+  <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :citation, label: helpers.t('related_works.edit.fields.citation.label'), data: { related_work_target: 'citation' }, container_classes: 'mb-4', rows: 2) %>
   <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :relationship, options:, required: false, label: helpers.t('related_works.edit.fields.relationship.label.html'), prompt:, container_classes: 'mb-4') %>
 </div>
