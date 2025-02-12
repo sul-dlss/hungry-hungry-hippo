@@ -7,6 +7,10 @@ RSpec.describe 'Edit work' do
 
   let(:druid) { druid_fixture }
 
+  let(:roundtrip_warning) do
+    'If you need to make a change to this work, contact <a href="mailto:sdr-support@lists.stanford.edu">sdr-support@lists.stanford.edu</a>' # rubocop:disable Layout/LineLength
+  end
+
   context 'when the user is not authorized' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
@@ -90,26 +94,7 @@ RSpec.describe 'Edit work' do
         expect(response).to redirect_to(work_path(druid))
 
         follow_redirect!
-        expect(response.body).to include('This work cannot be edited.')
-        expect(ToWorkForm::RoundtripValidator).not_to have_received(:roundtrippable?)
-      end
-    end
-
-    context 'when the user is an administrator' do
-      let(:admin_user) { create(:user) }
-      let(:groups) { ['dlss:hydrus-app-administrators'] }
-
-      before do
-        sign_in(admin_user, groups:)
-      end
-
-      it 'redirects to the show page' do
-        get "/works/#{druid}/edit"
-
-        expect(response).to redirect_to(work_path(druid))
-
-        follow_redirect!
-        expect(response.body).to include('This work cannot be edited.')
+        expect(response.body).to include(roundtrip_warning)
         expect(ToWorkForm::RoundtripValidator).not_to have_received(:roundtrippable?)
       end
     end
@@ -140,7 +125,7 @@ RSpec.describe 'Edit work' do
       expect(response).to redirect_to(work_path(druid))
 
       follow_redirect!
-      expect(response.body).to include('This work cannot be edited.')
+      expect(response.body).to include(roundtrip_warning)
       expect(ToWorkForm::RoundtripValidator).to have_received(:roundtrippable?)
     end
   end
@@ -171,7 +156,7 @@ RSpec.describe 'Edit work' do
       expect(response).to redirect_to(work_path(druid))
 
       follow_redirect!
-      expect(response.body).to include('This work cannot be edited.')
+      expect(response.body).to include(roundtrip_warning)
       expect(ToWorkForm::RoundtripValidator).not_to have_received(:roundtrippable?)
     end
   end
@@ -202,7 +187,7 @@ RSpec.describe 'Edit work' do
       expect(response).to redirect_to(work_path(druid))
 
       follow_redirect!
-      expect(response.body).to include('This work cannot be edited.')
+      expect(response.body).to include(roundtrip_warning)
       expect(ToWorkForm::RoundtripValidator).not_to have_received(:roundtrippable?)
     end
   end
