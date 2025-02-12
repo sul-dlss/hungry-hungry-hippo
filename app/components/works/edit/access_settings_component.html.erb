@@ -1,5 +1,5 @@
 <div class="pane-section">
-  <%= render Edit::SectionHeaderComponent.new(title: 'Release date') %>
+  <%= render Edit::LabelComponent.new(label_text: 'Release date') %>
   <% if immediate_release_option? %>
     <p>Your files with be available shortly after you deposit this item.</p>
     <%= form.hidden_field :release_option, value: :immediate %>
@@ -30,7 +30,7 @@
 </div>
 
 <div class="pane-section">
-  <%= render Edit::SectionHeaderComponent.new(title: 'Individual file visibility') %>
+  <%= render Edit::LabelComponent.new(label_text: 'Individual file visibility') %>
   <p>
     You can prevent individual files from being displayed on the PURL page,
     meaning viewers of the page can neither see or download the files. All files
@@ -44,11 +44,13 @@
 </div>
 
 <div class="pane-section">
-  <%= render Edit::SectionHeaderComponent.new(title: 'Download access') %>
+  <%= render Edit::LabelComponent.new(label_text: 'Download access') %>
   <% if depositor_selects_access? %>
     <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :access, options: access_options, width: 250, label: 'Who can download the files?') %>
   <% else %>
-    <%= collection_selects_access_message %>
+    <p>
+      <%= collection_selects_access_message %>
+    </p>
     <%= form.hidden_field :access %>
   <% end %>
 </div>

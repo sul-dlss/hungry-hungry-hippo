@@ -161,11 +161,11 @@ RSpec.describe 'Create a work deposit' do
     # Clicking on Next to go to access settings tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Access settings')
-    expect(page).to have_css('.h5', text: 'Release date')
+    expect(page).to have_css('label', text: 'Release date')
     choose('On this date')
     fill_in 'Release date', with: (Time.zone.today + 1.day).iso8601
 
-    expect(page).to have_css('.h5', text: 'Individual file visibility')
+    expect(page).to have_css('label', text: 'Individual file visibility')
 
     # Manage files link
     click_link_or_button('Manage files')
@@ -175,7 +175,7 @@ RSpec.describe 'Create a work deposit' do
     find('.nav-link', text: 'Access settings').click
     expect(page).to have_css('.nav-link.active', text: 'Access settings')
 
-    expect(page).to have_css('.h5', text: 'Download access')
+    expect(page).to have_css('label', text: 'Download access')
     select('Everyone', from: 'work_access')
 
     # Clicking on Next to go to license tab
