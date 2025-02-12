@@ -20,7 +20,7 @@ module Elements
       end
 
       def render?
-        errors.present?
+        field_name.present? && errors.present?
       end
 
       private

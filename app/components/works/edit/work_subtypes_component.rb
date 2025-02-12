@@ -4,15 +4,16 @@ module Works
   module Edit
     # Component for the work subtypes field
     class WorkSubtypesComponent < ApplicationComponent
-      def initialize(form:, work_type:, more_options: false, minimum_terms: 0)
+      def initialize(form:, work_type:, more_options: false, minimum_terms: 0, error_field_name: nil)
         @form = form
         @work_type = work_type
         @more_options = more_options
         @minimum_terms = minimum_terms
+        @error_field_name = error_field_name
         super()
       end
 
-      attr_reader :form, :work_type, :minimum_terms
+      attr_reader :form, :work_type, :minimum_terms, :error_field_name
 
       def more_options?
         @more_options

@@ -88,5 +88,26 @@ RSpec.describe 'Edit work type and subtypes for a work' do
     expect(page).to have_field('Specify "Other" type*', type: :text)
     expect(page).to have_no_field('3D model', type: :checkbox)
     expect(page).to have_no_text('See more options')
+
+    # Check validation for music
+    choose('Music')
+    click_link_or_button('Save as draft')
+
+    expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+
+    find('.nav-link.is-invalid', text: 'Type of deposit').click
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: '1 term is the minimum allowed')
+
+    # Clicking on another work type hides the error message
+    choose('Mixed Materials')
+    expect(page).to have_no_css('.invalid-feedback.is-invalid', text: '1 term is the minimum allowed')
+
+    check('Capstone')
+    click_link_or_button('Save as draft')
+
+    expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+
+    find('.nav-link.is-invalid', text: 'Type of deposit').click
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: '2 terms are the minimum allowed')
   end
 end

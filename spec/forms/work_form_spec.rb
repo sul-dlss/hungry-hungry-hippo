@@ -56,7 +56,7 @@ RSpec.describe WorkForm do
 
       it 'is invalid' do
         expect(form).not_to be_valid
-        expect(form.errors[:work_subtypes]).to include('1 term is the minimum allowed')
+        expect(form.errors[:work_subtypes_music]).to include('1 term is the minimum allowed')
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe WorkForm do
 
       it 'is invalid' do
         expect(form).not_to be_valid
-        expect(form.errors[:work_subtypes]).to include('2 terms is the minimum allowed')
+        expect(form.errors[:work_subtypes_mixed_materials]).to include('2 terms are the minimum allowed')
       end
     end
 
