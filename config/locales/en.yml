@@ -78,11 +78,14 @@ en:
     validation:
       email:
         invalid: 'must provide a valid email address'
-  keyword:
-    edit:
+  keyword:   
+    edit: 
       fields:
         text:
           label: 'Keywords (one per box)'
+  keywords:
+    edit:
+      legend: 'Keywords'
   license:
     terms_of_use: >
       User agrees that, where applicable, content will not be used to identify or to otherwise infringe the privacy or
