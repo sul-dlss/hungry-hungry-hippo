@@ -14,7 +14,8 @@ RSpec.describe 'Discard a work' do
     VersionStatus.new(status:
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
                                                                          discardable?: true,
-                                                                         version: cocina_object.version))
+                                                                         version: cocina_object.version,
+                                                                         version_description: whats_changing_fixture))
   end
 
   before do

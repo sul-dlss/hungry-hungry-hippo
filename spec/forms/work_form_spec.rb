@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe WorkForm do
+  include WorkMappingFixtures
+
   describe 'work type validations' do
     let(:form) do
       described_class.new(
@@ -159,6 +161,64 @@ RSpec.describe WorkForm do
     it 'normalizes linefeeds' do
       expect(form).to be_valid
       expect(form.abstract).to eq("This is a test.\r\n\r\nThis is a second paragraph.")
+    end
+  end
+
+  describe 'Whats changing validation' do
+    before do
+      create(:collection, druid: collection_druid_fixture)
+    end
+
+    context 'when first draft and depositing' do
+      let(:work_form) do
+        new_work_form_fixture.tap do |form|
+          form.release_date = 1.day.from_now
+        end
+      end
+
+      it 'is valid' do
+        expect(work_form.whats_changing).to be_nil
+        expect(work_form).to be_valid
+      end
+    end
+
+    context 'when not first draft and depositing' do
+      let(:work_form) do
+        work_form_fixture.tap do |form|
+          form.release_date = 1.day.from_now
+          form.whats_changing = nil
+        end
+      end
+
+      it 'is invalid' do
+        expect(work_form.valid?(:deposit)).to be false
+        expect(work_form.errors[:whats_changing]).to include("can't be blank")
+      end
+    end
+
+    context 'when not first draft and depositing and whats changing is provided' do
+      let(:work_form) do
+        work_form_fixture.tap do |form|
+          form.release_date = 1.day.from_now
+        end
+      end
+
+      it 'is valid' do
+        expect(work_form.valid?(:deposit)).to be true
+      end
+    end
+
+    context 'when not first draft and saving draft' do
+      let(:work_form) do
+        work_form_fixture.tap do |form|
+          form.release_date = 1.day.from_now
+          form.whats_changing = nil
+        end
+      end
+
+      it 'is invalid' do
+        expect(work_form).to be_valid
+      end
     end
   end
 end

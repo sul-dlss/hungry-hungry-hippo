@@ -7,10 +7,11 @@ module ToWorkForm
       new(...).call
     end
 
-    def initialize(cocina_object:, doi_assigned:, agree_to_terms:)
+    def initialize(cocina_object:, doi_assigned:, agree_to_terms:, version_description:)
       @cocina_object = cocina_object
       @doi_assigned = doi_assigned
       @agree_to_terms = agree_to_terms
+      @version_description = version_description
     end
 
     def call
@@ -19,7 +20,7 @@ module ToWorkForm
 
     private
 
-    attr_reader :cocina_object, :doi_assigned, :agree_to_terms
+    attr_reader :cocina_object, :doi_assigned, :agree_to_terms, :version_description
 
     def params # rubocop:disable Metrics/AbcSize
       {
@@ -41,7 +42,8 @@ module ToWorkForm
         publication_date_attributes: ToWorkForm::PublicationDateMapper.call(cocina_object:),
         custom_rights_statement:,
         doi_option:,
-        agree_to_terms:
+        agree_to_terms:,
+        whats_changing: version_description
       }.merge(ToWorkForm::WorkTypeMapper.call(cocina_object:))
         .merge(ToWorkForm::ReleaseDateMapper.call(cocina_object:))
         .merge(ToWorkForm::CreationDateMapper.call(cocina_object:))

@@ -13,7 +13,8 @@ RSpec.describe ReviewsMailer do
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
     allow(Sdr::Repository).to receive(:status)
-      .with(druid:).and_return(instance_double(Dor::Services::Client::ObjectVersion::VersionStatus))
+      .with(druid:).and_return(instance_double(Dor::Services::Client::ObjectVersion::VersionStatus,
+                                               version_description: whats_changing_fixture))
   end
 
   describe '.submitted_email' do

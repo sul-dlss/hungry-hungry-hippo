@@ -23,13 +23,15 @@ RSpec.describe 'Discard a work draft' do
     let(:version_status_discardable) do
       VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 2, discardable?: true,
-                                                                           openable?: false))
+                                                                           openable?: false,
+                                                                           version_description: whats_changing_fixture))
     end
     let(:version_status_openable) do
       VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
                                                                            discardable?: false,
-                                                                           openable?: true, accessioning?: false))
+                                                                           openable?: true, accessioning?: false,
+                                                                           version_description: whats_changing_fixture))
     end
 
     before do
@@ -58,7 +60,8 @@ RSpec.describe 'Discard a work draft' do
     let(:version_status) do
       VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1, discardable?: false,
-                                                                           openable?: false))
+                                                                           openable?: false,
+                                                                           version_description: whats_changing_fixture))
     end
 
     let(:collection_cocina_object) { collection_with_metadata_fixture }

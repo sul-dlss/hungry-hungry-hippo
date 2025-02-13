@@ -11,7 +11,8 @@ RSpec.describe 'Show work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status)
-        .with(druid:).and_return(instance_double(Dor::Services::Client::ObjectVersion::VersionStatus))
+        .with(druid:).and_return(instance_double(Dor::Services::Client::ObjectVersion::VersionStatus,
+                                                 version_description: whats_changing_fixture))
     end
 
     context 'when just some user' do
@@ -55,7 +56,8 @@ RSpec.describe 'Show work' do
         .with(druid:).and_return(
           VersionStatus.new(status:
           instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1,
-                                                                               openable?: false))
+                                                                               openable?: false,
+                                                                               version_description: whats_changing_fixture))
         )
 
       sign_in(admin_user, groups:)
@@ -95,7 +97,8 @@ RSpec.describe 'Show work' do
         .with(druid:).and_return(
           VersionStatus.new(status:
           instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1,
-                                                                               openable?: false))
+                                                                               openable?: false,
+                                                                               version_description: whats_changing_fixture))
         )
 
       sign_in(user)
@@ -125,7 +128,8 @@ RSpec.describe 'Show work' do
         .with(druid:).and_return(
           VersionStatus.new(status:
           instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true,
-                                                                               version: 1, openable?: false))
+                                                                               version: 1, openable?: false,
+                                                                               version_description: whats_changing_fixture))
         )
 
       sign_in(user)

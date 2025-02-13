@@ -15,7 +15,8 @@ RSpec.describe 'Edit work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status)
-        .with(druid:).and_return(instance_double(Dor::Services::Client::ObjectVersion::VersionStatus))
+        .with(druid:).and_return(instance_double(Dor::Services::Client::ObjectVersion::VersionStatus,
+                                                 version_description: whats_changing_fixture))
 
       create(:work, druid:, collection: create(:collection, druid: collection_druid_fixture))
       sign_in(create(:user))
@@ -34,7 +35,8 @@ RSpec.describe 'Edit work' do
     let(:version_status) do
       VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 1,
-                                                                           openable?: true))
+                                                                           openable?: true,
+                                                                           version_description: whats_changing_fixture))
     end
 
     before do
@@ -74,7 +76,8 @@ RSpec.describe 'Edit work' do
     let(:version_status) do
       VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, openable?: false,
-                                                                           accessioning?: true, version: 1))
+                                                                           accessioning?: true, version: 1,
+                                                                           version_description: whats_changing_fixture))
     end
 
     before do
@@ -108,7 +111,8 @@ RSpec.describe 'Edit work' do
     let(:version_status) do
       VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
-                                                                           version: cocina_object.version))
+                                                                           version: cocina_object.version,
+                                                                           version_description: whats_changing_fixture))
     end
 
     before do
@@ -139,7 +143,8 @@ RSpec.describe 'Edit work' do
     let(:version_status) do
       VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
-                                                                           accessioning?: false, version: 1))
+                                                                           accessioning?: false, version: 1,
+                                                                           version_description: whats_changing_fixture))
     end
 
     before do
@@ -170,7 +175,8 @@ RSpec.describe 'Edit work' do
     let(:version_status) do
       VersionStatus.new(status:
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
-                                                                           accessioning?: false, version: 1))
+                                                                           accessioning?: false, version: 1,
+                                                                           version_description: whats_changing_fixture))
     end
 
     before do

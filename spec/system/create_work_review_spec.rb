@@ -11,7 +11,8 @@ RSpec.describe 'Create a work that requires review' do
   let(:version_status) do
     VersionStatus.new(status:
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, accessioning?: true,
-                                                                         openable?: false, version: 1))
+                                                                         openable?: false, version: 1,
+                                                                         version_description: whats_changing_fixture))
   end
 
   before do

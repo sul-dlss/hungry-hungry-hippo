@@ -15,7 +15,8 @@ RSpec.describe 'Review and accept a work' do
       status: instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 2,
                                                                                    openable?: false,
                                                                                    accessioning?: false,
-                                                                                   discardable?: false)
+                                                                                   discardable?: false,
+                                                                                   version_description: whats_changing_fixture)
     )
   end
 
@@ -24,7 +25,8 @@ RSpec.describe 'Review and accept a work' do
       status: instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
                                                                                    openable?: false,
                                                                                    accessioning?: true,
-                                                                                   discardable?: false)
+                                                                                   discardable?: false,
+                                                                                   version_description: whats_changing_fixture)
     )
   end
 

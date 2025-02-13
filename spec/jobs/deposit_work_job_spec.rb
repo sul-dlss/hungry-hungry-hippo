@@ -56,7 +56,7 @@ RSpec.describe DepositWorkJob do
   context 'when an existing work with changed cocina object' do
     let(:work_form) do
       WorkForm.new(title: title_fixture, druid:, content_id: content.id, lock: 'abc123',
-                   collection_druid: collection.druid)
+                   collection_druid: collection.druid, whats_changing: whats_changing_fixture)
     end
     let(:work) { create(:work, :registering_or_updating, druid:) }
 
@@ -74,7 +74,7 @@ RSpec.describe DepositWorkJob do
                                                                   source_id: "h3:object-#{work.id}")
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
       expect(Sdr::Repository).to have_received(:open_if_needed)
-        .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata))
+        .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata), version_description: whats_changing_fixture)
       expect(Sdr::Repository).to have_received(:update).with(cocina_object:)
       expect(Sdr::Repository).not_to have_received(:accession)
       expect(RoundtripSupport).to have_received(:changed?)

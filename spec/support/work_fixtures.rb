@@ -247,3 +247,7 @@ end
 def full_custom_rights_statement_fixture
   "#{custom_rights_statement_fixture}\n\n#{I18n.t('license.terms_of_use')}"
 end
+
+def whats_changing_fixture
+  'I am changing the title.'
+end

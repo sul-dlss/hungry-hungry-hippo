@@ -3,7 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe ToWorkForm::Mapper, type: :mapping do
-  subject(:work_form) { described_class.call(cocina_object:, doi_assigned:, agree_to_terms: true) }
+  subject(:work_form) do
+    described_class.call(cocina_object:, doi_assigned:, agree_to_terms: true,
+                         version_description: whats_changing_fixture)
+  end
 
   let(:cocina_object) { dro_with_metadata_fixture }
   let(:doi_assigned) { true }

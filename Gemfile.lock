@@ -184,7 +184,7 @@ GEM
       capistrano-shared_configs
       ed25519
     docile (1.4.1)
-    dor-services-client (15.3.0)
+    dor-services-client (15.4.0)
       activesupport (>= 7.0.0)
       cocina-models (~> 0.99.0)
       deprecation
@@ -591,7 +591,7 @@ GEM
     zeitwerk (2.7.1)
 
 PLATFORMS
-  arm64-darwin
+  arm64-darwin-23
   x86_64-linux
 
 DEPENDENCIES
@@ -609,7 +609,7 @@ DEPENDENCIES
   datacite
   debug
   dlss-capistrano
-  dor-services-client (>= 15.3.0)
+  dor-services-client (>= 15.4.0)
   dor-workflow-client (>= 7.6.1)
   druid-tools
   dry-monads

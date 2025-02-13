@@ -38,6 +38,7 @@ module WorkMappingFixtures
       form.lock = lock_fixture
       form.doi_option = 'assigned'
       form.agree_to_terms = true
+      form.whats_changing = whats_changing_fixture
     end
   end
 

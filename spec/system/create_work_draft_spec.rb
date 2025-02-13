@@ -9,7 +9,8 @@ RSpec.describe 'Create a work draft' do
   let(:version_status) do
     VersionStatus.new(status:
     instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1,
-                                                                         openable?: false))
+                                                                         openable?: false,
+                                                                         version_description: whats_changing_fixture))
   end
 
   before do
