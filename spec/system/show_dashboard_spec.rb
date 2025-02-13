@@ -26,6 +26,8 @@ RSpec.describe 'Show dashboard', :rack_test do
 
       expect(page).to have_css('h1', text: "#{user.name} - Dashboard")
 
+      expect(page).to have_no_link('Admin')
+
       # Drafts section
       expect(page).to have_css('h2', text: 'Drafts - please complete')
       within('table#drafts-table') do

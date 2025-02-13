@@ -51,6 +51,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   get 'dashboard', to: 'dashboard#show'
 
+  namespace :admin do
+    get 'dashboard', to: 'dashboard#show'
+  end
+
   root 'home#show'
 
   mount MissionControl::Jobs::Engine, at: '/jobs'
