@@ -1,0 +1,8 @@
+<% content_for :breadcrumbs do %>
+  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
+    <% component.with_breadcrumb(text: 'Admin dashboard') %>
+  <% end %>
+<% end %>
+
+<%= render Elements::HeadingComponent.new(level: :h1, text: 'Admin dashboard', classes: 'h2 mb-4') %>
