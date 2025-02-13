@@ -74,7 +74,8 @@ RSpec.describe DepositWorkJob do
                                                                   source_id: "h3:object-#{work.id}")
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
       expect(Sdr::Repository).to have_received(:open_if_needed)
-        .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata), version_description: whats_changing_fixture)
+        .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata),
+              version_description: whats_changing_fixture)
       expect(Sdr::Repository).to have_received(:update).with(cocina_object:)
       expect(Sdr::Repository).not_to have_received(:accession)
       expect(RoundtripSupport).to have_received(:changed?)

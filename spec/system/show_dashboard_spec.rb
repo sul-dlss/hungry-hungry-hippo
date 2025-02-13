@@ -11,15 +11,8 @@ RSpec.describe 'Show dashboard', :rack_test do
     create(:collection, :with_druid, user:, managers: [user], reviewers: [user], review_enabled: true)
   end
   let(:user) { create(:user) }
-  let(:version_status) do
-    VersionStatus.new(status:
-    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, accessioning?: true,
-                                                                         openable?: false))
-  end
-  let(:draft_version_status) do
-    VersionStatus.new(status:
-    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 2))
-  end
+  let(:version_status) { build(:accessioning_version_status) }
+  let(:draft_version_status) { build(:draft_version_status) }
 
   before do
     allow(Sdr::Repository).to receive(:statuses).and_return({ work.druid => version_status,

@@ -20,12 +20,7 @@ RSpec.describe 'Create a work deposit' do
   end
 
   context 'when creating a new work' do
-    let(:version_status) do
-      VersionStatus.new(status:
-      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, accessioning?: true,
-                                                                           openable?: false, version: 1,
-                                                                           version_description: 'Initial version'))
-    end
+    let(:version_status) { build(:first_accessioning_version_status) }
 
     before do
       # Stubbing out for Deposit Job
@@ -228,19 +223,9 @@ RSpec.describe 'Create a work deposit' do
   end
 
   context 'when updating an existing work' do
-    let(:openable_version_status) do
-      VersionStatus.new(status:
-      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, accessioning?: false,
-                                                                           openable?: true, version: 1, discardable?: false,
-                                                                           version_description: 'Initial version'))
-    end
+    let(:openable_version_status) { build(:openable_version_status) }
 
-    let(:accessioning_version_status) do
-      VersionStatus.new(status:
-      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, accessioning?: true,
-                                                                           openable?: false, version: 2,
-                                                                           version_description: whats_changing_fixture))
-    end
+    let(:accessioning_version_status) { build(:accessioning_version_status) }
 
     let(:cocina_object) { dro_with_metadata_fixture }
     let(:druid) { cocina_object.externalIdentifier }
@@ -254,10 +239,12 @@ RSpec.describe 'Create a work deposit' do
       end
 
       # Stubbing out for show page
-      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object, cocina_object, cocina_object,
-                                                                       @registered_cocina_object)
-      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(openable_version_status, openable_version_status,
-                                                                         accessioning_version_status)
+      allow(Sdr::Repository).to receive(:find).with(druid:)
+                                              .and_return(cocina_object, cocina_object, cocina_object,
+                                                          @registered_cocina_object)
+      allow(Sdr::Repository).to receive(:status).with(druid:)
+                                                .and_return(openable_version_status, openable_version_status,
+                                                            accessioning_version_status)
     end
 
     it 'updates and deposits a work' do

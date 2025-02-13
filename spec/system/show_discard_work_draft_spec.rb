@@ -20,19 +20,8 @@ RSpec.describe 'Discard a work draft' do
   end
 
   context 'when not the first version' do
-    let(:version_status_discardable) do
-      VersionStatus.new(status:
-      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 2, discardable?: true,
-                                                                           openable?: false,
-                                                                           version_description: whats_changing_fixture))
-    end
-    let(:version_status_openable) do
-      VersionStatus.new(status:
-      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
-                                                                           discardable?: false,
-                                                                           openable?: true, accessioning?: false,
-                                                                           version_description: whats_changing_fixture))
-    end
+    let(:version_status_discardable) { build(:draft_version_status) }
+    let(:version_status_openable) { build(:openable_version_status) }
 
     before do
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status_discardable,
@@ -57,12 +46,7 @@ RSpec.describe 'Discard a work draft' do
   end
 
   context 'when the first version' do
-    let(:version_status) do
-      VersionStatus.new(status:
-      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1, discardable?: false,
-                                                                           openable?: false,
-                                                                           version_description: whats_changing_fixture))
-    end
+    let(:version_status) { build(:first_draft_version_status) }
 
     let(:collection_cocina_object) { collection_with_metadata_fixture }
     let(:collection) { create(:collection, druid: collection_cocina_object.externalIdentifier, user:) }

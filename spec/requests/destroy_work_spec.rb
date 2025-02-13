@@ -18,7 +18,7 @@ RSpec.describe 'Destroy work' do
       create(:work, druid:)
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status)
-        .with(druid:).and_return(instance_double(Dor::Services::Client::ObjectVersion::VersionStatus))
+        .with(druid:).and_return(build(:version_status))
       sign_in(create(:user))
     end
 
@@ -49,11 +49,7 @@ RSpec.describe 'Destroy work' do
     before do
       create(:work, druid:, collection:)
       allow(Sdr::Repository).to receive(:status)
-        .with(druid:).and_return(
-          instance_double(Dor::Services::Client::ObjectVersion::VersionStatus,
-                          discardable?: true,
-                          version: 1)
-        )
+        .with(druid:).and_return(build(:first_draft_version_status))
     end
 
     context 'with the collection owner role' do

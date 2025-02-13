@@ -14,20 +14,8 @@ RSpec.describe 'Edit a collection' do
     collection_with_metadata_fixture
   end
 
-  let(:version_status) do
-    VersionStatus.new(status:
-    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
-                                                                         version: cocina_object.version,
-                                                                         discardable?: false))
-  end
-
-  let(:accessioning_version_status) do
-    VersionStatus.new(status:
-    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, openable?: false,
-                                                                         version: cocina_object.version,
-                                                                         accessioning?: true,
-                                                                         discardable?: false))
-  end
+  let(:version_status) { build(:draft_version_status, version: cocina_object.version) }
+  let(:accessioning_version_status) { build(:accessioning_version_status, version: cocina_object.version) }
 
   let(:updated_title) { 'My new title' }
   let(:updated_description) { 'This is what my collection is really about.' }
