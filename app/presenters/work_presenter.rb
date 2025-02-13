@@ -97,9 +97,21 @@ class WorkPresenter < FormPresenter
     end
   end
 
+  def number_of_files_in_deposit
+    content_files_in_deposit.count
+  end
+
+  def size_of_deposit
+    content_files_in_deposit.sum(&:size)
+  end
+
   private
 
   delegate :collection, :created_at, :user, :review_state, to: :work
+
+  def content_files_in_deposit
+    ContentFile.where(content_id: work_form.content_id)
+  end
 
   def license_presenter
     @license_presenter ||= LicensePresenter.new(work_form:, collection:)

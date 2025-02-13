@@ -19,6 +19,8 @@
   <% component.with_row(label: 'Collection', values: [@work_presenter.collection_link]) %>
   <% component.with_row(label: 'Depositor', values: [@work_presenter.depositor]) %>
   <% component.with_row(label: 'Version details', values: [@work_presenter.version]) %>
+  <% component.with_row(label: 'Total number of files', values: [@work_presenter.number_of_files_in_deposit]) %>
+  <% component.with_row(label: 'Size', values: [number_to_human_size(@work_presenter.size_of_deposit)]) %>
   <% component.with_row(label: 'Deposit created', values: [@work_presenter.deposited_at]) %>
 <% end %>
 
