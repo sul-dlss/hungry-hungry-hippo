@@ -264,7 +264,7 @@ body {
 
 .opacity-85 {
   opacity: 0.85;
-}  
+}
 
 i.icon-lg {
   font-size: 2rem;
@@ -272,6 +272,19 @@ i.icon-lg {
 
 i.icon-xl {
   font-size: 3rem;
+}
+
+.tooltip-info {
+  color: var(--stanford-digital-blue);
+}
+
+.tooltip-shift-right {
+  // NOTE: for some reason, the bootstrap tooltip wants to be about 16px to the left of where we want it.
+  left: 16px !important;
+}
+
+.tooltip-header {
+  display: inline-block;
 }
 
 .secondary-card {
