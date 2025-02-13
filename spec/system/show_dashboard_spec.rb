@@ -24,23 +24,23 @@ RSpec.describe 'Show dashboard', :rack_test do
     it 'displays the dashboard' do
       visit dashboard_path
 
-      expect(page).to have_css('h2', text: "#{user.name} - Dashboard")
+      expect(page).to have_css('h1', text: "#{user.name} - Dashboard")
 
       # Drafts section
-      expect(page).to have_css('h3', text: 'Drafts - please complete')
+      expect(page).to have_css('h2', text: 'Drafts - please complete')
       within('table#drafts-table') do
         expect(page).to have_css('td', text: draft_work.title)
       end
 
       # Pending review section
-      expect(page).to have_css('h3', text: 'Items waiting for collection manager or reviewer to approve')
+      expect(page).to have_css('h2', text: 'Items waiting for collection manager or reviewer to approve')
       within('table#pending-review-table') do
         expect(page).to have_css('td', text: pending_review_work.title)
       end
 
       # Your collections section
-      expect(page).to have_css('h3', text: 'Your collections')
-      expect(page).to have_css('h4', text: collection.title)
+      expect(page).to have_css('h2', text: 'Your collections')
+      expect(page).to have_css('h3', text: collection.title)
       expect(page).to have_no_css('.alert', text: 'Congratulations on taking the first step')
 
       # Works table
@@ -72,14 +72,14 @@ RSpec.describe 'Show dashboard', :rack_test do
     it 'shows the dashboard' do
       visit dashboard_path
 
-      expect(page).to have_css('h2', text: "#{user.name} - Dashboard")
+      expect(page).to have_css('h1', text: "#{user.name} - Dashboard")
 
-      expect(page).to have_no_css('h3', text: 'Drafts - please complete')
-      expect(page).to have_no_css('h3', text: 'Items waiting for collection manager or reviewer to approve')
+      expect(page).to have_no_css('h2', text: 'Drafts - please complete')
+      expect(page).to have_no_css('h2', text: 'Items waiting for collection manager or reviewer to approve')
 
       # Your collections section
-      expect(page).to have_css('h3', text: 'Your collections')
-      expect(page).to have_css('h4', text: collection.title)
+      expect(page).to have_css('h2', text: 'Your collections')
+      expect(page).to have_css('h3', text: collection.title)
 
       expect(page).to have_css('.alert', text: 'Congratulations on taking the first step')
     end
