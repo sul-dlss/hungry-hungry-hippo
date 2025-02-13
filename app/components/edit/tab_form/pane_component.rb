@@ -8,15 +8,16 @@ module Edit
       renders_one :footer
       renders_one :help
 
-      def initialize(tab_name:, label: nil, selected: false, help_text: nil)
+      def initialize(tab_name:, label: nil, selected: false, help_text: nil, tooltip: nil)
         @tab_name = tab_name
         @label = label
         @selected = selected
         @help_text = help_text
+        @tooltip = tooltip
         super()
       end
 
-      attr_reader :tab_name, :selected, :label, :help_text
+      attr_reader :tab_name, :selected, :label, :help_text, :tooltip
 
       def classes
         merge_classes(%w[tab-pane fade h-100], selected ? 'show active' : nil)

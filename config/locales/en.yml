@@ -74,6 +74,8 @@ en:
   depositors:
     edit:
       legend: 'Depositors'
+      tooltip_html: >
+        Depositors are allowed to add works to the collection and to modify those works, but cannot see or edit the works deposited by others.
   create_date_single:
     edit:
       legend: 'Creation date'
@@ -82,11 +84,13 @@ en:
       fields:
         email:
           label: 'Contact email'
+          tooltip_html: >
+            Enter one or more valid email addresses (one per box) where people can write to ask questions about this collection. Consider using a group address that will be active and monitored for a long time to ensure that questions are received. Email addresses will appear on the public page for the collection.
     validation:
       email:
         invalid: 'must provide a valid email address'
-  keyword:   
-    edit: 
+  keyword:
+    edit:
       fields:
         text:
           label: 'Keywords (one per box)'
@@ -105,6 +109,8 @@ en:
   managers:
     edit:
       legend: 'Managers'
+      tooltip_html: >
+        Managers have the ability to edit the collection description; add and remove other Managers, Reviewers, and Depositors; adjust discovery, access, and license settings for the collection; and edit any content deposited to the collection, including content deposited by others.
   publication_date:
     edit:
       legend: 'Previous publication date'
@@ -148,6 +154,8 @@ en:
   reviewers:
     edit:
       legend: 'Reviewers'
+      tooltip_html: >
+        Reviewers can approve, edit, or return works to Depositors. Reviewers cannot edit collection information or settings and cannot add or remove collection participants.
   terms_of_deposit:
     faq: 'FAQs and download Terms of Deposit'
   works:
@@ -238,19 +246,37 @@ en:
           help_text: >
             Enter a summary statement (max 600 words) describing the collection that you are creating.
             A detailed statement may improve the discovery of your collection in web searches.
+          tooltip_html: >
+            Enter an approximately 2-3 sentence description of the works to be included in this collection. You may want to include information on who the creators of the works are/will be, general subject matter of the works, types of works (technical reports, datasets, video archives, etc), and the scholarly value of the content.
         title:
           label: 'Collection name'
           help_text: >
             A unique, descriptive name may improve discovery of your collection in web searches.
+          tooltip_html: >
+            Enter a name for your collection. This name will serve as the title on the public page for the collection and the title of web search results, as well as in Stanford Libraries' catalog. Please do not use the word "Collection" at the end of the title.
+        release_option:
+          label: 'When will files on deposits to this collection be downloadable?'
+          tooltip_html: >
+            As the collection manager, you can decide whether 1) Depositors to this collection are required to make the files on their deposits downloadable as soon as the deposit is completed ("Immediately"), or 2) if Depositors can decide for themselves when downloading of their content will be available ("Depositor selects…"). Note that for both options the public page is always visible as soon as the deposit is complete and all metadata on the page is visible to anyone at any time.
+          options:
+            immediate: 'Immediately'
+            depositor_selects: 'Depositor selects a date up to'
         access:
-          world: 'Everyone -- anyone in the world will be able to download the files for all deposits in this collection.'
-          stanford: 'Stanford Community -- only members of the Stanford community will be able to download the files for all deposits in this collection.'
-          depositor_selects: 'Depositor selects -- default for all deposits will be that everyone can download the files, but Depositor can choose to
-            restrict file download for their deposit to the Stanford community.'
+          label: 'Who will have permission to download files for deposits to this collection?'
+          tooltip_html: >
+            As the collection manager, you can decide whether 1) Depositors to this collection are required to make the files on their deposits downloadable by anyone in the world ("Everyone"), 2) if downloading of files for all deposits will be restricted to the Stanford community ("Stanford community"), or 3) if Depositors can decide for themselves which of these options to choose ("Depositor selects"). For the "Depositor selects" option, the default option presented to the Depositor will be the "Everyone" option, but they will be able to choose "Stanford community" if they choose.
+          options:
+            world: 'Everyone -- anyone in the world will be able to download the files for all deposits in this collection.'
+            stanford: 'Stanford Community -- only members of the Stanford community will be able to download the files for all deposits in this collection.'
+            depositor_selects: 'Depositor selects -- default for all deposits will be that everyone can download the files, but Depositor can choose to restrict file download for their deposit to the Stanford community.'
         doi_option:
-          doi_yes: 'Yes, a DOI will be assigned to each deposit in this collection.'
-          doi_no: 'No, DOIs will not be assigned to any deposits in this collection.'
-          depositor_selects: 'Depositor selects: all deposits will be assigned a DOI by default unless the depositor chooses not to have a DOI assigned.'
+          label: 'Will a DOI be assigned to the deposits in this collection?'
+          tooltip_html: >
+            As the collection manager, you can decide whether 1) DOIs will be assigned automatically to every deposit in this collection, 2) DOIs will not be assigned to any deposits in this collection, or 3) Depositors can decide for themselves if they would like to have a DOI assigned to their work. Check the "What's a DOI?" link next to this info icon for more details about DOIs.
+          options:
+            doi_yes: 'Yes, a DOI will be assigned to each deposit in this collection.'
+            doi_no: 'No, DOIs will not be assigned to any deposits in this collection.'
+            depositor_selects: 'Depositor selects: all deposits will be assigned a DOI by default unless the depositor chooses not to have a DOI assigned.'
         license:
           help_text: Assigning a default license may improve discovery of your collection in web searches.
       messages:
@@ -270,9 +296,13 @@ en:
           help_text: >
             We highly recommend every deposit be assigned a license when possible. A license helps other who access the
             content to understand what the Depositor is allowing them to do with the work and under what conditions.
+          tooltip_html: >
+            As the collection manager, you can decide whether 1) a specific license  you choose from the list will be mandatory for every deposit to the collection ("Require license for all deposits") or 2) if the Depositors will be able to choose the license they wish to use ("Depositor selects license").  For this second option, you must choose a license from the list to be displayed as the default option for Depositors.
         related_links:
           tab_label: 'Related links (optional)'
           label: 'Links to related content (optional)'
+          tooltip_html: >
+            This section is for links to other web pages that are related to your collection. Enter the text to be displayed on the page in the "Link text" box. This entire text will be hyperlinked to the URL you enter in the "URL" box. Examples of content you might consider linking to are key funder websites,  lab or institute websites, or project pages.
         access:
           tab_label: 'Access settings'
           label: 'Manage release of deposits for discovery and download'

@@ -1,17 +1,17 @@
 <div data-controller="release" class="pane-section">
-  <%= render Elements::Forms::FieldsetComponent.new(label: 'When will files on deposits to this collection be downloadable?') do %>
+  <%= render Elements::Forms::FieldsetComponent.new(label: helpers.t('collections.edit.fields.release_option.label'), tooltip: helpers.t('collections.edit.fields.release_option.tooltip_html')) do %>
     <div class="form-check">
       <div class="ps-2">
         <%= form.radio_button :release_option, 'immediate',
                               class: 'form-check-input',
                               data: { release_target: 'releaseImmediate', action: 'click->release#resetReleaseDuration' } %>
-        <%= form.label :release_option_immediate, 'Immediately', class: 'form-check-label' %>
+        <%= form.label :release_option_immediate, helpers.t('collections.edit.fields.release_option.options.immediate'), class: 'form-check-label' %>
       </div>
     </div>
     <div class="form-check d-flex pt-2">
       <div class="ps-2">
         <%= form.radio_button :release_option, 'depositor_selects', class: 'form-check-input' %>
-        <%= form.label :release_option_depositor_selects, 'Depositor selects a date up to', class: 'form-check-label' %>
+        <%= form.label :release_option_depositor_selects, helpers.t('collections.edit.fields.release_option.options.depositor_selects'), class: 'form-check-label' %>
       </div>
       <div class="ps-2">
         <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :release_duration,
@@ -23,43 +23,43 @@
     </div>
   <% end %>
 </div>
-<%= render Elements::Forms::FieldsetComponent.new(label: 'Who will have permission to download files for deposits to this collection?', classes: 'pane-section') do %>
+<%= render Elements::Forms::FieldsetComponent.new(label: helpers.t('collections.edit.fields.access.label'), tooltip: helpers.t('collections.edit.fields.access.tooltip_html'), classes: 'pane-section') do %>
   <div class="form-check">
     <div class="ps-2">
       <%= form.radio_button :access, 'world', class: 'form-check-input' %>
-      <%= form.label :access_world, I18n.t('collections.edit.fields.access.world'), class: 'form-check-label' %>
+      <%= form.label :access_world, helpers.t('collections.edit.fields.access.options.world'), class: 'form-check-label' %>
     </div>
   </div>
   <div class="form-check pt-2">
     <div class="ps-2">
       <%= form.radio_button :access, 'stanford', class: 'form-check-input' %>
-      <%= form.label :access_world, I18n.t('collections.edit.fields.access.stanford'), class: 'form-check-label' %>
+      <%= form.label :access_world, helpers.t('collections.edit.fields.access.options.stanford'), class: 'form-check-label' %>
     </div>
   </div>
   <div class="form-check pt-2">
     <div class="ps-2">
       <%= form.radio_button :access, 'depositor_selects', class: 'form-check-input' %>
-      <%= form.label :access_world, I18n.t('collections.edit.fields.access.depositor_selects'), class: 'form-check-label' %>
+      <%= form.label :access_world, helpers.t('collections.edit.fields.access.options.depositor_selects'), class: 'form-check-label' %>
     </div>
   </div>
 <% end %>
-<%= render Elements::Forms::FieldsetComponent.new(label: 'Will a DOI be assigned to the deposits in this collection?', classes: 'pane-section') do %>
+<%= render Elements::Forms::FieldsetComponent.new(label: helpers.t('collections.edit.fields.doi_option.label'), tooltip: helpers.t('collections.edit.fields.doi_option.tooltip_html'), classes: 'pane-section') do %>
   <div class="form-check">
     <div class="ps-2">
       <%= form.radio_button :doi_option, 'yes', class: 'form-check-input' %>
-      <%= form.label :doi_option_yes, I18n.t('collections.edit.fields.doi_option.doi_yes'), class: 'form-check-label' %>
+      <%= form.label :doi_option_yes, helpers.t('collections.edit.fields.doi_option.options.doi_yes'), class: 'form-check-label' %>
     </div>
   </div>
   <div class="form-check pt-2">
     <div class="ps-2">
       <%= form.radio_button :doi_option, 'no', class: 'form-check-input' %>
-      <%= form.label :doi_option_no, I18n.t('collections.edit.fields.doi_option.doi_no'), class: 'form-check-label' %>
+      <%= form.label :doi_option_no, helpers.t('collections.edit.fields.doi_option.options.doi_no'), class: 'form-check-label' %>
     </div>
   </div>
   <div class="form-check pt-2">
     <div class="ps-2">
       <%= form.radio_button :doi_option, 'depositor_selects', class: 'form-check-input' %>
-      <%= form.label :doi_option_depositor_selects, I18n.t('collections.edit.fields.doi_option.depositor_selects'), class: 'form-check-label' %>
+      <%= form.label :doi_option_depositor_selects, helpers.t('collections.edit.fields.doi_option.options.depositor_selects'), class: 'form-check-label' %>
     </div>
   </div>
 <% end %>

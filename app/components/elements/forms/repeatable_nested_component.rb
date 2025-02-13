@@ -25,6 +25,10 @@ module Elements
         helpers.t("#{field_name}.edit.legend")
       end
 
+      def tooltip
+        helpers.t("#{field_name}.edit.tooltip_html")
+      end
+
       def bordered?
         @bordered
       end

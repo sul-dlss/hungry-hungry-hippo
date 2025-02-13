@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
-import * as bootstrap from 'bootstrap' // eslint-disable-line no-unused-vars
+import * as bootstrap from 'bootstrap'
 
 export default class extends Controller {
   static values = { selector: String }

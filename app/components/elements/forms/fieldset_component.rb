@@ -7,7 +7,7 @@ module Elements
       renders_one :legend # Provide legend or label
 
       def initialize(label: nil, hidden_label: false, classes: [], label_classes: [], legend_classes: [], # rubocop:disable Metrics/ParameterLists
-                     data: {}, id: nil)
+                     data: {}, id: nil, tooltip: nil)
         @label = label
         @hidden_label = hidden_label
         @classes = classes
@@ -15,10 +15,11 @@ module Elements
         @id = id
         @label_classes = label_classes
         @legend_classes = legend_classes
+        @tooltip = tooltip
         super()
       end
 
-      attr_reader :label, :data, :id
+      attr_reader :label, :data, :id, :tooltip
 
       def label_classes
         merge_classes(@label_classes, @hidden_label ? 'visually-hidden' : 'form-label fw-bold')

@@ -5,6 +5,7 @@
     <% else %>
       <%= tag.label class: label_classes do %><%= label %><% end %>
     <% end %>
+    <%= render Elements::TooltipComponent.new(tooltip:) %>
   <% end %>
   <%= content %>
 <% end %>
