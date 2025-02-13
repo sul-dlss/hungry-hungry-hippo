@@ -7,6 +7,10 @@ class Notifier
   REVIEWER_ADDED = 'reviewer_added'
   DEPOSITOR_ADDED = 'depositor_added'
 
+  MANAGER_REMOVED = 'manager_removed'
+  REVIEWER_REMOVED = 'reviewer_removed'
+  DEPOSITOR_REMOVED = 'depositor_removed'
+
   REVIEW_REQUESTED = 'review_requested'
   REVIEW_APPROVED = 'review_approved'
   REVIEW_REJECTED = 'review_rejected'

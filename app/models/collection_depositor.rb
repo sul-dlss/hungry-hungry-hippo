@@ -8,4 +8,5 @@ class CollectionDepositor < ApplicationRecord
   belongs_to :collection
 
   after_create -> { Notifier.publish(Notifier::DEPOSITOR_ADDED, user:, collection:) }
+  after_destroy -> { Notifier.publish(Notifier::DEPOSITOR_REMOVED, user:, collection:) }
 end
