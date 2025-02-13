@@ -1,1 +1,4 @@
-  <%= form.label field_name, label_text, class: classes %>
+<%= form.label field_name, label_text, class: classes %>
+<% if render_tooltip? %>
+  <%= helpers.info_icon(fill: true, classes: 'px-3 tooltip-info', data: { bs_custom_class: 'tooltip-shift-right', bs_toggle: 'tooltip', bs_title: tooltip, bs_trigger: 'click focus', tooltips_target: 'icon' }) %>
+<% end %>
