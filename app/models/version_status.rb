@@ -48,7 +48,7 @@ class VersionStatus
     end
   end
 
-  delegate :open?, :openable?, :version, to: :status
+  delegate :open?, :openable?, :version, :version_description, to: :status
 
   private
 

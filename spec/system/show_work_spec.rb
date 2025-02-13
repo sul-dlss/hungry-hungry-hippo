@@ -101,12 +101,7 @@ RSpec.describe 'Show a work' do
                                     isMemberOf: []
                                   })
   end
-  let(:version_status) do
-    VersionStatus.new(status:
-      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 2,
-                                                                           openable?: true, accessioning?: false,
-                                                                           discardable?: false))
-  end
+  let(:version_status) { build(:openable_version_status) }
 
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)

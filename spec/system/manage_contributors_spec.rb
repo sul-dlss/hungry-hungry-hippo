@@ -5,11 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Manage contributors for a work deposit' do
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
-  let(:version_status) do
-    VersionStatus.new(status:
-    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, accessioning?: true,
-                                                                         openable?: false, version: 1))
-  end
+  let(:version_status) { build(:first_accessioning_version_status) }
 
   before do
     # Stubbing out for Deposit Job

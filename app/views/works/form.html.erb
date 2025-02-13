@@ -122,6 +122,11 @@
 
     <% component.with_pane do %>
       <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.deposit.help_text')) do |component| %>
+        <% if @work_form.persisted? %>
+          <div class="pane-section">
+            <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: 'What\'s changing?') %>
+          </div>
+        <% end %>
         <%= render Works::Edit::TermsOfDepositComponent.new(form:) %>
         <% component.with_deposit_button do %>
           <%= render Works::Edit::SubmitComponent.new(work: @work, collection: @collection) %>

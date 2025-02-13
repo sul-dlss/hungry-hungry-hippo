@@ -6,11 +6,7 @@ RSpec.describe 'Create a work draft' do
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
 
-  let(:version_status) do
-    VersionStatus.new(status:
-    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1,
-                                                                         openable?: false))
-  end
+  let(:version_status) { build(:first_draft_version_status) }
 
   before do
     # Stubbing out for Deposit Job

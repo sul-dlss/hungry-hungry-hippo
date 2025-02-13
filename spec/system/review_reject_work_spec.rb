@@ -10,14 +10,7 @@ RSpec.describe 'Review and reject a work' do
   let(:collection) { create(:collection, druid: collection_druid_fixture, reviewers: [user], review_enabled: true) }
   let!(:work) { create(:work, druid:, title: title_fixture, collection:, review_state: 'pending_review') }
   let(:cocina_object) { dro_with_metadata_fixture }
-  let(:version_status) do
-    VersionStatus.new(
-      status: instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 2,
-                                                                                   openable?: false,
-                                                                                   accessioning?: false,
-                                                                                   discardable?: false)
-    )
-  end
+  let(:version_status) { build(:draft_version_status) }
 
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)

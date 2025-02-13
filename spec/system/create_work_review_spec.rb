@@ -8,11 +8,7 @@ RSpec.describe 'Create a work that requires review' do
   let(:query) { 'Biology' }
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
-  let(:version_status) do
-    VersionStatus.new(status:
-    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, accessioning?: true,
-                                                                         openable?: false, version: 1))
-  end
+  let(:version_status) { build(:first_accessioning_version_status) }
 
   before do
     # Stubbing out for Deposit Job

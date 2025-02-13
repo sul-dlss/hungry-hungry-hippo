@@ -30,13 +30,7 @@ RSpec.describe 'Show collection' do
     before do
       create(:collection, druid:, depositors: [depositor])
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
-      allow(Sdr::Repository).to receive(:status)
-        .with(druid:)
-        .and_return(
-          VersionStatus.new(status:
-          instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true,
-                                                                               version: 1, openable?: true))
-        )
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:version_status))
       sign_in(depositor)
     end
 
@@ -69,13 +63,8 @@ RSpec.describe 'Show collection' do
 
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
-      allow(Sdr::Repository).to receive(:status)
-        .with(druid:)
-        .and_return(
-          VersionStatus.new(status:
-          instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true,
-                                                                               version: 1, openable?: true))
-        )
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:version_status))
+
       sign_in(user, groups: ['dlss:hydrus-app-administrators'])
     end
 

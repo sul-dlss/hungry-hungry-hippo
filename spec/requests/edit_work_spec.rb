@@ -15,7 +15,7 @@ RSpec.describe 'Edit work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status)
-        .with(druid:).and_return(instance_double(Dor::Services::Client::ObjectVersion::VersionStatus))
+        .with(druid:).and_return(build(:version_status))
 
       create(:work, druid:, collection: create(:collection, druid: collection_druid_fixture))
       sign_in(create(:user))
@@ -31,11 +31,7 @@ RSpec.describe 'Edit work' do
   context 'when the user is an administrator' do
     let(:admin_user) { create(:user) }
     let(:groups) { ['dlss:hydrus-app-administrators'] }
-    let(:version_status) do
-      VersionStatus.new(status:
-      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, version: 1,
-                                                                           openable?: true))
-    end
+    let(:version_status) { build(:openable_version_status) }
 
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
@@ -71,11 +67,7 @@ RSpec.describe 'Edit work' do
     let(:cocina_object) do
       build(:dro_with_metadata, title: work.title, id: druid, collection_ids: [collection_druid_fixture])
     end
-    let(:version_status) do
-      VersionStatus.new(status:
-      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: false, openable?: false,
-                                                                           accessioning?: true, version: 1))
-    end
+    let(:version_status) { build(:accessioning_version_status) }
 
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
@@ -105,11 +97,7 @@ RSpec.describe 'Edit work' do
     let(:collection) { create(:collection, :with_druid, user:) }
     let(:work) { create(:work, druid:, user:, collection:) }
     let(:cocina_object) { build(:dro_with_metadata, title: work.title, id: druid, collection_ids: [collection.druid]) }
-    let(:version_status) do
-      VersionStatus.new(status:
-      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
-                                                                           version: cocina_object.version))
-    end
+    let(:version_status) { build(:draft_version_status, version: cocina_object.version) }
 
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
@@ -136,11 +124,7 @@ RSpec.describe 'Edit work' do
     let(:cocina_object) do
       build(:dro_with_metadata, title: work.title, id: druid)
     end
-    let(:version_status) do
-      VersionStatus.new(status:
-      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
-                                                                           accessioning?: false, version: 1))
-    end
+    let(:version_status) { build(:first_draft_version_status) }
 
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
@@ -167,11 +151,7 @@ RSpec.describe 'Edit work' do
     let(:cocina_object) do
       build(:dro_with_metadata, title: work.title, id: druid, collection_ids: ['druid:gj446wf8162'])
     end
-    let(:version_status) do
-      VersionStatus.new(status:
-      instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
-                                                                           accessioning?: false, version: 1))
-    end
+    let(:version_status) { build(:first_draft_version_status) }
 
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)

@@ -82,6 +82,9 @@ class WorkForm < ApplicationForm
   attribute :create_date_type, :string, default: 'single'
   validates :create_date_type, inclusion: { in: %w[single range] }
 
+  attribute :whats_changing, :string
+  validates :whats_changing, presence: true, on: :deposit, if: :persisted?
+
   def content_file_presence
     return if content_id.nil? # This makes test configuration easier.
     return if Content.find(content_id).content_files.exists?

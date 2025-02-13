@@ -14,12 +14,7 @@ RSpec.describe 'Edit a work' do
   let(:cocina_object) do
     dro_with_structural_and_metadata_fixture
   end
-  let(:version_status) do
-    VersionStatus.new(status:
-    instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, openable?: false,
-                                                                         discardable?: true,
-                                                                         version: cocina_object.version))
-  end
+  let(:version_status) { build(:draft_version_status, version: cocina_object.version) }
   let(:updated_title) { 'My new title' }
   let(:updated_contributors) do
     [

@@ -12,10 +12,9 @@ RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
   let(:work_with_doi) { create(:work, :with_druid, user: current_user, collection:) }
   let(:collection) { create(:collection, depositors: [current_user]) }
   let(:current_user) { create(:user) }
-  let(:version_status) { instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, open?: true, version: 1) }
   let(:status_map) do
     {
-      work.id => VersionStatus.new(status: version_status),
+      work.id => build(:first_draft_version_status),
       work_without_druid.id => VersionStatus::NilStatus.new,
       work_in_collection.id => VersionStatus::NilStatus.new,
       work_with_doi.id => VersionStatus::NilStatus.new
