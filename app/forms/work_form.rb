@@ -45,6 +45,7 @@ class WorkForm < ApplicationForm
   validates :work_type, presence: true, on: :deposit
 
   attribute :work_subtypes, array: true, default: -> { [] }
+  before_validation ->(work_form) { work_form.work_subtypes.compact_blank! }
   validate :correct_work_subtype_length
 
   attribute :other_work_subtype, :string
@@ -105,7 +106,7 @@ class WorkForm < ApplicationForm
 
   def correct_work_subtype_length
     # Doing custom validation because need to set custom error keys.
-    length = work_subtypes.compact_blank.length
+    length = work_subtypes.length
     if work_type == WorkType::MUSIC && length < WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES
       errors.add(:work_subtypes_music,
                  "#{WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES} term is the minimum allowed")
