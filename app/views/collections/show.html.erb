@@ -1,3 +1,5 @@
+<%= turbo_stream_from @collection %>
+
 <% content_for :breadcrumbs do %>
   <%= render Elements::BreadcrumbNavComponent.new do |component| %>
     <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>

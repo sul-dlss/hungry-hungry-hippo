@@ -13,6 +13,8 @@ namespace :development do
     object = Work.find_by(druid:) || Collection.find_by!(druid:)
     object.accession_complete!
 
+    Turbo::StreamsChannel.broadcast_refresh_to object
+
     puts "Completed accession for #{druid}"
   end
 end

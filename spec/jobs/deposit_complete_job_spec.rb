@@ -16,6 +16,7 @@ RSpec.describe DepositCompleteJob do
     allow(ModelSync::Work).to receive(:call)
     allow(ModelSync::Collection).to receive(:call)
     allow(Settings.notifications).to receive(:enabled).and_return(false)
+    allow(Turbo::StreamsChannel).to receive(:broadcast_refresh_to)
   end
 
   context 'when a work' do
@@ -27,9 +28,10 @@ RSpec.describe DepositCompleteJob do
       }.from('accessioning').to('deposit_not_in_progress')
     end
 
-    it 'syncs and returns ack' do
+    it 'syncs, refreshes, and returns ack' do
       expect(job.work(message)).to eq(:ack)
       expect(ModelSync::Work).to have_received(:call).with(work: object, cocina_object: dro_fixture, raise: false)
+      expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with(object)
     end
   end
 
@@ -42,9 +44,10 @@ RSpec.describe DepositCompleteJob do
       }.from('accessioning').to('deposit_not_in_progress')
     end
 
-    it 'syncs and returns ack' do
+    it 'syncs, refreshes, and returns ack' do
       expect(job.work(message)).to eq(:ack)
       expect(ModelSync::Collection).to have_received(:call).with(collection: object, cocina_object: collection_fixture)
+      expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with(object)
     end
   end
 

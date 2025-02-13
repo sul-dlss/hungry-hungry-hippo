@@ -26,6 +26,8 @@ class DepositCompleteJob
     # the deposit state will not be accessioning.
     object.accession_complete! if object.accessioning?
 
+    Turbo::StreamsChannel.broadcast_refresh_to object
+
     ack!
   end
 
