@@ -23,6 +23,7 @@
   <div class="mb-5">
     <%= render Collections::HeaderLinkComponent.new(collection:, level: :h4) %>
     <%= render Dashboard::Show::WorksListComponent.new(collection:, status_map: @status_map) %>
+    <%= render Dashboard::Show::FirstUseAlertComponent.new(user: current_user) %>
     <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary) %>
   </div>
 <% end %>
