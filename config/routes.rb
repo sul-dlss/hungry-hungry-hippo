@@ -30,6 +30,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     member do
       put 'review', to: 'works#review', as: 'review'
     end
+
+    namespace :admin do
+      resources :move, only: %i[new create], controller: 'move'
+    end
   end
 
   resources :contents, only: %i[update show] do

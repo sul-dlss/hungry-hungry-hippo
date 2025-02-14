@@ -1,0 +1,20 @@
+<%= render Elements::CardComponent.new(classes: 'admin-card mb-4', data: { controller: 'admin-select' }) do |component| %>
+  <% component.with_header do %>
+    <div class="row">
+      <div class="col-auto d-flex align-items-center">
+        <label for="admin-function" class="form-label fw-bold">Admin functions</label>
+      </div>
+      <div class="col">
+        <select id="admin-function" class="form-select" data-action="change->admin-select#changeFunction">
+          <option selected></option>
+          <% options.each do |label, path| %>
+            <%= tag.option value: path do %><%= label %><% end %>
+          <% end %>
+        </select>
+      </div>
+    </div>
+  <% end %>
+  <% component.with_body(classes: 'd-none', data: { admin_select_target: 'body' }) do %>
+    <%= tag.turbo_frame id: 'admin-body', data: { admin_select_target: 'frame' } %>
+  <% end %>
+<% end %>

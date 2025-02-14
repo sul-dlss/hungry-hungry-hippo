@@ -50,7 +50,7 @@ RSpec.describe 'Show work' do
     before do
       create(:work, druid:)
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
-      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:version_status))
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:openable_version_status))
 
       sign_in(admin_user, groups:)
     end
@@ -59,6 +59,7 @@ RSpec.describe 'Show work' do
       get "/works/#{druid}"
 
       expect(response).to have_http_status(:ok)
+      expect(response.body).to include('Admin functions')
     end
   end
 
