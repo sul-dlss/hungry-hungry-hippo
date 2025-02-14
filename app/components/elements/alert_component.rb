@@ -42,5 +42,9 @@ module Elements
     def icon
       helpers.public_send(:"#{variant}_icon")
     end
+
+    def render?
+      title.present? || value.present? || content.present?
+    end
   end
 end

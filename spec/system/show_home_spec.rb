@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Show home', :rack_test do
+  include ActionView::Helpers::SanitizeHelper
   before do
     sign_in(create(:user))
   end
@@ -12,6 +13,7 @@ RSpec.describe 'Show home', :rack_test do
 
     expect(page).to have_content('Create or manage your deposits')
     expect(page).to have_link('Enter here', href: dashboard_path)
+    expect(page).to have_content(strip_links(I18n.t('banner.home_html')))
     expect(page).to have_content('Sign up for our newsletter')
     expect(page).to have_css('.quote-card', text: 'I am definitely hearing more')
     expect(page).to have_css('.quote-card', count: 5)

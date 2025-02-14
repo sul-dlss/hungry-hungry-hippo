@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Show dashboard', :rack_test do
+  include ActionView::Helpers::SanitizeHelper
+
   context 'when existing user has works and collections' do
     let!(:work) { create(:work, :with_druid, user:, collection:) }
     let!(:work_without_druid) { create(:work, user:, collection:) }
@@ -14,6 +16,7 @@ RSpec.describe 'Show dashboard', :rack_test do
     let(:user) { create(:user) }
     let(:version_status) { build(:accessioning_version_status) }
     let(:draft_version_status) { build(:draft_version_status) }
+    let(:banner_text) { strip_links(I18n.t('banner.dashboard_html')) }
 
     before do
       allow(Sdr::Repository).to receive(:statuses).and_return({ work.druid => version_status,
@@ -27,6 +30,12 @@ RSpec.describe 'Show dashboard', :rack_test do
       expect(page).to have_css('h1', text: "#{user.name} - Dashboard")
 
       expect(page).to have_no_link('Admin')
+
+      if banner_text.present?
+        expect(page).to have_css('.alert.alert-info', text: banner_text)
+      else
+        expect(page).to have_no_css('.alert.alert-info')
+      end
 
       # Drafts section
       expect(page).to have_css('h2', text: 'Drafts - please complete')
