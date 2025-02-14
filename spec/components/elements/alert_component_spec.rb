@@ -40,4 +40,12 @@ RSpec.describe Elements::AlertComponent, type: :component do
       expect { render_inline(described_class.new(title: 'My title', variant: :notice)) }.to raise_error(ArgumentError)
     end
   end
+
+  context 'without title, value, or content' do
+    it 'does not render' do
+      render_inline(described_class.new(title: '').with_content(''))
+
+      expect(page).to have_no_css('.alert')
+    end
+  end
 end
