@@ -84,8 +84,8 @@ en:
     validation:
       email:
         invalid: 'must provide a valid email address'
-  keyword:   
-    edit: 
+  keyword:
+    edit:
       fields:
         text:
           label: 'Keywords (one per box)'
@@ -241,6 +241,8 @@ en:
           label: 'Collection name'
           help_text: >
             A unique, descriptive name may improve discovery of your collection in web searches.
+          tooltip_html: >
+            Enter a name for your collection. This name will serve as the title on the public page for the collection and the title of web search results, as well as in Stanford Libraries' catalog. Please do not use the word "Collection" at the end of the title.
         access:
           world: 'Everyone -- anyone in the world will be able to download the files for all deposits in this collection.'
           stanford: 'Stanford Community -- only members of the Stanford community will be able to download the files for all deposits in this collection.'
