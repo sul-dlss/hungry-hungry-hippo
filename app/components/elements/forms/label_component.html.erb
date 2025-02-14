@@ -1,1 +1,2 @@
-  <%= form.label field_name, label_text, class: classes %>
+<%= form.label field_name, label_text, class: classes %>
+<%= helpers.info_icon(fill: true, classes: 'px-3 tooltip-info', data: tooltip_data) if tooltip? %>

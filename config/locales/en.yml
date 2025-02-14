@@ -81,11 +81,13 @@ en:
       fields:
         email:
           label: 'Contact email'
+          tooltip_html: >
+            Enter one or more valid email addresses (one per box) where people can write to ask questions about this collection. Consider using a group address that will be active and monitored for a long time to ensure that questions are received. Email addresses will appear on the public page for the collection.
     validation:
       email:
         invalid: 'must provide a valid email address'
-  keyword:   
-    edit: 
+  keyword:
+    edit:
       fields:
         text:
           label: 'Keywords (one per box)'
@@ -237,10 +239,14 @@ en:
           help_text: >
             Enter a summary statement (max 600 words) describing the collection that you are creating.
             A detailed statement may improve the discovery of your collection in web searches.
+          tooltip_html: >
+            Enter an approximately 2-3 sentence description of the works to be included in this collection. You may want to include information on who the creators of the works are/will be, general subject matter of the works, types of works (technical reports, datasets, video archives, etc), and the scholarly value of the content.
         title:
           label: 'Collection name'
           help_text: >
             A unique, descriptive name may improve discovery of your collection in web searches.
+          tooltip_html: >
+            Enter a name for your collection. This name will serve as the title on the public page for the collection and the title of web search results, as well as in Stanford Libraries' catalog. Please do not use the word "Collection" at the end of the title.
         access:
           world: 'Everyone -- anyone in the world will be able to download the files for all deposits in this collection.'
           stanford: 'Stanford Community -- only members of the Stanford community will be able to download the files for all deposits in this collection.'
@@ -272,6 +278,8 @@ en:
         related_links:
           tab_label: 'Related links (optional)'
           label: 'Links to related content (optional)'
+          tooltip_html: >
+            This section is for links to other web pages that are related to your collection. Enter the text to be displayed on the page in the "Link text" box. This entire text will be hyperlinked to the URL you enter in the "URL" box. Examples of content you might consider linking to are key funder websites,  lab or institute websites, or project pages.
         access:
           tab_label: 'Access settings'
           label: 'Manage release of deposits for discovery and download'
