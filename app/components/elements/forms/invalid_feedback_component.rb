@@ -26,7 +26,7 @@ module Elements
       private
 
       def errors
-        @errors ||= form.object.errors[field_name]
+        @errors ||= form.object&.errors&.[](field_name)
       end
 
       def classes

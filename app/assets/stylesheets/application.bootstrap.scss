@@ -292,3 +292,7 @@ i.icon-xl {
 fieldset.form-fieldset legend {
   font-size: unset;
 }
+
+.admin-card {
+  --bs-card-bg: var(--stanford-10-black);
+}

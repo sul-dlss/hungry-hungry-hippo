@@ -3,7 +3,7 @@
     <%= render Elements::HeadingComponent.new(level: :h1, text: "#{current_user.name} - Dashboard", classes: 'h2 mb-4') %>
   </div>
   <div class="col-1">
-    <%= render Elements::ButtonLinkComponent.new(link: admin_dashboard_path, label: 'Admin') if allowed_to?(:show?, with: Admin::DashboardPolicy) %>
+    <%= render Elements::ButtonLinkComponent.new(link: admin_dashboard_path, label: 'Admin') if allowed_to?(:show?, with: AdminPolicy) %>
   </div>
 </div>
 <%= render Elements::AlertComponent.new(value: t('banner.dashboard_html'), dismissible: true) %>

@@ -99,6 +99,10 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     work = Work.find(params[:id])
     authorize! work
 
+    # Don't show flashes on wait and preserve them for the next page
+    @no_flash = true
+    flash.keep
+
     redirect_to work_path(druid: work.druid) unless work.deposit_registering_or_updating?
   end
 

@@ -2,7 +2,7 @@
 
 module Admin
   # Controller for the admin dashboard
-  class DashboardController < ApplicationController
+  class DashboardController < Admin::ApplicationController
     def show
       authorize!
     end

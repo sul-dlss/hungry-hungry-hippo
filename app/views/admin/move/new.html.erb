@@ -1,0 +1,8 @@
+<%= turbo_frame_tag 'admin-body' do %>
+  <%= form_with url: work_admin_move_index_path(@work.druid) do |form| %>
+    <%= form.hidden_field :content_id, value: @work_form.content_id %>
+    <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :collection_druid, label: 'Collection you want to move this item to', label_classes: 'fw-bold', options: @collections.map { |c| [c.title, c.druid] }) %>
+
+    <%= render Elements::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-5', data: { turbo_frame: '_top' }) %>
+  <% end %>
+<% end %>
