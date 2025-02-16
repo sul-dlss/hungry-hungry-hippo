@@ -22,9 +22,9 @@
   </div>
 <% end %>
 
-<div class="d-flex">
-  <%= render Elements::HeadingComponent.new(level: :h2, text: 'Your collections', classes: 'h3 mb-4 w-100 text-nowrap') %>
-  <%= render Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary, classes: 'ml-auto text-nowrap h-50') if allowed_to?(:new?, Collection) %>
+<div class="d-flex justify-content-between mb-4">
+  <%= render Elements::HeadingComponent.new(level: :h2, text: 'Your collections', classes: 'h3 mb-0') %>
+  <%= render Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary) if allowed_to?(:new?, Collection) %>
 </div>
 
 <% current_user.your_collections.each do |collection| %>
