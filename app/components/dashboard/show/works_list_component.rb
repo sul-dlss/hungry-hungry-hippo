@@ -26,7 +26,7 @@ module Dashboard
 
       def values_for(work)
         [
-          link_to(work.title, link_for(work)),
+          link_to(work.title, work_or_wait_path(work)),
           @status_map[work.id].status_message,
           work.user.name,
           work.object_updated_at ? I18n.l(work.object_updated_at, format: '%b %d, %Y') : nil,
@@ -39,12 +39,6 @@ module Dashboard
       end
 
       private
-
-      def link_for(work)
-        return wait_works_path(work) unless work.druid
-
-        work_path(druid: work.druid)
-      end
 
       def persistent_link_for(work)
         if work.druid.nil?

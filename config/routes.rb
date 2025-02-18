@@ -22,6 +22,14 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
 
+  direct :collection_or_wait do |model, options|
+    if model.druid
+      route_for(:collection, model.druid, options)
+    else
+      route_for(:wait_collections, model.id, options)
+    end
+  end
+
   resources :works, only: %i[new create show edit update destroy], param: :druid do
     collection do
       get 'wait/:id', to: 'works#wait', as: 'wait'
@@ -33,6 +41,14 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
     namespace :admin do
       resources :move, only: %i[new create], controller: 'move'
+    end
+  end
+
+  direct :work_or_wait do |model, options|
+    if model.druid
+      route_for(:work, model.druid, options)
+    else
+      route_for(:wait_works, model.id, options)
     end
   end
 
