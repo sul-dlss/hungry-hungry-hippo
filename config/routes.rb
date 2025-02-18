@@ -57,6 +57,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   namespace :admin do
     get 'dashboard', to: 'dashboard#show'
+
+    # Constraint is because email addresses can contain periods
+    resources :users, only: %i[show index], param: :sunetid, constraints: { sunetid: /.*/ }
   end
 
   root 'home#show'
