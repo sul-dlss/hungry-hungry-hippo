@@ -20,26 +20,12 @@ module Admin
 
     def values_for(work)
       [
-        link_to(work.title, work_link(work)),
-        link_to(work.collection.title, collection_link(work.collection)),
+        link_to(work.title, work_or_wait_path(work)),
+        link_to(work.collection.title, collection_or_wait_path(work.collection)),
         @status_map[work.id].status_message,
         work.druid,
         I18n.l(work.object_updated_at, format: '%b %d, %Y')
       ]
-    end
-
-    private
-
-    def work_link(work)
-      return wait_works_path(work) unless work.druid
-
-      work_path(druid: work.druid)
-    end
-
-    def collection_link(collection)
-      return wait_collections_path(collection) unless collection.druid
-
-      collection_path(druid: collection.druid)
     end
   end
 end

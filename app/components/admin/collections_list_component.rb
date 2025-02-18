@@ -20,19 +20,13 @@ module Admin
 
     def values_for(collection)
       [
-        link_to(collection.title, link_for(collection)),
+        link_to(collection.title, collection_or_wait_path(collection)),
         collection.druid,
         roles_for(collection)
       ]
     end
 
     private
-
-    def link_for(collection)
-      return wait_collections_path(collection) unless collection.druid
-
-      collection_path(druid: collection.druid)
-    end
 
     def roles_for(collection)
       user.roles_for(collection:).map(&:titleize).join(', ')
