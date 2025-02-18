@@ -6,5 +6,9 @@
   <div class="d-flex align-items-start">
     <%= render Edit::EditDraftButtonComponent.new(presenter:) %>
     <%= render Edit::DiscardDraftButtonComponent.new(presenter:, classes: 'ms-2') %>
+    <%= render Admin::FunctionDropdownComponent.new(classes: 'ms-2') do |component| %>
+      <% component.with_function(label: 'Move to another collection', link: new_work_admin_move_path(druid, content_id:), data: { turbo_frame: 'admin-card' }) if editable? %>
+    <% end %>
   </div>
 </div>
+<%= tag.turbo_frame id: 'admin-card' %>
