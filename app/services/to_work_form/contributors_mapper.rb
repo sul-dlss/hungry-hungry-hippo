@@ -66,7 +66,7 @@ module ToWorkForm
       end
 
       def role
-        contributor.role.first.value.tr(' ', '_')
+        contributor.role.first&.value&.tr(' ', '_')
       end
 
       def stanford_degree_granting_institution?
