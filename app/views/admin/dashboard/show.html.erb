@@ -6,7 +6,9 @@
 <% end %>
 
 <div class="d-flex justify-content-end">
-  <%= render Admin::FunctionDropdownComponent.new %>
+  <%= render Admin::FunctionDropdownComponent.new do |component| %>
+    <% component.with_function(label: 'Search for user', link: admin_users_path) %>
+  <% end %>
 </div>
 
 <%= render Elements::HeadingComponent.new(level: :h1, text: 'Admin dashboard', classes: 'h2 mb-4') %>

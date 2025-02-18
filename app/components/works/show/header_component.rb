@@ -8,9 +8,10 @@ module Works
         @presenter = presenter
         super()
       end
+
       attr_reader :presenter
 
-      delegate :title, :status_message, to: :presenter
+      delegate :title, :status_message, :content_id, :editable?, :druid, to: :presenter
     end
   end
 end

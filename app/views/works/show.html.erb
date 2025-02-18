@@ -8,7 +8,6 @@
   <% end %>
 <% end %>
 
-<%= render Works::Admin::CardComponent.new(work_presenter: @work_presenter) %>
 <%= render Works::Show::ReviewComponent.new(work: @work, review_form: @review_form) %>
 <%= render Works::Show::ReviewRejectedComponent.new(work: @work) %>
 <%= render Works::Show::HeaderComponent.new(presenter: @work_presenter) %>

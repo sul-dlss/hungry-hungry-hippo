@@ -28,7 +28,8 @@ RSpec.describe 'Move a work' do
     visit work_path(druid)
 
     expect(page).to have_css('h1', text: work.title)
-    select('Move to another collection', from: 'Admin functions')
+    click_link_or_button('Admin functions')
+    click_link_or_button('Move to another collection')
     select(new_collection.title, from: 'Collection you want to move this item to')
     click_link_or_button('Submit')
 

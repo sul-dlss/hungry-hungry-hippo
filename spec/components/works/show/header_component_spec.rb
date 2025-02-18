@@ -16,6 +16,14 @@ RSpec.describe Works::Show::HeaderComponent, type: :component do
   let(:editable) { false }
   let(:discardable) { false }
 
+  let(:user) { build(:user) }
+  let(:groups) { [] }
+
+  before do
+    allow(vc_test_controller).to receive(:current_user).and_return(user)
+    allow(Current).to receive(:groups).and_return(groups)
+  end
+
   it 'renders the header' do
     render_inline(described_class.new(presenter:))
     expect(page).to have_css('h1', text: title)
@@ -41,6 +49,20 @@ RSpec.describe Works::Show::HeaderComponent, type: :component do
       expect(page).to have_button('Discard draft')
       expect(page).to have_css("form[action=\"/works/#{druid_fixture}\"]")
       expect(page).to have_field('_method', with: 'delete', type: :hidden)
+    end
+  end
+
+  context 'when user is an admin' do
+    let(:groups) { ['dlss:hydrus-app-administrators'] }
+    let(:editable) { true }
+
+    it 'renders the admin functions button' do
+      render_inline(described_class.new(presenter:))
+
+      expect(page).to have_button('Admin functions')
+      expect(page).to have_link('Move to another collection', class: 'dropdown-item')
+      expect(page).to have_link('Edit or deposit', href: "/works/#{druid_fixture}/edit")
+      expect(page).to have_css("turbo-frame[id='admin-card']")
     end
   end
 end
