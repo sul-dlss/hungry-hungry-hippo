@@ -5,4 +5,8 @@
   <% end %>
 <% end %>
 
+<div class="d-flex justify-content-end">
+  <%= render Admin::FunctionDropdownComponent.new %>
+</div>
+
 <%= render Elements::HeadingComponent.new(level: :h1, text: 'Admin dashboard', classes: 'h2 mb-4') %>
