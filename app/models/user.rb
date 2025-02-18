@@ -39,4 +39,16 @@ class User < ApplicationRecord
   def your_pending_review_works
     @your_pending_review_works ||= Work.where(collection: reviewer_for + manages).with_review_state(:pending_review)
   end
+
+  def roles_for(collection:)
+    [].tap do |roles|
+      roles << 'manager' if manages.include?(collection)
+      roles << 'depositor' if depositor_for.include?(collection)
+      roles << 'reviewer' if reviewer_for.include?(collection)
+    end
+  end
+
+  def self.find_by_sunetid(sunetid:)
+    find_by(email_address: "#{sunetid}#{EMAIL_SUFFIX}")
+  end
 end
