@@ -23,27 +23,39 @@ RSpec.describe CollectionsMailer do
   end
 
   describe '#deposit_access_removed_email' do
-    let(:collection) do
-      create(:collection,
-             title: '20 Minutes into the Future',
-             managers: [manager],
-             email_depositors_status_changed: true)
-    end
-    let(:mail) { described_class.with(user:, collection:).deposit_access_removed_email }
-    let(:manager) { create(:user) }
+    context 'when email depositor on status change is enabled' do
+      let(:mail) { described_class.with(user:, collection:).deposit_access_removed_email }
+      let(:manager) { create(:user) }
+      let(:collection) do
+        create(:collection,
+               title: '20 Minutes into the Future',
+               managers: [manager],
+               email_depositors_status_changed: true)
+      end
 
-    it 'renders the headers' do
-      expect(mail.subject).to eq 'Your Depositor permissions for the 20 Minutes into the Future collection ' \
-                                 'in the SDR have been removed'
-      expect(mail.to).to eq [user.email_address]
-      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+      it 'renders the headers' do
+        expect(mail.subject).to eq 'Your Depositor permissions for the 20 Minutes into the Future collection ' \
+                                   'in the SDR have been removed'
+        expect(mail.to).to eq [user.email_address]
+        expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+      end
+
+      it 'renders the body with salutation of first name' do
+        expect(mail).to match_body('Dear Maxwell,')
+        expect(mail).to match_body('A Manager of the 20 Minutes into the Future collection has updated ' \
+                                   'the permissions for this collection and removed you as a depositor.')
+        expect(mail).to match_body(manager.email_address)
+      end
     end
 
-    it 'renders the body with salutation of first name' do
-      expect(mail).to match_body('Dear Maxwell,')
-      expect(mail).to match_body('A Manager of the 20 Minutes into the Future collection has updated the permissions ' \
-                                 'for this collection and removed you as a Depositor.')
-      expect(mail).to match_body(manager.email_address)
+    context 'when email depositor on status change is disabled' do
+      before do
+        ActionMailer::Base.deliveries.clear
+      end
+
+      it 'does not render an email' do
+        expect(ActionMailer::Base.deliveries).to be_empty
+      end
     end
   end
 
@@ -84,28 +96,40 @@ RSpec.describe CollectionsMailer do
   end
 
   describe '#participants_changed_email' do
-    let(:collection) do
-      create(:collection,
-             title: '20 Minutes into the Future',
-             managers: [manager],
-             email_when_participants_changed: true)
-    end
-    let(:mail) { described_class.with(user:, collection:).participants_changed_email }
-    let(:manager) { create(:user) }
+    context 'when notify managers and reviewers on participant changes is enabled' do
+      let(:collection) do
+        create(:collection,
+               title: '20 Minutes into the Future',
+               managers: [manager],
+               email_when_participants_changed: true)
+      end
+      let(:mail) { described_class.with(user:, collection:).participants_changed_email }
+      let(:manager) { create(:user) }
 
-    it 'renders the headers' do
-      expect(mail.subject).to eq 'Participant changes for the 20 Minutes into the Future ' \
-                                 'collection in the SDR'
-      expect(mail.to).to eq [manager.email_address]
-      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+      it 'renders the headers' do
+        expect(mail.subject).to eq 'Participant changes for the 20 Minutes into the Future ' \
+                                   'collection in the SDR'
+        expect(mail.to).to eq [manager.email_address]
+        expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+      end
+
+      it 'renders the body' do
+        expect(mail).to match_body("Dear #{manager.first_name},")
+        expect(mail).to match_body('Members have been either added to or removed from the ' \
+                                   '20 Minutes into the Future collection. Please see the ' \
+                                   'history section at the bottom of the collection details ' \
+                                   'page to see the changes made.')
+      end
     end
 
-    it 'renders the body' do
-      expect(mail).to match_body("Dear #{manager.first_name},")
-      expect(mail).to match_body('Members have been either added to or removed from the ' \
-                                 '20 Minutes into the Future collection. Please see the ' \
-                                 'history section at the bottom of the collection details ' \
-                                 'page to see the changes made.')
+    context 'when notify managers and reviewers on participant changes is disabled' do
+      before do
+        ActionMailer::Base.deliveries.clear
+      end
+
+      it 'does not render an email' do
+        expect(ActionMailer::Base.deliveries).to be_empty
+      end
     end
   end
 end

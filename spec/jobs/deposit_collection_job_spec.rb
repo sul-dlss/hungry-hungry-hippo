@@ -46,6 +46,8 @@ RSpec.describe DepositCollectionJob do
       expect(new_manager.name).to eq('stepking')
       expect(new_depositor.name).to eq('joehill')
       expect(manager.name).not_to eq(manager.sunetid)
+      expect(collection.email_when_participants_changed).to be true
+      expect(collection.email_depositors_status_changed).to be true
     end
   end
 
