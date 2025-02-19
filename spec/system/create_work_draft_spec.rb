@@ -41,6 +41,8 @@ RSpec.describe 'Create a work draft' do
 
     expect(page).to have_css('h1', text: 'Untitled deposit')
 
+    expect(page).to have_link('Cancel', href: dashboard_path)
+
     # Title is required.
     find('.nav-link', text: 'Title and contact').click
     click_link_or_button('Save as draft')

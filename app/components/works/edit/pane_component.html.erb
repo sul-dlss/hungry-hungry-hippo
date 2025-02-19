@@ -17,7 +17,7 @@
         <% if work_presenter %>
           <%= render Edit::DiscardDraftSubmitButtonComponent.new(presenter: work_presenter, form_id: discard_draft_form_id) %>
         <% else %>
-          <%= render Elements::CancelButtonComponent.new(link: root_path) %>
+          <%= render Elements::CancelButtonComponent.new(link: dashboard_path) %>
         <% end %>
       </div>
     </div>
