@@ -76,6 +76,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
     # Constraint is because email addresses can contain periods
     resources :users, only: %i[show index], param: :sunetid, constraints: { sunetid: /.*/ }
+
+    resource :collection_search, only: %i[new], controller: 'collection_search' do
+      get 'search', to: 'collection_search#search'
+    end
   end
 
   root 'home#show'

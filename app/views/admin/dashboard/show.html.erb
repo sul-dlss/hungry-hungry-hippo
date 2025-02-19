@@ -12,3 +12,7 @@
 </div>
 
 <%= render Elements::HeadingComponent.new(level: :h1, text: 'Admin dashboard', classes: 'h2 mb-4') %>
+
+<%= turbo_frame_tag 'collection-search', src: new_admin_collection_search_path do %>
+  <%= render Elements::SpinnerComponent.new %>
+<% end %>
