@@ -10,6 +10,7 @@ RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
   let(:work_without_druid) { create(:work, user: current_user, collection:) }
   let(:work_in_collection) { create(:work, :with_druid, collection:) }
   let(:work_with_doi) { create(:work, :with_druid, user: current_user, collection:) }
+  let(:work_in_review) { create(:work, :with_druid, user: current_user, collection:, review_state: 'pending_review') }
   let(:collection) { create(:collection, depositors: [current_user]) }
   let(:current_user) { create(:user) }
   let(:status_map) do
@@ -17,7 +18,8 @@ RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
       work.id => build(:first_draft_version_status),
       work_without_druid.id => VersionStatus::NilStatus.new,
       work_in_collection.id => VersionStatus::NilStatus.new,
-      work_with_doi.id => VersionStatus::NilStatus.new
+      work_with_doi.id => VersionStatus::NilStatus.new,
+      work_in_review.id => VersionStatus::NilStatus.new
     }
   end
 
@@ -36,7 +38,7 @@ RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
     expect(table).to have_css('th', text: 'Last modified')
     expect(table).to have_css('th', text: 'Link for sharing')
     table_body = table.find('tbody')
-    expect(table_body).to have_css('tr', count: 3)
+    expect(table_body).to have_css('tr', count: 4)
     first_row = table_body.find('tr:nth-of-type(1)')
     expect(first_row).to have_css('td:nth-of-type(1)', text: work.title)
     expect(first_row).to have_link(work.title, href: "/works/#{work.druid}")
@@ -50,5 +52,7 @@ RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
     expect(second_row).to have_css('td:nth-of-type(5)', text: '') # No PURL
     third_row = table_body.find('tr:nth-of-type(3)')
     expect(third_row).to have_css('td:nth-of-type(5)', text: Doi.url(druid: work_with_doi.druid))
+    fourth_row = table_body.find('tr:nth-of-type(4)')
+    expect(fourth_row).to have_css('td:nth-of-type(2)', text: 'Pending review')
   end
 end

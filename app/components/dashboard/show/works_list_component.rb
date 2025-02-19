@@ -25,9 +25,10 @@ module Dashboard
       end
 
       def values_for(work)
+        presenter = WorkPresenter.new(work:, version_status: @status_map[work.id], work_form: WorkForm.new)
         [
           link_to(work.title, work_or_wait_path(work)),
-          @status_map[work.id].status_message,
+          presenter.status_message,
           work.user.name,
           work.object_updated_at ? I18n.l(work.object_updated_at, format: '%b %d, %Y') : nil,
           persistent_link_for(work)

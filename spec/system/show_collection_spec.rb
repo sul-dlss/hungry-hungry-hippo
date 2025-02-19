@@ -22,6 +22,7 @@ RSpec.describe 'Show a collection' do
     allow(Sdr::Repository).to receive(:statuses)
       .and_return(collection.works.where.not(druid: nil).to_h { |work| [work.druid, version_status] })
 
+    collection.works.first.request_review!
     sign_in(user)
   end
 
@@ -115,21 +116,28 @@ RSpec.describe 'Show a collection' do
 
     # Deposits table
     within('table#deposits-table') do
-      expect(page).to have_css('tr', text: 'Deposit')
-      expect(page).to have_css('tr', text: 'Owner')
-      expect(page).to have_css('tr', text: 'Status')
-      expect(page).to have_css('tr', text: 'Modified')
-      expect(page).to have_css('tr', text: 'Link for sharing')
-      collection.works.each do |work|
-        expect(page).to have_css('td', text: work.title)
-        expect(page).to have_css('td', text: work.user.name)
-        expect(page).to have_css('td', text: 'Saving')
-        expect(page).to have_css('td', text: I18n.l(work.object_updated_at, format: '%b %d, %Y'))
-        if work.druid
-          expect(page).to have_css('td', text: "https://doi.org/10.80343/#{work.druid.delete_prefix('druid:')}")
-        else
-          expect(page).to have_css('td', text: 'N/A (still depositing)')
-        end
+      expect(page).to have_css('th', text: 'Deposit')
+      expect(page).to have_css('th', text: 'Owner')
+      expect(page).to have_css('th', text: 'Status')
+      expect(page).to have_css('th', text: 'Modified')
+      expect(page).to have_css('th', text: 'Link for sharing')
+      within('tbody tr:nth-of-type(1)') do
+        work = collection.works[0]
+        expect(page).to have_css('td:nth-of-type(1)', text: work.title)
+        expect(page).to have_css('td:nth-of-type(2)', text: work.user.name)
+        expect(page).to have_css('td:nth-of-type(3)', text: 'Pending review')
+        expect(page).to have_css('td:nth-of-type(5)', text: "https://doi.org/10.80343/#{work.druid.delete_prefix('druid:')}")
+      end
+      within('tbody tr:nth-of-type(2)') do
+        work = collection.works[1]
+        expect(page).to have_css('td:nth-of-type(1)', text: work.title)
+        expect(page).to have_css('td:nth-of-type(3)', text: 'Deposited')
+      end
+      within('tbody tr:nth-of-type(3)') do
+        work = collection.works[2]
+        expect(page).to have_css('td:nth-of-type(1)', text: work.title)
+        expect(page).to have_css('td:nth-of-type(3)', text: 'Saving')
+        expect(page).to have_css('td:nth-of-type(5)', exact_text: '')
       end
     end
   end

@@ -13,9 +13,9 @@ module Collections
       delegate :collection, :work_statuses, to: :presenter
 
       def collection_deposits
-        @collection_deposits ||= collection.works.map do |work|
+        @collection_deposits ||= collection.works.order(:title).map do |work|
           {
-            id: work.druid || work.id,
+            id: dom_id(work),
             values: values_for(work)
           }
         end
@@ -32,12 +32,16 @@ module Collections
       end
 
       def status_for(work)
-        work_statuses.fetch(work.druid, VersionStatus::NilStatus.new).status_message
+        presenter = WorkPresenter.new(work:,
+                                      version_status: work_statuses.fetch(work.druid, VersionStatus::NilStatus.new),
+                                      work_form: WorkForm.new)
+
+        presenter.status_message
       end
 
       def persistent_link_for(work)
         if work.druid.nil?
-          'N/A (still depositing)'
+          ''
         elsif work.doi_assigned?
           helpers.link_to(nil, Doi.url(druid: work.druid))
         else
