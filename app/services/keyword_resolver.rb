@@ -47,6 +47,7 @@ class KeywordResolver
     151 => 'place',
     155 => 'genre'
   }.freeze
+  private_constant :TAG_TYPES
 
   def parse(body)
     JSON.parse(body).dig('response', 'docs').map do |result|
