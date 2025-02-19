@@ -1,7 +1,10 @@
 <%= tag.thead class: classes do %>
   <tr>
   <% headers.each_with_index do |header, index| %>
-    <%= tag.th header, class: classes_for_header(index) %>
+    <%= tag.th class: classes_for_header(index) do %>
+      <%= header %>
+      <%= render Elements::TooltipComponent.new(tooltip: tooltip_for_header(index)) %>
+    <% end %>
   <% end %>
   </tr>
 <% end %>

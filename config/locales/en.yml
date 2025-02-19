@@ -50,6 +50,16 @@ en:
     stanford: 'Stanford Community'
     world: 'Everyone'
     depositor_selects: 'Depositor selects'
+  contact_sdr: 'Contact SDR staff'
+  content_files:
+    edit:
+      fields:
+        description:
+          tooltip_html: >
+            Enter a brief description (100 characters max) to help others understand what this file contains. This description will appear on the public page for your work next to the name of the file. This description is not required.
+        hide:
+          tooltip_html: >
+            Check this box to prevent this file from being displayed on or downloaded from the public page for your work. The file will still be preserved in the SDR as part of your deposit. Hidden files should NOT contain any content the University classifies as <a href="https://uit.stanford.edu/guide/riskclassifications" target="_blank">High Risk</a>.
   contributors:
     edit:
       legend: 'Contributor'
@@ -60,7 +70,6 @@ en:
         blank: 'must provide a last name'
       orcid:
         invalid: 'must be formatted as "XXXX-XXXX-XXXX-XXXX"'
-  contact_sdr: 'Contact SDR staff'
   date:
     fields:
       year:
