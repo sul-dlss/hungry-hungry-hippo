@@ -84,6 +84,7 @@ GEM
     base64 (0.2.0)
     bcrypt (3.1.20)
     bcrypt_pbkdf (1.1.1)
+    bcrypt_pbkdf (1.1.1-arm64-darwin)
     benchmark (0.4.0)
     better_html (2.1.1)
       actionview (>= 6.0)
@@ -132,7 +133,7 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     chronic (0.10.2)
-    cocina-models (0.99.4)
+    cocina-models (0.100.0)
       activesupport
       deprecation
       dry-struct (~> 1.0)
@@ -183,9 +184,9 @@ GEM
       capistrano-shared_configs
       ed25519
     docile (1.4.1)
-    dor-services-client (15.4.0)
+    dor-services-client (15.5.0)
       activesupport (>= 7.0.0)
-      cocina-models (~> 0.99.0)
+      cocina-models (~> 0.100.0)
       deprecation
       faraday (~> 2.0)
       faraday-retry
@@ -609,7 +610,7 @@ DEPENDENCIES
   datacite
   debug
   dlss-capistrano
-  dor-services-client (>= 15.4.0)
+  dor-services-client (>= 15.5.0)
   dor-workflow-client (>= 7.6.1)
   druid-tools
   dry-monads
