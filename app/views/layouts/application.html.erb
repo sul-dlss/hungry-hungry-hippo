@@ -35,7 +35,7 @@
         <%= yield :breadcrumbs %>
       </nav>
     </div>
-    <main id="main-container">
+    <main id="main-container" data-controller="tooltips">
       <% if content_for?(:fluid_body) %>
         <div class="fluid-container">
           <%= yield :fluid_body %>

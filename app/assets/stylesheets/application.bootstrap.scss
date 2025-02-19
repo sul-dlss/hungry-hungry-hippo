@@ -264,7 +264,7 @@ body {
 
 .opacity-85 {
   opacity: 0.85;
-}  
+}
 
 i.icon-lg {
   font-size: 2rem;
@@ -272,6 +272,14 @@ i.icon-lg {
 
 i.icon-xl {
   font-size: 3rem;
+}
+
+.tooltip-info {
+  color: var(--stanford-digital-blue);
+}
+
+.tooltip-header {
+  display: inline-block;
 }
 
 .secondary-card {

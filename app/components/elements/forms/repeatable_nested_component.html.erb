@@ -1,7 +1,8 @@
 <%= render Elements::Forms::FieldsetComponent.new(data: fieldset_data, classes: fieldset_classes) do |component| %>
   <% component.with_legend do %>
-    <h3>
+    <h3 class="tooltip-header">
       <%= render Edit::LabelComponent.new(label_text:, hidden_label:) %>
+      <%= render Elements::TooltipComponent.new(tooltip:) %>
     </h3>
   <% end %>
   <%= tag.div(class: container_classes, data: { nested_form_target: 'container', nested_form_reorder_target: 'container' }) do %>
