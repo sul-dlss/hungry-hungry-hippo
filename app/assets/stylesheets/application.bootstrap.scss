@@ -278,6 +278,12 @@ i.icon-xl {
   color: var(--stanford-digital-blue);
 }
 
+// NOTE: The bootstrap tooltip wants to be ~16px to the left of where we want it.
+//       Apply a style to shift it rightward.
+.tooltip-shift-right {
+  left: 16px !important;
+}
+
 .tooltip-header {
   display: inline-block;
 }

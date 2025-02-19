@@ -33,10 +33,8 @@ module Elements
     end
 
     def tooltip_template
-      # NOTE: The bootstrap tooltip wants to be ~16px to the left of where we want it.
-      #       Apply a style to shift it rightward.
       <<~HTML.squish
-        <div class="tooltip" style="left: 16px !important;" role="tooltip">
+        <div class="tooltip tooltip-shift-right" role="tooltip">
           <div class="tooltip-arrow"></div>
           <div class="tooltip-inner text-start"></div>
         </div>
