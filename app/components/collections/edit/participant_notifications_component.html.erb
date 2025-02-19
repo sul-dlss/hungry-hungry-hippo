@@ -1,0 +1,4 @@
+<div class="mb-5">
+  <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :email_when_participants_changed, label: 'Send email to Collection Managers and Reviewers when participants are added/removed.') %>
+  <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :email_depositors_status_changed, label: 'Send email to Depositors whose status has changed.') %>
+</div>

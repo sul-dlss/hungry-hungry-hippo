@@ -10,6 +10,13 @@ class CollectionsMailer < ApplicationMailer
          subject: "Invitation to deposit to the #{@collection.title} collection in the SDR")
   end
 
+  def deposit_access_removed_email
+    return unless @collection.email_depositors_status_changed
+
+    mail(to: @user.email_address, subject: "Your Depositor permissions for the #{@collection.title} " \
+                                           'collection in the SDR have been removed')
+  end
+
   def manage_access_granted_email
     mail(to: @user.email_address, subject: "You are invited to participate as a Manager in the #{@collection.title} " \
                                            'collection in the SDR')
@@ -18,6 +25,15 @@ class CollectionsMailer < ApplicationMailer
   def review_access_granted_email
     mail(to: @user.email_address, subject: "You are invited to participate as a Reviewer in the #{@collection.title} " \
                                            'collection in the SDR')
+  end
+
+  def participants_changed_email
+    return unless @collection.email_when_participants_changed
+
+    (@collection.managers + @collection.reviewers).uniq.each do |user|
+      @user = user
+      mail(to: @user.email_address, subject: "Participant changes for the #{@collection.title} collection in the SDR")
+    end
   end
 
   private

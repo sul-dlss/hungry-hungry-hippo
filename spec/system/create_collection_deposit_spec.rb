@@ -91,6 +91,10 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_field('SUNet ID', with: user.sunetid)
     fill_in('collection_managers_attributes_1_sunetid', with: 'stepking')
     fill_in('collection_depositors_attributes_0_sunetid', with: 'joehill')
+    expect(page).to have_checked_field('Send email to Collection Managers and Reviewers ' \
+                                       'when participants are added/removed',
+                                       with: '1')
+    expect(page).to have_checked_field('Send email to Depositors whose status has changed.', with: '1')
 
     # Clicking on Next to go to Workflow
     click_link_or_button('Next')

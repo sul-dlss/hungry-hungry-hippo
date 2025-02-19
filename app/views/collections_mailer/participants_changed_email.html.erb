@@ -1,0 +1,8 @@
+<%= render Emails::SalutationComponent.new(user: @user) %>
+
+<p>Members have been either added to or removed from the <%= @collection.title %> collection. Please see the
+   history section at the bottom of the collection details page to see the changes made.</p>
+
+<%= render Emails::ContactComponent.new %>
+
+<%= render Emails::SignatureComponent.new %>

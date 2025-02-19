@@ -8,4 +8,5 @@ class CollectionReviewer < ApplicationRecord
   belongs_to :collection
 
   after_create -> { Notifier.publish(Notifier::REVIEWER_ADDED, user:, collection:) }
+  after_destroy -> { Notifier.publish(Notifier::REVIEWER_REMOVED, user:, collection:) }
 end

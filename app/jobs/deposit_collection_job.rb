@@ -42,7 +42,9 @@ class DepositCollectionJob < ApplicationJob
                        license_option: collection_form.license_option,
                        license:,
                        doi_option: collection_form.doi_option,
-                       review_enabled: collection_form.review_enabled)
+                       review_enabled: collection_form.review_enabled,
+                       email_when_participants_changed: collection_form.email_when_participants_changed,
+                       email_depositors_status_changed: collection_form.email_depositors_status_changed)
 
     assign_participants(:managers)
     assign_participants(:depositors)

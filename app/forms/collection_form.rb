@@ -47,6 +47,8 @@ class CollectionForm < ApplicationForm
   validates :doi_option, inclusion: { in: %w[yes no depositor_selects] }
 
   attribute :review_enabled, :boolean, default: false
+  attribute :email_when_participants_changed, :boolean, default: true
+  attribute :email_depositors_status_changed, :boolean, default: true
 end
 
 def duration_must_be_present
