@@ -3,44 +3,61 @@
 module Admin
   # Controller for moving resources between collections
   class MoveController < Admin::ApplicationController
-    before_action :set_work
-    before_action :set_status
-    before_action :set_work_form_from_cocina
-
     def new
       authorize!
 
-      @collections = Admin::MoveTargetCollections.call(work_form: @work_form)
+      @move_form = Admin::MoveForm.new(content_id: params[:content_id])
+      render :form
     end
 
     def create
       authorize!
 
-      collection = Collection.find_by(druid: params[:collection_druid])
-      Admin::Move.call(work_form: @work_form, work: @work, collection:, version_status: @version_status)
+      @move_form = Admin::MoveForm.new(work_form:, **move_params)
 
-      flash[:success] = I18n.t('messages.work_moved')
-      redirect_to wait_works_path(@work.id)
+      if @move_form.valid?
+        work_form.content_id = @move_form.content_id
+        Admin::Move.call(work_form:, work:, collection: @move_form.collection, version_status:)
+
+        render_move_success
+      else
+        render :form, status: :unprocessable_entity
+      end
     end
 
     private
 
-    def set_work
-      @work = Work.find_by(druid: params[:work_druid])
+    def move_params
+      params.expect(admin_move: %i[content_id collection_druid])
     end
 
-    def set_work_form_from_cocina
-      @cocina_object = Sdr::Repository.find(druid: params[:work_druid])
-      @work_form = ToWorkForm::Mapper.call(cocina_object: @cocina_object,
-                                           doi_assigned: DoiAssignedService.call(cocina_object: @cocina_object,
-                                                                                 work: @work),
-                                           agree_to_terms: current_user.agree_to_terms?,
-                                           version_description: 'Moving collection')
-      @work_form.content_id = params[:content_id]
+    def work
+      @work ||= Work.find_by(druid: params[:work_druid])
     end
 
-    def set_status
-      @version_status = Sdr::Repository.status(druid: params[:work_druid])
+    def cocina_object
+      @cocina_object ||= Sdr::Repository.find(druid: params[:work_druid])
+    end
+
+    def work_form
+      @work_form ||= ToWorkForm::Mapper.call(cocina_object:,
+                                             doi_assigned: DoiAssignedService.call(cocina_object:, work:),
+                                             agree_to_terms: current_user.agree_to_terms?,
+                                             version_description: 'Moving collection')
+    end
+
+    def version_status
+      @version_status ||= Sdr::Repository.status(druid: params[:work_druid])
+    end
+
+    def render_move_success
+      flash[:success] = I18n.t('messages.work_moved')
+      # This breaks out of the turbo frame.
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.action(:full_page_redirect, wait_works_path(work))
+        end
+      end
     end
   end
 end

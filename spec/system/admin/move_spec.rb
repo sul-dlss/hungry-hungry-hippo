@@ -30,7 +30,14 @@ RSpec.describe 'Move a work' do
     expect(page).to have_css('h1', text: work.title)
     click_link_or_button('Admin functions')
     click_link_or_button('Move to another collection')
-    select(new_collection.title, from: 'Collection you want to move this item to')
+
+    fill_in('Enter DRUID of the collection you want to move this item to', with: 'foo')
+    click_link_or_button('Submit')
+
+    expect(page).to have_css('.invalid-feedback', text: 'not found')
+
+    fill_in('Enter DRUID of the collection you want to move this item to',
+            with: new_collection.druid.delete_prefix('druid:'))
     click_link_or_button('Submit')
 
     # Waiting page may be too fast to catch so not testing.
