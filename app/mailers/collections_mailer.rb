@@ -30,7 +30,7 @@ class CollectionsMailer < ApplicationMailer
   def participants_changed_email
     return unless @collection.email_when_participants_changed
 
-    User.where(id: @collection.managers).or(User.where(id: @collection.reviewers)).distinct.each do |user|
+    (@collection.managers + @collection.reviewers).uniq.each do |user|
       @user = user
       mail(to: @user.email_address, subject: "Participant changes for the #{@collection.title} collection in the SDR")
     end

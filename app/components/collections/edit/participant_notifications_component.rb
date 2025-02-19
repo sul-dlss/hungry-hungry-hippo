@@ -2,7 +2,7 @@
 
 module Collections
   module Edit
-    # Component for rendering the review workflow pane.
+    # Component for rendering the participant notification options.
     class ParticipantNotificationsComponent < ApplicationComponent
       def initialize(form:)
         @form = form

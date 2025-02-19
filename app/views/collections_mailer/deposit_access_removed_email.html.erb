@@ -1,8 +1,8 @@
 <%= render Emails::SalutationComponent.new(user: @user) %>
 
 <p>A Manager of the <%= @collection.title %> collection has updated the permissions
-   for this collection and removed you as a Depositor. You no longer have permission
-   to deposit to this collection. Please contact the collection Managers below
+   for this collection and removed you as a depositor. You no longer have permission
+   to deposit to this collection. Please contact the collection managers below
    if you have questions about this change.</p>
 
 <p>Collection Managers:<br>
@@ -11,6 +11,6 @@
   <% end %>
 </p>
 
-<p>If you have any questions, contact the SDR team at: <%= link_to contact_form_url, contact_form_url %></p>
+<%= render Emails::ContactComponent.new %>
 
-<p>The Stanford Digital Repository Team</p>
+<%= render Emails::SignatureComponent.new %>
