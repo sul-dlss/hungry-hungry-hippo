@@ -6,7 +6,7 @@ module Elements
     # NOTE: Use the `NestedComponentPresenter` to invoke this component; do not directly instantiate it.
     class RepeatableNestedComponent < ApplicationComponent
       def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists
-                     reorderable: false, single_field: false, fieldset_classes: [])
+                     reorderable: false, single_field: false, fieldset_classes: [], skip_tooltip: false)
         @form = form
         @model_class = model_class
         @field_name = field_name
@@ -16,6 +16,12 @@ module Elements
         @reorderable = reorderable
         @single_field = single_field
         @fieldset_classes = fieldset_classes
+        # We need to be able to skip tooltips in nested components because
+        # related link tooltips in the collection and work design are in
+        # different spots. In the collection design, the tooltip has been
+        # rendered in a parent element of the DOM, so rendering the tooltip
+        # within this component would cause repetition and confusion.
+        @skip_tooltip = skip_tooltip
         super()
       end
 
@@ -26,7 +32,13 @@ module Elements
       end
 
       def tooltip
+        return if skip_tooltip?
+
         helpers.t("#{field_name}.edit.tooltip_html", default: nil)
+      end
+
+      def skip_tooltip?
+        @skip_tooltip
       end
 
       def bordered?

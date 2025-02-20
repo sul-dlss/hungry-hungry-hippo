@@ -4,7 +4,7 @@
     </div>
   </div>
 
-<%= render Elements::Forms::FieldsetComponent.new(label: 'Creation date', classes: 'pane-section', data: { controller: 'dates' }, id: 'creation_date') do %>
+<%= render Elements::Forms::FieldsetComponent.new(label: t('works.edit.fields.create_date.label'), tooltip: t('works.edit.fields.create_date.tooltip_html'), classes: 'pane-section', data: { controller: 'dates' }, id: 'creation_date') do %>
   <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :create_date_type, hidden_label: true,
                                                   label: 'Date type') do |component| %>
     <% component.with_left_toggle_option(form:,

@@ -1,6 +1,7 @@
 <div class="pane-section">
   <div class="d-flex">
     <%= render Edit::LabelComponent.new(label_text: 'License') %>
+    <%= render Elements::TooltipComponent.new(tooltip:) %>
     <div class="ms-4"><%= helpers.link_to_new_tab 'Get help selecting a license', Settings.license_url %></div>
   </div>
   <% if required_license_option? %>

@@ -49,7 +49,7 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
   context 'when a single field' do
     subject(:component) do
       described_class.new(form:, field_name: :contact_emails, model_class: ContactEmailForm,
-                          form_component: ContactEmails::EditComponent, hidden_label:, bordered:, single_field:)
+                          form_component: Works::Edit::ContactEmailsComponent, hidden_label:, bordered:, single_field:)
     end
 
     let(:single_field) { true }

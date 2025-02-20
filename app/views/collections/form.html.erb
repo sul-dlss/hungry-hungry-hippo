@@ -31,13 +31,13 @@
       <%= render Collections::Edit::PaneComponent.new(tab_name: :details, label: t('collections.edit.panes.details.label'), selected: true) do %>
         <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: t('collections.edit.fields.title.label'), tooltip: t('collections.edit.fields.title.tooltip_html'), container_classes: 'pane-section') %>
         <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: t('collections.edit.fields.description.label'), tooltip: t('collections.edit.fields.description.tooltip_html'), container_classes: 'pane-section') %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: Collections::Edit::ContactEmailsComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
       <%= render Collections::Edit::PaneComponent.new(tab_name: :related_links, label: t('collections.edit.panes.related_links.label'), tooltip: t('collections.edit.panes.related_links.tooltip_html')) do %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, fieldset_classes: 'pane-section') %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, fieldset_classes: 'pane-section', skip_tooltip: true) %>
       <% end %>
     <% end %>
 

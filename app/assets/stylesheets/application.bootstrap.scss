@@ -11,11 +11,6 @@ $container-max-widths: (
 @import "bootstrap-icons/font/bootstrap-icons";
 @import "dropzone";
 
-// Stop the page from jumping when switching, e.g., to a tab containing a scrollbar
-html {
-  margin-left: calc(100vw - 100%);
-}
-
 // This is used on the collection show page
 .nav-underline {
   border-bottom: 1px solid black;
@@ -224,8 +219,11 @@ textarea {
   margin-bottom: 1.5rem;
 }
 
-// Ensure the footer is at the bottom of the page
 body {
+  // Stop the page from jumping when switching, e.g., to a tab containing a scrollbar
+  margin-left: calc(100vw - 100%);
+
+  // Ensure the footer is at the bottom of the page
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -278,10 +276,9 @@ i.icon-xl {
   color: var(--stanford-digital-blue);
 }
 
-// NOTE: The bootstrap tooltip wants to be ~16px to the left of where we want it.
-//       Apply a style to shift it rightward.
-.tooltip-shift-right {
-  left: 16px !important;
+.tooltip-inner {
+  // Override bootstrap default of center-aligned text in tooltips
+  text-align: left;
 }
 
 .tooltip-header {
