@@ -1,0 +1,9 @@
+<%= tag.ul class: classes, role: 'tablist' do %>
+  <% tabs.each do |tab| %><%= tab %><% end %>
+<% end %>
+
+<%= header %>
+
+<div class="tab-content">
+  <% panes.each do |pane| %><%= pane %><% end %>
+</div>
