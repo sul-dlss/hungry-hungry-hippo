@@ -43,7 +43,7 @@ module ToCocina
       def fileset_params_for(content_file)
         # one file per fileset
         {
-          type: fileset_type,
+          type: fileset_type_for(content_file),
           version: work_form.version,
           label: content_file.label,
           externalIdentifier: fileset_external_identifier_for(content_file),
@@ -105,8 +105,10 @@ module ToCocina
         @document
       end
 
-      def fileset_type
-        document? ? Cocina::Models::FileSetType.document : Cocina::Models::FileSetType.file
+      def fileset_type_for(content_file)
+        return Cocina::Models::FileSetType.document if document? && content_file.pdf? && !content_file.hidden?
+
+        Cocina::Models::FileSetType.file
       end
     end
   end

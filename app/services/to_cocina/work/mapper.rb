@@ -57,9 +57,13 @@ module ToCocina
       def document?
         return false if content.content_files.empty?
 
-        content.content_files.all? do |content_file|
-          !content_file.hidden? && content_file.mime_type == 'application/pdf'
+        # All files are PDF or hidden
+        return false unless content.content_files.all? do |content_file|
+          content_file.hidden? || content_file.pdf?
         end
+
+        # There is at least one non-hidden PDF
+        content.content_files.any? { |content_file| !content_file.hidden? && content_file.pdf? }
       end
     end
   end
