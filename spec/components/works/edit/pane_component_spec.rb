@@ -22,8 +22,8 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
     end
   end
 
-  context 'when no work presenter (existing work)' do
-    let(:work_presenter) { instance_double(WorkPresenter) }
+  context 'when work presenter (existing work)' do
+    let(:work_presenter) { instance_double(WorkPresenter, discardable?: true) }
 
     it 'renders the pane' do
       render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
