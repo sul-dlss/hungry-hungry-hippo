@@ -5,7 +5,10 @@
   <% component.with_header(
        headers: ['Recent deposits in collection', 'Deposit status', 'Owner', 'Last modified', 'Link for sharing']
      ) %>
-  <% works.each do |work| %>
+  <% works.take(WORK_LIMIT).each do |work| %>
     <% component.with_row(values: values_for(work), id: id_for(work)) %>
   <% end %>
 <% end %>
+<div>
+  <%= link_to('See all deposits', collection_path(druid: collection.druid, tab: 'deposits'), class: 'fw-bold') if see_all? %>
+</div>

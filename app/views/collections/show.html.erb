@@ -11,19 +11,16 @@
   <% end %>
 <% end %>
 
-<ul class="nav nav-underline mb-3" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details-pane" type="button" role="tab" aria-controls="details-pane" aria-selected="true">Collection information</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="deposits-tab" data-bs-toggle="tab" data-bs-target="#deposits-pane" type="button" role="tab" aria-controls="deposits-pane" aria-selected="false">Deposits</button>
-  </li>
-</ul>
+<% deposits_active = params[:tab] == 'deposits' %>
+<%= render Elements::Tabs::TabListComponent.new(classes: 'nav-underline mb-3') do |component| %>
+  <% component.with_tab(id: 'details-tab', pane_id: 'details-pane', label: 'Collection information', active: !deposits_active) %>
+  <% component.with_tab(id: 'deposits-tab', pane_id: 'deposits-pane', label: 'Deposits', active: deposits_active) %>
 
-<%= render Collections::Show::HeaderComponent.new(presenter: @collection_presenter) %>
+  <% component.with_header do %>
+    <%= render Collections::Show::HeaderComponent.new(presenter: @collection_presenter) %>
+  <% end %>
 
-<div class="tab-content">
-  <div class="tab-pane fade show active" id="details-pane" role="tabpanel" aria-labelledby="details-tab" tabindex="0">
+  <%= component.with_pane(id: 'details-pane', tab_id: 'details-tab', active: !deposits_active) do %>
     <%= render Elements::Tables::TableComponent.new(id: 'info-table', classes: 'mb-5') do |component| %>
       <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Collection information') %><% end %>
       <% component.with_row(label: 'PURL', values: [@collection_presenter.purl_link]) %>
@@ -74,7 +71,9 @@
       <% component.with_row(label: 'Status', values: [@collection_presenter.review_workflow_status]) %>
       <% component.with_row(label: 'Reviewers', values: [@collection_presenter.participants(:reviewers)]) %>
     <% end %>
-  </div>
+  <% end %>
 
-  <%= render Collections::Show::DepositsComponent.new(presenter: @collection_presenter) %>
-</div>
+  <%= component.with_pane(id: 'deposits-pane', tab_id: 'deposits-tab', active: deposits_active) do %>
+    <%= render Collections::Show::DepositsComponent.new(presenter: @collection_presenter) %>
+  <% end %>
+<% end %>

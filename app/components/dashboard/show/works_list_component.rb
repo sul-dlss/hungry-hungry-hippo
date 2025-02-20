@@ -4,6 +4,8 @@ module Dashboard
   module Show
     # Component for rendering a table on the work show page.
     class WorksListComponent < ApplicationComponent
+      WORK_LIMIT = 4
+
       def initialize(collection:, status_map:)
         @collection = collection
         @status_map = status_map
@@ -36,7 +38,11 @@ module Dashboard
       end
 
       def works
-        collection.works.filter { |work| helpers.allowed_to?(:show, work) }
+        @works ||= collection.works.filter { |work| helpers.allowed_to?(:show, work) }
+      end
+
+      def see_all?
+        works.length > WORK_LIMIT
       end
 
       private
