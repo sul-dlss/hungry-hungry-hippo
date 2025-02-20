@@ -6,6 +6,7 @@ FactoryBot.define do
     sequence(:label) { |n| "My file #{n}" }
     content
     file_type { 'deposited' }
+    hide { false }
 
     trait :attached do
       file_type { 'attached' }

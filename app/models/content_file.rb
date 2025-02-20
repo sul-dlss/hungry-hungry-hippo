@@ -27,4 +27,8 @@ class ContentFile < ApplicationRecord
   def path
     path_parts.join('/')
   end
+
+  def pdf?
+    mime_type == 'application/pdf'
+  end
 end

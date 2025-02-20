@@ -43,7 +43,7 @@ module WorkMappingFixtures
   end
 
   # No external identifiers
-  def new_content_fixture(user: nil)
+  def new_content_fixture(user: nil, hide: false)
     content = Content.create!(user: user || create(:user))
     ContentFile.create(
       file_type: 'attached',
@@ -53,12 +53,13 @@ module WorkMappingFixtures
       size: file_size_fixture,
       mime_type: mime_type_fixture,
       md5_digest: md5_fixture,
-      sha1_digest: sha1_fixture
+      sha1_digest: sha1_fixture,
+      hide:
     )
     content
   end
 
-  def new_pdf_content_fixture(user: nil)
+  def new_pdf_content_fixture(user: nil, hide: false)
     content = Content.create!(user: user || create(:user))
     ContentFile.create(
       file_type: 'attached',
@@ -68,7 +69,8 @@ module WorkMappingFixtures
       size: file_size_fixture,
       mime_type: 'application/pdf',
       md5_digest: md5_fixture,
-      sha1_digest: sha1_fixture
+      sha1_digest: sha1_fixture,
+      hide:
     )
     content
   end

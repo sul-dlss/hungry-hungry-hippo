@@ -45,12 +45,28 @@ RSpec.describe ToCocina::Work::Mapper, type: :mapping do
     end
   end
 
-  context 'with a work with a PDF file' do
+  context 'with a work with a PDF file and a hidden file' do
     let(:content) { new_pdf_content_fixture }
+
+    before do
+      create(:content_file, label: 'My hidden file', hide: true, content:)
+    end
 
     it 'maps to cocina' do
       expect(cocina_object.type).to eq 'https://cocina.sul.stanford.edu/models/document'
-      expect(cocina_object.structural.contains[0].type).to eq 'https://cocina.sul.stanford.edu/models/resources/document'
+      fileset1 = cocina_object.structural.contains.find { |fileset| fileset.label == 'My file' }
+      expect(fileset1.type).to eq 'https://cocina.sul.stanford.edu/models/resources/document'
+      fileset2 = cocina_object.structural.contains.find { |fileset| fileset.label == 'My hidden file' }
+      expect(fileset2.type).to eq 'https://cocina.sul.stanford.edu/models/resources/file'
+    end
+  end
+
+  context 'with a work with a hidden PDF file' do
+    let(:content) { new_pdf_content_fixture(hide: true) }
+
+    it 'maps to cocina' do
+      expect(cocina_object.type).to eq 'https://cocina.sul.stanford.edu/models/object'
+      expect(cocina_object.structural.contains[0].type).to eq 'https://cocina.sul.stanford.edu/models/resources/file'
     end
   end
 end
