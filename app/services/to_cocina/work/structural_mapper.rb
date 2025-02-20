@@ -12,9 +12,11 @@ module ToCocina
 
       # @param [WorkForm] work_form
       # @param [Content] content
-      def initialize(work_form:, content:)
+      # @param [boolean] whether the object type is document
+      def initialize(work_form:, content:, document:)
         @work_form = work_form
         @content = content
+        @document = document
       end
 
       def call
@@ -41,7 +43,7 @@ module ToCocina
       def fileset_params_for(content_file)
         # one file per fileset
         {
-          type: Cocina::Models::FileSetType.file,
+          type: fileset_type,
           version: work_form.version,
           label: content_file.label,
           externalIdentifier: fileset_external_identifier_for(content_file),
@@ -97,6 +99,14 @@ module ToCocina
           digests << { type: 'md5', digest: content_file.md5_digest } if content_file.md5_digest.present?
           digests << { type: 'sha1', digest: content_file.sha1_digest } if content_file.sha1_digest.present?
         end
+      end
+
+      def document?
+        @document
+      end
+
+      def fileset_type
+        document? ? Cocina::Models::FileSetType.document : Cocina::Models::FileSetType.file
       end
     end
   end
