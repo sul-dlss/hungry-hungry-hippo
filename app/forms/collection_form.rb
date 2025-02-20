@@ -35,6 +35,9 @@ class CollectionForm < ApplicationForm
   attribute :license, :string
   attribute :default_license
 
+  attribute :custom_rights_statement_option, :string, default: 'no'
+  # attribute :custom_rights_statement_instructions, :string
+
   attribute :release_option, :string, default: 'immediate'
   validates :release_option, inclusion: { in: %w[immediate depositor_selects] }
 
