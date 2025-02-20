@@ -44,4 +44,13 @@ RSpec.describe ToCocina::Work::Mapper, type: :mapping do
       expect(cocina_object.structural.contains[0].structural.contains[0].externalIdentifier).to eq 'https://cocina.sul.stanford.edu/file/bc123df4567-bcd234'
     end
   end
+
+  context 'with a work with a PDF file' do
+    let(:content) { new_pdf_content_fixture }
+
+    it 'maps to cocina' do
+      expect(cocina_object.type).to eq 'https://cocina.sul.stanford.edu/models/document'
+      expect(cocina_object.structural.contains[0].type).to eq 'https://cocina.sul.stanford.edu/models/resources/document'
+    end
+  end
 end

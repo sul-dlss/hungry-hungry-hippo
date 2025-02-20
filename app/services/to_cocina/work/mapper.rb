@@ -33,20 +33,32 @@ module ToCocina
       def params # rubocop:disable Metrics/AbcSize
         {
           externalIdentifier: work_form.druid,
-          type: Cocina::Models::ObjectType.object,
+          type: object_type,
           label: work_form.title,
           description: DescriptionMapper.call(work_form:),
           version: work_form.version,
           access: AccessMapper.call(work_form:),
           identification: IdentificationMapper.call(work_form:, source_id:),
           administrative: { hasAdminPolicy: Settings.apo },
-          structural: StructuralMapper.call(work_form:, content:)
+          structural: StructuralMapper.call(work_form:, content:, document: document?)
         }.compact
       end
 
       def request_params
         params.tap do |params_hash|
           params_hash[:administrative][:partOfProject] = Settings.project_tag
+        end
+      end
+
+      def object_type
+        document? ? Cocina::Models::ObjectType.document : Cocina::Models::ObjectType.object
+      end
+
+      def document?
+        return false if content.content_files.empty?
+
+        content.content_files.all? do |content_file|
+          !content_file.hidden? && content_file.mime_type == 'application/pdf'
         end
       end
     end

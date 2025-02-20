@@ -58,6 +58,21 @@ module WorkMappingFixtures
     content
   end
 
+  def new_pdf_content_fixture(user: nil)
+    content = Content.create!(user: user || create(:user))
+    ContentFile.create(
+      file_type: 'attached',
+      content:,
+      filepath: 'my_dir/my_file.pdf',
+      label: file_label_fixture,
+      size: file_size_fixture,
+      mime_type: 'application/pdf',
+      md5_digest: md5_fixture,
+      sha1_digest: sha1_fixture
+    )
+    content
+  end
+
   def content_fixture(user: nil, hide: false)
     content = Content.create!(user: user || create(:user))
     ContentFile.create(
