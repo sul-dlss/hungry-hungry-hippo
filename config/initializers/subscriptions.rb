@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Rails.application.config.after_initialize do # rubocop:disable Style/BlockLength
+Rails.application.config.after_initialize do # rubocop:disable Metrics/BlockLength
   # Subscriptions for CollectionsMailer
   # Depositor change notifications
   Notifier.subscribe_mailer(event_name: Notifier::DEPOSITOR_ADDED, mailer_class: CollectionsMailer,

@@ -50,6 +50,16 @@ en:
     stanford: 'Stanford Community'
     world: 'Everyone'
     depositor_selects: 'Depositor selects'
+  contact_sdr: 'Contact SDR staff'
+  content_files:
+    edit:
+      fields:
+        description:
+          tooltip_html: >-
+            Enter a brief description (100 characters max) to help others understand what this file contains. This description will appear on the public page for your work next to the name of the file. This description is not required.
+        hide:
+          tooltip_html: >-
+            Check this box to prevent this file from being displayed on or downloaded from the public page for your work. The file will still be preserved in the SDR as part of your deposit. Hidden files should NOT contain any content the University classifies as <a href="https://uit.stanford.edu/guide/riskclassifications" target="_blank">High Risk</a>.
   contributors:
     edit:
       legend: 'Contributor'
@@ -60,7 +70,6 @@ en:
         blank: 'must provide a last name'
       orcid:
         invalid: 'must be formatted as "XXXX-XXXX-XXXX-XXXX"'
-  contact_sdr: 'Contact SDR staff'
   date:
     fields:
       year:
@@ -74,7 +83,7 @@ en:
   depositors:
     edit:
       legend: 'Depositors'
-      tooltip_html: >
+      tooltip_html: >-
         Depositors are allowed to add works to the collection and to modify those works, but cannot see or edit the works deposited by others.
   create_date_single:
     edit:
@@ -84,8 +93,12 @@ en:
       fields:
         email:
           label: 'Contact email'
-          tooltip_html: >
-            Enter one or more valid email addresses (one per box) where people can write to ask questions about this collection. Consider using a group address that will be active and monitored for a long time to ensure that questions are received. Email addresses will appear on the public page for the collection.
+          collections:
+            tooltip_html: >-
+              Enter one or more valid email addresses (one per box) where people can write to ask questions about this collection. Consider using a group address that will be active and monitored for a long time to ensure that questions are received. Email addresses will appear on the public page for the collection.
+          works:
+            tooltip_html: >-
+              Enter one or more valid email addresses (per box) where people can write to ask questions about this deposit. Email addresses will be publicly visible. Use an email address that you expect to be functional for many years, if possible.
     validation:
       email:
         invalid: 'must provide a valid email address'
@@ -94,6 +107,8 @@ en:
       fields:
         text:
           label: 'Keywords (one per box)'
+          tooltip_html: >-
+            Enter one keyword or phrase per box. Keywords should reflect significant concepts related to the deposit. As you type, terms will be suggested to you, but free-text entries are also permitted.
   keywords:
     edit:
       legend: 'Keywords'
@@ -109,14 +124,18 @@ en:
   managers:
     edit:
       legend: 'Managers'
-      tooltip_html: >
+      tooltip_html: >-
         Managers have the ability to edit the collection description; add and remove other Managers, Reviewers, and Depositors; adjust discovery, access, and license settings for the collection; and edit any content deposited to the collection, including content deposited by others.
   publication_date:
     edit:
       legend: 'Previous publication date'
+      tooltip_html: >-
+        Use only for works that were previously published elsewhere, prior to their deposit in the SDR. Date entered must be in the past.
   related_links:
     edit:
       legend: 'Related links'
+      tooltip_html: >-
+        This section is for links to other web pages that are related to your deposit and that are not included in the related works section above. Enter the text to be displayed on the page in the "Link text" box. This entire text will be hyperlinked to the URL you enter in the "URL" box. Examples of content you might consider linking to are lab, institute, or project pages; GitHub repositories for the current version of software code; or funder websites.
       fields:
         text:
           label: 'Link text'
@@ -125,6 +144,8 @@ en:
   related_works:
     edit:
       legend: 'Related works'
+      tooltip_html: >-
+        List additional published works related to your deposit. You may provide either a link (preferably a persistent identifier) or the full citation for the work. You must select an option from the list provided for how your deposit is related to this work.
       fields:
         citation:
           label: 'Full citation for work'
@@ -154,7 +175,7 @@ en:
   reviewers:
     edit:
       legend: 'Reviewers'
-      tooltip_html: >
+      tooltip_html: >-
         Reviewers can approve, edit, or return works to Depositors. Reviewers cannot edit collection information or settings and cannot add or remove collection participants.
   terms_of_deposit:
     faq: 'FAQs and download Terms of Deposit'
@@ -165,23 +186,66 @@ en:
       fields:
         abstract:
           label: 'Abstract'
+          tooltip_html: >-
+            The abstract should describe the content you are depositing and its relation to or context within any other published works or larger projects. If you are depositing a dataset related to a publication, please describe the dataset itself and not the publication.
         citation:
           label: 'Select citation'
           help_text: >
             Indicate how you would like others to cite your work. Only autogenerated citations will
             be provided in multiple citation styles.
-          auto_citation: Autogenerate citation (Recommended)
-          custom_citation: Enter custom citation - replaces autogenerated citation
+          auto_citation: 'Autogenerate citation (Recommended)'
+          custom_citation: 'Enter custom citation - replaces autogenerated citation'
+        contributors:
+          cited:
+            label: 'Include contributor in citation?'
+            tooltip_html: >-
+              "Yes" indicates that the individual or organization entered will be included in the citation for the work. If someone should be credited as being part of the work but should not be listed as an author in the citation, such as an advisor, select "No."
+          role:
+            tooltip_html: >-
+              Choose one role for each individual or organization that best describes their contribution to the work you are depositing.
+          first_name:
+            tooltip_html: >-
+              For individuals, use whatever capitalization the individual would normally use for their name. Middle names or initials may be included after the first name in the same box. Both first and last names are required.
+          organization_name:
+            tooltip_html: >-
+              Enter the full name of the organization.
+          with_orcid:
+            label: Do you want to use a contributor's ORCID iD?
+            tooltip_html: >-
+              An ORCID iD is a persistent digital identifier that distinguishes you from every other researcher. If you don't have an ORCID iD, you can get one at <a href="https://orcid.org/" target="_blank">https://orcid.org/</a> and then connect it to your Stanford identity at <a href="https://authorize.stanford.edu" target="_blank">https://authorize.stanford.edu</a>. If you choose to supply an ORCID iD, we will use it to retrieve the person's name and store both the name and ORCID iD in the metadata for your deposit.
+          orcid_name:
+            tooltip_html: >-
+              This is the name we retrieved from ORCID and that will be included in the metadata for this deposit. Editing this name will change it for this deposit only and will not alter your ORCID record.
+        create_date:
+          label: 'Creation date'
+          tooltip_html: >-
+            Use only for datasets to describe the date or date range when the dataset was collected, generated, or created.
         title:
           label: 'Title of deposit'
           help_text: >
             A unique, descriptive title may improve discovery of your work in web searches.
+          tooltip_html: >-
+            Serves as the title of the public page for your work and the title of web search results. Detailed titles similar to those used for scholarly publications will make it easier for users to find your work online. Avoid generic titles such as "Dataset for publication" or "My honors thesis."
         license:
-          help_text: Assigning a license may improve discovery of your work in web searches.
+          help_text: 'Assigning a license may improve discovery of your work in web searches.'
+          tooltip_html: >-
+            We strongly recommend that you assign a license to your work, as it will help others understand what you are allowing them to do with your work and under what conditions.  Click on "Get help selecting a license" for assistance with the license options presented here.
+        custom_rights_statement:
+          label: 'Additional terms of use'
+          tooltip_html: >-
+            For open access articles, use this section if your publisher requires a statement when depositing your work to an institutional repository. For other deposits, use this section to describe other terms of use not covered by the license you have selected.
+        whats_changing:
+          label: "What's changing?"
+          tooltip_html: >-
+            Enter a brief description (200 characters max) indicating which fields were changed or what type of correction was made. This information is not displayed on the public page.
         work_type:
           label: 'What type of content will you deposit?'
+          tooltip_html: >-
+            Choose the one content type that best describes the overall or primary nature of the work. Click on each content type to view and select terms you may use to further describe the work you are depositing.
         work_subtypes:
           label: 'Which of the following terms further describe your deposit?'
+          tooltip_html: >-
+            Provides further description for the type of work you are depositing. Click "See more options" for additional terms. An entry here is only required if you have selected "Mixed Materials," "Music," or  "Other" above.
       messages:
         cannot_be_edited_html: "If you need to make a change to this work, contact <a href=\"mailto:%{support_email}\">%{support_email}</a>."
       panes:
@@ -201,15 +265,21 @@ en:
             This is the text that others can use when they want to cite this deposit.
             We highly recommend that you provide the text of that citation here to make it
             easier for them to cite your work and give you proper credit.
+          tooltip_html: >-
+            We will automatically generate a citation for this work, based on the information you have provided, however, you may provide a custom citation if you wish. If you are providing a custom citation, be sure to include the DOI if you are getting one or the link to the public page for your work that begins "https://purl.stanford.edu/..."
         contributors:
           tab_label: 'Contributors'
           label: 'Contributors'
           help_text: >
             List contributors in they order they should appear in the citation.
             Use the arrows on the right to move entries up or down in the list.
+          tooltip_html: >-
+            List all individuals or organizations who played a role in this work. List each individual or organization only once.
         dates:
           tab_label: 'Dates (optional)'
           label: 'Enter dates related to your deposit (optional)'
+          tooltip_html: >-
+            This application will automatically record the date that your content is made available on the public page for your work. The date fields below are optional.
         doi:
           tab_label: 'DOI'
           label: 'DOI assignment'
@@ -246,24 +316,24 @@ en:
           help_text: >
             Enter a summary statement (max 600 words) describing the collection that you are creating.
             A detailed statement may improve the discovery of your collection in web searches.
-          tooltip_html: >
+          tooltip_html: >-
             Enter an approximately 2-3 sentence description of the works to be included in this collection. You may want to include information on who the creators of the works are/will be, general subject matter of the works, types of works (technical reports, datasets, video archives, etc), and the scholarly value of the content.
         title:
           label: 'Collection name'
           help_text: >
             A unique, descriptive name may improve discovery of your collection in web searches.
-          tooltip_html: >
+          tooltip_html: >-
             Enter a name for your collection. This name will serve as the title on the public page for the collection and the title of web search results, as well as in Stanford Libraries' catalog. Please do not use the word "Collection" at the end of the title.
         release_option:
           label: 'When will files on deposits to this collection be downloadable?'
-          tooltip_html: >
+          tooltip_html: >-
             As the collection manager, you can decide whether 1) Depositors to this collection are required to make the files on their deposits downloadable as soon as the deposit is completed ("Immediately"), or 2) if Depositors can decide for themselves when downloading of their content will be available ("Depositor selects…"). Note that for both options the public page is always visible as soon as the deposit is complete and all metadata on the page is visible to anyone at any time.
           options:
             immediate: 'Immediately'
             depositor_selects: 'Depositor selects a date up to'
         access:
           label: 'Who will have permission to download files for deposits to this collection?'
-          tooltip_html: >
+          tooltip_html: >-
             As the collection manager, you can decide whether 1) Depositors to this collection are required to make the files on their deposits downloadable by anyone in the world ("Everyone"), 2) if downloading of files for all deposits will be restricted to the Stanford community ("Stanford community"), or 3) if Depositors can decide for themselves which of these options to choose ("Depositor selects"). For the "Depositor selects" option, the default option presented to the Depositor will be the "Everyone" option, but they will be able to choose "Stanford community" if they choose.
           options:
             world: 'Everyone -- anyone in the world will be able to download the files for all deposits in this collection.'
@@ -271,7 +341,7 @@ en:
             depositor_selects: 'Depositor selects -- default for all deposits will be that everyone can download the files, but Depositor can choose to restrict file download for their deposit to the Stanford community.'
         doi_option:
           label: 'Will a DOI be assigned to the deposits in this collection?'
-          tooltip_html: >
+          tooltip_html: >-
             As the collection manager, you can decide whether 1) DOIs will be assigned automatically to every deposit in this collection, 2) DOIs will not be assigned to any deposits in this collection, or 3) Depositors can decide for themselves if they would like to have a DOI assigned to their work. Check the "What's a DOI?" link next to this info icon for more details about DOIs.
           options:
             doi_yes: 'Yes, a DOI will be assigned to each deposit in this collection.'
@@ -296,12 +366,12 @@ en:
           help_text: >
             We highly recommend every deposit be assigned a license when possible. A license helps other who access the
             content to understand what the Depositor is allowing them to do with the work and under what conditions.
-          tooltip_html: >
+          tooltip_html: >-
             As the collection manager, you can decide whether 1) a specific license  you choose from the list will be mandatory for every deposit to the collection ("Require license for all deposits") or 2) if the Depositors will be able to choose the license they wish to use ("Depositor selects license").  For this second option, you must choose a license from the list to be displayed as the default option for Depositors.
         related_links:
           tab_label: 'Related links (optional)'
           label: 'Links to related content (optional)'
-          tooltip_html: >
+          tooltip_html: >-
             This section is for links to other web pages that are related to your collection. Enter the text to be displayed on the page in the "Link text" box. This entire text will be hyperlinked to the URL you enter in the "URL" box. Examples of content you might consider linking to are key funder websites,  lab or institute websites, or project pages.
         access:
           tab_label: 'Access settings'

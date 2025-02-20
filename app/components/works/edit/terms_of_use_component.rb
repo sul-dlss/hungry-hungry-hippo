@@ -27,7 +27,11 @@ module Works
       end
 
       def label
-        'Additional terms of use'
+        helpers.t('works.edit.fields.custom_rights_statement.label')
+      end
+
+      def tooltip
+        helpers.t('works.edit.fields.custom_rights_statement.tooltip_html')
       end
     end
   end

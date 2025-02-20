@@ -26,6 +26,10 @@ module Works
         helpers.t('works.edit.fields.license.help_text')
       end
 
+      def tooltip
+        helpers.t('works.edit.fields.license.tooltip_html')
+      end
+
       def license_options
         @license_presenter.options
       end

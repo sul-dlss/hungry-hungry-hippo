@@ -51,21 +51,21 @@
 
     <% component.with_pane do %>
       <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: t('works.edit.panes.title.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
-        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :title, label: t('works.edit.fields.title.label'),
+        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :title, label: t('works.edit.fields.title.label'), tooltip: t('works.edit.fields.title.tooltip_html'),
                                                                help_text: t('works.edit.fields.title.help_text'), width: 500, rows: 1, container_classes: 'pane-section') %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: ContactEmails::EditComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: Works::Edit::ContactEmailsComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Works::Edit::PaneComponent.new(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
+      <%= render Works::Edit::PaneComponent.new(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text'), tooltip: t('works.edit.panes.contributors.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
         <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Works::Edit::ContributorComponent, hidden_label: true, reorderable: true, fieldset_classes: 'pane-section') %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
       <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), help_text: t('works.edit.panes.abstract.help_text'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
-        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: t('works.edit.fields.abstract.label'), container_classes: 'pane-section') %>
+        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: t('works.edit.fields.abstract.label'), tooltip: t('works.edit.fields.abstract.tooltip_html'), container_classes: 'pane-section') %>
         <%= render NestedComponentPresenter.for(form:, field_name: :keywords, model_class: KeywordForm, form_component: Works::Edit::KeywordComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
       <% end %>
     <% end %>
@@ -87,13 +87,13 @@
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Works::Edit::PaneComponent.new(tab_name: :dates, label: t('works.edit.panes.dates.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
+      <%= render Works::Edit::PaneComponent.new(tab_name: :dates, label: t('works.edit.panes.dates.label'), tooltip: t('works.edit.panes.dates.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
         <%= render Works::Edit::DatesComponent.new(form:) %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Works::Edit::PaneComponent.new(tab_name: :citation, label: t('works.edit.panes.citation.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.fields.citation.help_text')) do %>
+      <%= render Works::Edit::PaneComponent.new(tab_name: :citation, label: t('works.edit.panes.citation.label'), tooltip: t('works.edit.panes.citation.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.fields.citation.help_text')) do %>
         <%= render Works::Edit::CitationComponent.new(form:) %>
       <% end %>
     <% end %>
@@ -124,7 +124,7 @@
       <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.deposit.help_text')) do |component| %>
         <% if @work_form.persisted? %>
           <div class="pane-section">
-            <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: 'What\'s changing?') %>
+            <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: t('works.edit.fields.whats_changing.label'), tooltip: t('works.edit.fields.whats_changing.tooltip_html')) %>
           </div>
         <% end %>
         <%= render Works::Edit::TermsOfDepositComponent.new(form:) %>
