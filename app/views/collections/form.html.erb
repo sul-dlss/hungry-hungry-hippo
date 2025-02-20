@@ -23,6 +23,7 @@
     <% component.with_tab(label: t('collections.edit.panes.related_links.tab_label'), tab_name: :related_links, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.access.tab_label'), tab_name: :access, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.license.tab_label'), tab_name: :license, active_tab_name:) %>
+    <% component.with_tab(label: t('collections.edit.panes.terms_of_use.label'), tab_name: :terms_of_use, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.participants.tab_label'), tab_name: :participants, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.workflow.tab_label'), tab_name: :workflow, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.deposit.tab_label'), tab_name: :deposit, active_tab_name:) %>
@@ -56,12 +57,28 @@
       <% end %>
 
       <% component.with_pane do %>
-        <%= render Collections::Edit::PaneComponent.new(tab_name: :participants, label: t('collections.edit.panes.participants.label'), help_text: t('collections.edit.panes.participants.help_text'), active_tab_name:) do %>
-          <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, form_component: Collections::Edit::ParticipantComponent, fieldset_classes: 'pane-section') %>
-          <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, form_component: Collections::Edit::ParticipantComponent, fieldset_classes: 'pane-section') %>
-          <%= render Collections::Edit::ParticipantNotificationsComponent.new(form:) %>
+        <%= render Collections::Edit::PaneComponent.new(tab_name: :terms_of_use, label: I18n.t('collections.edit.panes.terms_of_use.label'), tooltip: t('collections.edit.panes.terms_of_use.tooltip_html'), active_tab_name:) do |pane_component| %>
+          <% pane_component.with_help do %>
+            <p class="fw-bold mt-4"><%= t('license.edit.license_terms_of_use') %></p>
+            <p class="my-4 ms-3 fst-italic"><%= t('license.terms_of_use') %></p>
+            <p class="fw-bold">The option below will allow you either to:</p>
+            <ol class="my-4">
+              <li>Provide a custom use statement that will appear on every deposit in this collection or</li>
+              <li>Allow depositors to enter a custom use statement, typically one required by a publisher in order to deposit an Open Access version of an article.</li>
+            </ol>
+            <p class="mb-0">You will also be able to provide custom instructions for this field if you wish.</p>
+          <% end %>
+          <%= render Collections::Edit::TermsOfUseComponent.new(form:) %>
         <% end %>
       <% end %>
+
+      <% component.with_pane do %>
+        <%= render Collections::Edit::PaneComponent.new(tab_name: :participants, label: t('collections.edit.panes.participants.label'), help_text: t('collections.edit.panes.participants.help_text'), active_tab_name:) do %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, form_component: Collections::Edit::ParticipantComponent, fieldset_classes: 'pane-section') %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, form_component: Collections::Edit::ParticipantComponent, fieldset_classes: 'pane-section') %>
+        <%= render Collections::Edit::ParticipantNotificationsComponent.new(form:) %>
+      <% end %>
+    <% end %>
 
       <% component.with_pane do %>
         <%= render Collections::Edit::PaneComponent.new(tab_name: :workflow, label: t('collections.edit.panes.workflow.label'), help_text: t('collections.edit.panes.workflow.help_text'), active_tab_name:) do %>

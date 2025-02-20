@@ -86,6 +86,17 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_select('Required license', selected: 'Select required license...')
     select('CC-BY-4.0 Attribution International', from: 'Required license')
 
+    # Clicking on Next to go to Terms of Use tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Terms of use')
+    expect(page).to have_checked_field('No, do not include a custom use statement.')
+    expect(page).to have_field(id: 'collection_provided_custom_rights_statement', disabled: true)
+
+    # Fill in a custom rights statement (test JS that enables the textarea)
+    find('label', text: 'Yes, include the following custom use statement for every deposit in this collection.').click
+    expect(page).to have_field(id: 'collection_provided_custom_rights_statement', disabled: false)
+    fill_in('collection_provided_custom_rights_statement', with: 'My custom rights statement')
+
     # Clicking on Next to go to Participants tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Participants')
@@ -149,5 +160,9 @@ RSpec.describe 'Create a collection deposit' do
       expect(page).to have_css('th', text: 'Reviewers')
       expect(page).to have_css('td', text: 'pennywise@stanford.edu')
     end
+
+    # Terms of use
+    expect(page).to have_css('th', text: 'Additional terms of use')
+    expect(page).to have_css('td', text: 'My custom rights statement')
   end
 end

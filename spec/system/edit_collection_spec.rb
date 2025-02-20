@@ -112,6 +112,11 @@ RSpec.describe 'Edit a collection' do
     choose('Depositor selects license')
     select('CC-BY-4.0 Attribution International', from: 'Default license')
 
+    # Clicking on Next to go to Terms of Use tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Terms of use')
+    expect(page).to have_checked_field('No, do not include a custom use statement.')
+
     # Clicking on Next to go to Participants tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Participants')
