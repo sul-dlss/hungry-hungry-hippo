@@ -9,6 +9,13 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: numeric; Type: COLLATION; Schema: public; Owner: -
+--
+
+CREATE COLLATION public."numeric" (provider = icu, locale = 'en-u-kn');
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -706,6 +713,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250220231211'),
 ('20250123195702'),
 ('20250123120038'),
 ('20250122145633'),
