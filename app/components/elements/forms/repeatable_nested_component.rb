@@ -26,7 +26,7 @@ module Elements
       end
 
       def tooltip
-        helpers.t("#{field_name}.edit.tooltip_html")
+        helpers.t("#{field_name}.edit.tooltip_html", default: nil)
       end
 
       def bordered?
