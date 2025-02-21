@@ -357,8 +357,8 @@ en:
           tab_label: 'Description'
           label: 'Describe your collection'
         deposit:
-          tab_label: 'Deposit'
-          label: 'Submit your collection'
+          tab_label: 'Save your collection'
+          label: 'Save your collection'
           help_text: >
               Be sure you have completed all the required sections.
         license:

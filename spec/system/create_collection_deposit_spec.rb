@@ -106,18 +106,18 @@ RSpec.describe 'Create a collection deposit' do
 
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
-    find('.nav-link', text: 'Deposit', exact_text: true).click
-    expect(page).to have_css('.nav-link.active', text: 'Deposit')
+    find('.nav-link', text: 'Save your collection', exact_text: true).click
+    expect(page).to have_css('.nav-link.active', text: 'Save your collection')
 
     # Footer buttons
     expect(page).to have_no_button('Next')
     expect(page).to have_link('Cancel')
 
-    click_link_or_button('Deposit', class: 'btn-primary')
+    click_link_or_button('Save', class: 'btn-primary')
 
     # Waiting page may be too fast to catch so not testing.
     # On show page
     expect(page).to have_css('h1', text: collection_title_fixture)
-    expect(page).to have_no_link('Edit or deposit')
+    expect(page).to have_no_link('Edit')
   end
 end
