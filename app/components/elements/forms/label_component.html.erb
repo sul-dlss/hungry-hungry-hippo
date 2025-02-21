@@ -1,4 +1,5 @@
 <%= form.label field_name, class: classes do %>
   <%= label_text %>
-  <%= render Elements::TooltipComponent.new(tooltip:) %>
 <% end %>
+<%# This is outside the label so that clicking on it doesn't toggle some inputs like checkboxes. %>
+<%= render Elements::TooltipComponent.new(tooltip:) %>

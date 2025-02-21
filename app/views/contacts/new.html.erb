@@ -1,8 +1,10 @@
 <%= turbo_frame_tag 'contact-form' do %>
-  <% if @contact_form.welcome? %>
-    <h2>Welcome</h2>
-    <p class="mb-4">It looks like this is your first time here. Fill out the form below and we will help you get started.</p>
-  <% end %>
+  <div data-controller='tooltips'>
+    <% if @contact_form.welcome? %>
+      <h2>Welcome</h2>
+      <p class="mb-4">It looks like this is your first time here. Fill out the form below and we will help you get started.</p>
+    <% end %>
 
-  <%= render 'form', contact_form: @contact_form %>
+    <%= render 'form', contact_form: @contact_form %>
+  </div>
 <% end %>

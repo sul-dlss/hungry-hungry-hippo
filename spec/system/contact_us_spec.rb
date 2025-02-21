@@ -17,7 +17,10 @@ RSpec.describe 'Contact SDR staff' do
       fill_in('What is your name?', with: 'Jane Stanford')
       fill_in('What is your email address?', with: 'jane@stanford.edu')
       fill_in('What is your Stanford affiliation?', with: 'Founder')
-      select('I want to ask a question', from: 'How can we help you?')
+      expect(page).to have_no_text('Faculty, Student, and Staff Publications ')
+      select('Request access to another collection', from: 'How can we help you?')
+      check('Stanford Research Data')
+      check('Stanford University Open Access Articles')
       fill_in('Describe your issue', with: 'How do I deposit content?')
       click_link_or_button('Submit')
     end
@@ -33,9 +36,10 @@ RSpec.describe 'Contact SDR staff' do
 
     mail = ActionMailer::Base.deliveries.last
     expect(mail.to).to include('sdr-support@jirasul.stanford.edu')
-    expect(mail.subject).to eq('I want to ask a question')
+    expect(mail.subject).to eq('Request access to another collection')
     expect(mail.from).to eq(['jane@stanford.edu'])
     expect(mail).to match_body('Jane Stanford')
     expect(mail).to match_body('How do I deposit content?')
+    expect(mail).to match_body('Collections: Stanford Research Data; Stanford University Open Access Articles')
   end
 end
