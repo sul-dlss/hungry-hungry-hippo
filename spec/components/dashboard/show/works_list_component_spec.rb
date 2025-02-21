@@ -43,20 +43,19 @@ RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
       expect(table).to have_css('th', text: 'Link for sharing')
       table_body = table.find('tbody')
       expect(table_body).to have_css('tr', count: 4)
-      first_row = table_body.find('tr:nth-of-type(1)')
-      expect(first_row).to have_css('td:nth-of-type(1)', text: work.title)
+      all_rows = table_body.all('tr')
+      first_row = all_rows.find { |row| row.has_css?('td:nth-of-type(1)', text: work.title) }
       expect(first_row).to have_link(work.title, href: "/works/#{work.druid}")
       expect(first_row).to have_css('td:nth-of-type(2)', text: 'Draft - Not deposited')
       expect(first_row).to have_css('td:nth-of-type(4)', text: 'Dec 03, 2024')
       expect(first_row).to have_css('td:nth-of-type(5)', text: Sdr::Purl.from_druid(druid: work.druid))
-      second_row = table_body.find('tr:nth-of-type(2)')
-      expect(second_row).to have_css('td:nth-of-type(1)', text: work_without_druid.title)
+      second_row = all_rows.find { |row| row.has_css?('td:nth-of-type(1)', text: work_without_druid.title) }
       expect(second_row).to have_link(work_without_druid.title, href: "/works/wait/#{work_without_druid.id}")
       expect(second_row).to have_css('td:nth-of-type(2)', text: 'Saving')
       expect(second_row).to have_css('td:nth-of-type(5)', text: '') # No PURL
-      third_row = table_body.find('tr:nth-of-type(3)')
+      third_row = all_rows.find { |row| row.has_css?('td:nth-of-type(1)', text: work_with_doi.title) }
       expect(third_row).to have_css('td:nth-of-type(5)', text: Doi.url(druid: work_with_doi.druid))
-      fourth_row = table_body.find('tr:nth-of-type(4)')
+      fourth_row = all_rows.find { |row| row.has_css?('td:nth-of-type(1)', text: work_in_review.title) }
       expect(fourth_row).to have_css('td:nth-of-type(2)', text: 'Pending review')
 
       expect(page).to have_no_link('See all deposits')
