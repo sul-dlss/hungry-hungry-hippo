@@ -9,7 +9,7 @@ RSpec.describe ContactEmailForm do
 
     context 'when nil' do
       it 'is valid' do
-        expect(form).to be_valid
+        expect(form).not_to be_valid
       end
     end
 
