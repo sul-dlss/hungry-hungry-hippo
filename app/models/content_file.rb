@@ -9,6 +9,7 @@ class ContentFile < ApplicationRecord
   enum :file_type, attached: 'attached', deposited: 'deposited'
 
   scope :path_order, -> { order(path_parts: :asc, basename: :asc, extname: :asc) }
+  scope :shown, -> { where(hide: false) }
 
   def hidden?
     hide

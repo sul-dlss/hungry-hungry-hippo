@@ -55,15 +55,12 @@ module ToCocina
       end
 
       def document?
-        return false if content.content_files.empty?
+        # All shown (not hidden) files must be PDFs to be considered a document type
+        shown_files.any? && shown_files.all?(&:pdf?)
+      end
 
-        # All files are PDF or hidden
-        return false unless content.content_files.all? do |content_file|
-          content_file.hidden? || content_file.pdf?
-        end
-
-        # There is at least one non-hidden PDF
-        content.content_files.any? { |content_file| !content_file.hidden? && content_file.pdf? }
+      def shown_files
+        @shown_files ||= content.shown_files
       end
     end
   end
