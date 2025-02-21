@@ -36,7 +36,10 @@ module ToCollectionForm
         doi_option: collection.doi_option,
         managers_attributes: participant_attributes(:managers),
         depositors_attributes: participant_attributes(:depositors),
-        version: cocina_object.version
+        version: cocina_object.version,
+        review_enabled: collection.review_enabled,
+        email_when_participants_changed: collection.email_when_participants_changed,
+        email_depositors_status_changed: collection.email_depositors_status_changed
       }.merge(license_params)
     end
     # rubocop:enable Metrics/AbcSize

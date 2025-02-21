@@ -121,21 +121,22 @@ RSpec.describe 'Show a collection' do
       expect(page).to have_css('th', text: 'Status')
       expect(page).to have_css('th', text: 'Modified')
       expect(page).to have_css('th', text: 'Link for sharing')
-      within('tbody tr:nth-of-type(1)') do
-        work = collection.works[0]
-        expect(page).to have_css('td:nth-of-type(1)', text: work.title)
+      all_trs = page.all('tbody tr')
+      work = collection.works[0]
+      row = all_trs.find { |tr| tr.has_css?('td:nth-of-type(1)', text: work.title) }
+      within(row) do
         expect(page).to have_css('td:nth-of-type(2)', text: work.user.name)
         expect(page).to have_css('td:nth-of-type(3)', text: 'Pending review')
         expect(page).to have_css('td:nth-of-type(5)', text: "https://doi.org/10.80343/#{work.druid.delete_prefix('druid:')}")
       end
-      within('tbody tr:nth-of-type(2)') do
-        work = collection.works[1]
-        expect(page).to have_css('td:nth-of-type(1)', text: work.title)
+      work = collection.works[1]
+      row = all_trs.find { |tr| tr.has_css?('td:nth-of-type(1)', text: work.title) }
+      within(row) do
         expect(page).to have_css('td:nth-of-type(3)', text: 'Deposited')
       end
-      within('tbody tr:nth-of-type(3)') do
-        work = collection.works[2]
-        expect(page).to have_css('td:nth-of-type(1)', text: work.title)
+      work = collection.works[2]
+      row = all_trs.find { |tr| tr.has_css?('td:nth-of-type(1)', text: work.title) }
+      within(row) do
         expect(page).to have_css('td:nth-of-type(3)', text: 'Saving')
         expect(page).to have_css('td:nth-of-type(5)', exact_text: '')
       end
