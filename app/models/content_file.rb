@@ -2,7 +2,7 @@
 
 # Model for a content file
 class ContentFile < ApplicationRecord
-  before_save :set_filepath_parts
+  before_save :set_file_path_parts
   belongs_to :content
   has_one_attached :file
 
@@ -11,25 +11,29 @@ class ContentFile < ApplicationRecord
   scope :path_order, -> { order(path_parts: :asc).order('basename COLLATE "numeric"').order(extname: :asc) }
   scope :shown, -> { where(hide: false) }
 
+  delegate :filename, :parts, :basename, :extname, to: :file_path
+
   def hidden?
     hide
   end
 
-  def set_filepath_parts
-    self.path_parts = FilenameSupport.path_parts(filepath:)
-    self.basename = FilenameSupport.basename(filepath:)
-    self.extname = FilenameSupport.extname(filepath:)
-  end
-
-  def filename
-    FilenameSupport.filename(filepath:)
+  def set_file_path_parts
+    self.path_parts = parts
+    self.basename = basename
+    self.extname = extname
   end
 
   def path
-    path_parts.join('/')
+    parts.join('/')
   end
 
   def pdf?
     mime_type == 'application/pdf'
+  end
+
+  private
+
+  def file_path
+    FilePath.new(filepath)
   end
 end
