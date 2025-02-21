@@ -14,6 +14,10 @@ module Emails
       end
     end
 
+    def render?
+      first_name.present?
+    end
+
     delegate :first_name, to: :@user
   end
 end
