@@ -95,21 +95,23 @@ RSpec.describe 'Manage files for a work' do
       # Add 2 more files
       find('.dropzone').drop('spec/fixtures/files/hippo.svg')
       expect(page).to have_css('table#content-table td', text: 'hippo.svg')
+      # Make hippo.svg hierarchical. This is a kludge to allow later testing of hierarchical file display.
+      ContentFile.find_by(filepath: 'hippo.svg').update(filepath: 'hippopotamus/hippo.svg')
       find('.dropzone').drop('spec/fixtures/files/hippo.txt')
 
       # First 2 are listed on page.
       expect(page).to have_css('ul.pagination')
       expect(page).to have_css('table#content-table td', text: 'hippo.png')
-      expect(page).to have_css('table#content-table td', text: 'hippo.svg')
-      expect(page).to have_no_css('table#content-table td', text: 'hippo.txt')
+      expect(page).to have_css('table#content-table td', text: 'hippo.txt')
+      expect(page).to have_no_css('table#content-table td', text: 'hippopotamus/hippo.svg')
 
       # Go to the next page
       all('a', text: 'Next', class: 'page-link').first.click
 
-      # Third is listed on page.
+      # # Third is listed on page.
       expect(page).to have_no_css('table#content-table td', text: 'hippo.png')
-      expect(page).to have_no_css('table#content-table td', text: 'hippo.svg')
-      expect(page).to have_css('table#content-table td', text: 'hippo.txt')
+      expect(page).to have_no_css('table#content-table td', text: 'hippo.txt')
+      expect(page).to have_css('table#content-table td', text: 'hippopotamus/hippo.svg')
 
       # Go back to the first page
       click_link_or_button('1')
@@ -118,7 +120,7 @@ RSpec.describe 'Manage files for a work' do
       expect(page).to have_css('table#content-table td', text: 'hippo.png')
       all('a', text: 'Remove').first.click
       expect(page).to have_no_css('table#content-table td', text: 'hippo.png')
-      expect(page).to have_css('table#content-table td', text: 'hippo.svg')
+      expect(page).to have_css('table#content-table td', text: 'hippopotamus/hippo.svg')
       expect(page).to have_css('table#content-table td', text: 'hippo.txt')
 
       # Edit the description
@@ -133,9 +135,9 @@ RSpec.describe 'Manage files for a work' do
       end
 
       # The description is updated.
-      expect(page).to have_css('table#content-table td', text: 'hippo.svg')
+      expect(page).to have_css('table#content-table td', text: 'hippo.txt')
       expect(page).to have_css('table#content-table td', text: 'This is a hippo.')
-      content_file = ContentFile.find_by(filepath: 'hippo.svg')
+      content_file = ContentFile.find_by!(filepath: 'hippo.txt')
       expect(content_file.label).to eq('This is a hippo.')
 
       # Hide the file
