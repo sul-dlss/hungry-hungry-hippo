@@ -12,7 +12,7 @@
         <%= pane %>
       <% end %>
 
-      <%= form_with(model:, id: form_id) do |form| %>
+      <%= form_with(model:, id: form_id, data: { controller: 'form-reset' }) do |form| %>
         <% hidden_fields.each do |field| %>
           <%= form.hidden_field field %>
         <% end %>
