@@ -34,9 +34,9 @@ RSpec.describe 'Validate a collection deposit' do
     expect(page).to have_select('Release duration', selected: 'Select an option')
 
     # Depositing the collection
-    find('.nav-link', text: 'Deposit', exact_text: true).click
-    expect(page).to have_css('.nav-link.active', text: 'Deposit')
-    click_link_or_button('Deposit', class: 'btn-primary')
+    find('.nav-link', text: 'Save your collection', exact_text: true).click
+    expect(page).to have_css('.nav-link.active', text: 'Save your collection')
+    click_link_or_button('Save', class: 'btn-primary')
     expect(page).to have_css('h1', text: collection_title_fixture)
     expect(page).to have_current_path(collection_path)
 
@@ -68,9 +68,9 @@ RSpec.describe 'Validate a collection deposit' do
     expect(page).to have_select('Release duration', selected: '3 years in the future')
 
     # Try to deposit again
-    find('.nav-link', text: 'Deposit', exact_text: true).click
-    expect(page).to have_css('.nav-link.active', text: 'Deposit')
-    click_link_or_button('Deposit', class: 'btn-primary')
+    find('.nav-link', text: 'Save your collection').click
+    expect(page).to have_css('.nav-link.active', text: 'Save your collection')
+    click_link_or_button('Save', class: 'btn-primary')
     expect(page).to have_css('h1', text: collection_title_fixture)
     expect(page).to have_current_path(collection_path)
 
