@@ -17,4 +17,16 @@ class RoundtripSupport
     original_cocina_object = Sdr::Repository.find(druid: cocina_object.externalIdentifier)
     cocina_object != normalize_cocina_object(cocina_object: original_cocina_object)
   end
+
+  def self.notify_error(original_cocina_object:, roundtripped_cocina_object:) # rubocop:disable Metrics/AbcSize
+    original_prettier ||= Cocina::Prettier.new(cocina_object: original_cocina_object)
+    roundtripped_prettier ||= Cocina::Prettier.new(cocina_object: roundtripped_cocina_object)
+    Honeybadger.notify('Roundtrip failed',
+                       context: { original: original_prettier.clean, roundtripped: roundtripped_prettier.clean })
+    # Pretty for dev and test makes reading the logs easier. Not pretty for production makes grepping easier.
+    Rails.logger.info('Roundtrip failed. Original: ' \
+                      "#{Rails.env.production? ? original_prettier.clean : original_prettier.pretty}")
+    Rails.logger.info('Roundtripped: ' \
+                      "#{Rails.env.production? ? roundtripped_prettier.clean : roundtripped_prettier.pretty}")
+  end
 end

@@ -21,12 +21,8 @@ module ToWorkForm
       if roundtripped_cocina_object == normalized_original_cocina_object
         true
       else
-        pretty_original = Cocina::Prettier.call(cocina_object: normalized_original_cocina_object)
-        pretty_roundtripped = Cocina::Prettier.call(cocina_object: roundtripped_cocina_object)
-        Honeybadger.notify('Roundtrip failed',
-                           context: { original: pretty_original, roundtripped: pretty_roundtripped })
-        Rails.logger.info("Roundtrip failed. Original: #{pretty_original}")
-        Rails.logger.info("Roundtripped: #{pretty_roundtripped}")
+        RoundtripSupport.notify_error(original_cocina_object: normalized_original_cocina_object,
+                                      roundtripped_cocina_object:)
         false
       end
     rescue Cocina::Models::ValidationError

@@ -3,27 +3,37 @@
 module Cocina
   # Pretties a cocina object
   class Prettier
-    def self.call(...)
-      new(...).call
+    def self.clean(...)
+      new(...).clean
+    end
+
+    def self.pretty(...)
+      new(...).pretty
     end
 
     def initialize(cocina_object:)
       @cocina_object = cocina_object
     end
 
-    def call
-      JSON.pretty_generate(clean(@cocina_object.to_h))
+    # @return [Hash] the cocina object with empty values removed
+    def clean
+      @clean ||= perform_clean(@cocina_object.to_h)
+    end
+
+    # @return [String] the clean cocina object as a pretty JSON string
+    def pretty
+      JSON.pretty_generate(clean)
     end
 
     private
 
     # Clean up a hash or array by removing empty values
-    def clean(obj)
+    def perform_clean(obj)
       if obj.is_a?(Hash)
-        obj.each_value { |v| clean(v) }
+        obj.each_value { |v| perform_clean(v) }
         obj.delete_if { |_k, v| v.try(:empty?) }
       elsif obj.is_a?(Array)
-        obj.each { |v| clean(v) }
+        obj.each { |v| perform_clean(v) }
         obj.delete_if { |v| v.try(:empty?) }
       end
       obj
