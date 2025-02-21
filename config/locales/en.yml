@@ -32,8 +32,8 @@ en:
     # Home banner must always be present.
     # To hide dashboard banner, set to ''.
     # Banners can include links, e.g., "Email <a href="mailto:sdr-contact@lists.stanford.edu">sdr-contact@lists.stanford.edu</a> to volunteer!"
-    home_html: 'Do you have 15 minutes to help with user testing for a new SDR feature? Email <a href="mailto:sdr-contact@lists.stanford.edu">sdr-contact@lists.stanford.edu</a> to volunteer!'
-    dashboard_html: 'Do you have 15 minutes to help with user testing for a new SDR feature? Email <a href="mailto:sdr-contact@lists.stanford.edu">sdr-contact@lists.stanford.edu</a> to volunteer!'
+    home_html: 'Welcome to our new SDR self-deposit app. We're so happy you're here! Find out <a href="https://sdr.library.stanford.edu/">more about the new app</a>. Email <a href="mailto:sdr-contact@lists.stanford.edu">sdr-contact@lists.stanford.edu</a> to volunteer!'
+    dashboard_html: ''
   app_name: 'Stanford Digital Repository'
   time:
     formats:
