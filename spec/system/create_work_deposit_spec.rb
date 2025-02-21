@@ -213,6 +213,7 @@ RSpec.describe 'Create a work deposit' do
       # On show page
       expect(page).to have_css('h1', text: title_fixture)
       expect(page).to have_css('.status', text: 'Depositing')
+      expect(page).to have_css('.alert-success', text: 'You have successfully submitted your work')
       expect(page).to have_no_link('Edit or deposit')
 
       # Has work types and subtypes

@@ -126,6 +126,7 @@ RSpec.describe 'Show a work' do
       expect(page).to have_css('h1', text: work.title)
       expect(page).to have_css('.status', text: 'Deposited')
       expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
+      expect(page).to have_no_css('.alert-success', text: 'You have successfully submitted your work')
       expect(page).to have_no_content('Admin functions')
 
       # Files table
