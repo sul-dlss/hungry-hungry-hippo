@@ -100,7 +100,7 @@ en:
               Enter one or more valid email addresses (one per box) where people can write to ask questions about this collection. Consider using a group address that will be active and monitored for a long time to ensure that questions are received. Email addresses will appear on the public page for the collection.
           works:
             tooltip_html: >-
-              Enter one or more valid email addresses (per box) where people can write to ask questions about this deposit. Email addresses will be publicly visible. Use an email address that you expect to be functional for many years, if possible.
+              Enter one or more valid email addresses (one per box) where people can write to ask questions about this deposit. Email addresses will be publicly visible. Use an email address that you expect to be functional for many years, if possible.
     validation:
       email:
         invalid: 'must provide a valid email address'
@@ -147,7 +147,7 @@ en:
     edit:
       legend: 'Related works'
       tooltip_html: >-
-        List additional published works related to your deposit. You may provide either a link (preferably a persistent identifier) or the full citation for the work. You must select an option from the list provided for how your deposit is related to this work.
+        List additional published works related to your deposit. You may provide either a link (preferably a persistent identifier) or the full citation for the work. You must select an option from the list provided to describe how your deposit is related to this work.
       fields:
         citation:
           label: 'Full citation for work'
@@ -247,7 +247,7 @@ en:
         work_subtypes:
           label: 'Which of the following terms further describe your deposit?'
           tooltip_html: >-
-            Provides further description for the type of work you are depositing. Click "See more options" for additional terms. An entry here is only required if you have selected "Mixed Materials," "Music," or  "Other" above.
+            Choose terms from this list to further describe the type of work you are depositing. Click "See more options" for additional terms. An entry here is only required if you have selected "Mixed Materials," "Music," or  "Other" above.
       messages:
         cannot_be_edited_html: "If you need to make a change to this work, contact <a href=\"mailto:%{support_email}\">%{support_email}</a>."
       panes:
@@ -325,7 +325,7 @@ en:
           help_text: >
             A unique, descriptive name may improve discovery of your collection in web searches.
           tooltip_html: >-
-            Enter a name for your collection. This name will serve as the title on the public page for the collection and the title of web search results, as well as in Stanford Libraries' catalog. Please do not use the word "Collection" at the end of the title.
+            Enter a name for your collection. This name will serve as the title on the public page for the collection and the title of web search results, as well as in Stanford University Libraries' catalog. Please do not use the word "Collection" at the end of the title.
         release_option:
           label: 'When will files on deposits to this collection be downloadable?'
           tooltip_html: >-
@@ -336,7 +336,7 @@ en:
         access:
           label: 'Who will have permission to download files for deposits to this collection?'
           tooltip_html: >-
-            As the collection manager, you can decide whether 1) Depositors to this collection are required to make the files on their deposits downloadable by anyone in the world ("Everyone"), 2) if downloading of files for all deposits will be restricted to the Stanford community ("Stanford community"), or 3) if Depositors can decide for themselves which of these options to choose ("Depositor selects"). For the "Depositor selects" option, the default option presented to the Depositor will be the "Everyone" option, but they will be able to choose "Stanford community" if they choose.
+            As the collection manager, you can decide whether 1) Depositors to this collection are required to make the files on their deposits downloadable by anyone in the world ("Everyone"), 2) if downloading of files for all deposits will be restricted to the Stanford community ("Stanford community"), or 3) if Depositors can decide for themselves which of these options to choose ("Depositor selects"). For the "Depositor selects" option, the default option presented to the Depositor will be the "Everyone" option, but they will be able to choose "Stanford community" if they would like.
           options:
             world: 'Everyone -- anyone in the world will be able to download the files for all deposits in this collection.'
             stanford: 'Stanford Community -- only members of the Stanford community will be able to download the files for all deposits in this collection.'
