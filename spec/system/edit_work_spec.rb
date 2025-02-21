@@ -167,6 +167,10 @@ RSpec.describe 'Edit a work' do
     # Filling in access settings
     find('.nav-link', text: 'Access settings').click
     choose('Immediately')
+
+    # Check What's changing
+    find('.nav-link', text: 'Deposit', exact_text: true).click
+    expect(page).to have_field('What\'s changing?', with: whats_changing_fixture)
     click_link_or_button('Save as draft')
 
     # Waiting page may be too fast to catch so not testing.
@@ -198,6 +202,20 @@ RSpec.describe 'Edit a work' do
         expect(page).to have_text('The reviewer for this collection has returned the deposit')
         expect(page).to have_css('blockquote', text: 'Try harder.')
       end
+    end
+  end
+
+  context 'when openable (not a draft)' do
+    let(:version_status) { build(:openable_version_status, version: cocina_object.version) }
+
+    it 'does not have a whats changing value' do
+      visit edit_work_path(druid)
+
+      expect(page).to have_css('h1', text: title_fixture)
+
+      # Check What's changing
+      find('.nav-link', text: 'Deposit', exact_text: true).click
+      expect(page).to have_field('What\'s changing?', with: '')
     end
   end
 end
