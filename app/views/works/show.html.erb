@@ -10,6 +10,7 @@
 
 <%= render Works::Show::ReviewComponent.new(work: @work, review_form: @review_form) %>
 <%= render Works::Show::ReviewRejectedComponent.new(work: @work) %>
+<%= render Works::Show::DepositingComponent.new(work_presenter: @work_presenter) %>
 <%= render Works::Show::HeaderComponent.new(presenter: @work_presenter) %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'mb-5') do |component| %>
