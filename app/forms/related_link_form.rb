@@ -4,5 +4,5 @@
 class RelatedLinkForm < ApplicationForm
   attribute :text, :string
   attribute :url, :string
-  validates :url, url: true, unless: ->(link) { link.text.blank? }
+  validates :url, url: true, unless: ->(link) { link.url.blank? && link.text.blank? }
 end
