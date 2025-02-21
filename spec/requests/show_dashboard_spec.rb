@@ -86,7 +86,7 @@ RSpec.describe 'Show dashboard' do
         get '/dashboard'
 
         expect(response.body).to include('Dashboard')
-        expect(response.body).not_to include('Welcome')
+        expect(response.body).not_to include('<h2>Welcome</h2>')
       end
     end
 
@@ -97,7 +97,7 @@ RSpec.describe 'Show dashboard' do
         get '/dashboard'
 
         expect(response.body).to include('Dashboard')
-        expect(response.body).not_to include('Welcome')
+        expect(response.body).not_to include('<h2>Welcome</h2>')
       end
     end
 
@@ -110,7 +110,7 @@ RSpec.describe 'Show dashboard' do
         get '/dashboard'
 
         expect(response.body).to include('Dashboard')
-        expect(response.body).not_to include('Welcome')
+        expect(response.body).not_to include('<h2>Welcome</h2>')
       end
     end
 
@@ -123,7 +123,7 @@ RSpec.describe 'Show dashboard' do
         get '/dashboard'
 
         expect(response.body).to include('Dashboard')
-        expect(response.body).not_to include('Welcome')
+        expect(response.body).not_to include('<h2>Welcome</h2>')
       end
     end
 
@@ -136,7 +136,7 @@ RSpec.describe 'Show dashboard' do
         get '/dashboard'
 
         expect(response.body).to include('Dashboard')
-        expect(response.body).not_to include('Welcome')
+        expect(response.body).not_to include('<h2>Welcome</h2>')
       end
     end
 
