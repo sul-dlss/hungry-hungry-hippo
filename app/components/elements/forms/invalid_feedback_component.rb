@@ -4,10 +4,11 @@ module Elements
   module Forms
     # Component for rendering invalid feedback for a form field.
     class InvalidFeedbackComponent < ApplicationComponent
-      def initialize(field_name:, form:, classes: [])
+      def initialize(field_name:, form:, render_errors: true, classes: [])
         @field_name = field_name
         @form = form
         @classes = classes
+        @render_errors = render_errors
         super()
       end
 
@@ -20,7 +21,7 @@ module Elements
       end
 
       def render?
-        field_name.present? && errors.present?
+        field_name.present? && errors.present? && @render_errors
       end
 
       private

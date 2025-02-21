@@ -6,7 +6,7 @@ module Elements
     class FieldComponent < ApplicationComponent
       def initialize(form:, field_name:, required: false, hidden_label: false, label: nil, help_text: nil, # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength
                      disabled: false, hidden: false, data: {}, input_data: {}, placeholder: nil, width: nil,
-                     label_classes: [], container_classes: [], input_classes: [], tooltip: nil)
+                     label_classes: [], container_classes: [], input_classes: [], tooltip: nil, render_errors: true)
         @form = form
         @field_name = field_name
         @required = required
@@ -23,11 +23,12 @@ module Elements
         @container_classes = container_classes
         @input_classes = input_classes
         @tooltip = tooltip
+        @render_errors = render_errors
         super()
       end
 
       attr_reader :form, :field_name, :required, :help_text, :hidden_label, :label, :hidden, :disabled, :data,
-                  :placeholder, :width, :label_classes, :input_data, :tooltip
+                  :placeholder, :width, :label_classes, :input_data, :tooltip, :render_errors
 
       def help_text_id
         @help_text_id ||= form.field_id(field_name, 'help')
@@ -40,9 +41,7 @@ module Elements
       end
 
       def styles
-        return if width.blank?
-
-        "max-width: #{width}px;"
+        [width_styles, error_styles].join(' ')
       end
 
       def container_classes
@@ -51,6 +50,19 @@ module Elements
 
       def input_classes
         merge_classes(@input_classes)
+      end
+
+      def width_styles
+        return if width.blank?
+
+        "max-width: #{width}px;"
+      end
+
+      def error_styles
+        return if render_errors
+
+        # This removes the exclamation mark from the input field for short fields that it obscures
+        'background-image: none; padding-right: 0;'
       end
 
       delegate :id, to: :form, prefix: true
