@@ -82,6 +82,9 @@ en:
         label: 'Day'
       approximate:
         label: 'Approximate'
+    validation:
+      year:
+        less_than_or_equal_to: 'must be in the past'
   depositors:
     edit:
       legend: 'Depositors'

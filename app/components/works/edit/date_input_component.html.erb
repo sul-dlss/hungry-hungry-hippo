@@ -1,8 +1,13 @@
 <%= tag.div data: { controller: 'form-date' }, class: reset_class  do %>
   <div class="row">
     <div class="col-3">
-      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :year, label: helpers.t('date.fields.year.label'),
-                                                         input_data: { form_date_target: 'year', action: 'form-date#update' }, container_classes: 'mb-2', width: 85) %>
+      <%= render Elements::Forms::TextFieldComponent.new(form:,
+                                                         field_name: :year,
+                                                         label: helpers.t('date.fields.year.label'),
+                                                         input_data: { form_date_target: 'year', action: 'form-date#update' },
+                                                         container_classes: 'mb-2',
+                                                         error_classes: 'text-nowrap',
+                                                         width: 85) %>
     </div>
     <div class="col-5">
       <%= render Elements::Forms::SelectMonthFieldComponent.new(form:, field_name: :month, label: helpers.t('date.fields.month.label'),

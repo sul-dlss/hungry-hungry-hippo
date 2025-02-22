@@ -6,7 +6,7 @@ class DateForm < ApplicationForm
   validates :year, numericality: { greater_than_or_equal_to: 1000, allow_nil: true }
   validates :year, numericality: { less_than_or_equal_to: Time.zone.now.year,
                                    allow_nil: true,
-                                   message: 'Must be in the past' } # rubocop:disable Rails/I18nLocaleTexts
+                                   message: I18n.t('date.validation.year.less_than_or_equal_to') }
   validates :year, presence: true, if: -> { month.present? }
   attribute :month, :integer
   validates :month, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 12, allow_nil: true }

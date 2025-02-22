@@ -31,7 +31,7 @@ module Elements
 
       def classes
         # Adding is-invalid to trigger the tab error.
-        merge_classes(%w[invalid-feedback is-invalid d-block text-nowrap], @classes)
+        merge_classes(%w[invalid-feedback is-invalid d-block], @classes)
       end
     end
   end
