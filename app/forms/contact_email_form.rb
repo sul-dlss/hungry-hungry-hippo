@@ -9,4 +9,12 @@ class ContactEmailForm < ApplicationForm
     allow_blank: true,
     message: I18n.t('contact_email.validation.email.invalid')
   }
+
+  before_validation :strip_whitespace
+
+  private
+
+  def strip_whitespace
+    email&.strip!
+  end
 end

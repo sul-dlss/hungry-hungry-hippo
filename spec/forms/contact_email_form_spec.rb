@@ -20,10 +20,20 @@ RSpec.describe ContactEmailForm do
     end
 
     context 'when valid email' do
-      let(:email) { 'alfred@stanford.edu' }
+      context 'with no whitespace' do
+        let(:email) { 'alfred@stanford.edu' }
 
-      it 'is valid' do
-        expect(form).to be_valid
+        it 'is valid' do
+          expect(form).to be_valid
+        end
+      end
+
+      context 'with whitespace' do
+        let(:email) { ' alfred@stanford.edu ' }
+
+        it 'is valid' do
+          expect(form).to be_valid
+        end
       end
     end
 
