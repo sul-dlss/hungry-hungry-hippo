@@ -33,11 +33,8 @@ Rails.application.configure do
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 
-  # Log to STDOUT with the current request id as a default log tag.
-  config.log_tags = [
-    ->(_request) { Time.now.iso8601 },
-    :request_id
-  ]
+  # Log with the current request id as a default log tag.
+  config.log_tags = [:request_id]
 
   # Log to STDOUT if env var is set
   if ENV['RAILS_LOG_TO_STDOUT'].present?
