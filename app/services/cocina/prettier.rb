@@ -11,6 +11,10 @@ module Cocina
       new(...).pretty
     end
 
+    def self.json(...)
+      new(...).json
+    end
+
     def initialize(cocina_object:)
       @cocina_object = cocina_object
     end
@@ -18,6 +22,11 @@ module Cocina
     # @return [Hash] the cocina object with empty values removed
     def clean
       @clean ||= perform_clean(@cocina_object.to_h)
+    end
+
+    # @return [String] the clean cocina object as a pretty JSON string
+    def json
+      clean.to_json
     end
 
     # @return [String] the clean cocina object as a pretty JSON string
