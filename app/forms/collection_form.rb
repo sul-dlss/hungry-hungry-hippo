@@ -36,7 +36,19 @@ class CollectionForm < ApplicationForm
   attribute :default_license, :string
 
   attribute :custom_rights_statement_option, :string, default: 'no'
-  # attribute :custom_rights_statement_instructions, :string
+  validates :custom_rights_statement_option, inclusion: { in: %w[no provided depositor_selects] }
+
+  attribute :provided_custom_rights_statement, :string
+  with_options if: -> { custom_rights_statement_option == 'provided' } do
+    validates :provided_custom_rights_statement, presence: true
+    validates :provided_custom_rights_statement, length: { maximum: 1000 }
+  end
+
+  attribute :custom_rights_statement_instructions, :string
+  with_options if: -> { custom_rights_statement_option == 'depositor_selects' } do
+    validates :custom_rights_statement_instructions, presence: true
+    validates :custom_rights_statement_instructions, length: { maximum: 1000 }
+  end
 
   attribute :release_option, :string, default: 'immediate'
   validates :release_option, inclusion: { in: %w[immediate depositor_selects] }

@@ -19,14 +19,13 @@ export default class extends Controller {
       const textArea = container.querySelector("textarea");
       if (!textArea) return;
 
-      // If this button was clicked, enable the text area and make it required
-      // Otherwise, disable the text area and remove required
+      // If this button was clicked, enable the text area and focus it
+      // Otherwise, disable the text area
       if (radio == event.target) {
         textArea.removeAttribute("disabled");
-        textArea.setAttribute("required", "true");
+        textArea.focus();
       } else {
         textArea.setAttribute("disabled", "true");
-        textArea.removeAttribute("required");
       }
     });
   }
