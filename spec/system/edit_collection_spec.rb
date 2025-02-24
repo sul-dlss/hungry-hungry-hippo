@@ -8,6 +8,7 @@ RSpec.describe 'Edit a collection' do
 
   let(:druid) { collection_druid_fixture }
   let(:user) { create(:user) }
+  let(:manager) { create(:user, name: 'alborland', email_address: 'alborland@stanford.edu') }
   let(:groups) { ['dlss:hydrus-app-collection-creators'] }
 
   let(:cocina_object) do
@@ -44,7 +45,7 @@ RSpec.describe 'Edit a collection' do
     end
     allow(Sdr::Repository).to receive(:accession)
 
-    create(:collection, druid:, user:)
+    create(:collection, druid:, user:, managers: [manager])
 
     sign_in(user, groups:)
   end
@@ -118,7 +119,16 @@ RSpec.describe 'Edit a collection' do
     expect(form_instances[0]).to have_text('SUNet ID') # Manager
     expect(form_instances[1]).to have_text('SUNet ID') # Depositor
 
-    # Fill in the manager form
+    # Remove the first manager
+    within form_instances[0] do
+      expect(page).to have_field('SUNet ID', with: manager.sunetid)
+      find('button[data-action="click->nested-form#delete"]').click
+    end
+
+    click_link_or_button('+ Add another manager')
+    form_instances = all('.form-instance')
+
+    # Add a new manager
     within form_instances[0] do
       fill_in('SUNet ID', with: 'stepking')
     end
@@ -155,5 +165,6 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_content('stepking@stanford.edu')
     expect(page).to have_content('joehill@stanford.edu')
     expect(page).to have_content('pennywise@stanford.edu')
+    expect(page).to have_no_content('aborland@stanford.edu')
   end
 end
