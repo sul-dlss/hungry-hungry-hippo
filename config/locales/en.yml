@@ -127,7 +127,7 @@ en:
     edit:
       legend: 'Managers'
       tooltip_html: >-
-        Managers have the ability to edit the collection description; add and remove other Managers, Reviewers, and Depositors; adjust discovery, access, and license settings for the collection; and edit any content deposited to the collection, including content deposited by others.
+        Managers have the ability to edit the collection description; add and remove other Managers, Reviewers (see Workflow section of form), and Depositors; adjust discovery, access, and license settings for the collection; and edit any content deposited to the collection, including content deposited by others.
   publication_date:
     edit:
       legend: 'Previous publication date'
@@ -325,7 +325,7 @@ en:
           help_text: >
             A unique, descriptive name may improve discovery of your collection in web searches.
           tooltip_html: >-
-            Enter a name for your collection. This name will serve as the title on the public page for the collection and the title of web search results, as well as in Stanford University Libraries' catalog. Please do not use the word "Collection" at the end of the title.
+            Enter a name for your collection. This name will serve as the title on the public page for the collection and the title of web search results, as well as in the Stanford University Libraries' catalog. Please do not use the word "Collection" at the end of the title.
         release_option:
           label: 'When will files on deposits to this collection be downloadable?'
           tooltip_html: >-
