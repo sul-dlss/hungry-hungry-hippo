@@ -20,4 +20,24 @@ RSpec.describe ToCocina::Collection::Mapper, type: :mapping do
       expect(cocina_object).to equal_cocina(collection_with_metadata_fixture)
     end
   end
+
+  context 'with depositor selects license' do
+    before do
+      collection_form.license_option = 'depositor-selects'
+    end
+
+    it 'does not include license in access' do
+      expect(cocina_object.access.license).to be_nil
+    end
+  end
+
+  context 'with none license' do
+    before do
+      collection_form.license = ''
+    end
+
+    it 'does not include license in access' do
+      expect(cocina_object.access.license).to be_nil
+    end
+  end
 end
