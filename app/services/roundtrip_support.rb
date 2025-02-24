@@ -22,11 +22,11 @@ class RoundtripSupport
     original_prettier ||= Cocina::Prettier.new(cocina_object: original_cocina_object)
     roundtripped_prettier ||= Cocina::Prettier.new(cocina_object: roundtripped_cocina_object)
     Honeybadger.notify('Roundtrip failed',
-                       context: { original: original_prettier.clean, roundtripped: roundtripped_prettier.clean })
+                       context: { original: original_prettier.json, roundtripped: roundtripped_prettier.json })
     # Pretty for dev and test makes reading the logs easier. Not pretty for production makes grepping easier.
     Rails.logger.info('Roundtrip failed. Original: ' \
-                      "#{Rails.env.production? ? original_prettier.clean : original_prettier.pretty}")
+                      "#{Rails.env.production? ? original_prettier.json : original_prettier.pretty}")
     Rails.logger.info('Roundtripped: ' \
-                      "#{Rails.env.production? ? roundtripped_prettier.clean : roundtripped_prettier.pretty}")
+                      "#{Rails.env.production? ? roundtripped_prettier.json : roundtripped_prettier.pretty}")
   end
 end
