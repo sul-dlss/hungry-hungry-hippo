@@ -5,7 +5,7 @@ module Elements
   class AlertComponent < ApplicationComponent
     # Variants are :danger, :success, :note, :info, :warning, :input
     # input is not part of the component library
-    def initialize(title: nil, variant: :info, dismissible: false, value: nil, data: {}, classes: []) # rubocop:disable Metrics/ParameterLists
+    def initialize(title: nil, variant: :info, dismissible: false, value: nil, data: {}, classes: [], id: nil) # rubocop:disable Metrics/ParameterLists
       raise ArgumentError, 'Invalid variant' unless %i[danger success note info warning input].include?(variant.to_sym)
 
       @title = title
@@ -14,10 +14,11 @@ module Elements
       @value = value
       @data = data
       @classes = classes
+      @id = id
       super()
     end
 
-    attr_reader :title, :variant, :value, :data
+    attr_reader :title, :variant, :value, :data, :id
 
     def classes
       merge_classes(%w[alert d-flex shadow-sm align-items-center], variant_class, dismissible_class, @classes)

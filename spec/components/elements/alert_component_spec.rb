@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe Elements::AlertComponent, type: :component do
   it 'renders the alert' do
-    render_inline(described_class.new(title: 'My title'))
-    expect(page).to have_css(".alert.alert-info[role='alert']")
+    render_inline(described_class.new(title: 'My title', id: 'my-alert'))
+    expect(page).to have_css(".alert.alert-info[role='alert']#my-alert")
     expect(page).to have_css('.fw-semibold', text: 'My title')
     expect(page).to have_css('i.bi-info-circle-fill')
   end

@@ -9,8 +9,8 @@ module Works
         super()
       end
 
-      def render?
-        @work_presenter.accessioning?
+      def alert?
+        @work_presenter.first_version? && @work_presenter.accessioning?
       end
     end
   end
