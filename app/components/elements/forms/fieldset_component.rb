@@ -5,6 +5,7 @@ module Elements
     # Component for rendering a form fieldset.
     class FieldsetComponent < ApplicationComponent
       renders_one :legend # Provide legend or label
+      renders_one :help_link # Optional
 
       def initialize(label: nil, hidden_label: false, classes: [], label_classes: [], legend_classes: [], # rubocop:disable Metrics/ParameterLists
                      data: {}, id: nil, tooltip: nil)

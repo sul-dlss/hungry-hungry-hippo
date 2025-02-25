@@ -51,8 +51,14 @@
     </div>
   </div>
 <% end %>
-<%= render Elements::Forms::FieldsetComponent.new(label: helpers.t('collections.edit.fields.doi_option.label'), tooltip: helpers.t('collections.edit.fields.doi_option.tooltip_html'), classes: 'pane-section') do %>
-  <div class="form-check">
+<%= render Elements::Forms::FieldsetComponent.new(label: helpers.t('collections.edit.fields.doi_option.label'),
+                                                  tooltip: helpers.t('collections.edit.fields.doi_option.tooltip_html'),
+                                                  classes: 'pane-section') do |component| %>
+  <% component.with_help_link do %>
+    <%= helpers.link_to_new_tab('What is a DOI?', 'https://sdr.library.stanford.edu/documentation/purls-dois-and-orcid-ids') %>
+  <% end %>
+
+ <div class="form-check">
     <div class="ps-2">
       <%= form.radio_button :doi_option, 'yes', class: 'form-check-input' %>
       <%= form.label :doi_option_yes, helpers.t('collections.edit.fields.doi_option.options.doi_yes'), class: 'form-check-label' %>
