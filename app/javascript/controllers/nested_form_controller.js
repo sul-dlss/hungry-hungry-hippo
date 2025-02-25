@@ -5,7 +5,7 @@ export default class extends Controller {
   static values = { selector: String }
 
   add (event) {
-    event.preventDefault()
+    if (event) event.preventDefault()
 
     this.containerTarget.insertAdjacentHTML(
       'beforeend',
@@ -17,6 +17,7 @@ export default class extends Controller {
     event.preventDefault()
 
     event.target.closest(this.selectorValue).remove()
+    if (this.instanceTargets.length === 0) this.add()
   }
 
   get maxIndex () {
