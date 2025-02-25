@@ -88,7 +88,7 @@ class DepositCollectionJob < ApplicationJob
   def remove_deleted_participants(role, participants)
     collection.send(role)
               .reject { |user| participants.include?(user) }
-              .map { |user| collection.send(role).delete(user) }
+              .map { |user| collection.send(role).destroy(user) }
   end
 
   def sunetid_to_email_address(sunetid)
