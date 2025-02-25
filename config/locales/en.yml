@@ -157,7 +157,7 @@ en:
     edit:
       fields:
         label: 'License'
-      license_terms_of_use: In addition to the license, the following Terms of Use will also be displayed on your PURL page.
+      license_terms_of_use: In addition to the license, the following Terms of Use will also be displayed on the public page for your work.
   managers:
     edit:
       legend: 'Managers'
@@ -249,10 +249,10 @@ en:
           with_orcid:
             label: Do you want to use a contributor's ORCID iD?
             tooltip_html: >-
-              An ORCID iD is a persistent digital identifier that distinguishes you from every other researcher. If you don't have an ORCID iD, you can get one at <a href="https://orcid.org/" target="_blank">https://orcid.org/</a> and then connect it to your Stanford identity at <a href="https://authorize.stanford.edu" target="_blank">https://authorize.stanford.edu</a>. If you choose to supply an ORCID iD, we will use it to retrieve the person's name and store both the name and ORCID iD in the metadata for your deposit.
+              An ORCID iD is a persistent digital identifier that distinguishes you from every other researcher. If you don't have an ORCID iD, you can get one at <a href="https://orcid.org/" target="_blank">https://orcid.org/</a> and then connect it to your Stanford identity at <a href="https://authorize.stanford.edu" target="_blank">https://authorize.stanford.edu</a>. If you choose to supply an ORCID iD, we will use it to retrieve the person's name and store both the name and ORCID iD in the detailed information about your deposit.
           orcid_name:
             tooltip_html: >-
-              This is the name we retrieved from ORCID and that will be included in the metadata for this deposit. Editing this name will change it for this deposit only and will not alter your ORCID record.
+              This is the name we retrieved from ORCID and that will be included in the detailed information about this deposit. Editing this name will change it for this deposit only and will not alter your ORCID record.
         create_date:
           label: 'Creation date'
           tooltip_html: >-
@@ -364,7 +364,7 @@ en:
         release_option:
           label: 'When will files on deposits to this collection be downloadable?'
           tooltip_html: >-
-            As the collection manager, you can decide whether 1) Depositors to this collection are required to make the files on their deposits downloadable as soon as the deposit is completed ("Immediately"), or 2) if Depositors can decide for themselves when downloading of their content will be available ("Depositor selects…"). Note that for both options the public page is always visible as soon as the deposit is complete and all metadata on the page is visible to anyone at any time.
+            As the collection manager, you can decide whether 1) Depositors to this collection are required to make the files on their deposits downloadable as soon as the deposit is completed ("Immediately"), or 2) if Depositors can decide for themselves when downloading of their content will be available ("Depositor selects…"). Note that for both options the public page is always visible as soon as the deposit is complete and all descriptive information on the page is visible to anyone at any time.
           options:
             immediate: 'Immediately'
             depositor_selects: 'Depositor selects a date up to'
@@ -401,10 +401,10 @@ en:
           tab_label: 'License'
           label: 'License'
           help_text: >
-            We highly recommend every deposit be assigned a license when possible. A license helps other who access the
+            We highly recommend every deposit be assigned a license when possible. A license helps others who access the
             content to understand what the Depositor is allowing them to do with the work and under what conditions.
           tooltip_html: >-
-            As the collection manager, you can decide whether 1) a specific license  you choose from the list will be mandatory for every deposit to the collection ("Require license for all deposits") or 2) if the Depositors will be able to choose the license they wish to use ("Depositor selects license").  For this second option, you must choose a license from the list to be displayed as the default option for Depositors.
+            As the collection manager, you can decide whether 1) a specific license  you choose from the list will be mandatory for every deposit to the collection ("Require license for all deposits") or 2) if the Depositors will be able to choose the license they wish to use ("Depositor selects license").  For this second option, you must choose a license from the list to be displayed as the default option for Depositors, which they will be able to change.
         related_links:
           tab_label: 'Related links (optional)'
           label: 'Links to related content (optional)'
