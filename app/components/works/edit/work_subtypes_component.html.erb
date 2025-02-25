@@ -8,8 +8,8 @@
       <% if minimum_terms.positive? %>
         <p>Select at least <%= term_phrase %> below:</p>
       <% end %>
-      <div class="row">
-        <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: work_subtypes, div_classes: 'col-4') %>
+      <div class="types-container">
+        <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: work_subtypes) %>
       </div>
 
       <%# More options %>
@@ -18,8 +18,8 @@
           See more options
         <% end %>
         <%= tag.div id: collapse_id, class: 'collapse' do %>
-          <div class="row">
-            <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: more_types, div_classes: 'col-4') %>
+          <div class="types-container">
+            <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: more_types) %>
           </div>
         <% end %>
       <% end %>

@@ -307,3 +307,17 @@ fieldset.form-fieldset legend {
 .admin-card {
   --bs-card-bg: var(--stanford-10-black);
 }
+
+// Allow for types to list alphabetically in the vertical direction while
+// still maintaining responsive columns.
+.types-container {
+  columns: 3;
+
+  @include media-breakpoint-down(lg) {
+    columns: 2;
+  }
+
+  @include media-breakpoint-down(sm) {
+    columns: 1;
+  }
+}
