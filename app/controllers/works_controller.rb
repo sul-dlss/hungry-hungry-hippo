@@ -146,7 +146,6 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     @work_form = ToWorkForm::Mapper.call(cocina_object: @cocina_object,
                                          doi_assigned: doi_assigned?, agree_to_terms: current_user.agree_to_terms?,
                                          version_description:)
-    @work_form.release_date = @collection.max_release_date if @work_form.release_option.blank?
   end
 
   def doi_assigned?
@@ -183,7 +182,6 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       content_id: @content.id,
       license: @collection.license,
       access: @collection.stanford_access? ? 'stanford' : 'world',
-      release_date: @collection.max_release_date,
       agree_to_terms: current_user.agree_to_terms?
     )
   end
