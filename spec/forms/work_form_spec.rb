@@ -147,6 +147,88 @@ RSpec.describe WorkForm do
     end
   end
 
+  describe 'create date range validation' do
+    let(:form) do
+      described_class.new(
+        title: title_fixture,
+        contact_emails_attributes: contact_emails_fixture,
+        contributors_attributes: contributors_fixture,
+        # collection_druid: collection.druid,
+        create_date_type: 'range',
+        create_date_range_from_attributes: creation_date_range_from,
+        create_date_range_to_attributes: creation_date_range_to
+      )
+    end
+
+    let(:creation_date_range_to) do
+      {
+        year: 2022,
+        month: 4,
+        day: nil,
+        approximate: true
+      }
+    end
+
+    let(:creation_date_range_from) do
+      {
+        year: 2021,
+        month: 3,
+        day: 7,
+        approximate: false
+      }
+    end
+
+    context 'when create date range is complete and in sequence' do
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+    end
+
+    context 'when from date is after to date' do
+      let(:creation_date_range_to) do
+        {
+          year: 2021
+        }
+      end
+
+      let(:creation_date_range_from) do
+        {
+          year: 2022
+        }
+      end
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+
+        expect(form.errors[:create_date_range_from]).to eq(['must be before end date'])
+      end
+    end
+
+    context 'when from date is blank' do
+      let(:creation_date_range_from) do
+        {}
+      end
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+
+        expect(form.errors[:create_date_range_from]).to eq(['must have both a start and end date'])
+      end
+    end
+
+    context 'when to date is blank' do
+      let(:creation_date_range_to) do
+        {}
+      end
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+
+        expect(form.errors[:create_date_range_from]).to eq(['must have both a start and end date'])
+      end
+    end
+  end
+
   describe 'Abstract linefeed normalization' do
     let(:form) do
       described_class.new(

@@ -18,4 +18,8 @@ class DateForm < ApplicationForm
   def to_s
     EdtfSupport.to_edtf_s(year:, month:, day:, approximate:)
   end
+
+  def to_edtf
+    EdtfSupport.to_edtf(year:, month:, day:, approximate:)
+  end
 end

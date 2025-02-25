@@ -8,7 +8,10 @@ class WorkForm < ApplicationForm
                                 :keywords, :create_date_single, :create_date_range_from, :create_date_range_to
 
   validate :content_file_presence, on: :deposit
-  validate :create_date_range_complete, if: -> { create_date_type == 'range' }
+  with_options if: -> { create_date_type == 'range' } do
+    validate :create_date_range_complete
+    validate :create_date_range_sequence
+  end
 
   def self.immutable_attributes
     ['druid']
@@ -102,6 +105,15 @@ class WorkForm < ApplicationForm
     return if create_date_range_from.year.blank? && create_date_range_to.year.blank?
 
     errors.add(:create_date_range_from, 'must have both a start and end date')
+  end
+
+  def create_date_range_sequence
+    create_date_range_from_edtf = create_date_range_from.to_edtf
+    create_date_range_to_edtf = create_date_range_to.to_edtf
+    return if create_date_range_from_edtf.nil? || create_date_range_to_edtf.nil?
+    return if create_date_range_from_edtf <= create_date_range_to_edtf
+
+    errors.add(:create_date_range_from, 'must be before end date')
   end
 
   def correct_work_subtype_length
