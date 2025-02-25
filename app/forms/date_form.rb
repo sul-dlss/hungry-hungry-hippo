@@ -16,10 +16,10 @@ class DateForm < ApplicationForm
   attribute :approximate, :boolean, default: false
 
   def to_s
-    EdtfSupport.to_edtf_s(year:, month:, day:, approximate:)
+    to_date&.to_fs(:edtf)
   end
 
-  def to_edtf
-    EdtfSupport.to_edtf(year:, month:, day:, approximate:)
+  def to_date
+    EdtfDate.for(year:, month:, day:, approximate:)
   end
 end
