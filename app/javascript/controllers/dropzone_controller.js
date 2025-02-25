@@ -7,8 +7,9 @@ export default class extends Controller {
     existingFiles: { type: Number, default: 0 },
     maxFiles: Number,
     maxFilesize: Number
-
   }
+
+  static outlets = ['dropzone-files']
 
   // Expected error handling behavior:
   // - A blank directory is ignored.
@@ -31,6 +32,7 @@ export default class extends Controller {
     this.shouldClearErrors = false
     this.basePath = null
     this.dropzone.on('processingmultiple', () => {
+      this.element.dataset.dropzoneReady = false
       // Using processingmultiple instead of addedfiles for showing the progress bar
       // since addedfiles is triggered by dropping an empty directory.
       // This is not.
@@ -51,6 +53,9 @@ export default class extends Controller {
       this.dropzone.element.classList.remove('dz-started')
       this.progressTarget.classList.add('d-none')
       this.updateProgress(0, true)
+      // Reload the files section to show the newly uploaded files.
+      this.dropzoneFilesOutlets.forEach(dropzoneFiles => dropzoneFiles.reload())
+      this.element.dataset.dropzoneReady = true
     })
     this.dropzone.on('sendingmultiple', (files, xhr, data) => {
       // Add the full path of each file to the form data
@@ -61,7 +66,6 @@ export default class extends Controller {
         if (this.basePath) path = `${this.basePath}/${path}`
         data.append(`content[paths][${i}]`, path)
       }
-      data.append('content[completed]', this.dropzone.getActiveFiles().length === files.length)
     })
     this.dropzone.on('errormultiple', (files, message) => {
       this.clearErrors()

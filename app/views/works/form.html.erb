@@ -35,8 +35,6 @@
     <%# This pane is outside the work form because it contains its own forms for files. %>
     <% component.with_before_form_pane do %>
       <%= render Works::Edit::PaneComponent.new(tab_name: :files, label: t('works.edit.panes.files.label'), selected: true, form_id:, discard_draft_form_id:, work_presenter: @work_presenter) do %>
-        <%= turbo_stream_from @content %>
-
         <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
 
         <%= render 'contents/edit', content: @content %>
@@ -44,7 +42,9 @@
         <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
         <%= render Edit::SectionHeaderComponent.new(title: t('works.edit.panes.files.list')) %>
         <div id="content-files" class="pane-section">
-          <%= render partial: 'contents/show', locals: { content: @content, content_files: @content.content_files.page(1) } %>
+          <%= turbo_frame_tag @content, 'show', src: content_path(@content), data: { controller: 'dropzone-files' }, class: 'dropzone-files' do %>
+            <%= render Elements::SpinnerComponent.new %>
+          <% end %>
         </div>
       <% end %>
     <% end %>
