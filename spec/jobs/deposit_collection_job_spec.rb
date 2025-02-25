@@ -96,4 +96,57 @@ RSpec.describe DepositCollectionJob do
       expect(collection.deposit_not_in_progress?).to be true
     end
   end
+
+  context 'when adding participants to an existing collection with an unchanged cocina object' do
+    let(:collection_form) do
+      CollectionForm.new(title: collection_title_fixture,
+                         druid:,
+                         lock: 'abc123',
+                         managers_attributes:)
+    end
+    let(:collection) { create(:collection, :registering_or_updating, druid:) }
+    let(:managers_attributes) { [{ sunetid: manager.sunetid }] }
+    let(:manager) { create(:user) }
+
+    before do
+      allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
+      allow(RoundtripSupport).to receive(:changed?).and_return(false)
+      allow(Notifier).to receive(:publish)
+    end
+
+    it 'publishes a MANGER_ADDED notification' do
+      described_class.perform_now(collection_form:, collection:)
+      expect(collection.managers).to include(manager)
+      expect(Notifier).to have_received(:publish).with(Notifier::MANAGER_ADDED, collection:, user: manager)
+    end
+  end
+
+  context 'when removing participants to an existing collection with an unchanged cocina object' do
+    let(:collection_form) do
+      CollectionForm.new(title: collection_title_fixture,
+                         druid:,
+                         lock: 'abc123',
+                         managers_attributes:)
+    end
+    let(:collection) do
+      create(:collection, :registering_or_updating, druid:, managers: [first_manager, second_manager])
+    end
+    let(:managers_attributes) { [{ sunetid: first_manager.sunetid }] }
+    let(:first_manager) { create(:user) }
+    let(:second_manager) { create(:user) }
+
+    before do
+      allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
+      allow(RoundtripSupport).to receive(:changed?).and_return(false)
+      allow(Notifier).to receive(:publish)
+    end
+
+    it 'only publishes a MANGER_REMOVED notification' do
+      described_class.perform_now(collection_form:, collection:)
+      expect(collection.managers).to include(first_manager)
+      expect(collection.managers).not_to include(second_manager)
+      expect(Notifier).to have_received(:publish).with(Notifier::MANAGER_REMOVED, collection:, user: second_manager)
+      expect(Notifier).not_to have_received(:publish).with(Notifier::MANAGER_ADDED)
+    end
+  end
 end
