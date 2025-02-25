@@ -9,6 +9,8 @@ module Elements
         args[:input_classes] = merge_classes('form-check-input', args[:input_classes])
         super
       end
+
+      attr_reader :value
     end
   end
 end

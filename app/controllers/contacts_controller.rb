@@ -13,7 +13,14 @@ class ContactsController < ApplicationController
   def create
     contact_form = ContactForm.new(contact_form_params)
 
-    ContactsMailer.with(contact_form.attributes.symbolize_keys).jira_email.deliver_later
+    ContactsMailer.with(
+      name: contact_form.name,
+      affiliation: contact_form.affiliation,
+      email_address: contact_form.email_address,
+      message: contact_form.message,
+      help_how: contact_form.help_how,
+      collections: contact_form.selected_collections
+    ).jira_email.deliver_later
 
     @welcome = contact_form.welcome?
 
@@ -23,6 +30,6 @@ class ContactsController < ApplicationController
   private
 
   def contact_form_params
-    params.expect(contact: %i[name email_address affiliation help_how message welcome])
+    params.expect(contact: ContactForm.user_editable_attributes)
   end
 end
