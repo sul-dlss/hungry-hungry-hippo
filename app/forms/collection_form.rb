@@ -33,7 +33,7 @@ class CollectionForm < ApplicationForm
   validates :license_option, inclusion: { in: %w[required depositor_selects] }
 
   attribute :license, :string
-  attribute :default_license
+  attribute :default_license, :string
 
   attribute :release_option, :string, default: 'immediate'
   validates :release_option, inclusion: { in: %w[immediate depositor_selects] }

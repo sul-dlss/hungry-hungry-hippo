@@ -5,7 +5,7 @@
       <%= form.label :license_option_required, 'Require license for all deposits', class: 'form-check-label' %>
     </div>
     <div class="ps-2">
-      <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :license, options: license_options, hidden_label: true, label:, width: 250, container_classes: 'mb-4') %>
+      <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :license, options: license_options, hidden_label: true, label: 'Required license', width: 250, container_classes: 'mb-4') %>
     </div>
     <div class="ps-2">
       <%= helpers.link_to_new_tab('Get help selecting a license', Settings.license_url) %>
@@ -17,7 +17,7 @@
       <%= form.label :license_option_depositor_selects, 'Depositor selects license', class: 'form-check-label' %>
     </div>
     <div class="ps-2">
-      <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :default_license, options: license_options, hidden_label: true, label:, width: 250, container_classes: 'mb-4') %>
+      <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :default_license, options: license_options, hidden_label: true, label: 'Default license', width: 250, container_classes: 'mb-4') %>
     </div>
   </div>
 <% end %>
