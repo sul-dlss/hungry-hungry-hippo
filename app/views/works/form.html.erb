@@ -81,7 +81,7 @@
         <%= render Works::Edit::DoiComponent.new(form:, collection: @collection) %>
 
         <% component.with_help do %>
-          <%= link_to_new_tab('What is a DOI?', 'https://sdr.library.stanford.edu/documentation/purls-dois-and-orcid-ids') %>
+          <%= link_to_new_tab('What is a DOI?', 'https://sdr.library.stanford.edu/documentation/purls-dois-and-orcid-ids', class: 'ms-3') %>
         <% end %>
       <% end %>
     <% end %>
