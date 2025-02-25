@@ -6,7 +6,7 @@ class ContactEmailForm < ApplicationForm
   validates :email, presence: true, on: :deposit
   validates :email, format: {
     with: URI::MailTo::EMAIL_REGEXP,
-    allow_blank: false,
+    allow_blank: true,
     message: I18n.t('contact_email.validation.email.invalid')
   }
 end
