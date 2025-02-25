@@ -20,12 +20,6 @@ class ContentsController < ApplicationController
 
     update_files
 
-    # Broadcast the update to the content if completed
-    if params[:content][:completed] == 'true'
-      Turbo::StreamsChannel.broadcast_update_later_to @content, target: 'content-files', partial: 'contents/show',
-                                                                locals: { content: @content }
-    end
-
     head :ok
   end
 

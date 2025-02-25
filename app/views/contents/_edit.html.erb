@@ -1,5 +1,5 @@
 <%= turbo_frame_tag content, 'edit' do %>
-  <%= form_with model: content, data: { controller: 'dropzone', dropzone_existing_files_value: content.content_files.count, dropzone_max_files_value: Settings.file_upload.max_files, dropzone_max_filesize_value: Settings.file_upload.max_filesize }, id: 'file-dropzone', class: 'dropzone' do |form| %>
+  <%= form_with model: content, data: { controller: 'dropzone', dropzone_existing_files_value: content.content_files.count, dropzone_max_files_value: Settings.file_upload.max_files, dropzone_max_filesize_value: Settings.file_upload.max_filesize, dropzone_dropzone_files_outlet: '.dropzone-files' }, id: 'file-dropzone', class: 'dropzone' do |form| %>
     <%= render Elements::AlertComponent.new(classes: 'd-none', data: { dropzone_target: 'folderAlert' }) do %>
       <span data-dropzone-target="folderAlertText"></span>
       <%= render Elements::ButtonComponent.new(label: 'Reset', variant: 'outline-primary', classes: 'ms-3', data: { action: 'dropzone#clearBasePath' }) %>
