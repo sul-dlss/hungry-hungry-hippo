@@ -11,10 +11,6 @@ module Collections
 
       attr_reader :form
 
-      def label
-        helpers.t('license.edit.fields.label')
-      end
-
       def license_options
         License::GROUPS.to_h do |group|
           licenses = License.where(group:).filter_map do |license|

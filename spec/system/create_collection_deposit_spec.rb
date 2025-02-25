@@ -79,10 +79,8 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_css('.nav-link.active', text: 'License')
     expect(page).to have_text('License')
     expect(page).to have_checked_field('Require license for all deposits')
-    expect(page).to have_select('License', selected: 'No License')
-    find_by_id('collection_license').click
-    select('CC-BY-4.0 Attribution International', from: 'collection_license')
-    expect(page).to have_select('License', selected: 'CC-BY-4.0 Attribution International')
+    expect(page).to have_select('Required license', selected: 'No License')
+    select('CC-BY-4.0 Attribution International', from: 'Required license')
 
     # Clicking on Next to go to Participants tab
     click_link_or_button('Next')
@@ -106,7 +104,6 @@ RSpec.describe 'Create a collection deposit' do
 
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
-    find('.nav-link', text: 'Save your collection', exact_text: true).click
     expect(page).to have_css('.nav-link.active', text: 'Save your collection')
 
     # Footer buttons
@@ -119,5 +116,9 @@ RSpec.describe 'Create a collection deposit' do
     # On show page
     expect(page).to have_css('h1', text: collection_title_fixture)
     expect(page).to have_no_link('Edit')
+
+    # License
+    expect(page).to have_css('th', text: 'Required license')
+    expect(page).to have_css('td', text: 'CC-BY-4.0 Attribution International')
   end
 end

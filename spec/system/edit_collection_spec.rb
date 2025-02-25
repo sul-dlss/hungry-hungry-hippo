@@ -101,11 +101,9 @@ RSpec.describe 'Edit a collection' do
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'License')
     expect(page).to have_checked_field('Require license for all deposits')
-    expect(page).to have_select('License', selected: 'CC-BY-4.0 Attribution International')
-    find_by_id('collection_license_option_depositor_selects').click
-    find_by_id('collection_default_license').click
-    select('CC-BY-4.0 Attribution International', from: 'collection_default_license')
-    expect(page).to have_select('License', selected: 'CC-BY-4.0 Attribution International')
+    expect(page).to have_select('Required license', selected: 'CC-BY-4.0 Attribution International')
+    choose('Depositor selects license')
+    select('CC-BY-4.0 Attribution International', from: 'Default license')
 
     # Clicking on Next to go to Participants tab
     click_link_or_button('Next')
@@ -155,5 +153,9 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_content('stepking@stanford.edu')
     expect(page).to have_content('joehill@stanford.edu')
     expect(page).to have_content('pennywise@stanford.edu')
+
+    # License
+    expect(page).to have_css('th', text: 'Default license')
+    expect(page).to have_css('td', text: 'CC-BY-4.0 Attribution International')
   end
 end
