@@ -16,6 +16,7 @@ RSpec.describe Collection do
       collection.managers << user
       expect(Notifier).to have_received(:publish).with(Notifier::MANAGER_ADDED, collection:,
                                                                                 user:)
+      expect(Notifier).not_to have_received(:publish).with(Notifier::MANAGER_REMOVED)
     end
   end
 
@@ -26,6 +27,7 @@ RSpec.describe Collection do
       collection.depositors << user
       expect(Notifier).to have_received(:publish).with(Notifier::DEPOSITOR_ADDED, collection:,
                                                                                   user:)
+      expect(Notifier).not_to have_received(:publish).with(Notifier::DEPOSITOR_REMOVED)
     end
   end
 
@@ -36,6 +38,7 @@ RSpec.describe Collection do
       collection.reviewers << user
       expect(Notifier).to have_received(:publish).with(Notifier::REVIEWER_ADDED, collection:,
                                                                                  user:)
+      expect(Notifier).not_to have_received(:publish).with(Notifier::REVIEWER_REMOVED)
     end
   end
 
