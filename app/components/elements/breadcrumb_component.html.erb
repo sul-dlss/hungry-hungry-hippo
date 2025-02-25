@@ -1,7 +1,7 @@
 <%= tag.li class: classes do %>
   <% if link.present? %>
-    <%= link_to truncated_title, link, title: text %>
+    <%= link_to truncated_text, link, title: text %>
   <% else %>
-    <%= truncated_title %>
+    <%= truncated_text %>
   <% end %>
 <% end %>
