@@ -21,4 +21,16 @@ RSpec.describe Elements::Forms::FieldsetComponent, type: :component do
       expect(page).to have_css('fieldset.form-fieldset label.visually-hidden', text: 'My Fieldset')
     end
   end
+
+  context 'when the fieldset has a help_link' do
+    it 'renders the fieldset with a help_link' do
+      render_inline(
+        described_class.new(label: 'My Fieldset').tap do |component|
+          component.with_help_link { '<a>Help</a>'.html_safe }
+        end
+      )
+
+      expect(page).to have_css('a', text: 'Help')
+    end
+  end
 end
