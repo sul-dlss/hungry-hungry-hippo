@@ -6,7 +6,7 @@ module Elements
     class FieldComponent < ApplicationComponent
       def initialize(form:, field_name:, required: false, hidden_label: false, label: nil, help_text: nil, # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength
                      disabled: false, hidden: false, data: {}, input_data: {}, placeholder: nil, width: nil,
-                     label_classes: [], container_classes: [], input_classes: [], tooltip: nil)
+                     label_classes: [], container_classes: [], input_classes: [], tooltip: nil, error_classes: [])
         @form = form
         @field_name = field_name
         @required = required
@@ -23,6 +23,7 @@ module Elements
         @container_classes = container_classes
         @input_classes = input_classes
         @tooltip = tooltip
+        @error_classes = error_classes
         super()
       end
 
@@ -51,6 +52,10 @@ module Elements
 
       def input_classes
         merge_classes(@input_classes)
+      end
+
+      def error_classes
+        merge_classes(@error_classes)
       end
 
       delegate :id, to: :form, prefix: true
