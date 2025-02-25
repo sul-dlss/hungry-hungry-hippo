@@ -4,7 +4,7 @@
     <% if (current_page?(action: :new) || (controller.action_name == 'create')) %>
       <% component.with_breadcrumb(text: t('collections.edit.no_title')) %>
     <% else %>
-      <% component.with_breadcrumb(text: @collection_form.title, link: collection_path(druid: @collection_form.druid)) %>
+      <% component.with_collection_breadcrumb(text: @collection_form.title, link: collection_path(druid: @collection_form.druid)) %>
     <% end %>
     <%# include an Edit breadcrumb only if title exists %>
     <% if @collection_form.title.present? %>

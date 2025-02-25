@@ -1,11 +1,11 @@
 <% content_for :breadcrumbs do %>
   <%= render Elements::BreadcrumbNavComponent.new do |component| %>
     <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
-    <% component.with_breadcrumb(text: @collection.title, link: collection_path(druid: @work_form.collection_druid)) %>
+    <% component.with_collection_breadcrumb(text: @collection.title, link: collection_path(druid: @work_form.collection_druid)) %>
     <% if (current_page?(action: :new) || (controller.action_name == 'create')) %>
       <% component.with_breadcrumb(text: I18n.t('works.edit.no_title')) %>
     <% else %>
-      <% component.with_breadcrumb(text: @work_form.title, link: work_path(druid: @work.druid)) %>
+      <% component.with_title_breadcrumb(text: @work_form.title, link: work_path(druid: @work.druid)) %>
       <% component.with_breadcrumb(text: t('works.edit.breadcrumb')) %>
     <% end %>
   <% end %>

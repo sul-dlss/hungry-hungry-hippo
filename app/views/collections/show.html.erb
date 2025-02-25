@@ -6,7 +6,7 @@
     <% if current_page?(action: :new) %>
       <% component.with_breadcrumb(text: I18n.t('collections.edit.no_title')) %>
     <% else %>
-      <% component.with_breadcrumb(text: @collection_form.title, active: true) %>
+      <% component.with_collection_breadcrumb(text: @collection_form.title, active: true) %>
     <% end %>
   <% end %>
 <% end %>
