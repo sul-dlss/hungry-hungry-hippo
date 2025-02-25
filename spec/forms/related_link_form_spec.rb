@@ -17,8 +17,10 @@ RSpec.describe RelatedLinkForm do
   context 'with url only' do
     let(:text) { '' }
 
-    it 'is valid' do
-      expect(form).to be_valid
+    it 'is not valid' do
+      expect(form).not_to be_valid
+
+      expect(form.errors[:text]).to eq(['can\'t be blank'])
     end
   end
 
