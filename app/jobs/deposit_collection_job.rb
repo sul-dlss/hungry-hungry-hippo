@@ -67,7 +67,7 @@ class DepositCollectionJob < ApplicationJob
   # does not exist, it will be created and the name set to the sunetid until they login for the first time.
   # rubocop:disable Metrics/AbcSize
   def assign_participants(role)
-    collection.send(role).clear
+    updated_users_for_role = []
     collection_form.send(:"#{role}_attributes").each do |participant|
       participant = participant.attributes if participant.respond_to?(:attributes)
       next if participant['sunetid'].blank?
@@ -76,10 +76,20 @@ class DepositCollectionJob < ApplicationJob
       user.update!(name: participant['sunetid']) if user.name.blank?
       user.save!
 
-      collection.send(role).append(user)
+      collection.send(role).append(user) unless collection.send(role).include?(user)
+      updated_users_for_role.append(user)
     end
+
+    remove_deleted_participants(role, updated_users_for_role)
   end
   # rubocop:enable Metrics/AbcSize
+
+  # Remove any participants that are no longer in the form
+  def remove_deleted_participants(role, participants)
+    collection.send(role)
+              .reject { |user| participants.include?(user) }
+              .map { |user| collection.send(role).delete(user) }
+  end
 
   def sunetid_to_email_address(sunetid)
     "#{sunetid}#{User::EMAIL_SUFFIX}"
