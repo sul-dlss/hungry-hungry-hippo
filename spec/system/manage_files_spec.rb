@@ -136,15 +136,15 @@ RSpec.describe 'Manage files for a work' do
 
         expect(page).to have_link('Add description', count: 2)
         all('a', text: 'Add description').first.click
-        fill_in('Description', with: 'This is a hippo.')
+        fill_in('Description', with: '')
         click_link_or_button('Update')
       end
 
       # The description is updated.
       expect(page).to have_css('table#content-table td', text: 'hippo.txt')
-      expect(page).to have_css('table#content-table td', text: 'This is a hippo.')
+      expect(page).to have_link('Add description', count: 2)
       content_file = ContentFile.find_by!(filepath: 'hippo.txt')
-      expect(content_file.label).to eq('This is a hippo.')
+      expect(content_file.label).to be_blank
 
       # Hide the file
       all('input[type=checkbox][name="content_file[hide]"]').first.check
