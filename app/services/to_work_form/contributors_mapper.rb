@@ -70,8 +70,8 @@ module ToWorkForm
       end
 
       def stanford_degree_granting_institution?
-        @stanford_degree_granting_institution ||= organization_name == WorkForm::STANFORD_UNIVERSITY \
-         && role == 'degree_granting_institution'
+        @stanford_degree_granting_institution ||= organization_name == WorkForm::STANFORD_UNIVERSITY &&
+                                                  role == 'degree_granting_institution'
       end
 
       def suborganization_name
