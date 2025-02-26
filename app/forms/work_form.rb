@@ -108,8 +108,8 @@ class WorkForm < ApplicationForm
   end
 
   def create_date_range_sequence
-    create_date_range_from_edtf = create_date_range_from.to_edtf
-    create_date_range_to_edtf = create_date_range_to.to_edtf
+    create_date_range_from_edtf = create_date_range_from.to_date
+    create_date_range_to_edtf = create_date_range_to.to_date
     return if create_date_range_from_edtf.nil? || create_date_range_to_edtf.nil?
     return if create_date_range_from_edtf <= create_date_range_to_edtf
 
