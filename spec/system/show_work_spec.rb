@@ -186,7 +186,7 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('th', text: 'Role')
         expect(page).to have_css('td', text: contributors_fixture.first['first_name'])
         expect(page).to have_css('td', text: contributors_fixture.first['last_name'])
-        expect(page).to have_css('td', text: contributors_fixture.first['orcid'])
+        expect(page).to have_css('td', text: "#{Settings.orcid.url}#{contributors_fixture.first['orcid']}")
       end
 
       # Description table
