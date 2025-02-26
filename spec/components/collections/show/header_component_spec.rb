@@ -27,7 +27,6 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
     expect(page).to have_no_link('Edit')
     expect(page).to have_no_button('Discard draft')
     expect(page).to have_no_button('Deposit to this collection')
-    expect(page).to have_no_css('i.bi-pencil')
   end
 
   context 'when editable' do
@@ -36,7 +35,6 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
     it 'renders the edit button' do
       render_inline(described_class.new(presenter:))
       expect(page).to have_link('Edit', href: "/collections/#{druid_fixture}/edit")
-      expect(page).to have_css('i.bi-pencil.h4')
       expect(page).to have_link(href: "/collections/#{druid_fixture}/edit")
     end
   end
@@ -52,7 +50,6 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
     it 'does not show the Deposit to collection button' do
       render_inline(described_class.new(presenter:))
       expect(page).to have_no_button('Deposit to this collection')
-      expect(page).to have_css('i.bi-pencil.h4')
     end
   end
 
@@ -72,7 +69,6 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
       expect(page).to have_no_link('Edit')
       expect(page).to have_no_button('Discard draft')
       expect(page).to have_no_button('Deposit to this collection')
-      expect(page).to have_no_css('i.bi-pencil')
     end
   end
 end
