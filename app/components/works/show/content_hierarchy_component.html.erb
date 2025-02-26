@@ -1,4 +1,5 @@
-<%= render Elements::Tables::TreegridTableComponent.new(id: 'files-table', label: 'Files') do |component| %>
+<%= render Elements::Tables::TreegridTableComponent.new(id: 'files-table') do |component| %>
+  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Files', presenter: work_presenter, tab: :files) %><% end %>
   <% component.with_header(headers: ['File Name', 'Description', 'Hide']) %>
   <% last_path_parts = [] %>
   <% content_files.each do |content_file| %>

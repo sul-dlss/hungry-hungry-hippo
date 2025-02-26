@@ -16,19 +16,20 @@
 <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if @collection_form.errors.present? %>
 <% discard_draft_form_id = dom_id(@collection_form, 'discard_form') %>
 <%= render Edit::DiscardDraftFormComponent.new(presenter: @collection_presenter, id: discard_draft_form_id) if @collection_presenter %>
+<% active_tab_name = params[:tab]&.to_sym || :details %>
 <%= render Edit::TabForm::TabListComponent.new(model: @collection_form, hidden_fields: %i[lock version]) do |component| %>
-  <% component.with_tab(label: t('collections.edit.panes.details.tab_label'), tab_name: :details, selected: true) %>
-  <% component.with_tab(label: t('collections.edit.panes.related_links.tab_label'), tab_name: :related_links) %>
-  <% component.with_tab(label: t('collections.edit.panes.access.tab_label'), tab_name: :access) %>
-  <% component.with_tab(label: t('collections.edit.panes.license.tab_label'), tab_name: :license) %>
-  <% component.with_tab(label: t('collections.edit.panes.participants.tab_label'), tab_name: :participants) %>
-  <% component.with_tab(label: t('collections.edit.panes.workflow.tab_label'), tab_name: :workflow) %>
-  <% component.with_tab(label: t('collections.edit.panes.deposit.tab_label'), tab_name: :deposit) %>
+  <% component.with_tab(label: t('collections.edit.panes.details.tab_label'), tab_name: :details, active_tab_name:) %>
+  <% component.with_tab(label: t('collections.edit.panes.related_links.tab_label'), tab_name: :related_links, active_tab_name:) %>
+  <% component.with_tab(label: t('collections.edit.panes.access.tab_label'), tab_name: :access, active_tab_name:) %>
+  <% component.with_tab(label: t('collections.edit.panes.license.tab_label'), tab_name: :license, active_tab_name:) %>
+  <% component.with_tab(label: t('collections.edit.panes.participants.tab_label'), tab_name: :participants, active_tab_name:) %>
+  <% component.with_tab(label: t('collections.edit.panes.workflow.tab_label'), tab_name: :workflow, active_tab_name:) %>
+  <% component.with_tab(label: t('collections.edit.panes.deposit.tab_label'), tab_name: :deposit, active_tab_name:) %>
   <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
   <%# TabListComponent will render the actual form. %>
   <% form_with(model: @collection_form) do |form| %>
     <% component.with_pane do %>
-      <%= render Collections::Edit::PaneComponent.new(tab_name: :details, label: t('collections.edit.panes.details.label'), selected: true) do %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :details, label: t('collections.edit.panes.details.label'), active_tab_name:) do %>
         <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: t('collections.edit.fields.title.label'), tooltip: t('collections.edit.fields.title.tooltip_html'), container_classes: 'pane-section') %>
         <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: t('collections.edit.fields.description.label'), tooltip: t('collections.edit.fields.description.tooltip_html'), container_classes: 'pane-section') %>
         <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: Collections::Edit::ContactEmailsComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
@@ -36,25 +37,25 @@
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Collections::Edit::PaneComponent.new(tab_name: :related_links, label: t('collections.edit.panes.related_links.label'), tooltip: t('collections.edit.panes.related_links.tooltip_html')) do %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :related_links, label: t('collections.edit.panes.related_links.label'), tooltip: t('collections.edit.panes.related_links.tooltip_html'), active_tab_name:) do %>
         <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, fieldset_classes: 'pane-section', skip_tooltip: true) %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Collections::Edit::PaneComponent.new(tab_name: :access, label: t('collections.edit.panes.access.label')) do %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :access, label: t('collections.edit.panes.access.label'), active_tab_name:) do %>
         <%= render Collections::Edit::AccessSettingsComponent.new(form:) %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Collections::Edit::PaneComponent.new(tab_name: :license, label: t('collections.edit.panes.license.label'), help_text: t('collections.edit.panes.license.help_text'), tooltip: t('collections.edit.panes.license.tooltip_html')) do %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :license, label: t('collections.edit.panes.license.label'), help_text: t('collections.edit.panes.license.help_text'), tooltip: t('collections.edit.panes.license.tooltip_html'), active_tab_name:) do %>
         <%= render Collections::Edit::LicenseComponent.new(form:) %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Collections::Edit::PaneComponent.new(tab_name: :participants, label: t('collections.edit.panes.participants.label'), help_text: t('collections.edit.panes.participants.help_text')) do %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :participants, label: t('collections.edit.panes.participants.label'), help_text: t('collections.edit.panes.participants.help_text'), active_tab_name:) do %>
         <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, form_component: Collections::ContributorComponent, fieldset_classes: 'pane-section') %>
         <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, form_component: Collections::ContributorComponent, fieldset_classes: 'pane-section') %>
         <%= render Collections::Edit::ParticipantNotificationsComponent.new(form:) %>
@@ -62,13 +63,13 @@
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Collections::Edit::PaneComponent.new(tab_name: :workflow, label: t('collections.edit.panes.workflow.label'), help_text: t('collections.edit.panes.workflow.help_text')) do %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :workflow, label: t('collections.edit.panes.workflow.label'), help_text: t('collections.edit.panes.workflow.help_text'), active_tab_name:) do %>
         <%= render Collections::Edit::WorkflowComponent.new(form:) %>
       <% end %>
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Collections::Edit::PaneComponent.new(tab_name: :deposit, label: t('collections.edit.panes.deposit.label'), help_text: t('collections.edit.panes.deposit.help_text')) do |component| %>
+      <%= render Collections::Edit::PaneComponent.new(tab_name: :deposit, label: t('collections.edit.panes.deposit.label'), help_text: t('collections.edit.panes.deposit.help_text'), active_tab_name:) do |component| %>
         <%# For spacing %>
         <div class="pane-section"></div>
         <% component.with_deposit_button do %>

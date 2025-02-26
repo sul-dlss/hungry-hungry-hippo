@@ -13,6 +13,10 @@ class ContentsController < ApplicationController
   # Called from work show page.
   def show_table
     authorize! @content
+
+    work = Work.find_by!(druid: params[:druid])
+    version_status = Sdr::Repository.status(druid: params[:druid])
+    @work_presenter = WorkPresenter.new(work:, version_status:, work_form: WorkForm.new(druid: params[:druid]))
   end
 
   def update

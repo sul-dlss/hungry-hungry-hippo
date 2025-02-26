@@ -68,7 +68,7 @@ RSpec.describe 'Edit a work' do
   end
 
   it 'edits a work' do
-    visit edit_work_path(druid)
+    visit edit_work_path(druid, tab: 'title')
 
     expect(page).to have_css('.breadcrumb-item', text: collection_title_fixture)
     expect(page).to have_link(collection_title_fixture, href: collection_path(druid: collection_druid_fixture))
@@ -79,7 +79,7 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_button('Next')
     expect(page).to have_button('Discard draft')
 
-    find('.nav-link', text: 'Title').click
+    expect(page).to have_css('.nav-link.active', text: 'Title')
     expect(page).to have_field('Title of deposit', with: title_fixture)
 
     fill_in('Title of deposit', with: updated_title)

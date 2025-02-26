@@ -8,10 +8,10 @@ module Edit
       renders_one :footer
       renders_one :help
 
-      def initialize(tab_name:, label: nil, selected: false, help_text: nil, tooltip: nil)
+      def initialize(tab_name:, active_tab_name:, label: nil, help_text: nil, tooltip: nil)
         @tab_name = tab_name
         @label = label
-        @selected = selected
+        @selected = tab_name == active_tab_name
         @help_text = help_text
         @tooltip = tooltip
         super()

@@ -4,12 +4,13 @@ module Works
   module Show
     # Component for rendering a table of contributors on the work show page.
     class ContributorsShowComponent < ApplicationComponent
-      def initialize(contributors:)
+      def initialize(contributors:, work_presenter:)
         @contributors = contributors
+        @work_presenter = work_presenter
         super()
       end
 
-      attr_reader :contributors
+      attr_reader :contributors, :work_presenter
 
       def headers
         %w[Contributor ORCID Role]

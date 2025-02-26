@@ -51,9 +51,11 @@ RSpec.describe 'Edit a collection' do
   end
 
   it 'edits a collection' do
-    visit edit_collection_path(druid)
+    visit edit_collection_path(druid, tab: 'related_links')
 
     expect(page).to have_css('h1', text: collection_title_fixture)
+
+    expect(page).to have_css('.nav-link.active', text: 'Related links (optional)')
 
     find('.nav-link', text: 'Details').click
     expect(page).to have_field('Collection name', with: collection_title_fixture)

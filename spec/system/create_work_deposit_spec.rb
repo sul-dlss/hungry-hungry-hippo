@@ -249,7 +249,7 @@ RSpec.describe 'Create a work deposit' do
                                                           @registered_cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid:)
                                                 .and_return(openable_version_status, openable_version_status,
-                                                            accessioning_version_status)
+                                                            openable_version_status, accessioning_version_status)
     end
 
     it 'updates and deposits a work' do

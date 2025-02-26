@@ -4,10 +4,10 @@ module Edit
   module TabForm
     # Component for a tab in a tabbed pane.
     class TabComponent < ApplicationComponent
-      def initialize(label:, tab_name:, selected: false)
+      def initialize(label:, tab_name:, active_tab_name:)
         @label = label
         @tab_name = tab_name
-        @selected = selected
+        @selected = tab_name == active_tab_name
         super()
       end
 

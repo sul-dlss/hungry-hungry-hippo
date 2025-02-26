@@ -132,6 +132,7 @@ RSpec.describe 'Show a work' do
       # Files table
       within('table#files-table') do
         expect(page).to have_css('caption', text: 'Files')
+        expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'files'))
         expect(page).to have_css('th', text: 'File Name')
         expect(page).to have_css('th', text: 'Description')
         expect(page).to have_css('td', text: 'my_file1.txt')
@@ -172,6 +173,7 @@ RSpec.describe 'Show a work' do
       # Title table
       within('table#title-table') do
         expect(page).to have_css('caption', text: 'Title and contact')
+        expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'title'))
         expect(page).to have_css('tr', text: 'Title')
         expect(page).to have_css('td', text: work.title)
         expect(page).to have_css('tr', text: 'Contact emails')
@@ -181,6 +183,7 @@ RSpec.describe 'Show a work' do
       # Authors
       within('table#contributors-table') do
         expect(page).to have_css('caption', text: 'Contributors')
+        expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'contributors'))
         expect(page).to have_css('th', text: 'Contributor')
         expect(page).to have_css('th', text: 'ORCID')
         expect(page).to have_css('th', text: 'Role')
@@ -192,6 +195,7 @@ RSpec.describe 'Show a work' do
       # Description table
       within('table#description-table') do
         expect(page).to have_css('caption', text: 'Abstract and keywords')
+        expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'abstract'))
         expect(page).to have_css('tr', text: 'Abstract')
         expect(page).to have_css('td', text: abstract_fixture)
         expect(page).to have_css('tr', text: 'Keywords')
@@ -201,6 +205,7 @@ RSpec.describe 'Show a work' do
       # Work type table
       within('table#work-type-table') do
         expect(page).to have_css('caption', text: 'Type of deposit')
+        expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'types'))
         expect(page).to have_css('tr', text: 'Deposit type')
         expect(page).to have_css('td', text: work_type_fixture)
         expect(page).to have_css('tr', text: 'Deposit subtypes')
@@ -210,6 +215,7 @@ RSpec.describe 'Show a work' do
       # Dates table
       within('table#dates-table') do
         expect(page).to have_css('caption', text: 'Dates')
+        expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'dates'))
         expect(page).to have_css('tr', text: 'Publication date')
         expect(page).to have_css('td', text: '2024-12')
         expect(page).to have_css('tr', text: 'Creation date')
@@ -219,6 +225,7 @@ RSpec.describe 'Show a work' do
       # Preferred citation table
       within('table#citation-table') do
         expect(page).to have_css('caption', text: 'Citation')
+        expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'citation'))
         expect(page).to have_css('tr', text: 'Preferred citation')
         expect(page).to have_css('td', text: citation_fixture)
       end
@@ -227,7 +234,7 @@ RSpec.describe 'Show a work' do
       within('table#related-content-table') do
         expect(page).to have_css('caption', text: 'Related content')
         expect(page).to have_css('tr', text: 'Related links')
-        expect(page).to have_css('td', text: related_links_fixture.first['text'])
+        expect(page).to have_css('td', text: related_links_fixture.first['related_content'])
         expect(page).to have_css('tr', text: 'Related published work')
         expect(page).to have_css('td', text: 'Here is a valid citation. (part of)')
         expect(page).to have_css('td', text: 'doi:10.7710/2162-3309.1059 (has part)')
@@ -236,6 +243,7 @@ RSpec.describe 'Show a work' do
       # Access settings table
       within('table#access-table') do
         expect(page).to have_css('caption', text: 'Access settings')
+        expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'access'))
         expect(page).to have_css('tr', text: 'Available')
         expect(page).to have_css('td', text: 'June 10, 2027')
         expect(page).to have_css('tr', text: 'Access')
@@ -245,6 +253,7 @@ RSpec.describe 'Show a work' do
       # License table
       within('table#license-table') do
         expect(page).to have_css('caption', text: 'License')
+        expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'license'))
         expect(page).to have_css('tr', text: 'License')
         expect(page).to have_css('td', text: license_label_fixture)
         expect(page).to have_css('tr', text: 'Terms of use')
@@ -265,6 +274,7 @@ RSpec.describe 'Show a work' do
       # Files table
       within('table#files-table') do
         expect(page).to have_css('caption', text: 'Files')
+        expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'files'))
         expect(page).to have_css('th', text: 'File Name')
         expect(page).to have_css('th', text: 'Description')
         expect(page).to have_css('th', text: 'Hide')
@@ -305,6 +315,19 @@ RSpec.describe 'Show a work' do
         expect(page).to have_text('The reviewer for this collection has returned the deposit')
         expect(page).to have_css('blockquote', text: 'Try harder.')
       end
+    end
+  end
+
+  context 'when not editable' do
+    let(:version_status) { build(:accessioning_version_status) }
+
+    it 'shows a work' do
+      visit work_path(druid)
+
+      expect(page).to have_css('h1', text: work.title)
+      expect(page).to have_css('.status', text: 'Depositing')
+      expect(page).to have_no_link('Edit or deposit')
+      expect(page).to have_no_link('Edit')
     end
   end
 end
