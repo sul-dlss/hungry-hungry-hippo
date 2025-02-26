@@ -49,7 +49,7 @@ module ToCocina
 
       def access
         { view: 'world' }.tap do |params|
-          if collection_form.license_option == 'required' && collection_form.license.present?
+          if collection_form.license_option == 'required' && collection_form.license != License::NO_LICENSE_ID
             params[:license] = collection_form.license
           end
         end

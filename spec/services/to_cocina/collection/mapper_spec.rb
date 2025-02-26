@@ -33,7 +33,7 @@ RSpec.describe ToCocina::Collection::Mapper, type: :mapping do
 
   context 'with none license' do
     before do
-      collection_form.license = ''
+      collection_form.license = License::NO_LICENSE_ID
     end
 
     it 'does not include license in access' do
