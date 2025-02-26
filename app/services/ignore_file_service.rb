@@ -15,9 +15,9 @@ class IgnoreFileService
 
   # @return [Boolean] true if the file should be ignored, false otherwise
   def call
-    filepath.start_with?(*START_WITH_PATTERNS) \
-    || File.basename(filepath).start_with?(*START_WITH_PATTERNS) \
-    || filepath.end_with?(*END_WITH_PATTERNS)
+    filepath.start_with?(*START_WITH_PATTERNS) ||
+      File.basename(filepath).start_with?(*START_WITH_PATTERNS) ||
+      filepath.end_with?(*END_WITH_PATTERNS)
   end
 
   private
