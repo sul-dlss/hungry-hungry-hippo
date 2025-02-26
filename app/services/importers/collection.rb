@@ -41,7 +41,7 @@ module Importers
         collection.license = license
         collection.custom_rights_statement_option = custom_rights_statement_option
         collection.provided_custom_rights_statement = collection_json['provided_custom_rights_statement']
-        collection.custom_rights_statement_custom_instructions = collection_json['custom_rights_statement_custom_instructions'] # rubocop:disable Layout/LineLength
+        collection.custom_rights_statement_instructions = custom_rights_statement_instructions
         collection.email_when_participants_changed = collection_json['email_when_participants_changed']
         collection.email_depositors_status_changed = collection_json['email_depositors_status_changed']
         collection.review_enabled = collection_json['review_enabled']
@@ -89,6 +89,15 @@ module Importers
       else
         'depositor_selects'
       end
+    end
+
+    # This field was renamed via migration; we want to populate it with a default
+    # if left empty in H2 and the collection is set to 'depositor selects'
+    def custom_rights_statement_instructions
+      return unless custom_rights_statement_option == 'depositor_selects'
+
+      collection_json['custom_rights_statement_custom_instructions'].presence ||
+        I18n.t('terms_of_use.default_use_statement_instructions')
     end
 
     def users_from(field)
