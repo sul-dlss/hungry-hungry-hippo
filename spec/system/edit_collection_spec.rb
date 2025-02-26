@@ -136,7 +136,8 @@ RSpec.describe 'Edit a collection' do
       fill_in('SUNet ID', with: 'joehill')
     end
 
-    find('label', text: 'Send email to Collection Managers and Reviewers when participants are added/removed').click
+    find('label', text: 'Send email to Collection Managers and Reviewers ' \
+                        '(see Workflow section of form) when participants are added/removed').click
     find('label', text: 'Send email to Depositors whose status has changed.').click
 
     # Clicking on Next to go to Workflow
