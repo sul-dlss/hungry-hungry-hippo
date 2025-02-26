@@ -182,7 +182,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       content_id: @content.id,
       license: @collection.license,
       access: @collection.stanford_access? ? 'stanford' : 'world',
-      agree_to_terms: current_user.agree_to_terms?
+      agree_to_terms: current_user.agree_to_terms?,
+      contact_emails_attributes: [{ email: current_user.email_address }]
     )
   end
 

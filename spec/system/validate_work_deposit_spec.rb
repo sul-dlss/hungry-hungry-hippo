@@ -21,7 +21,8 @@ RSpec.describe 'Validate a work deposit' do
     # Filling in title
     find('.nav-link', text: 'Title and contact').click
     fill_in('work_title', with: title_fixture)
-    # Contact email is required, but skipping.
+    # Contact email is required, but removing.
+    click_link_or_button('Clear')
 
     # Abstract is required for deposit, but skipping.
 
