@@ -71,6 +71,11 @@ RSpec.describe 'Manage files for a work' do
       await_upload
       expect(page).to have_css('tr[aria-level="2"] td', text: 'hippo.png')
       ContentFile.find_by!(filepath: 'hippopotamus/hippo.png')
+
+      # Upload an ignored file
+      find('.dropzone').drop('spec/fixtures/files/hippo.txt.DS_Store')
+      await_upload
+      expect(page).to have_no_css('table#content-table td', text: 'hippo.txt.DS_Store')
     end
   end
 
