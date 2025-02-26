@@ -21,25 +21,10 @@ RSpec.describe Works::Edit::TermsOfUseComponent, type: :component do
     end
   end
 
-  context 'with default instructions' do
-    let(:collection) do
-      instance_double(Collection, provided_custom_rights_statement_option?: false,
-                                  custom_rights_statement_custom_instructions: nil)
-    end
-
-    it 'renders the default instructions and input' do
-      render_inline(described_class.new(form:, collection:))
-
-      expect(page).to have_css('label', text: 'Additional terms of use (optional)')
-      expect(page).to have_css('.form-text', text: 'Enter additional terms of use not covered')
-      expect(page).to have_field('custom_rights_statement', type: 'textarea')
-    end
-  end
-
   context 'with provided instructions' do
     let(:collection) do
       instance_double(Collection, provided_custom_rights_statement_option?: false,
-                                  custom_rights_statement_custom_instructions: instructions)
+                                  custom_rights_statement_instructions: instructions)
     end
 
     let(:instructions) { 'What terms do you want?' }

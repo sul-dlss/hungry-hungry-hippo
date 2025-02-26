@@ -13,18 +13,9 @@ module Works
       attr_reader :form
 
       delegate :provided_custom_rights_statement_option?, :provided_custom_rights_statement,
-               :custom_rights_statement_custom_instructions, to: :@collection
-
-      def instructions
-        custom_rights_statement_custom_instructions.presence || default_instructions
-      end
+               :custom_rights_statement_instructions, to: :@collection
 
       private
-
-      def default_instructions
-        'Enter additional terms of use not covered by your chosen license or the default terms shown above, ' \
-          'which also displays on the PURL page.'
-      end
 
       def label
         helpers.t('works.edit.fields.custom_rights_statement.label')
