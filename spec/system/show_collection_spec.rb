@@ -54,6 +54,7 @@ RSpec.describe 'Show a collection' do
     # Details table
     within('table#details-table') do
       expect(page).to have_css('caption', text: 'Details')
+      expect(page).to have_link('Edit', href: edit_collection_path(druid, tab: 'details'))
       expect(page).to have_css('tr', text: 'Collection name')
       expect(page).to have_css('td', text: collection.title)
       expect(page).to have_css('tr', text: 'Description')
@@ -65,6 +66,7 @@ RSpec.describe 'Show a collection' do
     # Related Content table
     within('table#related-content-table') do
       expect(page).to have_css('caption', text: 'Links to related information')
+      expect(page).to have_link('Edit', href: edit_collection_path(druid, tab: 'related_links'))
       expect(page).to have_css('tr', text: 'Related links')
       expect(page).to have_css('td', text: related_links_fixture.first['text'])
     end
@@ -72,6 +74,7 @@ RSpec.describe 'Show a collection' do
     # Release and visibility table
     within('table#release-visibility-table') do
       expect(page).to have_css('caption', text: 'Release and visibility')
+      expect(page).to have_link('Edit', href: edit_collection_path(druid, tab: 'access'))
       expect(page).to have_css('tr', text: 'Release')
       expect(page).to have_css('td', text: 'Depositor selects release date no more than 1 year in the future')
       expect(page).to have_css('tr', text: 'Visibility')
@@ -83,6 +86,7 @@ RSpec.describe 'Show a collection' do
     # Terms of use and licenses table
     within('table#terms-licenses-table') do
       expect(page).to have_css('caption', text: 'Terms of use and licenses')
+      expect(page).to have_link('Edit', href: edit_collection_path(druid, tab: 'license'))
       expect(page).to have_css('tr', text: 'Terms of use')
       expect(page).to have_css('td', text: 'User agrees that')
       expect(page).to have_css('tr', text: 'Additional terms of use')
@@ -94,6 +98,7 @@ RSpec.describe 'Show a collection' do
     # Participants table
     within('table#participants-table') do
       expect(page).to have_css('caption', text: 'Collection participants')
+      expect(page).to have_link('Edit', href: edit_collection_path(druid, tab: 'participants'))
       expect(page).to have_css('tr', text: 'Managers')
       expect(page).to have_css('td', text: collection.managers.first.email_address)
       expect(page).to have_css('tr', text: 'Depositors')
@@ -103,6 +108,7 @@ RSpec.describe 'Show a collection' do
     # Review workflow table
     within('table#review-workflow-table') do
       expect(page).to have_css('caption', text: 'Review workflow')
+      expect(page).to have_link('Edit', href: edit_collection_path(druid, tab: 'workflow'))
       expect(page).to have_css('tr', text: 'Status')
       expect(page).to have_css('td', text: 'On')
       expect(page).to have_css('tr', text: 'Reviewers')

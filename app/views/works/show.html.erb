@@ -25,55 +25,55 @@
   <% component.with_row(label: 'Deposit created', values: [@work_presenter.deposited_at]) %>
 <% end %>
 
-<%= turbo_frame_tag @content, src: show_table_content_path(@content) do %>
+<%= turbo_frame_tag @content, src: show_table_content_path(@content, druid: @work_presenter.druid) do %>
   <%= render Elements::SpinnerComponent.new %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'title-table', classes: 'mb-5') do |component| %>
-  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Title and contact') %><% end %>
+  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Title and contact', presenter: @work_presenter, tab: :title) %><% end %>
   <% component.with_row(label: 'Title', values: [@work_presenter.title]) %>
   <% component.with_row(label: 'Contact emails', values: [@work_presenter.contact_emails]) %>
 <% end %>
 
-<%= render Works::Show::ContributorsShowComponent.new(contributors: @work_presenter.contributors) %>
+<%= render Works::Show::ContributorsShowComponent.new(contributors: @work_presenter.contributors, work_presenter: @work_presenter) %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'mb-5') do |component| %>
-  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Dates') %><% end %>
+  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Dates', presenter: @work_presenter, tab: :dates) %><% end %>
   <% component.with_row(label: 'Publication date', values: [@work_presenter.publication_date]) %>
   <% component.with_row(label: 'Creation date', values: [@work_presenter.creation_date]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'citation-table', classes: 'mb-5') do |component| %>
-  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Citation') %><% end %>
+  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Citation', presenter: @work_presenter, tab: :citation) %><% end %>
   <% component.with_row(label: 'Preferred citation', values: [@work_presenter.citation]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'mb-5') do |component| %>
-  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Abstract and keywords') %><% end %>
+  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Abstract and keywords', presenter: @work_presenter, tab: :abstract) %><% end %>
   <% component.with_row(label: 'Abstract', values: [simple_format(@work_presenter.abstract).html_safe]) %> <%# erb_lint:disable ErbSafety %>
   <% component.with_row(label: 'Keywords', values: [@work_presenter.keywords]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'work-type-table', classes: 'mb-5') do |component| %>
-  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Type of deposit') %><% end %>
+  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Type of deposit', presenter: @work_presenter, tab: :types) %><% end %>
   <% component.with_row(label: 'Deposit type', values: [@work_presenter.work_type]) %>
   <% component.with_row(label: 'Deposit subtypes', values: [@work_presenter.all_work_subtypes]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'mb-5') do |component| %>
-  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Related content') %><% end %>
+  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Related content', presenter: @work_presenter, tab: :related_content) %><% end %>
   <% component.with_row(label: 'Related published work', values: @work_presenter.related_works) %>
   <% component.with_row(label: 'Related links', values: @work_presenter.related_links) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'access-table', classes: 'mb-5') do |component| %>
-  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Access settings') %><% end %>
+  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Access settings', presenter: @work_presenter, tab: :access) %><% end %>
   <% component.with_row(label: 'Available', values: [@work_presenter.release_date_label]) %>
   <% component.with_row(label: 'Access', values: [@work_presenter.access_label]) %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'license-table', classes: 'mb-5') do |component| %>
-  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'License and additional terms of use') %><% end %>
+  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'License and additional terms of use', presenter: @work_presenter, tab: :license) %><% end %>
   <% component.with_row(label: 'License', values: [@work_presenter.license_label]) %>
   <% component.with_row(label: 'Terms of use', values: [@work_presenter.terms_of_use]) %>
 <% end %>

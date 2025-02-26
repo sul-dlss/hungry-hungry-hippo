@@ -1,4 +1,5 @@
-<%= render Elements::Tables::TableComponent.new(id: 'contributors-table', classes: 'table-work mb-5', label: 'Contributors') do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'contributors-table', classes: 'table-work mb-5') do |component| %>
+  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Contributors', presenter: work_presenter, tab: :contributors) %><% end %>
   <% component.with_header(headers:) %>
   <% contributors.each do |contributor| %>
     <% component.with_row(values: values_for(contributor)) %>
