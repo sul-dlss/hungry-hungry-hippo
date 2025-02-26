@@ -108,7 +108,8 @@ RSpec.describe Importers::Collection do
       expect(collection.yes_doi_option?).to be(true)
       expect(collection.required_license_option?).to be(true)
       expect(collection.depositor_selects_custom_rights_statement_option?).to be(true)
-      expect(collection.custom_rights_statement_custom_instructions).to eq('These are the instructions')
+      expect(collection.custom_rights_statement_instructions).to eq('These are the instructions')
+      expect(collection.custom_rights_statement_option).to eq('depositor_selects')
       expect(collection.email_when_participants_changed).to be(true)
       expect(collection.email_depositors_status_changed).to be(false)
       expect(collection.review_enabled).to be(true)
@@ -127,6 +128,17 @@ RSpec.describe Importers::Collection do
         described_class.call(collection_json:)
       end.to raise_error(Importers::Error,
                          "Collection #{druid} cannot be roundtripped").and not_change(Collection, :count)
+    end
+  end
+
+  context 'when depositor selects rights statement but there are no instructions' do
+    it 'uses the default custom rights statement instructions' do
+      collection_json['custom_rights_statement_custom_instructions'] = nil
+      collection = described_class.call(collection_json:)
+
+      expect(collection.custom_rights_statement_instructions).to eq(
+        I18n.t('terms_of_use.default_use_statement_instructions')
+      )
     end
   end
 end

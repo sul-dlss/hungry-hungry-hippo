@@ -40,8 +40,8 @@ class CollectionPresenter < FormPresenter
     when 'provided'
       collection.provided_custom_rights_statement
     else
-      if collection.custom_rights_statement_custom_instructions.present?
-        "Allow user to enter with instructions: #{collection.custom_rights_statement_custom_instructions}"
+      if collection.custom_rights_statement_instructions.present?
+        "Allow user to enter with instructions: #{collection.custom_rights_statement_instructions}"
       else
         'Allow user to enter'
       end

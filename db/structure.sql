@@ -181,7 +181,7 @@ CREATE TABLE public.collections (
     license character varying,
     custom_rights_statement_option character varying,
     provided_custom_rights_statement character varying,
-    custom_rights_statement_custom_instructions character varying,
+    custom_rights_statement_instructions character varying,
     email_when_participants_changed boolean DEFAULT true NOT NULL,
     email_depositors_status_changed boolean DEFAULT true NOT NULL,
     review_enabled boolean DEFAULT false NOT NULL,
@@ -713,6 +713,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250224190134'),
 ('20250220231211'),
 ('20250123195702'),
 ('20250123120038'),
@@ -739,4 +740,3 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241115001126'),
 ('20241111223829'),
 ('20241106143736');
-
