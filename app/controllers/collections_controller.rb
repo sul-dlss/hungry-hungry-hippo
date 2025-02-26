@@ -17,7 +17,10 @@ class CollectionsController < ApplicationController
 
   def new
     authorize! Collection
-    @collection_form = CollectionForm.new(managers_attributes: [{ sunetid: current_user.sunetid }, {}])
+    @collection_form = CollectionForm.new(
+      managers_attributes: [{ sunetid: current_user.sunetid }, {}],
+      contact_emails_attributes: [{ email: current_user.email_address }]
+    )
 
     render :form
   end

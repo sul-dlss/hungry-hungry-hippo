@@ -56,7 +56,7 @@ RSpec.describe 'Create a collection deposit' do
     find('.nav-link', text: 'Details').click
     fill_in('collection_title', with: collection_title_fixture)
     fill_in('collection_description', with: collection_description_fixture)
-    fill_in('Contact email', with: contact_emails_fixture.first['email'])
+    expect(page).to have_field('Contact email', with: user.email_address)
 
     # Clicking on Next to go to related content tab
     click_link_or_button('Next')

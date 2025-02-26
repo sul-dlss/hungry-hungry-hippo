@@ -72,8 +72,7 @@ RSpec.describe 'Create a work deposit' do
       # Filling in title
       find('.nav-link', text: 'Title and contact').click
       fill_in('work_title', with: title_fixture)
-      fill_in('Contact email', with: contact_emails_fixture[1]['email'])
-      expect(page).to have_field('Contact email', with: contact_emails_fixture[1]['email'])
+      expect(page).to have_field('Contact email', with: user.email_address)
       click_link_or_button('Clear')
       expect(page).to have_field('Contact email', with: '')
       fill_in('Contact email', with: contact_emails_fixture.first['email'])
