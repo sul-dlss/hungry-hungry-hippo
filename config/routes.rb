@@ -41,6 +41,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
     namespace :admin do
       resources :move, only: %i[new create], controller: 'move'
+      resources :delete, only: %i[new create], controller: 'delete_work'
     end
   end
 
