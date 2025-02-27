@@ -6,7 +6,7 @@ module Edit
     def initialize(presenter:, **args)
       @presenter = presenter
       args[:label] ||= 'Edit or deposit'
-      args[:variant] = 'outline-primary'
+      args[:variant] = 'primary'
       # polymorphic_path cannot be used in initializer, so overrriding link below
       args[:link] = nil
       super(**args)
