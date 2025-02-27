@@ -80,6 +80,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resource :collection_search, only: %i[new], controller: 'collection_search' do
       get 'search', to: 'collection_search#search'
     end
+
+    resource :druid_search, only: %i[new], controller: 'druid_search' do
+      get 'search', to: 'druid_search#search'
+    end
   end
 
   root 'home#show'
