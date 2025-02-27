@@ -3,15 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe ToCollectionForm::RoundtripValidator, type: :mapping do
-  subject(:roundtrippable?) do
-    described_class.roundtrippable?(collection_form: collection_form_fixture, cocina_object:)
+  subject(:validator) do
+    described_class.new(collection_form: collection_form_fixture, cocina_object:)
   end
 
   context 'when roundtrippable' do
     let(:cocina_object) { collection_with_metadata_fixture }
 
     it 'returns true' do
-      expect(roundtrippable?).to be true
+      expect(validator.call).to be true
     end
   end
 
@@ -19,7 +19,7 @@ RSpec.describe ToCollectionForm::RoundtripValidator, type: :mapping do
     let(:cocina_object) { collection_with_metadata_fixture.new(cocinaVersion: '0.1.1') }
 
     it 'returns true' do
-      expect(roundtrippable?).to be true
+      expect(validator.call).to be true
     end
   end
 
@@ -27,7 +27,19 @@ RSpec.describe ToCollectionForm::RoundtripValidator, type: :mapping do
     let(:cocina_object) { collection_with_metadata_fixture.new(type: Cocina::Models::ObjectType.curated_collection) }
 
     it 'returns false' do
-      expect(roundtrippable?).to be false
+      expect(validator.call).to be false
+    end
+  end
+
+  context 'when cocina raises a validation error' do
+    before do
+      allow(ToCocina::Collection::Mapper).to receive(:call).and_raise(Cocina::Models::ValidationError)
+    end
+
+    let(:cocina_object) { collection_with_metadata_fixture }
+
+    it 'returns false' do
+      expect(validator.call).to be false
     end
   end
 end

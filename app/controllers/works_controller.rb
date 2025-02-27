@@ -143,8 +143,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   def set_work_form_from_cocina
     @cocina_object = Sdr::Repository.find(druid: params[:druid])
     version_description = @version_status.open? ? @version_status.version_description : nil
-    @work_form = ToWorkForm::Mapper.call(cocina_object: @cocina_object,
-                                         doi_assigned: doi_assigned?, agree_to_terms: current_user.agree_to_terms?,
+    @work_form = ToWorkForm::Mapper.call(cocina_object: @cocina_object, doi_assigned: doi_assigned?,
+                                         agree_to_terms: current_user.agree_to_terms?,
                                          version_description:)
   end
 
@@ -168,8 +168,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     # and there is not a Collection record for the collection_druid in the work.
     return false unless Collection.exists?(druid: @work_form.collection_druid)
 
-    ToWorkForm::RoundtripValidator.roundtrippable?(work_form: @work_form, cocina_object: @cocina_object,
-                                                   content: @content)
+    ToWorkForm::RoundtripValidator.call(work_form: @work_form, cocina_object: @cocina_object,
+                                        content: @content)
   end
 
   def set_presenter

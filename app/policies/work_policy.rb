@@ -28,9 +28,8 @@ class WorkPolicy < ApplicationPolicy
   end
 
   def collection_depositor?
-    return record.depositors.include?(user) if record.is_a? Collection
-
-    record.collection.depositors.include?(user)
+    # NOTE: `record` should always be a Collection here
+    record.depositors.include?(user)
   end
 
   def collection_owner?

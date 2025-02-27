@@ -255,12 +255,10 @@ RSpec.describe Sdr::Repository do
     let(:version_client) do
       instance_double(Dor::Services::Client::ObjectVersion, status: version_status, discard: true)
     end
-
     let(:version_status) do
       instance_double(Dor::Services::Client::ObjectVersion::VersionStatus, version:, discardable?: discardable,
                                                                            open?: true)
     end
-
     let(:version) { 2 }
     let(:discardable) { true }
 
@@ -293,6 +291,18 @@ RSpec.describe Sdr::Repository do
         described_class.discard_draft(druid:)
 
         expect(version_client).to have_received(:discard)
+      end
+    end
+
+    context 'when discard fails' do
+      let(:version) { 1 }
+
+      before do
+        allow(object_client).to receive(:destroy).and_raise(Dor::Services::Client::Error, 'Failed to update')
+      end
+
+      it 'raises' do
+        expect { described_class.discard_draft(druid:) }.to raise_error(Sdr::Repository::Error)
       end
     end
   end

@@ -76,4 +76,50 @@ RSpec.describe 'Show collection' do
       expect(collection.object_updated_at).to eq(cocina_object.modified)
     end
   end
+
+  context 'when no custom rights statement' do
+    let(:cocina_object) { collection_with_metadata_fixture }
+    let!(:collection) { create(:collection, druid:, user:, custom_rights_statement_option: 'no') }
+    let(:user) { create(:user) }
+
+    before do
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:version_status))
+
+      sign_in(user)
+    end
+
+    it 'shows the collection with expected additional terms of use' do
+      get "/collections/#{druid}"
+
+      expect(response).to have_http_status(:ok)
+      # Match when a line contains "No" immediately after a line contains "Additional terms of use"
+      expect(response.body).to match(/(?<=Additional terms of use).+\R.+No/)
+    end
+  end
+
+  context 'when depositor selects custom rights statement and custom instructions are present' do
+    let(:cocina_object) { collection_with_metadata_fixture }
+    let!(:collection) do
+      create(:collection, druid:, user:, custom_rights_statement_option: 'depositor_selects',
+                          custom_rights_statement_instructions: 'Whip it!')
+    end
+    let(:user) { create(:user) }
+
+    before do
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:version_status))
+
+      sign_in(user)
+    end
+
+    it 'renders additional terms of use as expected' do
+      get "/collections/#{druid}"
+
+      expect(response).to have_http_status(:ok)
+      # Match when a line contains custom instructions immediately after a line contains "Additional terms of use"
+      expect(response.body)
+        .to match(/(?<=Additional terms of use).+\R.+Allow user to enter with instructions: Whip it!/)
+    end
+  end
 end

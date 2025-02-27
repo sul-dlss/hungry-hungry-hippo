@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe Contents::Analyzer do
   let(:content) { create(:content) }
-
   let!(:attached_file) { create(:content_file, :attached, content:) }
   let!(:deposited_file) { create(:content_file, content:) }
 

@@ -30,15 +30,10 @@ module ToWorkForm
       return [] if RelatedWorkForm::RELATIONSHIP_TYPES.exclude?(related_resource.type)
 
       if related_resource.note&.first&.[](:type) == 'preferred citation'
-        return [related_resource.note&.first&.[](:value), nil]
+        [related_resource.note&.first&.[](:value), nil]
+      elsif related_resource.identifier&.first&.[](:uri).present?
+        [nil, related_resource.identifier&.first&.[](:uri)]
       end
-
-      if related_resource.identifier&.first&.[](:uri).present?
-        return [nil,
-                related_resource.identifier&.first&.[](:uri)]
-      end
-
-      []
     end
   end
 end
