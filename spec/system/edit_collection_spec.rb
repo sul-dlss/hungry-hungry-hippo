@@ -168,8 +168,8 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_content('pennywise@stanford.edu')
 
     # License
-    expect(page).to have_css('th', text: 'Default license')
-    expect(page).to have_css('td', text: 'CC-BY-4.0 Attribution International')
+    expect(page).to have_css('th', text: 'License')
+    expect(page).to have_css('td', text: 'Depositor selects. Default license: CC-BY-4.0 Attribution International')
     expect(page).to have_no_content('aborland@stanford.edu')
   end
 end
