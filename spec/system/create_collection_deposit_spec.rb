@@ -79,7 +79,7 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_css('.nav-link.active', text: 'License')
     expect(page).to have_text('License')
     expect(page).to have_checked_field('Require license for all deposits')
-    expect(page).to have_select('Required license', selected: 'No License')
+    expect(page).to have_select('Required license', selected: 'Select required license...')
     select('CC-BY-4.0 Attribution International', from: 'Required license')
 
     # Clicking on Next to go to Participants tab

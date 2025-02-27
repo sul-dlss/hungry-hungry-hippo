@@ -68,6 +68,11 @@ RSpec.describe 'Validate a collection deposit' do
     select('3 years in the future', from: 'collection_release_duration')
     expect(page).to have_select('Release duration', selected: '3 years in the future')
 
+    # Required license is marked invalidate
+    find('.nav-link', text: 'License').click
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'can\'t be blank')
+    select('No License', from: 'Required license')
+
     # Try to deposit again
     find('.nav-link', text: 'Save your collection').click
     expect(page).to have_css('.nav-link.active', text: 'Save your collection')

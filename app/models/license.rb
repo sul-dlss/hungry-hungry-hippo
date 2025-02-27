@@ -7,4 +7,6 @@ class License < FrozenRecord::Base
     'Software Licenses',
     'Other'
   ].freeze
+
+  NO_LICENSE_ID = 'no-license'
 end

@@ -82,7 +82,7 @@
   deprecated: false
   label: "PDDL-1.0 Public Domain Dedication and License"
   group: "Open Data Commons (ODC) licenses"
-- id: ""
+- id: "no-license"
   deprecated: false
   label: "No License"
   group: "Other"
