@@ -118,7 +118,7 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_no_link('Edit')
 
     # License
-    expect(page).to have_css('th', text: 'Required license')
-    expect(page).to have_css('td', text: 'CC-BY-4.0 Attribution International')
+    expect(page).to have_css('th', text: 'License')
+    expect(page).to have_css('td', text: 'License required: CC-BY-4.0 Attribution International')
   end
 end
