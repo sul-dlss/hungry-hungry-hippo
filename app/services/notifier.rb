@@ -15,6 +15,7 @@ class Notifier
   REVIEW_APPROVED = 'review_approved'
   REVIEW_REJECTED = 'review_rejected'
 
+  DEPOSIT_PERSIST_COMPLETE = 'deposit_persist_complete'
   ACCESSIONING_COMPLETE = 'accessioning_complete'
 
   # Publishes an event with the given name and payload

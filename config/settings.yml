@@ -64,3 +64,4 @@ rabbitmq:
 
 notifications:
   enabled: true
+  admin_email: h2-administrators@lists.stanford.edu
