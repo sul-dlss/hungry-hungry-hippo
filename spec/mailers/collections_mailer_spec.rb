@@ -132,4 +132,23 @@ RSpec.describe CollectionsMailer do
       end
     end
   end
+
+  describe '#first_version_created_email' do
+    let(:collection) do
+      create(:collection, user:,
+                          title: '20 Minutes into the Future')
+    end
+    let(:mail) { described_class.with(collection:).first_version_created_email }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq 'A new collection has been created'
+      expect(mail.to).to eq ['h2-administrators@lists.stanford.edu']
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders the body' do
+      expect(mail).to match_body('Dear Administrator,')
+      expect(mail).to match_body('The following new collection has been created in H3')
+    end
+  end
 end

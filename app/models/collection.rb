@@ -51,4 +51,8 @@ class Collection < ApplicationRecord
   def reviewers_and_managers
     (reviewers + managers).uniq
   end
+
+  def first_version?
+    version == 1
+  end
 end

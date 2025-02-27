@@ -36,6 +36,10 @@ class CollectionsMailer < ApplicationMailer
     end
   end
 
+  def first_version_created_email
+    mail(to: Settings.notifications.admin_email, subject: 'A new collection has been created')
+  end
+
   private
 
   def set_user

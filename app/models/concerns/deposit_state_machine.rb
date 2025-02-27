@@ -31,6 +31,10 @@ module DepositStateMachine
         transition accessioning: :deposit_not_in_progress
       end
 
+      before_transition deposit_registering_or_updating: any do |object|
+        Notifier.publish(Notifier::DEPOSIT_PERSIST_COMPLETE, object:)
+      end
+
       before_transition accessioning: :deposit_not_in_progress do |object|
         Notifier.publish(Notifier::ACCESSIONING_COMPLETE, object:)
       end

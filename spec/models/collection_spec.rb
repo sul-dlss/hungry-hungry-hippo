@@ -86,6 +86,17 @@ RSpec.describe Collection do
     end
   end
 
+  describe '.deposit_persist_complete!' do
+    let(:collection) { create(:collection, deposit_state: 'deposit_registering_or_updating') }
+
+    it 'changes state and sends a notification' do
+      expect do
+        collection.deposit_persist_complete!
+      end.to change(collection, :deposit_state).from('deposit_registering_or_updating').to('deposit_not_in_progress')
+      expect(Notifier).to have_received(:publish).with(Notifier::DEPOSIT_PERSIST_COMPLETE, object: collection)
+    end
+  end
+
   describe '.accession_complete!' do
     let(:collection) { create(:collection, deposit_state: 'accessioning') }
 
