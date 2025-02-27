@@ -45,9 +45,5 @@ module Contents
     def create_directory(filepath)
       FileUtils.mkdir_p File.dirname(filepath)
     end
-
-    def zip_filepath
-      ActiveStorageSupport.filepath_for_blob(content.zip_file.blob)
-    end
   end
 end

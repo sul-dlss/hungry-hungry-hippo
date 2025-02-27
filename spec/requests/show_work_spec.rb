@@ -55,7 +55,7 @@ RSpec.describe 'Show work' do
       sign_in(admin_user, groups:)
     end
 
-    it 'display the work show page' do
+    it 'renders the work show page with admin functions' do
       get "/works/#{druid}"
 
       expect(response).to have_http_status(:ok)
@@ -116,12 +116,33 @@ RSpec.describe 'Show work' do
       sign_in(user)
     end
 
-    it 'thats OK' do
+    it 'renders the work show page' do
       get "/works/#{druid}"
 
       expect(response).to have_http_status(:ok)
       expect(work.reload.title).to eq(title_fixture)
       expect(work.collection).to eq(collection)
+    end
+  end
+
+  context 'when the DOI option is turned on' do
+    let(:collection) { create(:collection, :with_druid) }
+    let!(:work) { create(:work, druid:, user:, collection:, doi_assigned: false) }
+    let(:user) { create(:user) }
+
+    before do
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:version_status))
+      allow(Doi).to receive(:assigned?).and_return(false)
+
+      sign_in(user)
+    end
+
+    it 'renders the work show page with correct DOI verbiage' do
+      get "/works/#{druid}"
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('A DOI will be assigned.')
     end
   end
 end

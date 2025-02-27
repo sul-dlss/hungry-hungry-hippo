@@ -3,18 +3,6 @@
 module Cocina
   # Pretties a cocina object
   class Prettier
-    def self.clean(...)
-      new(...).clean
-    end
-
-    def self.pretty(...)
-      new(...).pretty
-    end
-
-    def self.json(...)
-      new(...).json
-    end
-
     def initialize(cocina_object:)
       @cocina_object = cocina_object
     end

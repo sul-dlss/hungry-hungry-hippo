@@ -18,8 +18,4 @@ class ApplicationMailer < ActionMailer::Base
                                         version_description: version_status.version_description)
     @work_presenter = WorkPresenter.new(work: @work, work_form:, version_status:)
   end
-
-  def doi_assigned?
-    DoiAssignedService.call(cocina_object: @cocina_object, work: @work)
-  end
 end

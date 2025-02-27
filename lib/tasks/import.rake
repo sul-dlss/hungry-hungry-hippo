@@ -11,12 +11,12 @@ namespace :import do
   task :collections, [:filename] => :environment do |_t, args|
     Rails.application.config.action_mailer.perform_deliveries = false
 
-    collections_json = JSON.parse(File.read(args[:filename] || 'collections.json'))
-    collections_json.each do |collection_json|
-      next unless collection_json['druid']
+    collections_hash = JSON.parse(File.read(args[:filename] || 'collections.json'))
+    collections_hash.each do |collection_hash|
+      next unless collection_hash['druid']
 
-      puts "Importing collection #{collection_json['druid']}"
-      Importers::Collection.call(collection_json:)
+      puts "Importing collection #{collection_hash['druid']}"
+      Importers::Collection.call(collection_hash:)
     end
   end
 end

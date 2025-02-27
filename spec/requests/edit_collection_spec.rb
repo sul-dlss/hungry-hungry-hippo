@@ -52,7 +52,7 @@ RSpec.describe 'Edit collection' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: collection.druid).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid: collection.druid).and_return(version_status)
-      allow(ToCollectionForm::RoundtripValidator).to receive(:roundtrippable?)
+      allow(ToCollectionForm::RoundtripValidator).to receive(:call)
 
       sign_in(user, groups:)
     end
@@ -64,7 +64,7 @@ RSpec.describe 'Edit collection' do
 
       follow_redirect!
       expect(response.body).to include('This collection cannot be edited.')
-      expect(ToCollectionForm::RoundtripValidator).not_to have_received(:roundtrippable?)
+      expect(ToCollectionForm::RoundtripValidator).not_to have_received(:call)
     end
   end
 
@@ -80,7 +80,7 @@ RSpec.describe 'Edit collection' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: collection.druid).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid: collection.druid).and_return(version_status)
-      allow(ToCollectionForm::RoundtripValidator).to receive(:roundtrippable?).and_call_original
+      allow(ToCollectionForm::RoundtripValidator).to receive(:call).and_call_original
 
       sign_in(user, groups:)
     end
@@ -92,7 +92,7 @@ RSpec.describe 'Edit collection' do
 
       follow_redirect!
       expect(response.body).to include('This collection cannot be edited.')
-      expect(ToCollectionForm::RoundtripValidator).to have_received(:roundtrippable?)
+      expect(ToCollectionForm::RoundtripValidator).to have_received(:call)
     end
   end
 end

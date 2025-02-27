@@ -46,7 +46,7 @@ RSpec.describe 'Update work' do
   # sending any parameters to the controller
   context 'when the user is authorized' do
     let(:user) { create(:user) }
-    let!(:work) { create(:work, druid:, collection:) } # rubocop:disable RSpec/LetSetup
+    let!(:work) { create(:work, druid:, collection:) }
     let(:collection) { create(:collection) }
 
     before do
@@ -74,7 +74,7 @@ RSpec.describe 'Update work' do
     end
 
     context 'when the work owner' do
-      let!(:work) { create(:work, druid:, collection:, user:) } # rubocop:disable RSpec/LetSetup
+      let!(:work) { create(:work, druid:, collection:, user:) }
 
       it 'redirects to root' do
         put "/works/#{druid}"

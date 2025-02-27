@@ -22,7 +22,7 @@ module Contents
 
     private
 
-    attr_reader :content, :zip_file
+    attr_reader :content
 
     def updates_for(content_file)
       updates = if content_file.md5_digest.present? && content_file.sha1_digest.present?
@@ -37,39 +37,14 @@ module Contents
     def digest_updates_for(content_file)
       stream = File.open(ActiveStorageSupport.filepath_for_blob(content_file.file.blob))
 
-      updates, buffer = process_stream(stream)
-      updates[:mime_type] = mime_type_for(content_file:, buffer:)
-      updates
-    end
-
-    def mime_type_for(content_file:, buffer:)
-      if content_file.attached?
-        content_file.file.blob.content_type
-      else
-        Marcel::MimeType.for(buffer,
-                             name: content_file.filename)
-      end
-    end
-
-    def process_stream(stream)
       md5 = Digest::MD5.new
       sha1 = Digest::SHA1.new
-      first_buffer = nil
       while (buffer = stream.read(4096))
-        first_buffer ||= buffer
         md5.update(buffer)
         sha1.update(buffer)
       end
-      [{ md5_digest: md5.hexdigest, sha1_digest: sha1.hexdigest }, first_buffer]
-    end
 
-    def base64_to_hex(base64_string)
-      binary_data = Base64.decode64(base64_string)
-      binary_data.unpack1('H*')
-    end
-
-    def zip_filepath
-      ActiveStorageSupport.filepath_for_blob(content.zip_file.blob)
+      { md5_digest: md5.hexdigest, sha1_digest: sha1.hexdigest }
     end
   end
 end

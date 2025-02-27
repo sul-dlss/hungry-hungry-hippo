@@ -65,6 +65,10 @@ RSpec/InstanceVariable:
   Exclude:
     - spec/system/**/* # We use instance variables in system specs to stub Cocina operations
 
+RSpec/LetSetup:
+  Exclude:
+    - spec/requests/**/*
+
 Style/Documentation:
   Exclude:
     - 'config/application.rb'

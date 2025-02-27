@@ -3,7 +3,7 @@
 module ToWorkForm
   # Validates that a cocina object can be converted to a work form and then back without loss.
   class RoundtripValidator
-    def self.roundtrippable?(...)
+    def self.call(...)
       new(...).call
     end
 

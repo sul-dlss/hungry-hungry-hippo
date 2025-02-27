@@ -6,8 +6,7 @@ RSpec.describe Importers::Collection do
   include CollectionMappingFixtures
 
   let(:druid) { collection_druid_fixture }
-
-  let(:collection_json) do
+  let(:collection_hash) do
     {
       druid:,
       release_option: 'depositor-selects',
@@ -16,7 +15,7 @@ RSpec.describe Importers::Collection do
       doi_option: 'yes',
       license_option: 'required',
       required_license: 'https://creativecommons.org/licenses/by/4.0/legalcode',
-      default_license: nil,
+      default_license: 'https://opendatacommons.org/licenses/pddl/1-0/',
       allow_custom_rights_statement: true,
       provided_custom_rights_statement: nil,
       custom_rights_statement_custom_instructions: 'These are the instructions',
@@ -68,11 +67,9 @@ RSpec.describe Importers::Collection do
 
     }.deep_stringify_keys
   end
-
   let(:cocina_object) do
     Cocina::Models.with_metadata(collection_fixture, lock_fixture, modified:)
   end
-
   let(:modified) { Time.zone.iso8601('2024-12-31T14:00:00') }
 
   before do
@@ -83,21 +80,21 @@ RSpec.describe Importers::Collection do
     let!(:collection) { create(:collection, druid:) }
 
     it 'does not create a new collection' do
-      expect { described_class.call(collection_json:) }.not_to change(Collection, :count)
+      expect { described_class.call(collection_hash:) }.not_to change(Collection, :count)
     end
 
     it 'returns collection' do
-      expect(described_class.call(collection_json:)).to eq(collection)
+      expect(described_class.call(collection_hash:)).to eq(collection)
     end
   end
 
   context 'when collection is roundtrippable' do
     it 'creates a new collection' do
-      expect { described_class.call(collection_json:) }.to change(Collection, :count).by(1)
+      expect { described_class.call(collection_hash:) }.to change(Collection, :count).by(1)
     end
 
     it 'populates collection attributes' do
-      collection = described_class.call(collection_json:)
+      collection = described_class.call(collection_hash:)
 
       expect(collection.druid).to eq(druid)
       expect(collection.title).to eq(collection_title_fixture)
@@ -125,20 +122,52 @@ RSpec.describe Importers::Collection do
 
     it 'raises an error and does not create a new collection' do
       expect do
-        described_class.call(collection_json:)
+        described_class.call(collection_hash:)
       end.to raise_error(Importers::Error,
                          "Collection #{druid} cannot be roundtripped").and not_change(Collection, :count)
     end
   end
 
+  context 'when license is not required' do
+    let(:cocina_object) do
+      original_object = Cocina::Models.with_metadata(collection_fixture, lock_fixture, modified:)
+      original_object.new(access: original_object.access.new(license: collection_hash['default_license']))
+    end
+
+    it 'sets the license to the default license' do
+      collection_hash['license_option'] = 'depositor_selects'
+      collection = described_class.call(collection_hash:)
+
+      expect(collection.license).to eq(collection_hash['default_license'])
+    end
+  end
+
   context 'when depositor selects rights statement but there are no instructions' do
     it 'uses the default custom rights statement instructions' do
-      collection_json['custom_rights_statement_custom_instructions'] = nil
-      collection = described_class.call(collection_json:)
+      collection_hash['custom_rights_statement_custom_instructions'] = nil
+      collection = described_class.call(collection_hash:)
 
       expect(collection.custom_rights_statement_instructions).to eq(
         I18n.t('terms_of_use.default_use_statement_instructions')
       )
+    end
+  end
+
+  context 'when custom rights statement is disallowed' do
+    it 'sets the custom rights statement option to "no"' do
+      collection_hash['allow_custom_rights_statement'] = false
+      collection = described_class.call(collection_hash:)
+
+      expect(collection.custom_rights_statement_option).to eq('no')
+    end
+  end
+
+  context 'when custom rights statement is provided' do
+    it 'sets the custom rights statement option to "provided"' do
+      collection_hash['provided_custom_rights_statement'] = 'Here it is.'
+      collection = described_class.call(collection_hash:)
+
+      expect(collection.custom_rights_statement_option).to eq('provided')
     end
   end
 end

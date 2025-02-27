@@ -6,10 +6,6 @@ module ToForm
     ABSTRACT_TYPE = 'abstract'
     CITATION_TYPE = 'preferred citation'
 
-    def self.call(...)
-      new(...).call
-    end
-
     def self.abstract(cocina_object:)
       new(cocina_object:, type: ABSTRACT_TYPE).call
     end

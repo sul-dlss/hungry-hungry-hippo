@@ -3,15 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe ToWorkForm::RoundtripValidator, type: :mapping do
-  subject(:roundtrippable?) do
-    described_class.roundtrippable?(work_form: work_form_fixture, cocina_object:, content: content_fixture)
+  subject(:validator) do
+    described_class.new(work_form: work_form_fixture, cocina_object:, content: content_fixture)
   end
 
   context 'when roundtrippable' do
     let(:cocina_object) { dro_with_structural_and_metadata_fixture }
 
     it 'returns true' do
-      expect(roundtrippable?).to be true
+      expect(validator.call).to be true
     end
   end
 
@@ -19,7 +19,19 @@ RSpec.describe ToWorkForm::RoundtripValidator, type: :mapping do
     let(:cocina_object) { dro_with_structural_and_metadata_fixture.new(type: Cocina::Models::ObjectType.image) }
 
     it 'returns false' do
-      expect(roundtrippable?).to be false
+      expect(validator.call).to be false
+    end
+
+    context 'with production env' do
+      before do
+        allow(Rails.env).to receive(:production?).and_return(true)
+        allow(Rails.logger).to receive(:info)
+      end
+
+      it 'logs non-pretty json' do
+        validator.call
+        expect(Rails.logger).to have_received(:info).with(/Roundtrip failed. Original:/).once
+      end
     end
   end
 end
