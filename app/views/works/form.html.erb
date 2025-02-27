@@ -35,7 +35,7 @@
   <% form_with(model: @work_form) do |form| %>
     <%# This pane is outside the work form because it contains its own forms for files. %>
     <% component.with_before_form_pane do %>
-      <%= render Works::Edit::PaneComponent.new(tab_name: :files, label: t('works.edit.panes.files.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+      <%= render Works::Edit::PaneComponent.new(tab_name: :files, label: t('works.edit.panes.files.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, previous_tab_btn: false) do %>
         <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
 
         <%= render 'contents/edit', content: @content %>
@@ -122,7 +122,7 @@
     <% end %>
 
     <% component.with_pane do %>
-      <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.deposit.help_text'), active_tab_name:) do |component| %>
+      <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.deposit.help_text'), active_tab_name:, next_tab_btn: false) do |component| %>
         <% if @work_form.persisted? %>
           <div class="pane-section">
             <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: t('works.edit.fields.whats_changing.label'), tooltip: t('works.edit.fields.whats_changing.tooltip_html'), maxlength: 100) %>

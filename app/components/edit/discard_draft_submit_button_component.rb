@@ -7,11 +7,21 @@ module Edit
   # See DiscardDraftFormComponent for the form.
   # See DiscardDraftButtonComponent for the form and button together.
   # Provide a form_id for the form to use this unnested from the form.
-  class DiscardDraftSubmitButtonComponent < Elements::Forms::SubmitComponent
-    def initialize(form_id: nil, **args)
-      args[:label] = 'Discard draft'
-      args[:variant] = 'outline-primary'
+  class DiscardDraftSubmitButtonComponent < ApplicationComponent
+    def initialize(presenter:, **btn_args)
+      @presenter = presenter
+      @btn_args = btn_args
       super
     end
+
+    def render?
+      @presenter&.discardable?
+    end
+
+    def label
+      'Discard draft'
+    end
+
+    attr_reader :btn_args
   end
 end

@@ -13,7 +13,7 @@ module Edit
     attr_reader :presenter, :classes
 
     def render?
-      presenter.discardable?
+      presenter&.discardable?
     end
   end
 end
