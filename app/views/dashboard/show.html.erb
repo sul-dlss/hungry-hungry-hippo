@@ -27,7 +27,7 @@
   <%= render Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary) if allowed_to?(:new?, Collection) %>
 </div>
 
-<% current_user.your_collections.each do |collection| %>
+<% @your_collections.each do |collection| %>
   <div class="mb-5">
     <%= render Collections::HeaderLinkComponent.new(collection:) %>
     <%= render Dashboard::Show::WorksListComponent.new(collection:, status_map: @status_map) %>
