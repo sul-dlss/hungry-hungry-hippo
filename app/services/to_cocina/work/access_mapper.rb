@@ -25,7 +25,7 @@ module ToCocina
 
       attr_reader :work_form
 
-      delegate :access, :license, :release_option, :release_date, :custom_rights_statement, to: :work_form
+      delegate :access, :release_option, :release_date, :custom_rights_statement, to: :work_form
 
       def access_params
         return access_params_with_embargo if release_option == 'delay'
@@ -47,6 +47,12 @@ module ToCocina
           releaseDate: release_date.to_datetime.iso8601
         }
         }
+      end
+
+      def license
+        return nil if work_form.license.blank? || work_form.license == License::NO_LICENSE_ID
+
+        work_form.license
       end
     end
   end
