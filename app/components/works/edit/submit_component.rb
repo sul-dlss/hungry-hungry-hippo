@@ -4,18 +4,19 @@ module Works
   module Edit
     # Component for rendering a submit button
     class SubmitComponent < ApplicationComponent
-      def initialize(work:, collection:, form_id: nil, classes: [])
+      def initialize(work:, collection:, form_id: nil, classes: [], data: {})
         @form_id = form_id
         @work = work
         @collection = collection
         @classes = classes
+        @data = data
         super()
       end
 
-      attr_reader :form_id, :work, :collection, :classes
+      attr_reader :form_id, :work, :collection, :classes, :data
 
       def call
-        render Elements::Forms::SubmitComponent.new(form_id:, label:, classes:)
+        render Elements::Forms::SubmitComponent.new(form_id:, label:, classes:, data:)
       end
 
       def label

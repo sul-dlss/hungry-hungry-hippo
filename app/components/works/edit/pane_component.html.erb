@@ -12,7 +12,7 @@
         <%= deposit_button %>
       </div>
       <div>
-        <%= render Elements::Forms::SubmitComponent.new(form_id:, label: 'Save as draft', variant: :'outline-primary', classes: 'me-2') %>
+        <%= render Elements::Forms::SubmitComponent.new(form_id:, label: 'Save as draft', variant: :'outline-primary', classes: 'me-2', data: { action: 'unsaved-changes#allowFormSubmission' }) %>
         <%= render Edit::DiscardDraftSubmitButtonComponent.new(presenter: work_presenter, form_id: discard_draft_form_id) %>
       </div>
     </div>
