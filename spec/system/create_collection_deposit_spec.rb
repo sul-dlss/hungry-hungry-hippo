@@ -30,6 +30,10 @@ RSpec.describe 'Create a collection deposit' do
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     allow(Settings.notifications).to receive(:enabled).and_return(false)
 
+    create(:user, name: 'Stephen King', email_address: 'stepking@stanford.edu')
+    create(:user, name: 'Joe Hill', email_address: 'joehill@stanford.edu')
+    create(:user, name: 'Pennywise', email_address: 'pennywise@stanford.edu')
+
     sign_in(user, groups:)
   end
 
@@ -87,9 +91,24 @@ RSpec.describe 'Create a collection deposit' do
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Participants')
     expect(page).to have_text('Managers')
-    expect(page).to have_field('SUNet ID', with: user.sunetid)
-    fill_in('collection_managers_attributes_1_sunetid', with: 'stepking')
-    fill_in('collection_depositors_attributes_0_sunetid', with: 'joehill')
+    form_instances = page.all('.form-instance')
+    within(form_instances[0]) do
+      expect(page).to have_field('SUNet ID', with: user.sunetid, readonly: true)
+    end
+    within(form_instances[1]) do
+      fill_in('Lookup SUNet ID', with: 'stepking')
+      expect(page).to have_text('Stephen King')
+      find('p', text: 'Click to add').click
+      expect(page).to have_field('SUNet ID', with: 'stepking', readonly: true)
+    end
+    within(form_instances[2]) do
+      fill_in('Lookup SUNet ID', with: 'notjoehill')
+      expect(page).to have_text('No results for "notjoehill"')
+      fill_in('Lookup SUNet ID', with: 'joehill')
+      expect(page).to have_text('Joe Hill')
+      find('p', text: 'Click to add').click
+      expect(page).to have_field('SUNet ID', with: 'joehill', readonly: true)
+    end
     expect(page).to have_checked_field('Send email to Collection Managers and Reviewers ' \
                                        '(see Workflow section of form) when participants are added/removed',
                                        with: '1')
@@ -101,7 +120,10 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_text('Review workflow')
     expect(page).to have_checked_field('No', with: false)
     find('label', text: 'Yes').click
-    fill_in('collection_reviewers_attributes_0_sunetid', with: 'pennywise')
+    fill_in('Lookup SUNet ID', with: 'pennywise')
+    expect(page).to have_text('Pennywise')
+    find('p', text: 'Click to add').click
+    expect(page).to have_field('SUNet ID', with: 'pennywise', readonly: true)
 
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
