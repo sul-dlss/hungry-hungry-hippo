@@ -180,16 +180,24 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('td', text: contact_emails_fixture.pluck(:email).join(', '))
       end
 
-      # Authors
+      # Contributors table
       within('table#contributors-table') do
         expect(page).to have_css('caption', text: 'Contributors')
         expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'contributors'))
         expect(page).to have_css('th', text: 'Contributor')
         expect(page).to have_css('th', text: 'ORCID')
         expect(page).to have_css('th', text: 'Role')
-        expect(page).to have_css('td', text: contributors_fixture.first['first_name'])
-        expect(page).to have_css('td', text: contributors_fixture.first['last_name'])
-        expect(page).to have_css('td', text: "#{Settings.orcid.url}#{contributors_fixture.first['orcid']}")
+        expect(page).to have_css('th', text: 'Include in citation?')
+        within('tbody tr:nth-of-type(1)') do
+          expect(page).to have_css('td:nth-of-type(1)', text: 'Jane Stanford')
+          expect(page).to have_css('td:nth-of-type(2)', text: 'https://orcid.org/0001-0002-0003-0004')
+          expect(page).to have_css('td:nth-of-type(3)', text: 'Author')
+          expect(page).to have_css('td:nth-of-type(4)', text: 'Yes')
+        end
+        within('tbody tr:nth-of-type(3)') do
+          expect(page).to have_css('td:nth-of-type(1)', text: 'Department of Philosophy, Stanford University')
+          expect(page).to have_css('td:nth-of-type(4)', text: 'No')
+        end
       end
 
       # Description table

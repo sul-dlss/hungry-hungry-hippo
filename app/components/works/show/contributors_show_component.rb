@@ -13,16 +13,18 @@ module Works
       attr_reader :contributors, :work_presenter
 
       def headers
-        %w[Contributor ORCID Role]
+        ['Contributor', 'ORCID', 'Role', 'Include in citation?']
       end
 
       def values_for(contributor)
         values = [
           contributor_name(contributor).presence,
           orcid_link(contributor),
-          contributor_role_label(contributor)
+          contributor_role_label(contributor),
+          helpers.human_boolean(contributor.cited)
         ]
-        return [] unless values.any?
+        # Note that this excludes the cited status since it always has a value.
+        return [] unless values.first(3).any?
 
         values
       end
