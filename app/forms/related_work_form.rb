@@ -34,8 +34,6 @@ class RelatedWorkForm < ApplicationForm
   end
 
   def to_s
-    return if relationship.blank? # otherwise it will return " ()"
-
-    "#{identifier.presence || citation} (#{relationship})"
+    identifier.presence || citation
   end
 end
