@@ -183,7 +183,7 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_content('0001-0002-0003-0004')
     expect(page).to have_content(citation_fixture)
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
-    expect(page).to have_content('https://purl.stanford.edu/fake (references)')
+    expect(page).to have_content('https://purl.stanford.edu/fake')
     expect(page).to have_content('Immediately')
     expect(page).to have_css('.status', text: 'New version in draft')
     expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
