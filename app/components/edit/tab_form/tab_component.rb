@@ -36,7 +36,7 @@ module Edit
       end
 
       def classes
-        merge_classes('nav-link', selected? ? 'active' : nil)
+        merge_classes('nav-link w-100', selected? ? 'active' : nil)
       end
 
       def id
