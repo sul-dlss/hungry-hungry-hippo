@@ -7,8 +7,9 @@ RSpec.describe WorksMailer do
 
   let(:druid) { druid_fixture }
   let(:user) { create(:user, name: 'Max Headroom', first_name: 'Maxwell') }
-  let(:collection) { create(:collection, title: '20 Minutes into the Future') }
+  let(:collection) { create(:collection, title: '20 Minutes into the Future', managers:) }
   let(:work) { create(:work, druid:, collection:, user:, title: 'S1.E2: Rakers', doi_assigned: true) }
+  let(:managers) { [] }
 
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
@@ -51,6 +52,24 @@ RSpec.describe WorksMailer do
       expect(mail).to match_body('If you did not recently submit')
       expect(mail).to match_body('License: CC-BY-4.0 Attribution International')
       expect(mail).to match_body('Your work was assigned this DOI: <a href="https://doi.org/10.80343/bc123df4567">https://doi.org/10.80343/bc123df4567</a>')
+    end
+  end
+
+  describe '.managers_depositing_email' do
+    let(:mail) { described_class.with(work:, current_user: user).managers_depositing_email }
+    let(:manager) { create(:user, first_name: 'Carter') }
+    let(:managers) { [user, manager] }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq 'Item deposit completed in the 20 Minutes into the Future collection'
+      expect(mail.to).to eq [manager.email_address]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders the body' do
+      expect(mail).to match_body('Dear Carter,')
+      expect(mail).to match_body('The item S1.E2: Rakers has been deposited in the 20 Minutes into the Future ' \
+                                 'collection by Max Headroom, a collection manager, or an SDR administrator.')
     end
   end
 end

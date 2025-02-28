@@ -14,4 +14,11 @@ class WorksMailer < ApplicationMailer
   def new_version_deposited_email
     mail(to: @user.email_address, subject: "Updates to #{@work.title} have been deposited in the SDR")
   end
+
+  def managers_depositing_email
+    (@collection.managers - Array(params[:current_user])).each do |user|
+      @user = user
+      mail(to: @user.email_address, subject: "Item deposit completed in the #{@collection.title} collection")
+    end
+  end
 end

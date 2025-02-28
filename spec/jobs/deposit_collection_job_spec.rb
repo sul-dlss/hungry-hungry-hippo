@@ -11,6 +11,7 @@ RSpec.describe DepositCollectionJob do
   before do
     allow(ToCocina::Collection::Mapper).to receive(:call).and_call_original
     allow(Sdr::Repository).to receive(:accession)
+    allow(Settings.notifications).to receive(:enabled).and_return(false)
   end
 
   context 'when a new collection' do

@@ -44,6 +44,7 @@ RSpec.describe 'Edit a collection' do
       @updated_cocina_object = args[:cocina_object]
     end
     allow(Sdr::Repository).to receive(:accession)
+    allow(Settings.notifications).to receive(:enabled).and_return(false)
 
     create(:collection, druid:, user:, managers: [manager])
 
