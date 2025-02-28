@@ -43,7 +43,7 @@ RSpec.describe ToCocina::Work::AccessMapper do
   end
 
   context 'when none license' do
-    let(:work_form) { WorkForm.new(license: '') }
+    let(:work_form) { WorkForm.new(license: License::NO_LICENSE_ID) }
 
     it 'maps to cocina' do
       expect(access).to match(
