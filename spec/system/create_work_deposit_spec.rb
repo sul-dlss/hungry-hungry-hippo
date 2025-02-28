@@ -62,7 +62,16 @@ RSpec.describe 'Create a work deposit' do
       # Footer buttons
       expect(page).to have_button('Save as draft')
       expect(page).to have_button('Next')
+      expect(page).to have_no_button('Previous')
       expect(page).to have_link('Cancel')
+
+      # Testing previous / next
+      click_link_or_button('Next')
+      expect(page).to have_css('.nav-link.active', text: 'Title and contact')
+      expect(page).to have_button('Next')
+      expect(page).to have_button('Previous')
+      click_link_or_button('Previous')
+      expect(page).to have_css('.nav-link.active', text: 'Manage files')
 
       # Adding a file
       find('.dropzone').drop('spec/fixtures/files/hippo.png')
@@ -208,6 +217,7 @@ RSpec.describe 'Create a work deposit' do
 
       # Footer buttons
       expect(page).to have_button('Save as draft')
+      expect(page).to have_button('Previous')
       expect(page).to have_no_button('Next')
       expect(page).to have_link('Cancel')
 

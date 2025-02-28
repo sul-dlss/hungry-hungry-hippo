@@ -2,23 +2,25 @@
 
 module Edit
   module TabForm
-    # Next button to progress through tabbed form
-    class NextButtonComponent < ApplicationComponent
+    # Previous button to progress through tabbed form
+    class PreviousButtonComponent < ApplicationComponent
       def initialize(tab_id:, classes: [])
         @tab_id = tab_id
         @classes = classes
         super
       end
 
+      def call
+        render Elements::ButtonComponent.new(label: 'Previous', variant: :primary, data:, classes: @classes)
+      end
+
       def data
         {
           controller: 'tab-nav',
           tab_nav_tab_id_value: @tab_id,
-          action: 'click->tab-nav#showNext'
+          action: 'click->tab-nav#showPrevious'
         }
       end
-
-      attr_reader :classes
     end
   end
 end
