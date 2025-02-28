@@ -17,6 +17,7 @@ RSpec.describe DepositWorkJob do
     allow(Contents::Stager).to receive(:call)
     allow(Sdr::Repository).to receive(:accession)
     allow(Sdr::Repository).to receive(:register).and_return(cocina_object)
+    allow(Settings.notifications).to receive(:enabled).and_return(false)
   end
 
   context 'when a new work' do

@@ -105,6 +105,23 @@ RSpec.describe Collection do
     end
   end
 
+  describe '#accession!' do
+    let(:collection) { create(:collection, deposit_state: 'deposit_registering_or_updating') }
+    let(:user) { create(:user) }
+
+    before do
+      Current.user = user
+    end
+
+    it 'changes state and sends a notification' do
+      expect { collection.accession! }.to change(collection, :deposit_state)
+        .from('deposit_registering_or_updating')
+        .to('accessioning')
+      expect(Notifier).to have_received(:publish).once.with(Notifier::ACCESSIONING_STARTED, object: collection,
+                                                                                            current_user: user)
+    end
+  end
+
   describe '#accession_complete!' do
     let(:collection) { create(:collection, deposit_state: 'accessioning') }
 
