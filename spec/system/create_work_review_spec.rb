@@ -28,8 +28,6 @@ RSpec.describe 'Create a work that requires review' do
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     create(:collection, :with_review_workflow, user:, druid: collection_druid_fixture, managers: [user])
 
-    allow(Settings.notifications).to receive(:enabled).and_return(false)
-
     sign_in(user)
   end
 
