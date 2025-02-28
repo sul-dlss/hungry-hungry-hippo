@@ -1,7 +1,7 @@
 <%= turbo_frame_tag 'admin-card' do %>
   <%= render Elements::CardComponent.new(classes: 'admin-card') do |component| %>
     <% component.with_body do %>
-      <%= form_with model: @delete_form, url: work_admin_delete_index_path(work_druid: params[:work_druid]) do |form| %>
+      <%= form_with url: work_admin_delete_path(druid: params[:work_druid]), method: :delete do |form| %>
         <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :confirm_decommissioned, label: 'I confirm this item has been decommissioned in Argo and understand that this action cannot be undone.', required: true) %>
         <%= render Elements::Forms::SubmitComponent.new(label: 'Delete', classes: 'mt-3') %>
       <% end %>

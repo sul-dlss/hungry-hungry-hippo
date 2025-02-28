@@ -6,37 +6,22 @@ module Admin
     def new
       authorize!
 
-      @delete_form = Admin::DeleteForm.new
       render :form
     end
 
-    def create
+    def destroy
       authorize!
 
-      @delete_form = Admin::DeleteForm.new(work_form:)
-      if @delete_form.valid?
-        Admin::DeleteWork.call(work_form:, work:)
-        render_delete_success
-      else
-        render :form, status: :unprocessable_entity
-      end
+      work.destroy!
+      render_delete_success
     end
+
+    attr_reader :work_form
 
     private
 
     def work
-      @work ||= Work.find_by(druid: params[:work_druid])
-    end
-
-    def cocina_object
-      @cocina_object ||= Sdr::Repository.find(druid: params[:work_druid])
-    end
-
-    def work_form
-      @work_form ||= ToWorkForm::Mapper.call(cocina_object:,
-                                             doi_assigned: DoiAssignedService.call(cocina_object:, work:),
-                                             agree_to_terms: current_user.agree_to_terms?,
-                                             version_description: 'Deleting')
+      @work ||= Work.find_by(druid: params[:druid])
     end
 
     def render_delete_success
