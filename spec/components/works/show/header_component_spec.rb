@@ -61,6 +61,7 @@ RSpec.describe Works::Show::HeaderComponent, type: :component do
 
       expect(page).to have_button('Admin functions')
       expect(page).to have_link('Move to another collection', class: 'dropdown-item')
+      expect(page).to have_link('Delete', class: 'dropdown-item')
       expect(page).to have_link('Edit or deposit', href: "/works/#{druid_fixture}/edit")
       expect(page).to have_css("turbo-frame[id='admin-card']")
     end

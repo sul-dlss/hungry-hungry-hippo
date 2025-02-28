@@ -48,6 +48,7 @@ en:
       Required fields have not been filled out. Click on the sections highlighted in red on
       the left to correct the errors and then try depositing again.
     work_moved: 'Work moved to the new collection.'
+    work_deleted: 'Work successfully deleted.'
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
