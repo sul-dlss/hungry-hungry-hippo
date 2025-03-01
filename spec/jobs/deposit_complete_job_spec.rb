@@ -15,7 +15,6 @@ RSpec.describe DepositCompleteJob do
     allow(Sdr::Repository).to receive(:find).with(druid: collection_druid_fixture).and_return(collection_fixture)
     allow(ModelSync::Work).to receive(:call)
     allow(ModelSync::Collection).to receive(:call)
-    allow(Settings.notifications).to receive(:enabled).and_return(false)
     allow(Turbo::StreamsChannel).to receive(:broadcast_refresh_to)
   end
 

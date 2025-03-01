@@ -12,6 +12,7 @@ RSpec.describe Notifier do
 
     before do
       allow(ActiveSupport::Notifications).to receive(:instrument).and_call_original
+      allow(Settings.notifications).to receive(:enabled).and_return(true)
     end
 
     context 'with a subscribed mailer' do
