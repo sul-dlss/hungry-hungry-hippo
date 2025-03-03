@@ -8,6 +8,7 @@
 <div class="d-flex justify-content-end">
   <%= render Admin::FunctionDropdownComponent.new do |component| %>
     <% component.with_function(label: 'Search for user', link: admin_users_path) %>
+    <% component.with_function(label: 'Get SUNet IDs of depositors', link: new_admin_depositors_search_path) %>
   <% end %>
 </div>
 
