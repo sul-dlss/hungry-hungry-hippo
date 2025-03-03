@@ -82,4 +82,14 @@ RSpec.describe ToWorkForm::Mapper, type: :mapping do
       expect(work_form.doi_option).to eq('no')
     end
   end
+
+  context 'when cocina does not have a license' do
+    let(:cocina_object) do
+      dro_with_metadata_fixture.new(access: dro_with_metadata_fixture.access.new(license: nil))
+    end
+
+    it 'maps to work form with no doi_option' do
+      expect(work_form.license).to eq('no-license')
+    end
+  end
 end
