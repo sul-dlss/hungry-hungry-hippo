@@ -54,7 +54,7 @@ module ToWorkForm
     end
 
     def license
-      cocina_object.access.license
+      cocina_object.access.license || License::NO_LICENSE_ID
     end
 
     def custom_rights_statement

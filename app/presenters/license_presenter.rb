@@ -29,6 +29,6 @@ class LicensePresenter
   attr_reader :collection, :work_form
 
   def current_license
-    work_form.license || '' # Treat nil as no license ('')
+    work_form.license
   end
 end
