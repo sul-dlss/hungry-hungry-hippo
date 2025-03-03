@@ -1,6 +1,9 @@
 <%= tag.tr id: do %>
   <% if label.present? %>
-    <th class="col-3" scope="row"><%= label %></th>
+    <th class="col-3" scope="row">
+      <%= label %>
+      <%= render Elements::TooltipComponent.new(tooltip:) %>
+    </th>
   <% end %>
   <% values.each do |value| %>
     <td><%= value %></td>

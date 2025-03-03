@@ -94,7 +94,7 @@ RSpec.describe 'Show collection' do
 
       expect(response).to have_http_status(:ok)
       # Match when a line contains "No" immediately after a line contains "Additional terms of use"
-      expect(response.body).to match(/(?<=Additional terms of use).+\R.+No/)
+      expect(response.body).to match(%r{Additional terms of use.+<td>No</td>}m)
     end
   end
 
@@ -119,7 +119,7 @@ RSpec.describe 'Show collection' do
       expect(response).to have_http_status(:ok)
       # Match when a line contains custom instructions immediately after a line contains "Additional terms of use"
       expect(response.body)
-        .to match(/(?<=Additional terms of use).+\R.+Allow user to enter with instructions: Whip it!/)
+        .to match(%r{Additional terms of use.+<td>Allow user to enter with instructions: Whip it!</td>}m)
     end
   end
 end
