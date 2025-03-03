@@ -1,0 +1,18 @@
+<% content_for :breadcrumbs do %>
+  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
+    <% component.with_breadcrumb(text: 'Admin dashboard', link: admin_dashboard_path) %>
+    <% component.with_breadcrumb(text: 'Get SUNet IDs of depositors') %>
+  <% end %>
+<% end %>
+
+<div class="d-flex justify-content-end">
+  <%= render Admin::FunctionDropdownComponent.new %>
+</div>
+
+<%= render Elements::HeadingComponent.new(level: :h1, text: 'Get SUNet IDs of depositors', classes: 'h2 mb-4') %>
+
+<%= form_with model: @depositors_search_form, url: admin_depositors_search_index_path, class: 'mb-5' do |form| %>
+  <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :druids, label: 'Enter work druids separated by spaces', hidden_label: true) %>
+  <%= render Elements::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-4') %>
+<% end %>
