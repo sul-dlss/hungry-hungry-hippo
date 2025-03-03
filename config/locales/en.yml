@@ -164,6 +164,10 @@ en:
       legend: 'Managers'
       tooltip_html: >-
         Managers have the ability to edit the collection description; add and remove other Managers, Reviewers (see Workflow section of form), and Depositors; adjust discovery, access, and license settings for the collection; and edit any content deposited to the collection, including content deposited by others.
+  sharing_link:
+    label: 'Link for sharing'
+    tooltip_html: >-
+      Use this link for sharing the public page for your deposit. Links become active when the deposit is completed.
   publication_date:
     edit:
       legend: 'Previous publication date'

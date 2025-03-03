@@ -3,7 +3,8 @@
       empty_message: 'You have not made any deposits to this collection.'
     ) do |component| %>
   <% component.with_header(
-       headers: ['Recent deposits in collection', 'Deposit status', 'Owner', 'Last modified', 'Link for sharing']
+       headers: ['Recent deposits in collection', 'Deposit status', 'Owner', 'Last modified', t('sharing_link.label')],
+       each_tooltips: [nil, nil, nil, nil, t('sharing_link.tooltip_html')]
      ) %>
   <% works.take(WORK_LIMIT).each do |work| %>
     <% component.with_row(values: values_for(work), id: id_for(work)) %>

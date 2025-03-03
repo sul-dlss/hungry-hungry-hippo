@@ -27,13 +27,14 @@ module Dashboard
       end
 
       def values_for(work)
-        presenter = WorkPresenter.new(work:, version_status: @status_map[work.id], work_form: WorkForm.new)
+        presenter = WorkPresenter.new(work:, version_status: @status_map[work.id],
+                                      work_form: WorkForm.new(druid: work.druid))
         [
           link_to(work.title, work_or_wait_path(work)),
           presenter.status_message,
           work.user.name,
           work.object_updated_at ? I18n.l(work.object_updated_at, format: '%b %d, %Y') : nil,
-          persistent_link_for(work)
+          presenter.sharing_link
         ]
       end
 
@@ -43,18 +44,6 @@ module Dashboard
 
       def see_all?
         works.length > WORK_LIMIT
-      end
-
-      private
-
-      def persistent_link_for(work)
-        if work.druid.nil?
-          nil
-        elsif work.doi_assigned?
-          link_to(nil, Doi.url(druid: work.druid))
-        else
-          link_to(nil, Sdr::Purl.from_druid(druid: work.druid))
-        end
       end
     end
   end
