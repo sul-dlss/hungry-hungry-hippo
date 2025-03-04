@@ -11,12 +11,12 @@
                                          field_name: :create_date_type,
                                          label: 'Single date',
                                          value: 'single',
-                                         data: { action: 'click->dates#selectSingle', dates_target: 'singleDateRadio' }) %>
+                                         data: { action: 'change->dates#selectSingle', dates_target: 'singleDateRadio' }) %>
     <% component.with_right_toggle_option(form:,
                                           field_name: :create_date_type,
                                           label: 'Date range',
                                           value: 'range',
-                                          data: { action: 'click->dates#selectRange' }) %>
+                                          data: { action: 'change->dates#selectRange' }) %>
   <% end %>
     <div class="row" data-dates-target="singleDateContainer">
       <div class="col-lg-5">

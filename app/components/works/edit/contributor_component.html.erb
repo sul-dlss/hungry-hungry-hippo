@@ -5,13 +5,12 @@
                                          field_name: :role_type,
                                          label: 'Individual',
                                          value: 'person',
-                                         label_data: { action: 'click->contributors#showPersonSection click->tooltips#hideAll' }) %>
+                                         data: { action: 'change->contributors#showPersonSection change->tooltips#hideAll' }) %>
     <% component.with_right_toggle_option(form:,
                                           field_name: :role_type,
                                           label: 'Organization',
                                           value: 'organization',
-                                          data: { contributors_target: 'organizationOption' },
-                                          label_data: { action: 'click->contributors#showOrganizationSection click->tooltips#hideAll' }) %>
+                                          data: { contributors_target: 'organizationOption', action: 'change->contributors#showOrganizationSection change->tooltips#hideAll' }) %>
   <% end %>
 
   <%= render Elements::Forms::LabelComponent.new(form:, field_name: :cited, label_text: helpers.t('works.edit.fields.contributors.cited.label'), tooltip: helpers.t('works.edit.fields.contributors.cited.tooltip_html'), classes: 'fw-bold') %>
@@ -39,12 +38,12 @@
       <% component.with_left_toggle_option(form:,
                                            field_name: :with_orcid,
                                            label: 'Yes',
-                                           data: { contributors_target: 'yesOrcidOption', action: 'click->contributors#showOrcidSection click->tooltips#hideAll' },
+                                           data: { contributors_target: 'yesOrcidOption', action: 'change->contributors#showOrcidSection change->tooltips#hideAll' },
                                            value: true) %>
       <% component.with_right_toggle_option(form:,
                                             field_name: :with_orcid,
                                             label: 'No',
-                                            data: { action: 'click->contributors#showNotOrcidSection click->tooltips#hideAll' },
+                                            data: { action: 'change->contributors#showNotOrcidSection change->tooltips#hideAll' },
                                             value: false) %>
     <% end %>
 
@@ -111,12 +110,12 @@
         <% component.with_left_toggle_option(form:,
                                              field_name: :stanford_degree_granting_institution,
                                              label: 'Yes',
-                                             data: { contributors_target: 'yesStanfordOption', action: 'click->contributors#showDegreeGrantingSuborganizationSection' },
+                                             data: { contributors_target: 'yesStanfordOption', action: 'change->contributors#showDegreeGrantingSuborganizationSection' },
                                              value: true) %>
         <% component.with_right_toggle_option(form:,
                                               field_name: :stanford_degree_granting_institution,
                                               label: 'No',
-                                              data: { action: 'click->contributors#showDegreeGrantingOrganizationSection' },
+                                              data: { action: 'change->contributors#showDegreeGrantingOrganizationSection' },
                                               value: false) %>
       <% end %>
 

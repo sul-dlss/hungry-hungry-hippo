@@ -5,13 +5,12 @@
                                          field_name: :review_enabled,
                                          label: 'Yes',
                                          value: true,
-                                         data: { workflow_target: 'enabledOption' },
-                                         label_data: { action: 'click->workflow#showReviewersSection' }) %>
+                                         data: { workflow_target: 'enabledOption', action: 'change->workflow#showReviewersSection' }) %>
     <% component.with_right_toggle_option(form:,
                                           field_name: :review_enabled,
                                           label: 'No',
                                           value: false,
-                                          label_data: { action: 'click->workflow#hideReviewersSection' }) %>
+                                          data: { action: 'change->workflow#hideReviewersSection' }) %>
   <% end %>
 
   <%= render Elements::Forms::FieldsetComponent.new(label: 'Enter one reviewer SUNet ID per box.', data: { workflow_target: 'reviewersSection' }, classes: 'd-none') do %>
