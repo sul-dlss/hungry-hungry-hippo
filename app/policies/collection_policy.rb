@@ -19,6 +19,10 @@ class CollectionPolicy < ApplicationPolicy
     collection_creator?
   end
 
+  def review?
+    collection_reviewer? || collection_manager?
+  end
+
   # TODO: Add a rule for collection managers & depositors
   # manage? will be based on the managers added to a collection
   # display? will be based on the depositors added to a collection
@@ -30,5 +34,9 @@ class CollectionPolicy < ApplicationPolicy
 
   def collection_depositor?
     record.depositors.include?(user)
+  end
+
+  def collection_reviewer?
+    record.reviewers.include?(user)
   end
 end

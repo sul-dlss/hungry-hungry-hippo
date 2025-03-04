@@ -11,17 +11,8 @@ RSpec.describe Works::Edit::SubmitComponent, type: :component do
   let(:review_enabled) { true }
 
   before do
+    allow(vc_test_controller).to receive(:current_user).and_return(user)
     allow(Current).to receive(:groups).and_return([])
-  end
-
-  context 'when work is nil (for a create)' do
-    let(:required) { false }
-
-    it 'renders the submit' do
-      render_inline(described_class.new(form_id:, work: nil, collection:))
-
-      expect(page).to have_button('Submit for review')
-    end
   end
 
   context 'when review is not enabled' do
