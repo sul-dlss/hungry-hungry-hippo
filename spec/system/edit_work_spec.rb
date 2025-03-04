@@ -135,7 +135,7 @@ RSpec.describe 'Edit a work' do
 
     # Filling in citation
     find('.nav-link', text: 'Citation for this deposit (optional)').click
-    expect(page).to have_text('Citation for this deposit')
+    expect(page).to have_text('Citation for this deposit (optional)')
     expect(page).to have_field('Select citation', disabled: false)
     expect(page).to have_field('Select citation', with: citation_fixture)
 
