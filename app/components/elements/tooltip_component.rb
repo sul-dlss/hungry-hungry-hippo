@@ -12,6 +12,7 @@ module Elements
       helpers.info_icon(
         fill: true,
         classes: 'px-2 tooltip-info',
+        tabindex: 0,
         data: {
           bs_html: true,
           bs_toggle: 'tooltip',
