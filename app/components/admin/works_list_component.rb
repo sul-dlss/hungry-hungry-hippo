@@ -24,7 +24,7 @@ module Admin
         link_to(work.collection.title, collection_or_wait_path(work.collection)),
         @status_map[work.id].status_message,
         work.druid,
-        I18n.l(work.object_updated_at, format: '%b %d, %Y')
+        work.object_updated_at ? I18n.l(work.object_updated_at, format: '%b %d, %Y') : nil
       ]
     end
   end
