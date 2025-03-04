@@ -44,6 +44,7 @@ en:
     not_authorized: 'You are not authorized to perform the requested action.'
   messages:
     collection_deleted: 'Collection successfully deleted.'
+    collection_delete_failed: 'Collection must be empty to delete.'
     draft_discarded: 'Draft discarded.'
     validation: >
       Required fields have not been filled out. Click on the sections highlighted in red on
