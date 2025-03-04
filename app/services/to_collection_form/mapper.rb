@@ -38,6 +38,7 @@ module ToCollectionForm
         depositors_attributes: participant_attributes(:depositors),
         version: cocina_object.version,
         review_enabled: collection.review_enabled,
+        reviewers_attributes: participant_attributes(:reviewers),
         email_when_participants_changed: collection.email_when_participants_changed,
         email_depositors_status_changed: collection.email_depositors_status_changed
       }.merge(license_params)

@@ -8,12 +8,14 @@ RSpec.describe ToCollectionForm::Mapper, type: :mapping do
   let(:collection) do
     create(:collection, druid: collection_druid_fixture,
                         user: manager, managers: [manager], depositors: [depositor],
+                        reviewers: [reviewer],
                         email_when_participants_changed:,
                         email_depositors_status_changed:,
                         review_enabled:)
   end
   let(:manager) { create(:user, email_address: 'stepking@stanford.edu') }
   let(:depositor) { create(:user, email_address: 'joehill@stanford.edu') }
+  let(:reviewer) { create(:user, email_address: 'rbachman@stanford.edu') }
   let(:review_enabled) { false }
   let(:email_when_participants_changed) { true }
   let(:email_depositors_status_changed) { true }
