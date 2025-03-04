@@ -43,12 +43,13 @@ en:
   errors:
     not_authorized: 'You are not authorized to perform the requested action.'
   messages:
+    collection_deleted: 'Collection successfully deleted.'
     draft_discarded: 'Draft discarded.'
     validation: >
       Required fields have not been filled out. Click on the sections highlighted in red on
       the left to correct the errors and then try depositing again.
-    work_moved: 'Work moved to the new collection.'
     work_deleted: 'Work successfully deleted.'
+    work_moved: 'Work moved to the new collection.'
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
