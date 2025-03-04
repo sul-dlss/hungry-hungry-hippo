@@ -41,8 +41,8 @@ Rails.application.config.after_initialize do # rubocop:disable Metrics/BlockLeng
                             action_class: SubscriptionActions::ReviewRequest)
 
   # Subscriptions for WorksMailer
-  Notifier.subscribe_mailer(event_name: Notifier::ACCESSIONING_STARTED, mailer_class: WorksMailer,
-                            mailer_method: :managers_depositing_email)
+  Notifier.subscribe_action(event_name: Notifier::ACCESSIONING_STARTED,
+                            action_class: SubscriptionActions::WorkAccessioningStarted)
   Notifier.subscribe_action(event_name: Notifier::ACCESSIONING_COMPLETE,
                             action_class: SubscriptionActions::WorkAccessioningCompleted)
 end
