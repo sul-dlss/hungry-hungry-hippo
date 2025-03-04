@@ -23,7 +23,8 @@ RSpec.describe ToCocina::Collection::Mapper, type: :mapping do
 
   context 'with depositor selects license' do
     before do
-      collection_form.license_option = 'depositor-selects'
+      collection_form.license_option = 'depositor_selects'
+      collection_form.default_license = License::NO_LICENSE_ID
     end
 
     it 'does not include license in access' do

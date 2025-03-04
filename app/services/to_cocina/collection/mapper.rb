@@ -50,6 +50,7 @@ module ToCocina
       def access
         { view: 'world' }.tap do |params|
           next unless (collection_license = collection_form.selected_license)
+          next if collection_license == License::NO_LICENSE_ID
 
           params[:license] = collection_license
         end
