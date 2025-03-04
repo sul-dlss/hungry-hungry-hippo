@@ -53,10 +53,6 @@ RSpec.describe 'Delete a Collection' do
       click_link_or_button('Admin functions')
       click_link_or_button('Delete')
 
-      check('I confirm this collection has been decommissioned in Argo ' \
-            'and understand that this action cannot be undone.')
-      click_link_or_button('Delete')
-
       expect(page).to have_css('h1', text: collection_title_fixture)
       expect(page).to have_css('.alert', text: 'Collection must be empty to delete.')
       expect(Collection.exists?(collection.id)).to be true

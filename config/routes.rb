@@ -22,7 +22,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
 
     namespace :admin do
-      resources :delete, only: %i[new destroy], controller: 'delete_collection', param: :druid
+      resources :delete, only: %i[new destroy], controller: 'delete_collection', param: :collection_druid
     end
   end
 

@@ -3,6 +3,8 @@
 module Admin
   # Controller for deleting a Collection as an administrator
   class DeleteCollectionController < Admin::ApplicationController
+    before_action :set_collection
+
     def new
       authorize!
 
@@ -12,20 +14,20 @@ module Admin
     def destroy
       authorize!
 
-      if collection.works.empty?
-        collection.destroy!
-        render_delete_success
-      else
-        render_delete_failure
-      end
+      collection.destroy!
+      render_delete_success
     end
 
-    attr_reader :collection_form
+    attr_reader :collection_form, :collection
 
     private
 
-    def collection
-      @collection ||= Collection.find_by(druid: params[:druid])
+    def druid
+      params[:collection_druid]
+    end
+
+    def set_collection
+      @collection = Collection.find_by(druid:)
     end
 
     def render_delete_success
@@ -34,16 +36,6 @@ module Admin
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.action(:full_page_redirect, dashboard_path)
-        end
-      end
-    end
-
-    def render_delete_failure
-      flash[:danger] = I18n.t('messages.collection_delete_failed')
-      # This breaks out of the turbo frame.
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.action(:full_page_redirect, collection_path(collection.druid))
         end
       end
     end
