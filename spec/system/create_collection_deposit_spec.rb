@@ -28,7 +28,6 @@ RSpec.describe 'Create a collection deposit' do
     # Stubbing out for show page
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
-    allow(Settings.notifications).to receive(:enabled).and_return(false)
 
     sign_in(user, groups:)
   end
