@@ -304,7 +304,7 @@ en:
           label: 'Access settings'
         citation:
           tab_label: 'Citation for this deposit (optional)'
-          label: 'Citation for this deposit'
+          label: 'Citation for this deposit (optional)'
           help_text: >
             This is the text that others can use when they want to cite this deposit.
             We highly recommend that you provide the text of that citation here to make it
