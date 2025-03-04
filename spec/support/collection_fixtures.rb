@@ -36,6 +36,14 @@ def collection_depositor_fixture
   ]
 end
 
+def collection_reviewer_fixture
+  [
+    {
+      'sunetid' => 'rbachman'
+    }
+  ]
+end
+
 def release_option_fixture
   'depositor_selects'
 end

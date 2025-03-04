@@ -121,5 +121,12 @@ RSpec.describe 'Create a collection deposit' do
     # License
     expect(page).to have_css('th', text: 'License')
     expect(page).to have_css('td', text: 'License required: CC-BY-4.0 Attribution International')
+
+    # Review workflow
+    within('#review-workflow-table') do
+      expect(page).to have_css('td', text: 'On')
+      expect(page).to have_css('th', text: 'Reviewers')
+      expect(page).to have_css('td', text: 'pennywise@stanford.edu')
+    end
   end
 end
