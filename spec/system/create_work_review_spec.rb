@@ -26,7 +26,7 @@ RSpec.describe 'Create a work that requires review' do
     # Stubbing out for show page
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
-    create(:collection, :with_review_workflow, user:, druid: collection_druid_fixture, managers: [user])
+    create(:collection, :with_review_workflow, user:, druid: collection_druid_fixture, depositors: [user])
 
     allow(Settings.notifications).to receive(:enabled).and_return(false)
 

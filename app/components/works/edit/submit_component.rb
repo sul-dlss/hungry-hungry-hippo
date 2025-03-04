@@ -20,7 +20,7 @@ module Works
       end
 
       def label
-        if collection.review_enabled? && (work.nil? || !helpers.allowed_to?(:review?, work))
+        if collection.review_enabled? && !helpers.allowed_to?(:review?, collection)
           'Submit for review'
         else
           'Deposit'
