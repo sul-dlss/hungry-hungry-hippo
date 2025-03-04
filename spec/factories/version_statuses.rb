@@ -44,5 +44,10 @@ FactoryBot.define do
       version_description { 'Initial version' }
       # Also not open or openable
     end
+
+    factory :first_version_status do
+      version { 1 }
+      version_description { 'Initial version' }
+    end
   end
 end

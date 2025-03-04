@@ -13,7 +13,23 @@ class WorkPresenter < FormPresenter
     # No druid yet, so there's no PURL link yet either. Work is likely still depositing.
     return if druid.blank?
 
-    link_to(nil, Sdr::Purl.from_druid(druid:))
+    purl = Sdr::Purl.from_druid(druid:)
+
+    persistent_links_clickable? ? link_to(nil, purl) : purl
+  end
+
+  def doi_link
+    # No druid yet, so there's no DOI link yet either. Work is likely still depositing.
+    return if druid.blank?
+
+    doi = Doi.url(druid:)
+
+    persistent_links_clickable? ? link_to(nil, doi) : doi
+  end
+
+  # Returns DOI link if DOI is assigned, otherwise returns PURL link.
+  def sharing_link
+    work.doi_assigned? ? doi_link : purl_link
   end
 
   def collection_link
@@ -30,10 +46,6 @@ class WorkPresenter < FormPresenter
 
   def keywords
     keywords_attributes.map(&:text).join(', ')
-  end
-
-  def related_works
-    related_works_attributes.map(&:to_s)
   end
 
   def all_work_subtypes
@@ -82,10 +94,6 @@ class WorkPresenter < FormPresenter
     end
   end
 
-  def doi_link
-    link_to(nil, Doi.url(druid:))
-  end
-
   def status_message
     case review_state
     when 'pending_review'
@@ -120,5 +128,12 @@ class WorkPresenter < FormPresenter
   def work_form
     # Get the object being delegated to (since this is a SimpleDelegator)
     __getobj__
+  end
+
+  def persistent_links_clickable?
+    return false if version_status.is_a?(VersionStatus::NilStatus)
+    return false if version_status.first_version? && (version_status.open? || version_status.accessioning?)
+
+    true
   end
 end

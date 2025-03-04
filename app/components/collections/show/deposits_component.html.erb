@@ -1,4 +1,4 @@
 <%= render Elements::Tables::TableComponent.new(id: 'deposits-table', classes: 'mb-5', label: 'Deposits for this collection', show_label: false) do |component| %>
-  <% component.with_header(headers: ['Deposit', 'Owner', 'Status', 'Modified', 'Link for sharing']) %>
+  <% component.with_header(headers: ['Deposit', 'Owner', 'Status', 'Modified', t('sharing_link.label')], each_tooltips: [nil, nil, nil, nil, t('sharing_link.tooltip_html')]) %>
   <% component.with_rows(collection_deposits) %>
 <% end %>

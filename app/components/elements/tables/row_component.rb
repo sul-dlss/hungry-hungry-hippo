@@ -7,16 +7,17 @@ module Elements
       renders_many :cells
       renders_many :items
 
-      def initialize(label: nil, values: [], id: nil)
+      def initialize(label: nil, values: [], id: nil, tooltip: nil)
         @label = label
         # Provide either values, cells (e.g. for content files),
         # or items (list of values for a field such as related links )
         @values = values
         @id = id
+        @tooltip = tooltip
         super()
       end
 
-      attr_reader :label, :values, :id
+      attr_reader :label, :values, :id, :tooltip
 
       def empty_cell?
         label.present? && values.empty? && !items? && !cells?
