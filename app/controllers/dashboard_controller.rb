@@ -8,7 +8,7 @@ class DashboardController < ApplicationController
     return render :welcome_form unless allowed_to?(:show?, :dashboard)
 
     set_draft_works_and_status_map
-    @your_collections = current_user.your_collections.to_a.sort_by!(&:title)
+    @your_collections = current_user.your_collections.order(:title)
   end
 
   private
