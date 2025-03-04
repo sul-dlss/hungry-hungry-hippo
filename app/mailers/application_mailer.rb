@@ -5,7 +5,7 @@ class ApplicationMailer < ActionMailer::Base
   layout 'mailer'
 
   def set_work
-    @work = params[:work] || params[:object]
+    @work = params[:work]
     @user = @work.user
     @collection = @work.collection
   end
