@@ -55,7 +55,7 @@
             <span class="input-group-text">
               <%= Settings.orcid.url %>
             </span>
-            <%= form.text_field :orcid, class: 'form-control', data: { contributors_target: 'orcidInput', action: 'input->contributors#resolveOrcid' } %>
+            <%= form.text_field :orcid, class: 'form-control', data: { contributors_target: 'orcidInput', action: 'input->contributors#resolveOrcid' }, aria: orcid_aria %>
             <%= render Elements::Forms::LabelComponent.new(form:, field_name: :orcid, label_text: 'ORCID iD', hidden_label: true) %>
           </div>
         </div>

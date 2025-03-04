@@ -66,6 +66,10 @@ module Works
         ['Thesis advisor', 'thesis_advisor']
       ].freeze
 
+      def orcid_aria
+        Elements::Forms::InvalidFeedbackSupport.arias_for(form:, field_name: :orcid)
+      end
+
       ORGANIZATION_ROLES = [
         ['Author', 'author'],
         ['Conference', 'conference'],
