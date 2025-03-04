@@ -10,5 +10,9 @@
                                                    variant: :primary,
                                                    classes: 'ms-2') %>
     <% end %>
+    <%= render Admin::FunctionDropdownComponent.new(classes: 'ms-2') do |component| %>
+      <% component.with_function(label: 'Delete', link: new_collection_admin_delete_path(presenter.druid), data: { turbo_frame: 'admin-card' }) %>
+    <% end %>
   </div>
 </div>
+<%= tag.turbo_frame id: 'admin-card' %>
