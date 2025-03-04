@@ -13,6 +13,67 @@ RSpec.describe ToCocina::Work::TypesMapper do
     end
   end
 
+  context 'when work has type and subtypes' do
+    let(:work_form) do
+      WorkForm.new(work_type: 'Mixed Materials', work_subtypes: ['Government document', 'Narrative film'],
+                   other_work_subtype: '')
+    end
+
+    it 'maps to cocina' do
+      expect(forms).to eq([
+                            {
+                              structuredValue: [
+                                {
+                                  value: 'Mixed Materials',
+                                  type: 'type'
+                                },
+                                {
+                                  value: 'Government document',
+                                  type: 'subtype'
+                                },
+                                {
+                                  value: 'Narrative film',
+                                  type: 'subtype'
+                                }
+                              ],
+                              source: {
+                                value: 'Stanford self-deposit resource types'
+                              },
+                              type: 'resource type'
+                            },
+                            {
+                              type: 'genre',
+                              value: 'Fiction films',
+                              uri: 'http://id.loc.gov/authorities/genreForms/gf2011026250',
+                              source: {
+                                code: 'lcgft'
+                              }
+                            },
+                            {
+                              type: 'resource type',
+                              value: 'mixed material',
+                              source: {
+                                value: 'MODS resource types'
+                              }
+                            },
+                            {
+                              type: 'resource type',
+                              value: 'moving image',
+                              source: {
+                                value: 'MODS resource types'
+                              }
+                            },
+                            {
+                              value: 'Collection',
+                              source: {
+                                value: 'DataCite resource types'
+                              },
+                              type: 'resource type'
+                            }
+                          ])
+    end
+  end
+
   context 'when Other work type' do
     let(:work_form) { WorkForm.new(work_type: 'Other', other_work_subtype: 'coloring books') }
 

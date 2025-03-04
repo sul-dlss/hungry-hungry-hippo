@@ -8,7 +8,6 @@ module ToWorkForm
         return { work_type:, work_subtypes: [],
                  other_work_subtype: work_subtypes.first }
       end
-
       { work_type:, work_subtypes: }
     end
 
@@ -30,7 +29,7 @@ module ToWorkForm
     end
 
     def work_subtypes
-      @work_subtypes ||= self_deposit_values.filter_map { |value| value[:type] == 'subtype' && value.value }
+      @work_subtypes ||= self_deposit_values.filter_map { |value| value[:type] == 'subtype' && value.value.presence }
     end
   end
 end
