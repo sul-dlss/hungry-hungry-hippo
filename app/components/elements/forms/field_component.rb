@@ -35,9 +35,9 @@ module Elements
       end
 
       def field_aria
-        return if help_text.blank?
-
-        { describedby: help_text_id }
+        InvalidFeedbackSupport.arias_for(field_name:, form:).tap do |arias|
+          arias[:describedby] = merge_actions(arias[:describedby], help_text_id) if help_text.present?
+        end
       end
 
       def styles

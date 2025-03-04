@@ -14,7 +14,7 @@ module Elements
       attr_reader :field_name, :form
 
       def call
-        tag.div(class: classes) do
+        tag.div(class: classes, id:) do
           errors.join(', ')
         end
       end
@@ -24,6 +24,10 @@ module Elements
       end
 
       private
+
+      def id
+        InvalidFeedbackSupport.id_for(field_name:, form:)
+      end
 
       def errors
         @errors ||= form.object&.errors&.[](field_name)

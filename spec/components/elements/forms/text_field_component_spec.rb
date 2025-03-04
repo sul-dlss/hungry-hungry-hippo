@@ -53,7 +53,7 @@ RSpec.describe Elements::Forms::TextFieldComponent, type: :component do
     it 'creates field with invalid feedback' do
       render_inline(described_class.new(form:, field_name:))
 
-      expect(page).to have_css('.form-control.is-invalid')
+      expect(page).to have_css('.form-control.is-invalid[aria-invalid="true"][aria-describedby="title_error"]')
       expect(page).to have_css('div.invalid-feedback.is-invalid', text: 'is required')
     end
   end

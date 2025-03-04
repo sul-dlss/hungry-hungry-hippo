@@ -48,6 +48,10 @@ module Works
           raise ArgumentError, "minimum_terms must be 1 or 2, not #{minimum_terms}"
         end
       end
+
+      def fieldset_aria
+        Elements::Forms::InvalidFeedbackSupport.arias_for(form:, field_name: error_field_name)
+      end
     end
   end
 end
