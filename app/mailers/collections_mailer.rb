@@ -18,6 +18,9 @@ class CollectionsMailer < ApplicationMailer
   end
 
   def manage_access_granted_email
+    # Don't send invitation of the user created the collection
+    return if @user == @collection.user
+
     mail(to: @user.email_address, subject: "You are invited to participate as a Manager in the #{@collection.title} " \
                                            'collection in the SDR')
   end

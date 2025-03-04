@@ -23,8 +23,9 @@ RSpec.describe CollectionsMailer do
   end
 
   describe '#deposit_access_removed_email' do
+    let(:mail) { described_class.with(user:, collection:).deposit_access_removed_email }
+
     context 'when email depositor on status change is enabled' do
-      let(:mail) { described_class.with(user:, collection:).deposit_access_removed_email }
       let(:manager) { create(:user) }
       let(:collection) do
         create(:collection,
@@ -49,12 +50,10 @@ RSpec.describe CollectionsMailer do
     end
 
     context 'when email depositor on status change is disabled' do
-      before do
-        ActionMailer::Base.deliveries.clear
-      end
+      let(:user) { collection.user }
 
       it 'does not render an email' do
-        expect(ActionMailer::Base.deliveries).to be_empty
+        expect(mail.message).to be_a(ActionMailer::Base::NullMail)
       end
     end
   end
@@ -62,18 +61,28 @@ RSpec.describe CollectionsMailer do
   describe '#manage_access_granted_email' do
     let(:mail) { described_class.with(user:, collection:).manage_access_granted_email }
 
-    it 'renders the headers' do
-      expect(mail.subject).to eq 'You are invited to participate as a Manager in the 20 Minutes into the Future ' \
-                                 'collection in the SDR'
-      expect(mail.to).to eq [user.email_address]
-      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    context 'when the user is not the collection creator' do
+      it 'renders the headers' do
+        expect(mail.subject).to eq 'You are invited to participate as a Manager in the 20 Minutes into the Future ' \
+                                   'collection in the SDR'
+        expect(mail.to).to eq [user.email_address]
+        expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+      end
+
+      it 'renders the body' do
+        expect(mail).to match_body('Dear Maxwell,')
+        expect(mail).to match_body('You have been invited to be a Manager ' \
+                                   'of the 20 Minutes into the Future collection')
+        expect(mail).to match_body('Subscribe to the SDR newsletter')
+      end
     end
 
-    it 'renders the body' do
-      expect(mail).to match_body('Dear Maxwell,')
-      expect(mail).to match_body('You have been invited to be a Manager ' \
-                                 'of the 20 Minutes into the Future collection')
-      expect(mail).to match_body('Subscribe to the SDR newsletter')
+    context 'when the user created the collection' do
+      let(:user) { collection.user }
+
+      it 'does not render an email' do
+        expect(mail.message).to be_a(ActionMailer::Base::NullMail)
+      end
     end
   end
 
