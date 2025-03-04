@@ -31,7 +31,7 @@ module Works
       end
 
       def more_types
-        WorkType.more_types - work_subtypes
+        WorkType.more_types - work_subtypes - [work_type]
       end
 
       def collapse_id
