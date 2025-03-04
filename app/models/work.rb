@@ -48,4 +48,8 @@ class Work < ApplicationRecord
   def first_version?
     version == 1
   end
+
+  def bare_druid
+    druid&.delete_prefix('druid:')
+  end
 end

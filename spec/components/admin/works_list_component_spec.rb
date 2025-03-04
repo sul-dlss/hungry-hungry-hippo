@@ -36,7 +36,7 @@ RSpec.describe Admin::WorksListComponent, type: :component do
     expect(first_row).to have_css('td:nth-of-type(2)', text: collection.title)
     expect(first_row).to have_link(collection.title, href: "/collections/#{collection.druid}")
     expect(first_row).to have_css('td:nth-of-type(3)', text: 'Draft - Not deposited')
-    expect(first_row).to have_css('td:nth-of-type(4)', text: work.druid)
+    expect(first_row).to have_css('td:nth-of-type(4)', text: work.druid.delete_prefix('druid:'))
     expect(first_row).to have_css('td:nth-of-type(5)', text: 'Dec 03, 2024')
   end
 end
