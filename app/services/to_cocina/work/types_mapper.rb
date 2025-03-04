@@ -28,7 +28,7 @@ module ToCocina
       delegate :work_type, to: :work_form
 
       def work_subtypes
-        @work_subtypes ||= work_form.work_subtypes + [work_form.other_work_subtype].compact
+        @work_subtypes ||= work_form.work_subtypes + [work_form.other_work_subtype.presence].compact
       end
 
       def self_deposit_resource_types

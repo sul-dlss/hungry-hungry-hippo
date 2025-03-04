@@ -55,6 +55,87 @@ RSpec.describe ToWorkForm::Mapper, type: :mapping do
     end
   end
 
+  context 'when blank work subtype' do
+    # There is some legacy data with blank work subtypes. This tests that it will be handled.
+    let(:cocina_object) do
+      dro_with_metadata_fixture.then do |object|
+        object.new(
+          object
+            .to_h
+            .tap do |obj|
+            obj[:description][:form] = [
+              {
+                structuredValue: [
+                  {
+                    value: 'Image',
+                    type: 'type'
+                  },
+                  {
+                    value: 'CAD',
+                    type: 'subtype'
+                  },
+                  {
+                    value: 'Map',
+                    type: 'subtype'
+                  },
+                  {
+                    type: 'subtype',
+                    value: ''
+                  }
+                ],
+                type: 'resource type',
+                source: {
+                  value: 'Stanford self-deposit resource types'
+                }
+              },
+              {
+                value: 'Computer-aided designs',
+                type: 'genre',
+                uri: 'http://id.loc.gov/vocabulary/graphicMaterials/tgm002405',
+                source: {
+                  code: 'lctgm'
+                }
+              },
+              {
+                value: 'Maps',
+                type: 'genre',
+                uri: 'http://id.loc.gov/authorities/genreForms/gf2011026387',
+                source: {
+                  code: 'lcgft'
+                }
+              },
+              {
+                value: 'still image',
+                type: 'resource type',
+                source: {
+                  value: 'MODS resource types'
+                }
+              },
+              {
+                value: 'cartographic',
+                type: 'resource type',
+                source: {
+                  value: 'MODS resource types'
+                }
+              },
+              {
+                value: 'Image',
+                type: 'resource type',
+                source: {
+                  value: 'DataCite resource types'
+                }
+              }
+            ]
+          end
+        )
+      end
+    end
+
+    it 'maps to work form' do
+      expect(work_form).to equal_form(work_form_fixture)
+    end
+  end
+
   context 'when default terms of use' do
     let(:cocina_object) do
       dro_with_metadata_fixture.new(access: { useAndReproductionStatement: I18n.t('license.terms_of_use') })
