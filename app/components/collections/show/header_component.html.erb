@@ -1,14 +1,14 @@
 <div class="d-flex justify-content-between">
-  <div>
-    <%= render Elements::HeadingComponent.new(level: :h1, text: title, classes: 'mb-4 d-inline-block') %>
+  <div class="mb-4">
+    <%= render Elements::HeadingComponent.new(level: :h1, text: title) %>
   </div>
-  <div class="d-flex align-items-start">
-    <%= render Edit::EditDraftButtonComponent.new(presenter:, label: 'Edit') if edit? %>
+  <div class="d-flex align-items-start ms-5">
+    <%= render Edit::EditDraftButtonComponent.new(presenter:, label: 'Edit', classes: 'text-nowrap') if edit? %>
     <% if !presenter.first_draft? && allowed_to_create_work? %>
       <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: presenter.druid),
                                                    label: 'Deposit to this collection',
                                                    variant: :primary,
-                                                   classes: 'ms-2') %>
+                                                   classes: 'ms-2 text-nowrap') %>
     <% end %>
   </div>
 </div>
