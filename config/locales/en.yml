@@ -202,19 +202,19 @@ en:
           label:
             html: 'How is your deposit related to this work?  <a href="https://sdr.library.stanford.edu/related-works" target="_blank">Get help choosing a term</a>'
           options:
-            supplement to: "It's a supplement to this related work"
-            supplemented by: "It's supplemented by this related work"
-            referenced by: "It's referenced or cited by this related work"
+            supplement to: "It is a supplement to this related work"
+            supplemented by: "It is supplemented by this related work"
+            referenced by: "It is referenced or cited by this related work"
             references: 'It references or cites this related work'
-            derived from: "It's derived from this related work"
-            source of: "It's the source of this related work"
+            derived from: "It is derived from this related work"
+            source of: "It is the source of this related work"
             version of record: "The version of record / publisher's version of my deposit is this related work"
-            identical to: "It's identical to this related work"
+            identical to: "It is identical to this related work"
             has version: 'It has specific versions or instances, one of which is this related work'
-            has original version: "It's a specific version or instance of this related work"
+            has original version: "It is a specific version or instance of this related work"
             preceded by: 'It succeeds or is a continuation of this related work'
             succeeded by: 'It precedes or is continued by this related work'
-            part of: "It's one part of this related work"
+            part of: "It is one part of this related work"
             has part: 'It consists of parts, one of which is this related work'
   reviewers:
     edit:
@@ -251,7 +251,7 @@ en:
               Choose one role for each individual or organization that best describes their contribution to the work you are depositing.
           first_name:
             tooltip_html: >-
-              For individuals, use whatever capitalization the individual would normally use for their name. Middle names or initials may be included after the first name in the same box. Both first and last names are required.
+              For individuals, use whatever capitalization the individual would normally use for their name. Middle names or initials may be included after the first name in the same box. Both first and last name fields are required.
           organization_name:
             tooltip_html: >-
               Enter the full name of the organization.
