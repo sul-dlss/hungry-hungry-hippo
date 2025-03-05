@@ -47,6 +47,10 @@ RSpec.describe 'Edit a collection' do
 
     create(:collection, druid:, user:, managers: [manager])
 
+    create(:user, name: 'Stephen King', email_address: 'stepking@stanford.edu')
+    create(:user, name: 'Joe Hill', email_address: 'joehill@stanford.edu')
+    create(:user, name: 'Pennywise', email_address: 'pennywise@stanford.edu')
+
     sign_in(user, groups:)
   end
 
@@ -130,12 +134,16 @@ RSpec.describe 'Edit a collection' do
 
     # Add a new manager
     within form_instances[0] do
-      fill_in('SUNet ID', with: 'stepking')
+      fill_in('Lookup SUNet ID', with: 'stepking')
+      find('p', text: 'Click to add').click
+      expect(page).to have_field('SUNet ID', with: 'stepking', readonly: true)
     end
 
     # Fill in the depositor form
     within form_instances[1] do
-      fill_in('SUNet ID', with: 'joehill')
+      fill_in('Lookup SUNet ID', with: 'joehill')
+      find('p', text: 'Click to add').click
+      expect(page).to have_field('SUNet ID', with: 'joehill', readonly: true)
     end
 
     find('label', text: 'Send email to Collection Managers and Reviewers ' \
@@ -148,7 +156,9 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_text('Review workflow')
     expect(page).to have_checked_field('No', with: false)
     find('label', text: 'Yes').click
-    fill_in('collection_reviewers_attributes_0_sunetid', with: 'pennywise')
+    fill_in('Lookup SUNet ID', with: 'pennywise')
+    find('p', text: 'Click to add').click
+    expect(page).to have_field('SUNet ID', with: 'pennywise', readonly: true)
 
     click_link_or_button('Next')
 

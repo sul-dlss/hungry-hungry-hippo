@@ -57,8 +57,8 @@
 
       <% component.with_pane do %>
         <%= render Collections::Edit::PaneComponent.new(tab_name: :participants, label: t('collections.edit.panes.participants.label'), help_text: t('collections.edit.panes.participants.help_text'), active_tab_name:) do %>
-          <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, form_component: Collections::ContributorComponent, fieldset_classes: 'pane-section') %>
-          <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, form_component: Collections::ContributorComponent, fieldset_classes: 'pane-section') %>
+          <%= render NestedComponentPresenter.for(form:, field_name: :managers, model_class: ManagerForm, form_component: Collections::Edit::ParticipantComponent, fieldset_classes: 'pane-section') %>
+          <%= render NestedComponentPresenter.for(form:, field_name: :depositors, model_class: DepositorForm, form_component: Collections::Edit::ParticipantComponent, fieldset_classes: 'pane-section') %>
           <%= render Collections::Edit::ParticipantNotificationsComponent.new(form:) %>
         <% end %>
       <% end %>

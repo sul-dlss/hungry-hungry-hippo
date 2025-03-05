@@ -74,6 +74,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   resource :contacts, only: %i[new create]
 
+  get 'accounts/search', to: 'accounts#search'
+
   get 'dashboard', to: 'dashboard#show'
 
   namespace :admin do

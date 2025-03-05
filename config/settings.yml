@@ -65,3 +65,7 @@ rabbitmq:
 notifications:
   enabled: true
   admin_email: h2-administrators@lists.stanford.edu
+
+accountws:
+  pem_file: /etc/ssl/certs/sul-h3-qa.stanford.edu.pem            
+  host: accountws-uat.stanford.edu
