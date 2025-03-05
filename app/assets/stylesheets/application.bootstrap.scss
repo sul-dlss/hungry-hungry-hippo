@@ -38,6 +38,7 @@ $container-max-widths: (
       --bs-nav-link-padding-x: 0.5rem;
 
       border-radius: unset;
+      display: block flex;
 
       &:not(:first-child) {
         border-top: var(--bs-border-width) var(--bs-border-style) rgba(var(--bs-white-rgb), 1);
