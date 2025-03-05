@@ -1,9 +1,9 @@
 <%= tag.thead class: classes do %>
   <tr>
-  <% headers.each_with_index do |header, index| %>
-    <%= tag.th class: classes_for_header(index) do %>
-      <%= header %>
-      <%= render Elements::TooltipComponent.new(tooltip: tooltip_for_header(index)) %>
+  <% headers.each do |header| %>
+    <%= tag.th class: merge_classes(header.classes) do %>
+      <%= header.label %>
+      <%= render Elements::TooltipComponent.new(tooltip: header.tooltip) %>
     <% end %>
   <% end %>
   </tr>

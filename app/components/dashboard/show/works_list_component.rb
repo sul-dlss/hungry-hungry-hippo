@@ -38,6 +38,16 @@ module Dashboard
         ]
       end
 
+      def headers
+        [
+          TableHeader.new(label: 'Recent deposits in collection'),
+          TableHeader.new(label: 'Deposit status'),
+          TableHeader.new(label: 'Owner'),
+          TableHeader.new(label: 'Last modified'),
+          TableHeader.new(label: t('sharing_link.label'), tooltip: t('sharing_link.tooltip_html'))
+        ]
+      end
+
       def works
         @works ||= collection.works.filter { |work| helpers.allowed_to?(:show, work) }
       end
