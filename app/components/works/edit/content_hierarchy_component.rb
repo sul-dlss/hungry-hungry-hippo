@@ -13,6 +13,16 @@ module Works
       def content_files
         @content_obj.content_files.path_order
       end
+
+      def headers
+        [
+          TableHeader.new(label: 'File Name'),
+          TableHeader.new(label: 'Description',
+                          tooltip: helpers.t('content_files.edit.fields.description.tooltip_html')),
+          TableHeader.new(label: 'Hide', tooltip: helpers.t('content_files.edit.fields.hide.tooltip_html')),
+          TableHeader.new(label: 'Action')
+        ]
+      end
     end
   end
 end

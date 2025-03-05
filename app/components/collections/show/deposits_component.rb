@@ -21,6 +21,16 @@ module Collections
         end
       end
 
+      def headers
+        [
+          TableHeader.new(label: 'Deposit'),
+          TableHeader.new(label: 'Owner'),
+          TableHeader.new(label: 'Status'),
+          TableHeader.new(label: 'Modified'),
+          TableHeader.new(label: t('sharing_link.label'), tooltip: t('sharing_link.tooltip_html'))
+        ]
+      end
+
       def values_for(work)
         presenter = work_presenter_for(work)
         [

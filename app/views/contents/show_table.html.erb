@@ -2,7 +2,7 @@
   <% if @content.content_files.count > Settings.file_upload.hierarchical_files_limit %>
     <%= render Elements::Tables::TableComponent.new(id: 'files-table', classes: 'table-work') do |component| %>
       <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Files', presenter: @work_presenter, tab: :files) %><% end %>
-      <% component.with_header(headers: ['File Name', 'Description', 'Hide'], each_classes: ['col-6']) %>
+      <% component.with_header(headers: [TableHeader.new(label: 'File Name', classes: 'col-6'), 'Description', 'Hide']) %>
       <% @content_files.each do |content_file| %>
         <% component.with_row(values: [content_file.filepath, content_file.label, human_boolean(content_file.hide)]) %>
       <% end %>
