@@ -16,8 +16,8 @@ RSpec.describe DepositCollectionJob do
   context 'when a new collection' do
     let(:collection_form) { CollectionForm.new(title: collection.title, managers_attributes:, depositors_attributes:) }
     let(:collection) { create(:collection, :registering_or_updating) }
-    let(:managers_attributes) { [{ sunetid: manager.sunetid }, { sunetid: 'stepking' }] }
-    let(:depositors_attributes) { [{ sunetid: 'joehill' }] }
+    let(:managers_attributes) { [{ sunetid: manager.sunetid }, { sunetid: 'stepking', name: 'Stephen King' }] }
+    let(:depositors_attributes) { [{ sunetid: 'joehill', name: 'Joe Hill' }] }
     let(:manager) { create(:user) }
 
     before do
@@ -43,8 +43,8 @@ RSpec.describe DepositCollectionJob do
       expect(manager.manages).to contain_exactly(collection)
       expect(new_manager.manages).to contain_exactly(collection)
       expect(new_depositor.depositor_for).to contain_exactly(collection)
-      expect(new_manager.name).to eq('stepking')
-      expect(new_depositor.name).to eq('joehill')
+      expect(new_manager.name).to eq('Stephen King')
+      expect(new_depositor.name).to eq('Joe Hill')
       expect(manager.name).not_to eq(manager.sunetid)
       expect(collection.email_when_participants_changed).to be true
       expect(collection.email_depositors_status_changed).to be true

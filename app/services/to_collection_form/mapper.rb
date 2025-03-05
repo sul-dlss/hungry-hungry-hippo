@@ -45,12 +45,15 @@ module ToCollectionForm
     end
     # rubocop:enable Metrics/AbcSize
 
-    # @param [Symbol] role :managers or :depositors
+    # @param [Symbol] role :managers, :reviewers, or :depositors
     # @return [Array<Hash>] an array of participant attributes
     # Creates the attribute hash of sunetids for the given role to be used in the CollectionForm
     def participant_attributes(role)
       collection.send(role).map do |participant|
-        { sunetid: participant.sunetid }
+        {
+          sunetid: participant.sunetid,
+          name: participant.name
+        }
       end
     end
 

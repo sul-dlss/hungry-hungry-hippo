@@ -14,15 +14,9 @@ class AccountService
 
   # @return [Account, nil] the account or nil if not found
   def call
-    params = Rails.cache.fetch(sunetid, namespace: 'account', expires_in: 1.month) do
-      url = "https://#{Settings.accountws.host}/accounts/#{ERB::Util.url_encode(sunetid)}"
-      response = connection.get(url)
-      doc = response.body
-      doc.slice('name', 'description')
-    end
     return if params.empty?
 
-    Account.new(sunetid:, **params)
+    Account.new(sunetid:, description:, name:)
   end
 
   private
@@ -49,5 +43,23 @@ class AccountService
 
   def cert
     @@cert ||= OpenSSL::X509::Certificate.new pem_file # rubocop:disable Style/ClassVars
+  end
+
+  def description
+    params['description']
+  end
+
+  def name
+    # "Last, First" to "First Last"
+    params['name'].split(', ').reverse.join(' ')
+  end
+
+  def params
+    @params ||= Rails.cache.fetch(sunetid, namespace: 'account', expires_in: 1.month) do
+      url = "https://#{Settings.accountws.host}/accounts/#{ERB::Util.url_encode(sunetid)}"
+      response = connection.get(url)
+      doc = response.body
+      doc.slice('name', 'description')
+    end
   end
 end

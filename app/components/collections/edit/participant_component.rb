@@ -11,9 +11,9 @@ module Collections
 
       attr_reader :form
 
-      def value?
-        form.object.sunetid.present?
-      end
+      delegate :sunetid, :name, to: :object
+
+      delegate :object, to: :form
 
       def lookup_id
         form.field_id(:lookup)
@@ -21,6 +21,12 @@ module Collections
 
       def label
         'SUNet ID'
+      end
+
+      def value
+        return unless sunetid
+
+        "#{sunetid}: #{name}"
       end
     end
   end

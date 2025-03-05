@@ -13,9 +13,9 @@ RSpec.describe ToCollectionForm::Mapper, type: :mapping do
                         email_depositors_status_changed:,
                         review_enabled:)
   end
-  let(:manager) { create(:user, email_address: 'stepking@stanford.edu') }
-  let(:depositor) { create(:user, email_address: 'joehill@stanford.edu') }
-  let(:reviewer) { create(:user, email_address: 'rbachman@stanford.edu') }
+  let(:manager) { create(:user, email_address: 'stepking@stanford.edu', name: 'Stephen King') }
+  let(:depositor) { create(:user, email_address: 'joehill@stanford.edu', name: 'Joseph Hill') }
+  let(:reviewer) { create(:user, email_address: 'rbachman@stanford.edu', name: 'Richard Bachman') }
   let(:review_enabled) { false }
   let(:email_when_participants_changed) { true }
   let(:email_depositors_status_changed) { true }
