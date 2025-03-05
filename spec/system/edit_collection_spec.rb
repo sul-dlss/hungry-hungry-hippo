@@ -8,7 +8,7 @@ RSpec.describe 'Edit a collection' do
 
   let(:druid) { collection_druid_fixture }
   let(:user) { create(:user) }
-  let(:manager) { create(:user, name: 'alborland', email_address: 'alborland@stanford.edu') }
+  let(:manager) { create(:user, name: 'Al Borland', email_address: 'alborland@stanford.edu') }
   let(:groups) { ['dlss:hydrus-app-collection-creators'] }
 
   let(:cocina_object) do
@@ -48,8 +48,18 @@ RSpec.describe 'Edit a collection' do
     create(:collection, druid:, user:, managers: [manager])
 
     create(:user, name: 'Stephen King', email_address: 'stepking@stanford.edu')
-    create(:user, name: 'Joe Hill', email_address: 'joehill@stanford.edu')
+    # Joe Hill is not created yet.
     create(:user, name: 'Pennywise', email_address: 'pennywise@stanford.edu')
+
+    allow(AccountService).to receive(:call)
+      .with(sunetid: 'stepking')
+      .and_return(AccountService::Account.new(name: 'Stephen King', sunetid: 'stepking'))
+    allow(AccountService).to receive(:call)
+      .with(sunetid: 'joehill')
+      .and_return(AccountService::Account.new(name: 'Joe Hill', sunetid: 'joehill'))
+    allow(AccountService).to receive(:call)
+      .with(sunetid: 'pennywise')
+      .and_return(AccountService::Account.new(name: 'Pennywise', sunetid: 'pennywise'))
 
     sign_in(user, groups:)
   end
@@ -120,19 +130,18 @@ RSpec.describe 'Edit a collection' do
     # Clicking on Next to go to Participants tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Participants')
-    # expect(page).to have_text('Managers')
 
     # There is a manager form and a depositor form
     form_instances = all('.form-instance')
     expect(form_instances.count).to eq(2)
-    expect(form_instances[0]).to have_text('SUNet ID') # Manager
-    expect(form_instances[1]).to have_text('SUNet ID') # Depositor
+    expect(form_instances[0]).to have_text('alborland: Al Borland') # Manager
+    expect(form_instances[1]).to have_text('Lookup SUNet ID') # Depositor
 
-    # Remove the first manager
+    # Remove the manager
     within form_instances[0] do
-      expect(page).to have_field('SUNet ID', with: manager.sunetid)
       find('button[data-action="click->nested-form#delete"]').click
     end
+    expect(page).to have_no_text('alborland: Al Borland')
 
     click_link_or_button('+ Add another manager')
     form_instances = all('.form-instance')
@@ -141,14 +150,14 @@ RSpec.describe 'Edit a collection' do
     within form_instances[0] do
       fill_in('Lookup SUNet ID', with: 'stepking')
       find('p', text: 'Click to add').click
-      expect(page).to have_field('SUNet ID', with: 'stepking', readonly: true)
+      expect(page).to have_field('autocomplete-input', with: 'stepking: Stephen King', readonly: true)
     end
 
     # Fill in the depositor form
     within form_instances[1] do
       fill_in('Lookup SUNet ID', with: 'joehill')
       find('p', text: 'Click to add').click
-      expect(page).to have_field('SUNet ID', with: 'joehill', readonly: true)
+      expect(page).to have_field('autocomplete-input', with: 'joehill: Joe Hill', readonly: true)
     end
 
     find('label', text: 'Send email to Collection Managers and Reviewers ' \
@@ -163,7 +172,7 @@ RSpec.describe 'Edit a collection' do
     find('label', text: 'Yes').click
     fill_in('Lookup SUNet ID', with: 'pennywise')
     find('p', text: 'Click to add').click
-    expect(page).to have_field('SUNet ID', with: 'pennywise', readonly: true)
+    expect(page).to have_field('autocomplete-input', with: 'pennywise: Pennywise', readonly: true)
 
     click_link_or_button('Next')
 
@@ -186,5 +195,8 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_css('th', text: 'License')
     expect(page).to have_css('td', text: 'Depositor selects. Default license: CC-BY-4.0 Attribution International')
     expect(page).to have_no_content('aborland@stanford.edu')
+
+    # Joe Hill was created
+    expect(User.find_by(email_address: 'joehill@stanford.edu', name: 'Joe Hill')).to be_present
   end
 end

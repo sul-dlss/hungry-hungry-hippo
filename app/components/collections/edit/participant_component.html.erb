@@ -1,15 +1,17 @@
-<% if value? %>
-  <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :sunetid, readonly: true, label:) %>
+<% if value %>
+  <p><%= value %></p>
+  <%= form.hidden_field :sunetid %>
+  <%= form.hidden_field :name %>
 <% else %>
-  <div data-controller="autocomplete autocomplete-sunetid" data-autocomplete-url-value="/accounts/search" data-autocomplete-query-param-value="id" data-autocomplete-min-length-value="3" aria-label="autocomplete group" class="dropdown" role="combobox" aria-expanded="false">
-    <%= render Elements::Forms::LabelComponent.new(form:, field_name: :sunetid, label_text: label) %>
-
+  <div data-controller="autocomplete autocomplete-sunetid" data-autocomplete-url-value="/accounts/search" data-autocomplete-query-param-value="id" data-autocomplete-min-length-value="3" aria-label="autocomplete group" class="dropdown mb-3" role="combobox" aria-expanded="false">
     <div class="input-group" data-autocomplete-sunetid-target='lookup'>
       <%= tag.label for: lookup_id, class: 'input-group-text' do %>Lookup SUNet ID<% end %>
       <%= tag.input type: 'text', id: lookup_id, data: { autocomplete_target: 'input' }, class: 'form-control' %>
     </div>
 
     <ul class="list-group" data-autocomplete-target="results" style="overflow-y: scroll; max-height: 425px;"></ul>
-    <%= form.text_field :sunetid, class: 'form-control-plaintext d-none', data: { autocomplete_target: 'hidden', autocomplete_sunetid_target: 'input', action: 'autocomplete-sunetid#change' }, readonly: true %>
+    <input name="autocomplete-input" class="form-control-plaintext" data-autocomplete-target="hidden" data-autocomplete-sunetid-target="input" data-action="autocomplete-sunetid#change" readonly="readonly" type="text" autocomplete="off">
+    <%= form.hidden_field :sunetid, data: { autocomplete_sunetid_target: 'sunetidInput' } %>
+    <%= form.hidden_field :name, data: { autocomplete_sunetid_target: 'nameInput' } %>
   </div>
 <% end %>

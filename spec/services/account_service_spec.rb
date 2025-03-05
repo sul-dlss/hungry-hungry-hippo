@@ -33,7 +33,7 @@ RSpec.describe AccountService do
       expect(account).to eq(
         described_class::Account.new(
           sunetid:,
-          name: 'Coyne, Justin Michael',
+          name: 'Justin Michael Coyne',
           description: 'Digital Library Systems and Services, Digital Library Software Engineer ' \
                        '- Web & Infrastructure'
         )

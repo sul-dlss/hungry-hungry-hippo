@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Create a collection deposit' do
   let(:druid) { collection_druid_fixture }
-  let(:user) { create(:user) }
+  let(:user) { create(:user, name: 'John Swithen', email_address: 'jswithen@stanford.edu') }
   let(:manager) { create(:user) }
   let(:groups) { ['dlss:hydrus-app-collection-creators'] }
   let(:cocina_object) do
@@ -30,8 +30,19 @@ RSpec.describe 'Create a collection deposit' do
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
 
     create(:user, name: 'Stephen King', email_address: 'stepking@stanford.edu')
-    create(:user, name: 'Joe Hill', email_address: 'joehill@stanford.edu')
+    # Note that Joe Hill is not created yet.
     create(:user, name: 'Pennywise', email_address: 'pennywise@stanford.edu')
+
+    allow(AccountService).to receive(:call)
+      .with(sunetid: 'stepking')
+      .and_return(AccountService::Account.new(name: 'Stephen King', sunetid: 'stepking'))
+    allow(AccountService).to receive(:call)
+      .with(sunetid: 'joehill')
+      .and_return(AccountService::Account.new(name: 'Joe Hill', sunetid: 'joehill'))
+    allow(AccountService).to receive(:call)
+      .with(sunetid: 'pennywise')
+      .and_return(AccountService::Account.new(name: 'Pennywise', sunetid: 'pennywise'))
+    allow(AccountService).to receive(:call).with(sunetid: 'notjoehill').and_return(nil)
 
     sign_in(user, groups:)
   end
@@ -103,13 +114,13 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_text('Managers')
     form_instances = page.all('.form-instance')
     within(form_instances[0]) do
-      expect(page).to have_field('SUNet ID', with: user.sunetid, readonly: true)
+      expect(page).to have_css('p', text: 'jswithen: John Swithen')
     end
     within(form_instances[1]) do
       fill_in('Lookup SUNet ID', with: 'stepking')
       expect(page).to have_text('Stephen King')
       find('p', text: 'Click to add').click
-      expect(page).to have_field('SUNet ID', with: 'stepking', readonly: true)
+      expect(page).to have_field('autocomplete-input', with: 'stepking: Stephen King', readonly: true)
     end
     within(form_instances[2]) do
       fill_in('Lookup SUNet ID', with: 'notjoehill')
@@ -117,7 +128,7 @@ RSpec.describe 'Create a collection deposit' do
       fill_in('Lookup SUNet ID', with: 'joehill')
       expect(page).to have_text('Joe Hill')
       find('p', text: 'Click to add').click
-      expect(page).to have_field('SUNet ID', with: 'joehill', readonly: true)
+      expect(page).to have_field('autocomplete-input', with: 'joehill: Joe Hill', readonly: true)
     end
     expect(page).to have_checked_field('Send email to Collection Managers and Reviewers ' \
                                        '(see Workflow section of form) when participants are added/removed',
@@ -133,7 +144,7 @@ RSpec.describe 'Create a collection deposit' do
     fill_in('Lookup SUNet ID', with: 'pennywise')
     expect(page).to have_text('Pennywise')
     find('p', text: 'Click to add').click
-    expect(page).to have_field('SUNet ID', with: 'pennywise', readonly: true)
+    expect(page).to have_field('autocomplete-input', with: 'pennywise: Pennywise', readonly: true)
 
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
@@ -164,5 +175,8 @@ RSpec.describe 'Create a collection deposit' do
     # Terms of use
     expect(page).to have_css('th', text: 'Additional terms of use')
     expect(page).to have_css('td', text: 'My custom rights statement')
+
+    # Joe Hill was created
+    expect(User.find_by(email_address: 'joehill@stanford.edu', name: 'Joe Hill')).to be_present
   end
 end

@@ -23,7 +23,8 @@ end
 def collection_manager_fixture
   [
     {
-      'sunetid' => 'stepking'
+      'sunetid' => 'stepking',
+      'name' => 'Stephen King'
     }
   ]
 end
@@ -31,7 +32,8 @@ end
 def collection_depositor_fixture
   [
     {
-      'sunetid' => 'joehill'
+      'sunetid' => 'joehill',
+      'name' => 'Joseph Hill'
     }
   ]
 end
@@ -39,7 +41,8 @@ end
 def collection_reviewer_fixture
   [
     {
-      'sunetid' => 'rbachman'
+      'sunetid' => 'rbachman',
+      'name' => 'Richard Bachman'
     }
   ]
 end

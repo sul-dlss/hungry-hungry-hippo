@@ -75,9 +75,8 @@ class DepositCollectionJob < ApplicationJob
       participant = participant.attributes if participant.respond_to?(:attributes)
       next if participant['sunetid'].blank?
 
-      user = User.find_or_initialize_by(email_address: sunetid_to_email_address(participant['sunetid']))
-      user.update!(name: participant['sunetid']) if user.name.blank?
-      user.save!
+      user = User.create_with(name: participant['name'])
+                 .find_or_create_by!(email_address: sunetid_to_email_address(participant['sunetid']))
 
       collection.send(role).append(user) unless collection.send(role).include?(user)
       updated_users_for_role.append(user)

@@ -15,7 +15,7 @@ class AccountsController < ApplicationController
 
   # Does a lookup from the account service in production mode, otherwise examines local database for users
   def lookup_account
-    return AccountService.call(sunetid: params[:id]) if Rails.env.production?
+    return AccountService.call(sunetid: params[:id]) unless Rails.env.development?
 
     user = User.find_by_sunetid(sunetid: params[:id])
     return nil unless user
