@@ -1,12 +1,12 @@
 <div class="d-flex justify-content-between">
-  <div>
-    <%= render Elements::HeadingComponent.new(level: :h1, text: title, classes: 'mb-4 d-inline-block') %>
-    <span class="ms-4 fst-italic status"><%= status_message %></span>
+  <div class="mb-4">
+    <%= render Elements::HeadingComponent.new(level: :h1, text: title, classes: 'd-inline') %>
+    <span class="fst-italic status ms-4"><%= status_message %></span>
   </div>
-  <div class="d-flex align-items-start">
-    <%= render Edit::EditDraftButtonComponent.new(presenter:) %>
-    <%= render Edit::DiscardDraftButtonComponent.new(presenter:, classes: 'ms-2') %>
-    <%= render Admin::FunctionDropdownComponent.new(classes: 'ms-2') do |component| %>
+  <div class="d-flex align-items-start ms-5">
+    <%= render Edit::EditDraftButtonComponent.new(presenter:, classes: 'text-nowrap') %>
+    <%= render Edit::DiscardDraftButtonComponent.new(presenter:, classes: 'ms-2 text-nowrap') %>
+    <%= render Admin::FunctionDropdownComponent.new(classes: 'ms-2 text-nowrap') do |component| %>
       <% component.with_function(label: 'Move to another collection', link: new_work_admin_move_path(druid, content_id:), data: { turbo_frame: 'admin-card' }) if editable? %>
       <% component.with_function(label: 'Delete', link: new_work_admin_delete_path(druid), data: { turbo_frame: 'admin-card' }) %>
     <% end %>
