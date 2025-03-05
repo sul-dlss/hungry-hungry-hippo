@@ -245,7 +245,7 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('td', text: related_links_fixture.first['related_content'])
         expect(page).to have_css('tr', text: 'Related published work')
         expect(page).to have_css('td p', text: 'Here is a valid citation.')
-        expect(page).to have_css('td p', text: 'Relationship: It\'s one part of this related work')
+        expect(page).to have_css('td p', text: 'Relationship: It is one part of this related work')
         expect(page).to have_css('td p', text: 'doi:10.7710/2162-3309.1059')
       end
 
