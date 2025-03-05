@@ -17,4 +17,27 @@ class ApplicationComponent < ViewComponent::Base
   def merge_actions(*)
     ComponentSupport::CssClasses.merge(*)
   end
+
+  # Generate error field ID for a form and field name
+  #
+  # @param field_name [Symbol,String] The name of the field needing an error field
+  # @param form [ActiveModel::Model] An ActiveModel form instance
+  # @return [String] A field identifier
+  def invalid_feedback_id_for(field_name:, form:)
+    form.field_id(field_name, 'error')
+  end
+
+  # Generate ARIA hash for a form and field name
+  #
+  # @param field_name [Symbol,String] The name of the field needing an error field
+  # @param form [ActiveModel::Model] An ActiveModel form instance
+  # @return [Hash] A hash of ARIA attributes
+  def invalid_feedback_arias_for(field_name:, form:)
+    return {} if field_name.nil? || form.object&.errors&.[](field_name).blank?
+
+    {
+      invalid: true,
+      describedby: invalid_feedback_id_for(field_name:, form:)
+    }
+  end
 end

@@ -26,7 +26,7 @@ module Elements
       private
 
       def id
-        InvalidFeedbackSupport.id_for(field_name:, form:)
+        invalid_feedback_id_for(field_name:, form:)
       end
 
       def errors

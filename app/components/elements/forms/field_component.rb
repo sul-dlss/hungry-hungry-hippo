@@ -37,7 +37,7 @@ module Elements
       end
 
       def field_aria
-        InvalidFeedbackSupport.arias_for(field_name:, form:).tap do |arias|
+        invalid_feedback_arias_for(field_name:, form:).tap do |arias|
           arias[:describedby] = merge_actions(arias[:describedby], help_text_id) if help_text.present?
         end
       end

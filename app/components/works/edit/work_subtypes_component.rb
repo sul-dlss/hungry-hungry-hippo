@@ -50,7 +50,7 @@ module Works
       end
 
       def fieldset_aria
-        Elements::Forms::InvalidFeedbackSupport.arias_for(form:, field_name: error_field_name)
+        invalid_feedback_arias_for(form:, field_name: error_field_name)
       end
     end
   end

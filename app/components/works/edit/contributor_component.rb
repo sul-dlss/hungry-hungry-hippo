@@ -67,7 +67,7 @@ module Works
       ].freeze
 
       def orcid_aria
-        Elements::Forms::InvalidFeedbackSupport.arias_for(form:, field_name: :orcid)
+        invalid_feedback_arias_for(form:, field_name: :orcid)
       end
 
       ORGANIZATION_ROLES = [
