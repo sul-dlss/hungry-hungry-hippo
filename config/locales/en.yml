@@ -193,9 +193,9 @@ en:
         List additional published works related to your deposit. You may provide either a link (preferably a persistent identifier) or the full citation for the work. You must select an option from the list provided to describe how your deposit is related to this work.
       fields:
         citation:
-          label: 'Full citation for work'
+          label: 'Enter full citation for related work'
         use_citation:
-          label: "I don't have a link but would like to enter a citation for a related work."
+          label: 'Do you have a link for this related work?'
         identifier:
           label:
             html: 'Link for a related work <em>(e.g., DOI, arXiv, PMID, PURL, or other URL)</em>'
