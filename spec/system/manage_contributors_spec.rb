@@ -195,6 +195,18 @@ RSpec.describe 'Manage contributors for a work deposit' do
       fill_in('ORCID iD', with: 'https://orcid.org/0000-0001-7756-243X')
       expect(page).to have_field('First name', with: 'Michael A.')
       expect(page).to have_field('Last name', with: 'Keller')
+      expect(page).to have_content('Name associated with this ORCID iD is Michael A. Keller.')
+
+      fill_in('ORCID iD', with: '')
+      expect(page).to have_field('First name', with: '', disabled: true)
+      expect(page).to have_field('Last name', with: '', disabled: true)
+      expect(page).to have_no_content('Name associated with this ORCID iD is Michael A. Keller.')
+
+      fill_in('ORCID iD', with: 'https://orcid.org/0000-0001-7756-243X')
+
+      within('.cited-section') do
+        find('label', text: 'No').click
+      end
     end
 
     click_link_or_button('Save as draft')
@@ -219,6 +231,12 @@ RSpec.describe 'Manage contributors for a work deposit' do
       within('tbody tr:nth-child(4)') do
         expect(page).to have_css('td:nth-child(1)', text: 'Foothill College')
         expect(page).to have_css('td:nth-child(3)', text: 'Degree granting institution')
+      end
+      within('tbody tr:nth-child(5)') do
+        expect(page).to have_css('td:nth-child(1)', text: 'Michael A. Keller')
+        expect(page).to have_css('td:nth-child(2)', text: 'https://orcid.org/0000-0001-7756-243X')
+        expect(page).to have_css('td:nth-child(3)', text: 'Author')
+        expect(page).to have_css('td:nth-child(4)', text: 'No')
       end
     end
   end

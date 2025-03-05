@@ -41,6 +41,7 @@ export default class extends Controller {
     this.orcidLastNameInputTarget.disabled = true
     this.orcidLastNameInputTarget.dataset.disabled = 'true'
     this.orcidLastNameInputTarget.value = ''
+    this.orcidMessageTarget.textContent = ''
 
     // Normalize
     const orcid = this.orcidInputTarget.value.replace(this.orcidPrefixValue, '')
@@ -54,10 +55,8 @@ export default class extends Controller {
     }
     this.orcidInputTarget.value = orcid
 
-    console.log('orcid', orcid)
     fetch(`${this.orcidResolverPathValue}${orcid}`)
       .then(response => {
-        console.log('response', response)
         if (response.status === 404) {
           this.orcidFeedbackTarget.classList.add('is-invalid')
           this.orcidFeedbackTarget.textContent = 'not found'
