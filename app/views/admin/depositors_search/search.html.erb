@@ -1,0 +1,26 @@
+<% content_for :breadcrumbs do %>
+  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
+    <% component.with_breadcrumb(text: 'Admin dashboard', link: admin_dashboard_path) %>
+    <% component.with_breadcrumb(text: 'Get SUNet IDs of depositors') %>
+  <% end %>
+<% end %>
+
+<div class="d-flex justify-content-end">
+  <%= render Admin::FunctionDropdownComponent.new %>
+</div>
+
+<%= render Elements::HeadingComponent.new(level: :h1, text: 'Get SUNet IDs of depositors', classes: 'h2 mb-4') %>
+
+<%= form_with model: @depositors_search_form, url: search_admin_depositors_search_path, method: :get, class: 'mb-5' do |form| %>
+  <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :druids, label: 'Enter work druids separated by spaces', hidden_label: true) %>
+  <%= render Elements::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-4') %>
+<% end %>
+
+<% if @druid_to_sunetid_map.present? %>
+  <%= render Elements::HorizontalRuleComponent.new %>
+  <%= render Elements::Tables::TableComponent.new(id: 'depositors-table', classes: 'mb-5', label: 'Depositor SUNet IDs', show_label: false) do |component| %>
+    <% component.with_header(headers: ['Work DRUID', 'Depositor SUNet ID']) %>
+    <% component.with_rows(@druid_to_sunetid_map) %>
+  <% end %>
+<% end %>
