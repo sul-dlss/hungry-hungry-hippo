@@ -415,6 +415,16 @@ en:
             content to understand what the Depositor is allowing them to do with the work and under what conditions.
           tooltip_html: >-
             As the collection manager, you can decide whether 1) a specific license  you choose from the list will be mandatory for every deposit to the collection ("Require license for all deposits") or 2) if the Depositors will be able to choose the license they wish to use ("Depositor selects license").  For this second option, you must choose a license from the list to be displayed as the default option for Depositors, which they will be able to change.
+        terms_of_use:
+          tab_label: 'Terms of use'
+          label: 'Terms of use'
+          tooltip_html: >-
+            As the collection manager, you can decide whether additional terms of use can be added to a deposit and displayed on the public page along with the Standard Terms of Use shown below. You have three options: 1) Leave the custom terms off. No additional terms will be added. 2) Provide custom terms that will appear on every deposit. The depositor will not be able to modify this text. 3) Allow the depositor to type in their own custom terms. With this option, you can choose to display to the depositor the default instructions we have written, or write your own instructions.
+          use_statement_label: 'Include a custom use statement?'
+          use_statement_options:
+            nope: 'No, do not include a custom use statement.'
+            provided: 'Yes, include the following custom use statement for every deposit in this collection.'
+            depositor_selects: 'Yes, allow depositors to enter their own custom use statement. The depositor will see the instructions provided below.'
         related_links:
           tab_label: 'Related links (optional)'
           label: 'Links to related content (optional)'

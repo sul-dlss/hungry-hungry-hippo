@@ -48,6 +48,40 @@ RSpec.describe DepositCollectionJob do
       expect(manager.name).not_to eq(manager.sunetid)
       expect(collection.email_when_participants_changed).to be true
       expect(collection.email_depositors_status_changed).to be true
+
+      expect(collection.custom_rights_statement_option).to eq('no') # default
+    end
+
+    context 'when a custom rights statement is provided' do
+      let(:collection_form) do
+        CollectionForm.new(title: collection.title,
+                           managers_attributes: [],
+                           depositors_attributes: [],
+                           custom_rights_statement_option: 'provided',
+                           provided_custom_rights_statement: 'This is a custom rights statement')
+      end
+
+      it 'registers a new collection with a custom rights statement' do
+        described_class.perform_now(collection_form:, collection:)
+        expect(collection.reload.custom_rights_statement_option).to eq('provided')
+        expect(collection.provided_custom_rights_statement).to eq('This is a custom rights statement')
+      end
+    end
+
+    context 'when the depositor can enter the custom rights statement' do
+      let(:collection_form) do
+        CollectionForm.new(title: collection.title,
+                           managers_attributes: [],
+                           depositors_attributes: [],
+                           custom_rights_statement_option: 'depositor_selects',
+                           custom_rights_statement_instructions: 'Please enter a custom rights statement')
+      end
+
+      it 'registers a new collection with instructions for entering the rights statement' do
+        described_class.perform_now(collection_form:, collection:)
+        expect(collection.reload.custom_rights_statement_option).to eq('depositor_selects')
+        expect(collection.reload.custom_rights_statement_instructions).to eq('Please enter a custom rights statement')
+      end
     end
   end
 
