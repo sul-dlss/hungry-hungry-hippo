@@ -29,4 +29,12 @@ RSpec.describe Elements::SpinnerComponent, type: :component do
       expect(page).to have_css('div.class1.class2')
     end
   end
+
+  context 'with an image' do
+    it 'renders the spinner with the image' do
+      render_inline(described_class.new(image_path: 'image.jpg', height: 100, width: 100))
+      expect(page).to have_css('img[src="image.jpg"][alt="Spinner"][style="height: 100px; width: 100px;"]' \
+                               '.spinner-border.border-0')
+    end
+  end
 end

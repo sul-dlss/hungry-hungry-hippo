@@ -68,10 +68,10 @@ class CollectionsController < ApplicationController
   end
 
   def wait
-    collection = Collection.find(params[:id])
-    authorize! collection
+    @collection = Collection.find(params[:id])
+    authorize! @collection
 
-    redirect_to collection_path(druid: collection.druid) unless collection.deposit_registering_or_updating?
+    redirect_to collection_path(druid: @collection.druid) unless @collection.deposit_registering_or_updating?
   end
 
   private

@@ -3,26 +3,37 @@
 module Elements
   # It spins.
   class SpinnerComponent < ApplicationComponent
-    def initialize(message: 'Loading...', variant: nil, hide_message: false, classes: [])
+    def initialize(message: 'Loading...', image_path: nil, variant: nil, hide_message: false, classes: [], # rubocop:disable Metrics/ParameterLists
+                   height: nil, width: nil, message_classes: [])
       @message = message
       @variant = variant
       @hide_message = hide_message
       @classes = classes
+      @image_path = image_path # Optionally spin an image
+      @height = height
+      @width = width
+      @message_classes = message_classes
       super()
     end
 
-    attr_reader :message
+    attr_reader :message, :image_path
 
     def spinner_classes
-      merge_classes('spinner-border', variant_class)
+      merge_classes('spinner-border', variant_class, border_class)
     end
 
     def message_classes
-      @hide_message ? 'visually-hidden' : ''
+      merge_classes(@message_classes, @hide_message ? 'visually-hidden' : nil)
     end
 
     def classes
       merge_classes(@classes)
+    end
+
+    def spinner_style
+      return unless @height && @width
+
+      "height: #{@height}px; width: #{@width}px;"
     end
 
     private
@@ -31,6 +42,12 @@ module Elements
       return unless @variant
 
       "text-#{@variant}"
+    end
+
+    def border_class
+      return unless image_path
+
+      'border-0'
     end
   end
 end

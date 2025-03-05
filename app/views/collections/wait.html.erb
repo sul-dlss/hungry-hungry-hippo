@@ -1,6 +1,13 @@
 <%# Setting the turbo_refresh_method will make the refresh smooth. %>
 <% content_for(:turbo_refresh_method, 'refresh') %>
 
+<% content_for :breadcrumbs do %>
+  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
+    <% component.with_collection_breadcrumb(text: @collection.title) %>
+  <% end %>
+<% end %>
+
 <%= tag.div data: { controller: 'refresh' } do %>
-    <%= render Elements::SpinnerComponent.new(message: 'Processing...', variant: :info, classes: 'my-2') %>
+    <%= render Elements::SpinnerComponent.new(image_path: image_path('rosette.png'), message: t('messages.wait_for_it'), classes: 'my-5 text-center', height: 150, width: 150, message_classes: 'mt-3') %>
 <% end %>

@@ -1,4 +1,8 @@
 <%= tag.div class: classes do %>
-    <%= tag.div class: spinner_classes, role: 'status' %>
-    <%= tag.div class: message_classes do %><%= message %><% end %>
+  <% if image_path %>
+    <%= tag.img src: image_path, alt: 'Spinner', class: spinner_classes, role: 'status', style: spinner_style %>
+  <% else %>
+    <%= tag.div class: spinner_classes, role: 'status', style: spinner_style %>
+  <% end %>
+  <%= tag.div class: message_classes do %><%= message %><% end %>
 <% end %>
