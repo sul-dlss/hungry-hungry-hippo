@@ -51,6 +51,7 @@ en:
       the left to correct the errors and then try depositing again.
     work_deleted: 'Work successfully deleted.'
     work_moved: 'Work moved to the new collection.'
+    wait_for_it: 'We are depositing your work. Feel free to navigate away from this page.'
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
