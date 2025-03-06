@@ -24,9 +24,9 @@ module Admin
 
     def redirect_to_work_or_collection
       path = if @druid_search_form.collection.present?
-               collection_path(druid: @druid_search_form.druid)
+               collection_path(@druid_search_form.druid)
              else
-               work_path(druid: @druid_search_form.druid)
+               work_path(@druid_search_form.druid)
              end
       render turbo_stream: turbo_stream.action(:full_page_redirect, path)
     end

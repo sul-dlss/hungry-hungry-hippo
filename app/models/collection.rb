@@ -55,4 +55,8 @@ class Collection < ApplicationRecord
   def first_version?
     version == 1
   end
+
+  def to_param
+    druid
+  end
 end

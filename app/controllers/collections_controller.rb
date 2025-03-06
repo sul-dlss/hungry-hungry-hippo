@@ -30,7 +30,7 @@ class CollectionsController < ApplicationController
 
     unless editable?
       flash[:danger] = I18n.t('collections.edit.messages.cannot_be_edited')
-      return redirect_to collection_path(druid: params[:druid])
+      return redirect_to collection_path(params[:druid])
     end
 
     # This updates the Collection with the latest metadata from the Cocina object.
@@ -71,7 +71,7 @@ class CollectionsController < ApplicationController
     @collection = Collection.find(params[:id])
     authorize! @collection
 
-    redirect_to collection_path(druid: @collection.druid) unless @collection.deposit_registering_or_updating?
+    redirect_to collection_path(@collection) unless @collection.deposit_registering_or_updating?
   end
 
   private

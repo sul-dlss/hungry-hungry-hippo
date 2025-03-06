@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe CollectionsMailer do
   let(:user) { create(:user, name: 'Max Headroom', first_name: 'Maxwell') }
-  let(:collection) { create(:collection, title: '20 Minutes into the Future') }
+  let(:collection) { create(:collection, :with_druid, title: '20 Minutes into the Future') }
 
   describe '#invitation_to_deposit_email' do
     let(:mail) { described_class.with(user:, collection:).invitation_to_deposit_email }
@@ -144,8 +144,7 @@ RSpec.describe CollectionsMailer do
 
   describe '#first_version_created_email' do
     let(:collection) do
-      create(:collection, user:,
-                          title: '20 Minutes into the Future')
+      create(:collection, :with_druid, user:, title: '20 Minutes into the Future')
     end
     let(:mail) { described_class.with(collection:).first_version_created_email }
 

@@ -36,7 +36,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
     unless editable?
       flash[:warning] = helpers.t('works.edit.messages.cannot_be_edited_html', support_email: Settings.support_email)
-      return redirect_to work_path(druid: params[:druid]), status: :see_other
+      return redirect_to work_path(params[:druid]), status: :see_other
     end
 
     # This updates the Work with the latest metadata from the Cocina object.
@@ -89,9 +89,9 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     if @version_status.version == 1
       collection_druid = @work.collection.druid
       @work.destroy!
-      redirect_to collection_path(druid: collection_druid)
+      redirect_to collection_path(collection_druid)
     else
-      redirect_to work_path(druid: @work.druid)
+      redirect_to work_path(@work)
     end
   end
 
@@ -103,7 +103,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     @no_flash = true
     flash.keep
 
-    redirect_to work_path(druid: @work.druid) unless @work.deposit_registering_or_updating?
+    redirect_to work_path(@work) unless @work.deposit_registering_or_updating?
   end
 
   def review
@@ -202,7 +202,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       wait_works_path(@work.id)
     else
       @work.reject_with_reason!(reason: @review_form.reject_reason)
-      work_path(druid: @work.druid)
+      work_path(@work)
     end
   end
 
