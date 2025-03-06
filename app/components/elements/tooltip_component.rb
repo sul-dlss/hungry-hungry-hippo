@@ -17,7 +17,7 @@ module Elements
           bs_html: true,
           bs_toggle: 'tooltip',
           bs_title: tooltip,
-          bs_trigger: 'click focus',
+          bs_trigger: 'focus',
           tooltips_target: 'icon'
         }
       )
