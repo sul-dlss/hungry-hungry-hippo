@@ -20,7 +20,7 @@ module Admin
 
     def values_for(collection)
       [
-        link_to(collection.title, collection_or_wait_path(collection)),
+        link_to(collection.title, collection_or_wait_path(collection), data: { turbo_frame: '_top' }),
         collection.druid,
         roles_for(collection)
       ]
