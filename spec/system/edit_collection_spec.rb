@@ -187,9 +187,9 @@ RSpec.describe 'Edit a collection' do
     # Access settings
     expect(page).to have_content('3 years in the future')
     # Participants
-    expect(page).to have_content('stepking@stanford.edu')
-    expect(page).to have_content('joehill@stanford.edu')
-    expect(page).to have_content('pennywise@stanford.edu')
+    expect(page).to have_content('stepking: Stephen King')
+    expect(page).to have_content('joehill: Joe Hill')
+    expect(page).to have_content('pennywise: Pennywise')
 
     # License
     expect(page).to have_css('th', text: 'License')

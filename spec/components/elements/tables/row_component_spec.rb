@@ -28,20 +28,6 @@ RSpec.describe Elements::Tables::RowComponent, type: :component do
     end
   end
 
-  context 'with items' do
-    it 'renders the row' do
-      render_inline(described_class.new.tap do |component|
-        component.with_item { 'First item' }
-        component.with_item { 'Second item' }
-      end)
-
-      row = page.find('tr')
-      expect(row).to have_css('td', count: 1)
-      expect(row).to have_css('td ul li', text: 'First item')
-      expect(row).to have_css('td ul li', text: 'Second item')
-    end
-  end
-
   context 'with label but no content' do
     it 'renders the row' do
       render_inline(described_class.new(label: 'My label'))

@@ -11,13 +11,6 @@
   <% cells.each do |cell| %>
     <td><%= cell %></td>
   <% end %>
-  <% if items? %>
-    <td><ul class="list-unstyled">
-      <% items.each do |item| %>
-        <li><%= item %></li>
-      <% end %>
-    </ul></td>
-  <% end %>
   <% if empty_cell? %>
     <td></td>
   <% end %>

@@ -13,9 +13,9 @@ class CollectionPresenter < FormPresenter
   delegate :license, to: :collection
 
   # @param [Symbol] role :managers or :depositors
-  # @return [String] a comma-separated list of email addresses
+  # @return [Array<String>] an array of formatted sunetids and names
   def participants(role)
-    collection.send(role).pluck(:email_address).join(', ')
+    collection.send(role).map { |participant| "#{participant.sunetid}: #{participant.name}" }
   end
 
   def release
