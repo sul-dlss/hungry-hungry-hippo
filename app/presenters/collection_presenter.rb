@@ -38,7 +38,7 @@ class CollectionPresenter < FormPresenter
     when 'provided'
       collection.provided_custom_rights_statement
     when 'depositor_selects'
-      "Allow user to enter with instructions: #{collection.custom_rights_statement_instructions}"
+      "Allow user to enter with instructions:\n\n#{collection.custom_rights_statement_instructions}"
     else
       'No'
     end
