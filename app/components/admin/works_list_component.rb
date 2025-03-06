@@ -20,8 +20,8 @@ module Admin
 
     def values_for(work)
       [
-        link_to(work.title, work_or_wait_path(work)),
-        link_to(work.collection.title, collection_or_wait_path(work.collection)),
+        link_to(work.title, work_or_wait_path(work), data: { turbo_frame: '_top' }),
+        link_to(work.collection.title, collection_or_wait_path(work.collection), data: { turbo_frame: '_top' }),
         @status_map[work.id].status_message,
         work.bare_druid,
         work.object_updated_at ? I18n.l(work.object_updated_at, format: '%b %d, %Y') : nil

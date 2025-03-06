@@ -32,9 +32,13 @@ RSpec.describe Admin::WorksListComponent, type: :component do
     expect(table_body).to have_css('tr', count: 2)
     first_row = table_body.find('tr:nth-of-type(1)')
     expect(first_row).to have_css('td:nth-of-type(1)', text: work.title)
-    expect(first_row).to have_link(work.title, href: "/works/#{work.druid}")
+    expect(first_row).to have_link(work.title, href: "/works/#{work.druid}") { |a|
+      a['data-turbo-frame'] == '_top'
+    }
     expect(first_row).to have_css('td:nth-of-type(2)', text: collection.title)
-    expect(first_row).to have_link(collection.title, href: "/collections/#{collection.druid}")
+    expect(first_row).to have_link(collection.title, href: "/collections/#{collection.druid}") { |a|
+      a['data-turbo-frame'] == '_top'
+    }
     expect(first_row).to have_css('td:nth-of-type(3)', text: 'Draft - Not deposited')
     expect(first_row).to have_css('td:nth-of-type(4)', text: work.druid.delete_prefix('druid:'))
     expect(first_row).to have_css('td:nth-of-type(5)', text: 'Dec 03, 2024')
