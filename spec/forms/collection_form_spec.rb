@@ -37,6 +37,18 @@ RSpec.describe CollectionForm do
       end
     end
 
+    context 'when provided custom rights statement includes line breaks' do
+      before do
+        form_hash[:custom_rights_statement_option] = 'provided'
+        form_hash[:provided_custom_rights_statement] = "This is a test\n\nwith a line break"
+      end
+
+      it 'normalizes the line breaks' do
+        form.validate
+        expect(form.provided_custom_rights_statement).to eq "This is a test\r\n\r\nwith a line break"
+      end
+    end
+
     context 'when custom rights statement is set to depositor selects' do
       before { form_hash[:custom_rights_statement_option] = 'depositor_selects' }
 

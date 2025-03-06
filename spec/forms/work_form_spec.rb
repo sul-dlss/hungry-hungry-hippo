@@ -235,14 +235,17 @@ RSpec.describe WorkForm do
         title: title_fixture,
         contact_emails_attributes: contact_emails_fixture,
         contributors_attributes: contributors_fixture,
-        abstract:
+        abstract:,
+        custom_rights_statement:
       )
     end
     let(:abstract) { "This is a test.\n\nThis is a second paragraph." }
+    let(:custom_rights_statement) { "This is a test.\n\nThis is a second paragraph." }
 
     it 'normalizes linefeeds' do
       expect(form).to be_valid
       expect(form.abstract).to eq("This is a test.\r\n\r\nThis is a second paragraph.")
+      expect(form.custom_rights_statement).to eq("This is a test.\r\n\r\nThis is a second paragraph.")
     end
   end
 

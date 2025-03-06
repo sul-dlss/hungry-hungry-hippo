@@ -77,6 +77,9 @@ class WorkForm < ApplicationForm
   end
 
   attribute :custom_rights_statement, :string
+  before_validation lambda { |work_form|
+    work_form.custom_rights_statement = LinebreakSupport.normalize(work_form.custom_rights_statement)
+  }
 
   attribute :doi_option, :string, default: 'yes'
   validates :doi_option, inclusion: { in: %w[yes no assigned] }
