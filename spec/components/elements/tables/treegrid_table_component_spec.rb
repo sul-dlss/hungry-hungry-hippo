@@ -16,7 +16,8 @@ RSpec.describe Elements::Tables::TreegridTableComponent, type: :component do
       render_inline(
         described_class.new(id: 'test-table', label: 'Test Table',
                             classes: 'table-another').tap do |component|
-                              component.with_header(headers: ['Header 1', 'Header 2'])
+                              component.with_header(label: 'Header 1')
+                              component.with_header(label: 'Header 2')
                               component.with_row_branch(level: 1, label: 'Branch 1')
                             end
       )

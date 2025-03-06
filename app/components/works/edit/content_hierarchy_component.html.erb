@@ -1,5 +1,10 @@
 <%= render Elements::Tables::TreegridTableComponent.new(id: 'content-table', label: 'File list', show_label: false) do |component| %>
-  <% component.with_header(headers: ['File Name', 'Description', 'Hide', 'Action'], each_tooltips: [nil, helpers.t('content_files.edit.fields.description.tooltip_html'), helpers.t('content_files.edit.fields.hide.tooltip_html'), nil]) %>
+  <% component.with_headers([
+                              { label: 'File Name' },
+                              { label: 'Description', tooltip: helpers.t('content_files.edit.fields.description.tooltip_html') },
+                              { label: 'Hide', tooltip: helpers.t('content_files.edit.fields.hide.tooltip_html') },
+                              { label: 'Action' }
+                            ]) %>
   <% last_path_parts = [] %>
   <% content_files.each do |content_file| %>
     <%= render Works::Edit::ContentFileHierarchyComponent.new(content_file:, last_path_parts:, component:) %>

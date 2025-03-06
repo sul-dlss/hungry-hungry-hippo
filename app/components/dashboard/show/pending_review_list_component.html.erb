@@ -2,9 +2,12 @@
       id:, label: 'Deposits pending review', show_label: false,
       empty_message: 'You do not have items waiting for approval.'
     ) do |component| %>
-  <% component.with_header(
-       headers: ['Deposit', 'Collection', 'Owner', 'Last modified']
-     ) %>
+    <% component.with_headers([
+                                { label: 'Deposit' },
+                                { label: 'Collection' },
+                                { label: 'Owner' },
+                                { label: 'Last modified' }
+                              ]) %>
   <% works.each do |work| %>
     <% component.with_row(values: values_for(work), id: id_for(work)) %>
   <% end %>
