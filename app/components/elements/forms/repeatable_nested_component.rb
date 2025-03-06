@@ -5,8 +5,11 @@ module Elements
     # Encapsulates a repeatable nested form, including adding and removing nested models.
     # NOTE: Use the `NestedComponentPresenter` to invoke this component; do not directly instantiate it.
     class RepeatableNestedComponent < ApplicationComponent
+      renders_one :before_section # Optional
+
       def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists
-                     reorderable: false, single_field: false, fieldset_classes: [], skip_tooltip: false)
+                     reorderable: false, single_field: false, fieldset_classes: [], skip_tooltip: false,
+                     fieldset_id: nil, hide_add_button: false)
         @form = form
         @model_class = model_class
         @field_name = field_name
@@ -16,16 +19,18 @@ module Elements
         @reorderable = reorderable
         @single_field = single_field
         @fieldset_classes = fieldset_classes
+        @fieldset_id = fieldset_id
         # We need to be able to skip tooltips in nested components because
         # related link tooltips in the collection and work design are in
         # different spots. In the collection design, the tooltip has been
         # rendered in a parent element of the DOM, so rendering the tooltip
         # within this component would cause repetition and confusion.
         @skip_tooltip = skip_tooltip
+        @hide_add_button = hide_add_button
         super()
       end
 
-      attr_reader :form, :model_class, :field_name, :form_component, :hidden_label, :fieldset_classes
+      attr_reader :form, :model_class, :field_name, :form_component, :hidden_label, :fieldset_classes, :fieldset_id
 
       def label_text
         helpers.t("#{field_name}.edit.legend")
@@ -74,13 +79,18 @@ module Elements
       def fieldset_data
         {
           controller: ['nested-form', reorderable? ? 'nested-form-reorder' : nil].compact.join(' '),
-          nested_form_selector_value: '.form-instance'
+          nested_form_selector_value: '.form-instance',
+          nested_form_add_when_empty_value: !hide_add_button?
         }
       end
 
       def single_field?
         # whether there is a single visible field in the form, to determine button placement
         @single_field
+      end
+
+      def hide_add_button?
+        @hide_add_button
       end
     end
   end

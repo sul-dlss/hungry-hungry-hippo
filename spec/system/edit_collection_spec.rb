@@ -134,31 +134,22 @@ RSpec.describe 'Edit a collection' do
     # There is a manager form and a depositor form
     form_instances = all('.form-instance')
     expect(form_instances.count).to eq(2)
-    expect(form_instances[0]).to have_text('alborland: Al Borland') # Manager
-    expect(form_instances[1]).to have_text('Lookup SUNet ID') # Depositor
 
     # Remove the manager
     within form_instances[0] do
+      expect(page).to have_css('.participant-label', text: 'alborland: Al Borland') # Manager
       find('button[data-action="click->nested-form#delete"]').click
     end
     expect(page).to have_no_text('alborland: Al Borland')
 
-    click_link_or_button('+ Add another manager')
-    form_instances = all('.form-instance')
-
-    # Add a new manager
-    within form_instances[0] do
-      fill_in('Lookup SUNet ID', with: 'stepking')
-      find('p', text: 'Click to add').click
-      expect(page).to have_field('autocomplete-input', with: 'stepking: Stephen King', readonly: true)
-    end
+    fill_in('managers-textarea', with: 'stepking@stanford.edu')
+    click_link_or_button('Add managers')
+    expect(page).to have_css('.participant-label', text: 'stepking: Stephen King')
 
     # Fill in the depositor form
-    within form_instances[1] do
-      fill_in('Lookup SUNet ID', with: 'joehill')
-      find('p', text: 'Click to add').click
-      expect(page).to have_field('autocomplete-input', with: 'joehill: Joe Hill', readonly: true)
-    end
+    fill_in('depositors-textarea', with: 'joehill')
+    click_link_or_button('Add depositors')
+    expect(page).to have_css('.participant-label', text: 'joehill: Joe Hill')
 
     find('label', text: 'Send email to Collection Managers and Reviewers ' \
                         '(see Workflow section of form) when participants are added/removed').click
@@ -170,9 +161,10 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_text('Review workflow')
     expect(page).to have_checked_field('No', with: false)
     find('label', text: 'Yes').click
-    fill_in('Lookup SUNet ID', with: 'pennywise')
-    find('p', text: 'Click to add').click
-    expect(page).to have_field('autocomplete-input', with: 'pennywise: Pennywise', readonly: true)
+
+    fill_in('reviewers-textarea', with: 'pennywise')
+    click_link_or_button('Add reviewers')
+    expect(page).to have_css('.participant-label', text: 'pennywise: Pennywise')
 
     click_link_or_button('Next')
 

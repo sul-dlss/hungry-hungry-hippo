@@ -15,14 +15,6 @@ module Collections
 
       delegate :object, to: :form
 
-      def lookup_id
-        form.field_id(:lookup)
-      end
-
-      def label
-        'SUNet ID'
-      end
-
       def value
         return unless sunetid
 

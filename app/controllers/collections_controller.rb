@@ -18,8 +18,11 @@ class CollectionsController < ApplicationController
   def new
     authorize! Collection
     @collection_form = CollectionForm.new(
-      managers_attributes: [{ sunetid: current_user.sunetid, name: current_user.name }, {}],
-      contact_emails_attributes: [{ email: current_user.email_address }]
+      managers_attributes: [{ sunetid: current_user.sunetid, name: current_user.name }],
+      contact_emails_attributes: [{ email: current_user.email_address }],
+      # This gets rid of the default empty nested forms.
+      reviewers_attributes: [],
+      depositors_attributes: []
     )
 
     render :form

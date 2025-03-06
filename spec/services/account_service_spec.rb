@@ -8,6 +8,7 @@ RSpec.describe AccountService do
   let(:body) do
     <<~JSON
       {
+        "id": "jcoyne85",
         "name":"Coyne, Justin Michael",
         "description":"Digital Library Systems and Services, Digital Library Software Engineer - Web \\u0026 Infrastructure",
         "otherStuff":"Is ignored"
@@ -22,17 +23,17 @@ RSpec.describe AccountService do
   end
 
   context 'with a string that requires no encoding' do
-    let(:sunetid) { 'jcoyne85' }
+    let(:sunetid) { 'jcoyne85;' }
 
     before do
-      stub_request(:get, 'https://accountws-uat.stanford.edu/accounts/jcoyne85')
+      stub_request(:get, 'https://accountws-uat.stanford.edu/accounts/jcoyne85;')
         .to_return(status: 200, body:, headers: { 'Content-Type' => 'application/json' })
     end
 
     it 'returns account' do
       expect(account).to eq(
         described_class::Account.new(
-          sunetid:,
+          sunetid: 'jcoyne85',
           name: 'Justin Michael Coyne',
           description: 'Digital Library Systems and Services, Digital Library Software Engineer ' \
                        '- Web & Infrastructure'

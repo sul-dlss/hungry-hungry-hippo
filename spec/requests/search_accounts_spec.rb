@@ -34,13 +34,9 @@ RSpec.describe 'Accounts search' do
       it 'displays the data' do
         get '/accounts/search?id=jc'
         expect(response).to have_http_status(:ok)
-        expect(response.body).to match <<~HTML.rstrip
-            <li class="list-group-item" role="option" data-autocomplete-value="jc: Justin Coyne" data-autocomplete-label="jc">
-              <div class="fw-bold">Justin Coyne (jc)</div>
-              <p>Digital Library Systems and Services</p>
-              <p class="text-muted">Click to add</p>
-          </li>
-        HTML
+        expect(response.parsed_body).to eq({ sunetid: 'jc', name: 'Justin Coyne',
+                                             description: 'Digital Library Systems and Services' }
+                                             .with_indifferent_access)
       end
     end
 
@@ -65,8 +61,7 @@ RSpec.describe 'Accounts search' do
 
       it 'displays no results' do
         get '/accounts/search?id=not_user'
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include 'No results for "not_user"'
+        expect(response).to have_http_status(:not_found)
       end
     end
   end
