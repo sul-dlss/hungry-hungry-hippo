@@ -55,7 +55,7 @@ module Admin
       # This breaks out of the turbo frame.
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.action(:full_page_redirect, wait_works_path(work))
+          render turbo_stream: turbo_stream.action(:full_page_redirect, wait_works_path(work.id))
         end
       end
     end

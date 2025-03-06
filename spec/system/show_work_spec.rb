@@ -120,7 +120,7 @@ RSpec.describe 'Show a work' do
 
       # Breadcrumbs
       expect(page).to have_link('Dashboard', href: dashboard_path)
-      expect(page).to have_link(collection.title, href: collection_path(collection.druid))
+      expect(page).to have_link(collection.title, href: collection_path(collection))
       expect(page).to have_css('.breadcrumb-item', text: work.title)
 
       expect(page).to have_css('h1', text: work.title)

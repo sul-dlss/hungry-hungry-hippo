@@ -22,7 +22,7 @@ module Dashboard
       def values_for(work)
         [
           link_to(work.title, work_or_wait_path(work)),
-          link_to(work.collection.title, collection_path(druid: work.collection.druid)),
+          link_to(work.collection.title, collection_path(work.collection.druid)),
           I18n.l(work.updated_at, format: '%b %d, %Y')
         ]
       end

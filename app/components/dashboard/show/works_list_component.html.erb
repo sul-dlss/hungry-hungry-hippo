@@ -11,5 +11,5 @@
   <% end %>
 <% end %>
 <div>
-  <%= link_to('See all deposits', collection_path(druid: collection.druid, tab: 'deposits'), class: 'fw-bold') if see_all? %>
+  <%= link_to('See all deposits', collection_path(collection, tab: 'deposits'), class: 'fw-bold') if see_all? %>
 </div>

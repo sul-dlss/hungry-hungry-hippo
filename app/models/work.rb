@@ -52,4 +52,8 @@ class Work < ApplicationRecord
   def bare_druid
     druid&.delete_prefix('druid:')
   end
+
+  def to_param
+    druid
+  end
 end

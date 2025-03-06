@@ -4,7 +4,7 @@
   The item "<%= @work.title %>" has been submitted for review in the
   <%= @collection.title %> collection by <%= @work.user.name %>,
   a collection manager, or an SDR admin. You can access this item directly
-  at <%= link_to nil, work_url(druid: @work.druid) %>.
+  at <%= link_to nil, work_url(@work) %>.
 </p>
 
 <p>

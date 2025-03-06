@@ -33,7 +33,7 @@ class WorkPresenter < FormPresenter
   end
 
   def collection_link
-    link_to(collection.title, Rails.application.routes.url_helpers.collection_path(druid: collection.druid))
+    link_to(collection.title, Rails.application.routes.url_helpers.collection_path(collection))
   end
 
   def deposited_at

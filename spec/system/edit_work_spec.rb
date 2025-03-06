@@ -71,7 +71,7 @@ RSpec.describe 'Edit a work' do
     visit edit_work_path(druid, tab: 'title')
 
     expect(page).to have_css('.breadcrumb-item', text: collection_title_fixture)
-    expect(page).to have_link(collection_title_fixture, href: collection_path(druid: collection_druid_fixture))
+    expect(page).to have_link(collection_title_fixture, href: collection_path(collection_druid_fixture))
     expect(page).to have_css('.breadcrumb-item', text: title_fixture)
     expect(page).to have_css('h1', text: title_fixture)
 

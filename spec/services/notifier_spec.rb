@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Notifier do
   describe 'Publishing an event' do
     include ActiveJob::TestHelper
-    let(:collection) { create(:collection, title: 'My Stuff', reviewers: [reviewer], managers: [manager]) }
+    let(:collection) { create(:collection, :with_druid, title: 'My Stuff', reviewers: [reviewer], managers: [manager]) }
     let(:user) { create(:user) }
     let(:reviewer) { create(:user) }
     let(:manager) { create(:user) }

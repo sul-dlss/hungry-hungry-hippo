@@ -5,7 +5,7 @@
 
 <p style="margin-left: 2rem; font-weight: bold;"><%= @work.review_rejected_reason %></p>
 
-<p>Click <%= link_to nil, edit_work_url(druid: @work.druid) %> to revisit your deposit.</p>
+<p>Click <%= link_to nil, edit_work_url(@work) %> to revisit your deposit.</p>
 
 <%= render Emails::ContactComponent.new %>
 

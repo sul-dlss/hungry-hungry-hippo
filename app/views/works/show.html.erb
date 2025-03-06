@@ -3,7 +3,7 @@
 <% content_for :breadcrumbs do %>
   <%= render Elements::BreadcrumbNavComponent.new do |component| %>
     <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
-    <% component.with_collection_breadcrumb(text: @work_presenter.collection.title, link: collection_path(druid: @work_presenter.collection.druid)) %>
+    <% component.with_collection_breadcrumb(text: @work_presenter.collection.title, link: collection_path(@work_presenter.collection)) %>
     <% component.with_title_breadcrumb(text: @work_presenter.title) %>
   <% end %>
 <% end %>

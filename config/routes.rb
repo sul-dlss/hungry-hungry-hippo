@@ -18,7 +18,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   resources :collections, only: %i[new create show edit update], param: :druid do
     collection do
-      get 'wait/:id', to: 'collections#wait', as: 'wait'
+      get 'wait/:id', to: 'collections#wait', as: 'wait', param: :id
     end
 
     namespace :admin do
@@ -36,7 +36,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   resources :works, only: %i[new create show edit update destroy], param: :druid do
     collection do
-      get 'wait/:id', to: 'works#wait', as: 'wait'
+      get 'wait/:id', to: 'works#wait', as: 'wait', param: :id
     end
 
     member do
