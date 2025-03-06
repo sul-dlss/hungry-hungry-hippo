@@ -100,9 +100,11 @@ RSpec.describe 'Show a collection' do
       expect(page).to have_css('caption', text: 'Collection participants')
       expect(page).to have_link('Edit', href: edit_collection_path(druid, tab: 'participants'))
       expect(page).to have_css('tr', text: 'Managers')
-      expect(page).to have_css('td', text: collection.managers.first.email_address)
+      manager = collection.managers.first
+      expect(page).to have_css('td ul li', text: "#{manager.sunetid}: #{manager.name}")
       expect(page).to have_css('tr', text: 'Depositors')
-      expect(page).to have_css('td', text: collection.depositors.first.email_address)
+      depositor = collection.depositors.first
+      expect(page).to have_css('td ul li', text: "#{depositor.sunetid}: #{depositor.name}")
     end
 
     # Review workflow table
@@ -112,7 +114,9 @@ RSpec.describe 'Show a collection' do
       expect(page).to have_css('tr', text: 'Status')
       expect(page).to have_css('td', text: 'On')
       expect(page).to have_css('tr', text: 'Reviewers')
-      expect(page).to have_css('td', text: collection.reviewers.pluck(:email_address).join(', '))
+      collection.reviewers.each do |reviewer|
+        expect(page).to have_css('td ul li', text: "#{reviewer.sunetid}: #{reviewer.name}")
+      end
     end
 
     # Change tab

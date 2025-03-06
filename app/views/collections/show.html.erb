@@ -38,11 +38,7 @@
     <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'mb-5') do |component| %>
       <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Links to related information', presenter: @collection_presenter, tab: :related_links) %><% end %>
       <% component.with_row(label: 'Related links') do |row_component| %>
-        <% @collection_presenter.related_links.each do |related_link| %>
-          <% row_component.with_item do %>
-            <%= related_link %>
-          <% end %>
-        <% end %>
+        <% row_component.with_cell do %><%= render Elements::Tables::ListCellComponent.new(item_values: @collection_presenter.related_links) %> <% end %>
       <% end %>
     <% end %>
 
@@ -62,14 +58,20 @@
 
     <%= render Elements::Tables::TableComponent.new(id: 'participants-table', classes: 'mb-5') do |component| %>
       <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Collection participants', presenter: @collection_presenter, tab: :participants) %><% end %>
-      <% component.with_row(label: 'Managers', values: [@collection_presenter.participants(:managers)]) %>
-      <% component.with_row(label: 'Depositors', values: [@collection_presenter.participants(:depositors)]) %>
+      <% component.with_row(label: 'Managers') do |row_component| %>
+        <% row_component.with_cell do %><%= render Elements::Tables::ListCellComponent.new(item_values: @collection_presenter.participants(:managers)) %> <% end %>
+      <% end %>
+      <% component.with_row(label: 'Depositors') do |row_component| %>
+        <% row_component.with_cell do %><%= render Elements::Tables::ListCellComponent.new(item_values: @collection_presenter.participants(:depositors)) %> <% end %>
+      <% end %>
     <% end %>
 
     <%= render Elements::Tables::TableComponent.new(id: 'review-workflow-table', classes: 'mb-5') do |component| %>
       <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Review workflow', presenter: @collection_presenter, tab: :workflow) %><% end %>
       <% component.with_row(label: 'Status', values: [@collection_presenter.review_workflow_status]) %>
-      <% component.with_row(label: 'Reviewers', values: [@collection_presenter.participants(:reviewers)]) %>
+      <% component.with_row(label: 'Reviewers') do |row_component| %>
+        <% row_component.with_cell do %><%= render Elements::Tables::ListCellComponent.new(item_values: @collection_presenter.participants(:reviewers)) %> <% end %>
+      <% end %>
     <% end %>
   <% end %>
 

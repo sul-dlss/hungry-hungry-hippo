@@ -169,7 +169,7 @@ RSpec.describe 'Create a collection deposit' do
     within('#review-workflow-table') do
       expect(page).to have_css('td', text: 'On')
       expect(page).to have_css('th', text: 'Reviewers')
-      expect(page).to have_css('td', text: 'pennywise@stanford.edu')
+      expect(page).to have_css('td ul li', text: 'pennywise: Pennywise')
     end
 
     # Terms of use
