@@ -28,8 +28,8 @@ class DepositWorkJob < ApplicationJob
     update_terms_of_deposit!
 
     if deposit? && new_cocina_object
-      Sdr::Repository.accession(druid:)
       work.accession!
+      Sdr::Repository.accession(druid:)
     else
       work.deposit_persist_complete!
     end
