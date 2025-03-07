@@ -36,7 +36,9 @@ class WorkForm < ApplicationForm
 
   attribute :abstract, :string
   validates :abstract, presence: true, on: :deposit
-  before_validation ->(work_form) { work_form.abstract = LinebreakSupport.normalize(work_form.abstract) }
+  before_validation do
+    self.abstract = LinebreakSupport.normalize(abstract)
+  end
 
   attribute :citation, :string
   attribute :auto_generate_citation, :boolean
@@ -49,7 +51,7 @@ class WorkForm < ApplicationForm
   validates :work_type, presence: true, on: :deposit
 
   attribute :work_subtypes, array: true, default: -> { [] }
-  before_validation ->(work_form) { work_form.work_subtypes.compact_blank! }
+  before_validation { work_subtypes.compact_blank! }
   validate :correct_work_subtype_length
 
   attribute :other_work_subtype, :string
@@ -77,9 +79,9 @@ class WorkForm < ApplicationForm
   end
 
   attribute :custom_rights_statement, :string
-  before_validation lambda { |work_form|
-    work_form.custom_rights_statement = LinebreakSupport.normalize(work_form.custom_rights_statement)
-  }
+  before_validation do
+    self.custom_rights_statement = LinebreakSupport.normalize(custom_rights_statement)
+  end
 
   attribute :doi_option, :string, default: 'yes'
   validates :doi_option, inclusion: { in: %w[yes no assigned] }
