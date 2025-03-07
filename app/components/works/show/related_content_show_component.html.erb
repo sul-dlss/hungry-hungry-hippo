@@ -14,5 +14,7 @@
       <% end %>
     <% end %>
   <% end %>
-  <% component.with_row(label: 'Related links', values: related_links) %>
+  <% component.with_row(label: 'Related links') do |row_component| %>
+    <% row_component.with_cell do %><%= render Elements::Tables::ListCellComponent.new(item_values: related_links) %> <% end %>
+  <% end %>
 <% end %>
