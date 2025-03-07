@@ -61,10 +61,11 @@ module Sdr
 
     # @param [Cocina::Models::DRO] cocina_object
     # @param [String] version_description the description of the version
+    # @param [VersionStatus] status optional status of the object to avoid a redundant status call
     # @raise [Error] if there is an error opening the object
     # @return [Cocina::Models::DRO] the updated cocina object
-    def self.open_if_needed(cocina_object:, version_description: 'Update')
-      status = Sdr::Repository.status(druid: cocina_object.externalIdentifier)
+    def self.open_if_needed(cocina_object:, version_description: 'Update', status: nil)
+      status ||= Sdr::Repository.status(druid: cocina_object.externalIdentifier)
       return cocina_object if status.open?
 
       raise Error, 'Object cannot be opened' unless status.openable?
