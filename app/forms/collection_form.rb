@@ -43,18 +43,18 @@ class CollectionForm < ApplicationForm
   attribute :provided_custom_rights_statement, :string
   validates :provided_custom_rights_statement, length: { maximum: 1000 }
   validates :provided_custom_rights_statement, presence: true, if: -> { custom_rights_statement_option == 'provided' }
-  before_validation lambda { |form|
-    form.provided_custom_rights_statement = LinebreakSupport.normalize(form.provided_custom_rights_statement)
-  }
+  before_validation do
+    self.provided_custom_rights_statement = LinebreakSupport.normalize(provided_custom_rights_statement)
+  end
 
   attribute :custom_rights_statement_instructions, :string
   validates :custom_rights_statement_instructions, length: { maximum: 1000 }
   validates :custom_rights_statement_instructions, presence: true, if: lambda {
     custom_rights_statement_option == 'depositor_selects'
   }
-  before_validation lambda { |form|
-    form.custom_rights_statement_instructions = LinebreakSupport.normalize(form.custom_rights_statement_instructions)
-  }
+  before_validation do
+    self.custom_rights_statement_instructions = LinebreakSupport.normalize(custom_rights_statement_instructions)
+  end
 
   attribute :release_option, :string, default: 'immediate'
   validates :release_option, inclusion: { in: %w[immediate depositor_selects] }
