@@ -27,7 +27,11 @@ class Doi
   end
 
   def assigned?
-    @assigned ||= client.exists?(id:)
+    @assigned ||= begin
+      result = client.exists?(id:) # returns a Dry::Monads result
+      Honeybadger.notify("Datacite error for #{druid}: #{result.failure}") if result.failure?
+      result.value_or(false)
+    end
   end
 
   private
