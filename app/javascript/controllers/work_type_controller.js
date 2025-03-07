@@ -11,11 +11,9 @@ export default class extends Controller {
   showSubtypes (event) {
     const workType = event.target.value
     this.subtypeSectionTargets.forEach((section) => {
-      if (section.dataset.workType === workType) {
-        section.classList.remove('d-none')
-      } else {
-        section.classList.add('d-none')
-      }
+      const show = section.dataset.workType === workType
+      section.classList.toggle('d-none', !show)
+      section.querySelectorAll('input').forEach((input) => { input.disabled = !show })
     })
   }
 }

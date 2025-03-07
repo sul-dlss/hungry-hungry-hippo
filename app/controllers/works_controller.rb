@@ -68,6 +68,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     authorize! @work
 
     @work_form = WorkForm.new(**update_work_params)
+
     # The validation_context param determines whether extra validations are applied, e.g., for deposits.
     if @work_form.valid?(validation_context)
       perform_deposit(work: @work)
