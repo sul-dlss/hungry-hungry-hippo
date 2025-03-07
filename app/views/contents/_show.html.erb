@@ -4,7 +4,12 @@
     <p>Your files will appear here once they have been uploaded.</p>
   <% elsif content.content_files.count > Settings.file_upload.hierarchical_files_limit %>
     <%= render Elements::Tables::TableComponent.new(id: 'content-table', label: 'Files', show_label: false) do |component| %>
-      <% component.with_header(headers: ['File Name', 'Description', 'Hide', 'Action']) %>
+      <% component.with_headers([
+                                  { label: 'File Name' },
+                                  { label: 'Description' },
+                                  { label: 'Hide' },
+                                  { label: 'Action' }
+                                ]) %>
       <% content_files.each do |content_file| %>
         <% component.with_row do |row_component| %>
           <% row_component.with_cell do %>

@@ -2,7 +2,15 @@
   <% if show_label? %>
     <caption><%= label || caption %></caption>
   <% end %>
-  <%= header %>
+  <% if headers? %>
+    <%= tag.thead class: head_classes do %>
+      <tr>
+        <% headers.each do |header| %>
+          <%= header %>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
   <%= tag.tbody class: body_classes do %>
     <% rows.each do |row| %>
       <%= row %>

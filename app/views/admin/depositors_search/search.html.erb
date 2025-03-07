@@ -20,7 +20,10 @@
 <% if @druid_to_sunetid_map.present? %>
   <%= render Elements::HorizontalRuleComponent.new %>
   <%= render Elements::Tables::TableComponent.new(id: 'depositors-table', classes: 'mb-5', label: 'Depositor SUNet IDs', show_label: false) do |component| %>
-    <% component.with_header(headers: ['Work DRUID', 'Depositor SUNet ID']) %>
+    <% component.with_headers([
+                                { label: 'Work DRUID' },
+                                { label: 'Depositor SUNet ID' }
+                              ]) %>
     <% component.with_rows(@druid_to_sunetid_map) %>
   <% end %>
 <% end %>
