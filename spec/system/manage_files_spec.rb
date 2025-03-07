@@ -50,7 +50,7 @@ RSpec.describe 'Manage files for a work' do
       sleep 0.25
       all('a', text: 'Add description').first.click
       fill_in('Description', with: 'This is a hippo.')
-      click_link_or_button('Update')
+      click_link_or_button('Save')
 
       # The description is updated.
       expect(page).to have_css('table#content-table td', text: 'hippo.svg')
@@ -142,7 +142,7 @@ RSpec.describe 'Manage files for a work' do
         expect(page).to have_link('Add description', count: 2)
         all('a', text: 'Add description').first.click
         fill_in('Description', with: '')
-        click_link_or_button('Update')
+        click_link_or_button('Save')
       end
 
       # The description is updated.

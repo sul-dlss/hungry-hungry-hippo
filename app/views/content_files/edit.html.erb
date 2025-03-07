@@ -3,7 +3,7 @@
     <%= render Elements::Forms::TextFieldComponent.new(field_name: :label, form:, label: 'Description', container_classes: 'mb-4', maxlength: 200, hidden_label: true) %>
     <div class="mt-2">
       <%= render Elements::CancelButtonComponent.new(link: content_file_path(@content_file), classes: 'me-4', data: { action: 'unsaved-changes#allowFormSubmission' }) %>
-      <%= render Elements::Forms::SubmitComponent.new(form_id: form.id, label: 'Update', data: { action: 'unsaved-changes#allowFormSubmission' }) %>
+      <%= render Elements::Forms::SubmitComponent.new(form_id: form.id, label: 'Save', data: { action: 'unsaved-changes#allowFormSubmission' }) %>
     </div>
   <% end %>
 <% end %>
