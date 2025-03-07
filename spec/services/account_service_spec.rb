@@ -53,4 +53,12 @@ RSpec.describe AccountService do
       expect(account).to be_nil
     end
   end
+
+  context 'with a blank string' do
+    let(:sunetid) { '' }
+
+    it 'returns nil' do
+      expect(account).to be_nil
+    end
+  end
 end

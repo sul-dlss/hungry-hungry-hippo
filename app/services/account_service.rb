@@ -14,6 +14,7 @@ class AccountService
 
   # @return [Account, nil] the account or nil if not found
   def call
+    return if sunetid.blank?
     return if params.empty?
 
     Account.new(sunetid:, description:, name:)
