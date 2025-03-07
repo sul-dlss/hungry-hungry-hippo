@@ -17,7 +17,9 @@ class AccountService
     return if sunetid.blank?
     return if params.empty?
 
-    Account.new(sunetid:, description:, name:)
+    # Using the sunetid returned from the Account API since it will perform some normalization
+    # e.g., removing accidental delimiter characters
+    Account.new(sunetid: params['id'], description: params['description'], name:)
   end
 
   private
@@ -46,10 +48,6 @@ class AccountService
     @@cert ||= OpenSSL::X509::Certificate.new pem_file # rubocop:disable Style/ClassVars
   end
 
-  def description
-    params['description']
-  end
-
   def name
     # "Last, First" to "First Last"
     params['name'].split(', ').reverse.join(' ')
@@ -60,7 +58,7 @@ class AccountService
       url = "https://#{Settings.accountws.host}/accounts/#{ERB::Util.url_encode(sunetid)}"
       response = connection.get(url)
       doc = response.body
-      doc.slice('name', 'description')
+      doc.slice('name', 'description', 'id')
     end
   end
 end

@@ -7,8 +7,10 @@ class AccountsController < ApplicationController
   def search
     authorize! with: AccountPolicy
 
-    @account = lookup_account
-    render layout: false
+    account = lookup_account
+    return head :not_found if account.nil?
+
+    render json: account
   end
 
   private

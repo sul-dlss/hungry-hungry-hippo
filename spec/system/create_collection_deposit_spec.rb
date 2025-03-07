@@ -116,20 +116,17 @@ RSpec.describe 'Create a collection deposit' do
     within(form_instances[0]) do
       expect(page).to have_css('p', text: 'jswithen: John Swithen')
     end
-    within(form_instances[1]) do
-      fill_in('Lookup SUNet ID', with: 'stepking')
-      expect(page).to have_text('Stephen King')
-      find('p', text: 'Click to add').click
-      expect(page).to have_field('autocomplete-input', with: 'stepking: Stephen King', readonly: true)
-    end
-    within(form_instances[2]) do
-      fill_in('Lookup SUNet ID', with: 'notjoehill')
-      expect(page).to have_text('No results for "notjoehill"')
-      fill_in('Lookup SUNet ID', with: 'joehill')
-      expect(page).to have_text('Joe Hill')
-      find('p', text: 'Click to add').click
-      expect(page).to have_field('autocomplete-input', with: 'joehill: Joe Hill', readonly: true)
-    end
+
+    fill_in('managers-textarea', with: 'stepking@stanford.edu')
+    click_link_or_button('Add managers')
+    expect(page).to have_css('.participant-label', text: 'stepking: Stephen King')
+
+    fill_in('depositors-textarea', with: 'notjoehill, joehill')
+    click_link_or_button('Add depositors')
+    expect(page).to have_css('.participant-label', text: 'joehill: Joe Hill')
+    expect(page).to have_field('depositors-textarea', with: 'notjoehill')
+    expect(page).to have_css('.invalid-feedback', text: 'joehill is not a valid email or Stanford id')
+
     expect(page).to have_checked_field('Send email to Collection Managers and Reviewers ' \
                                        '(see Workflow section of form) when participants are added/removed',
                                        with: '1')
@@ -141,10 +138,9 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_text('Review workflow')
     expect(page).to have_checked_field('No', with: false)
     find('label', text: 'Yes').click
-    fill_in('Lookup SUNet ID', with: 'pennywise')
-    expect(page).to have_text('Pennywise')
-    find('p', text: 'Click to add').click
-    expect(page).to have_field('autocomplete-input', with: 'pennywise: Pennywise', readonly: true)
+    fill_in('reviewers-textarea', with: 'pennywise')
+    click_link_or_button('Add reviewers')
+    expect(page).to have_css('.participant-label', text: 'pennywise: Pennywise')
 
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
