@@ -13,6 +13,15 @@ RSpec.describe ToCocina::Work::TypesMapper do
     end
   end
 
+  context 'when blank types or subtypes' do
+    # Due to normalization in the work form this should never happen. Howver, testing just in case.
+    let(:work_form) { WorkForm.new(work_type: '', work_subtypes: ['', '']) }
+
+    it 'returns an empty array' do
+      expect(forms).to eq([])
+    end
+  end
+
   context 'when work has type and subtypes' do
     let(:work_form) do
       WorkForm.new(work_type: 'Mixed Materials', work_subtypes: ['Government document', 'Narrative film'],

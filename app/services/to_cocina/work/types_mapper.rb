@@ -16,7 +16,7 @@ module ToCocina
       end
 
       def call
-        return [] unless work_type
+        return [] unless work_type.presence
 
         self_deposit_resource_types + genres + resource_types + datacite_types
       end
