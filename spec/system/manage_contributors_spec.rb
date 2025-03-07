@@ -154,7 +154,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
       select('Degree granting institution', from: 'Role')
       expect(page).to have_text('Is Stanford the institution?')
       within('.stanford-degree-granting-institution-section') do
-        find('label', text: 'Yes').click
+        expect(page).to have_field('Yes', checked: true)
       end
       fill_in('Department / Institute / Center', with: 'Department of Philosophy')
     end
