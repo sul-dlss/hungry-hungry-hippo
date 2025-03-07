@@ -125,7 +125,8 @@ RSpec.describe 'Edit a collection' do
     # Clicking on Next to go to Terms of Use tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Terms of use')
-    expect(page).to have_checked_field('No, do not include a custom use statement.')
+    expect(page).to have_checked_field('Yes, include the following custom use statement')
+    expect(page).to have_field('collection[provided_custom_rights_statement]', with: 'My custom rights statement')
 
     # Clicking on Next to go to Participants tab
     click_link_or_button('Next')

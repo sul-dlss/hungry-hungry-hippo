@@ -10,6 +10,7 @@ FactoryBot.define do
     doi_option { 'yes' }
     custom_rights_statement_option { 'provided' }
     provided_custom_rights_statement { 'My custom rights statement' }
+    custom_rights_statement_instructions { 'My custom rights statement instructions' }
     license_option { 'required' }
     license { 'https://creativecommons.org/licenses/by/4.0/legalcode' }
     review_enabled { false }

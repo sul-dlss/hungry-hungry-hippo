@@ -40,7 +40,10 @@ module ToCollectionForm
         review_enabled: collection.review_enabled,
         reviewers_attributes: participant_attributes(:reviewers),
         email_when_participants_changed: collection.email_when_participants_changed,
-        email_depositors_status_changed: collection.email_depositors_status_changed
+        email_depositors_status_changed: collection.email_depositors_status_changed,
+        custom_rights_statement_option: collection.custom_rights_statement_option,
+        provided_custom_rights_statement: collection.provided_custom_rights_statement,
+        custom_rights_statement_instructions: collection.custom_rights_statement_instructions
       }.merge(license_params)
     end
     # rubocop:enable Metrics/AbcSize
