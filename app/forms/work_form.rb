@@ -48,6 +48,9 @@ class WorkForm < ApplicationForm
   validates :license, presence: true, on: :deposit
 
   attribute :work_type, :string
+  before_validation do
+    self.work_type = work_type.presence
+  end
   validates :work_type, presence: true, on: :deposit
 
   attribute :work_subtypes, array: true, default: -> { [] }

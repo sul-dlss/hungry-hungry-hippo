@@ -136,6 +136,31 @@ RSpec.describe ToWorkForm::Mapper, type: :mapping do
     end
   end
 
+  context 'when no types' do
+    let(:cocina_object) do
+      dro_with_metadata_fixture.then do |object|
+        object.new(
+          object
+            .to_h
+            .tap do |obj|
+            obj[:description][:form] = []
+          end
+        )
+      end
+    end
+
+    let(:expected_work_form) do
+      work_form_fixture.tap do |work_form|
+        work_form.work_type = nil
+        work_form.work_subtypes = []
+      end
+    end
+
+    it 'maps to work form' do
+      expect(work_form).to equal_form(expected_work_form)
+    end
+  end
+
   context 'when default terms of use' do
     let(:cocina_object) do
       dro_with_metadata_fixture.new(access: { useAndReproductionStatement: I18n.t('license.terms_of_use') })
