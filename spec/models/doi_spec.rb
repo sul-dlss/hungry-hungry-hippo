@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Doi do
+  include Dry::Monads[:result]
+
   let(:druid) { druid_fixture }
 
   describe '#id' do
@@ -19,14 +21,37 @@ RSpec.describe Doi do
 
   describe '#assigned?' do
     let(:client) { instance_double(Datacite::Client) }
+    let(:response) { Success(true) }
 
     before do
       allow(Datacite::Client).to receive(:new).and_return(client)
-      allow(client).to receive(:exists?).and_return(true)
+      allow(client).to receive(:exists?).and_return(response)
+      allow(Honeybadger).to receive(:notify)
     end
 
-    it 'returns true' do
-      expect(described_class.assigned?(druid:)).to be(true)
+    context 'when the DOI is assigned' do
+      it 'returns true' do
+        expect(described_class.assigned?(druid:)).to be(true)
+        expect(Honeybadger).not_to have_received(:notify)
+      end
+    end
+
+    context 'when the DOI is not assigned' do
+      let(:response) { Success(false) }
+
+      it 'returns false' do
+        expect(described_class.assigned?(druid:)).to be(false)
+        expect(Honeybadger).not_to have_received(:notify)
+      end
+    end
+
+    context 'when an error occurs' do
+      let(:response) { Failure('error') }
+
+      it 'returns false' do
+        expect(described_class.assigned?(druid:)).to be(false)
+        expect(Honeybadger).to have_received(:notify)
+      end
     end
   end
 end
