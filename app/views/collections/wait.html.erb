@@ -9,5 +9,5 @@
 <% end %>
 
 <%= tag.div data: { controller: 'refresh' } do %>
-    <%= render Elements::SpinnerComponent.new(image_path: image_path('rosette.png'), message: t('messages.wait_for_it'), classes: 'my-5 text-center', height: 150, width: 150, message_classes: 'mt-3') %>
+    <%= render Elements::SpinnerComponent.new(image_path: image_path('rosette.png'), message: t('messages.wait_for_it'), classes: 'my-5 text-center', height: 150, width: 150, message_classes: 'mt-3', speed: 1.5) %>
 <% end %>
