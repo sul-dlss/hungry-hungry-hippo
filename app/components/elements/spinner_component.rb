@@ -4,7 +4,7 @@ module Elements
   # It spins.
   class SpinnerComponent < ApplicationComponent
     def initialize(message: 'Loading...', image_path: nil, variant: nil, hide_message: false, classes: [], # rubocop:disable Metrics/ParameterLists
-                   height: nil, width: nil, message_classes: [])
+                   height: nil, width: nil, message_classes: [], speed: 0.75)
       @message = message
       @variant = variant
       @hide_message = hide_message
@@ -13,6 +13,7 @@ module Elements
       @height = height
       @width = width
       @message_classes = message_classes
+      @speed = speed # In seconds, so a larger number is slower. The default (0.75) is the same as Bootstrap's default.
       super()
     end
 
@@ -33,7 +34,7 @@ module Elements
     def spinner_style
       return unless @height && @width
 
-      "height: #{@height}px; width: #{@width}px;"
+      "height: #{@height}px; width: #{@width}px; --bs-spinner-animation-speed: #{@speed}s;"
     end
 
     private
