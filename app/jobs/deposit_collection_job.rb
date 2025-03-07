@@ -21,8 +21,8 @@ class DepositCollectionJob < ApplicationJob
 
     ModelSync::Collection.call(collection:, cocina_object: mapped_cocina_object)
 
-    Sdr::Repository.accession(druid:)
     collection.accession!
+    Sdr::Repository.accession(druid:)
   end
 
   private
