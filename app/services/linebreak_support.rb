@@ -6,6 +6,6 @@ class LinebreakSupport
   def self.normalize(text)
     return text if text.nil?
 
-    text.encode(Encoding::UTF_8, universal_newline: true).encode(Encoding::UTF_8, crlf_newline: true)
+    text.strip.encode(Encoding::UTF_8, universal_newline: true).encode(Encoding::UTF_8, crlf_newline: true)
   end
 end
