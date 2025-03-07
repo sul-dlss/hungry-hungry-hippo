@@ -11,11 +11,12 @@ class DepositWorkJob < ApplicationJob
     @work = work
     @deposit = deposit
     @request_review = request_review
+    @status = Sdr::Repository.status(druid: work_form.druid) if work_form.persisted?
 
     # Add missing digests and mime types
     Contents::Analyzer.call(content:)
 
-    # If new_cocina_object then persist not performed since not changed.
+    # If new_cocina_object is null then persist not performed since not changed.
     new_cocina_object = perform_persist
     druid = work_form.druid || new_cocina_object.externalIdentifier
 
@@ -27,7 +28,7 @@ class DepositWorkJob < ApplicationJob
 
     update_terms_of_deposit!
 
-    if deposit? && new_cocina_object
+    if accession?(new_cocina_object:)
       work.accession!
       Sdr::Repository.accession(druid:)
     else
@@ -41,7 +42,7 @@ class DepositWorkJob < ApplicationJob
 
   private
 
-  attr_reader :work_form, :work
+  attr_reader :work_form, :work, :status
 
   def content
     @content ||= Content.find(work_form.content_id)
@@ -56,8 +57,11 @@ class DepositWorkJob < ApplicationJob
       Sdr::Repository.register(cocina_object: mapped_cocina_object, assign_doi:)
     elsif RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
 
-      Sdr::Repository.open_if_needed(cocina_object: mapped_cocina_object, version_description: work_form.whats_changing)
-                     .then { |cocina_object| Sdr::Repository.update(cocina_object:) }
+      Sdr::Repository.open_if_needed(cocina_object: mapped_cocina_object,
+                                     version_description: work_form.whats_changing, status:)
+                     .then do |cocina_object|
+        Sdr::Repository.update(cocina_object:)
+      end
     end
   end
 
@@ -82,5 +86,11 @@ class DepositWorkJob < ApplicationJob
 
   def request_review?
     @request_review
+  end
+
+  def accession?(new_cocina_object:)
+    # If a new cocina object, then accessionable.
+    # If work already opened, then the work has changes and can be accessioned.
+    deposit? && (new_cocina_object || status&.open?)
   end
 end
