@@ -406,7 +406,7 @@ en:
           tab_label: 'Save your collection'
           label: 'Save your collection'
           help_text: >
-              Be sure you have completed all the required sections.
+              If required sections are incomplete, you will be directed to update the information.
         license:
           tab_label: 'License'
           label: 'License'
