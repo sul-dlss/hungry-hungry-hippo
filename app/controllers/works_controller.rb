@@ -8,6 +8,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   before_action :set_work_form_from_cocina, only: %i[show edit review]
   before_action :set_content, only: %i[show edit review]
   before_action :set_presenter, only: %i[show edit review]
+  before_action :set_license_presenter, only: %i[edit]
 
   def show
     authorize! @work
@@ -26,7 +27,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
     @content = Content.create!(user: current_user)
     @work_form = new_work_form
-    @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @collection)
+    set_license_presenter # Note this requires @collection and @work_form set above.
 
     render :form
   end
@@ -41,8 +42,6 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
     # This updates the Work with the latest metadata from the Cocina object.
     ModelSync::Work.call(work: @work, cocina_object: @cocina_object)
-    @collection = @work.collection
-    @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @work.collection)
 
     render :form
   end
@@ -59,7 +58,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       redirect_to wait_works_path(work.id)
     else
       @content = Content.find(@work_form.content_id)
-      @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @collection)
+      set_license_presenter
       render :form, status: :unprocessable_entity
     end
   end
@@ -75,8 +74,9 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       redirect_to wait_works_path(@work.id)
     else
       @content = Content.find(@work_form.content_id)
-      @collection = @work.collection
-      @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @work.collection)
+      set_license_presenter
+      set_status
+      set_presenter
       render :form, status: :unprocessable_entity
     end
   end
@@ -135,6 +135,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   def set_work
     @work = Work.find_by!(druid: params[:druid])
+    @collection = @work.collection
   end
 
   def check_deposit_registering_or_updating
@@ -175,6 +176,10 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   def set_presenter
     @work_presenter = WorkPresenter.new(work: @work, work_form: @work_form, version_status: @version_status)
+  end
+
+  def set_license_presenter
+    @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @collection)
   end
 
   def new_work_form
