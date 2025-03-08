@@ -220,4 +220,18 @@ RSpec.describe 'Edit a work' do
       expect(page).to have_field('What\'s changing?', with: '')
     end
   end
+
+  context 'when first version' do
+    let(:version_status) { build(:first_draft_version_status) }
+
+    it 'does not have a whats changing field' do
+      visit edit_work_path(druid)
+
+      expect(page).to have_css('h1', text: title_fixture)
+
+      # Check What's changing
+      find('.nav-link', text: 'Deposit', exact_text: true).click
+      expect(page).to have_no_field('What\'s changing?')
+    end
+  end
 end
