@@ -21,4 +21,15 @@ RSpec.describe Elements::Forms::InputCollectionRadioButtonsComponent, type: :com
     expect(page).to have_css('label.form-check-label', count: 9)
     expect(page).to have_css('label.form-check-label', text: 'Data')
   end
+
+  context 'when disabled' do
+    it 'renders the collection radio buttons' do
+      render_inline(described_class.new(form:, field_name: :work_type, input_collection: WorkType.all,
+                                        text_method: :label,
+                                        value_method: :label, disabled: true))
+      expect(page).to have_css('div.form-check', count: 9)
+      expect(page).to have_field('work_type', type: 'radio', count: 9, class: 'form-check-input', disabled: true)
+      expect(page).to have_checked_field('work_type', with: 'Data', disabled: true)
+    end
+  end
 end

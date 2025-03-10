@@ -387,6 +387,14 @@ en:
             world: 'Everyone -- anyone in the world will be able to download the files for all deposits in this collection.'
             stanford: 'Stanford Community -- only members of the Stanford community will be able to download the files for all deposits in this collection.'
             depositor_selects: 'Depositor selects -- default for all deposits will be that everyone can download the files, but Depositor can choose to restrict file download for their deposit to the Stanford community.'
+        work_type:
+          label: 'Select a work type for deposits in this collection'
+          tooltip_html: >-
+            Choose the one content type that best describes the overall or primary nature of each of the works to be deposited in this collection. Click on each content type to view additional terms you may also select that will also be applied to each of the works in this collection. Depositors will not be able to change this term.
+        work_subtypes:
+          label: 'Select which subtypes will be applied to each deposit'
+          tooltip_html: >-
+            You have the option, but are not required, to choose terms from this list to further describe the works that are deposited in this collection. Click "See more options" for additional terms. Depositors will be able to add more of these terms, but will not be able to remove the terms you select.
         doi_option:
           label: 'Will a DOI be assigned to the deposits in this collection?'
           tooltip_html: >-
@@ -396,7 +404,7 @@ en:
             doi_no: 'No, DOIs will not be assigned to any deposits in this collection.'
             depositor_selects: 'Depositor selects: all deposits will be assigned a DOI by default unless the depositor chooses not to have a DOI assigned.'
         license:
-          help_text: Assigning a default license may improve discovery of your collection in web searches.
+          help_text: 'Assigning a default license may improve discovery of your collection in web searches.'
       messages:
         cannot_be_edited: 'This collection cannot be edited.'
       panes:
@@ -431,6 +439,9 @@ en:
           label: 'Links to related content (optional)'
           tooltip_html: >-
             This section is for links to other web pages that are related to your collection. Enter the text to be displayed on the page in the "Link text" box. This entire text will be hyperlinked to the URL you enter in the "URL" box. Examples of content you might consider linking to are key funder websites,  lab or institute websites, or project pages.
+        types:
+          tab_label: 'Type of deposit (optional)'
+          label: 'Type of deposit (optional)'       
         access:
           tab_label: 'Access settings'
           label: 'Manage release of deposits for discovery and download'

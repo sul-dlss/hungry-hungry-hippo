@@ -1,0 +1,37 @@
+<div data-controller="work-type">
+  <div class="pane-section">
+    <%= render Elements::Forms::FieldsetComponent.new(label: t('collections.edit.fields.work_type.label'), tooltip: t('collections.edit.fields.work_type.tooltip_html')) do %>
+      <div class="types-container">
+        <%= render Elements::Forms::InputCollectionRadioButtonsComponent.new(form:, field_name: :work_type, input_collection:, value_method: :value, input_data: { work_type_target: 'workTypeRadio', action: 'work-type#showSubtypes click->tooltips#hideAll' }) %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Text subtypes %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Text', more_options: true, label:, tooltip:) %>
+
+  <%# Data subtypes %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Data', more_options: true, label:, tooltip:) %>
+
+  <%# Software, multimedia subtypes %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Software/Code', more_options: true, label:, tooltip:) %>
+
+  <%# Image %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Image', more_options: true, label:, tooltip:) %>
+
+  <%# Sound %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Sound', more_options: true, label:, tooltip:) %>
+
+  <%# Video %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Video', more_options: true, label:, tooltip:) %>
+
+  <%# Music %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Music', more_options: true, label:, tooltip:) %>
+
+  <%# Mixed materials %>
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Mixed Materials', label:, tooltip:) %>
+
+  <%# For bottom spacing %>
+  <div class="pane-section"></div>
+
+</div>

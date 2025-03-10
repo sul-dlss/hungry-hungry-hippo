@@ -21,6 +21,7 @@
   <%= render Edit::TabForm::TabListComponent.new(model: @collection_form, hidden_fields: %i[lock version]) do |component| %>
     <% component.with_tab(label: t('collections.edit.panes.details.tab_label'), tab_name: :details, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.related_links.tab_label'), tab_name: :related_links, active_tab_name:) %>
+    <% component.with_tab(label: t('collections.edit.panes.types.tab_label'), tab_name: :types, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.access.tab_label'), tab_name: :access, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.license.tab_label'), tab_name: :license, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.terms_of_use.label'), tab_name: :terms_of_use, active_tab_name:) %>
@@ -41,6 +42,12 @@
       <% component.with_pane do %>
         <%= render Collections::Edit::PaneComponent.new(tab_name: :related_links, label: t('collections.edit.panes.related_links.label'), tooltip: t('collections.edit.panes.related_links.tooltip_html'), active_tab_name:) do %>
           <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, fieldset_classes: 'pane-section', skip_tooltip: true) %>
+        <% end %>
+      <% end %>
+
+      <% component.with_pane do %>
+        <%= render Collections::Edit::PaneComponent.new(tab_name: :types, label: t('collections.edit.panes.types.label'), active_tab_name:) do %>
+          <%= render Collections::Edit::WorkTypeComponent.new(form:) %>
         <% end %>
       <% end %>
 

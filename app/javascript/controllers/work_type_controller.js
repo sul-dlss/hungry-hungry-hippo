@@ -13,7 +13,11 @@ export default class extends Controller {
     this.subtypeSectionTargets.forEach((section) => {
       const show = section.dataset.workType === workType
       section.classList.toggle('d-none', !show)
-      section.querySelectorAll('input').forEach((input) => { input.disabled = !show })
+      // If the input is readonly, this indicates that should also be left disabled.
+      section.querySelectorAll('input:not([readonly])').forEach((input) => {
+        input.disabled = !show
+        if (!show) input.checked = false
+      })
     })
   }
 }

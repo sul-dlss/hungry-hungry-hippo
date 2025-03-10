@@ -57,5 +57,10 @@ FactoryBot.define do
     trait :with_druid do
       druid { generate(:unique_druid) }
     end
+
+    trait :with_required_types do
+      work_type { 'Image' }
+      work_subtypes { %w[CAD Map] }
+    end
   end
 end

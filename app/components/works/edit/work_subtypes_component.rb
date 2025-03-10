@@ -4,16 +4,20 @@ module Works
   module Edit
     # Component for the work subtypes field
     class WorkSubtypesComponent < ApplicationComponent
-      def initialize(form:, work_type:, more_options: false, minimum_terms: 0, error_field_name: nil)
+      def initialize(form:, work_type:, label:, tooltip: nil, more_options: false, minimum_terms: 0, # rubocop:disable Metrics/ParameterLists
+                     error_field_name: nil, required_subtypes: [])
         @form = form
         @work_type = work_type
+        @label = label
         @more_options = more_options
         @minimum_terms = minimum_terms
         @error_field_name = error_field_name
+        @tooltip = tooltip
+        @required_subtypes = required_subtypes
         super()
       end
 
-      attr_reader :form, :work_type, :minimum_terms, :error_field_name
+      attr_reader :form, :work_type, :minimum_terms, :error_field_name, :label, :tooltip, :required_subtypes
 
       def more_options?
         @more_options

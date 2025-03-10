@@ -190,7 +190,9 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       license: @collection.license,
       access: @collection.stanford_access? ? 'stanford' : 'world',
       agree_to_terms: current_user.agree_to_terms?,
-      contact_emails_attributes: [{ email: current_user.email_address }]
+      contact_emails_attributes: [{ email: current_user.email_address }],
+      work_type: @collection.work_type,
+      work_subtypes: @collection.work_subtypes
     )
   end
 

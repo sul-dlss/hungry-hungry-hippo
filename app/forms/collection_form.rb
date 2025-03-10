@@ -76,6 +76,14 @@ class CollectionForm < ApplicationForm
   attribute :email_when_participants_changed, :boolean, default: true
   attribute :email_depositors_status_changed, :boolean, default: true
 
+  attribute :work_type, :string
+  before_validation do
+    self.work_type = work_type.presence
+  end
+
+  attribute :work_subtypes, array: true, default: -> { [] }
+  before_validation { work_subtypes.compact_blank! }
+
   def duration_must_be_present
     return if release_duration.present?
 
