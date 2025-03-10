@@ -4,4 +4,8 @@
 class ParticipantForm < ApplicationForm
   attribute :sunetid, :string
   attribute :name, :string
+
+  def empty?
+    sunetid.blank? && name.blank?
+  end
 end

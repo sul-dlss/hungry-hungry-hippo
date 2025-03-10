@@ -57,5 +57,16 @@ RSpec.describe CollectionForm do
         expect(form.errors[:custom_rights_statement_instructions]).to include("can't be blank")
       end
     end
+
+    context 'with no managers' do
+      before do
+        form_hash[:managers_attributes] = [{}]
+      end
+
+      it 'validates presence of at least one manager' do
+        expect(form).not_to be_valid
+        expect(form.errors[:managers_attributes]).to include('must have at least one manager')
+      end
+    end
   end
 end

@@ -4,7 +4,10 @@
 class CollectionForm < ApplicationForm
   accepts_nested_attributes_for :related_links, :contact_emails, :managers, :depositors, :reviewers
   before_validation do
-    self.managers_attributes = managers_attributes.reject { |attrs| attrs.attributes.compact_blank.empty? }
+    blank_managers = managers_attributes.select(&:empty?)
+    next if blank_managers.empty?
+
+    self.managers_attributes = managers_attributes - blank_managers
   end
   validates :managers_attributes, length: { minimum: 1, message: 'must have at least one manager' } # rubocop:disable Rails/I18nLocaleTexts
 
