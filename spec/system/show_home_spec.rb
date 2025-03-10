@@ -17,5 +17,9 @@ RSpec.describe 'Show home', :rack_test do
     expect(page).to have_content('Sign up for our newsletter')
     expect(page).to have_css('.quote-card', text: 'I am definitely hearing more')
     expect(page).to have_css('.quote-card', count: 5)
+
+    # Dropdown menu
+    expect(page).to have_link('Dashboard', href: dashboard_path)
+    expect(page).to have_link('Logout', href: logout_path)
   end
 end
