@@ -37,6 +37,12 @@ module Elements
       end
 
       def field_aria
+        {}.tap do |arias|
+          arias[:required] = true if required
+        end.merge(error_aria)
+      end
+
+      def error_aria
         InvalidFeedbackSupport.arias_for(field_name:, form:).tap do |arias|
           arias[:describedby] = merge_actions(arias[:describedby], help_text_id) if help_text.present?
         end
