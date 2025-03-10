@@ -160,7 +160,7 @@ RSpec.describe 'Edit a work' do
       within('div[data-index="2"]') do
         fill_in('Link for a related work (e.g., DOI, arXiv, PMID, PURL, or other URL)',
                 with: updated_related_works.first['identifier'])
-        select('It references or cites', from: 'work_related_works_attributes_2_relationship')
+        select('My deposit references or cites', from: 'work_related_works_attributes_2_relationship')
       end
     end
 

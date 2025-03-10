@@ -203,20 +203,20 @@ en:
           label:
             html: 'How is your deposit related to this work?  <a href="https://sdr.library.stanford.edu/related-works" target="_blank">Get help choosing a term</a>'
           options:
-            supplement to: "It is a supplement to this related work"
-            supplemented by: "It is supplemented by this related work"
-            referenced by: "It is referenced or cited by this related work"
-            references: 'It references or cites this related work'
-            derived from: "It is derived from this related work"
-            source of: "It is the source of this related work"
+            supplement to: "My deposit is a supplement to this related work"
+            supplemented by: "My deposit is supplemented by this related work"
+            referenced by: "My deposit is referenced or cited by this related work"
+            references: 'My deposit references or cites this related work'
+            derived from: "My deposit is derived from this related work"
+            source of: "My deposit is the source of this related work"
             version of record: "The version of record / publisher's version of my deposit is this related work"
-            identical to: "It is identical to this related work"
-            has version: 'It has specific versions or instances, one of which is this related work'
-            has original version: "It is a specific version or instance of this related work"
-            preceded by: 'It succeeds or is a continuation of this related work'
-            succeeded by: 'It precedes or is continued by this related work'
-            part of: "It is one part of this related work"
-            has part: 'It consists of parts, one of which is this related work'
+            identical to: "My deposit is identical to this related work"
+            has version: 'My deposit has specific versions or instances, one of which is this related work'
+            has original version: "My deposit is a specific version or instance of this related work"
+            preceded by: 'My deposit succeeds or is a continuation of this related work'
+            succeeded by: 'My deposit precedes or is continued by this related work'
+            part of: "My deposit is one part of this related work"
+            has part: 'My deposit consists of parts, one of which is this related work'
   reviewers:
     edit:
       legend: 'Reviewers'
