@@ -31,6 +31,10 @@ module Works
       def next_tab_btn?
         @next_tab_btn
       end
+
+      def cancel_path
+        @work_presenter.nil? || @work_presenter.first_draft? ? dashboard_path : work_path(@work_presenter)
+      end
     end
   end
 end
