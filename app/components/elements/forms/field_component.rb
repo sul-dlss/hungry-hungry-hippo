@@ -7,10 +7,11 @@ module Elements
       def initialize(form:, field_name:, required: false, hidden_label: false, label: nil, help_text: nil, # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength, Metrics/AbcSize
                      disabled: false, hidden: false, data: {}, input_data: {}, placeholder: nil, width: nil,
                      label_classes: [], container_classes: [], input_classes: [], tooltip: nil, error_classes: [],
-                     readonly: false)
+                     readonly: false, mark_required: false)
         @form = form
         @field_name = field_name
         @required = required
+        @mark_required = mark_required
         @hidden_label = hidden_label
         @label = label
         @help_text = help_text
@@ -36,7 +37,23 @@ module Elements
         @help_text_id ||= form.field_id(field_name, 'help')
       end
 
+      # Used to tell the label to draw a "*" to indicate required
+      def mark_required?
+        @mark_required || required
+      end
+
       def field_aria
+        {}.tap do |arias|
+          # Set aria-required if we want to indicate required, but the field
+          # does not actually have a required attribute
+          #
+          # This is used for collection/work forms where we do server-side
+          # validation and don't want to block form submission on empty fields
+          arias[:required] = true if @mark_required
+        end.merge(error_aria)
+      end
+
+      def error_aria
         InvalidFeedbackSupport.arias_for(field_name:, form:).tap do |arias|
           arias[:describedby] = merge_actions(arias[:describedby], help_text_id) if help_text.present?
         end

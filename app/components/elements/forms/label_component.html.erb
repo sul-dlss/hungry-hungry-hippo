@@ -1,5 +1,6 @@
 <%= form.label field_name, class: classes do %>
   <%= label_text %>
 <% end %>
+<% if required && !@hidden_label %><span class="required-indicator" title="Required">*</span><% end %>
 <%# This is outside the label so that clicking on it doesn't toggle some inputs like checkboxes. %>
 <%= render Elements::TooltipComponent.new(tooltip:) %>

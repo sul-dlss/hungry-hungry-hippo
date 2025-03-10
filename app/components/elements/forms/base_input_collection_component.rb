@@ -5,7 +5,7 @@ module Elements
     # Base component for a set of inputs for a collection, e.g. checkboxes or radio buttons
     class BaseInputCollectionComponent < ApplicationComponent
       def initialize(form:, field_name:, input_collection:, value_method: :to_s, text_method: :to_s, # rubocop:disable Metrics/ParameterLists
-                     div_classes: [], input_data: {})
+                     div_classes: [], input_data: {}, mark_required: false)
         @form = form
         @field_name = field_name
         @input_collection = input_collection
@@ -13,6 +13,7 @@ module Elements
         @text_method = text_method
         @div_classes = div_classes
         @input_data = input_data
+        @mark_required = mark_required
         super()
       end
 
