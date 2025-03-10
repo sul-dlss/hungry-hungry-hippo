@@ -3,6 +3,7 @@
     <%= tag.div data:, class: 'mb-3' do %>
       <%= tag.label class: 'form-label', for: textarea_id do %>Enter list of email addresses or Stanford id's of people you would like to add.<% end %>
       <%= tag.textarea id: textarea_id, class: 'form-control mb-2', rows: 5, data: { participants_target: 'input' } %>
+      <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: validation_field_name, classes: 'mb-2') %>
       <%= render Elements::ButtonComponent.new(label: add_button_label, variant: :'outline-primary', data: { action: 'participants#lookup' }) %>
       <div data-participants-target="invalidFeedbackContainer"></div>
       <template data-participants-target="invalidFeedbackTemplate">

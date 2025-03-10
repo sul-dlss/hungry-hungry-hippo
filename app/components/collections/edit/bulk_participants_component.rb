@@ -32,6 +32,10 @@ module Collections
       def textarea_id
         "#{field_name}-textarea"
       end
+
+      def validation_field_name
+        :"#{field_name}_attributes"
+      end
     end
   end
 end
