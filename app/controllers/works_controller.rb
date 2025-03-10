@@ -195,7 +195,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   def perform_deposit(work:)
     work.deposit_persist! # Sets the deposit state
-    DepositWorkJob.perform_later(work:, work_form: @work_form, deposit: deposit?, request_review: request_review?)
+    DepositWorkJob.perform_later(work:, work_form: @work_form, deposit: deposit?, request_review: request_review?,
+                                 current_user:)
   end
 
   # @return [String] path to redirect to after review
@@ -204,7 +205,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       # Deposit
       @work.deposit_persist! # Sets the deposit state
       @work.approve!
-      DepositWorkJob.perform_later(work: @work, work_form: @work_form, deposit: true, request_review: false)
+      DepositWorkJob.perform_later(work: @work, work_form: @work_form, deposit: true, request_review: false,
+                                   current_user:)
       wait_works_path(@work.id)
     else
       @work.reject_with_reason!(reason: @review_form.reject_reason)

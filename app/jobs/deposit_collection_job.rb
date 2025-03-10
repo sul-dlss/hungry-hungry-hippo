@@ -4,9 +4,12 @@
 class DepositCollectionJob < ApplicationJob
   # @param [CollectionForm] collection_form
   # @param [Collection] collection
-  def perform(collection_form:, collection:)
+  # @param [User] current_user
+  def perform(collection_form:, collection:, current_user:)
     @collection_form = collection_form
     @collection = collection
+    # Setting current user so that it will be available for notifications.
+    Current.user = current_user
 
     # If new_cocina_object then persist not performed since not changed.
     new_cocina_object = perform_persist

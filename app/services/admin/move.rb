@@ -23,7 +23,7 @@ module Admin
 
       # Deposit if not a draft
       DepositWorkJob.perform_later(work:, work_form:, deposit: deposit?,
-                                   request_review: false)
+                                   request_review: false, current_user: Current.user)
     end
 
     private

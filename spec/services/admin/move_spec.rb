@@ -6,9 +6,11 @@ RSpec.describe Admin::Move do
   let(:work_form) { WorkForm.new }
   let(:work) { create(:work) }
   let(:collection) { create(:collection) }
+  let(:current_user) { create(:user) }
 
   before do
     allow(DepositWorkJob).to receive(:perform_later)
+    Current.user = current_user
   end
 
   context 'when the work is not open' do
@@ -22,7 +24,7 @@ RSpec.describe Admin::Move do
       expect(work.reload.deposit_registering_or_updating?).to be(true)
 
       expect(DepositWorkJob).to have_received(:perform_later).with(work:, work_form:, deposit: true,
-                                                                   request_review: false)
+                                                                   request_review: false, current_user:)
     end
   end
 
@@ -33,7 +35,7 @@ RSpec.describe Admin::Move do
       described_class.call(work_form:, work:, collection:, version_status:)
 
       expect(DepositWorkJob).to have_received(:perform_later).with(work:, work_form:, deposit: false,
-                                                                   request_review: false)
+                                                                   request_review: false, current_user:)
     end
   end
 end

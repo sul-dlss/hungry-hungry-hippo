@@ -49,7 +49,7 @@ class CollectionsController < ApplicationController
       collection = Collection.create!(title: @collection_form.title,
                                       user: current_user,
                                       deposit_state_event: 'deposit_persist')
-      DepositCollectionJob.perform_later(collection:, collection_form: @collection_form)
+      DepositCollectionJob.perform_later(collection:, collection_form: @collection_form, current_user:)
       redirect_to wait_collections_path(collection.id)
     else
       render :form, status: :unprocessable_entity
@@ -63,7 +63,7 @@ class CollectionsController < ApplicationController
     # The validation_context param determines whether extra validations are applied, e.g., for deposits.
     if @collection_form.valid?(:deposit)
       @collection.deposit_persist! # Sets the deposit state
-      DepositCollectionJob.perform_later(collection: @collection, collection_form: @collection_form)
+      DepositCollectionJob.perform_later(collection: @collection, collection_form: @collection_form, current_user:)
       redirect_to wait_collections_path(@collection.id)
     else
       render :form, status: :unprocessable_entity

@@ -7,6 +7,7 @@ RSpec.describe DepositCollectionJob do
 
   let(:druid) { collection_druid_fixture }
   let(:cocina_object) { collection_with_metadata_fixture }
+  let(:current_user) { create(:user) }
 
   before do
     allow(ToCocina::Collection::Mapper).to receive(:call).and_call_original
@@ -25,7 +26,7 @@ RSpec.describe DepositCollectionJob do
     end
 
     it 'registers a new collection' do
-      described_class.perform_now(collection_form:, collection:)
+      described_class.perform_now(collection_form:, collection:, current_user:)
       new_manager = User.find_by(email_address: 'stepking@stanford.edu')
       new_depositor = User.find_by(email_address: 'joehill@stanford.edu')
       expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form:,
@@ -50,6 +51,9 @@ RSpec.describe DepositCollectionJob do
       expect(collection.email_depositors_status_changed).to be true
 
       expect(collection.custom_rights_statement_option).to eq('no') # default
+
+      # Verifying that Current.user is being set for notifications
+      expect(Current.user).to eq current_user
     end
 
     context 'when a custom rights statement is provided' do
@@ -62,7 +66,7 @@ RSpec.describe DepositCollectionJob do
       end
 
       it 'registers a new collection with a custom rights statement' do
-        described_class.perform_now(collection_form:, collection:)
+        described_class.perform_now(collection_form:, collection:, current_user:)
         expect(collection.reload.custom_rights_statement_option).to eq('provided')
         expect(collection.provided_custom_rights_statement).to eq('This is a custom rights statement')
       end
@@ -78,7 +82,7 @@ RSpec.describe DepositCollectionJob do
       end
 
       it 'registers a new collection with instructions for entering the rights statement' do
-        described_class.perform_now(collection_form:, collection:)
+        described_class.perform_now(collection_form:, collection:, current_user:)
         expect(collection.reload.custom_rights_statement_option).to eq('depositor_selects')
         expect(collection.reload.custom_rights_statement_instructions).to eq('Please enter a custom rights statement')
       end
@@ -95,7 +99,7 @@ RSpec.describe DepositCollectionJob do
     end
 
     it 'updates an existing collection' do
-      described_class.perform_now(collection_form:, collection:)
+      described_class.perform_now(collection_form:, collection:, current_user:)
       expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form:,
                                                                         source_id: "h3:collection-#{collection.id}")
       expect(Sdr::Repository).to have_received(:open_if_needed)
@@ -119,7 +123,7 @@ RSpec.describe DepositCollectionJob do
     end
 
     it 'updates an existing collection' do
-      described_class.perform_now(collection_form:, collection:)
+      described_class.perform_now(collection_form:, collection:, current_user:)
       expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form:,
                                                                         source_id: "h3:collection-#{collection.id}")
       expect(Sdr::Repository).not_to have_received(:open_if_needed)
@@ -149,7 +153,7 @@ RSpec.describe DepositCollectionJob do
     end
 
     it 'publishes a MANGER_ADDED notification' do
-      described_class.perform_now(collection_form:, collection:)
+      described_class.perform_now(collection_form:, collection:, current_user:)
       expect(collection.managers).to include(manager)
       expect(Notifier).to have_received(:publish).with(Notifier::MANAGER_ADDED, collection:, user: manager)
     end
@@ -176,7 +180,7 @@ RSpec.describe DepositCollectionJob do
     end
 
     it 'only publishes a MANGER_REMOVED notification' do
-      described_class.perform_now(collection_form:, collection:)
+      described_class.perform_now(collection_form:, collection:, current_user:)
       expect(collection.managers).to include(first_manager)
       expect(collection.managers).not_to include(second_manager)
       expect(Notifier).to have_received(:publish).with(Notifier::MANAGER_REMOVED, collection:, user: second_manager)
