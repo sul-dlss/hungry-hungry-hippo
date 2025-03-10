@@ -6,11 +6,14 @@ class DepositWorkJob < ApplicationJob
   # @param [Work] work
   # @param [Boolean] deposit if true and review is not requested, deposit the work; otherwise, leave as draft
   # @param [Boolean] request_review if true, request view of the work
-  def perform(work_form:, work:, deposit:, request_review:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # @param [User] current_user
+  def perform(work_form:, work:, deposit:, request_review:, current_user:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     @work_form = work_form
     @work = work
     @deposit = deposit
     @request_review = request_review
+    # Setting current user so that it will be available for notifications.
+    Current.user = current_user
 
     # Add missing digests and mime types
     Contents::Analyzer.call(content:)
