@@ -1,9 +1,10 @@
 <%= render Elements::Tables::TreegridTableComponent.new(id: 'content-table', label: 'File list', show_label: false) do |component| %>
+  <%# These headers are duplicated in app/views/contents/_show.html.erb. %>
   <% component.with_headers([
                               { label: 'File Name' },
-                              { label: 'Description', tooltip: helpers.t('content_files.edit.fields.description.tooltip_html') },
-                              { label: 'Hide', tooltip: helpers.t('content_files.edit.fields.hide.tooltip_html') },
-                              { label: 'Action' }
+                              { label: 'Description', tooltip: helpers.t('content_files.edit.fields.description.tooltip_html'), style: 'width: 180px;' },
+                              { label: 'Hide', tooltip: helpers.t('content_files.edit.fields.hide.tooltip_html'), style: 'width: 85px;' },
+                              { label: 'Action', style: 'width: 85px;' }
                             ]) %>
   <% last_path_parts = [] %>
   <% content_files.each do |content_file| %>
