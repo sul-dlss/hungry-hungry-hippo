@@ -2,7 +2,9 @@
   <div class="d-flex">
     <%= render Edit::LabelComponent.new(label_text: 'License') %>
     <%= render Elements::TooltipComponent.new(tooltip:) %>
-    <div class="ms-4"><%= helpers.link_to_new_tab 'Get help selecting a license', Settings.license_url %></div>
+    <% unless required_license_option? %>
+      <div class="ms-4"><%= helpers.link_to_new_tab 'Get help selecting a license', Settings.license_url %></div>
+    <% end %>
   </div>
   <% if required_license_option? %>
     <p>The license for this deposit is <%= license_label %></p>
