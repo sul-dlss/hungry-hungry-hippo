@@ -286,7 +286,7 @@ en:
           tooltip_html: >-
             Enter a brief description (200 characters max) indicating which fields were changed or what type of correction was made. This information is not displayed on the public page.
         work_type:
-          label: 'What type of content will you deposit?'
+          label: 'What type of content are you depositing?'
           tooltip_html: >-
             Choose the one content type that best describes the overall or primary nature of the work. Click on each content type to view and select terms you may use to further describe the work you are depositing.
         work_subtypes:

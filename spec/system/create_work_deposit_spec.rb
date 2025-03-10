@@ -116,7 +116,7 @@ RSpec.describe 'Create a work deposit' do
       # Click Next to go to work type tab
       click_link_or_button('Next')
       expect(page).to have_css('.nav-link.active', text: 'Type of deposit')
-      expect(page).to have_text('What type of content will you deposit?')
+      expect(page).to have_text('What type of content are you depositing?')
 
       choose('Text')
       check('Thesis')

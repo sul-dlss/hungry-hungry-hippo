@@ -16,7 +16,7 @@ RSpec.describe 'Edit work type and subtypes for a work' do
     expect(page).to have_css('h1', text: 'Untitled deposit')
 
     find('.nav-link', text: 'Type of deposit').click
-    expect(page).to have_text('What type of content will you deposit?')
+    expect(page).to have_text('What type of content are you depositing?')
     expect(page).to have_field('work[work_type]', type: :radio, count: WorkType.all.count) # rubocop:disable Rails/RedundantActiveRecordAllMethod
 
     expect(page).to have_no_field('work[work_subtypes][]', type: :checkbox)
