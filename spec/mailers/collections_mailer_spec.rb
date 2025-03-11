@@ -125,9 +125,7 @@ RSpec.describe CollectionsMailer do
       it 'renders the body' do
         expect(mail).to match_body("Dear #{manager.first_name},")
         expect(mail).to match_body('Members have been either added to or removed from the ' \
-                                   '20 Minutes into the Future collection. Please see the ' \
-                                   'history section at the bottom of the collection details ' \
-                                   'page to see the changes made.')
+                                   '20 Minutes into the Future collection.')
       end
     end
 
