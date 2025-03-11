@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@7.0.0
-  ruby-rails: sul-dlss/ruby-rails@4.5.0
+  ruby-rails: sul-dlss/ruby-rails@4.6.0
 jobs:
   stylelint:
     executor: node/default
@@ -26,7 +26,6 @@ workflows:
           name: test
           context: dlss
           install-chrome: true
-          use-codecov: true
           before-test:
             - run:
                 name: Prepare for running specs (install JS dependencies and build assets)
