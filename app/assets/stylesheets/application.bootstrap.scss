@@ -338,3 +338,8 @@ fieldset.form-fieldset legend {
     @extend .btn-outline-primary;
   }
 }
+
+#content-table {
+  table-layout: fixed;
+  width: 100%;
+}
