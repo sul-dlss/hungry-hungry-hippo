@@ -59,4 +59,8 @@ class Collection < ApplicationRecord
   def to_param
     druid
   end
+
+  def bare_druid
+    druid&.delete_prefix('druid:')
+  end
 end

@@ -22,7 +22,7 @@ RSpec.describe Admin::CollectionsListComponent, type: :component do
     expect(first_row).to have_link(collection.title, href: "/collections/#{collection.druid}") { |a|
       a['data-turbo-frame'] == '_top'
     }
-    expect(first_row).to have_css('td:nth-of-type(2)', text: collection.druid)
+    expect(first_row).to have_css('td:nth-of-type(2)', text: collection.druid.delete_prefix('druid:'))
     expect(first_row).to have_css('td:nth-of-type(3)', text: 'Manager, Depositor')
   end
 end
