@@ -210,7 +210,21 @@ RSpec.describe 'Edit a work' do
   context 'when openable (not a draft)' do
     let(:version_status) { build(:openable_version_status, version: cocina_object.version) }
 
-    it 'does not have a whats changing value' do
+    it 'has a whats changing value' do
+      visit edit_work_path(druid)
+
+      expect(page).to have_css('h1', text: title_fixture)
+
+      # Check What's changing
+      find('.nav-link', text: 'Deposit', exact_text: true).click
+      expect(page).to have_field('What\'s changing?', with: '')
+    end
+  end
+
+  context 'when openable first version' do
+    let(:version_status) { build(:openable_version_status, version: 1) }
+
+    it 'has a whats changing value' do
       visit edit_work_path(druid)
 
       expect(page).to have_css('h1', text: title_fixture)

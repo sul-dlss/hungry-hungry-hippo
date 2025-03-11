@@ -315,12 +315,13 @@ RSpec.describe WorkForm do
       let(:work_form) do
         work_form_fixture.tap do |form|
           form.release_date = 1.day.from_now
-          form.whats_changing = nil
+          form.whats_changing = ''
         end
       end
 
       it 'is invalid' do
-        expect(work_form).to be_valid
+        expect(work_form).not_to be_valid
+        expect(work_form.errors[:whats_changing]).to include("can't be blank")
       end
     end
   end

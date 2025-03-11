@@ -124,7 +124,7 @@
 
       <% component.with_pane do %>
         <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.deposit.help_text'), active_tab_name:, next_tab_btn: false) do |component| %>
-          <% if @work_presenter && !@work_presenter.first_version? %>
+          <% if @work_presenter && !@work_presenter.first_draft? %>
             <div class="pane-section">
               <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: t('works.edit.fields.whats_changing.label'), tooltip: t('works.edit.fields.whats_changing.tooltip_html'), maxlength: 100) %>
             </div>
