@@ -85,7 +85,7 @@ RSpec.describe 'Show dashboard' do
       it 'renders the dashboard' do
         get '/dashboard'
 
-        expect(response.body).to include('Dashboard')
+        expect(response.body).to include('Dashboard</h1>')
         expect(response.body).not_to include('<h2>Welcome</h2>')
       end
     end
@@ -96,7 +96,7 @@ RSpec.describe 'Show dashboard' do
       it 'renders the dashboard' do
         get '/dashboard'
 
-        expect(response.body).to include('Dashboard')
+        expect(response.body).to include('Dashboard</h1>')
         expect(response.body).not_to include('<h2>Welcome</h2>')
       end
     end
@@ -109,7 +109,7 @@ RSpec.describe 'Show dashboard' do
       it 'renders the dashboard' do
         get '/dashboard'
 
-        expect(response.body).to include('Dashboard')
+        expect(response.body).to include('Dashboard</h1>')
         expect(response.body).not_to include('<h2>Welcome</h2>')
       end
     end
@@ -122,7 +122,7 @@ RSpec.describe 'Show dashboard' do
       it 'renders the dashboard' do
         get '/dashboard'
 
-        expect(response.body).to include('Dashboard')
+        expect(response.body).to include('Dashboard</h1>')
         expect(response.body).not_to include('<h2>Welcome</h2>')
       end
     end
@@ -135,7 +135,7 @@ RSpec.describe 'Show dashboard' do
       it 'renders the dashboard' do
         get '/dashboard'
 
-        expect(response.body).to include('Dashboard')
+        expect(response.body).to include('Dashboard</h1>')
         expect(response.body).not_to include('<h2>Welcome</h2>')
       end
     end
@@ -144,7 +144,7 @@ RSpec.describe 'Show dashboard' do
       it 'renders the new user form' do
         get '/dashboard'
 
-        expect(response.body).not_to include('Dashboard')
+        expect(response.body).not_to include('Dashboard</h1>')
         expect(response.body).to include('<turbo-frame id="contact-form" src="/contacts/new?welcome=true">')
       end
     end
