@@ -11,6 +11,9 @@ export default class extends Controller {
       const paneEl = this.paneTargets[index]
       if (paneEl.querySelector('.is-invalid')) {
         tabEl.classList.add('is-invalid')
+        tabEl.setAttribute('aria-invalid', 'true')
+        tabEl.setAttribute('aria-label', 'Error: required fields missing')
+        tabEl.setAttribute('role', 'img')
       }
     })
     // Show the first tab that has an invalid input.
