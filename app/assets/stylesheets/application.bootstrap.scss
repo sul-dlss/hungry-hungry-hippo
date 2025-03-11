@@ -338,3 +338,9 @@ fieldset.form-fieldset legend {
     @extend .btn-outline-primary;
   }
 }
+
+.card-text {
+  a {
+    text-decoration: underline !important;
+  }
+}
