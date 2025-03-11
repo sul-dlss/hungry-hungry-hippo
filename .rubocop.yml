@@ -1,12 +1,10 @@
-require:
-  - rubocop-capybara
-  - rubocop-rspec_rails
-  - rubocop-factory_bot
-
 plugins:
+  - rubocop-capybara
+  - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
   TargetRubyVersion: 3.4
@@ -554,3 +552,11 @@ Style/RedundantFormat: # new in 1.72
   Enabled: true
 Performance/ZipWithoutBlock: # new in 1.24
   Enabled: true
+
+Capybara/FindAllFirst: # new in 2.22
+  Enabled: true
+Capybara/NegationMatcherAfterVisit: # new in 2.22
+  Enabled: true
+Capybara/RSpec/PredicateMatcher: # new in 2.19
+  Enabled: true
+
