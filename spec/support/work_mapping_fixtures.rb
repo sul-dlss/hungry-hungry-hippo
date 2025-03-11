@@ -27,7 +27,8 @@ module WorkMappingFixtures
       agree_to_terms: false,
       create_date_range_from_attributes: creation_date_range_from_fixture,
       create_date_range_to_attributes: creation_date_range_to_fixture,
-      create_date_type: 'range'
+      create_date_type: 'range',
+      whats_changing: 'Initial version'
     )
   end
 

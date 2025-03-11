@@ -14,13 +14,15 @@ RSpec.describe WorkForm do
         work_type:,
         work_subtypes:,
         other_work_subtype:,
-        abstract:
+        abstract:,
+        whats_changing:
       )
     end
     let(:work_type) { '' }
     let(:work_subtypes) { [] }
     let(:other_work_subtype) { '' }
     let(:abstract) { abstract_fixture }
+    let(:whats_changing) { 'Initial version' }
 
     context 'when saving draft with blank work type' do
       it 'is valid' do
@@ -88,6 +90,15 @@ RSpec.describe WorkForm do
         expect(form).to be_valid
       end
     end
+
+    context 'when whats changing is blank' do
+      let(:whats_changing) { '' }
+
+      it 'is invalid' do
+        expect(form).not_to be_valid
+        expect(form.errors[:whats_changing]).to include("can't be blank")
+      end
+    end
   end
 
   describe 'release date validations' do
@@ -98,7 +109,8 @@ RSpec.describe WorkForm do
         contributors_attributes: contributors_fixture,
         release_option:,
         release_date:,
-        collection_druid: collection.druid
+        collection_druid: collection.druid,
+        whats_changing: 'Initial version'
       )
     end
 
@@ -156,7 +168,8 @@ RSpec.describe WorkForm do
         # collection_druid: collection.druid,
         create_date_type: 'range',
         create_date_range_from_attributes: creation_date_range_from,
-        create_date_range_to_attributes: creation_date_range_to
+        create_date_range_to_attributes: creation_date_range_to,
+        whats_changing: 'Initial version'
       )
     end
 
@@ -236,7 +249,8 @@ RSpec.describe WorkForm do
         contact_emails_attributes: contact_emails_fixture,
         contributors_attributes: contributors_fixture,
         abstract:,
-        custom_rights_statement:
+        custom_rights_statement:,
+        whats_changing: 'Initial version'
       )
     end
     let(:abstract) { "This is a test.\n\nThis is a second paragraph." }
@@ -246,83 +260,6 @@ RSpec.describe WorkForm do
       expect(form).to be_valid
       expect(form.abstract).to eq("This is a test.\r\n\r\nThis is a second paragraph.")
       expect(form.custom_rights_statement).to eq("This is a test.\r\n\r\nThis is a second paragraph.")
-    end
-  end
-
-  describe 'Whats changing validation' do
-    before do
-      create(:collection, druid: collection_druid_fixture)
-    end
-
-    context 'when first draft and depositing' do
-      let(:work_form) do
-        new_work_form_fixture.tap do |form|
-          form.release_date = 1.day.from_now
-        end
-      end
-
-      it 'is valid' do
-        expect(work_form.persisted?).to be false
-        expect(work_form.whats_changing).to be_nil
-        expect(work_form).to be_valid
-      end
-    end
-
-    context 'when first draft, already persisted, and depositing' do
-      let(:work_form) do
-        work_form_fixture.tap do |form|
-          form.release_date = 1.day.from_now
-          form.version = 1
-          form.whats_changing = nil
-        end
-      end
-
-      it 'is valid' do
-        expect(work_form.persisted?).to be true
-        expect(work_form.version).to eq 1
-        expect(work_form.whats_changing).to be_nil
-        expect(work_form).to be_valid
-      end
-    end
-
-    context 'when not first draft and depositing' do
-      let(:work_form) do
-        work_form_fixture.tap do |form|
-          form.release_date = 1.day.from_now
-          form.whats_changing = nil
-        end
-      end
-
-      it 'is invalid' do
-        expect(work_form.valid?(:deposit)).to be false
-        expect(work_form.errors[:whats_changing]).to include("can't be blank")
-      end
-    end
-
-    context 'when not first draft and depositing and whats changing is provided' do
-      let(:work_form) do
-        work_form_fixture.tap do |form|
-          form.release_date = 1.day.from_now
-        end
-      end
-
-      it 'is valid' do
-        expect(work_form.valid?(:deposit)).to be true
-      end
-    end
-
-    context 'when not first draft and saving draft' do
-      let(:work_form) do
-        work_form_fixture.tap do |form|
-          form.release_date = 1.day.from_now
-          form.whats_changing = ''
-        end
-      end
-
-      it 'is invalid' do
-        expect(work_form).not_to be_valid
-        expect(work_form.errors[:whats_changing]).to include("can't be blank")
-      end
     end
   end
 end
