@@ -22,13 +22,17 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
       expect(tab_pane).to have_button('Save as draft') { |btn| expect(btn[:form]).to eq('new_work') }
       expect(tab_pane).to have_button('Next')
       expect(tab_pane).to have_button('Previous')
-      expect(tab_pane).to have_link('Cancel')
+      expect(tab_pane).to have_link('Cancel', href: '/dashboard')
       expect(tab_pane).to have_no_button('Discard draft')
     end
   end
 
-  context 'when work presenter (existing work)' do
-    let(:work_presenter) { instance_double(WorkPresenter, discardable?: true) }
+  context 'when work presenter (existing work, first_draft)' do
+    let(:version_status) { build(:first_draft_version_status) }
+    let(:work) { create(:work, :with_druid) }
+    let(:work_presenter) do
+      WorkPresenter.new(work:, work_form: WorkForm.new(druid: work.druid), version_status:)
+    end
 
     it 'renders the pane' do
       render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
@@ -37,7 +41,25 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
       expect(tab_pane).to have_button('Next')
       expect(tab_pane).to have_button('Previous')
       expect(tab_pane).to have_button('Discard draft') { |btn| expect(btn[:form]).to eq('discard_draft_form') }
-      expect(tab_pane).to have_link('Cancel')
+      expect(tab_pane).to have_link('Cancel', href: '/dashboard')
+    end
+  end
+
+  context 'when work presenter (existing work, not first_draft)' do
+    let(:version_status) { build(:version_status) }
+    let(:work) { create(:work, :with_druid) }
+    let(:work_presenter) do
+      WorkPresenter.new(work:, work_form: WorkForm.new(druid: work.druid), version_status:)
+    end
+
+    it 'renders the pane' do
+      render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
+      tab_pane = page.find('div.tab-pane')
+      expect(tab_pane).to have_button('Save as draft') { |btn| expect(btn[:form]).to eq('new_work') }
+      expect(tab_pane).to have_button('Next')
+      expect(tab_pane).to have_button('Previous')
+      expect(tab_pane).to have_no_button('Discard draft')
+      expect(tab_pane).to have_link('Cancel', href: "/works/#{work.druid}")
     end
   end
 
