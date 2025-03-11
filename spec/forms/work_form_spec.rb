@@ -262,6 +262,24 @@ RSpec.describe WorkForm do
       end
 
       it 'is valid' do
+        expect(work_form.persisted?).to be false
+        expect(work_form.whats_changing).to be_nil
+        expect(work_form).to be_valid
+      end
+    end
+
+    context 'when first draft, already persisted, and depositing' do
+      let(:work_form) do
+        work_form_fixture.tap do |form|
+          form.release_date = 1.day.from_now
+          form.version = 1
+          form.whats_changing = nil
+        end
+      end
+
+      it 'is valid' do
+        expect(work_form.persisted?).to be true
+        expect(work_form.version).to eq 1
         expect(work_form.whats_changing).to be_nil
         expect(work_form).to be_valid
       end

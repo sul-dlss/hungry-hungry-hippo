@@ -96,7 +96,7 @@ class WorkForm < ApplicationForm
   validates :create_date_type, inclusion: { in: %w[single range] }
 
   attribute :whats_changing, :string
-  validates :whats_changing, presence: true, on: :deposit, if: :persisted?
+  validates :whats_changing, presence: true, on: :deposit, if: -> { persisted? && version > 1 }
 
   def content_file_presence
     return if content_id.nil? # This makes test configuration easier.
