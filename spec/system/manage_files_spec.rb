@@ -48,7 +48,7 @@ RSpec.describe 'Manage files for a work' do
 
       # Edit the description
       sleep 0.25
-      all('a', text: 'Add description').first.click
+      first('a', text: 'Add description').click
       fill_in('Description', with: 'This is a hippo.')
       click_link_or_button('Save')
 
@@ -59,7 +59,7 @@ RSpec.describe 'Manage files for a work' do
       expect(content_file.label).to eq('This is a hippo.')
 
       # Hide the file
-      all('input[type=checkbox][name="content_file[hide]"]').first.check
+      first('input[type=checkbox][name="content_file[hide]"]').check
       expect(page).to have_field('hide', checked: true)
       sleep 0.25 # Wait for the form to submit.
       expect(content_file.reload.hide).to be true
@@ -117,7 +117,7 @@ RSpec.describe 'Manage files for a work' do
       expect(page).to have_no_css('table#content-table td', text: 'hippopotamus/hippo.svg')
 
       # Go to the next page
-      all('a', text: 'Next', class: 'page-link').first.click
+      first('a', text: 'Next', class: 'page-link').click
 
       # # Third is listed on page.
       expect(page).to have_no_css('table#content-table td', text: 'hippo.png')
@@ -129,18 +129,18 @@ RSpec.describe 'Manage files for a work' do
 
       # Delete the first file
       expect(page).to have_css('table#content-table td', text: 'hippo.png')
-      all('a', text: 'Remove').first.click
+      first('a', text: 'Remove').click
       expect(page).to have_no_css('table#content-table td', text: 'hippo.png')
       expect(page).to have_css('table#content-table td', text: 'hippopotamus/hippo.svg')
       expect(page).to have_css('table#content-table td', text: 'hippo.txt')
 
       # Edit the description
       within('table#content-table') do
-        all('a', text: 'Add description').first.click
+        first('a', text: 'Add description').click
         click_link_or_button('Cancel')
 
         expect(page).to have_link('Add description', count: 2)
-        all('a', text: 'Add description').first.click
+        first('a', text: 'Add description').click
         fill_in('Description', with: '')
         click_link_or_button('Save')
       end
@@ -152,7 +152,7 @@ RSpec.describe 'Manage files for a work' do
       expect(content_file.label).to be_blank
 
       # Hide the file
-      all('input[type=checkbox][name="content_file[hide]"]').first.check
+      first('input[type=checkbox][name="content_file[hide]"]').check
       expect(page).to have_field('hide', checked: true)
       sleep 0.25 # Wait for the form to submit.
       expect(content_file.reload.hide).to be true
