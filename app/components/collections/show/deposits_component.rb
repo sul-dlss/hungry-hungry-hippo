@@ -4,16 +4,16 @@ module Collections
   module Show
     # Component for rendering a list of deposits for the collection show page.
     class DepositsComponent < ApplicationComponent
-      def initialize(presenter:)
-        @presenter = presenter
+      def initialize(work_statuses:, works:)
+        @work_statuses = work_statuses
+        @works = works
         super()
       end
-      attr_reader :presenter
 
-      delegate :collection, :work_statuses, to: :presenter
+      attr_reader :work_statuses, :works
 
       def collection_deposits
-        @collection_deposits ||= collection.works.order(:title).map do |work|
+        @collection_deposits ||= works.map do |work|
           {
             id: dom_id(work),
             values: values_for(work)

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Collections::Show::HeaderComponent, type: :component do
   let(:presenter) do
-    CollectionPresenter.new(collection_form:, version_status:, collection:, work_statuses: [])
+    CollectionPresenter.new(collection_form:, version_status:, collection:)
   end
   let(:collection_form) { CollectionForm.new(druid: druid_fixture, title:) }
   let(:collection) { create(:collection, user:, druid: druid_fixture) }

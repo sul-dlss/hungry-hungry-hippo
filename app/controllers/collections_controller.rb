@@ -2,7 +2,7 @@
 
 # Controller for a Collection
 class CollectionsController < ApplicationController
-  before_action :set_collection, only: %i[show edit update]
+  before_action :set_collection, only: %i[show edit update works]
   before_action :check_deposit_registering_or_updating, only: %i[show edit]
   before_action :set_collection_form_from_cocina, only: %i[show edit]
   before_action :set_status, only: %i[show edit]
@@ -77,6 +77,15 @@ class CollectionsController < ApplicationController
     redirect_to collection_path(@collection) unless @collection.deposit_registering_or_updating?
   end
 
+  def works
+    authorize! @collection
+
+    @works = @collection.works.order(:title).page(params[:page])
+    @work_statuses = Sdr::Repository.statuses(
+      druids: @works.where.not(druid: nil).pluck(:druid)
+    )
+  end
+
   private
 
   def collection_params
@@ -113,12 +122,6 @@ class CollectionsController < ApplicationController
 
   def set_presenter
     @collection_presenter = CollectionPresenter.new(collection: @collection, collection_form: @collection_form,
-                                                    version_status: @version_status, work_statuses:)
-  end
-
-  def work_statuses
-    @work_statuses ||= Sdr::Repository.statuses(
-      druids: @collection.works.where.not(druid: nil).pluck(:druid)
-    )
+                                                    version_status: @version_status)
   end
 end

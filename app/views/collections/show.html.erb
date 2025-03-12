@@ -76,6 +76,8 @@
   <% end %>
 
   <%= component.with_pane(id: 'deposits-pane', tab_id: 'deposits-tab', active: deposits_active) do %>
-    <%= render Collections::Show::DepositsComponent.new(presenter: @collection_presenter) %>
+    <%= turbo_frame_tag 'collection-works', src: works_collection_path(@collection) do %>
+      <%= render Elements::SpinnerComponent.new %>
+    <% end %>
   <% end %>
 <% end %>

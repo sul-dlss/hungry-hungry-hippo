@@ -2,6 +2,7 @@
 
 class CollectionPolicy < ApplicationPolicy
   alias_rule :update?, :edit?, :wait?, :destroy?, to: :manage?
+  alias_rule :works?, to: :show?
 
   def show?
     collection_depositor? || manage?

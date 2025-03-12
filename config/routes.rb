@@ -21,6 +21,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get 'wait/:id', to: 'collections#wait', as: 'wait', param: :id
     end
 
+    member do
+      get 'works', to: 'collections#works', as: 'works'
+    end
+
     namespace :admin do
       resources :delete, only: %i[new destroy], controller: 'delete_collection', param: :collection_druid
     end
