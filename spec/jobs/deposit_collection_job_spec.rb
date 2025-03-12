@@ -96,6 +96,7 @@ RSpec.describe DepositCollectionJob do
     before do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
       allow(RoundtripSupport).to receive(:changed?).and_return(true)
+      allow(Notifier).to receive(:publish)
     end
 
     it 'updates an existing collection' do
@@ -107,8 +108,10 @@ RSpec.describe DepositCollectionJob do
       expect(Sdr::Repository).to have_received(:update).with(cocina_object:)
       expect(Sdr::Repository).to have_received(:accession)
       expect(RoundtripSupport).to have_received(:changed?)
+      expect(Notifier).not_to have_received(:publish).with(Notifier::DEPOSIT_PERSIST_COMPLETE)
 
       expect(collection.reload.title).to eq(collection_title_fixture)
+      expect(collection.version).to eq(2)
       expect(collection.deposit_not_in_progress?).to be false
     end
   end

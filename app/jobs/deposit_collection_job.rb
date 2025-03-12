@@ -17,15 +17,13 @@ class DepositCollectionJob < ApplicationJob
 
     update_collection_record(druid:)
 
-    unless new_cocina_object
+    if new_cocina_object
+      ModelSync::Collection.call(collection:, cocina_object: new_cocina_object)
+      collection.accession!
+      Sdr::Repository.accession(druid:)
+    else
       collection.deposit_persist_complete!
-      return
     end
-
-    ModelSync::Collection.call(collection:, cocina_object: mapped_cocina_object)
-
-    collection.accession!
-    Sdr::Repository.accession(druid:)
   end
 
   private
