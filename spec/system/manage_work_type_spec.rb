@@ -96,7 +96,7 @@ RSpec.describe 'Edit work type and subtypes for a work' do
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
     find('.nav-link.is-invalid', text: 'Type of deposit').click
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: '1 term is the minimum allowed')
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: '1 music term is the minimum allowed')
 
     # Clicking on another work type hides the error message
     choose('Mixed Materials')
