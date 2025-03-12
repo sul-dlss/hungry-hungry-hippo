@@ -295,6 +295,7 @@ en:
             Choose terms from this list to further describe the type of work you are depositing. Click "See more options" for additional terms. An entry here is only required if you have selected "Mixed Materials," "Music," or  "Other" above.
       messages:
         cannot_be_edited_html: "If you need to make a change to this work, contact <a href=\"mailto:%{support_email}\">%{support_email}</a>."
+        no_changes: "You have not made any changes to the form. Please click 'Cancel' to exit this page."
       panes:
         abstract:
           tab_label: 'Abstract and keywords'

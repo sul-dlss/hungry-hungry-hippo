@@ -7,6 +7,10 @@ RSpec.describe 'Update work' do
 
   let(:druid) { druid_fixture }
 
+  before do
+    allow(Sdr::Repository).to receive(:status).and_return(build(:openable_version_status))
+  end
+
   context 'when the user is not authorized' do
     context 'when just some user' do
       before do
