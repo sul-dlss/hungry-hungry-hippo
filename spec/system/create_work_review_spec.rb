@@ -56,7 +56,7 @@ RSpec.describe 'Create a work that requires review' do
     within(form_instances.first) do
       select('Creator', from: 'Role')
       within('.orcid-section') do
-        find('label', text: 'No').click
+        find('label', text: 'Enter name manually').click
       end
       fill_in('First name', with: 'Jane')
       fill_in('Last name', with: 'Stanford')

@@ -37,12 +37,12 @@
                                                     label: helpers.t('works.edit.fields.contributors.with_orcid.label'), container_classes: 'orcid-section mb-4') do |component| %>
       <% component.with_left_toggle_option(form:,
                                            field_name: :with_orcid,
-                                           label: 'Yes',
+                                           label: 'Lookup using ORCID iD',
                                            data: { contributors_target: 'yesOrcidOption', action: 'change->contributors#showOrcidSection change->tooltips#hideAll' },
                                            value: true) %>
       <% component.with_right_toggle_option(form:,
                                             field_name: :with_orcid,
-                                            label: 'No',
+                                            label: 'Enter name manually',
                                             data: { action: 'change->contributors#showNotOrcidSection change->tooltips#hideAll' },
                                             value: false) %>
     <% end %>

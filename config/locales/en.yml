@@ -257,7 +257,7 @@ en:
             tooltip_html: >-
               Enter the full name of the organization.
           with_orcid:
-            label: Do you want to use a contributor's ORCID iD?
+            label: 'Enter name'
             tooltip_html: >-
               An ORCID iD is a persistent digital identifier that distinguishes you from every other researcher. If you don't have an ORCID iD, you can get one at <a href="https://orcid.org/" target="_blank">https://orcid.org/</a> and then connect it to your Stanford identity at <a href="https://authorize.stanford.edu" target="_blank">https://authorize.stanford.edu</a>. If you choose to supply an ORCID iD, we will use it to retrieve the person's name and store both the name and ORCID iD in the detailed information about your deposit.
           orcid_name:
