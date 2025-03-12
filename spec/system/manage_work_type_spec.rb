@@ -72,8 +72,7 @@ RSpec.describe 'Edit work type and subtypes for a work' do
     expect(page).to have_text('Which of the following terms further describe your deposit?')
     expect(page).to have_text('Select at least one term below:')
     expect(page).to have_field('Data', type: :checkbox)
-    click_link_or_button('See more options')
-    expect(page).to have_field('3D model', type: :checkbox)
+    expect(page).to have_no_text('See more options')
 
     # Mixed material
     choose('Mixed Materials')

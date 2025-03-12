@@ -26,7 +26,7 @@
   <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Video', more_options: true) %>
 
   <%# Music %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Music', more_options: true,
+  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Music', more_options: false,
                                                     minimum_terms: WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES, error_field_name: :work_subtypes_music) %>
 
   <%# Mixed materials %>
