@@ -87,7 +87,7 @@ RSpec.describe 'Validate a work deposit' do
 
     # Fill in the author name
     within('.orcid-section') do
-      find('label', text: 'No').click
+      find('label', text: 'Enter name manually').click
     end
     fill_in('First name', with: contributors_fixture.first['first_name'])
     fill_in('Last name', with: contributors_fixture.first['last_name'])

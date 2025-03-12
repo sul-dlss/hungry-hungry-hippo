@@ -77,7 +77,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
     # Fill in the contributor form
     within form_instances[0] do
       within('.orcid-section') do
-        find('label', text: 'No').click
+        find('label', text: 'Enter name manually').click
       end
       select('Creator', from: 'Role')
       fill_in('First name', with: 'Jane')

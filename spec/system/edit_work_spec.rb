@@ -102,7 +102,7 @@ RSpec.describe 'Edit a work' do
       end
       expect(page).to have_select('Role', selected: 'Author')
       within('.orcid-section') do
-        expect(page).to have_checked_field('Yes')
+        expect(page).to have_checked_field('Lookup using ORCID iD')
       end
       expect(page).to have_field('ORCID iD', with: '0001-0002-0003-0004')
       expect(page).to have_field('First name', with: 'Jane')

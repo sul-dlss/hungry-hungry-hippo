@@ -94,7 +94,7 @@ RSpec.describe 'Create a work deposit' do
       # Enter two contributors
       select('Creator', from: 'work_contributors_attributes_0_person_role')
       within('.orcid-section') do
-        find('label', text: 'No').click
+        find('label', text: 'Enter name manually').click
       end
       fill_in('First name', with: 'Jane')
       fill_in('Last name', with: 'Stanford')
