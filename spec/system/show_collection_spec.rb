@@ -131,6 +131,7 @@ RSpec.describe 'Show a collection' do
       expect(page).to have_css('th', text: 'Modified')
       expect(page).to have_css('th', text: 'Link for sharing')
       all_trs = page.all('tbody tr')
+      expect(all_trs.size).to eq(2) # Since paginated
       work = collection.works[0]
       row = all_trs.find { |tr| tr.has_css?('td:nth-of-type(1)', text: work.title) }
       within(row) do
@@ -143,9 +144,21 @@ RSpec.describe 'Show a collection' do
       within(row) do
         expect(page).to have_css('td:nth-of-type(3)', text: 'Deposited')
       end
-      work = collection.works[2]
-      row = all_trs.find { |tr| tr.has_css?('td:nth-of-type(1)', text: work.title) }
-      within(row) do
+    end
+
+    # Next page
+    click_link_or_button('Next')
+
+    within('table#deposits-table') do
+      expect(page).to have_css('th', text: 'Deposit')
+      expect(page).to have_css('th', text: 'Owner')
+      expect(page).to have_css('th', text: 'Status')
+      expect(page).to have_css('th', text: 'Modified')
+      expect(page).to have_css('th', text: 'Link for sharing')
+      all_trs = page.all('tbody tr')
+      expect(all_trs.size).to eq(1) # Since paginated
+      within(all_trs.first) do
+        expect(page).to have_css('td:nth-of-type(1)', text: collection.works[2].title)
         expect(page).to have_css('td:nth-of-type(3)', text: 'Saving')
         expect(page).to have_css('td:nth-of-type(5)', exact_text: '')
       end

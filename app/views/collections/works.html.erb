@@ -1,0 +1,3 @@
+<%= turbo_frame_tag 'collection-works' do %>
+  <%= render Collections::Show::DepositsComponent.new(works: @works, work_statuses: @work_statuses) %>
+<% end %>

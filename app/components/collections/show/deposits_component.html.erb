@@ -1,4 +1,6 @@
-<%= render Elements::Tables::TableComponent.new(id: 'deposits-table', classes: 'mb-5', label: 'Deposits for this collection', show_label: false) do |component| %>
+<%= render Elements::Tables::TableComponent.new(id: 'deposits-table', classes: 'mb-5',
+                                                label: 'Deposits for this collection', show_label: false,
+                                                empty_message: 'No deposits to this collection.') do |component| %>
   <% component.with_headers([
                               { label: 'Deposit' },
                               { label: 'Owner' },
@@ -8,3 +10,4 @@
                             ]) %>
   <% component.with_rows(collection_deposits) %>
 <% end %>
+<%= paginate works %>
