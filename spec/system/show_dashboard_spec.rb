@@ -29,6 +29,8 @@ RSpec.describe 'Show dashboard', :rack_test do
 
       expect(page).to have_css('h1', text: "#{user.name} - Dashboard")
 
+      expect(page).to have_css('meta[name="turbo-cache-control"][content="no-preview"]', visible: :hidden)
+
       expect(page).to have_no_link('Admin')
 
       if banner_text.present?

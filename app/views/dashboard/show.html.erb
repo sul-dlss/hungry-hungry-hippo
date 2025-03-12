@@ -1,3 +1,7 @@
+<% content_for :head do %>
+  <meta name="turbo-cache-control" content="no-preview">
+<% end %>
+
 <div class="row">
   <div class="col-11">
     <%= render Elements::HeadingComponent.new(level: :h1, text: "#{current_user.name} - Dashboard", classes: 'h2 mb-4') %>
