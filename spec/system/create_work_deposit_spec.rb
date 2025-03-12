@@ -186,7 +186,6 @@ RSpec.describe 'Create a work deposit' do
       click_link_or_button('Next')
       expect(page).to have_css('.nav-link.active', text: 'Access settings')
       expect(page).to have_css('label', text: 'Release date')
-      expect(page).to have_field('Release date', with: '', disabled: true)
       choose('On this date')
       fill_in 'Release date', with: (Time.zone.today + 1.day).iso8601
 

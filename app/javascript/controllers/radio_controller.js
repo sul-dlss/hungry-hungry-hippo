@@ -28,5 +28,15 @@ export default class extends Controller {
         input.disabled = disable
       }
     })
+    // Elements that have radio-hide class will be hidden when the radio is not selected.
+    const hideEls = containerElem.querySelectorAll('.radio-hide')
+    hideEls.forEach((el) => {
+      el.classList.toggle('d-none', disable)
+    })
+    // Elements that have radio-show class will be shown when the radio is not selected.
+    const showEls = containerElem.querySelectorAll('.radio-show')
+    showEls.forEach((el) => {
+      el.classList.toggle('d-none', !disable)
+    })
   }
 }
