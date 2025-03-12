@@ -46,17 +46,21 @@ RSpec.describe 'Edit a work' do
     ]
   end
 
-  let(:collection) { create(:collection, user:, druid: collection_druid_fixture, title: collection_title_fixture) }
+  let(:collection) do
+    create(:collection, user:, druid: collection_druid_fixture, title: collection_title_fixture,
+                        release_duration: 'three_years')
+  end
   let!(:work) { create(:work, druid:, user:, collection:) }
 
   before do
     # On the second call, this will return the cocina object submitted to update.
     # This will allow us to test the updated values.
-    allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { cocina_object }, lambda { |_arg|
-      cocina_object
-    }, lambda { |_arg|
-         @updated_cocina_object
-       })
+    allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(
+      ->(_arg) { cocina_object },
+      ->(_arg) { cocina_object },
+      ->(_arg) { cocina_object },
+      ->(_arg) { @updated_cocina_object }
+    )
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     # It is already open.
     allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
@@ -246,6 +250,81 @@ RSpec.describe 'Edit a work' do
       # Check What's changing
       find('.nav-link', text: 'Deposit', exact_text: true).click
       expect(page).to have_no_field('What\'s changing?')
+    end
+  end
+
+  context 'when nothing changed and saving as draft' do
+    before do
+      allow(RoundtripSupport).to receive(:changed?).and_return(false)
+    end
+
+    it 'notifies user that nothing changed' do
+      visit edit_work_path(druid)
+
+      expect(page).to have_css('h1', text: title_fixture)
+      click_link_or_button('Save as draft')
+
+      expect(page).to have_css('.alert-warning', text: 'You have not made any changes to the form.')
+      expect(page).to have_current_path(edit_work_path(druid))
+    end
+  end
+
+  context 'when changed and saving as draft' do
+    before do
+      allow(RoundtripSupport).to receive(:changed?).and_return(true)
+    end
+
+    it 'performs deposit' do
+      visit edit_work_path(druid)
+
+      expect(page).to have_css('h1', text: title_fixture)
+      click_link_or_button('Save as draft')
+
+      expect(page).to have_no_css('.alert-warning')
+      expect(page).to have_current_path(work_path(druid))
+    end
+  end
+
+  context 'when nothing changed, not open, and depositing' do
+    let(:version_status) { build(:openable_version_status, version: cocina_object.version) }
+
+    before do
+      allow(RoundtripSupport).to receive(:changed?).and_return(false)
+    end
+
+    it 'notifies user that nothing changed' do
+      visit edit_work_path(druid)
+
+      expect(page).to have_css('h1', text: title_fixture)
+
+      find('.nav-link', text: 'Deposit', exact_text: true).click
+      fill_in('What\'s changing?', with: 'Nothing')
+      click_link_or_button('Deposit', class: 'btn-primary')
+
+      expect(page).to have_css('.alert-warning', text: 'You have not made any changes to the form.')
+      expect(page).to have_current_path(edit_work_path(druid))
+    end
+  end
+
+  context 'when nothing changed, open, and depositing' do
+    let(:version_status) { build(:draft_version_status, version: cocina_object.version) }
+
+    before do
+      allow(RoundtripSupport).to receive(:changed?).and_return(false)
+      allow(Sdr::Repository).to receive(:accession)
+    end
+
+    it 'performs deposit' do
+      visit edit_work_path(druid)
+
+      expect(page).to have_css('h1', text: title_fixture)
+
+      find('.nav-link', text: 'Deposit', exact_text: true).click
+      fill_in('What\'s changing?', with: 'Nothing')
+      click_link_or_button('Deposit', class: 'btn-primary')
+
+      expect(page).to have_no_css('.alert-warning')
+      expect(page).to have_current_path(work_path(druid))
     end
   end
 end

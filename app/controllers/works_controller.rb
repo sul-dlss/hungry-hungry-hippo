@@ -4,7 +4,7 @@
 class WorksController < ApplicationController # rubocop:disable Metrics/ClassLength
   before_action :set_work, only: %i[show edit update destroy review]
   before_action :check_deposit_registering_or_updating, only: %i[show edit]
-  before_action :set_status, only: %i[show edit destroy review]
+  before_action :set_status, only: %i[show edit destroy review update]
   before_action :set_work_form_from_cocina, only: %i[show edit review]
   before_action :set_content, only: %i[show edit review]
   before_action :set_presenter, only: %i[show edit review]
@@ -63,19 +63,20 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     end
   end
 
-  def update
+  def update # rubocop:disable Metrics/AbcSize
     authorize! @work
 
     @work_form = WorkForm.new(**update_work_params)
+    @content = Content.find(@work_form.content_id)
 
-    # The validation_context param determines whether extra validations are applied, e.g., for deposits.
-    if @work_form.valid?(validation_context)
+    work_is_valid = @work_form.valid?(validation_context)
+
+    if work_is_valid && perform_deposit?
       perform_deposit(work: @work)
       redirect_to wait_works_path(@work.id)
     else
-      @content = Content.find(@work_form.content_id)
+      flash.now[:warning] = helpers.t('works.edit.messages.no_changes') if work_is_valid
       set_license_presenter
-      set_status
       set_presenter
       render :form, status: :unprocessable_entity
     end
@@ -223,5 +224,16 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     return :deposit if deposit? || request_review?
 
     nil
+  end
+
+  def perform_deposit?
+    # Open? indicates that a previous change was made.
+    # A previous change is OK for deposit or requesting review, but not saving draft.
+    return true if @version_status.open? && (deposit? || request_review?)
+
+    # If no previous change, then check for a current change.
+    mapped_cocina_object = ToCocina::Work::Mapper.call(work_form: @work_form, content: @content,
+                                                       source_id: "h3:object-#{@work.id}")
+    RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
   end
 end
