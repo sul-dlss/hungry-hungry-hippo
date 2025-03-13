@@ -35,107 +35,83 @@
     <%# TabListComponent will render the actual form. %>
     <% form_with(model: @work_form) do |form| %>
       <%# This pane is outside the work form because it contains its own forms for files. %>
-      <% component.with_before_form_pane do %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :files, label: t('works.edit.panes.files.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, previous_tab_btn: false) do %>
-          <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
+      <% component.with_before_form_pane(tab_name: :files, label: t('works.edit.panes.files.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, previous_tab_btn: false) do %>
+        <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
 
-          <%= render 'contents/edit', content: @content %>
+        <%= render 'contents/edit', content: @content %>
 
-          <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
-          <%= render Edit::SectionHeaderComponent.new(title: t('works.edit.panes.files.list')) %>
-          <div id="content-files" class="pane-section">
-            <%= turbo_frame_tag @content, 'show', src: content_path(@content), data: { controller: 'dropzone-files' }, class: 'dropzone-files' do %>
-              <%= render Elements::SpinnerComponent.new %>
-            <% end %>
+        <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
+        <%= render Edit::SectionHeaderComponent.new(title: t('works.edit.panes.files.list')) %>
+        <div id="content-files" class="pane-section">
+          <%= turbo_frame_tag @content, 'show', src: content_path(@content), data: { controller: 'dropzone-files' }, class: 'dropzone-files' do %>
+            <%= render Elements::SpinnerComponent.new %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% component.with_work_pane(tab_name: :title, label: t('works.edit.panes.title.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :title, label: t('works.edit.fields.title.label'), tooltip: t('works.edit.fields.title.tooltip_html'),
+                                                               help_text: t('works.edit.fields.title.help_text'), width: 500, rows: 1, container_classes: 'pane-section') %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: Works::Edit::ContactEmailsComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
+      <% end %>
+
+      <% component.with_work_pane(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text'), tooltip: t('works.edit.panes.contributors.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Works::Edit::ContributorComponent, hidden_label: true, reorderable: true, fieldset_classes: 'pane-section') %>
+      <% end %>
+
+      <% component.with_work_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), help_text: t('works.edit.panes.abstract.help_text'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: t('works.edit.fields.abstract.label'), tooltip: t('works.edit.fields.abstract.tooltip_html'), container_classes: 'pane-section') %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :keywords, model_class: KeywordForm, form_component: Works::Edit::KeywordComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
+      <% end %>
+
+      <% component.with_work_pane(tab_name: :types, label: t('works.edit.panes.types.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+        <%= render Works::Edit::WorkTypeComponent.new(form:, collection: @collection) %>
+      <% end %>
+
+      <% component.with_work_pane(tab_name: :doi, label: t('works.edit.panes.doi.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do |pane_component| %>
+        <%= render Works::Edit::DoiComponent.new(form:, collection: @collection) %>
+
+        <% pane_component.with_help do %>
+          <%= link_to_new_tab('What is a DOI?', 'https://sdr.library.stanford.edu/documentation/purls-dois-and-orcid-ids', class: 'ms-3') %>
+        <% end %>
+      <% end %>
+
+      <% component.with_work_pane(tab_name: :dates, label: t('works.edit.panes.dates.label'), tooltip: t('works.edit.panes.dates.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+        <%= render Works::Edit::DatesComponent.new(form:) %>
+      <% end %>
+
+      <% component.with_work_pane(tab_name: :citation, label: t('works.edit.panes.citation.label'), tooltip: t('works.edit.panes.citation.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.fields.citation.help_text'), active_tab_name:) do %>
+        <%= render Works::Edit::CitationComponent.new(form:) %>
+      <% end %>
+
+      <% component.with_work_pane(tab_name: :related_content, label: t('works.edit.panes.related_content.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :related_works, model_class: RelatedWorkForm, form_component: RelatedWorks::EditComponent, fieldset_classes: 'pane-section') %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, fieldset_classes: 'pane-section') %>
+      <% end %>
+
+      <% component.with_work_pane(tab_name: :access, label: t('works.edit.panes.access.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+        <%= render Works::Edit::AccessSettingsComponent.new(form:, collection: @collection) %>
+      <% end %>
+
+      <% component.with_work_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+        <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
+        <% unless @collection.no_custom_rights_statement_option? %>
+          <%= render Works::Edit::TermsOfUseComponent.new(form:, collection: @collection) %>
+        <% end %>
+      <% end %>
+
+      <% component.with_work_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.deposit.help_text'), active_tab_name:, next_tab_btn: false) do |pane_component| %>
+        <% if @work_presenter && !@work_presenter.first_draft? %>
+          <div class="pane-section">
+            <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: t('works.edit.fields.whats_changing.label'), tooltip: t('works.edit.fields.whats_changing.tooltip_html'), maxlength: 100) %>
           </div>
+        <% else %>
+          <%# This is a dummy value that is needed for validation, but won't be used for the version description. %>
+          <%= form.hidden_field :whats_changing, value: 'Initial version' %>
         <% end %>
-      <% end %>
-
-      <% component.with_pane do %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :title, label: t('works.edit.panes.title.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-          <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :title, label: t('works.edit.fields.title.label'), tooltip: t('works.edit.fields.title.tooltip_html'),
-                                                                 help_text: t('works.edit.fields.title.help_text'), width: 500, rows: 1, container_classes: 'pane-section') %>
-          <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: Works::Edit::ContactEmailsComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
-        <% end %>
-      <% end %>
-
-      <% component.with_pane do %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text'), tooltip: t('works.edit.panes.contributors.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-          <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Works::Edit::ContributorComponent, hidden_label: true, reorderable: true, fieldset_classes: 'pane-section') %>
-        <% end %>
-      <% end %>
-
-      <% component.with_pane do %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), help_text: t('works.edit.panes.abstract.help_text'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-          <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: t('works.edit.fields.abstract.label'), tooltip: t('works.edit.fields.abstract.tooltip_html'), container_classes: 'pane-section') %>
-          <%= render NestedComponentPresenter.for(form:, field_name: :keywords, model_class: KeywordForm, form_component: Works::Edit::KeywordComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
-        <% end %>
-      <% end %>
-
-      <% component.with_pane do %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :types, label: t('works.edit.panes.types.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-          <%= render Works::Edit::WorkTypeComponent.new(form:, collection: @collection) %>
-        <% end %>
-      <% end %>
-
-      <% component.with_pane do %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :doi, label: t('works.edit.panes.doi.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do |component| %>
-          <%= render Works::Edit::DoiComponent.new(form:, collection: @collection) %>
-
-          <% component.with_help do %>
-            <%= link_to_new_tab('What is a DOI?', 'https://sdr.library.stanford.edu/documentation/purls-dois-and-orcid-ids', class: 'ms-3') %>
-          <% end %>
-        <% end %>
-      <% end %>
-
-      <% component.with_pane do %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :dates, label: t('works.edit.panes.dates.label'), tooltip: t('works.edit.panes.dates.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-          <%= render Works::Edit::DatesComponent.new(form:) %>
-        <% end %>
-      <% end %>
-
-      <% component.with_pane do %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :citation, label: t('works.edit.panes.citation.label'), tooltip: t('works.edit.panes.citation.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.fields.citation.help_text'), active_tab_name:) do %>
-          <%= render Works::Edit::CitationComponent.new(form:) %>
-        <% end %>
-      <% end %>
-
-      <% component.with_pane do %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :related_content, label: t('works.edit.panes.related_content.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-          <%= render NestedComponentPresenter.for(form:, field_name: :related_works, model_class: RelatedWorkForm, form_component: RelatedWorks::EditComponent, fieldset_classes: 'pane-section') %>
-          <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, fieldset_classes: 'pane-section') %>
-        <% end %>
-      <% end %>
-
-      <% component.with_pane do %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :access, label: t('works.edit.panes.access.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-          <%= render Works::Edit::AccessSettingsComponent.new(form:, collection: @collection) %>
-        <% end %>
-      <% end %>
-
-      <% component.with_pane do %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-          <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
-          <% unless @collection.no_custom_rights_statement_option? %>
-            <%= render Works::Edit::TermsOfUseComponent.new(form:, collection: @collection) %>
-          <% end %>
-        <% end %>
-      <% end %>
-
-      <% component.with_pane do %>
-        <%= render Works::Edit::PaneComponent.new(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.deposit.help_text'), active_tab_name:, next_tab_btn: false) do |component| %>
-          <% if @work_presenter && !@work_presenter.first_draft? %>
-            <div class="pane-section">
-              <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: t('works.edit.fields.whats_changing.label'), tooltip: t('works.edit.fields.whats_changing.tooltip_html'), maxlength: 100) %>
-            </div>
-          <% else %>
-            <%# This is a dummy value that is needed for validation, but won't be used for the version description. %>
-            <%= form.hidden_field :whats_changing, value: 'Initial version' %>
-          <% end %>
-          <%= render Works::Edit::TermsOfDepositComponent.new(form:) %>
-          <% component.with_deposit_button do %>
-            <%= render Works::Edit::SubmitComponent.new(work: @work, collection: @collection, data: { action: 'unsaved-changes#allowFormSubmission' }) %>
-          <% end %>
+        <%= render Works::Edit::TermsOfDepositComponent.new(form:) %>
+        <% pane_component.with_deposit_button do %>
+          <%= render Works::Edit::SubmitComponent.new(work: @work, collection: @collection, data: { action: 'unsaved-changes#allowFormSubmission' }) %>
         <% end %>
       <% end %>
     <% end %>
