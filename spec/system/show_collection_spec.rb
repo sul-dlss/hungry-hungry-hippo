@@ -9,7 +9,7 @@ RSpec.describe 'Show a collection' do
   let(:bare_druid) { collection_bare_druid_fixture }
   let(:user) { collection.user }
   let!(:collection) do
-    create(:collection, :with_review_workflow, :with_depositors, :with_managers, :with_works,
+    create(:collection, :with_review_workflow, :with_depositors, :with_managers, :with_works, :with_required_types,
            works_count:, reviewers_count: 2, druid:, title: collection_title_fixture)
   end
   let(:works_count) { 3 }
@@ -69,6 +69,16 @@ RSpec.describe 'Show a collection' do
       expect(page).to have_link('Edit', href: edit_collection_path(druid, tab: 'related_links'))
       expect(page).to have_css('tr', text: 'Related links')
       expect(page).to have_css('td', text: related_links_fixture.first['text'])
+    end
+
+    # Work type table
+    within('table#work-type-table') do
+      expect(page).to have_css('caption', text: 'Type of deposit')
+      expect(page).to have_link('Edit', href: edit_collection_path(druid, tab: 'types'))
+      expect(page).to have_css('tr', text: 'Deposit type')
+      expect(page).to have_css('td', text: work_type_fixture)
+      expect(page).to have_css('tr', text: 'Deposit subtypes')
+      expect(page).to have_css('td', text: work_subtypes_fixture.join(', '))
     end
 
     # Release and visibility table

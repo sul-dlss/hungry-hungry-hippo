@@ -90,7 +90,7 @@ RSpec.describe DepositCollectionJob do
   end
 
   context 'when an existing collection with changed cocina object' do
-    let(:collection_form) { CollectionForm.new(title: collection_title_fixture, druid:, lock: 'abc123') }
+    let(:collection_form) { collection_form_fixture }
     let(:collection) { create(:collection, :registering_or_updating, druid:) }
 
     before do
@@ -112,6 +112,18 @@ RSpec.describe DepositCollectionJob do
 
       expect(collection.reload.title).to eq(collection_title_fixture)
       expect(collection.version).to eq(2)
+      expect(collection.release_option).to eq('depositor_selects')
+      expect(collection.release_duration).to eq('one_year')
+      expect(collection.license_option).to eq('required')
+      expect(collection.license).to eq(collection_license_fixture)
+      expect(collection.custom_rights_statement_option).to eq('provided')
+      expect(collection.provided_custom_rights_statement).to eq('My custom rights statement')
+      expect(collection.custom_rights_statement_instructions).to eq('My custom rights statement instructions')
+      expect(collection.doi_option).to eq('yes')
+      expect(collection.review_enabled).to be false
+      expect(collection.work_type).to eq(work_type_fixture)
+      expect(collection.work_subtypes).to eq(work_subtypes_fixture)
+
       expect(collection.deposit_not_in_progress?).to be false
     end
   end

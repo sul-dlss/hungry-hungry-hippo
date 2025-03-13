@@ -82,6 +82,14 @@ RSpec.describe 'Create a collection deposit' do
     fill_in('Link text', with: related_links_fixture.first['text'])
     fill_in('URL', with: related_links_fixture.first['url'])
 
+    # Clicking on Next to go to the type of deposit tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Type of deposit (optional)')
+    expect(page).to have_no_field('Other', type: 'radio')
+    choose('Text')
+    check('Capstone')
+    check('Thesis')
+
     # Clicking on Next to go to access settings tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Access settings')
@@ -156,6 +164,10 @@ RSpec.describe 'Create a collection deposit' do
     # On show page
     expect(page).to have_css('h1', text: collection_title_fixture)
     expect(page).to have_no_link('Edit')
+
+    # Has work types and subtypes
+    expect(page).to have_text('Text')
+    expect(page).to have_text('Capstone, Thesis')
 
     # License
     expect(page).to have_css('th', text: 'License')

@@ -43,7 +43,9 @@ module ToCollectionForm
         email_depositors_status_changed: collection.email_depositors_status_changed,
         custom_rights_statement_option: collection.custom_rights_statement_option,
         provided_custom_rights_statement: collection.provided_custom_rights_statement,
-        custom_rights_statement_instructions: collection.custom_rights_statement_instructions
+        custom_rights_statement_instructions: collection.custom_rights_statement_instructions,
+        work_type: collection.work_type,
+        work_subtypes: collection.work_subtypes
       }.merge(license_params)
     end
     # rubocop:enable Metrics/AbcSize

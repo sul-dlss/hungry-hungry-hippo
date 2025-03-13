@@ -63,12 +63,13 @@ class WorkType
 
   MIXED_TYPES = (['Music'] + MORE_TYPES).sort.freeze
 
-  attr_reader :label, :cocina_type, :subtypes
+  attr_reader :label, :cocina_type, :subtypes, :value
 
   def initialize(**params)
     @label = params.fetch(:label)
     @subtypes = params.fetch(:subtypes)
     @cocina_type = params.fetch(:cocina_type)
+    @value = params.fetch(:value, @label)
   end
 
   def to_s

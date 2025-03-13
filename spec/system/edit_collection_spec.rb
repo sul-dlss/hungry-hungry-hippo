@@ -45,7 +45,7 @@ RSpec.describe 'Edit a collection' do
     end
     allow(Sdr::Repository).to receive(:accession)
 
-    create(:collection, druid:, user:, managers: [manager])
+    create(:collection, :with_required_types, druid:, user:, managers: [manager])
 
     create(:user, name: 'Stephen King', email_address: 'stepking@stanford.edu')
     # Joe Hill is not created yet.
@@ -98,6 +98,15 @@ RSpec.describe 'Edit a collection' do
     within('div[data-index="0"]') do
       find('button[data-action="click->nested-form#delete"]').click
     end
+
+    # Clicking on Next to go to type of deposit tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Type of deposit (optional)')
+    expect(page).to have_field('Image', checked: true)
+    expect(page).to have_field('CAD', checked: true)
+    expect(page).to have_field('Map', checked: true)
+    choose('No required work type')
+    expect(page).to have_no_field('CAD')
 
     # Clicking on Next to go to access settings tab
     click_link_or_button('Next')
@@ -177,8 +186,14 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_css('h1', text: updated_title)
     expect(page).to have_content(updated_description)
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
+
+    # Work types
+    expect(page).to have_no_text('Image')
+    expect(page).to have_no_text('CAD')
+
     # Access settings
     expect(page).to have_content('3 years in the future')
+
     # Participants
     expect(page).to have_content('stepking: Stephen King')
     expect(page).to have_content('joehill: Joe Hill')

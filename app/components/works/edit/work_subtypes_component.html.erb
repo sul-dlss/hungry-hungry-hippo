@@ -2,14 +2,14 @@
   <% if content %>
     <%= content %>
   <% else %>
-    <%= render Elements::Forms::FieldsetComponent.new(label: t('works.edit.fields.work_subtypes.label'), tooltip: t('works.edit.fields.work_subtypes.tooltip_html'), aria: fieldset_aria) do %>
+    <%= render Elements::Forms::FieldsetComponent.new(label:, tooltip:, aria: fieldset_aria) do %>
       <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: error_field_name) %>
 
       <% if minimum_terms.positive? %>
         <p>Select at least <%= term_phrase %> below:</p>
       <% end %>
       <div class="types-container">
-        <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: work_subtypes) %>
+        <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: work_subtypes, disabled_values: required_subtypes) %>
       </div>
 
       <%# More options %>
@@ -19,7 +19,7 @@
         <% end %>
         <%= tag.div id: collapse_id, class: 'collapse' do %>
           <div class="types-container">
-            <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: more_types) %>
+            <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: more_types, disabled_values: required_subtypes) %>
           </div>
         <% end %>
       <% end %>

@@ -4,110 +4,146 @@ require 'rails_helper'
 
 RSpec.describe 'Edit work type and subtypes for a work' do
   let(:user) { create(:user) }
-  let(:collection) { create(:collection, :with_druid, user:) }
 
   before do
     sign_in(user)
   end
 
-  it 'creates a work' do
-    visit new_work_path(collection_druid: collection.druid)
+  context 'without required types' do
+    let(:collection) { create(:collection, :with_druid, user:) }
 
-    expect(page).to have_css('h1', text: 'Untitled deposit')
+    it 'creates a work' do
+      visit new_work_path(collection_druid: collection.druid)
 
-    find('.nav-link', text: 'Type of deposit').click
-    expect(page).to have_text('What type of content are you depositing?')
-    expect(page).to have_field('work[work_type]', type: :radio, count: WorkType.all.count) # rubocop:disable Rails/RedundantActiveRecordAllMethod
+      expect(page).to have_css('h1', text: 'Untitled deposit')
 
-    expect(page).to have_no_field('work[work_subtypes][]', type: :checkbox)
+      find('.nav-link', text: 'Type of deposit').click
+      expect(page).to have_text('What type of content are you depositing?')
+      expect(page).to have_field('work[work_type]', type: :radio, count: WorkType.all.count) # rubocop:disable Rails/RedundantActiveRecordAllMethod
 
-    # Text
-    choose('Text')
-    expect(page).to have_text('Which of the following terms further describe your deposit?')
-    expect(page).to have_field('Article', type: :checkbox)
-    expect(page).to have_no_field('3D model', type: :checkbox)
+      expect(page).to have_no_field('work[work_subtypes][]', type: :checkbox)
 
-    click_link_or_button('See more options')
-    expect(page).to have_field('3D model', type: :checkbox)
-    # Duplicate subtype is removed from more options
-    expect(page).to have_field('Article', type: :checkbox, count: 1)
+      # Text
+      choose('Text')
+      expect(page).to have_text('Which of the following terms further describe your deposit?')
+      expect(page).to have_field('Article', type: :checkbox)
+      expect(page).to have_no_field('3D model', type: :checkbox)
 
-    # Data
-    choose('Data')
-    expect(page).to have_text('Which of the following terms further describe your deposit?')
-    expect(page).to have_field('3D model', type: :checkbox)
-    click_link_or_button('See more options')
-    expect(page).to have_field('Animation', type: :checkbox)
+      click_link_or_button('See more options')
+      expect(page).to have_field('3D model', type: :checkbox)
+      # Duplicate subtype is removed from more options
+      expect(page).to have_field('Article', type: :checkbox, count: 1)
 
-    # Software / code
-    choose('Software/Code')
-    expect(page).to have_text('Which of the following terms further describe your deposit?')
-    expect(page).to have_field('Code', type: :checkbox)
-    click_link_or_button('See more options')
-    expect(page).to have_field('3D model', type: :checkbox)
+      # Data
+      choose('Data')
+      expect(page).to have_text('Which of the following terms further describe your deposit?')
+      expect(page).to have_field('3D model', type: :checkbox)
+      click_link_or_button('See more options')
+      expect(page).to have_field('Animation', type: :checkbox)
 
-    # Image
-    choose('Image')
-    expect(page).to have_text('Which of the following terms further describe your deposit?')
-    expect(page).to have_field('CAD', type: :checkbox)
-    click_link_or_button('See more options')
-    expect(page).to have_field('3D model', type: :checkbox)
+      # Software / code
+      choose('Software/Code')
+      expect(page).to have_text('Which of the following terms further describe your deposit?')
+      expect(page).to have_field('Code', type: :checkbox)
+      click_link_or_button('See more options')
+      expect(page).to have_field('3D model', type: :checkbox)
 
-    # Sound
-    choose('Sound')
-    expect(page).to have_text('Which of the following terms further describe your deposit?')
-    expect(page).to have_field('Interview', type: :checkbox)
-    click_link_or_button('See more options')
-    expect(page).to have_field('3D model', type: :checkbox)
+      # Image
+      choose('Image')
+      expect(page).to have_text('Which of the following terms further describe your deposit?')
+      expect(page).to have_field('CAD', type: :checkbox)
+      click_link_or_button('See more options')
+      expect(page).to have_field('3D model', type: :checkbox)
 
-    # Video
-    choose('Video')
-    expect(page).to have_text('Which of the following terms further describe your deposit?')
-    expect(page).to have_field('Conference session', type: :checkbox)
-    click_link_or_button('See more options')
-    expect(page).to have_field('3D model', type: :checkbox)
+      # Sound
+      choose('Sound')
+      expect(page).to have_text('Which of the following terms further describe your deposit?')
+      expect(page).to have_field('Interview', type: :checkbox)
+      click_link_or_button('See more options')
+      expect(page).to have_field('3D model', type: :checkbox)
 
-    # Music
-    choose('Music')
-    expect(page).to have_text('Which of the following terms further describe your deposit?')
-    expect(page).to have_text('Select at least one term below:')
-    expect(page).to have_field('Data', type: :checkbox)
-    click_link_or_button('See more options')
-    expect(page).to have_field('3D model', type: :checkbox)
+      # Video
+      choose('Video')
+      expect(page).to have_text('Which of the following terms further describe your deposit?')
+      expect(page).to have_field('Conference session', type: :checkbox)
+      click_link_or_button('See more options')
+      expect(page).to have_field('3D model', type: :checkbox)
 
-    # Mixed material
-    choose('Mixed Materials')
-    expect(page).to have_text('Which of the following terms further describe your deposit?')
-    expect(page).to have_text('Select at least two terms below:')
-    expect(page).to have_field('3D model', type: :checkbox)
-    expect(page).to have_no_text('See more options')
+      # Music
+      choose('Music')
+      expect(page).to have_text('Which of the following terms further describe your deposit?')
+      expect(page).to have_text('Select at least one term below:')
+      expect(page).to have_field('Data', type: :checkbox)
+      click_link_or_button('See more options')
+      expect(page).to have_field('3D model', type: :checkbox)
 
-    # Other
-    choose('Other')
-    expect(page).to have_no_text('Which of the following terms further describe your deposit?')
-    expect(page).to have_field('Specify "Other" type*', type: :text)
-    expect(page).to have_no_field('3D model', type: :checkbox)
-    expect(page).to have_no_text('See more options')
+      # Mixed material
+      choose('Mixed Materials')
+      expect(page).to have_text('Which of the following terms further describe your deposit?')
+      expect(page).to have_text('Select at least two terms below:')
+      expect(page).to have_field('3D model', type: :checkbox)
+      expect(page).to have_no_text('See more options')
 
-    # Check validation for music
-    choose('Music')
-    click_link_or_button('Save as draft')
+      # Other
+      choose('Other')
+      expect(page).to have_no_text('Which of the following terms further describe your deposit?')
+      expect(page).to have_field('Specify "Other" type*', type: :text)
+      expect(page).to have_no_field('3D model', type: :checkbox)
+      expect(page).to have_no_text('See more options')
 
-    expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+      # Changing work type clears subtypes
+      choose('Text')
+      check('Article')
+      expect(page).to have_field('Article', type: :checkbox)
 
-    find('.nav-link.is-invalid', text: 'Type of deposit').click
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: '1 music term is the minimum allowed')
+      check('3D model')
 
-    # Clicking on another work type hides the error message
-    choose('Mixed Materials')
-    expect(page).to have_no_css('.invalid-feedback.is-invalid', text: '1 term is the minimum allowed')
+      choose('Data')
+      choose('Text')
+      expect(page).to have_field('3D model', type: :checkbox)
+      expect(page).to have_field('Article', type: :checkbox) { |checkbox| expect(checkbox.checked?).to be false }
+      expect(page).to have_field('3D model', type: :checkbox) { |checkbox| expect(checkbox.checked?).to be false }
 
-    check('Capstone')
-    click_link_or_button('Save as draft')
+      # Check validation for music
+      choose('Music')
+      click_link_or_button('Save as draft')
 
-    expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+      expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
-    find('.nav-link.is-invalid', text: 'Type of deposit').click
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: '2 terms are the minimum allowed')
+      find('.nav-link.is-invalid', text: 'Type of deposit').click
+      expect(page).to have_css('.invalid-feedback.is-invalid', text: '1 music term is the minimum allowed')
+
+      # Clicking on another work type hides the error message
+      choose('Mixed Materials')
+      expect(page).to have_no_css('.invalid-feedback.is-invalid', text: '1 term is the minimum allowed')
+
+      check('Capstone')
+      click_link_or_button('Save as draft')
+
+      expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+
+      find('.nav-link.is-invalid', text: 'Type of deposit').click
+      expect(page).to have_css('.invalid-feedback.is-invalid', text: '2 terms are the minimum allowed')
+    end
+  end
+
+  context 'with required types' do
+    let(:collection) { create(:collection, :with_druid, :with_required_types, user:) }
+
+    it 'creates a work' do
+      visit new_work_path(collection_druid: collection.druid)
+
+      expect(page).to have_css('h1', text: 'Untitled deposit')
+
+      find('.nav-link', text: 'Type of deposit').click
+      expect(page).to have_text('What type of content are you depositing?')
+      expect(page).to have_field('Text', type: :radio, checked: false, disabled: true)
+      expect(page).to have_field('Image', type: :radio, checked: true, disabled: true)
+      expect(page).to have_field('work[work_type]', type: :hidden, with: 'Image')
+      expect(page).to have_field('CAD', checked: true, disabled: true)
+      expect(page).to have_field('Map', checked: true, disabled: true)
+      expect(page).to have_field('work[work_subtypes][]', type: :hidden, with: 'CAD')
+      expect(page).to have_field('work[work_subtypes][]', type: :hidden, with: 'Map')
+    end
   end
 end

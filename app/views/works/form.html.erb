@@ -74,7 +74,7 @@
 
       <% component.with_pane do %>
         <%= render Works::Edit::PaneComponent.new(tab_name: :types, label: t('works.edit.panes.types.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-          <%= render Works::Edit::WorkTypeComponent.new(form:) %>
+          <%= render Works::Edit::WorkTypeComponent.new(form:, collection: @collection) %>
         <% end %>
       <% end %>
 

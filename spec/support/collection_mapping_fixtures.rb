@@ -20,7 +20,9 @@ module CollectionMappingFixtures
       related_links_attributes: related_links_fixture,
       managers_attributes: collection_manager_fixture,
       reviewers_attributes: collection_reviewer_fixture,
-      depositors_attributes: collection_depositor_fixture
+      depositors_attributes: collection_depositor_fixture,
+      work_type: work_type_fixture,
+      work_subtypes: work_subtypes_fixture
     )
   end
 
