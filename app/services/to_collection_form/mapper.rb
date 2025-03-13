@@ -45,7 +45,8 @@ module ToCollectionForm
         provided_custom_rights_statement: collection.provided_custom_rights_statement,
         custom_rights_statement_instructions: collection.custom_rights_statement_instructions,
         work_type: collection.work_type,
-        work_subtypes: collection.work_subtypes
+        work_subtypes: collection.work_subtypes,
+        contributors_attributes:
       }.merge(license_params)
     end
     # rubocop:enable Metrics/AbcSize
@@ -66,6 +67,12 @@ module ToCollectionForm
       return { license: collection.license } if collection.license_option == 'required'
 
       { default_license: collection.license }
+    end
+
+    def contributors_attributes
+      return [{}] if collection.contributors.blank?
+
+      collection.contributors.map { |contributor| ToForm::ContributorMapper.call(contributor:) }
     end
   end
 end

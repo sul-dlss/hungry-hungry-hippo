@@ -10,11 +10,12 @@ RSpec.describe 'Show a collection' do
   let(:user) { collection.user }
   let!(:collection) do
     create(:collection, :with_review_workflow, :with_depositors, :with_managers, :with_works, :with_required_types,
-           works_count:, reviewers_count: 2, druid:, title: collection_title_fixture)
+           works_count:, reviewers_count: 2, druid:, title: collection_title_fixture, contributors: [contributor])
   end
   let(:works_count) { 3 }
   let(:cocina_object) { collection_with_metadata_fixture }
   let(:version_status) { build(:openable_version_status) }
+  let(:contributor) { create(:person_contributor, first_name: 'Jane', last_name: 'Stanford', orcid: 'https://orcid.org/0001-0002-0003-0004') }
 
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
@@ -79,6 +80,22 @@ RSpec.describe 'Show a collection' do
       expect(page).to have_css('td', text: work_type_fixture)
       expect(page).to have_css('tr', text: 'Deposit subtypes')
       expect(page).to have_css('td', text: work_subtypes_fixture.join(', '))
+    end
+
+    # Contributors table
+    within('table#contributors-table') do
+      expect(page).to have_css('caption', text: 'Contributors')
+      expect(page).to have_link('Edit', href: edit_collection_path(druid, tab: 'contributors'))
+      expect(page).to have_css('th', text: 'Contributor')
+      expect(page).to have_css('th', text: 'ORCID')
+      expect(page).to have_css('th', text: 'Role')
+      expect(page).to have_css('th', text: 'Include in citation?')
+      within('tbody tr:nth-of-type(1)') do
+        expect(page).to have_css('td:nth-of-type(1)', text: 'Jane Stanford')
+        expect(page).to have_css('td:nth-of-type(2)', text: 'https://orcid.org/0001-0002-0003-0004')
+        expect(page).to have_css('td:nth-of-type(3)', text: 'Author')
+        expect(page).to have_css('td:nth-of-type(4)', text: 'Yes')
+      end
     end
 
     # Release and visibility table

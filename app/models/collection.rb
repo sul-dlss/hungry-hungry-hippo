@@ -14,6 +14,7 @@ class Collection < ApplicationRecord
   has_many :depositors, through: :collection_depositors, source: :user
   has_many :managers, through: :collection_managers, source: :user
   has_many :reviewers, through: :collection_reviewers, source: :user
+  has_many :contributors, dependent: :destroy
 
   enum :release_option, { immediate: 'immediate', depositor_selects: 'depositor_selects' }, suffix: true
   enum :release_duration, { six_months: '6 months', one_year: '1 year', two_years: '2 years', three_years: '3 years' },

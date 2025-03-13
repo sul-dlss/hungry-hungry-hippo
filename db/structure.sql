@@ -287,6 +287,45 @@ ALTER SEQUENCE public.contents_id_seq OWNED BY public.contents.id;
 
 
 --
+-- Name: contributors; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contributors (
+    id bigint NOT NULL,
+    collection_id bigint,
+    first_name character varying,
+    last_name character varying,
+    organization_name character varying,
+    role character varying,
+    role_type character varying,
+    suborganization_name character varying,
+    orcid character varying,
+    cited boolean DEFAULT true NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: contributors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.contributors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: contributors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.contributors_id_seq OWNED BY public.contributors.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -412,6 +451,13 @@ ALTER TABLE ONLY public.contents ALTER COLUMN id SET DEFAULT nextval('public.con
 
 
 --
+-- Name: contributors id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contributors ALTER COLUMN id SET DEFAULT nextval('public.contributors_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -479,6 +525,14 @@ ALTER TABLE ONLY public.content_files
 
 ALTER TABLE ONLY public.contents
     ADD CONSTRAINT contents_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contributors contributors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contributors
+    ADD CONSTRAINT contributors_pkey PRIMARY KEY (id);
 
 
 --
@@ -604,6 +658,13 @@ CREATE INDEX index_contents_on_user_id ON public.contents USING btree (user_id);
 
 
 --
+-- Name: index_contributors_on_collection_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_contributors_on_collection_id ON public.contributors USING btree (collection_id);
+
+
+--
 -- Name: index_users_on_email_address; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -669,6 +730,14 @@ ALTER TABLE ONLY public.works
 
 
 --
+-- Name: contributors fk_rails_429a90613a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contributors
+    ADD CONSTRAINT fk_rails_429a90613a FOREIGN KEY (collection_id) REFERENCES public.collections(id);
+
+
+--
 -- Name: works fk_rails_7ea9207fbe; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -715,6 +784,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250313120842'),
 ('20250310201020'),
 ('20250226213052'),
 ('20250224190134'),

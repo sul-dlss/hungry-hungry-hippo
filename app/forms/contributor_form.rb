@@ -38,6 +38,9 @@ class ContributorForm < ApplicationForm
 
   attribute :cited, :boolean, default: true
 
+  # When true, indicates that the contributor is required by the collection.
+  attribute :collection_required, :boolean, default: false
+
   def person?(with_names: false)
     return false if role_type != 'person'
     return true unless with_names
@@ -54,6 +57,10 @@ class ContributorForm < ApplicationForm
 
   def with_orcid?
     with_orcid
+  end
+
+  def empty?
+    !(person?(with_names: true) || organization?(with_names: true))
   end
 
   private
