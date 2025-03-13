@@ -1,7 +1,7 @@
 <% content_for :fluid_body do %>
   <%= tag.div class: 'hero', style: "background-image: url(#{image_path(@hero_image)});" do %>
-    <div class="row align-items-center justify-content-center h-100 gy-2">
-      <div class="col-md-3 col-sm-12">
+    <div class="row align-items-center justify-content-center h-100 gy-2" role="list">
+      <div class="col-md-3 col-sm-12" role="listitem">
         <%= render Elements::CardComponent.new(classes: 'text-center mx-4 mx-md-2 opacity-85') do |component| %>
           <% component.with_body do %>
             <div class="mb-3">
@@ -13,7 +13,7 @@
           <% end %>
         <% end %>
       </div>
-      <div class="col-md-3 col-sm-12">
+      <div class="col-md-3 col-sm-12" role="listitem">
         <%= render Elements::CardComponent.new(classes: 'text-center mx-4 mx-md-2') do |component| %>
           <% component.with_body do %>
             <div class="mb-2">
@@ -24,7 +24,7 @@
           <% end %>
         <% end %>
       </div>
-      <div class="col-md-3 col-sm-12">
+      <div class="col-md-3 col-sm-12" role="listitem">
         <%= render Elements::CardComponent.new(classes: 'text-center mx-4 mx-md-2 opacity-85') do |component| %>
           <% component.with_body do %>
             <div class="mb-3">
@@ -86,36 +86,36 @@
     </div>
   </div>
 
-  <div class="h2 text-center mt-5">What Stanford researchers say about SDR</div>
+  <h1 class="h2 text-center mt-5">What Stanford researchers say about SDR</h1>
 
-  <div class="row mt-3 justify-content-center gy-2">
-    <div class="col-md-4 col-sm-12">
+  <div class="row mt-3 justify-content-center gy-2" role="list">
+    <div class="col-md-4 col-sm-12" role="listitem">
       <%= render Home::QuoteCardComponent.new do %>
         "I am definitely hearing more and more appreciation for the flexibility of SDR from my faculty colleagues who are racing to keep up with data sharing mandates from journals and funders. Way to be ahead of the curve!"
       <% end %>
     </div>
 
-    <div class="col-md-4 col-sm-12">
+    <div class="col-md-4 col-sm-12" role="listitem">
       <%= render Home::QuoteCardComponent.new do %>
         "I have recommended SDR to other folks, including those running capstone options. Overall, I have been really happy with this service! Your support over the years has been very appreciated!"
       <% end %>
     </div>
   </div>
 
-  <div class="row mt-2 mb-5 justify-content-center gy-2">
-    <div class="col-md-3 col-sm-12">
+  <div class="row mt-2 mb-5 justify-content-center gy-2" role="list">
+    <div class="col-md-3 col-sm-12" role="listitem">
       <%= render Home::QuoteCardComponent.new do %>
         "This dataset is really important for my research, and having it online gives credibility to the work we are accomplishing."
       <% end %>
     </div>
 
-    <div class="col-md-3 col-sm-12">
+    <div class="col-md-3 col-sm-12" role="listitem">
       <%= render Home::QuoteCardComponent.new do %>
         "Making deposits into the repository has been very convenient and helpful to our research and teaching here at Stanford."
       <% end %>
     </div>
 
-    <div class="col-md-3 col-sm-12">
+    <div class="col-md-3 col-sm-12" role="listitem">
       <%= render Home::QuoteCardComponent.new do %>
         "Congratulations to your SDR team for such a well-designed and intuitive-to-use deposit interface. It is a joy to work with!"
       <% end %>
