@@ -37,4 +37,18 @@ RSpec.describe Elements::SpinnerComponent, type: :component do
                                '--bs-spinner-animation-speed: 1.5s;"].spinner-border.border-0')
     end
   end
+
+  context 'with id' do
+    it 'renders the spinner with the id' do
+      render_inline(described_class.new(id: 'spinner-id'))
+      expect(page).to have_css('div#spinner-id')
+    end
+  end
+
+  context 'with data' do
+    it 'renders the spinner with the data' do
+      render_inline(described_class.new(data: { key: 'value' }))
+      expect(page).to have_css('div[data-key="value"]')
+    end
+  end
 end
