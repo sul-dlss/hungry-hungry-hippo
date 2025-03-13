@@ -48,6 +48,8 @@
       <% component.with_row(label: 'Deposit subtypes', values: [@collection_presenter.work_subtypes.join(', ')]) %>
     <% end %>
 
+    <%= render Show::ContributorsShowComponent.new(contributors: @collection_presenter.contributors, presenter: @collection_presenter) %>
+
     <%= render Elements::Tables::TableComponent.new(id: 'release-visibility-table', classes: 'mb-5') do |component| %>
       <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Release and visibility', presenter: @collection_presenter, tab: :access) %><% end %>
       <% component.with_row(label: 'Release', values: [@collection_presenter.release]) %>

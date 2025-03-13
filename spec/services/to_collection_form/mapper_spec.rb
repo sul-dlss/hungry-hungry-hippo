@@ -13,7 +13,8 @@ RSpec.describe ToCollectionForm::Mapper, type: :mapping do
                         email_depositors_status_changed:,
                         review_enabled:,
                         work_type: work_type_fixture,
-                        work_subtypes: work_subtypes_fixture)
+                        work_subtypes: work_subtypes_fixture,
+                        contributors:)
   end
   let(:manager) { create(:user, email_address: 'stepking@stanford.edu', name: 'Stephen King') }
   let(:depositor) { create(:user, email_address: 'joehill@stanford.edu', name: 'Joseph Hill') }
@@ -21,6 +22,13 @@ RSpec.describe ToCollectionForm::Mapper, type: :mapping do
   let(:review_enabled) { false }
   let(:email_when_participants_changed) { true }
   let(:email_depositors_status_changed) { true }
+  let(:contributors) do
+    [
+      create(:person_contributor, first_name: 'Jane', last_name: 'Stanford', orcid: '0001-0002-0003-0004'),
+      create(:organization_contributor, organization_name: 'Stanford University Libraries', role: 'host_institution'),
+      create(:organization_contributor, :stanford, cited: false)
+    ]
+  end
 
   it 'maps to collection form' do
     expect(collection_form).to equal_form(collection_form_fixture)

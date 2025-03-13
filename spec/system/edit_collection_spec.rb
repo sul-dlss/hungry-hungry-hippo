@@ -108,6 +108,11 @@ RSpec.describe 'Edit a collection' do
     choose('No required work type')
     expect(page).to have_no_field('CAD')
 
+    # Clicking on Next to go to contributors tab
+    click_link_or_button('Next')
+    # There is a blank contributor form.
+    expect(page).to have_css('.form-instance')
+
     # Clicking on Next to go to access settings tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Access settings')

@@ -56,7 +56,7 @@
       <% end %>
 
       <% component.with_work_pane(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text'), tooltip: t('works.edit.panes.contributors.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Works::Edit::ContributorComponent, hidden_label: true, reorderable: true, fieldset_classes: 'pane-section') %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Edit::ContributorComponent, hidden_label: true, reorderable: true, fieldset_classes: 'pane-section') %>
       <% end %>
 
       <% component.with_work_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), help_text: t('works.edit.panes.abstract.help_text'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>

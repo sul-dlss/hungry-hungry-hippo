@@ -202,4 +202,79 @@ RSpec.describe DepositCollectionJob do
       expect(Notifier).not_to have_received(:publish).with(Notifier::MANAGER_ADDED)
     end
   end
+
+  context 'when adding contributors to an existing collection with an unchanged cocina object' do
+    let(:collection_form) do
+      CollectionForm.new(title: collection_title_fixture,
+                         druid:,
+                         lock: 'abc123',
+                         contributors_attributes:)
+    end
+    let(:collection) { create(:collection, :registering_or_updating, druid:, contributors: [existing_contributor]) }
+    let(:contributors_attributes) do
+      [
+        {
+          'first_name' => 'Jonathan',
+          'last_name' => 'Levin',
+          'person_role' => 'researcher',
+          'role_type' => 'person',
+          'with_orcid' => true,
+          'orcid' => '0000-0000-0000-0000',
+          'cited' => true
+        },
+        {
+          'organization_name' => 'Stanford University',
+          'role_type' => 'organization',
+          'organization_role' => 'degree_granting_institution',
+          'stanford_degree_granting_institution' => true,
+          'suborganization_name' => 'Graduate School of Business',
+          'cited' => true
+        },
+        {
+          'organization_name' => 'Massachusetts Institute of Technology',
+          'role_type' => 'organization',
+          'organization_role' => 'research_group',
+          'stanford_degree_granting_institution' => false,
+          'cited' => false
+        }
+      ]
+    end
+
+    let(:existing_contributor) { create(:person_contributor) }
+
+    before do
+      allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
+      allow(RoundtripSupport).to receive(:changed?).and_return(false)
+      allow(Notifier).to receive(:publish)
+    end
+
+    it 'removes existing contributors and adds new contributors' do
+      described_class.perform_now(collection_form:, collection:, current_user:)
+
+      expect(Contributor.exists?(existing_contributor.id)).to be false
+
+      expect(collection.reload.contributors.count).to eq(3)
+
+      person_contributor = collection.contributors[0]
+      expect(person_contributor.first_name).to eq('Jonathan')
+      expect(person_contributor.last_name).to eq('Levin')
+      expect(person_contributor.role).to eq('researcher')
+      expect(person_contributor.role_type).to eq('person')
+      expect(person_contributor.orcid).to eq('0000-0000-0000-0000')
+      expect(person_contributor.cited).to be true
+
+      stanford_contributor = collection.contributors[1]
+      expect(stanford_contributor.organization_name).to eq('Stanford University')
+      expect(stanford_contributor.role_type).to eq('organization')
+      expect(stanford_contributor.role).to eq('degree_granting_institution')
+      expect(stanford_contributor.suborganization_name).to eq('Graduate School of Business')
+      expect(stanford_contributor.cited).to be true
+
+      organization_contributor = collection.contributors[2]
+      expect(organization_contributor.organization_name).to eq('Massachusetts Institute of Technology')
+      expect(organization_contributor.role_type).to eq('organization')
+      expect(organization_contributor.role).to eq('research_group')
+      expect(organization_contributor.cited).to be false
+    end
+  end
 end

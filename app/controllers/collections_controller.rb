@@ -52,6 +52,7 @@ class CollectionsController < ApplicationController
       DepositCollectionJob.perform_later(collection:, collection_form: @collection_form, current_user:)
       redirect_to wait_collections_path(collection.id)
     else
+      add_blank_contributor
       render :form, status: :unprocessable_entity
     end
   end
@@ -66,6 +67,7 @@ class CollectionsController < ApplicationController
       DepositCollectionJob.perform_later(collection: @collection, collection_form: @collection_form, current_user:)
       redirect_to wait_collections_path(@collection.id)
     else
+      add_blank_contributor
       render :form, status: :unprocessable_entity
     end
   end
@@ -123,5 +125,9 @@ class CollectionsController < ApplicationController
   def set_presenter
     @collection_presenter = CollectionPresenter.new(collection: @collection, collection_form: @collection_form,
                                                     version_status: @version_status)
+  end
+
+  def add_blank_contributor
+    @collection_form.contributors_attributes = [{}] if @collection_form.contributors_attributes.empty?
   end
 end

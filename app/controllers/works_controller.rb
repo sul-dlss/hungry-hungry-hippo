@@ -28,6 +28,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     @content = Content.create!(user: current_user)
     @work_form = new_work_form
     set_license_presenter # Note this requires @collection and @work_form set above.
+    mark_collection_required_contributors # Note this requires @collection and @work_form set above.
 
     render :form
   end
@@ -42,6 +43,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
     # This updates the Work with the latest metadata from the Cocina object.
     ModelSync::Work.call(work: @work, cocina_object: @cocina_object)
+
+    mark_collection_required_contributors
 
     render :form
   end
@@ -183,7 +186,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @collection)
   end
 
-  def new_work_form
+  def new_work_form # rubocop:disable Metrics/AbcSize
     WorkForm.new(
       collection_druid: @collection.druid,
       content_id: @content.id,
@@ -193,7 +196,13 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       contact_emails_attributes: [{ email: current_user.email_address }],
       work_type: @collection.work_type,
       work_subtypes: @collection.work_subtypes
-    )
+    ).tap do |work_form|
+      if @collection.contributors.present?
+        work_form.contributors_attributes = @collection.contributors.map do |contributor|
+          ToForm::ContributorMapper.call(contributor:)
+        end
+      end
+    end
   end
 
   def perform_deposit(work:)
@@ -237,5 +246,15 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     mapped_cocina_object = ToCocina::Work::Mapper.call(work_form: @work_form, content: @content,
                                                        source_id: "h3:object-#{@work.id}")
     RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
+  end
+
+  def mark_collection_required_contributors
+    collection_contributors = @collection.contributors.map do |contributor|
+      ContributorForm.new(ToForm::ContributorMapper.call(contributor:)).attributes
+    end
+
+    @work_form.contributors.each do |contributor|
+      contributor.collection_required = collection_contributors.include?(contributor.attributes)
+    end
   end
 end
