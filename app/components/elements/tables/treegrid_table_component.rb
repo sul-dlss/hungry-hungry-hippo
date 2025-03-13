@@ -5,8 +5,8 @@ module Elements
     # Component for rendering a treegrid table (e.g., file hierarchy).
     class TreegridTableComponent < BaseTableComponent
       renders_many :rows, types: {
-        branch: 'Elements::Tables::TreegridBranchRowComponent',
-        leaf: 'Elements::Tables::TreegridLeafRowComponent'
+        branch: Elements::Tables::TreegridBranchRowComponent,
+        leaf: Elements::Tables::TreegridLeafRowComponent
       }
 
       def initialize(**args)

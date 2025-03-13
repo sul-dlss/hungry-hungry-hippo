@@ -4,7 +4,7 @@ module Elements
   module Tables
     # Component for rendering a table.
     class TableComponent < BaseTableComponent
-      renders_many :rows, 'Elements::Tables::RowComponent'
+      renders_many :rows, Elements::Tables::RowComponent
     end
   end
 end

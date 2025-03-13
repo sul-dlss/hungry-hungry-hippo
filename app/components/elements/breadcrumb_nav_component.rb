@@ -1,17 +1,18 @@
 # frozen_string_literal: true
 
 module Elements
-  # Displays the top bread crumb navigation
+  # Displays the top breadcrumb navigation
   class BreadcrumbNavComponent < ApplicationComponent
     renders_many :breadcrumbs, types: {
-      breadcrump: { renders: BreadcrumbComponent, as: :breadcrumb },
-      title_breadcrumb: { renders: ->(**args) { BreadcrumbComponent.new(truncate_length: 75, **args) },
-                          as: :title_breadcrumb },
-      collection_breadcrumb: { renders: lambda { |**args|
-        BreadcrumbComponent.new(truncate_length: 50, **args)
+      default: {
+        renders: BreadcrumbComponent, as: :breadcrumb
       },
-                               as: :collection_breadcrumb }
-
+      title: {
+        renders: ->(**args) { BreadcrumbComponent.new(truncate_length: 75, **args) }, as: :title_breadcrumb
+      },
+      collection: {
+        renders: ->(**args) { BreadcrumbComponent.new(truncate_length: 50, **args) }, as: :collection_breadcrumb
+      }
     }
   end
 end

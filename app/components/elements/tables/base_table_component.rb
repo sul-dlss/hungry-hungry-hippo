@@ -4,7 +4,7 @@ module Elements
   module Tables
     # Base component for rendering a table.
     class BaseTableComponent < ApplicationComponent
-      renders_many :headers, 'Elements::Tables::HeaderComponent'
+      renders_many :headers, Elements::Tables::HeaderComponent
       renders_one :caption
       # Subclasses should provide rows, e.g., renders_many :rows
 
