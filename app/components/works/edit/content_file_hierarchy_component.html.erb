@@ -8,6 +8,9 @@
 
 <% component.with_row_leaf(level: path_parts.length + 1, label: filename) do |row_component| %>
   <% row_component.with_cell do %>
+    <%= render Works::Edit::ContentFileUploadedTimeComponent.new(content_file:) %>
+  <% end %>
+  <% row_component.with_cell do %>
     <%= render Works::Edit::ContentFileDescriptionComponent.new(content_file:) %>
   <% end %>
   <% row_component.with_cell do %>

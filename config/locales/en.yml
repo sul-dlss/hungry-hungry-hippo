@@ -40,6 +40,7 @@ en:
   time:
     formats:
       long: '%B %d, %Y'
+      uploaded: '%H:%M:%S %m/%d/%y'
   errors:
     not_authorized: 'You are not authorized to perform the requested action.'
   messages:
@@ -441,7 +442,7 @@ en:
             This section is for links to other web pages that are related to your collection. Enter the text to be displayed on the page in the "Link text" box. This entire text will be hyperlinked to the URL you enter in the "URL" box. Examples of content you might consider linking to are key funder websites,  lab or institute websites, or project pages.
         types:
           tab_label: 'Type of deposit (optional)'
-          label: 'Type of deposit (optional)'       
+          label: 'Type of deposit (optional)'
         access:
           tab_label: 'Access settings'
           label: 'Manage release of deposits for discovery and download'
