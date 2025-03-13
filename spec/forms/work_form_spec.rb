@@ -60,13 +60,23 @@ RSpec.describe WorkForm do
 
       it 'is invalid' do
         expect(form).not_to be_valid
-        expect(form.errors[:work_subtypes_music]).to include('1 term is the minimum allowed')
+        expect(form.errors[:work_subtypes_music]).to include('1 music term is the minimum allowed')
+      end
+    end
+
+    context 'when Music work type and non music work subtypes' do
+      let(:work_type) { 'Music' }
+      let(:work_subtypes) { ['Newspaper'] }
+
+      it 'is invalid' do
+        expect(form).not_to be_valid
+        expect(form.errors[:work_subtypes_music]).to include('1 music term is the minimum allowed')
       end
     end
 
     context 'when Music work type and one work subtype' do
       let(:work_type) { 'Music' }
-      let(:work_subtypes) { ['Album'] }
+      let(:work_subtypes) { ['Sound'] }
 
       it 'is valid' do
         expect(form).to be_valid
