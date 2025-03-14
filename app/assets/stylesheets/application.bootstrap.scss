@@ -188,6 +188,11 @@ table.table-treegrid {
   --bs-border-color: #979797;
 }
 
+.form-check-input:checked {
+  background-color: var(--stanford-digital-blue);
+  border-color: var(--stanford-digital-blue);
+}
+
 .btn-link {
   color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
 }
@@ -336,6 +341,16 @@ fieldset.form-fieldset legend {
 
   input:not(:checked) + label  {
     @extend .btn-outline-primary;
+  }
+
+  .btn-check:checked + .btn {
+    background-color: var(--stanford-digital-blue);
+    border-color: var(--stanford-digital-blue);
+  }
+
+  :not(.btn-check:checked) + .btn {
+    color: var(--stanford-digital-blue);
+    border-color: var(--stanford-digital-blue);
   }
 }
 
