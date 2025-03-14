@@ -19,6 +19,14 @@ module Collections
         t('collections.edit.fields.work_subtypes.tooltip_html')
       end
 
+      def type_help_text
+        t('collections.edit.fields.work_type.help_text')
+      end
+
+      def subtype_help_text
+        t('collections.edit.fields.work_subtypes.help_text')
+      end
+
       def input_collection
         [WorkType.new(label: 'No required work type', subtypes: [],
                       cocina_type: Cocina::Models::ObjectType.object, value: '')] +

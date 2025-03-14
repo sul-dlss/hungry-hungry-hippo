@@ -3,6 +3,7 @@
     <%= content %>
   <% else %>
     <%= render Elements::Forms::FieldsetComponent.new(label:, tooltip:, aria: fieldset_aria) do %>
+      <%= tag.p class: 'form-text mb-3' do %><%= help_text %><% end %>
       <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: error_field_name) %>
 
       <% if required_subtypes.present? %>
