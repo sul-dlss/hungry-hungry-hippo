@@ -13,33 +13,33 @@
   </div>
 
   <%# Text subtypes %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Text', more_options: true, label:, tooltip:, required_subtypes:) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Text', more_options: true, label:, tooltip:, required_subtypes:) %>
 
   <%# Data subtypes %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Data', more_options: true, label:, tooltip:, required_subtypes:) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Data', more_options: true, label:, tooltip:, required_subtypes:) %>
 
   <%# Software, multimedia subtypes %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Software/Code', more_options: true, label:, tooltip:, required_subtypes:) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Software/Code', more_options: true, label:, tooltip:, required_subtypes:) %>
 
   <%# Image %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Image', more_options: true, label:, tooltip:, required_subtypes:) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Image', more_options: true, label:, tooltip:, required_subtypes:) %>
 
   <%# Sound %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Sound', more_options: true, label:, tooltip:, required_subtypes:) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Sound', more_options: true, label:, tooltip:, required_subtypes:) %>
 
   <%# Video %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Video', more_options: true, label:, tooltip:, required_subtypes:) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Video', more_options: true, label:, tooltip:, required_subtypes:) %>
 
   <%# Music %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Music', more_options: true, label:, tooltip:, required_subtypes:,
-                                                    minimum_terms: WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES, error_field_name: :work_subtypes_music) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Music', more_options: true, label:, tooltip:, required_subtypes:,
+                                             minimum_terms: WorkType::MINIMUM_REQUIRED_MUSIC_SUBTYPES, error_field_name: :work_subtypes_music) %>
 
   <%# Mixed materials %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Mixed Materials', label:, tooltip:, required_subtypes:,
-                                                    minimum_terms: WorkType::MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES, error_field_name: :work_subtypes_mixed_materials) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Mixed Materials', label:, tooltip:, required_subtypes:,
+                                             minimum_terms: WorkType::MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES, error_field_name: :work_subtypes_mixed_materials) %>
 
   <%# Other %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Other', label:, tooltip:) do %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Other', label:, tooltip:) do %>
     <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :other_work_subtype, label: 'Specify "Other" type*') %>
   <% end %>
 
