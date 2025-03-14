@@ -20,8 +20,12 @@ module Works
         t('works.edit.fields.work_subtypes.tooltip_html')
       end
 
-      def readonly
-        @collection.work_type.present? && form.object.work_type == @collection.work_type
+      def work_type
+        form.object.work_type
+      end
+
+      def readonly?
+        @collection.work_type.present? && work_type == @collection.work_type
       end
 
       def required_subtypes
