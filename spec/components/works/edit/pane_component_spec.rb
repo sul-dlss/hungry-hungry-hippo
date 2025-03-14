@@ -41,7 +41,7 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
       expect(tab_pane).to have_button('Next')
       expect(tab_pane).to have_button('Previous')
       expect(tab_pane).to have_button('Discard draft') { |btn| expect(btn[:form]).to eq('discard_draft_form') }
-      expect(tab_pane).to have_link('Cancel', href: '/dashboard')
+      expect(tab_pane).to have_link('Cancel', href: "/works/#{work.druid}")
     end
   end
 

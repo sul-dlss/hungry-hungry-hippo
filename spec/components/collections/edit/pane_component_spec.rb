@@ -4,9 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Collections::Edit::PaneComponent, type: :component do
   let(:component) do
-    described_class.new(tab_name: :test_pane, label: 'Test Pane', active_tab_name:)
+    described_class.new(tab_name: :test_pane, label: 'Test Pane', active_tab_name:, collection_presenter:)
   end
   let(:active_tab_name) { :test_pane }
+  let(:collection_presenter) { nil }
 
   context 'when no deposit button provided' do
     it 'renders the pane' do
@@ -44,6 +45,27 @@ RSpec.describe Collections::Edit::PaneComponent, type: :component do
     it 'renders the pane without active class' do
       render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
       expect(page).to have_css('div.tab-pane:not(.active)')
+    end
+  end
+
+  context 'when not persisted' do
+    it 'renders the pane with cancel button to dashboard' do
+      render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
+      tab_pane = page.find('div.tab-pane')
+      expect(tab_pane).to have_link('Cancel', href: '/dashboard')
+    end
+  end
+
+  context 'when persisted' do
+    let(:collection_presenter) do
+      CollectionPresenter.new(collection: nil, collection_form: CollectionForm.new(druid: collection_druid_fixture),
+                              version_status: nil)
+    end
+
+    it 'renders the pane with cancel button to show' do
+      render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
+      tab_pane = page.find('div.tab-pane')
+      expect(tab_pane).to have_link('Cancel', href: "/collections/#{collection_druid_fixture}")
     end
   end
 end

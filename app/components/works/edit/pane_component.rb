@@ -33,7 +33,7 @@ module Works
       end
 
       def cancel_path
-        @work_presenter.nil? || @work_presenter.first_draft? ? dashboard_path : work_path(@work_presenter)
+        @work_presenter.nil? ? dashboard_path : work_path(@work_presenter)
       end
     end
   end
