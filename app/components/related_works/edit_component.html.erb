@@ -2,13 +2,13 @@
 
   <div class="form-check">
     <%= form.radio_button :use_citation, 'false', class: 'form-check-input', data: { radio_target: 'radio', action: 'radio#toggle' } %>
-    <%= form.label :use_citation_false, 'Yes', class: 'form-check-label' %>
-    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :identifier, label: helpers.t('related_works.edit.fields.identifier.label.html'), data: { related_work_target: 'identifier' }, container_classes: 'mb-4') %>
+    <%= form.label :use_citation_false, helpers.t('related_works.edit.fields.identifier.label.html'), class: 'form-check-label' %>
+    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :identifier, label: helpers.t('related_works.edit.fields.identifier.label.html'), hidden_label: true, data: { related_work_target: 'identifier' }, container_classes: 'mb-4') %>
   </div>
   <div class="form-check">
     <%= form.radio_button :use_citation, 'true', class: 'form-check-input', data: { radio_target: 'radio', action: 'radio#toggle' } %>
-    <%= form.label :use_citation_true, 'No', class: 'form-check-label' %>
-    <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :citation, label: helpers.t('related_works.edit.fields.citation.label'), data: { related_work_target: 'citation' }, container_classes: 'mb-4', rows: 2) %>
+    <%= form.label :use_citation_true, helpers.t('related_works.edit.fields.citation.label'), class: 'form-check-label' %>
+    <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :citation, label: helpers.t('related_works.edit.fields.citation.label'), hidden_label: true, data: { related_work_target: 'citation' }, container_classes: 'mb-4', rows: 2) %>
   </div>
 <% end %>
 <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :relationship, options:, required: false, label: helpers.t('related_works.edit.fields.relationship.label.html'), prompt:, container_classes: 'mb-4') %>
