@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title><%= content_for(:title) || 'Hungry Hungry Hippo' %></title>
+    <title><%= content_for(:title) || 'SDR | Stanford Digital Repository' %></title>
     <meta name='viewport' content='width=device-width,initial-scale=1'>
     <meta name='apple-mobile-web-app-capable' content='yes'>
     <meta name='mobile-web-app-capable' content='yes'>
@@ -16,8 +16,8 @@
     <%# To morph a page: content_for(:turbo_refresh_method, 'refresh') %>
     <%= tag.meta name: 'turbo-refresh-method', content: content_for(:turbo_refresh_method) || 'replace' %>
 
-    <link rel='icon' href='/icon.png' type='image/png'>
-    <link rel='icon' href='/icon.svg' type='image/svg+xml'>
+    <%= tag.link rel: 'icon', type: 'image/png', href: Rails.env.development? ? '/hippo.png' : '/icon.png' %>
+    <%= tag.link rel: 'icon', type: 'image/svg+xml', href: Rails.env.development? ? '/hippo.svg' : '/icon.svg' %>
     <link rel='apple-touch-icon' href='/icon.png'>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>

@@ -1,23 +1,41 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">  <image id="image0" width="16" height="16" x="0" y="0"
-    xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAIGNIUk0AAHomAACAhAAA+gAAAIDo
-AAB1MAAA6mAAADqYAAAXcJy6UTwAAAHOUExURQAAADlIZUFOZzA6UUtgiFVwn1Zwn0thizE+VURS
-bTM/Vzc3N09eeGNtgCYmJlVVVUhcgUVWdiQkJEZbgEddghoiIlFrmFJsmiYqOTVDXzdIZSEmLy86
-TTZEYDdGYEhbgERYekldhFJqljZDXk1iixgYGFt3qmKCuy03SzdIZEhdg1JsmVt4q4CAgElcflht
-kklJSUFBQYeHh7GxsXx8fFhaXjxLaUJTdj5ARoODhrq9v36DiV1lc5acpmeHwm6S0m2Pzn6ImWOB
-t22PzWyPzWeIw4CMosPDxXWGpXOFp8LDxYKNom6S0WuNysbHyIeHh5GVnJidp3x8fM3NzmiJxWGA
-uKGmr22CqWyCqqClrneHpGODvEphi0JWfFx5riczSm2R0E1lkFl2qSk2TTFBXFBqlxIXIW6R0VZx
-omSEvmaHwmqLyGWGwFZyo1Fql22Q0Ft4rKarsl95qGuNy4CJm3yKpW6R0EVbgU1lkWd7oGiKxmJ9
-rF56rURagGSDvFVvnzpMbEVagFFsmll1qFJsm0ZcgzREYFFrmW2Qzlx6r1NsmmGAt1NunGSFvmqM
-yVdypHSFo2d8oWx+oGmArGODu1dvmnGDomd8onCCof///yhLOwAAAAA9dFJOUwCG6Xuq6eqteOiN
-Dv3+FAPk6QedpR7u9Ta62zZdgKefyJe+Z48V9f4zps7T9wTa+gdOyN/Wk2ZohNLfzmjj1AuYAAAA
-AWJLR0SZAdY2qAAAAAd0SU1FB+gLDQ4UMLGQEHAAAADySURBVBjTY2BgYGBkYmZhZWPn4ORiAANu
-Hls7eyBwcOTlAwvwCzjZO9vbu9i7CgpBlAjbu7l7eHp5+4hA+KJivn7+AYFBwSHiEmAByVB7j7Dw
-iMgo+2gpkB7pGHv72Dh7e9f4BPtEGaCAbJK9fXKKvX1qWrp9nBxQQD7DPj0zy94+PTvHPlcBKKCY
-l19QWGRvX1xSWlauBBRQdqmIrqwCOqy6prZOBSigqlbf0NjU3NzS2taurgGyVrPDp7OrO7Qno8xH
-C+wObaDy3u6+fiClowsS0JswcdLkpClTp02foW8AEjA0MjYxNTO3sLSytmFgAABTajuvIaQSrwAA
-ACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNC0xMS0xM1QxNDoyMDo0NyswMDowMAjhMwgAAAAldEVYdGRh
-dGU6bW9kaWZ5ADIwMjQtMTEtMTNUMTQ6MjA6NDcrMDA6MDB5vIu0AAAAKHRFWHRkYXRlOnRpbWVz
-dGFtcAAyMDI0LTExLTEzVDE0OjIwOjQ4KzAwOjAw2OHaggAAAABJRU5ErkJggg==" />
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="rosette" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #8c1515;
+      }
+
+      .cls-2 {
+        fill: #d2c295;
+      }
+
+      .cls-3 {
+        fill: #00505c;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M8,0C3.59,0,0,3.59,0,8s3.59,8,8,8,8-3.59,8-8S12.41,0,8,0ZM8,15.15c-3.95,0-7.14-3.2-7.14-7.14S4.05.86,8,.86s7.15,3.2,7.15,7.14-3.2,7.14-7.15,7.14h0Z"/>
+  <path class="cls-2" d="M15.42,8c0,4.1-3.32,7.42-7.42,7.42S.58,12.1.58,8,3.9.58,8,.58s7.42,3.32,7.42,7.42h0Z"/>
+  <path class="cls-1" d="M13.74,11.31c-.41-.53-.65-1.19-.65-1.87,0-.17.01-.35.05-.52,0,0,0,0,0,0,.15-.86.67-1.6,1.39-2.05-.83-.18-1.57-.69-2.01-1.46-.27-.47-.41-1-.41-1.52,0-.32.05-.63.15-.93-.75.39-1.64.47-2.47.17-.82-.3-1.46-.94-1.78-1.73-.32.79-.96,1.42-1.79,1.73-.82.3-1.72.22-2.46-.17.1.3.15.61.15.93,0,.53-.14,1.06-.41,1.54-.44.76-1.18,1.27-2.01,1.45.71.45,1.23,1.17,1.39,2.03,0,0,0,.06.01.06.03.17.04.33.04.5,0,.68-.23,1.34-.65,1.87.84-.12,1.71.12,2.38.68l.02.02s.02.01.02.02c.65.56,1.01,1.36,1.05,2.2.57-.63,1.39-1.01,2.27-1.01.88,0,1.69.38,2.26,1.01.03-.85.41-1.66,1.09-2.23.67-.56,1.54-.8,2.38-.68h0Z"/>
+  <path class="cls-2" d="M12.89,8c0,2.7-2.19,4.88-4.88,4.88s-4.88-2.19-4.88-4.88,2.19-4.88,4.88-4.88,4.88,2.19,4.88,4.88h0Z"/>
+  <g>
+    <path class="cls-3" d="M2.66,9.3s0-.07,0-.11c-.68.68-1.12,1.49-1.12,2.06,0,.09.02.18.04.26.64-.5,1.09-1.4,1.09-2.21h0ZM.71,6.88c.03.58.8,1.34,1.85,1.83-.25-.79-1.03-1.57-1.85-1.83ZM1.74,11.77c.41.43,1.49.53,2.57.25-.71-.46-1.79-.56-2.57-.25h0ZM3.15,5.49c-1.14.1-2.15.57-2.38,1.11.86.03,1.87-.44,2.38-1.11ZM3.59,3.99c0-.54-.14-1.09-.4-1.51-.15.2-.23.5-.23.87,0,.5.15,1.11.41,1.7.13-.32.22-.68.22-1.06ZM15.24,6.6c-.23-.54-1.23-1.01-2.38-1.11.51.67,1.51,1.15,2.38,1.11ZM5.91,2.93c-.91-.63-1.96-.9-2.48-.63.63.56,1.66.82,2.48.63ZM4.66,12.76c0,.96.28,1.81.71,2.1.03-.16.07-.33.07-.5,0-.72-.29-1.5-.75-2-.01.14-.03.27-.03.41h0ZM12.58,2.3c-.53-.27-1.57,0-2.48.63.82.19,1.86-.08,2.48-.63ZM11.7,12.03c1.08.28,2.16.18,2.57-.25-.78-.31-1.86-.21-2.57.25ZM13.35,9.3c0,.82.44,1.72,1.09,2.22.02-.08.04-.17.04-.26,0-.57-.44-1.38-1.12-2.07,0,.04,0,.07,0,.11h0ZM13.44,8.71c1.04-.48,1.82-1.25,1.85-1.83-.82.26-1.6,1.04-1.85,1.83ZM10.56,14.35c0,.18.03.34.07.51.43-.29.71-1.13.71-2.1,0-.13-.02-.27-.03-.41-.46.5-.75,1.27-.75,2ZM8.24,13.48c.65.94,1.53,1.55,2.11,1.48-.4-.77-1.28-1.38-2.11-1.48h0ZM6.37,2.77c.74-.38,1.37-1.29,1.49-2.15-.56.14-1.19,1.04-1.49,2.15ZM9.64,2.77c-.3-1.11-.93-2.01-1.49-2.15.12.86.75,1.77,1.49,2.15ZM5.65,14.96c.58.07,1.46-.54,2.11-1.48-.83.1-1.71.72-2.11,1.48h0ZM12.63,5.05c.27-.59.41-1.19.41-1.7,0-.37-.08-.67-.23-.87-.26.42-.4.96-.4,1.51,0,.38.08.74.22,1.06Z"/>
+    <g>
+      <path class="cls-3" d="M6.05,5.84c-.78-.23-1.56-.33-2.26-.31h0c.33.64.81,1.29,1.41,1.87l2.29.3-1.44-1.87h0Z"/>
+      <path class="cls-3" d="M5.12,7.6c-.75.33-1.41.75-1.93,1.22h0c.66.28,1.44.47,2.28.53l1.96-1.24-2.3-.5h0Z"/>
+      <path class="cls-3" d="M5.53,9.55c-.36.73-.6,1.49-.7,2.18,0,0,0,0,0,0,.68-.21,1.41-.57,2.09-1.07l.7-2.21-2.1,1.1h0Z"/>
+      <path class="cls-3" d="M10.88,7.39c.58-.56,1.05-1.18,1.37-1.78h0c-.72-.04-1.54.06-2.35.29l-1.39,1.81,2.37-.32h0Z"/>
+      <path class="cls-3" d="M9.81,5.69c.09-.8.05-1.58-.09-2.25h0c-.57.44-1.14,1.03-1.61,1.73l.1,2.28,1.6-1.76h0Z"/>
+      <path class="cls-3" d="M7.9,5.08c-.45-.67-.98-1.24-1.52-1.67h0c-.16.7-.21,1.51-.12,2.34l1.55,1.69.1-2.36h0Z"/>
+      <path class="cls-3" d="M12.81,8.9c-.53-.49-1.22-.95-2-1.29l-2.23.49,2.02,1.28c.8-.05,1.56-.23,2.2-.48h0s0,0,0,0Z"/>
+      <path class="cls-3" d="M9.1,10.73c.65.48,1.35.84,2.01,1.05h0c-.08-.64-.57-1.91-.72-2.28l-2.01-1.05.72,2.28Z"/>
+      <path class="cls-3" d="M7.1,10.78c.19.79.5,1.52.86,2.11h0c.39-.61.72-1.35.92-2.17l-.88-2.14-.9,2.2h0Z"/>
+    </g>
+  </g>
+  <g>
+    <path class="cls-1" d="M2.66,8c0,2.95,2.4,5.35,5.35,5.35s5.35-2.4,5.35-5.35-2.4-5.35-5.35-5.35-5.35,2.4-5.35,5.35ZM2.88,8c0-2.83,2.3-5.13,5.13-5.13s5.13,2.3,5.13,5.13-2.3,5.13-5.13,5.13-5.13-2.3-5.13-5.13h0Z"/>
+    <path class="cls-1" d="M9.11,8c0,.61-.49,1.1-1.1,1.1s-1.1-.49-1.1-1.1.49-1.1,1.1-1.1,1.1.49,1.1,1.1Z"/>
+  </g>
+  <path class="cls-2" d="M6.85,8c0,.64.52,1.16,1.16,1.16s1.16-.52,1.16-1.16-.52-1.16-1.16-1.16-1.16.52-1.16,1.16h0ZM6.96,8c0-.58.47-1.05,1.05-1.05s1.05.47,1.05,1.05-.47,1.05-1.05,1.05-1.05-.47-1.05-1.05h0Z"/>
 </svg>
