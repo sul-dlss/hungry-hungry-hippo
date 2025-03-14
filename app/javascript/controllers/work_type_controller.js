@@ -1,9 +1,11 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ['subtypeSection', 'workTypeRadio']
+  static targets = ['subtypeSection', 'workTypeRadio', 'workTypeHidden']
 
   connect () {
+    if (this.hasWorkTypeHiddenTarget) this.showSubtypes({ target: this.workTypeHiddenTarget })
+
     const checkedWorkTypeRadio = this.workTypeRadioTargets.find((radio) => radio.checked)
     if (checkedWorkTypeRadio) this.showSubtypes({ target: checkedWorkTypeRadio })
   }
