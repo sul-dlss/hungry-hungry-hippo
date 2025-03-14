@@ -173,12 +173,12 @@ en:
       Use this link for sharing the public page for your deposit. Links become active when the deposit is completed.
   publication_date:
     edit:
-      legend: 'Previous publication date'
+      legend: 'Previous publication date (optional)'
       tooltip_html: >-
         Use only for works that were previously published elsewhere, prior to their deposit in the SDR. Date entered must be in the past.
   related_links:
     edit:
-      legend: 'Related links'
+      legend: 'Related links (optional)'
       tooltip_html: >-
         This section is for links to other web pages that are related to your deposit and that are not included in the related works section above. Enter the text to be displayed on the page in the "Link text" box. This entire text will be hyperlinked to the URL you enter in the "URL" box. Examples of content you might consider linking to are lab, institute, or project pages; GitHub repositories for the current version of software code; or funder websites.
       fields:
@@ -264,7 +264,7 @@ en:
             tooltip_html: >-
               This is the name we retrieved from ORCID and that will be included in the detailed information about this deposit. Editing this name will change it for this deposit only and will not alter your ORCID record.
         create_date:
-          label: 'Creation date'
+          label: 'Creation date (optional, use for datasets)'
           tooltip_html: >-
             Use only for datasets to describe the date or date range when the dataset was collected, generated, or created.
         title:
@@ -307,8 +307,8 @@ en:
           tab_label: 'Access settings'
           label: 'Access settings'
         citation:
-          tab_label: 'Citation for this deposit (optional)'
-          label: 'Citation for this deposit (optional)'
+          tab_label: 'Citation for this deposit'
+          label: 'Citation for this deposit'
           help_text: >
             This is the text that others can use when they want to cite this deposit.
             We highly recommend that you provide the text of that citation here to make it
@@ -441,7 +441,7 @@ en:
             This section is for links to other web pages that are related to your collection. Enter the text to be displayed on the page in the "Link text" box. This entire text will be hyperlinked to the URL you enter in the "URL" box. Examples of content you might consider linking to are key funder websites,  lab or institute websites, or project pages.
         types:
           tab_label: 'Type of deposit (optional)'
-          label: 'Type of deposit (optional)'       
+          label: 'Type of deposit (optional)'
         access:
           tab_label: 'Access settings'
           label: 'Manage release of deposits for discovery and download'
