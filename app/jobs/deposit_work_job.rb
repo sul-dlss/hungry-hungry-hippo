@@ -59,7 +59,6 @@ class DepositWorkJob < ApplicationJob
     if !work_form.persisted?
       Sdr::Repository.register(cocina_object: mapped_cocina_object, assign_doi:)
     elsif RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
-
       Sdr::Repository.open_if_needed(cocina_object: mapped_cocina_object,
                                      version_description: work_form.whats_changing, status:)
                      .then do |cocina_object|

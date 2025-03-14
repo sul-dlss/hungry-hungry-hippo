@@ -45,7 +45,8 @@ module ToCollectionForm
         provided_custom_rights_statement: collection.provided_custom_rights_statement,
         custom_rights_statement_instructions: collection.custom_rights_statement_instructions,
         work_type: collection.work_type,
-        work_subtypes: collection.work_subtypes
+        work_subtypes: collection.work_subtypes,
+        deposits_contact_email: collection.deposits_contact_email
       }.merge(license_params)
     end
     # rubocop:enable Metrics/AbcSize

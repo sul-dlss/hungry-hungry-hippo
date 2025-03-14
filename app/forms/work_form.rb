@@ -31,6 +31,8 @@ class WorkForm < ApplicationForm
 
   attribute :version, :integer, default: 1
 
+  attribute :deposits_contact_email, :string
+
   attribute :title, :string
   validates :title, presence: true
 

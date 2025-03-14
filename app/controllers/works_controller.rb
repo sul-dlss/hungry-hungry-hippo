@@ -192,7 +192,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       agree_to_terms: current_user.agree_to_terms?,
       contact_emails_attributes: [{ email: current_user.email_address }],
       work_type: @collection.work_type,
-      work_subtypes: @collection.work_subtypes
+      work_subtypes: @collection.work_subtypes,
+      deposits_contact_email: @collection.deposits_contact_email
     )
   end
 
