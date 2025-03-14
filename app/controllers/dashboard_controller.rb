@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'benchmark'
+
 # Controller for the user dashboard
 class DashboardController < ApplicationController
   skip_verify_authorized only: :show
@@ -16,7 +18,12 @@ class DashboardController < ApplicationController
   def druid_to_status_map
     @druid_to_status_map ||= begin
       druids = current_user.your_works.where.not(druid: nil).pluck(:druid)
-      Sdr::Repository.statuses(druids:)
+      statuses = nil
+      time = Benchmark.realtime do
+        statuses = Sdr::Repository.statuses(druids:)
+      end
+      Rails.logger.info("FETCHED #{statuses.size} statuses in #{time.round(2)}s")
+      statuses
     end
   end
 
