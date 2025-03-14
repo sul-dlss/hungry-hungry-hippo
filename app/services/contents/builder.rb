@@ -46,7 +46,8 @@ module Contents
             md5_digest: digest_for(type: 'md5', file:),
             sha1_digest: digest_for(type: 'sha1', file:),
             content_id: content.id,
-            hide: !file.administrative.shelve
+            hide: !file.administrative.shelve,
+            updated_at:
           }
         end
       end
