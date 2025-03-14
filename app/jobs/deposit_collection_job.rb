@@ -55,6 +55,7 @@ class DepositCollectionJob < ApplicationJob
     assign_participants(:managers)
     assign_participants(:depositors)
     assign_participants(:reviewers)
+    assign_contributors
   end
 
   def perform_persist
@@ -104,5 +105,37 @@ class DepositCollectionJob < ApplicationJob
     return collection_form.license if collection_form.license_option == 'required'
 
     collection_form.default_license
+  end
+
+  def assign_contributors
+    collection.contributors.clear
+    collection_form.contributors.each do |contributor_form|
+      if contributor_form.person?(with_names: true)
+        assign_person(contributor_form:)
+      elsif contributor_form.organization?(with_names: true)
+        assign_organization(contributor_form:)
+      end
+    end
+  end
+
+  def assign_person(contributor_form:)
+    collection.contributors.create!(first_name: contributor_form.first_name,
+                                    last_name: contributor_form.last_name,
+                                    role: contributor_form.person_role,
+                                    role_type: 'person',
+                                    orcid: contributor_form.with_orcid ? contributor_form.orcid : nil,
+                                    cited: contributor_form.cited)
+  end
+
+  def assign_organization(contributor_form:)
+    collection.contributors.create!(organization_name: contributor_form.organization_name,
+                                    role: contributor_form.organization_role,
+                                    role_type: 'organization',
+                                    suborganization_name: suborganization_name_for(contributor_form:),
+                                    cited: contributor_form.cited)
+  end
+
+  def suborganization_name_for(contributor_form:)
+    contributor_form.stanford_degree_granting_institution ? contributor_form.suborganization_name : nil
   end
 end

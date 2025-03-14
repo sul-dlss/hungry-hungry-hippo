@@ -92,16 +92,20 @@ RSpec.describe 'Create a work deposit' do
       expect(page).to have_css('.h4', text: 'Contributors')
 
       # Enter two contributors
-      select('Creator', from: 'work_contributors_attributes_0_person_role')
+      select('Creator', from: 'Role')
       within('.orcid-section') do
         find('label', text: 'Enter name manually').click
       end
       fill_in('First name', with: 'Jane')
       fill_in('Last name', with: 'Stanford')
+
       click_link_or_button('Add another contributor')
-      find('label[for=work_contributors_attributes_1_role_type_organization]').click
-      select('Author', from: 'work_contributors_attributes_1_organization_role')
-      fill_in(id: 'work_contributors_attributes_1_organization_name', with: 'Stanford University')
+      form_instance = page.all('.form-instance').last
+      within(form_instance) do
+        find('label', text: 'Organization').click
+        select('Author', from: 'Role')
+        fill_in('Organization name', with: 'Stanford University')
+      end
 
       # Click Next to go to abstract tab
       click_link_or_button('Next')
@@ -242,6 +246,12 @@ RSpec.describe 'Create a work deposit' do
       expect(page).to have_css('.status', text: 'Depositing')
       expect(page).to have_css('.alert-success', text: 'You have successfully submitted your work')
       expect(page).to have_no_link('Edit or deposit')
+
+      # Contributors
+      within('#contributors-table') do
+        expect(page).to have_css('td', text: 'Jane Stanford')
+        expect(page).to have_css('td', text: 'Stanford University')
+      end
 
       # Has work types and subtypes
       expect(page).to have_text('Text')
