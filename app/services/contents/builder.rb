@@ -7,9 +7,10 @@ module Contents
       new(...).call
     end
 
-    def initialize(cocina_object:, user:)
+    def initialize(cocina_object:, user:, updated_at: nil)
       @cocina_object = cocina_object
       @user = user
+      @updated_at = updated_at
     end
 
     # @return [Content] the created content
@@ -25,7 +26,7 @@ module Contents
 
     private
 
-    attr_reader :cocina_object, :user
+    attr_reader :cocina_object, :user, :updated_at
 
     def content_file_params_for(content:) # rubocop:disable Metrics/AbcSize
       cocina_object.structural.contains.flat_map do |file_set|
@@ -45,7 +46,8 @@ module Contents
             md5_digest: digest_for(type: 'md5', file:),
             sha1_digest: digest_for(type: 'sha1', file:),
             content_id: content.id,
-            hide: !file.administrative.shelve
+            hide: !file.administrative.shelve,
+            updated_at:
           }
         end
       end
