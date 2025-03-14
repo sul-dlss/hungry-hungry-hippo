@@ -1,7 +1,7 @@
 <div data-controller="work-type">
   <div class="pane-section">
     <%= render Elements::Forms::FieldsetComponent.new(label: t('collections.edit.fields.work_type.label'), tooltip: t('collections.edit.fields.work_type.tooltip_html')) do %>
-    <%= tag.p class: 'form-text mb-3' do %><%= type_help_text %><% end %>
+    <p class="mb-3"><%= type_help_text %></p>
 
       <div class="types-container">
         <%= render Elements::Forms::InputCollectionRadioButtonsComponent.new(form:, field_name: :work_type, input_collection:, value_method: :value, input_data: { work_type_target: 'workTypeRadio', action: 'work-type#showSubtypes click->tooltips#hideAll' }) %>
@@ -10,28 +10,28 @@
   </div>
 
   <%# Text subtypes %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Text', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Text', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
 
   <%# Data subtypes %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Data', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Data', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
 
   <%# Software, multimedia subtypes %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Software/Code', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Software/Code', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
 
   <%# Image %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Image', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Image', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
 
   <%# Sound %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Sound', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Sound', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
 
   <%# Video %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Video', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Video', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
 
   <%# Music %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Music', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Music', more_options: true, label:, tooltip:, help_text: subtype_help_text) %>
 
   <%# Mixed materials %>
-  <%= render Works::Edit::WorkSubtypesComponent.new(form:, work_type: 'Mixed Materials', label:, tooltip:, help_text: subtype_help_text) %>
+  <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Mixed Materials', label:, tooltip:, help_text: subtype_help_text) %>
 
   <%# For bottom spacing %>
   <div class="pane-section"></div>
