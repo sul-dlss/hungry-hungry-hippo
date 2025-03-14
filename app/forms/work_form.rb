@@ -31,6 +31,11 @@ class WorkForm < ApplicationForm
 
   attribute :version, :integer, default: 1
 
+  attribute :works_contact_email, :string
+  validates :works_contact_email, format: {
+    with: URI::MailTo::EMAIL_REGEXP, allow_blank: true, message: I18n.t('contact_email.validation.email.invalid')
+  }
+
   attribute :title, :string
   validates :title, presence: true
 

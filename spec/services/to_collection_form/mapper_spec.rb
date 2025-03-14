@@ -14,6 +14,7 @@ RSpec.describe ToCollectionForm::Mapper, type: :mapping do
                         review_enabled:,
                         work_type: work_type_fixture,
                         work_subtypes: work_subtypes_fixture,
+                        works_contact_email: works_contact_email_fixture,
                         contributors:)
   end
   let(:manager) { create(:user, email_address: 'stepking@stanford.edu', name: 'Stephen King') }

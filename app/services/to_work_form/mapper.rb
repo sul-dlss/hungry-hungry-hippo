@@ -31,22 +31,31 @@ module ToWorkForm
         abstract: ToForm::NoteMapper.abstract(cocina_object:),
         citation:,
         auto_generate_citation: citation.blank?,
-        contact_emails_attributes: ToForm::ContactEmailsMapper.call(cocina_object:),
+        contact_emails_attributes: ToForm::ContactEmailsMapper.call(cocina_object:, works_contact_email:),
         related_works_attributes: ToWorkForm::RelatedWorksMapper.call(cocina_object:),
         related_links_attributes: ToForm::RelatedLinksMapper.call(cocina_object:),
         keywords_attributes: ToWorkForm::KeywordsMapper.call(cocina_object:),
         license:,
         access:,
         version: cocina_object.version,
-        collection_druid: Cocina::Parser.collection_druid_for(cocina_object:),
+        collection_druid:,
         publication_date_attributes: ToWorkForm::PublicationDateMapper.call(cocina_object:),
         custom_rights_statement:,
         doi_option:,
         agree_to_terms:,
+        works_contact_email:,
         whats_changing: version_description
       }.merge(ToWorkForm::WorkTypeMapper.call(cocina_object:))
         .merge(ToWorkForm::ReleaseDateMapper.call(cocina_object:))
         .merge(ToWorkForm::CreationDateMapper.call(cocina_object:))
+    end
+
+    def works_contact_email
+      Collection.find_by(druid: collection_druid)&.works_contact_email
+    end
+
+    def collection_druid
+      Cocina::Parser.collection_druid_for(cocina_object:)
     end
 
     def citation

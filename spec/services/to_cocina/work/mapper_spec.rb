@@ -85,4 +85,10 @@ RSpec.describe ToCocina::Work::Mapper, type: :mapping do
       expect(cocina_object.structural.contains[0].type).to eq 'https://cocina.sul.stanford.edu/models/resources/file'
     end
   end
+
+  context 'with a work in a collection declaring a required contact email' do
+    it 'includes the collection contact email in the work contact email mapping' do
+      expect(cocina_object.description.access.accessContact.last.value).to eq(works_contact_email_fixture)
+    end
+  end
 end

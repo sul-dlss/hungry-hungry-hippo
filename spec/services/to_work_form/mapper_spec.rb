@@ -11,6 +11,8 @@ RSpec.describe ToWorkForm::Mapper, type: :mapping do
   let(:cocina_object) { dro_with_metadata_fixture }
   let(:doi_assigned) { true }
 
+  before { create(:collection, :with_required_contact_email, druid: collection_druid_fixture) }
+
   it 'maps to work form' do
     expect(work_form).to equal_form(work_form_fixture)
   end
@@ -196,6 +198,13 @@ RSpec.describe ToWorkForm::Mapper, type: :mapping do
 
     it 'maps to work form with no doi_option' do
       expect(work_form.license).to eq('no-license')
+    end
+  end
+
+  context 'when collection declares a required contact email' do
+    it 'maps the value to its own form field, not the contact emails field' do
+      expect(work_form.contact_emails.map(&:email)).not_to include(works_contact_email_fixture)
+      expect(work_form.works_contact_email).to eq(works_contact_email_fixture)
     end
   end
 end
