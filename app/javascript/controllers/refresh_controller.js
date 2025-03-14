@@ -4,6 +4,6 @@ export default class extends Controller {
   connect () {
     setTimeout(() => {
       window.location.reload()
-    }, 750)
+    }, 1500)
   }
 }
