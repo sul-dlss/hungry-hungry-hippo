@@ -138,8 +138,8 @@ RSpec.describe 'Edit a work' do
     fill_in('work_keywords_attributes_1_text', with: updated_keywords.first)
 
     # Filling in citation
-    find('.nav-link', text: 'Citation for this deposit (optional)').click
-    expect(page).to have_text('Citation for this deposit (optional)')
+    find('.nav-link', text: 'Citation for this deposit').click
+    expect(page).to have_text('Citation for this deposit')
     expect(page).to have_field('Select citation', disabled: false)
     expect(page).to have_field('Select citation', with: citation_fixture)
 
