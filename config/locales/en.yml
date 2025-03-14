@@ -389,10 +389,12 @@ en:
             depositor_selects: 'Depositor selects -- default for all deposits will be that everyone can download the files, but Depositor can choose to restrict file download for their deposit to the Stanford community.'
         work_type:
           label: 'Select a work type for deposits in this collection'
+          help_text: 'You can designate a required type of work that will be associated with every deposit to this collection. Depositors will not be able to change this or add other types.'
           tooltip_html: >-
             Choose the one content type that best describes the overall or primary nature of each of the works to be deposited in this collection. Click on each content type to view additional terms you may also select that will also be applied to each of the works in this collection. Depositors will not be able to change this term.
         work_subtypes:
           label: 'Select which subtypes will be applied to each deposit'
+          help_text: 'You can also designate required subtypes that will be associated with every deposit to this collection. Depositors will not be able to remove this subtype, but will be able to add more subtypes.'
           tooltip_html: >-
             You have the option, but are not required, to choose terms from this list to further describe the works that are deposited in this collection. Click "See more options" for additional terms. Depositors will be able to add more of these terms, but will not be able to remove the terms you select.
         doi_option:
