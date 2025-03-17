@@ -14,7 +14,7 @@ module Edit
       def call
         tag.div(
           class: classes,
-          id: "#{tab_name}-tab",
+          id:,
           data: {
             bs_toggle: 'tab',
             bs_target: "##{pane_id}",
@@ -23,7 +23,8 @@ module Edit
           },
           type: 'button',
           'aria-controls': pane_id,
-          'aria-selected': selected?
+          'aria-selected': selected?,
+          'aria-labelledby': id
         ) do
           label
         end
