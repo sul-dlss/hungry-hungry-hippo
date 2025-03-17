@@ -456,6 +456,7 @@ en:
         related_links:
           tab_label: 'Related links (optional)'
           label: 'Links to related content (optional)'
+          help_text: 'Links entered here will appear on the page for your collection. They will not appear on individual deposit items.'
           tooltip_html: >-
             This section is for links to other web pages that are related to your collection. Enter the text to be displayed on the page in the "Link text" box. This entire text will be hyperlinked to the URL you enter in the "URL" box. Examples of content you might consider linking to are key funder websites,  lab or institute websites, or project pages.
         types:
