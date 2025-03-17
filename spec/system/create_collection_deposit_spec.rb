@@ -73,6 +73,11 @@ RSpec.describe 'Create a collection deposit' do
     fill_in('collection_description', with: collection_description_fixture)
     expect(page).to have_field('Contact email', with: user.email_address)
 
+    # Clicking on Next to go to works contact email tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Contact email for deposits (optional)')
+    expect(page).to have_text('Add contact email for all deposits (optional)')
+
     # Clicking on Next to go to related content tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Related links (optional)')

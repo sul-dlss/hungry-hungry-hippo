@@ -188,7 +188,8 @@ CREATE TABLE public.collections (
     deposit_state character varying DEFAULT 'deposit_not_in_progress'::character varying NOT NULL,
     version integer DEFAULT 1 NOT NULL,
     work_type character varying,
-    work_subtypes character varying[] DEFAULT '{}'::character varying[]
+    work_subtypes character varying[] DEFAULT '{}'::character varying[],
+    works_contact_email character varying
 );
 
 
@@ -784,6 +785,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250313174420'),
 ('20250313120842'),
 ('20250310201020'),
 ('20250226213052'),
@@ -814,4 +816,3 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241115001126'),
 ('20241111223829'),
 ('20241106143736');
-

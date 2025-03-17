@@ -62,5 +62,9 @@ FactoryBot.define do
       work_type { 'Image' }
       work_subtypes { %w[CAD Map] }
     end
+
+    trait :with_required_contact_email do
+      works_contact_email { 'collection.manager@stanford.example.edu' }
+    end
   end
 end

@@ -195,7 +195,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       agree_to_terms: current_user.agree_to_terms?,
       contact_emails_attributes: [{ email: current_user.email_address }],
       work_type: @collection.work_type,
-      work_subtypes: @collection.work_subtypes
+      work_subtypes: @collection.work_subtypes,
+      works_contact_email: @collection.works_contact_email
     ).tap do |work_form|
       if @collection.contributors.present?
         work_form.contributors_attributes = @collection.contributors.map do |contributor|

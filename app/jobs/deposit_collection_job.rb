@@ -50,7 +50,8 @@ class DepositCollectionJob < ApplicationJob
                        email_when_participants_changed: collection_form.email_when_participants_changed,
                        email_depositors_status_changed: collection_form.email_depositors_status_changed,
                        work_type: collection_form.work_type,
-                       work_subtypes: collection_form.work_subtypes)
+                       work_subtypes: collection_form.work_subtypes,
+                       works_contact_email: collection_form.works_contact_email)
 
     assign_participants(:managers)
     assign_participants(:depositors)

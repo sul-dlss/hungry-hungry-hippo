@@ -123,7 +123,7 @@ RSpec.describe DepositCollectionJob do
       expect(collection.review_enabled).to be false
       expect(collection.work_type).to eq(work_type_fixture)
       expect(collection.work_subtypes).to eq(work_subtypes_fixture)
-
+      expect(collection.works_contact_email).to eq(works_contact_email_fixture)
       expect(collection.deposit_not_in_progress?).to be false
     end
   end

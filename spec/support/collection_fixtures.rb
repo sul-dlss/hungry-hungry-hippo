@@ -66,3 +66,7 @@ end
 def collection_license_fixture
   'https://creativecommons.org/licenses/by/4.0/legalcode'
 end
+
+def works_contact_email_fixture
+  'collection.manager@stanford.example.edu'
+end

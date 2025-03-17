@@ -3,7 +3,7 @@
 # Fixtures for mappings.
 # Not using FactoryBot because we want these fixtures to be consistent across tests.
 module WorkMappingFixtures
-  def new_work_form_fixture
+  def new_work_form_fixture # rubocop:disable Metrics/AbcSize
     WorkForm.new(
       title: title_fixture,
       contributors_attributes: contributors_fixture,
@@ -28,7 +28,8 @@ module WorkMappingFixtures
       create_date_range_from_attributes: creation_date_range_from_fixture,
       create_date_range_to_attributes: creation_date_range_to_fixture,
       create_date_type: 'range',
-      whats_changing: 'Initial version'
+      whats_changing: 'Initial version',
+      works_contact_email: works_contact_email_fixture
     )
   end
 
@@ -116,7 +117,9 @@ module WorkMappingFixtures
           relatedResource: CocinaGenerators::Description.related_works(related_works: related_works_fixture) +
                            CocinaGenerators::Description.related_links(related_links: related_links_fixture),
           access: {
-            accessContact: CocinaGenerators::Description.contact_emails(contact_emails: contact_emails_fixture)
+            accessContact: CocinaGenerators::Description.contact_emails(
+              contact_emails: contact_emails_fixture.append(ContactEmailForm.new(email: works_contact_email_fixture))
+            )
           },
           form: form_fixture
         },
@@ -261,7 +264,9 @@ module WorkMappingFixtures
           relatedResource: CocinaGenerators::Description.related_works(related_works: related_works_fixture) +
                            CocinaGenerators::Description.related_links(related_links: related_links_fixture),
           access: {
-            accessContact: CocinaGenerators::Description.contact_emails(contact_emails: contact_emails_fixture)
+            accessContact: CocinaGenerators::Description.contact_emails(
+              contact_emails: contact_emails_fixture.append(ContactEmailForm.new(email: works_contact_email_fixture))
+            )
           },
           form: form_fixture,
           purl: Sdr::Purl.from_druid(druid: druid_fixture)

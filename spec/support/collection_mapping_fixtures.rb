@@ -23,6 +23,7 @@ module CollectionMappingFixtures
       depositors_attributes: collection_depositor_fixture,
       work_type: work_type_fixture,
       work_subtypes: work_subtypes_fixture,
+      works_contact_email: works_contact_email_fixture,
       contributors_attributes: contributors_fixture
     )
   end

@@ -36,7 +36,8 @@ RSpec.describe WorkFormSerializer do
       'create_date_range_from_attributes' => creation_date_range_from_fixture,
       'create_date_range_to_attributes' => creation_date_range_to_fixture,
       'create_date_type' => 'single',
-      'whats_changing' => whats_changing_fixture
+      'whats_changing' => whats_changing_fixture,
+      'works_contact_email' => nil
     }
   end
   let(:work_form) do

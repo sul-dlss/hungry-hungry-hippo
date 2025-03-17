@@ -62,7 +62,14 @@ module ToCocina
       end
 
       def access_contact_params
-        CocinaGenerators::Description.contact_emails(contact_emails: work_form.contact_emails_attributes)
+        CocinaGenerators::Description.contact_emails(
+          # Use `#dup` because mutating the passed-in form object would be unexpected
+          contact_emails: work_form.contact_emails_attributes.dup.tap do |contact_emails_attributes|
+            next if work_form.works_contact_email.blank?
+
+            contact_emails_attributes << ContactEmailForm.new(email: work_form.works_contact_email)
+          end
+        )
       end
     end
   end

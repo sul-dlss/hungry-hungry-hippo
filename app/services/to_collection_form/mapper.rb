@@ -46,6 +46,7 @@ module ToCollectionForm
         custom_rights_statement_instructions: collection.custom_rights_statement_instructions,
         work_type: collection.work_type,
         work_subtypes: collection.work_subtypes,
+        works_contact_email: collection.works_contact_email,
         contributors_attributes:
       }.merge(license_params)
     end
