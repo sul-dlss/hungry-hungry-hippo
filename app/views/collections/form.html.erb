@@ -35,7 +35,7 @@
     <% form_with(model: @collection_form) do |form| %>
       <% component.with_collection_pane(tab_name: :details, label: t('collections.edit.panes.details.label'), active_tab_name:, collection_presenter: @collection_presenter) do %>
         <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: t('collections.edit.fields.title.label'), tooltip: t('collections.edit.fields.title.tooltip_html'), container_classes: 'pane-section', required: true) %>
-        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: t('collections.edit.fields.description.label'), tooltip: t('collections.edit.fields.description.tooltip_html'), container_classes: 'pane-section') %>
+        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: t('collections.edit.fields.description.label'), tooltip: t('collections.edit.fields.description.tooltip_html'), container_classes: 'pane-section', required: true) %>
         <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: Collections::Edit::ContactEmailsComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
       <% end %>
 
