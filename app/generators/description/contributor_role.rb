@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module CocinaGenerators
+module Generators
   class Description
     # Generates contributor role
     class ContributorRole # rubocop:disable Metrics/ClassLength

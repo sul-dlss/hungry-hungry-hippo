@@ -34,14 +34,14 @@ module ToCocina
 
         return if date.nil?
 
-        CocinaGenerators::Description.event(type: 'creation', date:)
+        Generators::Description.event(type: 'creation', date:)
       end
 
       def publication_date_event_params
         date = publication_date.to_s
         return if date.nil?
 
-        CocinaGenerators::Description.event(type: 'publication', primary: true, date:)
+        Generators::Description.event(type: 'publication', primary: true, date:)
       end
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module CocinaGenerators
+module Generators
   class Description
     # Generates the Cocina parameters for a keywords.
     class Keywords

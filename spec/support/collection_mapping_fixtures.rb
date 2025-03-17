@@ -42,11 +42,11 @@ module CollectionMappingFixtures
         type: Cocina::Models::ObjectType.collection,
         label: collection_title_fixture,
         description: {
-          title: CocinaGenerators::Description.title(title: collection_title_fixture),
-          note: [CocinaGenerators::Description.note(type: 'abstract', value: collection_description_fixture)],
-          relatedResource: CocinaGenerators::Description.related_links(related_links: related_links_fixture),
+          title: Generators::Description.title(title: collection_title_fixture),
+          note: [Generators::Description.note(type: 'abstract', value: collection_description_fixture)],
+          relatedResource: Generators::Description.related_links(related_links: related_links_fixture),
           access: {
-            accessContact: CocinaGenerators::Description.contact_emails(contact_emails: contact_emails_fixture)
+            accessContact: Generators::Description.contact_emails(contact_emails: contact_emails_fixture)
           }
         },
         version: 1,
@@ -64,11 +64,11 @@ module CollectionMappingFixtures
         type: Cocina::Models::ObjectType.collection,
         label: collection_title_fixture,
         description: {
-          title: CocinaGenerators::Description.title(title: collection_title_fixture),
-          note: [CocinaGenerators::Description.note(type: 'abstract', value: collection_description_fixture)],
-          relatedResource: CocinaGenerators::Description.related_links(related_links: related_links_fixture),
+          title: Generators::Description.title(title: collection_title_fixture),
+          note: [Generators::Description.note(type: 'abstract', value: collection_description_fixture)],
+          relatedResource: Generators::Description.related_links(related_links: related_links_fixture),
           access: {
-            accessContact: CocinaGenerators::Description.contact_emails(contact_emails: contact_emails_fixture)
+            accessContact: Generators::Description.contact_emails(contact_emails: contact_emails_fixture)
           },
           purl: Sdr::Purl.from_druid(druid: collection_druid_fixture)
         },

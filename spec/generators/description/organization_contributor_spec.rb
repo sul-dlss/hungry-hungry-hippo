@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CocinaGenerators::Description::OrganizationContributor do
+RSpec.describe Generators::Description::OrganizationContributor do
   context 'with conference role' do
     subject(:cocina_params) { described_class.call(name: 'RailsConf', role: 'conference') }
 

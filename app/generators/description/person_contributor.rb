@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module CocinaGenerators
+module Generators
   class Description
     # Generates the Cocina contributor parameters for a person
     class PersonContributor

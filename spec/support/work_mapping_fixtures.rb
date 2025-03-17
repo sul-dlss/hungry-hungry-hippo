@@ -101,23 +101,23 @@ module WorkMappingFixtures
         type: Cocina::Models::ObjectType.object,
         label: title_fixture,
         description: {
-          title: CocinaGenerators::Description.title(title: title_fixture),
-          subject: CocinaGenerators::Description.keywords(keywords: keywords_fixture),
-          contributor: [CocinaGenerators::Description.person_contributor(**person_contributor_fixture),
-                        CocinaGenerators::Description.organization_contributor(**organization_contributor_fixture),
-                        CocinaGenerators::Description.organization_contributor(**degree_granting_contributor_fixture)],
+          title: Generators::Description.title(title: title_fixture),
+          subject: Generators::Description.keywords(keywords: keywords_fixture),
+          contributor: [Generators::Description.person_contributor(**person_contributor_fixture),
+                        Generators::Description.organization_contributor(**organization_contributor_fixture),
+                        Generators::Description.organization_contributor(**degree_granting_contributor_fixture)],
           event: [
-            CocinaGenerators::Description.event(type: 'creation', date: '2021-03-07/2022-04~'),
-            CocinaGenerators::Description.event(type: 'publication', date: '2024-12', primary: true)
+            Generators::Description.event(type: 'creation', date: '2021-03-07/2022-04~'),
+            Generators::Description.event(type: 'publication', date: '2024-12', primary: true)
           ],
-          note: [CocinaGenerators::Description.note(type: 'abstract', value: abstract_fixture),
-                 CocinaGenerators::Description.note(type: 'preferred citation',
-                                                    value: citation_fixture,
-                                                    label: 'Preferred Citation')],
-          relatedResource: CocinaGenerators::Description.related_works(related_works: related_works_fixture) +
-                           CocinaGenerators::Description.related_links(related_links: related_links_fixture),
+          note: [Generators::Description.note(type: 'abstract', value: abstract_fixture),
+                 Generators::Description.note(type: 'preferred citation',
+                                              value: citation_fixture,
+                                              label: 'Preferred Citation')],
+          relatedResource: Generators::Description.related_works(related_works: related_works_fixture) +
+                           Generators::Description.related_links(related_links: related_links_fixture),
           access: {
-            accessContact: CocinaGenerators::Description.contact_emails(
+            accessContact: Generators::Description.contact_emails(
               contact_emails: contact_emails_fixture.append(ContactEmailForm.new(email: works_contact_email_fixture))
             )
           },
@@ -248,23 +248,23 @@ module WorkMappingFixtures
         type: Cocina::Models::ObjectType.object,
         label: title_fixture,
         description: {
-          title: CocinaGenerators::Description.title(title: title_fixture),
-          subject: CocinaGenerators::Description.keywords(keywords: keywords_fixture),
-          contributor: [CocinaGenerators::Description.person_contributor(**person_contributor_fixture),
-                        CocinaGenerators::Description.organization_contributor(**organization_contributor_fixture),
-                        CocinaGenerators::Description.organization_contributor(**degree_granting_contributor_fixture)],
+          title: Generators::Description.title(title: title_fixture),
+          subject: Generators::Description.keywords(keywords: keywords_fixture),
+          contributor: [Generators::Description.person_contributor(**person_contributor_fixture),
+                        Generators::Description.organization_contributor(**organization_contributor_fixture),
+                        Generators::Description.organization_contributor(**degree_granting_contributor_fixture)],
           event: [
-            CocinaGenerators::Description.event(type: 'creation', date: '2021-03-07/2022-04~'),
-            CocinaGenerators::Description.event(type: 'publication', date: '2024-12', primary: true)
+            Generators::Description.event(type: 'creation', date: '2021-03-07/2022-04~'),
+            Generators::Description.event(type: 'publication', date: '2024-12', primary: true)
           ],
-          note: [CocinaGenerators::Description.note(type: 'abstract', value: abstract_fixture),
-                 CocinaGenerators::Description.note(type: 'preferred citation',
-                                                    value: citation_fixture,
-                                                    label: 'Preferred Citation')],
-          relatedResource: CocinaGenerators::Description.related_works(related_works: related_works_fixture) +
-                           CocinaGenerators::Description.related_links(related_links: related_links_fixture),
+          note: [Generators::Description.note(type: 'abstract', value: abstract_fixture),
+                 Generators::Description.note(type: 'preferred citation',
+                                              value: citation_fixture,
+                                              label: 'Preferred Citation')],
+          relatedResource: Generators::Description.related_works(related_works: related_works_fixture) +
+                           Generators::Description.related_links(related_links: related_links_fixture),
           access: {
-            accessContact: CocinaGenerators::Description.contact_emails(
+            accessContact: Generators::Description.contact_emails(
               contact_emails: contact_emails_fixture.append(ContactEmailForm.new(email: works_contact_email_fixture))
             )
           },

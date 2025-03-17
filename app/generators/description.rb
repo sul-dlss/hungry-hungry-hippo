@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module CocinaGenerators
+module Generators
   # Generates Cocina Description
   class Description
     def self.person_contributor(...)

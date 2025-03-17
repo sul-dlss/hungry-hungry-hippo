@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CocinaGenerators::Description::PersonContributor do
+RSpec.describe Generators::Description::PersonContributor do
   subject(:contributor_params) do
     described_class.call(forename: 'Leland', surname: 'Stanford', role: 'funder', orcid:, cited:)
   end

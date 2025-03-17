@@ -24,7 +24,7 @@ RSpec.describe ToWorkForm::CreationDateMapper do
 
   context 'when event date is EDTF with year only' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'creation', date: '2021')
+      Generators::Description.event(type: 'creation', date: '2021')
     end
 
     it 'returns the event date' do
@@ -38,7 +38,7 @@ RSpec.describe ToWorkForm::CreationDateMapper do
 
   context 'when event date is EDTF with year and month only' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'creation', date: '2021-03')
+      Generators::Description.event(type: 'creation', date: '2021-03')
     end
 
     it 'returns the event date' do
@@ -53,7 +53,7 @@ RSpec.describe ToWorkForm::CreationDateMapper do
 
   context 'when event date is approximate EDTF' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'creation', date: '2021-03~')
+      Generators::Description.event(type: 'creation', date: '2021-03~')
     end
 
     it 'returns the event date' do
@@ -68,7 +68,7 @@ RSpec.describe ToWorkForm::CreationDateMapper do
 
   context 'when event date is EDTF interval' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'creation', date: '2021-03~/2021-04-21')
+      Generators::Description.event(type: 'creation', date: '2021-03~/2021-04-21')
     end
 
     it 'returns the event date' do
@@ -89,7 +89,7 @@ RSpec.describe ToWorkForm::CreationDateMapper do
 
   context 'when event date is EDTF interval with both dates approximate' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'creation', date: '2021-03~/2021-04~')
+      Generators::Description.event(type: 'creation', date: '2021-03~/2021-04~')
     end
 
     it 'returns the event date' do
@@ -109,7 +109,7 @@ RSpec.describe ToWorkForm::CreationDateMapper do
 
   context 'when event date is EDTF' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'creation', date: '2021-03-05')
+      Generators::Description.event(type: 'creation', date: '2021-03-05')
     end
 
     it 'returns the event date' do
@@ -125,7 +125,7 @@ RSpec.describe ToWorkForm::CreationDateMapper do
 
   context 'when event date is not EDTF' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'creation', date: '2021-03-05', date_encoding_code: 'iso8601')
+      Generators::Description.event(type: 'creation', date: '2021-03-05', date_encoding_code: 'iso8601')
     end
 
     it 'returns nil' do
@@ -135,7 +135,7 @@ RSpec.describe ToWorkForm::CreationDateMapper do
 
   context 'when event date is not correct type' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'deposit', date: '2021-03-05')
+      Generators::Description.event(type: 'deposit', date: '2021-03-05')
     end
 
     it 'returns nil' do
