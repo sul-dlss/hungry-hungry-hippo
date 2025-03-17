@@ -17,16 +17,12 @@ module Elements
         super()
       end
 
-      attr_reader :field_name, :form, :tooltip
+      attr_reader :field_name, :form, :tooltip, :required
 
       def label_text
         return field_name if @label_text.blank?
 
-        "#{@label_text} #{required_indicator}"
-      end
-
-      def required_indicator
-        '*' if @required
+        @label_text
       end
 
       def classes
