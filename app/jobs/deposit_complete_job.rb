@@ -43,9 +43,9 @@ class DepositCompleteJob
 
   def sync(object:)
     if object.is_a? Work
-      ModelSync::Work.call(work: object, cocina_object:, raise: false)
+      Synchronizers::Work.call(work: object, cocina_object:, raise: false)
     else
-      ModelSync::Collection.call(collection: object, cocina_object:)
+      Synchronizers::Collection.call(collection: object, cocina_object:)
     end
   end
 

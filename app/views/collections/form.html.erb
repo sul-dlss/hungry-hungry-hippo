@@ -51,7 +51,7 @@
         <%= render Collections::Edit::WorkTypeComponent.new(form:) %>
       <% end %>
 
-      <% component.with_collection_pane(tab_name: :contributors, label: t('collections.edit.panes.contributors.label'), help_text: t('collections.edit.panes.contributors.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do %>
+      <% component.with_collection_pane(tab_name: :contributors, label: t('collections.edit.panes.contributors.label'), help_text: t('collections.edit.panes.contributors.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do %>b
         <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Edit::ContributorComponent, hidden_label: true, fieldset_classes: 'pane-section') %>
       <% end %>
 
@@ -78,9 +78,9 @@
       <% end %>
 
       <% component.with_collection_pane(tab_name: :participants, label: t('collections.edit.panes.participants.label'), help_text: t('collections.edit.panes.participants.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do %>
-        <%= render Collections::Edit::ParticipantNotificationsComponent.new(form:) %>
         <%= render Collections::Edit::BulkParticipantsComponent.new(form:, field_name: :managers, model_class: ManagerForm) %>
         <%= render Collections::Edit::BulkParticipantsComponent.new(form:, field_name: :depositors, model_class: DepositorForm) %>
+        <%= render Collections::Edit::ParticipantNotificationsComponent.new(form:) %>
       <% end %>
 
       <% component.with_collection_pane(tab_name: :workflow, label: t('collections.edit.panes.workflow.label'), help_text: t('collections.edit.panes.workflow.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do %>

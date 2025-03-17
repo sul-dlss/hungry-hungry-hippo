@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ModelSync
+module Synchronizers
   # Updates a Work model object based on a DRO
   #
   # Syncing should be performed whenever the DRO is retrieved (since it may have been updated externally from H3)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ModelSync
+module Synchronizers
   # Updates a Collection model object based on a Cocina Collection
   #
   # Syncing should be performed whenever the Collection is retrieved (since it may have been updated externally from H3)

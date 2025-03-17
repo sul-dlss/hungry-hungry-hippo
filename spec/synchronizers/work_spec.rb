@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ModelSync::Work do
+RSpec.describe Synchronizers::Work do
   let(:druid) { druid_fixture }
   let(:collection) { create(:collection, :with_druid) }
   let(:new_collection) { create(:collection, :with_druid) }
@@ -28,7 +28,7 @@ RSpec.describe ModelSync::Work do
 
     it 'raises an error' do
       expect { described_class.call(work:, cocina_object:) }
-        .to raise_error(ModelSync::Work::Error)
+        .to raise_error(Synchronizers::Work::Error)
     end
   end
 
