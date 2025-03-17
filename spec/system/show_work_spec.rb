@@ -182,7 +182,7 @@ RSpec.describe 'Show a work' do
 
       # Contributors table
       within('table#contributors-table') do
-        expect(page).to have_css('caption', text: 'Contributors')
+        expect(page).to have_css('caption', text: 'Authors / Contributors')
         expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'contributors'))
         expect(page).to have_css('th', text: 'Contributor')
         expect(page).to have_css('th', text: 'ORCID')
