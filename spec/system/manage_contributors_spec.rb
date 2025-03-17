@@ -68,8 +68,8 @@ RSpec.describe 'Manage contributors for a work deposit' do
       fill_in('Contact email', with: contact_emails_fixture.first['email'])
 
       # Go to contributors tab
-      find('.nav-link', text: 'Contributors').click
-      expect(page).to have_css('.h4', text: 'Contributors')
+      find('.nav-link', text: 'Authors / Contributors').click
+      expect(page).to have_css('.h4', text: 'Authors / Contributors')
 
       # There is a single contributor form
       form_instances = all('.form-instance')
@@ -261,15 +261,15 @@ RSpec.describe 'Manage contributors for a work deposit' do
       expect(page).to have_css('h1', text: 'Untitled deposit')
 
       # Go to contributors tab
-      find('.nav-link', text: 'Contributors').click
-      expect(page).to have_css('.h4', text: 'Contributors')
+      find('.nav-link', text: 'Authors / Contributors').click
+      expect(page).to have_css('.h4', text: 'Authors / Contributors')
 
       # There is a single contributor form
       form_instances = all('.form-instance')
       expect(form_instances.count).to eq(2)
 
       within(form_instances[0]) do
-        expect(page).to have_text('Collection manager has entered this contributor')
+        expect(page).to have_text('Collection manager has entered this author / contributor')
         expect(page).to have_no_button('Clear')
         expect(page).to have_css('dd', text: 'Yes')
         expect(page).to have_css('dd', text: 'Individual')
@@ -279,7 +279,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
       end
 
       within(form_instances[1]) do
-        expect(page).to have_text('Collection manager has entered this contributor')
+        expect(page).to have_text('Collection manager has entered this author / contributor')
         expect(page).to have_no_button('Clear')
         expect(page).to have_css('dd', text: 'Yes')
         expect(page).to have_css('dd', text: 'Organization')
@@ -305,25 +305,25 @@ RSpec.describe 'Manage contributors for a work deposit' do
       expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
       # Go to contributors tab
-      find('.nav-link', text: 'Contributors').click
-      expect(page).to have_css('.h4', text: 'Contributors')
+      find('.nav-link', text: 'Authors / Contributors').click
+      expect(page).to have_css('.h4', text: 'Authors / Contributors')
 
       # There is a single contributor form
       form_instances = all('.form-instance')
       expect(form_instances.count).to eq(3)
 
       within(form_instances[0]) do
-        expect(page).to have_text('Collection manager has entered this contributor')
+        expect(page).to have_text('Collection manager has entered this author / contributor')
         expect(page).to have_css('dd', text: "#{required_person.first_name} #{required_person.last_name}")
       end
 
       within(form_instances[1]) do
-        expect(page).to have_text('Collection manager has entered this contributor')
+        expect(page).to have_text('Collection manager has entered this author / contributor')
         expect(page).to have_css('dd', text: required_organization.organization_name.to_s)
       end
 
       within(form_instances[2]) do
-        expect(page).to have_no_text('Collection manager has entered this contributor')
+        expect(page).to have_no_text('Collection manager has entered this author / contributor')
         expect(page).to have_field('First name', with: 'Jane')
       end
 

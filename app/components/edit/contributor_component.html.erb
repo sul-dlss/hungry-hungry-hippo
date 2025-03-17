@@ -12,15 +12,15 @@
   <%= form.hidden_field :cited %>
   <%= form.hidden_field :collection_required %>
 
-  <div class="fw-bold">Collection manager has entered this contributor</div>
-  <p>You cannot edit this contributor, but you can add more contributors by clicking the button below.</p>
+  <div class="fw-bold">Collection manager has entered this author / contributor</div>
+  <p>You cannot edit this author / contributor, but you can add more authors / contributors by clicking the button below.</p>
 
   <dl class="mt-4">
-    <dt>Include contributor in citation</dt>
+    <dt>Include author / contributor in citation</dt>
     <dd><%= helpers.human_boolean(cited) %></dd>
 
     <% if person? %>
-      <dt>Contributor type</dt>
+      <dt>Author / contributor type</dt>
       <dd>Individual</dd>
 
       <dt>Role</dt>
@@ -32,7 +32,7 @@
         <% if with_orcid %><br><%= orcid %><% end %>
       </dd>
     <% else %>
-      <dt>Contributor type</dt>
+      <dt>Author / Contributor type</dt>
       <dd>Organization</dd>
 
       <dt>Role</dt>
@@ -48,7 +48,7 @@
 <% else %>
   <%= tag.div data: contributors_data do %>
     <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :role_type, label_classes: 'fw-bold',
-                                                    label: 'Role type', container_classes: 'mb-4') do |component| %>
+                                                    label: 'Author / Contributor type', container_classes: 'mb-4') do |component| %>
       <% component.with_left_toggle_option(form:,
                                            field_name: :role_type,
                                            label: 'Individual',
