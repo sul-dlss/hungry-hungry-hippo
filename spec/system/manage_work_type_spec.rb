@@ -138,6 +138,7 @@ RSpec.describe 'Edit work type and subtypes for a work' do
       find('.nav-link', text: 'Type of deposit').click
       expect(page).to have_text('What type of content are you depositing?')
       expect(page).to have_text('The collection manager has selected "Image" as the type for all deposits.')
+      expect(page).to have_text('The collection manager has selected "CAD" and "Map" as the subtypes')
       expect(page).to have_no_field('Text', type: :radio)
       expect(page).to have_no_field('Image', type: :radio)
       expect(page).to have_field('work[work_type]', type: :hidden, with: 'Image')

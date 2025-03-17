@@ -56,6 +56,18 @@ module Works
       def fieldset_aria
         Elements::Forms::InvalidFeedbackSupport.arias_for(form:, field_name: error_field_name)
       end
+
+      def disabled_params
+        { disabled_values: required_subtypes, disabled_checkbox_classes: 'opacity-100 bg-dark',
+          disabled_label_classes: 'opacity-100' }
+      end
+
+      def required_subtype_text
+        required_subtype_labels = required_subtypes.map { |subtype| "\"#{subtype}\"" }
+        "The collection manager has selected #{required_subtype_labels.to_sentence} as the " \
+          "#{'subtype'.pluralize(required_subtypes.count)} for all deposits in this collection. You may select " \
+          'additional subtypes below.'
+      end
     end
   end
 end
