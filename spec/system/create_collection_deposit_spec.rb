@@ -90,6 +90,24 @@ RSpec.describe 'Create a collection deposit' do
     check('Capstone')
     check('Thesis')
 
+    # Clicking on Next to go to the contributors tab
+    click_link_or_button('Next')
+    # Enter two contributors
+    select('Creator', from: 'Role')
+    within('.orcid-section') do
+      find('label', text: 'Enter name manually').click
+    end
+    fill_in('First name', with: 'Jane')
+    fill_in('Last name', with: 'Stanford')
+
+    click_link_or_button('Add another contributor')
+    form_instance = page.all('.form-instance').last
+    within(form_instance) do
+      find('label', text: 'Organization').click
+      select('Author', from: 'Role')
+      fill_in('Organization name', with: 'Stanford University')
+    end
+
     # Clicking on Next to go to access settings tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Access settings')
@@ -168,6 +186,12 @@ RSpec.describe 'Create a collection deposit' do
     # Has work types and subtypes
     expect(page).to have_text('Text')
     expect(page).to have_text('Capstone, Thesis')
+
+    # Contributors
+    within('#contributors-table') do
+      expect(page).to have_css('td', text: 'Jane Stanford')
+      expect(page).to have_css('td', text: 'Stanford University')
+    end
 
     # License
     expect(page).to have_css('th', text: 'License')

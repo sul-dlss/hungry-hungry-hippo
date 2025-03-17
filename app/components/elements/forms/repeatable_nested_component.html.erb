@@ -28,10 +28,13 @@
       <%# Note that this div is duplicated above. If making a change here, also make the change above. %>
       <%= tag.div(class: row_classes, data: { index: nested_form.options[:child_index], nested_form_target: 'instance', nested_form_reorder_target: 'instance' }) do %>
         <div class="col">
-          <%= render form_component.new(form: nested_form) %>
+          <% form_component_instance = form_component.new(form: nested_form) %>
+          <%= render form_component_instance %>
         </div>
         <%= tag.div(class: nested_buttons_classes) do %>
-          <%= render Elements::DeleteButtonComponent.new(data: { action: 'click->nested-form#delete' }) %>
+          <%# A component can hide the delete button by providing a `hide_repeatable_nested_delete_button?` method that returns true. %>
+          <%# This can be used for a required field that the user cannot delete. %>
+          <%= render Elements::DeleteButtonComponent.new(data: { action: 'click->nested-form#delete' }) unless form_component_instance.try(:hide_repeatable_nested_delete_button?) %>
           <% if reorderable? %>
             <%= render Elements::MoveUpButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveUp' }) %>
             <%= render Elements::MoveDownButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveDown' }) %>
