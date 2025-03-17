@@ -2,7 +2,7 @@
 
 # Controller for a Work
 class WorksController < ApplicationController # rubocop:disable Metrics/ClassLength
-  before_action :set_work, only: %i[show edit update destroy review]
+  before_action :set_work_and_collection, only: %i[show edit update destroy review]
   before_action :check_deposit_registering_or_updating, only: %i[show edit]
   before_action :set_status, only: %i[show edit destroy review update]
   before_action :set_work_form_from_cocina, only: %i[show edit review]
@@ -137,7 +137,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     work_params.merge(druid: params[:druid])
   end
 
-  def set_work
+  def set_work_and_collection
     @work = Work.find_by!(druid: params[:druid])
     @collection = @work.collection
   end
@@ -151,7 +151,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     version_description = @version_status.open? ? @version_status.version_description : nil
     @work_form = ToWorkForm::Mapper.call(cocina_object: @cocina_object, doi_assigned: doi_assigned?,
                                          agree_to_terms: current_user.agree_to_terms?,
-                                         version_description:)
+                                         version_description:, collection: @collection)
   end
 
   def doi_assigned?

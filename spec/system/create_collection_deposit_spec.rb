@@ -77,6 +77,7 @@ RSpec.describe 'Create a collection deposit' do
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Contact email for deposits (optional)')
     expect(page).to have_text('Add contact email for all deposits (optional)')
+    fill_in('collection_works_contact_email', with: works_contact_email_fixture)
 
     # Clicking on Next to go to related content tab
     click_link_or_button('Next')
@@ -191,6 +192,9 @@ RSpec.describe 'Create a collection deposit' do
     # Has work types and subtypes
     expect(page).to have_text('Text')
     expect(page).to have_text('Capstone, Thesis')
+
+    # Has contact email for deposits
+    expect(page).to have_text(works_contact_email_fixture)
 
     # Contributors
     within('#contributors-table') do

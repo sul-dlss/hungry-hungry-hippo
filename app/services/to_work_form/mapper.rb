@@ -7,11 +7,12 @@ module ToWorkForm
       new(...).call
     end
 
-    def initialize(cocina_object:, doi_assigned:, agree_to_terms:, version_description:)
+    def initialize(cocina_object:, doi_assigned:, agree_to_terms:, version_description:, collection:)
       @cocina_object = cocina_object
       @doi_assigned = doi_assigned
       @agree_to_terms = agree_to_terms
       @version_description = version_description
+      @collection = collection
     end
 
     def call
@@ -20,7 +21,7 @@ module ToWorkForm
 
     private
 
-    attr_reader :cocina_object, :doi_assigned, :agree_to_terms, :version_description
+    attr_reader :cocina_object, :doi_assigned, :agree_to_terms, :version_description, :collection
 
     def params # rubocop:disable Metrics/AbcSize
       {
@@ -38,7 +39,7 @@ module ToWorkForm
         license:,
         access:,
         version: cocina_object.version,
-        collection_druid:,
+        collection_druid: Cocina::Parser.collection_druid_for(cocina_object:),
         publication_date_attributes: ToWorkForm::PublicationDateMapper.call(cocina_object:),
         custom_rights_statement:,
         doi_option:,
@@ -51,11 +52,7 @@ module ToWorkForm
     end
 
     def works_contact_email
-      Collection.find_by(druid: collection_druid)&.works_contact_email
-    end
-
-    def collection_druid
-      Cocina::Parser.collection_druid_for(cocina_object:)
+      collection&.works_contact_email
     end
 
     def citation

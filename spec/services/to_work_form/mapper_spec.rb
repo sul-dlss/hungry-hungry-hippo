@@ -5,13 +5,12 @@ require 'rails_helper'
 RSpec.describe ToWorkForm::Mapper, type: :mapping do
   subject(:work_form) do
     described_class.call(cocina_object:, doi_assigned:, agree_to_terms: true,
-                         version_description: whats_changing_fixture)
+                         version_description: whats_changing_fixture, collection:)
   end
 
   let(:cocina_object) { dro_with_metadata_fixture }
+  let(:collection) { create(:collection, :with_required_contact_email, druid: collection_druid_fixture) }
   let(:doi_assigned) { true }
-
-  before { create(:collection, :with_required_contact_email, druid: collection_druid_fixture) }
 
   it 'maps to work form' do
     expect(work_form).to equal_form(work_form_fixture)
