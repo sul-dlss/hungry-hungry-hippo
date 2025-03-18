@@ -20,15 +20,15 @@
   <% active_tab_name = params[:tab]&.to_sym || :details %>
   <%= render Edit::TabForm::TabListComponent.new(model: @collection_form, hidden_fields: %i[lock version]) do |component| %>
     <% component.with_tab(label: t('collections.edit.panes.details.tab_label'), tab_name: :details, active_tab_name:) %>
-    <% component.with_tab(label: t('collections.edit.panes.works_contact_email.tab_label'), tab_name: :works_contact_email, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.related_links.tab_label'), tab_name: :related_links, active_tab_name:) %>
-    <% component.with_tab(label: t('collections.edit.panes.types.tab_label'), tab_name: :types, active_tab_name:) %>
-    <% component.with_tab(label: t('collections.edit.panes.contributors.tab_label'), tab_name: :contributors, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.access.tab_label'), tab_name: :access, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.license.tab_label'), tab_name: :license, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.terms_of_use.label'), tab_name: :terms_of_use, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.participants.tab_label'), tab_name: :participants, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.workflow.tab_label'), tab_name: :workflow, active_tab_name:) %>
+    <% component.with_tab(label: t('collections.edit.panes.types.tab_label'), tab_name: :types, active_tab_name:) %>
+    <% component.with_tab(label: t('collections.edit.panes.works_contact_email.tab_label'), tab_name: :works_contact_email, active_tab_name:) %>
+    <% component.with_tab(label: t('collections.edit.panes.contributors.tab_label'), tab_name: :contributors, active_tab_name:) %>
     <% component.with_tab(label: t('collections.edit.panes.deposit.tab_label'), tab_name: :deposit, active_tab_name:) %>
     <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
     <%# TabListComponent will render the actual form. %>
@@ -39,20 +39,8 @@
         <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: Collections::Edit::ContactEmailsComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
       <% end %>
 
-      <% component.with_collection_pane(tab_name: :works_contact_email, label: t('collections.edit.panes.works_contact_email.label'), help_text: t('collections.edit.panes.works_contact_email.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do %>
-        <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :works_contact_email, label: t('collections.edit.fields.works_contact_email.label'), tooltip: t('collections.edit.fields.works_contact_email.tooltip_html'), container_classes: 'pane-section') %>
-      <% end %>
-
       <% component.with_collection_pane(tab_name: :related_links, label: t('collections.edit.panes.related_links.label'), tooltip: t('collections.edit.panes.related_links.tooltip_html'), help_text: t('collections.edit.panes.related_links.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do %>
         <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, fieldset_classes: 'pane-section', skip_tooltip: true) %>
-      <% end %>
-
-      <% component.with_collection_pane(tab_name: :types, label: t('collections.edit.panes.types.label'), active_tab_name:, collection_presenter: @collection_presenter) do %>
-        <%= render Collections::Edit::WorkTypeComponent.new(form:) %>
-      <% end %>
-
-      <% component.with_collection_pane(tab_name: :contributors, label: t('collections.edit.panes.contributors.label'), help_text: t('collections.edit.panes.contributors.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Edit::ContributorComponent, hidden_label: true, fieldset_classes: 'pane-section') %>
       <% end %>
 
       <% component.with_collection_pane(tab_name: :access, label: t('collections.edit.panes.access.label'), active_tab_name:, collection_presenter: @collection_presenter) do %>
@@ -85,6 +73,18 @@
 
       <% component.with_collection_pane(tab_name: :workflow, label: t('collections.edit.panes.workflow.label'), help_text: t('collections.edit.panes.workflow.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do %>
         <%= render Collections::Edit::WorkflowComponent.new(form:) %>
+      <% end %>
+
+      <% component.with_collection_pane(tab_name: :types, label: t('collections.edit.panes.types.label'), active_tab_name:, collection_presenter: @collection_presenter) do %>
+        <%= render Collections::Edit::WorkTypeComponent.new(form:) %>
+      <% end %>
+
+      <% component.with_collection_pane(tab_name: :works_contact_email, label: t('collections.edit.panes.works_contact_email.label'), help_text: t('collections.edit.panes.works_contact_email.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do %>
+        <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :works_contact_email, label: t('collections.edit.fields.works_contact_email.label'), tooltip: t('collections.edit.fields.works_contact_email.tooltip_html'), container_classes: 'pane-section') %>
+      <% end %>
+
+      <% component.with_collection_pane(tab_name: :contributors, label: t('collections.edit.panes.contributors.label'), help_text: t('collections.edit.panes.contributors.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Edit::ContributorComponent, hidden_label: true, fieldset_classes: 'pane-section') %>
       <% end %>
 
       <% component.with_collection_pane(tab_name: :deposit, label: t('collections.edit.panes.deposit.label'), help_text: t('collections.edit.panes.deposit.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do |pane_component| %>
