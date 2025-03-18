@@ -223,7 +223,7 @@ CREATE TABLE public.content_files (
     label character varying NOT NULL,
     external_identifier character varying,
     fileset_external_identifier character varying,
-    size integer,
+    size bigint,
     mime_type character varying,
     md5_digest character varying,
     sha1_digest character varying,
@@ -785,6 +785,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250318195336'),
 ('20250313174420'),
 ('20250313120842'),
 ('20250310201020'),
