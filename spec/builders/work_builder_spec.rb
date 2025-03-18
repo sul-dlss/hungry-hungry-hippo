@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Builders::WorkForm, type: :mapping do
+RSpec.describe WorkBuilder, type: :mapping do
   subject(:work_form) do
     described_class.call(cocina_object:, doi_assigned:, agree_to_terms: true,
                          version_description: whats_changing_fixture)

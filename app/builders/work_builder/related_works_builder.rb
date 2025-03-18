@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module ToWorkForm
-  # Maps related works.
-  class RelatedWorksMapper < ToForm::BaseMapper
+class WorkBuilder
+  # Builds related works for work form from Cocina
+  class RelatedWorksBuilder < BaseBuilder
     def call
       return if related_resources.blank?
 

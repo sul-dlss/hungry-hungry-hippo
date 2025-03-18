@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToWorkForm::KeywordsMapper do
+RSpec.describe WorkBuilder::KeywordsBuilder do
   context 'when object has keywords' do
     let(:cocina_object) do
       # NOTE: the :dro factory in the cocina-models gem does not have a seam

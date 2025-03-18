@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module ToWorkForm
-  # Maps creation date from Cocina to WorkForm
-  class CreationDateMapper < BaseDateMapper
+class WorkBuilder
+  # Builds creation date from Cocina to WorkForm
+  class CreationDateBuilder < BaseDateBuilder
     def call
       cocina_date = first_cocina_event_date_of(type: 'creation')
       return {} if cocina_date.nil?

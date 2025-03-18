@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module ToWorkForm
-  # Maps contributors.
-  class ContributorsMapper < ToForm::BaseMapper
+class WorkBuilder
+  # Builds contributors from Cocina for the work form
+  class ContributorsBuilder < BaseBuilder
     def call
       return nil if cocina_object.description.contributor.blank?
 

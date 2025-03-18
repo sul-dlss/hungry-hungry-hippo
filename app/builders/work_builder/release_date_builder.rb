@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module ToWorkForm
-  # Maps release date.
-  class ReleaseDateMapper < ToForm::BaseMapper
+class WorkBuilder
+  # Builds release date for work from from Cocina object
+  class ReleaseDateBuilder < BaseBuilder
     def call
       return { release_option: 'immediate' } if release_date.blank?
 

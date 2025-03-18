@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module ToWorkForm
-  # Maps keywords.
-  class KeywordsMapper < ToForm::BaseMapper
+class WorkBuilder
+  # Builds keywords.
+  class KeywordsBuilder < BaseBuilder
     def call
       return nil if cocina_object.description.subject.blank?
 

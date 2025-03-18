@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module ToWorkForm
-  # Maps work types.
-  class WorkTypeMapper < ToForm::BaseMapper
+class WorkBuilder
+  # Builds work types for the work form from Cocina objects
+  class WorkTypeBuilder < BaseBuilder
     def call
       if work_type == WorkType::OTHER
         return { work_type:, work_subtypes: [],

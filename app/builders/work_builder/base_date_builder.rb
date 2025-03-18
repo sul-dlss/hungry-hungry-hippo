@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module ToWorkForm
-  # Base class for mapping date from Cocina to WorkForm
-  class BaseDateMapper < ToForm::BaseMapper
+class WorkBuilder
+  # Base class for building work form dates from Cocina objects
+  class BaseDateBuilder < BaseBuilder
     private
 
     def first_cocina_event_date_of(type:)

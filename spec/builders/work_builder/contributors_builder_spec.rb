@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToWorkForm::ContributorsMapper do
+RSpec.describe WorkBuilder::ContributorsBuilder do
   subject(:contributor_params) { described_class.call(cocina_object:) }
 
   let(:cocina_object) do

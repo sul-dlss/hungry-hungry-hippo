@@ -149,9 +149,9 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   def set_work_form_from_cocina
     @cocina_object = Sdr::Repository.find(druid: params[:druid])
     version_description = @version_status.open? ? @version_status.version_description : nil
-    @work_form = Builders::WorkForm.call(cocina_object: @cocina_object, doi_assigned: doi_assigned?,
-                                         agree_to_terms: current_user.agree_to_terms?,
-                                         version_description:)
+    @work_form = WorkBuilder.call(cocina_object: @cocina_object, doi_assigned: doi_assigned?,
+                                  agree_to_terms: current_user.agree_to_terms?,
+                                  version_description:)
   end
 
   def doi_assigned?
@@ -200,7 +200,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     ).tap do |work_form|
       if @collection.contributors.present?
         work_form.contributors_attributes = @collection.contributors.map do |contributor|
-          ToForm::ContributorMapper.call(contributor:)
+          ContributorBuilder.call(contributor:)
         end
       end
     end
@@ -251,7 +251,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   def mark_collection_required_contributors
     collection_contributors = @collection.contributors.map do |contributor|
-      ContributorForm.new(ToForm::ContributorMapper.call(contributor:)).attributes
+      ContributorForm.new(ContributorBuilder.call(contributor:)).attributes
     end
 
     @work_form.contributors.each do |contributor|
