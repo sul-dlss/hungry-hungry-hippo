@@ -4,6 +4,7 @@
     <p>Your files with be available shortly after you deposit this item.</p>
     <%= form.hidden_field :release_option, value: :immediate %>
   <% else %>
+    <%= form.hidden_field :max_release_date %>
     <p>
       Select when the files in your deposit will be downloadable from the PURL page.
       If you select "Immediately", your files will be available shortly after you
@@ -21,9 +22,13 @@
       <div class="col-md-8 form-check d-flex">
         <div class="pt-2">
           <%= form.radio_button :release_option, 'delay', class: 'form-check-input', data: { radio_target: 'radio', action: 'radio#toggle' } %>
-          <%= form.label :release_option_delay, 'On this date', class: 'form-check-label' %>
+          <%= form.label :release_option_delay, delay_release_option_label, class: 'form-check-label' %>
         </div>
-        <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :release_date, min: min_release_date, max: max_release_date, help_text: datepicker_help_text, label: 'Release date', hidden_label: true, container_classes: 'ms-2') %>
+        <% if fixed_release_date? %>
+          <%= form.hidden_field :release_date %>
+        <% else %>
+          <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :release_date, min: min_release_date, max: max_release_date, help_text: datepicker_help_text, label: 'Release date', hidden_label: true, container_classes: 'ms-2') %>
+        <% end %>
       </div>
     </div>
   <% end %>
