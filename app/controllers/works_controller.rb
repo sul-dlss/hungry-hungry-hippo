@@ -45,6 +45,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     ModelSync::Work.call(work: @work, cocina_object: @cocina_object)
 
     mark_collection_required_contributors
+    add_max_release_date
 
     render :form
   end
@@ -203,6 +204,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
           ToForm::ContributorMapper.call(contributor:)
         end
       end
+      work_form.max_release_date = @collection.max_release_date if @collection.depositor_selects_release_option?
     end
   end
 
@@ -257,5 +259,10 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     @work_form.contributors.each do |contributor|
       contributor.collection_required = collection_contributors.include?(contributor.attributes)
     end
+  end
+
+  def add_max_release_date
+    # This is to account for when the collection release date is shortened.
+    @work_form.max_release_date = [@collection.max_release_date, @work_form.release_date].compact.max
   end
 end

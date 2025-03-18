@@ -119,15 +119,14 @@ RSpec.describe WorkForm do
         contributors_attributes: contributors_fixture,
         release_option:,
         release_date:,
-        collection_druid: collection.druid,
+        max_release_date:,
         whats_changing: 'Initial version'
       )
     end
 
     let(:release_option) { 'delay' }
     let(:release_date) { '' }
-
-    let(:collection) { create(:collection, :with_druid) }
+    let(:max_release_date) { 1.year.from_now }
 
     context 'when release option is immediate' do
       let(:release_option) { 'immediate' }

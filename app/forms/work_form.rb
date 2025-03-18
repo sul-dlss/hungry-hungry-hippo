@@ -86,6 +86,7 @@ class WorkForm < ApplicationForm
       message: 'must be on or before %<count>s' # rubocop:disable Rails/I18nLocaleTexts
     }
   end
+  attribute :max_release_date, :date
 
   attribute :custom_rights_statement, :string
   before_validation do
@@ -109,10 +110,6 @@ class WorkForm < ApplicationForm
     return if Content.find(content_id).content_files.exists?
 
     errors.add(:content, 'must have at least one file')
-  end
-
-  def max_release_date
-    Collection.find_by(druid: collection_druid).max_release_date
   end
 
   def create_date_range_complete
