@@ -86,13 +86,6 @@ RSpec.describe 'Edit a collection' do
     # Filling in abstract
     fill_in('collection_description', with: updated_description)
 
-    # Clicking on Next to go to works contact email tab
-    click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Contact email for deposits (optional)')
-    expect(page).to have_field('Contact email to be included in all deposits in this collection',
-                               with: works_contact_email_fixture)
-    fill_in('collection_works_contact_email', with: '')
-
     # Filling in related content
     find('.nav-link', text: 'Related links (optional)').click
     fill_in('Link text', with: 'delete')
@@ -105,20 +98,6 @@ RSpec.describe 'Edit a collection' do
     within('div[data-index="0"]') do
       find('button[data-action="click->nested-form#delete"]').click
     end
-
-    # Clicking on Next to go to type of deposit tab
-    click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Type of deposit (optional)')
-    expect(page).to have_field('Image', checked: true)
-    expect(page).to have_field('CAD', checked: true)
-    expect(page).to have_field('Map', checked: true)
-    choose('No required work type')
-    expect(page).to have_no_field('CAD')
-
-    # Clicking on Next to go to contributors tab
-    click_link_or_button('Next')
-    # There is a blank contributor form.
-    expect(page).to have_css('.form-instance')
 
     # Clicking on Next to go to access settings tab
     click_link_or_button('Next')
@@ -188,8 +167,28 @@ RSpec.describe 'Edit a collection' do
     click_link_or_button('Add reviewers')
     expect(page).to have_css('.participant-label', text: 'pennywise: Pennywise')
 
+    # Clicking on Next to go to type of deposit tab
     click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Type of deposit (optional)')
+    expect(page).to have_field('Image', checked: true)
+    expect(page).to have_field('CAD', checked: true)
+    expect(page).to have_field('Map', checked: true)
+    choose('No required work type')
+    expect(page).to have_no_field('CAD')
 
+    # Clicking on Next to go to works contact email tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Contact email for deposits (optional)')
+    expect(page).to have_field('Contact email to be included in all deposits in this collection',
+                               with: works_contact_email_fixture)
+    fill_in('collection_works_contact_email', with: '')
+
+    # Clicking on Next to go to contributors tab
+    click_link_or_button('Next')
+    # There is a blank contributor form.
+    expect(page).to have_css('.form-instance')
+
+    click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Save your collection')
     click_link_or_button('Save', class: 'btn-primary')
 

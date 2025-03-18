@@ -73,12 +73,6 @@ RSpec.describe 'Create a collection deposit' do
     fill_in('collection_description', with: collection_description_fixture)
     expect(page).to have_field('Contact email', with: user.email_address)
 
-    # Clicking on Next to go to works contact email tab
-    click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Contact email for deposits (optional)')
-    expect(page).to have_text('Add contact email for all deposits (optional)')
-    fill_in('collection_works_contact_email', with: works_contact_email_fixture)
-
     # Clicking on Next to go to related content tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Related links (optional)')
@@ -87,32 +81,6 @@ RSpec.describe 'Create a collection deposit' do
     # Filling in related links
     fill_in('Link text', with: related_links_fixture.first['text'])
     fill_in('URL', with: related_links_fixture.first['url'])
-
-    # Clicking on Next to go to the type of deposit tab
-    click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Type of deposit (optional)')
-    expect(page).to have_no_field('Other', type: 'radio')
-    choose('Text')
-    check('Capstone')
-    check('Thesis')
-
-    # Clicking on Next to go to the contributors tab
-    click_link_or_button('Next')
-    # Enter two contributors
-    select('Creator', from: 'Role')
-    within('.orcid-section') do
-      find('label', text: 'Enter name manually').click
-    end
-    fill_in('First name', with: 'Jane')
-    fill_in('Last name', with: 'Stanford')
-
-    click_link_or_button('Add another contributor')
-    form_instance = page.all('.form-instance').last
-    within(form_instance) do
-      find('label', text: 'Organization').click
-      select('Author', from: 'Role')
-      fill_in('Organization name', with: 'Stanford University')
-    end
 
     # Clicking on Next to go to access settings tab
     click_link_or_button('Next')
@@ -173,6 +141,38 @@ RSpec.describe 'Create a collection deposit' do
     fill_in('reviewers-textarea', with: 'pennywise')
     click_link_or_button('Add reviewers')
     expect(page).to have_css('.participant-label', text: 'pennywise: Pennywise')
+
+    # Clicking on Next to go to the type of deposit tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Type of deposit (optional)')
+    expect(page).to have_no_field('Other', type: 'radio')
+    choose('Text')
+    check('Capstone')
+    check('Thesis')
+
+    # Clicking on Next to go to works contact email tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Contact email for deposits (optional)')
+    expect(page).to have_text('Add contact email for all deposits (optional)')
+    fill_in('collection_works_contact_email', with: works_contact_email_fixture)
+
+    # Clicking on Next to go to the contributors tab
+    click_link_or_button('Next')
+    # Enter two contributors
+    select('Creator', from: 'Role')
+    within('.orcid-section') do
+      find('label', text: 'Enter name manually').click
+    end
+    fill_in('First name', with: 'Jane')
+    fill_in('Last name', with: 'Stanford')
+
+    click_link_or_button('Add another contributor')
+    form_instance = page.all('.form-instance').last
+    within(form_instance) do
+      find('label', text: 'Organization').click
+      select('Author', from: 'Role')
+      fill_in('Organization name', with: 'Stanford University')
+    end
 
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
