@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToCollectionForm::Mapper, type: :mapping do
+RSpec.describe Builders::Collection, type: :mapping do
   subject(:collection_form) { described_class.call(cocina_object: collection_with_metadata_fixture, collection:) }
 
   let(:collection) do

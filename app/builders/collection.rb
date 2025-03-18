@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module ToCollectionForm
-  # Maps Cocina Collection to CollectionForm
-  class Mapper
+module Builders
+  # Builds CollectionForm from a Cocina collection
+  class Collection
     def self.call(...)
       new(...).call
     end
