@@ -358,3 +358,12 @@ fieldset.form-fieldset legend {
   table-layout: fixed;
   width: 100%;
 }
+
+// Red text or "*" indicating fields are required
+.required-indicator {
+  color: red;
+}
+
+label + .required-indicator {
+  margin-left: 0.25rem;
+}
