@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SubscriptionActions
+module Messengers
   # Action that sends the appropriate emails when a work is starting accessioning.
   class WorkAccessioningStarted
     def self.call(...)

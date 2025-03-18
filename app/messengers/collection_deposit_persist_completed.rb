@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SubscriptionActions
+module Messengers
   # Action that sends the appropriate emails when a collection is persisted.
   class CollectionDepositPersistCompleted
     def self.call(...)

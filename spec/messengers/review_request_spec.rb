@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe SubscriptionActions::ReviewRequest, :active_job_test_adapter do
+RSpec.describe Messengers::ReviewRequest, :active_job_test_adapter do
   include ActionMailer::TestHelper
 
   let(:work) { create(:work, :with_druid, collection:) }

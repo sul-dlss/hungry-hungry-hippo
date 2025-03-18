@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe SubscriptionActions::CollectionDepositPersistCompleted, :active_job_test_adapter do
+RSpec.describe Messengers::CollectionDepositPersistCompleted, :active_job_test_adapter do
   include ActionMailer::TestHelper
 
   context 'when first version' do

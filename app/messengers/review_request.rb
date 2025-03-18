@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SubscriptionActions
+module Messengers
   # Action that sends a review request to all reviewers and managers of a work's collection.
   class ReviewRequest
     def self.call(...)

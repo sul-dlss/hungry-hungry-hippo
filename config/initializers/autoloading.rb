@@ -6,9 +6,12 @@
 module Generators; end
 # Import hash data (froma JSON export) to DB-persisted models
 module Importers; end
+# Send messages to the expected recipients at the expected time
+module Messengers; end
 # Synchronize Cocina to DB-persisted models
 module Synchronizers; end
 
 Rails.autoloaders.main.push_dir(Rails.root.join('app/generators'), namespace: Generators)
 Rails.autoloaders.main.push_dir(Rails.root.join('app/importers'), namespace: Importers)
+Rails.autoloaders.main.push_dir(Rails.root.join('app/messengers'), namespace: Messengers)
 Rails.autoloaders.main.push_dir(Rails.root.join('app/synchronizers'), namespace: Synchronizers)
