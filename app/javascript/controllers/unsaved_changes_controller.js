@@ -36,6 +36,7 @@ export default class extends Controller {
   }
 
   allowFormSubmission (event) {
-    this.changedForms.delete(event.target.closest('form').action)
+    const form = event.target.form ? event.target.form : event.target.closest('form')
+    this.changedForms.delete(form.action)
   }
 }
