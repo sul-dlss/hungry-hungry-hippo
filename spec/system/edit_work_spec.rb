@@ -273,6 +273,28 @@ RSpec.describe 'Edit a work' do
     end
   end
 
+  context 'when nothing changed and depositing' do
+    let(:version_status) { build(:openable_version_status, version: cocina_object.version) }
+
+    before do
+      allow(RoundtripSupport).to receive(:changed?).and_return(false)
+    end
+
+    it 'notifies user that nothing changed' do
+      visit edit_work_path(druid)
+
+      expect(page).to have_css('h1', text: title_fixture)
+
+      find('.nav-link', text: 'Deposit', exact_text: true).click
+      fill_in('What\'s changing?', with: 'Nothing')
+      click_link_or_button('Deposit')
+
+      expect(page).to have_current_path(edit_work_path(druid))
+      expect(page).to have_css('.alert-warning', text: 'You have not made any changes to the form.')
+      expect(page).to have_css('.nav-link.active', text: 'Deposit', exact_text: true)
+    end
+  end
+
   context 'when changed and saving as draft' do
     before do
       allow(RoundtripSupport).to receive(:changed?).and_return(true)

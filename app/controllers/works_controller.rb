@@ -67,7 +67,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     end
   end
 
-  def update # rubocop:disable Metrics/AbcSize
+  def update
     authorize! @work
 
     @work_form = WorkForm.new(**update_work_params)
@@ -79,7 +79,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       perform_deposit(work: @work)
       redirect_to wait_works_path(@work.id)
     else
-      flash.now[:warning] = helpers.t('works.edit.messages.no_changes') if work_is_valid
+      handle_no_changes if work_is_valid
       set_license_presenter
       set_presenter
       render :form, status: :unprocessable_entity
@@ -264,5 +264,10 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   def add_max_release_date
     # This is to account for when the collection release date is shortened.
     @work_form.max_release_date = [@collection.max_release_date, @work_form.release_date].compact.max
+  end
+
+  def handle_no_changes
+    flash.now[:warning] = helpers.t('works.edit.messages.no_changes')
+    @active_tab_name = :deposit if deposit?
   end
 end
