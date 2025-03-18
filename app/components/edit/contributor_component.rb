@@ -64,7 +64,7 @@ module Edit
       ['Author', 'author'],
       ['Advisor', 'advisor'],
       ['Composer', 'composer'],
-      ['Contributing Author', 'contributing_author'],
+      ['Contributing author', 'contributing_author'],
       ['Copyright holder', 'copyright_holder'],
       ['Creator', 'creator'],
       ['Data collector', 'data_collector'],
