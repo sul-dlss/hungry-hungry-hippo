@@ -1,7 +1,7 @@
 <%= turbo_frame_tag content, 'show' do %>
   <% content_files ||= content.content_files.path_order.page(1) %>
   <% if content_files.empty? %>
-    <p>Your files will appear here once they have been uploaded.</p>
+    <p>Your files will appear here once they have been uploaded. <span class="required-indicator">At least one file is required.</span></p>
   <% elsif content.content_files.count > Settings.file_upload.hierarchical_files_limit %>
     <%= render Elements::Tables::TableComponent.new(id: 'content-table', label: 'Files', show_label: false) do |component| %>
       <%# These headers are duplicated in app/components/works/edit/content_hierarchy_component.html.erb %>
