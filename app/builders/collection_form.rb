@@ -2,7 +2,7 @@
 
 module Builders
   # Builds CollectionForm from a Cocina collection
-  class Collection
+  class CollectionForm
     def self.call(...)
       new(...).call
     end

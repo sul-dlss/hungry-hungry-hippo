@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module ToWorkForm
+module Builders
   # Maps Cocina DRO to WorkForm
-  class Mapper
+  class WorkForm
     def self.call(...)
       new(...).call
     end

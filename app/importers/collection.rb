@@ -56,7 +56,7 @@ module Importers
     end
 
     def collection_form
-      @collection_form ||= Builders::Collection.call(cocina_object:, collection:)
+      @collection_form ||= Builders::CollectionForm.call(cocina_object:, collection:)
     end
 
     def option_for(option)

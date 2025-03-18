@@ -149,7 +149,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   def set_work_form_from_cocina
     @cocina_object = Sdr::Repository.find(druid: params[:druid])
     version_description = @version_status.open? ? @version_status.version_description : nil
-    @work_form = ToWorkForm::Mapper.call(cocina_object: @cocina_object, doi_assigned: doi_assigned?,
+    @work_form = Builders::WorkForm.call(cocina_object: @cocina_object, doi_assigned: doi_assigned?,
                                          agree_to_terms: current_user.agree_to_terms?,
                                          version_description:)
   end

@@ -40,7 +40,7 @@ module Admin
     end
 
     def work_form
-      @work_form ||= ToWorkForm::Mapper.call(cocina_object:,
+      @work_form ||= Builders::WorkForm.call(cocina_object:,
                                              doi_assigned: DoiAssignedService.call(cocina_object:, work:),
                                              agree_to_terms: current_user.agree_to_terms?,
                                              version_description: 'Moving collection')
