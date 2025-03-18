@@ -3,16 +3,15 @@
 module Edit
   # Component for rendering a form label outside of a form field.
   class LabelComponent < ApplicationComponent
-    def initialize(label_text:, hidden_label: false, classes: [])
+    def initialize(label_text:, hidden_label: false, classes: [], required: false)
       @label_text = label_text
       @hidden_label = hidden_label
       @classes = classes
+      @required = required
       super()
     end
 
-    def call
-      tag.label(@label_text, class: classes)
-    end
+    attr_reader :required
 
     def classes
       merge_classes(%w[form-label fw-bold], @hidden_label ? 'visually-hidden' : nil, @classes)
