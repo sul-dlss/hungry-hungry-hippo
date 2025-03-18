@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToCocina::Work::Mapper, type: :mapping do
+RSpec.describe WorkMapper, type: :mapping do
   subject(:cocina_object) { described_class.call(work_form:, content:, source_id: source_id_fixture) }
 
   let(:content) { content_fixture }

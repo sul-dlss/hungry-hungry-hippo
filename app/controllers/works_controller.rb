@@ -244,8 +244,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     return true if @version_status.open? && (deposit? || request_review?)
 
     # If no previous change, then check for a current change.
-    mapped_cocina_object = ToCocina::Work::Mapper.call(work_form: @work_form, content: @content,
-                                                       source_id: "h3:object-#{@work.id}")
+    mapped_cocina_object = WorkMapper.call(work_form: @work_form, content: @content,
+                                           source_id: "h3:object-#{@work.id}")
     RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
   end
 

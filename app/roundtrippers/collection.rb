@@ -33,8 +33,8 @@ module Roundtrippers
     attr_reader :collection_form, :content
 
     def roundtripped_cocina_object
-      ToCocina::Collection::Mapper.call(collection_form:,
-                                        source_id: normalized_original_cocina_object.identification&.sourceId)
+      CollectionMapper.call(collection_form:,
+                            source_id: normalized_original_cocina_object.identification&.sourceId)
     end
 
     def normalized_original_cocina_object

@@ -16,7 +16,7 @@ class WorkBuilder
     # @return [Cocina::Models::DescriptiveValue] descriptive value for Stanford self-deposit resource types
     def self_deposit_form
       @self_deposit_form ||= cocina_object.description.form.find do |form|
-        form&.source&.value == ToCocina::Work::TypesMapper::RESOURCE_TYPE_SOURCE_LABEL
+        form&.source&.value == WorkMapper::TypesMapper::RESOURCE_TYPE_SOURCE_LABEL
       end
     end
 
