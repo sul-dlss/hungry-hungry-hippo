@@ -4,8 +4,11 @@
 
 # Generate Cocina from scalars
 module Generators; end
+# Import hash data (froma JSON export) to DB-persisted models
+module Importers; end
 # Synchronize Cocina to DB-persisted models
 module Synchronizers; end
 
 Rails.autoloaders.main.push_dir(Rails.root.join('app/generators'), namespace: Generators)
+Rails.autoloaders.main.push_dir(Rails.root.join('app/importers'), namespace: Importers)
 Rails.autoloaders.main.push_dir(Rails.root.join('app/synchronizers'), namespace: Synchronizers)
