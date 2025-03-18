@@ -1,7 +1,7 @@
 <%= render Elements::Forms::FieldsetComponent.new(data: fieldset_data, classes: fieldset_classes, id: fieldset_id) do |component| %>
   <% component.with_legend do %>
     <h3 class="tooltip-header">
-      <%= render Edit::LabelComponent.new(label_text:, hidden_label:) %>
+      <%= render Edit::LabelComponent.new(label_text:, hidden_label:, required: mark_required?) %>
       <%= render Elements::TooltipComponent.new(tooltip:) %>
     </h3>
   <% end %>
