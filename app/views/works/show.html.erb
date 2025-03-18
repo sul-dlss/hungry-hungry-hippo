@@ -35,7 +35,7 @@
   <% component.with_row(label: 'Contact emails', values: [@work_presenter.contact_emails]) %>
 <% end %>
 
-<%= render Show::ContributorsShowComponent.new(contributors: @work_presenter.contributors, presenter: @work_presenter) %>
+<%= render Show::ContributorsShowComponent.new(contributors: @work_presenter.contributors, presenter: @work_presenter, label: 'Authors / Contributors') %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'mb-5') do |component| %>
   <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Dates', presenter: @work_presenter, tab: :dates) %><% end %>

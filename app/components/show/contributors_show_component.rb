@@ -3,13 +3,14 @@
 module Show
   # Component for rendering a table of contributors on the show page.
   class ContributorsShowComponent < ApplicationComponent
-    def initialize(contributors:, presenter:)
+    def initialize(contributors:, presenter:, label:)
       @contributors = contributors
       @presenter = presenter
+      @label = label
       super()
     end
 
-    attr_reader :contributors, :presenter
+    attr_reader :contributors, :presenter, :label
 
     def values_for(contributor)
       values = [

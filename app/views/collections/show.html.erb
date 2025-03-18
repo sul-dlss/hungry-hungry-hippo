@@ -53,7 +53,7 @@
       <% component.with_row(label: 'Contact email', values: [@collection_presenter.works_contact_email]) %>
     <% end %>
 
-    <%= render Show::ContributorsShowComponent.new(contributors: @collection_presenter.contributors, presenter: @collection_presenter) %>
+    <%= render Show::ContributorsShowComponent.new(contributors: @collection_presenter.contributors, presenter: @collection_presenter, label: 'Contributors for deposits') %>
 
     <%= render Elements::Tables::TableComponent.new(id: 'release-visibility-table', classes: 'mb-5') do |component| %>
       <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Release and visibility', presenter: @collection_presenter, tab: :access) %><% end %>
