@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToCollectionForm::RoundtripValidator, type: :mapping do
+RSpec.describe Roundtrippers::Collection, type: :mapping do
   subject(:validator) do
     described_class.new(collection_form: collection_form_fixture, cocina_object:)
   end

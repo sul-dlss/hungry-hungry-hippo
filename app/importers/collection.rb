@@ -13,7 +13,7 @@ module Importers
 
     def call
       ::Collection.transaction do
-        unless ToCollectionForm::RoundtripValidator.call(
+        unless Roundtrippers::Collection.call(
           collection_form:, cocina_object:
         )
           raise Error,

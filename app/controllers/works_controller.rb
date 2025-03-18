@@ -174,8 +174,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     # and there is not a Collection record for the collection_druid in the work.
     return false unless Collection.exists?(druid: @work_form.collection_druid)
 
-    ToWorkForm::RoundtripValidator.call(work_form: @work_form, cocina_object: @cocina_object,
-                                        content: @content)
+    Roundtrippers::Work.call(work_form: @work_form, cocina_object: @cocina_object,
+                             content: @content)
   end
 
   def set_presenter

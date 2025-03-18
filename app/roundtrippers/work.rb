@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
-module ToCollectionForm
-  # Validates that a cocina object can be converted to a collection form and then back without loss.
-  class RoundtripValidator
+module Roundtrippers
+  # Validates that a cocina object can be converted to a work form and then back without loss.
+  class Work
     def self.call(...)
       new(...).call
     end
 
-    # @param [CollectoinForm] collection_form
-    # @param [Cocina::Models::Collection] cocina_object
-    def initialize(collection_form:, cocina_object:)
-      @collection_form = collection_form
+    # @param [WorkForm] work_form
+    # @param [Content] content
+    # @param [Cocina::Models::DRO] cocina_object
+    def initialize(work_form:, content:, cocina_object:)
+      @work_form = work_form
+      @content = content
       @original_cocina_object = cocina_object
     end
 
@@ -30,11 +32,12 @@ module ToCollectionForm
 
     private
 
-    attr_reader :collection_form, :content
+    attr_reader :work_form, :content
 
     def roundtripped_cocina_object
-      ToCocina::Collection::Mapper.call(collection_form:,
-                                        source_id: normalized_original_cocina_object.identification&.sourceId)
+      ToCocina::Work::Mapper.call(work_form:,
+                                  content:,
+                                  source_id: normalized_original_cocina_object.identification&.sourceId)
     end
 
     def normalized_original_cocina_object
