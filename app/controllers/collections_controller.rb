@@ -12,7 +12,7 @@ class CollectionsController < ApplicationController
     authorize! @collection
 
     # This updates the Collection with the latest metadata from the Cocina object.
-    ModelSync::Collection.call(collection: @collection, cocina_object: @cocina_object)
+    Synchronizers::Collection.call(collection: @collection, cocina_object: @cocina_object)
   end
 
   def new
@@ -37,7 +37,7 @@ class CollectionsController < ApplicationController
     end
 
     # This updates the Collection with the latest metadata from the Cocina object.
-    ModelSync::Collection.call(collection: @collection, cocina_object: @cocina_object)
+    Synchronizers::Collection.call(collection: @collection, cocina_object: @cocina_object)
 
     render :form
   end
@@ -108,7 +108,7 @@ class CollectionsController < ApplicationController
 
   def set_collection_form_from_cocina
     @cocina_object = Sdr::Repository.find(druid: params[:druid])
-    @collection_form = ToCollectionForm::Mapper.call(cocina_object: @cocina_object, collection: @collection)
+    @collection_form = CollectionBuilder.call(cocina_object: @cocina_object, collection: @collection)
   end
 
   def set_status
@@ -118,8 +118,8 @@ class CollectionsController < ApplicationController
   def editable?
     return false unless @version_status.editable?
 
-    ToCollectionForm::RoundtripValidator.call(collection_form: @collection_form,
-                                              cocina_object: @cocina_object)
+    Roundtrippers::Collection.call(collection_form: @collection_form,
+                                   cocina_object: @cocina_object)
   end
 
   def set_presenter
