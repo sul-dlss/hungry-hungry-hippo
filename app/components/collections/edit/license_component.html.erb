@@ -1,7 +1,7 @@
-<%= render Elements::Forms::FieldsetComponent.new(label: 'License settings', hidden_label: true, classes: 'pane-section') do %>
+<%= render Elements::Forms::FieldsetComponent.new(label: 'License settings', hidden_label: true, classes: 'pane-section', data: { controller: 'radio'}) do %>
   <div class="form-check d-flex pt-2 row">
     <div class="col-md-4">
-      <%= form.radio_button :license_option, 'required', class: 'form-check-input' %>
+      <%= form.radio_button :license_option, 'required', class: 'form-check-input', data: { radio_target: 'radio', action: 'radio#toggle' } %>
       <%= form.label :license_option_required, 'Require license for all deposits', class: 'form-check-label' %>
     </div>
     <div class="col-md-5">
@@ -13,7 +13,7 @@
   </div>
   <div class="form-check d-flex pt-2 row">
     <div class="col-md-4">
-      <%= form.radio_button :license_option, 'depositor_selects', class: 'form-check-input' %>
+      <%= form.radio_button :license_option, 'depositor_selects', class: 'form-check-input', data: { radio_target: 'radio', action: 'radio#toggle' } %>
       <%= form.label :license_option_depositor_selects, 'Depositor selects license', class: 'form-check-label' %>
     </div>
     <div class="col-md-5">
