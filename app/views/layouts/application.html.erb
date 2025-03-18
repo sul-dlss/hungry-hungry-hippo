@@ -44,11 +44,14 @@
 
       <div class="container">
         <% unless @no_flash %>
-          <% flash.each do |flash_type, msg| %>
-            <%= render Elements::AlertComponent.new(variant: flash_type) do %>
-              <div><%= msg.html_safe %></div><%# erb_lint:disable ErbSafety %>
+          <%# This prevents the flash from being cached by turbo. %>
+          <div data-turbo-temporary="true">
+            <% flash.each do |flash_type, msg| %>
+              <%= render Elements::AlertComponent.new(variant: flash_type) do %>
+                <div><%= msg.html_safe %></div><%# erb_lint:disable ErbSafety %>
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
         <% end %>
         <%= yield %>
       </div>
