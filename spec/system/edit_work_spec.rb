@@ -47,8 +47,8 @@ RSpec.describe 'Edit a work' do
   end
 
   let(:collection) do
-    create(:collection, user:, druid: collection_druid_fixture, title: collection_title_fixture,
-                        release_duration: 'three_years')
+    create(:collection, :with_required_contact_email, user:, druid: collection_druid_fixture,
+                                                      title: collection_title_fixture, release_duration: 'three_years')
   end
   let!(:work) { create(:work, druid:, user:, collection:) }
 
@@ -87,6 +87,10 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_field('Title of deposit', with: title_fixture)
 
     fill_in('Title of deposit', with: updated_title)
+
+    # Show user that the collection manager already gave them a contact email for free
+    expect(page).to have_text('Contact email provided by collection manager')
+    expect(page).to have_text(works_contact_email_fixture)
 
     # Testing validation
     find('.nav-link', text: 'Abstract and keywords').click

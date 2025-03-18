@@ -265,7 +265,7 @@ en:
               This is the name we retrieved from ORCID and that will be included in the detailed information about this deposit. Editing this name will change it for this deposit only and will not alter your ORCID record.
         works_contact_email:
           tooltip_html: >-
-            The collection manager has provided an email address for all works deposited into this collection. Depositors can not change or remove this email address. It will be publicly visible and is intended to be a place where people can ask questions about the work you have deposited.
+            The collection manager has provided an email address for all works deposited into this collection. Depositors cannot change or remove this email address. It will be publicly visible and is intended to be a place where people can ask questions about the work you have deposited.
         create_date:
           label: 'Creation date (optional, use for datasets)'
           tooltip_html: >-
@@ -372,7 +372,7 @@ en:
         works_contact_email:
           label: 'Contact email to be included in all deposits in this collection'
           tooltip_html: >-
-            Enter one or more valid email addresses (one per box) that will be included for each deposit to this collection. Depositors will not be able to change or remove these emails. These email addresses will be publicly visible and are intended to be a place where people can ask questions about the content deposited.
+            Enter a valid email address that will be included for each deposit to this collection. Depositors will not be able to change or remove this email address. It will be publicly visible and is intended to be a place where people can ask questions about the content deposited.
         title:
           label: 'Collection name'
           help_text: >-
@@ -434,7 +434,7 @@ en:
           tab_label: 'Contact email for deposits (optional)'
           label: 'Add contact email for all deposits (optional)'
           help_text: >-
-            You can add a contact email for all deposits in this collection that can not be deleted by the depositor.
+            You can add a contact email for all deposits in this collection that cannot be deleted or changed by the depositor.
         license:
           tab_label: 'License'
           label: 'License'

@@ -45,7 +45,7 @@ RSpec.describe 'Edit a collection' do
     end
     allow(Sdr::Repository).to receive(:accession)
 
-    create(:collection, :with_required_types, druid:, user:, managers: [manager])
+    create(:collection, :with_required_types, :with_required_contact_email, druid:, user:, managers: [manager])
 
     create(:user, name: 'Stephen King', email_address: 'stepking@stanford.edu')
     # Joe Hill is not created yet.
@@ -85,6 +85,13 @@ RSpec.describe 'Edit a collection' do
 
     # Filling in abstract
     fill_in('collection_description', with: updated_description)
+
+    # Clicking on Next to go to works contact email tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Contact email for deposits (optional)')
+    expect(page).to have_field('Contact email to be included in all deposits in this collection',
+                               with: works_contact_email_fixture)
+    fill_in('collection_works_contact_email', with: '')
 
     # Filling in related content
     find('.nav-link', text: 'Related links (optional)').click
@@ -195,6 +202,9 @@ RSpec.describe 'Edit a collection' do
     # Work types
     expect(page).to have_no_text('Image')
     expect(page).to have_no_text('CAD')
+
+    # Has contact email for deposits
+    expect(page).to have_no_text(works_contact_email_fixture)
 
     # Access settings
     expect(page).to have_content('3 years in the future')

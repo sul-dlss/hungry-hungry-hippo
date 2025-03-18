@@ -10,7 +10,8 @@ RSpec.describe 'Show a collection' do
   let(:user) { collection.user }
   let!(:collection) do
     create(:collection, :with_review_workflow, :with_depositors, :with_managers, :with_works, :with_required_types,
-           works_count:, reviewers_count: 2, druid:, title: collection_title_fixture, contributors: [contributor])
+           :with_required_contact_email, works_count:, reviewers_count: 2, druid:, title: collection_title_fixture,
+                                         contributors: [contributor])
   end
   let(:works_count) { 3 }
   let(:cocina_object) { collection_with_metadata_fixture }
@@ -80,6 +81,14 @@ RSpec.describe 'Show a collection' do
       expect(page).to have_css('td', text: work_type_fixture)
       expect(page).to have_css('tr', text: 'Deposit subtypes')
       expect(page).to have_css('td', text: work_subtypes_fixture.join(', '))
+    end
+
+    # Works contact email table
+    within('table#works-contact-email-table') do
+      expect(page).to have_css('caption', text: 'Contact email for deposits')
+      expect(page).to have_link('Edit', href: edit_collection_path(druid, tab: 'works_contact_email'))
+      expect(page).to have_css('tr', text: 'Contact email')
+      expect(page).to have_css('td', text: works_contact_email_fixture)
     end
 
     # Contributors table

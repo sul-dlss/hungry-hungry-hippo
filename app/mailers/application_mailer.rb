@@ -15,7 +15,8 @@ class ApplicationMailer < ActionMailer::Base
     version_status = Sdr::Repository.status(druid: @work.druid)
     doi_assigned = DoiAssignedService.call(cocina_object:, work: @work)
     work_form = ToWorkForm::Mapper.call(cocina_object:, doi_assigned:, agree_to_terms: true,
-                                        version_description: version_status.version_description)
+                                        version_description: version_status.version_description,
+                                        collection: @collection)
     @work_presenter = WorkPresenter.new(work: @work, work_form:, version_status:)
   end
 end
