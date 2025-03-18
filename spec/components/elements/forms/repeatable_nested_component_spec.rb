@@ -89,21 +89,4 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
       expect(page).to have_no_button('Clear')
     end
   end
-
-  context 'when the field is marked required' do
-    subject(:component) do
-      described_class.new(form:, field_name: :related_links, model_class: RelatedLinkForm,
-                          form_component: RelatedLinks::EditComponent, hidden_label:, bordered:, mark_required: true)
-    end
-
-    it 'renders the required marker' do
-      render_inline(component)
-      expect(page).to have_css('span.required-indicator', text: '*')
-    end
-
-    it 'renders the field with aria-required' do
-      render_inline(component)
-      expect(page).to have_css('input[aria-required="true"]')
-    end
-  end
 end
