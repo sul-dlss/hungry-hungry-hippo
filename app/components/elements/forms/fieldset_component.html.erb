@@ -4,7 +4,7 @@
       <%= legend %>
     <% else %>
       <%= tag.label class: label_classes do %><%= label %><% end %>
-      <% if required %><span class="required-indicator">*</span><% end %>
+      <% if required %><span class="required-indicator" aria-label="Required">*</span><% end %>
     <% end %>
     <%= render Elements::TooltipComponent.new(tooltip:) %>
     <%= help_link if help_link? %>
