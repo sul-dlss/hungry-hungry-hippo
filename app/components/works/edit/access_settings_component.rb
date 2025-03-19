@@ -40,7 +40,7 @@ module Works
       end
 
       def datepicker_help_text
-        "Date must be before #{max_release_date&.strftime('%B %d, %Y')}"
+        "Date must be before #{max_release_date&.strftime('%Y-%m-%d')}"
       end
 
       def delay_release_option_label

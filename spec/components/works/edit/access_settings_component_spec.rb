@@ -78,7 +78,7 @@ RSpec.describe Works::Edit::AccessSettingsComponent, type: :component do
       expect(page).to have_field('release_option', type: 'radio', with: 'delay', checked: true)
       expect(page).to have_css("div[data-controller='datepicker'][data-datepicker-min-value='#{Time.zone.today.iso8601}']") # rubocop:disable Layout/LineLength
       expect(page).to have_css("div[data-controller='datepicker'][data-datepicker-max-value='#{work_release_date.iso8601}']") # rubocop:disable Layout/LineLength
-      expect(page).to have_text("Date must be before #{work_release_date.strftime('%B %d, %Y')}")
+      expect(page).to have_text("Date must be before #{work_release_date.strftime('%Y-%m-%d')}")
       expect(page).to have_field('max_release_date', type: 'hidden', with: work_max_release_date.iso8601)
     end
   end
@@ -94,7 +94,7 @@ RSpec.describe Works::Edit::AccessSettingsComponent, type: :component do
       expect(page).to have_field('release_option', type: 'radio', with: 'delay')
       expect(page).to have_css("div[data-controller='datepicker'][data-datepicker-min-value='#{Time.zone.today.iso8601}']") # rubocop:disable Layout/LineLength
       expect(page).to have_css("div[data-controller='datepicker'][data-datepicker-max-value='#{max_release_date.iso8601}']") # rubocop:disable Layout/LineLength
-      expect(page).to have_text("Date must be before #{max_release_date.strftime('%B %d, %Y')}")
+      expect(page).to have_text("Date must be before #{max_release_date.strftime('%Y-%m-%d')}")
       expect(page).to have_field('max_release_date', type: 'hidden', with: work_max_release_date.iso8601)
     end
   end
