@@ -8,6 +8,9 @@ require 'okcomputer'
 OkComputer.mount_at = 'status'
 OkComputer.check_in_parallel = true
 
+# Required
+OkComputer::Registry.register 'ruby_version', OkComputer::RubyVersionCheck.new
+
 if Settings.rabbitmq.enabled
   OkComputer::Registry.register 'rabbit',
                                 OkComputer::RabbitmqCheck.new(hostname: Settings.rabbitmq.hostname,
