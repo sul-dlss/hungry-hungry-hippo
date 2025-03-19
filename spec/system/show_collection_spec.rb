@@ -200,4 +200,17 @@ RSpec.describe 'Show a collection' do
       end
     end
   end
+
+  context 'when depositor' do
+    let(:user) { collection.depositors.first }
+
+    it 'shows a collection' do
+      visit collection_path(druid)
+
+      # Header
+      expect(page).to have_css('h1', text: collection.title)
+      expect(page).to have_no_link('Edit', href: edit_collection_path(druid))
+      expect(page).to have_link('Deposit to this collection', href: new_work_path(collection_druid: druid))
+    end
+  end
 end

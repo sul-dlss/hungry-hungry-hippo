@@ -13,7 +13,7 @@ module Collections
       delegate :title, to: :presenter
 
       def allowed_to_create_work?
-        helpers.allowed_to?(:create_work?, presenter.collection)
+        helpers.allowed_to?(:create?, presenter.collection, with: WorkPolicy)
       end
 
       def edit?
