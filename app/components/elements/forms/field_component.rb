@@ -38,14 +38,14 @@ module Elements
       end
 
       def field_aria
-        {}.tap do |arias|
+        error_aria.tap do |arias|
           # Set aria-required if we want to indicate required, but the field
           # does not actually have a required attribute
           #
           # This is used for collection/work forms where we do server-side
           # validation and don't want to block form submission on empty fields
           arias[:required] = true if @mark_required
-        end.merge(error_aria)
+        end
       end
 
       def error_aria
