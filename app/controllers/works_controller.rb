@@ -210,6 +210,9 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   def perform_deposit(work:)
     work.deposit_persist! # Sets the deposit state
+    # If a collection manager or reviewer has rejected a previous review, we need to approve the work again
+    work.approve! if work.rejected_review?
+
     DepositWorkJob.perform_later(work:, work_form: @work_form, deposit: deposit?, request_review: request_review?,
                                  current_user:)
   end
