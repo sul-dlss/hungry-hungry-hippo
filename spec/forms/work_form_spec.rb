@@ -139,7 +139,16 @@ RSpec.describe WorkForm do
     context 'when release option is delay and release date is blank' do
       it 'is invalid' do
         expect(form).not_to be_valid
-        expect(form.errors[:release_date]).to include("can't be blank")
+        expect(form.errors[:release_date]).to include('must be formatted YYYY-MM-DD')
+      end
+    end
+
+    context 'when release option is delay and release date is malformed' do
+      let(:release_date) { 1.day.from_now.strftime('%m-%d-%Y') }
+
+      it 'is invalid' do
+        expect(form).not_to be_valid
+        expect(form.errors[:release_date]).to include('must be formatted YYYY-MM-DD')
       end
     end
 
