@@ -172,6 +172,16 @@ RSpec.describe ToWorkForm::Mapper, type: :mapping do
     end
   end
 
+  context 'when default terms of use with trailing newline' do
+    let(:cocina_object) do
+      dro_with_metadata_fixture.new(access: { useAndReproductionStatement: I18n.t('license.terms_of_use') + "\n" })
+    end
+
+    it 'maps to work form without custom rights statement' do
+      expect(work_form.custom_rights_statement).to be_nil
+    end
+  end
+
   context 'when the DOI does not exist' do
     let(:doi_assigned) { false }
 

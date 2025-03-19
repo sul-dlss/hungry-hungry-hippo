@@ -69,7 +69,7 @@ module ToWorkForm
       return if use_statement == default_terms_of_use
 
       # Remove the default terms
-      use_statement.delete_suffix(default_terms_of_use)&.strip
+      use_statement.strip.delete_suffix(default_terms_of_use)&.strip&.presence
     end
 
     def default_terms_of_use
