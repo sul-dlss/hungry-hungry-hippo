@@ -14,7 +14,7 @@
         <p>Select at least <%= term_phrase %> below:</p>
       <% end %>
       <div class="types-container">
-        <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: work_subtypes, **disabled_params) %>
+        <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: work_subtypes, input_data:, **disabled_params) %>
       </div>
 
       <%# More options %>
@@ -24,7 +24,7 @@
         <% end %>
         <%= tag.div id: collapse_id, class: 'collapse' do %>
           <div class="types-container">
-            <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: more_types, **disabled_params) %>
+            <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: more_types, input_data:, **disabled_params) %>
           </div>
         <% end %>
       <% end %>

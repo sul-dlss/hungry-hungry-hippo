@@ -1,13 +1,14 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
+  static outlets = ['tab-error']
   static targets = ['subtypeSection', 'workTypeRadio', 'workTypeHidden']
 
   connect () {
-    if (this.hasWorkTypeHiddenTarget) this.showSubtypes({ target: this.workTypeHiddenTarget })
+    if (this.hasWorkTypeHiddenTarget) this.showSubtypes({ target: this.workTypeHiddenTarget, skipClearingInvalidStatus: true })
 
     const checkedWorkTypeRadio = this.workTypeRadioTargets.find((radio) => radio.checked)
-    if (checkedWorkTypeRadio) this.showSubtypes({ target: checkedWorkTypeRadio })
+    if (checkedWorkTypeRadio) this.showSubtypes({ target: checkedWorkTypeRadio, skipClearingInvalidStatus: true })
   }
 
   showSubtypes (event) {
@@ -21,5 +22,10 @@ export default class extends Controller {
         if (!show) input.checked = false
       })
     })
+    if (!event.skipClearingInvalidStatus) this.clearInvalidStatus()
+  }
+
+  clearInvalidStatus () {
+    this.tabErrorOutlet.clearInvalidStatus('types')
   }
 }
