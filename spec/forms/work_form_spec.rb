@@ -183,7 +183,6 @@ RSpec.describe WorkForm do
         title: title_fixture,
         contact_emails_attributes: contact_emails_fixture,
         contributors_attributes: contributors_fixture,
-        # collection_druid: collection.druid,
         create_date_type: 'range',
         create_date_range_from_attributes: creation_date_range_from,
         create_date_range_to_attributes: creation_date_range_to,
@@ -256,6 +255,118 @@ RSpec.describe WorkForm do
         expect(form).not_to be_valid
 
         expect(form.errors[:create_date_range_from]).to eq(['must have both a start and end date'])
+      end
+    end
+  end
+
+  describe 'keyword validation' do
+    let(:form) do
+      described_class.new(
+        title: title_fixture,
+        contact_emails_attributes: contact_emails_fixture,
+        contributors_attributes: contributors_fixture,
+        abstract: abstract_fixture,
+        license: license_fixture,
+        work_type: work_type_fixture,
+        keywords_attributes:,
+        whats_changing: 'Initial version'
+      )
+    end
+
+    context 'when keywords are provided' do
+      let(:keywords_attributes) do
+        [
+          {
+            'text' => 'Biology',
+            'uri' => 'http://id.worldcat.org/fast/832383/',
+            'cocina_type' => 'topic'
+          },
+          {
+            'text' => 'MyBespokeKeyword',
+            'uri' => nil,
+            'cocina_type' => nil
+          }
+        ]
+      end
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+
+      it 'is valid when depositing' do
+        expect(form.valid?(:deposit)).to be true
+      end
+    end
+
+    context 'when keywords with a blank are provided' do
+      let(:keywords_attributes) do
+        [
+          {
+            'text' => 'Biology',
+            'uri' => 'http://id.worldcat.org/fast/832383/',
+            'cocina_type' => 'topic'
+          },
+          {
+            'text' => '',
+            'uri' => nil,
+            'cocina_type' => nil
+          }
+        ]
+      end
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+
+      it 'is valid when depositing' do
+        expect(form.valid?(:deposit)).to be true
+      end
+    end
+
+    context 'when keywords with only a blank are provided' do
+      let(:keywords_attributes) do
+        [
+          {
+            'text' => '',
+            'uri' => nil,
+            'cocina_type' => nil
+          }
+        ]
+      end
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+
+      it 'is invalid when depositing' do
+        expect(form.valid?(:deposit)).to be false
+        expect(form.keywords.first.errors[:text]).to include('can\'t be blank')
+      end
+    end
+
+    context 'when keywords with multiple blank provided' do
+      let(:keywords_attributes) do
+        [
+          {
+            'text' => '',
+            'uri' => nil,
+            'cocina_type' => nil
+          },
+          {
+            'text' => '',
+            'uri' => nil,
+            'cocina_type' => nil
+          }
+        ]
+      end
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+
+      it 'is invalid when depositing' do
+        expect(form.valid?(:deposit)).to be false
+        expect(form.keywords.first.errors[:text]).to include('can\'t be blank')
       end
     end
   end
