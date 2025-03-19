@@ -37,11 +37,6 @@ module Elements
         @help_text_id ||= form.field_id(field_name, 'help')
       end
 
-      # Used to tell the label to draw a "*" to indicate required
-      def mark_required?
-        @mark_required || required
-      end
-
       def field_aria
         {}.tap do |arias|
           # Set aria-required if we want to indicate required, but the field

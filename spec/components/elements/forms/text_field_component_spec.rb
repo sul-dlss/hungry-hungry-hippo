@@ -84,22 +84,12 @@ RSpec.describe Elements::Forms::TextFieldComponent, type: :component do
       render_inline(described_class.new(form:, field_name:, required: true))
       expect(page).to have_css('input[required]')
     end
-
-    it 'adds a required marker to the label' do
-      render_inline(described_class.new(form:, field_name:, required: true))
-      expect(page).to have_css('span.required-indicator', text: '*')
-    end
   end
 
   context 'when field is marked as required (server-side validation)' do
     it 'creates input with aria-required attribute' do
       render_inline(described_class.new(form:, field_name:, mark_required: true))
       expect(page).to have_css('input[aria-required="true"]')
-    end
-
-    it 'adds a required marker to the label' do
-      render_inline(described_class.new(form:, field_name:, mark_required: true))
-      expect(page).to have_css('span.required-indicator', text: '*')
     end
   end
 end
