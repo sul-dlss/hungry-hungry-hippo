@@ -11,4 +11,8 @@ class KeywordForm < ApplicationForm
   #       fields.
   attribute :uri, :string
   attribute :cocina_type, :string
+
+  def empty?
+    text.blank?
+  end
 end

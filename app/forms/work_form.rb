@@ -7,6 +7,10 @@ class WorkForm < ApplicationForm
   accepts_nested_attributes_for :related_links, :related_works, :publication_date, :contact_emails, :contributors,
                                 :keywords, :create_date_single, :create_date_range_from, :create_date_range_to
 
+  before_validation do
+    self.keywords_attributes = keywords_attributes.reject(&:empty?).map(&:attributes).presence || [{}]
+  end
+
   validate :content_file_presence, on: :deposit
   with_options if: -> { create_date_type == 'range' } do
     validate :create_date_range_complete
