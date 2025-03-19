@@ -20,6 +20,7 @@ class Work < ApplicationRecord
 
     event :approve do
       transition pending_review: :review_not_in_progress
+      transition rejected_review: :review_not_in_progress
     end
 
     before_transition pending_review: :review_not_in_progress do |work|

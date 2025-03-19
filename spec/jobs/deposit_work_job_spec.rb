@@ -189,4 +189,27 @@ RSpec.describe DepositWorkJob do
       expect(Sdr::Repository).not_to have_received(:accession)
     end
   end
+
+  context 'when review rejected but a manager or reviewer deposits' do
+    let(:druid) { druid_fixture }
+    let(:cocina_object) { dro_with_metadata_fixture }
+    let(:work_form) { WorkForm.new(druid:, content_id: content.id) }
+    let(:work) { create(:work, :rejected_review, druid:, collection:) }
+    let(:version_status) { build(:draft_version_status) }
+    let(:collection) { create(:collection, druid: collection_druid_fixture, reviewers: [current_user]) }
+
+    before do
+      allow(Sdr::Repository).to receive(:status).and_return(version_status)
+      allow(ToCocina::Work::Mapper).to receive(:call).and_return(cocina_object)
+      allow(RoundtripSupport).to receive(:changed?).and_return(false)
+    end
+
+    it 'approves the work and deposits' do
+      expect(work.rejected_review?).to be true
+      described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:)
+
+      expect(work.review_not_in_progress?).to be true
+      expect(Sdr::Repository).to have_received(:accession)
+    end
+  end
 end
