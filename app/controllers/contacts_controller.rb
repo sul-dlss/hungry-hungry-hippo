@@ -4,10 +4,12 @@
 class ContactsController < ApplicationController
   skip_verify_authorized
 
-  def new
-    @contact_form = ContactForm.new(welcome: params[:welcome])
+  before_action :set_contact_form_conditions
 
-    render :new, layout: false
+  def new
+    @contact_form = ContactForm.new
+
+    render :new
   end
 
   def create
@@ -22,8 +24,6 @@ class ContactsController < ApplicationController
       collections: contact_form.selected_collections
     ).jira_email.deliver_later
 
-    @welcome = contact_form.welcome?
-
     render :success, status: :created
   end
 
@@ -31,5 +31,10 @@ class ContactsController < ApplicationController
 
   def contact_form_params
     params.expect(contact: ContactForm.user_editable_attributes)
+  end
+
+  def set_contact_form_conditions
+    @welcome = params[:welcome] == 'true'
+    @modal = params[:modal] == 'true'
   end
 end

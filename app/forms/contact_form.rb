@@ -15,7 +15,6 @@ class ContactForm < ApplicationForm
   attribute :affiliation, :string
   attribute :help_how, :string
   attribute :message, :string
-  attribute :welcome, :boolean, default: false
 
   attribute :faculty_student_staff_collection, :boolean, default: false
   attribute :research_data_collection, :boolean, default: false

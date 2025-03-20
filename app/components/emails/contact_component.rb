@@ -10,7 +10,7 @@ module Emails
     end
 
     def contact_form_link
-      link_to nil, contact_form_url
+      link_to nil, new_contacts_url
     end
   end
 end
