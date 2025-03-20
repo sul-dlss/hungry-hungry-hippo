@@ -8,7 +8,7 @@ RSpec.describe 'Discard a work draft' do
 
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
-  let(:collection) { create(:collection, :with_druid, user:) }
+  let(:collection) { create(:collection, :with_druid, managers: [user]) }
   let!(:work) { create(:work, druid:, title: title_fixture, collection:, user:) }
   let(:cocina_object) { dro_with_metadata_fixture }
 
@@ -49,7 +49,7 @@ RSpec.describe 'Discard a work draft' do
     let(:version_status) { build(:first_draft_version_status) }
 
     let(:collection_cocina_object) { collection_with_metadata_fixture }
-    let(:collection) { create(:collection, druid: collection_cocina_object.externalIdentifier, user:) }
+    let(:collection) { create(:collection, druid: collection_cocina_object.externalIdentifier, managers: [user]) }
 
     before do
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)

@@ -7,7 +7,7 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
     CollectionPresenter.new(collection_form:, version_status:, collection:)
   end
   let(:collection_form) { CollectionForm.new(druid: druid_fixture, title:) }
-  let(:collection) { create(:collection, user:, druid: druid_fixture) }
+  let(:collection) { create(:collection, managers: [user], druid: druid_fixture) }
   let(:user) { create(:user) }
   let(:version_status) do
     instance_double(VersionStatus, editable?: editable, first_draft?: first_draft)

@@ -79,7 +79,7 @@ RSpec.describe 'Show collection' do
 
   context 'when no custom rights statement' do
     let(:cocina_object) { collection_with_metadata_fixture }
-    let!(:collection) { create(:collection, druid:, user:, custom_rights_statement_option: 'no') }
+    let!(:collection) { create(:collection, druid:, managers: [user], custom_rights_statement_option: 'no') }
     let(:user) { create(:user) }
 
     before do
@@ -101,7 +101,7 @@ RSpec.describe 'Show collection' do
   context 'when depositor selects custom rights statement and custom instructions are present' do
     let(:cocina_object) { collection_with_metadata_fixture }
     let!(:collection) do
-      create(:collection, druid:, user:, custom_rights_statement_option: 'depositor_selects',
+      create(:collection, druid:, managers: [user], custom_rights_statement_option: 'depositor_selects',
                           custom_rights_statement_instructions: 'Whip it!')
     end
     let(:user) { create(:user) }

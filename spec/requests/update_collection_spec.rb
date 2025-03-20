@@ -29,6 +29,19 @@ RSpec.describe 'Update collection' do
   context 'when the user is authorized' do
     let(:user) { create(:user) }
 
+    context 'with the collection manager role' do
+      before do
+        create(:collection, druid:, managers: [user])
+        sign_in(user)
+      end
+
+      it 'allows the delete' do
+        put "/collections/#{druid}"
+
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+
     context 'with the collection owner role' do
       before do
         create(:collection, druid:, user:)
@@ -38,20 +51,7 @@ RSpec.describe 'Update collection' do
       it 'redirects to root' do
         put "/collections/#{druid}"
 
-        expect(response).to have_http_status(:bad_request)
-      end
-    end
-
-    context 'with the collection manager role' do
-      before do
-        create(:collection, druid:, managers: [user])
-        sign_in(user)
-      end
-
-      it 'redirects to root' do
-        put "/collections/#{druid}"
-
-        expect(response).to have_http_status(:bad_request)
+        expect(response).to redirect_to(root_path)
       end
     end
 

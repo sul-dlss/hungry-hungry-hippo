@@ -7,9 +7,7 @@ RSpec.describe 'Edit a collection' do
   include CollectionMappingFixtures
 
   let(:druid) { collection_druid_fixture }
-  let(:user) { create(:user) }
   let(:manager) { create(:user, name: 'Al Borland', email_address: 'alborland@stanford.edu') }
-  let(:groups) { ['dlss:hydrus-app-collection-creators'] }
 
   let(:cocina_object) do
     collection_with_metadata_fixture
@@ -45,7 +43,7 @@ RSpec.describe 'Edit a collection' do
     end
     allow(Sdr::Repository).to receive(:accession)
 
-    create(:collection, :with_required_types, :with_required_contact_email, druid:, user:, managers: [manager])
+    create(:collection, :with_required_types, :with_required_contact_email, druid:, managers: [manager])
 
     create(:user, name: 'Stephen King', email_address: 'stepking@stanford.edu')
     # Joe Hill is not created yet.
@@ -61,7 +59,7 @@ RSpec.describe 'Edit a collection' do
       .with(sunetid: 'pennywise')
       .and_return(AccountService::Account.new(name: 'Pennywise', sunetid: 'pennywise'))
 
-    sign_in(user, groups:)
+    sign_in(create(:user), groups: ['dlss:hydrus-app-administrators'])
   end
 
   it 'edits a collection' do
