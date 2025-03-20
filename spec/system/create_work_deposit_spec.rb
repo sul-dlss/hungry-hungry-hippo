@@ -124,7 +124,7 @@ RSpec.describe 'Create a work deposit' do
 
       choose('Text')
       check('Thesis')
-      click_link_or_button('See more options')
+      click_link_or_button('See more subtype options')
       expect(page).to have_field('3D model', type: 'checkbox', with: '3D model')
       # Type does not appear under more options
       expect(page).to have_no_field('Text', type: 'checkbox', with: 'Text')

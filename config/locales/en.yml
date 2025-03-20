@@ -295,7 +295,7 @@ en:
         work_subtypes:
           label: 'Which of the following terms further describe your deposit?'
           tooltip_html: >-
-            Choose terms from this list to further describe the type of work you are depositing. Click "See more options" for additional terms. An entry here is only required if you have selected "Mixed Materials," "Music," or  "Other" above.
+            Choose terms from this list to further describe the type of work you are depositing. Click "See more subtype options" for additional terms. An entry here is only required if you have selected "Mixed Materials," "Music," or  "Other" above.
       messages:
         cannot_be_edited_html: "If you need to make a change to this work, contact <a href=\"mailto:%{support_email}\">%{support_email}</a>."
         no_changes: "You have not made any changes to the form. Please click 'Cancel' to exit this page."
@@ -403,7 +403,7 @@ en:
           label: 'Select which subtypes will be applied to each deposit'
           help_text: 'You can also designate required subtypes that will be associated with every deposit to this collection. Depositors will not be able to remove this subtype, but will be able to add more subtypes.'
           tooltip_html: >-
-            You have the option, but are not required, to choose terms from this list to further describe the works that are deposited in this collection. Click "See more options" for additional terms. Depositors will be able to add more of these terms, but will not be able to remove the terms you select.
+            You have the option, but are not required, to choose terms from this list to further describe the works that are deposited in this collection. Click "See more subtype options" for additional terms. Depositors will be able to add more of these terms, but will not be able to remove the terms you select.
         doi_option:
           label: 'Will a DOI be assigned to the deposits in this collection?'
           tooltip_html: >-
