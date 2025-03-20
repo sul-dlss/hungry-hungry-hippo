@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Validate a collection deposit' do
+  include CollectionMappingFixtures
+
   let(:user) { create(:user) }
   let(:groups) { ['dlss:hydrus-app-collection-creators'] }
   let(:collection_path) { new_collection_path }
@@ -83,5 +85,43 @@ RSpec.describe 'Validate a collection deposit' do
     # No Alert!
     expect(page).to have_no_css('.alert-danger', text: 'Required fields have not been filled out.')
     expect(DepositCollectionJob).to have_received(:perform_later)
+  end
+
+  context 'when nested field has validation errors' do
+    let(:druid) { collection_druid_fixture }
+    let(:manager) { create(:user, name: 'Al Borland', email_address: 'alborland@stanford.edu') }
+
+    let(:cocina_object) do
+      collection_with_metadata_fixture
+    end
+
+    let(:version_status) { build(:draft_version_status, version: cocina_object.version) }
+
+    before do
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+
+      create(:collection, druid:, managers: [manager])
+
+      sign_in(create(:user), groups: ['dlss:hydrus-app-administrators'])
+    end
+
+    it 'validates a collection' do
+      visit edit_collection_path(druid, tab: 'related_links')
+
+      expect(page).to have_css('h1', text: collection_title_fixture)
+
+      find('.nav-link', text: 'Contributors').click
+      select('Creator', from: 'Role')
+      within('.orcid-section') do
+        find('label', text: 'Enter name manually').click
+      end
+      fill_in('First name', with: 'Jane')
+
+      find('.nav-link', text: 'Save your collection').click
+      click_link_or_button('Save', class: 'btn-primary')
+
+      expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+    end
   end
 end

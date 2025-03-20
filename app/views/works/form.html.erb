@@ -13,7 +13,7 @@
   <% end %>
   <%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: @work_form.title || t('works.edit.no_title'), classes: 'mb-3') %>
   <%= render Works::Show::ReviewRejectedComponent.new(work: @work) if @work %>
-  <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if @work_form.errors.present? %>
+  <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if defined?(@valid) && !@valid %>
   <% form_id = dom_id(@work_form, 'tabbed_form') %>
   <% discard_draft_form_id = dom_id(@work_form, 'discard_form') %>
   <%= render Edit::DiscardDraftFormComponent.new(presenter: @work_presenter, id: discard_draft_form_id) if @work_presenter %>

@@ -3,11 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Validate a work deposit' do
+  include_context 'with FAST connection'
+
   let(:user) { create(:user, agreed_to_terms_at: nil) }
   let(:collection) { create(:collection, :with_druid, user:) }
   let(:work_path_with_collection) { new_work_path(collection_druid: collection.druid) }
 
+  let(:query) { 'Biology' } # Used in stubbing out FAST connection
+
   before do
+    allow(DepositWorkJob).to receive(:perform_later)
+
     sign_in(user)
   end
 
@@ -101,6 +107,12 @@ RSpec.describe 'Validate a work deposit' do
     # Make the abstract valid
     fill_in('Abstract', with: abstract_fixture)
 
+    # Keywords are marked invalid
+    expect(page).to have_field('Keywords (one per box)', class: 'is-invalid')
+    fill_in('Keywords (one per box)', with: keywords_fixture.first['text'])
+    # Wait for autocomplete to load. FAST is stubbed out.
+    expect(page).to have_css('li.list-group-item', text: 'Tearooms')
+
     # Work type is marked invalid
     find('.nav-link', text: 'Type of deposit').click
     expect(page).to have_css('.nav-link.active', text: 'Type of deposit')
@@ -148,10 +160,32 @@ RSpec.describe 'Validate a work deposit' do
 
     # Try to deposit again
     click_link_or_button('Deposit', class: 'btn-primary')
-    expect(page).to have_css('h1', text: title_fixture)
-    expect(page).to have_current_path(work_path_with_collection)
 
-    # No Alert!
-    expect(page).to have_no_css('.alert-danger', text: 'Required fields have not been filled out.')
+    # On wait page
+    expect(page).to have_text('We are saving your work.')
+  end
+
+  context 'when nested field has validation errors' do
+    it 'validates a work' do
+      visit work_path_with_collection
+
+      expect(page).to have_css('h1', text: 'Untitled deposit')
+
+      # Filling in title
+      find('.nav-link', text: 'Title and contact').click
+      fill_in('work_title', with: title_fixture)
+
+      find('.nav-link', text: 'Contributors').click
+
+      # Fill in the author name only
+      within('.orcid-section') do
+        find('label', text: 'Enter name manually').click
+      end
+      fill_in('First name', with: contributors_fixture.first['first_name'])
+
+      click_link_or_button('Save as draft')
+
+      expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+    end
   end
 end
