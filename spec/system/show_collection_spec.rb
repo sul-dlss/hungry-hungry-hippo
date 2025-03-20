@@ -12,10 +12,11 @@ RSpec.describe 'Show a collection' do
 
   let!(:collection) do
     create(:collection, :with_review_workflow, :with_works, :with_required_types,
-           :with_required_contact_email, works_count:, reviewers_count: 2, druid:, title: collection_title_fixture,
+           :with_required_contact_email, works_count: 3, reviewers_count: 2, druid:, title: collection_title_fixture,
                                          contributors: [contributor], managers: [manager], depositors: [depositor])
   end
-  let(:works_count) { 3 }
+  let(:works) { collection.works.order(:title) }
+
   let(:cocina_object) { collection_with_metadata_fixture }
   let(:version_status) { build(:openable_version_status) }
   let(:contributor) { create(:person_contributor, first_name: 'Jane', last_name: 'Stanford', orcid: 'https://orcid.org/0001-0002-0003-0004') }
@@ -175,14 +176,14 @@ RSpec.describe 'Show a collection' do
         expect(page).to have_css('th', text: 'Link for sharing')
         all_trs = page.all('tbody tr')
         expect(all_trs.size).to eq(2) # Since paginated
-        work = collection.works[0]
+        work = works[0]
         row = all_trs.find { |tr| tr.has_css?('td:nth-of-type(1)', text: work.title) }
         within(row) do
           expect(page).to have_css('td:nth-of-type(2)', text: work.user.name)
           expect(page).to have_css('td:nth-of-type(3)', text: 'Pending review')
           expect(page).to have_css('td:nth-of-type(5)', text: "https://doi.org/10.80343/#{work.druid.delete_prefix('druid:')}")
         end
-        work = collection.works[1]
+        work = works[1]
         row = all_trs.find { |tr| tr.has_css?('td:nth-of-type(1)', text: work.title) }
         within(row) do
           expect(page).to have_css('td:nth-of-type(3)', text: 'Deposited')
@@ -201,7 +202,7 @@ RSpec.describe 'Show a collection' do
         all_trs = page.all('tbody tr')
         expect(all_trs.size).to eq(1) # Since paginated
         within(all_trs.first) do
-          expect(page).to have_css('td:nth-of-type(1)', text: collection.works[2].title)
+          expect(page).to have_css('td:nth-of-type(1)', text: works[2].title)
           expect(page).to have_css('td:nth-of-type(3)', text: 'Saving')
           expect(page).to have_css('td:nth-of-type(5)', exact_text: '')
         end
