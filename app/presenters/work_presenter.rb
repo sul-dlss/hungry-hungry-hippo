@@ -113,9 +113,13 @@ class WorkPresenter < FormPresenter
     content_files_in_deposit.sum(&:size)
   end
 
+  def editable?
+    super && !pending_review?
+  end
+
   private
 
-  delegate :collection, :created_at, :user, :review_state, to: :work
+  delegate :collection, :created_at, :user, :review_state, :pending_review?, to: :work
 
   def content_files_in_deposit
     ContentFile.where(content_id: work_form.content_id)
