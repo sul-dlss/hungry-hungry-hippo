@@ -69,11 +69,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   resources :content_files, only: %i[edit update destroy show]
 
-  # This route is used by the emails for the contact the SDR team link.
-  direct :contact_form do
-    { controller: 'home', action: 'show', anchor: 'help' }
-  end
-
   resource :terms, only: :show
 
   resource :contacts, only: %i[new create]

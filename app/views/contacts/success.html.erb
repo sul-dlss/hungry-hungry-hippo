@@ -6,6 +6,6 @@
   <% if @welcome %>
     <%= render Elements::ButtonLinkComponent.new(data: { turbo_frame: '_top' }, link: root_path, label: 'Back', variant: :link) %>
   <% else %>
-    <%= render 'form', contact_form: ContactForm.new %>
+    <%= render 'form', contact_form: ContactForm.new, welcome: @welcome, modal: @modal %>
   <% end %>
 </turbo-frame>

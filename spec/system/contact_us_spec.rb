@@ -22,6 +22,7 @@ RSpec.describe 'Contact SDR staff' do
       check('Stanford Research Data')
       check('Stanford University Open Access Articles')
       fill_in('Describe your issue', with: 'How do I deposit content?')
+      expect(page).to have_link('Cancel')
       click_link_or_button('Submit')
     end
 
