@@ -323,7 +323,7 @@ en:
           tab_label: 'Authors / Contributors'
           label: 'Authors / Contributors'
           help_text: >-
-            List authors / contributors in they order they should appear in the citation.
+            List authors / contributors in the order they should appear in the citation.
             Use the arrows on the right to move entries up or down in the list.
           tooltip_html: >-
             List all individuals or organizations who played a role in this work. List each individual or organization only once.
