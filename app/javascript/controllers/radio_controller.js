@@ -27,6 +27,9 @@ export default class extends Controller {
       if (!this.radioTargets.includes(input)) {
         input.disabled = disable
       }
+      // If not disabled, an element is marked required because it must go with
+      // the selected radio button.
+      input.setAttribute('aria-required', !disable)
     })
     // Elements that have radio-hide class will be hidden when the radio is not selected.
     const hideEls = containerElem.querySelectorAll('.radio-hide')
