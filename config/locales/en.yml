@@ -47,8 +47,8 @@ en:
     collection_not_empty: 'Collection must be empty to delete.'
     draft_discarded: 'Draft discarded.'
     validation: >-
-      Required fields have not been filled out. Click on the sections highlighted in red on
-      the left to correct the errors and then try depositing again.
+      Required fields have not been filled out. Click on the sections highlighted on
+      the left to correct the errors and then try saving or depositing again.
     work_deleted: 'Work successfully deleted.'
     work_moved: 'Work moved to the new collection.'
     wait_for_it: 'We are saving your work. Feel free to navigate away from this page.'
