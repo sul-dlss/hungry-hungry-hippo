@@ -7,14 +7,16 @@ RSpec.describe Works::Show::HeaderComponent, type: :component do
     WorkPresenter.new(work_form:, version_status:, work:)
   end
   let(:work_form) { WorkForm.new(druid: druid_fixture, title:) }
-  let(:work) { instance_double(Work, review_state: 'review_not_in_progress') }
+  let(:work) { create(:work, review_state:) }
   let(:version_status) do
-    instance_double(VersionStatus, editable?: editable, discardable?: discardable, status_message:)
+    instance_double(VersionStatus, editable?: editable_version_status, discardable?: discardable_version_status,
+                                   status_message:)
   end
   let(:title) { 'My Title' }
   let(:status_message) { 'Depositing' }
-  let(:editable) { false }
-  let(:discardable) { false }
+  let(:editable_version_status) { false }
+  let(:discardable_version_status) { false }
+  let(:review_state) { 'review_not_in_progress' }
 
   let(:user) { build(:user) }
   let(:groups) { [] }
@@ -32,8 +34,8 @@ RSpec.describe Works::Show::HeaderComponent, type: :component do
     expect(page).to have_no_button('Discard draft')
   end
 
-  context 'when editable' do
-    let(:editable) { true }
+  context 'when editable version status' do
+    let(:editable_version_status) { true }
 
     it 'renders the edit button' do
       render_inline(described_class.new(presenter:))
@@ -41,8 +43,18 @@ RSpec.describe Works::Show::HeaderComponent, type: :component do
     end
   end
 
+  context 'when pending review' do
+    let(:editable_version_status) { true }
+    let(:review_state) { 'pending_review' }
+
+    it 'does not render the edit button' do
+      render_inline(described_class.new(presenter:))
+      expect(page).to have_no_link('Edit or deposit')
+    end
+  end
+
   context 'when discardable' do
-    let(:discardable) { true }
+    let(:discardable_version_status) { true }
 
     it 'renders the discard button' do
       render_inline(described_class.new(presenter:))
@@ -54,7 +66,7 @@ RSpec.describe Works::Show::HeaderComponent, type: :component do
 
   context 'when user is an admin' do
     let(:groups) { ['dlss:hydrus-app-administrators'] }
-    let(:editable) { true }
+    let(:editable_version_status) { true }
 
     it 'renders the admin functions button' do
       render_inline(described_class.new(presenter:))
