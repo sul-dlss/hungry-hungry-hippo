@@ -173,9 +173,9 @@ en:
       Use this link for sharing the public page for your deposit. Links become active when the deposit is completed.
   publication_date:
     edit:
-      legend: 'Previous publication date (optional)'
+      legend: 'Publication date (optional)'
       tooltip_html: >-
-        Use only for works that were previously published elsewhere, prior to their deposit in the SDR. Date entered must be in the past.
+        Use this field to enter the publication date for the content you are uploading, if present. For example, the date indicated on the title page of the work.
   related_links:
     edit:
       legend: 'Related links (optional)'
