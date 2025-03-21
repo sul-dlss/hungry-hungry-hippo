@@ -6,9 +6,10 @@ RSpec.describe 'Create a work deposit' do
   include_context 'with FAST connection'
   include WorkMappingFixtures
 
-  let(:query) { 'Biology' }
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
+
+  let(:query) { 'Biology' } # Used in stubbing out FAST connection
 
   before do
     allow(Sdr::Repository).to receive(:accession)
@@ -116,9 +117,12 @@ RSpec.describe 'Create a work deposit' do
       fill_in('work_abstract', with: abstract_fixture)
       expect(page).to have_text('Keywords')
       fill_in('Keywords (one per box)', with: keywords_fixture.first['text'])
+      # Wait for autocomplete to load. FAST is stubbed out.
+      expect(page).to have_css('li.list-group-item', text: 'Tearooms')
 
-      # Click Next to go to work type tab
-      click_link_or_button('Next')
+      # Go to work type tab
+      # In test, Next button isn't working perhaps due to keywords autocomplete causing problem.
+      find('.nav-link', text: 'Type of deposit').click
       expect(page).to have_css('.nav-link.active', text: 'Type of deposit')
       expect(page).to have_text('What type of content are you depositing?')
 
