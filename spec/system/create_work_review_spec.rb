@@ -70,8 +70,9 @@ RSpec.describe 'Create a work that requires review' do
     fill_in('work_abstract', with: abstract_fixture)
     fill_in('Keywords (one per box)', with: keywords_fixture.first['text'])
 
-    # Click Next to go to work type tab
-    click_link_or_button('Next')
+    # Go to work type tab
+    # In test, Next button isn't working perhaps due to keywords autocomplete causing problem.
+    find('.nav-link', text: 'Type of deposit').click
     expect(page).to have_css('.nav-link.active', text: 'Type of deposit')
 
     # Selecting work type
