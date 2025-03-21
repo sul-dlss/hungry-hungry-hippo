@@ -12,6 +12,8 @@
 
       <% if minimum_terms.positive? %>
         <p>Select at least <%= term_phrase %> below:</p>
+      <% else %>
+        <p>Choosing additional terms is optional.</p>
       <% end %>
       <div class="types-container">
         <%= render Elements::Forms::InputCollectionCheckboxesComponent.new(form:, field_name: :work_subtypes, input_collection: work_subtypes, **disabled_params) %>
