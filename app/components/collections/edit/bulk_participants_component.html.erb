@@ -1,7 +1,7 @@
 <%= render NestedComponentPresenter.for(form:, field_name:, model_class:, form_component: Collections::Edit::ParticipantComponent, fieldset_classes: 'pane-section', bordered: false, fieldset_id:, hide_add_button: true) do |component| %>
   <% component.with_before_section do %>
     <%= tag.div data:, class: 'mb-3' do %>
-      <%= tag.label class: 'form-label', for: textarea_id do %>Enter list of email addresses or Stanford id's of people you would like to add.<% end %>
+      <%= tag.label class: 'form-label', for: textarea_id do %>Enter list of email addresses or Stanford id's of people you would like to add. <em>(Email aliases are not yet supported.)</em><% end %>
       <%= tag.textarea id: textarea_id, class: 'form-control mb-2', rows: 5, data: { participants_target: 'input' } %>
       <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: validation_field_name, classes: 'mb-2') %>
       <%= render Elements::ButtonComponent.new(label: add_button_label, variant: :'outline-primary', data: { action: 'participants#lookup' }) %>
