@@ -39,7 +39,7 @@ module Dashboard
       end
 
       def works
-        @works ||= collection.works.filter { |work| helpers.allowed_to?(:show, work) }
+        @works ||= helpers.authorized_scope(collection.works, as: :collection, scope_options: { collection: })
       end
 
       def see_all?
