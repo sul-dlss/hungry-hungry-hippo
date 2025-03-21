@@ -40,7 +40,7 @@
 
   <%# Other %>
   <%= render Edit::WorkSubtypesComponent.new(form:, work_type: 'Other', label:, tooltip:) do %>
-    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :other_work_subtype, label: 'Specify "Other" type*') %>
+    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :other_work_subtype, label: 'Description for "Other" required.') %>
   <% end %>
 
   <% required_subtypes.each do |subtype| %>

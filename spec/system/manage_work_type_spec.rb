@@ -87,7 +87,7 @@ RSpec.describe 'Edit work type and subtypes for a work' do
       # Other
       choose('Other')
       expect(page).to have_no_text('Which of the following terms further describe your deposit?')
-      expect(page).to have_field('Specify "Other" type*', type: :text)
+      expect(page).to have_field('Description for "Other" required.', type: :text)
       expect(page).to have_no_field('3D model', type: :checkbox)
       expect(page).to have_no_text('See more subtype options')
 
