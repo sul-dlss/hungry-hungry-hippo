@@ -12,39 +12,18 @@
   <%= form.hidden_field :cited %>
   <%= form.hidden_field :collection_required %>
 
-  <div class="fw-bold">Collection manager has entered this author / contributor</div>
-  <p>You cannot edit this author / contributor, but you can add more authors / contributors by clicking the button below.</p>
+  <div class="h5 mb-0">Required author / contributor</div>
+  <p class="mb-4">You cannot edit this entry, but you can reorder it. Add more entries by clicking the button below.</p>
 
-  <dl class="mt-4">
-    <dt>Include author / contributor in citation</dt>
-    <dd><%= helpers.human_boolean(cited) %></dd>
-
+  <p class="mb-1">
     <% if person? %>
-      <dt>Author / contributor type</dt>
-      <dd>Individual</dd>
-
-      <dt>Role</dt>
-      <dd><%= person_role.titleize %></dd>
-
-      <dt>Name</dt>
-      <dd>
-        <%= first_name %> <%= last_name %>
-        <% if with_orcid %><br><%= orcid %><% end %>
-      </dd>
+      <b><%= first_name %> <%= last_name %></b> <i>(<%= person_role.titleize %>)</i> will be included in the list of authors and contributors for this work.
+      This person <%= cited ? 'will' : 'will not' %> be included in the citation.
     <% else %>
-      <dt>Author / Contributor type</dt>
-      <dd>Organization</dd>
-
-      <dt>Role</dt>
-      <dd><%= organization_role.titleize %></dd>
-
-      <dt>Name</dt>
-      <dd>
-        <%= organization_name %>
-        <% if suborganization_name %><br><%= suborganization_name %><% end %>
-      </dd>
+      <b><%= organization_name %></b> <i>(<%= organization_role.titleize %>)</i> will be included in the list of authors and contributors for this work.
+      This organization <%= cited ? 'will' : 'will not' %> be included in the citation.
     <% end %>
-  </dl>
+  </p>
 <% else %>
   <%= tag.div data: contributors_data do %>
     <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :role_type, label_classes: 'fw-bold',
