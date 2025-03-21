@@ -2,7 +2,7 @@
   <% if label.present? %>
     <th class="col-3" scope="row">
       <%= label %>
-      <%= render Elements::TooltipComponent.new(tooltip:) %>
+      <%= render Elements::TooltipComponent.new(target_label: label, tooltip:) %>
     </th>
   <% end %>
   <% values.each do |value| %>
