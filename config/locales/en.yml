@@ -77,6 +77,8 @@ en:
       orcid:
         invalid: 'must be formatted as "XXXX-XXXX-XXXX-XXXX"'
   date:
+    formats:
+      slashes_short: "%m/%d/%Y"
     fields:
       year:
         label: 'Year'
