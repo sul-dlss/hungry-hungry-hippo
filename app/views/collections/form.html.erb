@@ -14,7 +14,7 @@
     <% end %>
   <% end %>
   <%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: @collection_form.title || 'Untitled collection', classes: 'mb-3') %>
-  <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if @collection_form.errors.present? %>
+  <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if defined?(@valid) && !@valid %>
   <% discard_draft_form_id = dom_id(@collection_form, 'discard_form') %>
   <%= render Edit::DiscardDraftFormComponent.new(presenter: @collection_presenter, id: discard_draft_form_id) if @collection_presenter %>
   <% active_tab_name = params[:tab]&.to_sym || :details %>

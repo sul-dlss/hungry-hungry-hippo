@@ -56,7 +56,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     authorize! @collection, with: WorkPolicy
 
     # The validation_context param determines whether extra validations are applied, e.g., for deposits.
-    if @work_form.valid?(validation_context)
+    if (@valid = @work_form.valid?(validation_context))
       work = Work.create!(title: @work_form.title, user: current_user, collection: @collection)
       perform_deposit(work:)
       redirect_to wait_works_path(work.id)
@@ -73,13 +73,11 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     @work_form = WorkForm.new(**update_work_params)
     @content = Content.find(@work_form.content_id)
 
-    work_is_valid = @work_form.valid?(validation_context)
-
-    if work_is_valid && perform_deposit?
+    if (@valid = @work_form.valid?(validation_context)) && perform_deposit?
       perform_deposit(work: @work)
       redirect_to wait_works_path(@work.id)
     else
-      handle_no_changes if work_is_valid
+      handle_no_changes if @valid
       set_license_presenter
       set_presenter
       render :form, status: :unprocessable_entity

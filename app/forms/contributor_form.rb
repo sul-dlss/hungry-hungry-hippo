@@ -45,7 +45,7 @@ class ContributorForm < ApplicationForm
     return false if role_type != 'person'
     return true unless with_names
 
-    first_name.present? && last_name.present?
+    first_name.present? || last_name.present?
   end
 
   def organization?(with_names: false)
