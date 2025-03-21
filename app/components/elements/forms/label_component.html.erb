@@ -2,4 +2,4 @@
   <%= label_text %>
 <% end %>
 <%# This is outside the label so that clicking on it doesn't toggle some inputs like checkboxes. %>
-<%= render Elements::TooltipComponent.new(tooltip:) %>
+<%= render Elements::TooltipComponent.new(target_label: label_text, tooltip:) %>

@@ -2,7 +2,7 @@
   <% component.with_legend do %>
     <h3 class="tooltip-header">
       <%= render Edit::LabelComponent.new(label_text:, hidden_label:) %>
-      <%= render Elements::TooltipComponent.new(tooltip:) %>
+      <%= render Elements::TooltipComponent.new(target_label: label_text, tooltip:) %>
     </h3>
   <% end %>
   <%= before_section %>
