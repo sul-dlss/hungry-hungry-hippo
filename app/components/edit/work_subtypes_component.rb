@@ -30,6 +30,12 @@ module Edit
       }
     end
 
+    def input_data
+      {
+        action: 'work-type#clearInvalidStatus'
+      }
+    end
+
     def work_subtypes
       @work_subtypes ||= WorkType.subtypes_for(work_type)
     end

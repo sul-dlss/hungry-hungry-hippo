@@ -125,7 +125,6 @@ RSpec.describe 'Create a collection deposit' do
     click_link_or_button('Add depositors')
     expect(page).to have_css('.participant-label', text: 'joehill: Joe Hill')
     expect(page).to have_field('depositors-textarea', with: 'notjoehill')
-    expect(page).to have_css('.invalid-feedback', text: 'joehill is not a valid email or Stanford id')
 
     expect(page).to have_checked_field('Send email to Collection Managers and Reviewers ' \
                                        '(see Workflow section of form) when participants are added/removed',

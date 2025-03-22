@@ -1,4 +1,4 @@
-<div data-controller="work-type">
+<div data-controller="work-type" data-work-type-tab-error-outlet=".tab-error">
   <div class="pane-section">
     <%= render Elements::Forms::FieldsetComponent.new(label: t('works.edit.fields.work_type.label'), tooltip: t('works.edit.fields.work_type.tooltip_html'), required: true) do %>
       <% if readonly? %>

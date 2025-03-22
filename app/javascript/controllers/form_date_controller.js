@@ -1,13 +1,14 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
+  static outlets = ['tab-error']
   static targets = ['year', 'month', 'day', 'approximate']
 
   connect () {
-    this.update()
+    this.update({ skipClearingInvalidStatus: true })
   }
 
-  update () {
+  update (event) {
     // Disable month and day fields if year is empty
     // Disable day field if month is empty
     // Disable approximate checkbox if day field
@@ -23,6 +24,8 @@ export default class extends Controller {
     if (!this.hasApproximateTarget) return
     this.approximateTarget.disabled = this.dayTarget.value !== ''
     this.dayTarget.disabled = this.dayTarget.disabled || this.approximateTarget.checked
+
+    if (!event?.skipClearingInvalidStatus) this.tabErrorOutlet.clearInvalidStatus('dates')
   }
 
   reset () {
