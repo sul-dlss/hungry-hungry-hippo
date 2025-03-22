@@ -27,7 +27,7 @@
         <% if fixed_release_date? %>
           <%= form.hidden_field :release_date %>
         <% else %>
-          <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :release_date, min: min_release_date, max: max_release_date, help_text: datepicker_help_text, label: 'Release date', hidden_label: true, container_classes: 'ms-2') %>
+          <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :release_date, help_text: datepicker_help_text, label: 'Release date', hidden_label: true, container_classes: 'ms-2') %>
         <% end %>
       </div>
     </div>

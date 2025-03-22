@@ -1,6 +1,5 @@
 import { Application } from '@hotwired/stimulus'
 import { Autocomplete } from 'stimulus-autocomplete'
-import { Datepicker } from 'stimulus-datepicker'
 
 const application = Application.start()
 

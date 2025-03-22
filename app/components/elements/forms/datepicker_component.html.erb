@@ -1,16 +1,6 @@
-<%= tag.div class: container_classes, hidden:, data: picker_data do %>
-  <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: label, hidden_label:, classes: label_classes) %>
-  <%# This input-group is for the enabled state %>
-  <div class="input-group radio-hide">
-    <%= form.text_field field_name, class: 'form-control', required:, aria: field_aria, disabled:, data:, placeholder:, style: styles, form: form_id %>
-    <span class="input-group-text" data-datepicker-target="toggle"><%= helpers.calendar_icon %></span>
-  </div>
-  <%# This input-group is for the disabled state. The radio controller will toggle between them. %>
-  <div class="input-group radio-show">
-    <input type="text" class="form-control" disabled autocomplete="off">
-    <span class="input-group-text" style="background-color: var(--bs-secondary-bg);"><%= helpers.calendar_icon %></span>
-  </div>
-
-  <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name:) %>
+<%= tag.div class: container_classes, hidden:, data: do %>
+  <%= render Elements::Forms::LabelComponent.new(form:, field_name:, tooltip:, label_text: label, hidden_label:, classes: label_classes) %>
+  <%= form.date_field field_name, class: input_classes, required:, aria: field_aria, disabled:, data: input_data, placeholder:, style: styles, form: form_id, readonly:, min:, max: %>
+  <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name:, classes: error_classes) %>
   <%= render Elements::Forms::HelpTextComponent.new(id: help_text_id, help_text:) %>
 <% end %>
