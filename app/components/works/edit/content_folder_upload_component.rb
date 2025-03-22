@@ -19,6 +19,10 @@ module Works
           dropzone_folder_dropzone_outlet: '.dropzone'
         }
       end
+
+      def label
+        'Upload to this folder'
+      end
     end
   end
 end
