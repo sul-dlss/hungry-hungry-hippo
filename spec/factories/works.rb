@@ -12,6 +12,11 @@ FactoryBot.define do
       deposit_state { 'deposit_registering_or_updating' }
     end
 
+    trait :rejected_review do
+      review_state { 'rejected_review' }
+      deposit_state { 'deposit_registering_or_updating' }
+    end
+
     trait :with_druid do
       druid { generate(:unique_druid) }
     end
