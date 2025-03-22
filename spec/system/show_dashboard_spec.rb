@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Show dashboard', :rack_test do
   include ActionView::Helpers::SanitizeHelper
 
-  context 'when existing user has works and collections' do
+  context 'when a managing user has works and collections' do
     let!(:work) { create(:work, :with_druid, user:, collection:) }
     let!(:work_without_druid) { create(:work, user:, collection:) }
     let!(:draft_work) { create(:work, :with_druid, user:, collection:) }
@@ -69,6 +69,69 @@ RSpec.describe 'Show dashboard', :rack_test do
         within("tr#table_collection_#{collection.id}_work_#{draft_work.id}") do
           expect(page).to have_css('td', text: draft_work.title)
           expect(page).to have_css('td', text: 'New version in draft')
+        end
+      end
+    end
+  end
+
+  context 'when a depositor has draft and pending review works' do
+    let!(:work) { create(:work, :with_druid, user:, collection:) }
+    let!(:draft_work) { create(:work, :with_druid, user:, collection:) }
+    let!(:pending_review_work) { create(:work, user:, collection:, review_state: 'pending_review') }
+    let(:collection) { create(:collection, :with_druid, depositors: [user], review_enabled: true) }
+    let(:user) { create(:user) }
+    let(:version_status) { build(:accessioning_version_status) }
+    let(:draft_version_status) { build(:draft_version_status) }
+    let(:pending_review_version_status) { build(:first_draft_version_status) }
+    let(:banner_text) { strip_links(I18n.t('banner.dashboard_html')) }
+
+    before do
+      allow(Sdr::Repository).to receive(:statuses).and_return({ work.druid => version_status,
+                                                                draft_work.druid => draft_version_status,
+                                                                pending_review_work.druid => pending_review_version_status }) # rubocop:disable Layout/LineLength
+      sign_in(user)
+    end
+
+    it 'displays the dashboard' do
+      visit dashboard_path
+
+      expect(page).to have_css('h1', text: "#{user.name} - Dashboard")
+
+      expect(page).to have_css('meta[name="turbo-cache-control"][content="no-preview"]', visible: :hidden)
+
+      expect(page).to have_no_link('Admin')
+
+      if banner_text.present?
+        expect(page).to have_css('.alert.alert-info', text: banner_text)
+      else
+        expect(page).to have_no_css('.alert.alert-info')
+      end
+
+      # Drafts section
+      expect(page).to have_css('h2', text: 'Drafts - please complete')
+      within('table#drafts-table') do
+        expect(page).to have_css('td', text: draft_work.title)
+        expect(page).to have_no_css('td', text: pending_review_work.title)
+      end
+
+      # Your collections section
+      expect(page).to have_css('h2', text: 'Your collections')
+      expect(page).to have_css('h3', text: collection.title)
+      expect(page).to have_no_css('.alert', text: 'Congratulations on taking the first step')
+
+      # Works table
+      within("table#table_collection_#{collection.id}") do
+        within("tr#table_collection_#{collection.id}_work_#{work.id}") do
+          expect(page).to have_css('td', text: work.title)
+          expect(page).to have_css('td', text: 'Depositing')
+        end
+        within("tr#table_collection_#{collection.id}_work_#{draft_work.id}") do
+          expect(page).to have_css('td', text: draft_work.title)
+          expect(page).to have_css('td', text: 'New version in draft')
+        end
+        within("tr#table_collection_#{collection.id}_work_#{pending_review_work.id}") do
+          expect(page).to have_css('td', text: pending_review_work.title)
+          expect(page).to have_css('td', text: 'Pending review')
         end
       end
     end

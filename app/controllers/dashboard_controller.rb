@@ -26,8 +26,14 @@ class DashboardController < ApplicationController
     @draft_works = []
     @status_map = current_user.your_works.to_h do |work|
       version_status = druid_to_status_map[work.druid] || VersionStatus::NilStatus.new
-      @draft_works << work if version_status.draft? && work.user == current_user
+      @draft_works << work if draft?(work, version_status)
       [work.id, version_status]
     end
+  end
+
+  def draft?(work, version_status)
+    return false if work.pending_review? || work.rejected_review?
+
+    version_status.draft? && work.user == current_user
   end
 end
