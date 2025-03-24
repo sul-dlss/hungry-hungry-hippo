@@ -21,8 +21,13 @@ module Works
 
       # Determine the difference between the last filepath parts and the current filepath parts.
       def new_path_parts
-        ComponentSupport::FileHierarchy.path_parts_diff(last_path_parts: @last_path_parts,
-                                                        path_parts:)
+        @new_path_parts ||= ComponentSupport::FileHierarchy.path_parts_diff(last_path_parts: @last_path_parts,
+                                                                            path_parts:)
+      end
+
+      def upload_path_for(level)
+        range_end = path_parts.length - new_path_parts.length + level
+        path_parts.slice(0..range_end).join('/')
       end
     end
   end
