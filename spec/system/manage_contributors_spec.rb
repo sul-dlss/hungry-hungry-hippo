@@ -248,7 +248,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
 
   context 'with required contributors' do
     let(:required_person) { create(:person_contributor) }
-    let(:required_organization) { create(:organization_contributor) }
+    let(:required_organization) { create(:organization_contributor, cited: false) }
 
     before do
       create(:collection, user:, druid: collection_druid_fixture,
@@ -269,22 +269,19 @@ RSpec.describe 'Manage contributors for a work deposit' do
       expect(form_instances.count).to eq(2)
 
       within(form_instances[0]) do
-        expect(page).to have_text('Collection manager has entered this author / contributor')
+        expect(page).to have_text('Required author / contributor')
         expect(page).to have_no_button('Clear')
-        expect(page).to have_css('dd', text: 'Yes')
-        expect(page).to have_css('dd', text: 'Individual')
-        expect(page).to have_css('dd', text: 'Author')
-        expect(page).to have_css('dd', text: "#{required_person.first_name} #{required_person.last_name}")
-        expect(page).to have_css('dd', text: '0001-0002-0003-0004')
+        expect(page).to have_text("#{required_person.first_name} #{required_person.last_name} (Author) will be " \
+                                  'included in the list of authors and contributors for this work. This person will ' \
+                                  'be included in the citation.')
       end
 
       within(form_instances[1]) do
-        expect(page).to have_text('Collection manager has entered this author / contributor')
+        expect(page).to have_text('Required author / contributor')
         expect(page).to have_no_button('Clear')
-        expect(page).to have_css('dd', text: 'Yes')
-        expect(page).to have_css('dd', text: 'Organization')
-        expect(page).to have_css('dd', text: 'Funder')
-        expect(page).to have_css('dd', text: required_organization.organization_name.to_s)
+        expect(page).to have_text("#{required_organization.organization_name} (Funder) will be included in the list " \
+                                  'of authors and contributors for this work. This organization will not be included ' \
+                                  'in the citation.')
       end
 
       # Add a contributor
@@ -313,17 +310,17 @@ RSpec.describe 'Manage contributors for a work deposit' do
       expect(form_instances.count).to eq(3)
 
       within(form_instances[0]) do
-        expect(page).to have_text('Collection manager has entered this author / contributor')
-        expect(page).to have_css('dd', text: "#{required_person.first_name} #{required_person.last_name}")
+        expect(page).to have_text('Required author / contributor')
+        expect(page).to have_text("#{required_person.first_name} #{required_person.last_name} (Author) will be include")
       end
 
       within(form_instances[1]) do
-        expect(page).to have_text('Collection manager has entered this author / contributor')
-        expect(page).to have_css('dd', text: required_organization.organization_name.to_s)
+        expect(page).to have_text('Required author / contributor')
+        expect(page).to have_text("#{required_organization.organization_name} (Funder) will be included")
       end
 
       within(form_instances[2]) do
-        expect(page).to have_no_text('Collection manager has entered this author / contributor')
+        expect(page).to have_no_text('Required author / contributor')
         expect(page).to have_field('First name', with: 'Jane')
       end
 
