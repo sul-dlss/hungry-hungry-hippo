@@ -172,6 +172,10 @@ table.table-treegrid {
     font-weight: 600;
     padding: 8px
   }
+
+  td[role="gridcell"] {
+    overflow-wrap: break-word;
+  }
 }
 
 // Following should be set in component library.
