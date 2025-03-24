@@ -10,6 +10,10 @@ module Works
       end
 
       attr_reader :content_file
+
+      def label
+        'Remove this file'
+      end
     end
   end
 end
