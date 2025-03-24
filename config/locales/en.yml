@@ -133,7 +133,7 @@ en:
     edit:
       fields:
         email:
-          label: 'Contact email'
+          label: 'Contact email (one per box)'
           collections:
             tooltip_html: >-
               Enter one or more valid email addresses (one per box) where people can write to ask questions about this collection. Consider using a group address that will be active and monitored for a long time to ensure that questions are received. Email addresses will appear on the public page for the collection.
