@@ -2,14 +2,13 @@ import { Controller } from '@hotwired/stimulus'
 import Dropzone from 'dropzone'
 
 export default class extends Controller {
+  static outlets = ['dropzone-files', 'tab-error']
   static targets = ['progress', 'error', 'folderAlert', 'folderAlertText']
   static values = {
     existingFiles: { type: Number, default: 0 },
     maxFiles: Number,
     maxFilesize: Number
   }
-
-  static outlets = ['dropzone-files']
 
   // Expected error handling behavior:
   // - A blank directory is ignored.
@@ -55,6 +54,7 @@ export default class extends Controller {
       this.updateProgress(0, true)
       // Reload the files section to show the newly uploaded files.
       this.dropzoneFilesOutlets.forEach(dropzoneFiles => dropzoneFiles.reload())
+      this.tabErrorOutlet.clearInvalidStatus('files')
       this.element.dataset.dropzoneReady = true
     })
     this.dropzone.on('sendingmultiple', (files, xhr, data) => {

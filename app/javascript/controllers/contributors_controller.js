@@ -28,6 +28,7 @@ export default class extends Controller {
 
   useMyOrcid () {
     this.orcidInputTarget.value = this.orcidValue
+    this.orcidInputTarget.dispatchEvent(new Event('change')) // To clear validation errors on changes
     this.resolveOrcid()
   }
 
@@ -70,9 +71,11 @@ export default class extends Controller {
         this.orcidFirstNameInputTarget.disabled = false
         this.orcidFirstNameInputTarget.dataset.disabled = 'false'
         this.orcidFirstNameInputTarget.value = data.first_name
+        this.orcidFirstNameInputTarget.dispatchEvent(new Event('change')) // To clear validation errors on changes
         this.orcidLastNameInputTarget.disabled = false
         this.orcidLastNameInputTarget.dataset.disabled = 'false'
         this.orcidLastNameInputTarget.value = data.last_name
+        this.orcidLastNameInputTarget.dispatchEvent(new Event('change')) // To clear validation errors on changes
         this.orcidMessageTarget.textContent = `Name associated with this ORCID iD is ${data.first_name} ${data.last_name}.`
       })
       .catch(error => console.dir(error))

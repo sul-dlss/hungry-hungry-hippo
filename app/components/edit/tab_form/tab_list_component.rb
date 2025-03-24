@@ -31,7 +31,7 @@ module Edit
       def classes
         # Provides d-flex, tabbable-panes as the static default classes
         # merged with any additional classes passed in.
-        merge_classes(%w[row tabbable-panes gx-4 gy-4 mb-5], @classes)
+        merge_classes(%w[tab-error row tabbable-panes gx-4 gy-4 mb-5], @classes)
       end
     end
   end
