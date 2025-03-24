@@ -51,7 +51,8 @@
 <div class="pane-section">
   <%= render Edit::LabelComponent.new(label_text: 'Download access') %>
   <% if depositor_selects_access? %>
-    <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :access, options: access_options, width: 250, label: 'Who can download the files?') %>
+    <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :access, options: access_options, width: 250,
+                                                         label: 'Who can download the files? If all files are hidden, this setting will apply if/when files are unhidden.') %>
   <% else %>
     <p>
       <%= collection_selects_access_message %>
