@@ -154,7 +154,7 @@ table.table-treegrid {
   tr[aria-expanded] > td:first-child::before {
     cursor: pointer;
     font-family: bootstrap-icons;
-    content: "\F286"; // chevron-up
+    content: "\F282"; // chevron-down
     display: inline-block;
     font-weight: 900;
     font-size: .9rem;
