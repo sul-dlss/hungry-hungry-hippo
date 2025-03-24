@@ -9,6 +9,7 @@
   <%= render Admin::FunctionDropdownComponent.new do |component| %>
     <% component.with_function(label: 'Search for user', link: admin_users_path) %>
     <% component.with_function(label: 'Get SUNet IDs of depositors', link: new_admin_depositors_search_path) %>
+    <% component.with_function(label: 'Emulate being not an admin', link: new_admin_emulate_path) %>
   <% end %>
 </div>
 
