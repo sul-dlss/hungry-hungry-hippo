@@ -72,4 +72,8 @@ class CollectionPresenter < FormPresenter
   def created_datetime
     collection.created_at.localtime.strftime('%b %d, %Y, %l:%M%p %Z')
   end
+
+  def contact_emails
+    contact_emails_attributes.map(&:email).join(', ')
+  end
 end
