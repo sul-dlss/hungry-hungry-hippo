@@ -560,3 +560,5 @@ Capybara/NegationMatcherAfterVisit: # new in 2.22
 Capybara/RSpec/PredicateMatcher: # new in 2.19
   Enabled: true
 
+Style/ComparableBetween: # new in 1.74
+  Enabled: true
