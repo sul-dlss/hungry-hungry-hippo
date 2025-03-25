@@ -32,7 +32,7 @@ module ToCocina
           contributor: ContributorsMapper.call(contributor_forms: work_form.contributors_attributes),
           note: note_params,
           event: EventsMapper.call(work_form:),
-          subject: CocinaGenerators::Description.keywords(keywords: work_form.keywords_attributes),
+          subject: subject_params,
           form: TypesMapper.call(work_form:),
           purl: Sdr::Purl.from_druid(druid: work_form.druid),
           relatedResource: related_resource_params,
@@ -70,6 +70,12 @@ module ToCocina
             contact_emails_attributes << ContactEmailForm.new(email: work_form.works_contact_email)
           end
         )
+      end
+
+      def subject_params
+        # Note that deduping only on text.
+        keyword_forms = work_form.keywords_attributes.uniq(&:text)
+        CocinaGenerators::Description.keywords(keywords: keyword_forms)
       end
     end
   end
