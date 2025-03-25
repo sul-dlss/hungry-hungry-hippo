@@ -61,13 +61,13 @@ accessionWF steps can be completed with:
 bin/rake "development:accession[druid:dh414dd1590]"
 ```
 
-### System tests
+### Tests
 
-#### Javascript
+#### Speeding up system tests
 
-By default, system tests will use headless Chrome, which supports javascript.
+By default, system tests will use the headless Chrome browser driver, which supports JavaScript.
 
-If your test doesn't use javascript, consider using Rack, as it is much faster:
+If your test doesn't use JavaScript, consider using the Rack driver, as it is much faster:
 ```
 RSpec.describe 'Create a work draft', :rack_test do
 ```
@@ -83,6 +83,10 @@ In cases in which Cyperful doesn't work, temporarily using a headed test might b
 ```
 RSpec.describe 'Manage files for a work', :headed_test do
 ```
+
+#### Viewing test coverage
+
+Whenever the test suite is run, RSpec uses SimpleCov to generate test coverage reports. To view the most recent test coverage report in your browser, open `coverage/index.html`. NOTE: if the latest test run did not run against the entire test suite---e.g., if you tested a single file or directory---you should expect the coverage to appear very low.
 
 ### Code Linters
 
