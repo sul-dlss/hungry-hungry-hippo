@@ -4,7 +4,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <span><%= content_file.label %></span>
       <%= render Elements::ButtonLinkComponent.new(link: edit_content_file_path(content_file), variant: :'outline-primary', bordered: false, classes: 'me-3 py-0') do %>
-        <%= helpers.edit_icon %><span class="visually-hidden">Edit</span>
+        <%= helpers.edit_icon %><span class="visually-hidden">Edit this file</span>
       <% end %>
     </div>
   <% else %>

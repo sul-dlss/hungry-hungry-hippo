@@ -15,28 +15,27 @@ export default class extends Controller {
   // Also, unsaved-changes#allowFormSubmission should be called for any submit or cancel buttons:
   // <input type="submit" data-action="unsaved-changes#allowFormSubmission">
   connect () {
-    this.changedForms = new Set([])
+    this.allowSubmit = true
   }
 
   changed (event) {
-    this.changedForms.add(event.target.form.action)
+    this.allowSubmit = false
   }
 
   leavingPage (event) {
-    if (this.changedForms.size > 0) {
-      if (event.type === 'turbo:before-visit') {
-        if (!window.confirm(LEAVING_PAGE_MESSAGE)) {
-          event.preventDefault()
-        }
-      } else {
-        event.returnValue = LEAVING_PAGE_MESSAGE
-        return event.returnValue
+    if (this.allowSubmit) return
+
+    if (event.type === 'turbo:before-visit') {
+      if (!window.confirm(LEAVING_PAGE_MESSAGE)) {
+        event.preventDefault()
       }
+    } else {
+      event.returnValue = LEAVING_PAGE_MESSAGE
+      return event.returnValue
     }
   }
 
   allowFormSubmission (event) {
-    const form = event.target.form ? event.target.form : event.target.closest('form')
-    this.changedForms.delete(form.action)
+    this.allowSubmit = true
   }
 }

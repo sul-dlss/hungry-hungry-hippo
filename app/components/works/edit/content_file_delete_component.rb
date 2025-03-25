@@ -14,6 +14,14 @@ module Works
       def label
         'Remove this file'
       end
+
+      def data
+        {
+          turbo_method: :delete,
+          turbo_frame: dom_id(content_file.content, 'show'),
+          action: 'unsaved-changes#changed'
+        }
+      end
     end
   end
 end
