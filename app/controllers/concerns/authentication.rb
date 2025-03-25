@@ -79,7 +79,7 @@ module Authentication
     # This situation typically occurs when we are scanned for vulnerabilities and a
     # CRLF Injection attack is attempted, see https://www.geeksforgeeks.org/crlf-injection-attack/
     session[:return_to_after_authenticating] = request.url if request.url.size < MAX_URL_SIZE
-    redirect_to login_path
+    redirect_to main_app.login_path
   end
 
   def after_authentication_url
