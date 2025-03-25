@@ -39,6 +39,9 @@ export default class extends Controller {
       // This shows the user that something is going on since there may be a paused before first progress.
       this.updateProgress(2)
 
+      // This notifies the unsaved changes controller that the form has changed.
+      this.element.dispatchEvent(new Event('change'))
+
       this.clearErrors()
     })
     this.dropzone.on('totaluploadprogress', (totalUploadProgress) => {

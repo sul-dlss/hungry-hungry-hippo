@@ -60,7 +60,7 @@ RSpec.describe 'Manage files for a work' do
 
       # Hide the file
       first('input[type=checkbox][name="content_file[hide]"]').check
-      expect(page).to have_field('hide', checked: true)
+      expect(page).to have_field('Hide this file', checked: true)
       sleep 0.25 # Wait for the form to submit.
       expect(content_file.reload.hide).to be true
 
@@ -153,7 +153,7 @@ RSpec.describe 'Manage files for a work' do
 
       # Hide the file
       first('input[type=checkbox][name="content_file[hide]"]').check
-      expect(page).to have_field('hide', checked: true)
+      expect(page).to have_field('Hide this file', checked: true)
       sleep 0.25 # Wait for the form to submit.
       expect(content_file.reload.hide).to be true
     end
