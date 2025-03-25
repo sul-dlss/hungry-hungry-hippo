@@ -10,6 +10,7 @@ RSpec.describe 'Show dashboard', :rack_test do
     let!(:work_without_druid) { create(:work, user:, collection:) }
     let!(:draft_work) { create(:work, :with_druid, user:, collection:) }
     let!(:pending_review_work) { create(:work, user:, collection:, review_state: 'pending_review') }
+    let!(:rejected_review_work) { create(:work, user:, collection:, review_state: 'rejected_review') }
     let(:collection) do
       create(:collection, :with_druid, user:, managers: [user], reviewers: [user], review_enabled: true)
     end
@@ -43,6 +44,8 @@ RSpec.describe 'Show dashboard', :rack_test do
       expect(page).to have_css('h2', text: 'Drafts - please complete')
       within('table#drafts-table') do
         expect(page).to have_css('td', text: draft_work.title)
+        expect(page).to have_no_css('td', text: pending_review_work.title)
+        expect(page).to have_css('td', text: rejected_review_work.title)
       end
 
       # Pending review section

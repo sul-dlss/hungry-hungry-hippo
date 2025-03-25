@@ -32,8 +32,8 @@ class DashboardController < ApplicationController
   end
 
   def draft?(work, version_status)
-    return false if work.pending_review? || work.rejected_review?
+    return false if work.pending_review?
 
-    version_status.draft? && work.user == current_user
+    (work.rejected_review? || version_status.draft?) && work.user == current_user
   end
 end
