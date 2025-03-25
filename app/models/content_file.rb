@@ -32,4 +32,8 @@ class ContentFile < ApplicationRecord
   def pdf?
     mime_type == 'application/pdf'
   end
+
+  def hierarchy?
+    path_parts.present?
+  end
 end

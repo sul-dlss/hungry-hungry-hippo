@@ -77,6 +77,18 @@ RSpec.describe ToCocina::Work::Mapper, type: :mapping do
     end
   end
 
+  context 'with a work with a PDF file hierarchical structure' do
+    let(:content) { new_pdf_content_with_hierarchy_fixture }
+
+    it 'maps to cocina' do
+      expect(cocina_object.type).to eq 'https://cocina.sul.stanford.edu/models/object'
+      fileset1 = cocina_object.structural.contains.find { |fileset| fileset.label == 'My file' }
+      expect(fileset1.type).to eq 'https://cocina.sul.stanford.edu/models/resources/file'
+      fileset2 = cocina_object.structural.contains.find { |fileset| fileset.label == 'My sub file' }
+      expect(fileset2.type).to eq 'https://cocina.sul.stanford.edu/models/resources/file'
+    end
+  end
+
   context 'with a work with a hidden PDF file' do
     let(:content) { new_pdf_content_fixture(hide: true) }
 

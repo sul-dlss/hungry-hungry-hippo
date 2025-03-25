@@ -66,8 +66,24 @@ module WorkMappingFixtures
     ContentFile.create(
       file_type: 'attached',
       content:,
-      filepath: 'my_dir/my_file.pdf',
+      filepath: 'my_file.pdf',
       label: file_label_fixture,
+      size: file_size_fixture,
+      mime_type: 'application/pdf',
+      md5_digest: md5_fixture,
+      sha1_digest: sha1_fixture,
+      hide:
+    )
+    content
+  end
+
+  def new_pdf_content_with_hierarchy_fixture(user: nil, hide: false)
+    content = new_pdf_content_fixture(user:, hide:)
+    ContentFile.create(
+      file_type: 'attached',
+      content:,
+      filepath: 'my_sub_dir/my_second_file.pdf',
+      label: 'My sub file',
       size: file_size_fixture,
       mime_type: 'application/pdf',
       md5_digest: md5_fixture,
