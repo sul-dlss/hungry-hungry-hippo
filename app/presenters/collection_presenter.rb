@@ -2,6 +2,8 @@
 
 # Presents a collection
 class CollectionPresenter < FormPresenter
+  include ActionPolicy::Behaviour
+
   def initialize(collection:, collection_form:, version_status:)
     @collection = collection
     super(form: collection_form, version_status:)
@@ -75,5 +77,9 @@ class CollectionPresenter < FormPresenter
 
   def contact_emails
     contact_emails_attributes.map(&:email).join(', ')
+  end
+
+  def editable?
+    super && allowed_to?(:edit?, collection, context: { user: Current.user })
   end
 end
