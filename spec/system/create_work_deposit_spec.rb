@@ -156,7 +156,7 @@ RSpec.describe 'Create a work deposit' do
       expect(page).to have_css('.nav-link.active', text: 'Access settings')
       expect(page).to have_css('label', text: 'Release date')
       choose('On this date')
-      fill_in 'Release date', with: (Time.zone.today + 1.day).iso8601
+      fill_in 'Release date', with: (Time.zone.today + 1.day).strftime('%m/%d/%Y')
 
       expect(page).to have_css('label', text: 'Individual file visibility')
 

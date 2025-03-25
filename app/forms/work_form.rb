@@ -79,8 +79,6 @@ class WorkForm < ApplicationForm
 
   attribute :release_date, :date
   with_options if: -> { release_option == 'delay' } do |form|
-    form.validates :release_date, format: { with: /\A\d\d\d\d-\d\d-\d\d+\z/,
-                                            message: 'must be formatted YYYY-MM-DD' } # rubocop:disable Rails/I18nLocaleTexts
     form.validates :release_date, comparison: {
       greater_than_or_equal_to: -> { Time.zone.today },
       message: 'must be today or later' # rubocop:disable Rails/I18nLocaleTexts
@@ -88,7 +86,9 @@ class WorkForm < ApplicationForm
 
     form.validates :release_date, comparison: {
       less_than_or_equal_to: :max_release_date,
-      message: 'must be on or before %<count>s' # rubocop:disable Rails/I18nLocaleTexts
+      message: lambda do |_, data|
+        "must be on or before #{I18n.l(data[:count], format: :slashes_short)}"
+      end
     }
   end
   attribute :max_release_date, :date

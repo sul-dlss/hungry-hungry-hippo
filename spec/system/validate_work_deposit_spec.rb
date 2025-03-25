@@ -57,7 +57,7 @@ RSpec.describe 'Validate a work deposit' do
     find('.nav-link', text: 'Access settings').click
     expect(page).to have_css('.nav-link.active', text: 'Access settings')
     choose('On this date')
-    fill_in('Release date', with: (Time.zone.today - 1.day).iso8601)
+    fill_in('Release date', with: (Time.zone.today - 1.day).strftime('%m/%d/%Y'))
 
     # Terms of deposit is required, but skipping.
     find('.nav-link', text: 'Deposit', exact_text: true).click

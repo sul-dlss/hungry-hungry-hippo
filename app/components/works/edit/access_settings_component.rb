@@ -40,7 +40,7 @@ module Works
       end
 
       def datepicker_help_text
-        "Date must be before #{max_release_date&.strftime('%Y-%m-%d')}"
+        "Date must be before #{I18n.l(max_release_date, format: :slashes_short)}" if max_release_date
       end
 
       def delay_release_option_label
