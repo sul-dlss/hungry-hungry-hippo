@@ -2,5 +2,9 @@
 
 module Structure
   # Dropdown menu for user login/logout, used in the header
-  class LoginMenuComponent < ViewComponent::Base; end
+  class LoginMenuComponent < ViewComponent::Base
+    def admin?
+      Current.groups.include?(Settings.authorization_workgroup_names.administrators)
+    end
+  end
 end

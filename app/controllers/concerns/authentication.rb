@@ -106,11 +106,23 @@ module Authentication
   # This looks first in the session for groups, and then to the headers.
   # This allows the application session to outlive the shibboleth session
   def groups_from_session
+    set_groups_for_emulate_not_admin
     session['groups'] ||= begin
       raw_header = request.headers[Settings.http_headers.user_groups]
-      roles = ENV.fetch('ROLES', nil)
-      raw_header = roles if Rails.env.development?
+      raw_header = ENV.fetch('ROLES', nil) if Rails.env.development?
       raw_header&.split(';') || []
+    end
+  end
+
+  def set_groups_for_emulate_not_admin
+    # This cookie is set from the emulate admin page.
+    if cookies[:emulate_not_admin]
+      session['groups'] = ['emulating_not_admin']
+    # The absence of the cookie but the presence of the "emulating_not_admin" group indicates
+    # that should revert to normal groups.
+    # The cookie may be deleted by the user or when there is a new session.
+    elsif session['groups'] == ['emulating_not_admin']
+      session['groups'] = nil
     end
   end
 

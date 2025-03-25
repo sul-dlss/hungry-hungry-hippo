@@ -94,6 +94,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resource :druid_search, only: :new, controller: :druid_search do
       get :search
     end
+
+    resource :emulate, only: %i[new create], controller: :emulate
   end
 
   root 'home#show'
