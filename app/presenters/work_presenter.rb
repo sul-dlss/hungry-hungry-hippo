@@ -117,6 +117,10 @@ class WorkPresenter < FormPresenter
     super && !pending_review?
   end
 
+  def contact_emails
+    (contact_emails_attributes.map(&:email) + [works_contact_email]).compact.join(', ')
+  end
+
   private
 
   delegate :collection, :created_at, :user, :review_state, :pending_review?, to: :work

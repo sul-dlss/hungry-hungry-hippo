@@ -102,6 +102,7 @@ RSpec.describe 'Show a work' do
                                   })
   end
   let(:version_status) { build(:openable_version_status) }
+  let(:contact_emails) { (contact_emails_fixture.pluck('email') + [works_contact_email_fixture]) }
 
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
@@ -177,7 +178,8 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('tr', text: 'Title')
         expect(page).to have_css('td', text: work.title)
         expect(page).to have_css('tr', text: 'Contact emails')
-        expect(page).to have_css('td', text: contact_emails_fixture.pluck(:email).join(', '))
+        expect(page).to have_css('td',
+                                 text: contact_emails.join(', '))
       end
 
       # Contributors table

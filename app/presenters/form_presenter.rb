@@ -25,8 +25,4 @@ class FormPresenter < SimpleDelegator
       link_to_new_tab(related_link.text || related_link.url, related_link.url)
     end
   end
-
-  def contact_emails
-    contact_emails_attributes.map(&:email).join(', ')
-  end
 end
