@@ -7,6 +7,8 @@ class WorkForm < ApplicationForm
   accepts_nested_attributes_for :related_links, :related_works, :publication_date, :contact_emails, :contributors,
                                 :keywords, :create_date_single, :create_date_range_from, :create_date_range_to
 
+  validate :cited_contributor_presence, on: :deposit
+
   before_validation do
     self.keywords_attributes = keywords_attributes.reject(&:empty?).map(&:attributes).presence || [{}]
   end
@@ -143,5 +145,11 @@ class WorkForm < ApplicationForm
 
     errors.add(:work_subtypes_mixed_materials,
                "#{WorkType::MINIMUM_REQUIRED_MIXED_MATERIAL_SUBTYPES} terms are the minimum allowed")
+  end
+
+  def cited_contributor_presence
+    return if contributors_attributes.any?(&:cited)
+
+    errors.add(:contributors, 'must have at least one cited contributor')
   end
 end

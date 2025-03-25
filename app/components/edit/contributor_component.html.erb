@@ -44,13 +44,13 @@
     <div class="cited-section row mb-3">
       <div class="col-md-3 form-check">
         <div class="ps-3">
-          <%= form.radio_button :cited, 'true', class: 'form-check-input' %>
+          <%= form.radio_button :cited, 'true', class: 'form-check-input', data: { action: 'invalid-feedback#hide' } %>
           <%= form.label :cited_true, 'Yes', class: 'form-check-label' %>
         </div>
       </div>
 
       <div class="col-md-3 form-check">
-        <%= form.radio_button :cited, 'false', class: 'form-check-input' %>
+        <%= form.radio_button :cited, 'false', class: 'form-check-input', data: { action: 'invalid-feedback#hide' } %>
         <%= form.label :cited_false, 'No', class: 'form-check-label' %>
       </div>
     </div>

@@ -44,9 +44,10 @@ export default class extends Controller {
     }
   }
 
+  // Clear all invalid feedbacks on a pane and removes invalid from the tab.
   clearInvalidStatus (paneAndTabId) {
-    const tabElement = this.tabTargets.find(tab => tab.id === `${paneAndTabId}-tab`)
-    const paneElement = this.paneTargets.find(pane => pane.id === `${paneAndTabId}-pane`)
+    const tabElement = this.tabElementFromId(paneAndTabId)
+    const paneElement = this.paneElementFromId(paneAndTabId)
     const invalidElements = paneElement.querySelectorAll('.is-invalid')
     if (invalidElements.length > 0) {
       invalidElements.forEach(invalidElement => {
@@ -58,5 +59,20 @@ export default class extends Controller {
       })
       tabElement.classList.remove('is-invalid')
     }
+  }
+
+  updateTabInvalidStatus (paneAndTabId) {
+    const tabElement = this.tabElementFromId(paneAndTabId)
+    const paneElement = this.paneElementFromId(paneAndTabId)
+
+    if (!paneElement.querySelector('.is-invalid')) tabElement.classList.remove('is-invalid')
+  }
+
+  tabElementFromId (paneAndTabId) {
+    return this.tabTargets.find(tab => tab.id === `${paneAndTabId}-tab`)
+  }
+
+  paneElementFromId (paneAndTabId) {
+    return this.paneTargets.find(pane => pane.id === `${paneAndTabId}-pane`)
   }
 }

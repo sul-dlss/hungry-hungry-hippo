@@ -364,6 +364,50 @@ RSpec.describe WorkForm do
     end
   end
 
+  describe 'contributors validation' do
+    let(:form) do
+      described_class.new(
+        title: title_fixture,
+        contact_emails_attributes: contact_emails_fixture,
+        contributors_attributes:,
+        abstract: abstract_fixture,
+        license: license_fixture,
+        work_type: work_type_fixture,
+        whats_changing: 'Initial version'
+      )
+    end
+
+    context 'when a contributor that is cited is provided' do
+      let(:contributors_attributes) { contributors_fixture }
+
+      it 'is valid' do
+        expect(form.valid?(:deposit)).to be false
+      end
+    end
+
+    context 'when no cited contributor is provided' do
+      let(:contributors_attributes) do
+        contributors_fixture.map do |contributor_attrs|
+          contributor_attrs['cited'] = false
+          contributor_attrs
+        end
+      end
+
+      context 'when not depositing' do
+        it 'is valid' do
+          expect(form).to be_valid
+        end
+      end
+
+      context 'when depositing' do
+        it 'is invalid' do
+          expect(form.valid?(:deposit)).to be false
+          expect(form.errors[:contributors]).to include('must have at least one cited contributor')
+        end
+      end
+    end
+  end
+
   describe 'Abstract linefeed normalization' do
     let(:form) do
       described_class.new(
