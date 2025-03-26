@@ -83,7 +83,7 @@ RSpec.describe 'Show a collection' do
 
       # Work type table
       within('table#work-type-table') do
-        expect(page).to have_css('caption', text: 'Type of deposit')
+        expect(page).to have_css('caption', text: 'Type of deposits')
         expect(page).to have_link('Edit', href: edit_collection_path(druid, tab: 'types'))
         expect(page).to have_css('tr', text: 'Deposit type')
         expect(page).to have_css('td', text: work_type_fixture)
