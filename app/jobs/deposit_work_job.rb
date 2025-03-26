@@ -34,6 +34,8 @@ class DepositWorkJob < ApplicationJob
     if accession?(new_cocina_object:)
       work.accession!
       Sdr::Repository.accession(druid:)
+      # If a collection manager or reviewer has rejected a previous review, we need to approve the work again
+      work.approve! if work.rejected_review?
     else
       work.deposit_persist_complete!
     end
