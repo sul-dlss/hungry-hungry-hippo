@@ -9,7 +9,7 @@ module Elements
 
       def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists
                      reorderable: false, single_field: false, fieldset_classes: [], skip_tooltip: false,
-                     fieldset_id: nil, hide_add_button: false)
+                     fieldset_id: nil, hide_add_button: false, add_button_data: {})
         @form = form
         @model_class = model_class
         @field_name = field_name
@@ -27,10 +27,13 @@ module Elements
         # within this component would cause repetition and confusion.
         @skip_tooltip = skip_tooltip
         @hide_add_button = hide_add_button
+        @add_button_data = add_button_data
+        @add_button_data[:action] = merge_actions('click->nested-form#add', @add_button_data[:action])
         super()
       end
 
-      attr_reader :form, :model_class, :field_name, :form_component, :hidden_label, :fieldset_classes, :fieldset_id
+      attr_reader :form, :model_class, :field_name, :form_component, :hidden_label, :fieldset_classes, :fieldset_id,
+                  :add_button_data
 
       def label_text
         helpers.t("#{field_name}.edit.legend")
