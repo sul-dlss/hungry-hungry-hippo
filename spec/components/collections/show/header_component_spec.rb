@@ -18,7 +18,7 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
 
   before do
     allow(vc_test_controller).to receive(:current_user).and_return(user)
-    allow(Current).to receive(:groups).and_return([])
+    allow(Current).to receive_messages(groups: [], user:)
   end
 
   it 'renders the header' do
