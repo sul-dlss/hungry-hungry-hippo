@@ -52,7 +52,13 @@ module ToWorkForm
     end
 
     def works_contact_email
-      collection&.works_contact_email
+      return unless collection&.works_contact_email
+
+      return unless cocina_object.description.access.accessContact.any? do |access_contact|
+        access_contact.value == collection.works_contact_email
+      end
+
+      collection.works_contact_email
     end
 
     def citation

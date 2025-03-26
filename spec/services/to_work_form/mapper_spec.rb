@@ -206,4 +206,29 @@ RSpec.describe ToWorkForm::Mapper, type: :mapping do
       expect(work_form.works_contact_email).to eq(works_contact_email_fixture)
     end
   end
+
+  context 'when collection and work has a required contact email' do
+    it 'maps to work form' do
+      expect(work_form.works_contact_email).to eq(works_contact_email_fixture)
+    end
+  end
+
+  context 'when collection does not have a required contact email' do
+    let(:collection) { create(:collection, druid: collection_druid_fixture) }
+
+    it 'maps to work form' do
+      expect(work_form.works_contact_email).to be_nil
+    end
+  end
+
+  context 'when collection has a required contact email but it is not in work contact emails' do
+    let(:collection) do
+      create(:collection, druid: collection_druid_fixture,
+                          works_contact_email: 'collection.manager2@stanford.example.edu')
+    end
+
+    it 'maps to work form' do
+      expect(work_form.works_contact_email).to be_nil
+    end
+  end
 end

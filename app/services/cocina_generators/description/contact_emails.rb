@@ -24,7 +24,7 @@ module CocinaGenerators
             type: 'email',
             displayLabel: 'Contact'
           }
-        end.compact_blank
+        end.compact_blank.uniq
       end
 
       private
