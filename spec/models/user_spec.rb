@@ -28,6 +28,7 @@ RSpec.describe User do
     let!(:managed_work) { create(:work, user: owning_user, collection: managed_collection) }
     let!(:depositor_work) { create(:work, user: owning_user, collection: depositor_collection) }
     let!(:reviewed_work) { create(:work, user: owning_user, collection: reviewed_collection) }
+    let!(:owned_work) { create(:work, user:) }
 
     before do
       # Not your work
@@ -35,7 +36,7 @@ RSpec.describe User do
     end
 
     it 'returns the works that are part of the your collections' do
-      expect(user.your_works).to contain_exactly(managed_work, depositor_work, reviewed_work)
+      expect(user.your_works).to contain_exactly(managed_work, depositor_work, reviewed_work, owned_work)
     end
   end
 
