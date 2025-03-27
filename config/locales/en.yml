@@ -342,7 +342,7 @@ en:
           label: 'Submit your deposit'
           help_text: >-
               Be sure you have completed all the required sections. Your deposit may take several hours
-              to complete if your filesize is larger than 10GB.
+              to complete if your file size is larger than 10GB.
         files:
           tab_label: 'Manage files'
           label: 'Manage files'
