@@ -7,6 +7,9 @@ $container-max-widths: (
   xxl: 1140px // Limit width of xxl
 );
 
+// See https://github.com/hotwired/turbo/issues/698
+$enable-smooth-scroll: false;
+
 @import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons";
 @import "dropzone";
