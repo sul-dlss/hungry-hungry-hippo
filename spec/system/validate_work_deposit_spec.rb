@@ -86,6 +86,12 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_field('Contact email', class: 'is-invalid')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
     fill_in('Contact email', with: contact_emails_fixture.first['email'])
+    find_field('Contact email').send_keys(:tab)
+    expect(page).to have_no_css('.invalid-feedback.is-invalid', text: "can't be blank")
+
+    # Add a blank contact email. It will be ignored.
+    click_link_or_button('Add another contact email')
+    expect(page).to have_css('.form-instance', count: 2)
 
     # Authors is marked invalid
     find('.nav-link.is-invalid', text: 'Contributors').click
@@ -97,6 +103,10 @@ RSpec.describe 'Validate a work deposit' do
     end
     fill_in('First name', with: contributors_fixture.first['first_name'])
     fill_in('Last name', with: contributors_fixture.first['last_name'])
+
+    # Add a blank contributor. It will be ignored.
+    click_link_or_button('Add another contributor')
+    expect(page).to have_css('.form-instance', count: 2)
 
     # Abstract is marked invalid
     find('.nav-link.is-invalid', text: 'Abstract').click

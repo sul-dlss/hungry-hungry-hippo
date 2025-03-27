@@ -13,6 +13,20 @@ class WorkForm < ApplicationForm
     self.keywords_attributes = keywords_attributes.reject(&:empty?).map(&:attributes).presence || [{}]
   end
 
+  before_validation do
+    blank_contributors = contributors_attributes.select(&:empty?)
+    next if blank_contributors.empty? || blank_contributors.length == contributors_attributes.length
+
+    self.contributors_attributes = (contributors_attributes - blank_contributors).map(&:attributes)
+  end
+
+  before_validation do
+    blank_contact_emails = contact_emails_attributes.select(&:empty?)
+    next if blank_contact_emails.empty? || blank_contact_emails.length == contact_emails_attributes.length
+
+    self.contact_emails_attributes = (contact_emails_attributes - blank_contact_emails).map(&:attributes)
+  end
+
   validate :content_file_presence, on: :deposit
   with_options if: -> { create_date_type == 'range' } do
     validate :create_date_range_complete
