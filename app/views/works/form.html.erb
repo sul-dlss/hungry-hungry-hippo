@@ -54,7 +54,7 @@
                                                                help_text: t('works.edit.fields.title.help_text'), width: 500, rows: 1, container_classes: 'pane-section', mark_required: true) %>
         <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: Works::Edit::ContactEmailsComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
 
-        <% if @work_form.works_contact_email %>
+        <% if @work_form.works_contact_email.present? %>
           <%= form.hidden_field :works_contact_email %>
 
           <div class="pane-section">
