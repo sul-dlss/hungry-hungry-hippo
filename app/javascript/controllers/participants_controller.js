@@ -12,8 +12,16 @@ export default class extends Controller {
 
     this.invalidFeedbackContainerTarget.innerHTML = ''
     const ids = this.inputTarget.value.split(/[,;]? |\n/)
-    const errorIds = await Promise.all(ids.map(id => this.lookupId(id)))
-    this.inputTarget.value = errorIds.filter(id => id).join('\n')
+    await Promise.all(ids.map(id => this.lookupId(id)))
+      .then((errorIds) => {
+        this.inputTarget.value = ''
+        if (!errorIds.filter(Boolean).length) {
+          this.invalidFeedbackContainerTarget.innerHTML = ''
+        } else {
+          errorIds.filter(Boolean).map(id => this.addError(id))
+          this.inputTarget.value = errorIds.filter(id => id).join('\n')
+        }
+      })
   }
 
   async lookupId (id) {
@@ -26,7 +34,6 @@ export default class extends Controller {
       })
       .then(data => {
         if (!data) {
-          this.addError(id)
           return id
         }
         this.addParticipant(data)
