@@ -29,7 +29,7 @@ class User < ApplicationRecord
 
   # Returns all works for collections that the user manages, deposits to, or reviews.
   def your_works
-    @your_works ||= Work.where(collection: your_collections)
+    @your_works ||= Work.where(collection: your_collections).or(Work.where(user: self))
   end
 
   def agree_to_terms?
