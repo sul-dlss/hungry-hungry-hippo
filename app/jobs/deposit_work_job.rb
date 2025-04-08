@@ -27,7 +27,7 @@ class DepositWorkJob < ApplicationJob
 
     Contents::Stager.call(content:, druid:)
 
-    ModelSync::Work.call(work:, cocina_object: mapped_cocina_object)
+    WorkModelSynchronizer.call(work:, cocina_object: mapped_cocina_object)
 
     update_terms_of_deposit!
 

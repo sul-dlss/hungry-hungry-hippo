@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ModelSync::Collection do
+RSpec.describe CollectionModelSynchronizer do
   let(:druid) { druid_fixture }
   let(:collection) { create(:collection, :with_druid) }
   let(:cocina_object) do

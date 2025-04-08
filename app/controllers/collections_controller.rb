@@ -12,7 +12,7 @@ class CollectionsController < ApplicationController
     authorize! @collection
 
     # This updates the Collection with the latest metadata from the Cocina object.
-    ModelSync::Collection.call(collection: @collection, cocina_object: @cocina_object)
+    CollectionModelSynchronizer.call(collection: @collection, cocina_object: @cocina_object)
   end
 
   def new
@@ -37,7 +37,7 @@ class CollectionsController < ApplicationController
     end
 
     # This updates the Collection with the latest metadata from the Cocina object.
-    ModelSync::Collection.call(collection: @collection, cocina_object: @cocina_object)
+    CollectionModelSynchronizer.call(collection: @collection, cocina_object: @cocina_object)
 
     render :form
   end
