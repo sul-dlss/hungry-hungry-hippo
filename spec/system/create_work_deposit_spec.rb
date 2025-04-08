@@ -82,6 +82,8 @@ RSpec.describe 'Create a work deposit' do
       # Filling in title
       find('.nav-link', text: 'Title and contact').click
       fill_in('work_title', with: title_fixture)
+
+      expect(page).to have_no_text('Contact email provided by collection manager')
       expect(page).to have_field('Contact email', with: user.email_address)
       click_link_or_button('Clear')
       expect(page).to have_field('Contact email', with: '')
