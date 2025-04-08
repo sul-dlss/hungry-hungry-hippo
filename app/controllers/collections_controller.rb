@@ -119,8 +119,8 @@ class CollectionsController < ApplicationController
   def editable?
     return false unless @version_status.editable?
 
-    ToCollectionForm::RoundtripValidator.call(collection_form: @collection_form,
-                                              cocina_object: @cocina_object)
+    CollectionRoundtripper.call(collection_form: @collection_form,
+                                cocina_object: @cocina_object)
   end
 
   def set_presenter

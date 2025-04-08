@@ -14,9 +14,15 @@
 ### Software architecture
 
 H3 is a Rails application and at its core is a [Model-View-Controller (MVC) framework](https://guides.rubyonrails.org/getting_started.html#model-view-controller-basics)
-with extensions that come from Rails, such as [helpers](https://guides.rubyonrails.org/action_view_helpers.html),[jobs](https://guides.rubyonrails.org/active_job_basics.html), and [mailers](https://guides.rubyonrails.org/action_mailer_basics.html).
-We extend H3 to include the following concerns, some of which we tend to use across our
-portfolio of services and some of which are unique to H3:
+with concerns that come from Rails, such as [helpers](https://guides.rubyonrails.org/action_view_helpers.html),[jobs](https://guides.rubyonrails.org/active_job_basics.html), and [mailers](https://guides.rubyonrails.org/action_mailer_basics.html).
+We extend H3 to include the concerns listed below, some of which we tend to use across our
+portfolio of services and some of which are unique to H3.
+
+Unlike typical Rails applications, the source of truth for some of H3's models, particularly
+the work and collection models, is not the application itself but Cocina objects hosted in
+SDR. H3's software architecture reflects this by defining concerns that allow for robust and
+reliable transformation between various abstractions including database-backed models, form
+instances, and JSON-based Cocina objects.
 
 <dl>
   <dt>Components</dt>
@@ -25,10 +31,14 @@ portfolio of services and some of which are unique to H3:
   <dd>Define form attributes and validation behaviors (from Rails' <a href="https://guides.rubyonrails.org/active_model_basics.html">ActiveModel</a>)</dd>
   <dt>Importers</dt>
   <dd>Import a domain object in JSON/hash format into a database-backed model (plain old Ruby objects)</dd>
+  <dt>Model Synchronizers</dt>
+  <dd>Synchronize changes from Cocina objects into database-backed models (plain old Ruby objects)</dd>
   <dt>Policies</dt>
   <dd>Make authorization decisions (from <a href="https://actionpolicy.evilmartians.io/">ActionPolicy</a> gem)</dd>
   <dt>Presenters</dt>
   <dd>Present objects to views, holding complex business logic (plain old Ruby objects)</dd>
+  <dt>Roundtrippers</dt>
+  <dd>Verify that a Cocina object can be converted to a domain model and back without loss (plain old Ruby objects)</dd>
   <dt>Serializers</dt>
   <dd>Handle de-/serialization of form objects in jobs (from Rails' <a href="https://guides.rubyonrails.org/active_job_basics.html#serializers">ActiveJob</a>)</dd>
   <dt>Services</dt>
