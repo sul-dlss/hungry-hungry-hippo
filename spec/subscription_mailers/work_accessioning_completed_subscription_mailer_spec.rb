@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe SubscriptionActions::WorkAccessioningCompleted, :active_job_test_adapter do
+RSpec.describe WorkAccessioningCompletedSubscriptionMailer, :active_job_test_adapter do
   include ActionMailer::TestHelper
 
   context 'when first version' do

@@ -11,6 +11,34 @@
 * tmux ([installation instructions](https://github.com/tmux/tmux#installation))
 * overmind ([installed automatically via bundler](https://github.com/DarthSim/overmind/tree/master/packaging/rubygems#installation-with-rails))
 
+### Software architecture
+
+H3 is a Rails application and at its core is a [Model-View-Controller (MVC) framework](https://guides.rubyonrails.org/getting_started.html#model-view-controller-basics)
+with extensions that come from Rails, such as [helpers](https://guides.rubyonrails.org/action_view_helpers.html),[jobs](https://guides.rubyonrails.org/active_job_basics.html), and [mailers](https://guides.rubyonrails.org/action_mailer_basics.html).
+We extend H3 to include the following concerns, some of which we tend to use across our
+portfolio of services and some of which are unique to H3:
+
+<dl>
+  <dt>Components</dt>
+  <dd>Provide views for reusable UI elements and easier testing (from <a href="https://viewcomponent.org/">ViewComponent</a> gem)</dd>
+  <dt>Forms</dt>
+  <dd>Define form attributes and validation behaviors (from Rails' <a href="https://guides.rubyonrails.org/active_model_basics.html">ActiveModel</a>)</dd>
+  <dt>Policies</dt>
+  <dd>Make authorization decisions (from <a href="https://actionpolicy.evilmartians.io/">ActionPolicy</a> gem)</dd>
+  <dt>Presenters</dt>
+  <dd>Present objects to views, holding complex business logic (plain old Ruby objects)</dd>
+  <dt>Serializers</dt>
+  <dd>Handle de-/serialization of form objects in jobs (from Rails' <a href="https://guides.rubyonrails.org/active_job_basics.html#serializers">ActiveJob</a>)</dd>
+  <dt>Services</dt>
+  <dd>Execute business logic that spans various concerns, ideally with a single responsibility (plain old Ruby objects)</dd>
+  <dt>SubscriptionMailers</dt>
+  <dd>Deliver email notifications in response to subscriptions (plain old Ruby objects)</dd>
+  <dt>Validators</dt>
+  <dd>Validate forms, particularly for more complex rule sets (from Rails' <a href="https://guides.rubyonrails.org/active_model_basics.html#validations">ActiveModel validations</a>)</dd>
+  <dt>Values</dt>
+  <dd>Encapsulate a domain object defined by its attributes (plain old Ruby objects)</dd>
+</dl>
+
 ### Running locally
 
 Spin up containers and the app, and then set up the application and solid-* databases:
