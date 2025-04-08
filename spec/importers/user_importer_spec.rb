@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Importers::User do
+RSpec.describe UserImporter do
   let(:user_json) do
     {
       id: 932,

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Importers::Collection do
+RSpec.describe CollectionImporter do
   include CollectionMappingFixtures
 
   let(:druid) { collection_druid_fixture }
@@ -123,8 +123,8 @@ RSpec.describe Importers::Collection do
     it 'raises an error and does not create a new collection' do
       expect do
         described_class.call(collection_hash:)
-      end.to raise_error(Importers::Error,
-                         "Collection #{druid} cannot be roundtripped").and not_change(Collection, :count)
+      end.to raise_error(ImportError, "Collection #{druid} cannot be roundtripped")
+        .and not_change(Collection, :count)
     end
   end
 
