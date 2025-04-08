@@ -12,7 +12,7 @@ class CollectionImporter
 
   def call
     ::Collection.transaction do
-      unless ToCollectionForm::RoundtripValidator.call(collection_form:, cocina_object:)
+      unless CollectionRoundtripper.call(collection_form:, cocina_object:)
         raise ImportError, "Collection #{druid} cannot be roundtripped"
       end
 

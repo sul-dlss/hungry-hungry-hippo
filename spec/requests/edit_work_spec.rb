@@ -72,7 +72,7 @@ RSpec.describe 'Edit work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
-      allow(ToWorkForm::RoundtripValidator).to receive(:call)
+      allow(WorkRoundtripper).to receive(:call)
     end
 
     context 'when the user is the depositor' do
@@ -87,7 +87,7 @@ RSpec.describe 'Edit work' do
 
         follow_redirect!
         expect(response.body).to include(roundtrip_warning)
-        expect(ToWorkForm::RoundtripValidator).not_to have_received(:call)
+        expect(WorkRoundtripper).not_to have_received(:call)
       end
     end
   end
@@ -102,7 +102,7 @@ RSpec.describe 'Edit work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
-      allow(ToWorkForm::RoundtripValidator).to receive(:call).and_call_original
+      allow(WorkRoundtripper).to receive(:call).and_call_original
 
       sign_in(user)
     end
@@ -114,7 +114,7 @@ RSpec.describe 'Edit work' do
 
       follow_redirect!
       expect(response.body).to include(roundtrip_warning)
-      expect(ToWorkForm::RoundtripValidator).to have_received(:call)
+      expect(WorkRoundtripper).to have_received(:call)
     end
   end
 
@@ -129,7 +129,7 @@ RSpec.describe 'Edit work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
-      allow(ToWorkForm::RoundtripValidator).to receive(:call)
+      allow(WorkRoundtripper).to receive(:call)
 
       sign_in(user)
     end
@@ -141,7 +141,7 @@ RSpec.describe 'Edit work' do
 
       follow_redirect!
       expect(response.body).to include(roundtrip_warning)
-      expect(ToWorkForm::RoundtripValidator).not_to have_received(:call)
+      expect(WorkRoundtripper).not_to have_received(:call)
     end
   end
 
@@ -156,7 +156,7 @@ RSpec.describe 'Edit work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
-      allow(ToWorkForm::RoundtripValidator).to receive(:call)
+      allow(WorkRoundtripper).to receive(:call)
 
       sign_in(user)
     end
@@ -168,7 +168,7 @@ RSpec.describe 'Edit work' do
 
       follow_redirect!
       expect(response.body).to include(roundtrip_warning)
-      expect(ToWorkForm::RoundtripValidator).not_to have_received(:call)
+      expect(WorkRoundtripper).not_to have_received(:call)
     end
   end
 end

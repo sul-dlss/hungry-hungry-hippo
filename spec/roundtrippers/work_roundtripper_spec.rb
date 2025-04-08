@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToWorkForm::RoundtripValidator, type: :mapping do
+RSpec.describe WorkRoundtripper, type: :mapping do
   subject(:validator) do
     described_class.new(work_form: work_form_fixture, cocina_object:, content: content_fixture)
   end
