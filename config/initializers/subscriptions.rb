@@ -12,7 +12,7 @@ Rails.application.config.after_initialize do # rubocop:disable Metrics/BlockLeng
   Notifier.subscribe_mailer(event_name: Notifier::DEPOSITOR_REMOVED, mailer_class: CollectionsMailer,
                             mailer_method: :participants_changed_email)
   Notifier.subscribe_action(event_name: Notifier::DEPOSIT_PERSIST_COMPLETE,
-                            action_class: SubscriptionActions::CollectionDepositPersistCompleted)
+                            action_class: CollectionDepositPersistCompletedSubscriptionMailer)
 
   # Manager change notifications
   Notifier.subscribe_mailer(event_name: Notifier::MANAGER_ADDED, mailer_class: CollectionsMailer,
@@ -38,11 +38,11 @@ Rails.application.config.after_initialize do # rubocop:disable Metrics/BlockLeng
   Notifier.subscribe_mailer(event_name: Notifier::REVIEW_APPROVED, mailer_class: ReviewsMailer,
                             mailer_method: :approved_email)
   Notifier.subscribe_action(event_name: Notifier::REVIEW_REQUESTED,
-                            action_class: SubscriptionActions::ReviewRequest)
+                            action_class: ReviewRequestSubscriptionMailer)
 
   # Subscriptions for WorksMailer
   Notifier.subscribe_action(event_name: Notifier::ACCESSIONING_STARTED,
-                            action_class: SubscriptionActions::WorkAccessioningStarted)
+                            action_class: WorkAccessioningStartedSubscriptionMailer)
   Notifier.subscribe_action(event_name: Notifier::ACCESSIONING_COMPLETE,
-                            action_class: SubscriptionActions::WorkAccessioningCompleted)
+                            action_class: WorkAccessioningCompletedSubscriptionMailer)
 end

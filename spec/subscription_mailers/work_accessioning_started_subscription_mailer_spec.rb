@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe SubscriptionActions::WorkAccessioningStarted, :active_job_test_adapter do
+RSpec.describe WorkAccessioningStartedSubscriptionMailer, :active_job_test_adapter do
   include ActionMailer::TestHelper
 
   let(:current_user) { create(:user) }
