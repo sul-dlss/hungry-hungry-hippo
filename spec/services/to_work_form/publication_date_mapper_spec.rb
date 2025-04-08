@@ -24,7 +24,7 @@ RSpec.describe ToWorkForm::PublicationDateMapper do
 
   context 'when event date is EDTF with year only' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'publication', date: '2021')
+      DescriptionCocinaBuilder.event(type: 'publication', date: '2021')
     end
 
     it 'returns the event date' do
@@ -34,7 +34,7 @@ RSpec.describe ToWorkForm::PublicationDateMapper do
 
   context 'when event date is EDTF with year and month only' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'publication', date: '2021-03')
+      DescriptionCocinaBuilder.event(type: 'publication', date: '2021-03')
     end
 
     it 'returns the event date' do
@@ -44,7 +44,7 @@ RSpec.describe ToWorkForm::PublicationDateMapper do
 
   context 'when event date is approximate EDTF' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'publication', date: '2021-03~')
+      DescriptionCocinaBuilder.event(type: 'publication', date: '2021-03~')
     end
 
     it 'returns the event date' do
@@ -54,7 +54,7 @@ RSpec.describe ToWorkForm::PublicationDateMapper do
 
   context 'when event date is EDTF' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'publication', date: '2021-03-05')
+      DescriptionCocinaBuilder.event(type: 'publication', date: '2021-03-05')
     end
 
     it 'returns the event date' do
@@ -64,7 +64,7 @@ RSpec.describe ToWorkForm::PublicationDateMapper do
 
   context 'when event date is not EDTF' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'publication', date: '2021-03-05', date_encoding_code: 'iso8601')
+      DescriptionCocinaBuilder.event(type: 'publication', date: '2021-03-05', date_encoding_code: 'iso8601')
     end
 
     it 'returns nil' do
@@ -74,7 +74,7 @@ RSpec.describe ToWorkForm::PublicationDateMapper do
 
   context 'when event date is not correct type' do
     let(:event) do
-      CocinaGenerators::Description.event(type: 'deposit', date: '2021-03-05')
+      DescriptionCocinaBuilder.event(type: 'deposit', date: '2021-03-05')
     end
 
     it 'returns nil' do

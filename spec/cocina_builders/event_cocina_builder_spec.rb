@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CocinaGenerators::Description::Event do
+RSpec.describe EventCocinaBuilder do
   subject(:event) do
     described_class.call(type:, date:, date_encoding_code:, primary:, date_type:)
   end

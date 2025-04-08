@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CocinaGenerators::Description::ContactEmails do
+RSpec.describe ContactEmailsCocinaBuilder do
   subject(:contact_email_params) do
     described_class.call(contact_emails:)
   end

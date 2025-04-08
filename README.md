@@ -25,6 +25,8 @@ reliable transformation between various abstractions including database-backed m
 instances, and JSON-based Cocina objects.
 
 <dl>
+  <dt>CocinaBuilders</dt>
+  <dd>Build Cocina data structures from primitive data types</dd>
   <dt>Components</dt>
   <dd>Provide views for reusable UI elements and easier testing (from <a href="https://viewcomponent.org/">ViewComponent</a> gem)</dd>
   <dt>Forms</dt>

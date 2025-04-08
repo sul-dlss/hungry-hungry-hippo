@@ -31,7 +31,7 @@ module ToCocina
       attr_reader :contributor_forms
 
       def person_for(contributor:, primary:)
-        CocinaGenerators::Description.person_contributor(
+        DescriptionCocinaBuilder.person_contributor(
           forename: contributor.first_name,
           surname: contributor.last_name,
           role: contributor.person_role,
@@ -42,7 +42,7 @@ module ToCocina
       end
 
       def organization_for(contributor:, primary:)
-        CocinaGenerators::Description.organization_contributor(
+        DescriptionCocinaBuilder.organization_contributor(
           name: contributor.organization_name,
           role: contributor.organization_role,
           suborganization_name: contributor.suborganization_name,

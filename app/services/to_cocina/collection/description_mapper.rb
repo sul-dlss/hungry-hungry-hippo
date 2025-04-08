@@ -28,14 +28,14 @@ module ToCocina
 
       def params
         {
-          title: CocinaGenerators::Description.title(title: collection_form.title),
+          title: DescriptionCocinaBuilder.title(title: collection_form.title),
           note: note_params,
           purl: Sdr::Purl.from_druid(druid: collection_form.druid),
-          relatedResource: CocinaGenerators::Description.related_links(
+          relatedResource: DescriptionCocinaBuilder.related_links(
             related_links: collection_form.related_links_attributes
           ),
           access: {
-            accessContact: CocinaGenerators::Description.contact_emails(
+            accessContact: DescriptionCocinaBuilder.contact_emails(
               contact_emails: collection_form.contact_emails_attributes
             )
           }
@@ -45,8 +45,8 @@ module ToCocina
       def note_params
         [].tap do |params|
           if collection_form.description.present?
-            params << CocinaGenerators::Description.note(type: 'abstract',
-                                                         value: collection_form.description)
+            params << DescriptionCocinaBuilder.note(type: 'abstract',
+                                                    value: collection_form.description)
           end
         end.presence
       end

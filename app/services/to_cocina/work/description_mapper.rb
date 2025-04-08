@@ -28,7 +28,7 @@ module ToCocina
 
       def params # rubocop:disable Metrics/AbcSize
         {
-          title: CocinaGenerators::Description.title(title: work_form.title),
+          title: DescriptionCocinaBuilder.title(title: work_form.title),
           contributor: ContributorsMapper.call(contributor_forms: work_form.contributors_attributes),
           note: note_params,
           event: EventsMapper.call(work_form:),
@@ -45,24 +45,24 @@ module ToCocina
       def note_params # rubocop:disable Metrics/AbcSize
         [].tap do |params|
           if work_form.abstract.present?
-            params << CocinaGenerators::Description.note(type: 'abstract',
-                                                         value: work_form.abstract)
+            params << DescriptionCocinaBuilder.note(type: 'abstract',
+                                                    value: work_form.abstract)
           end
           if work_form.citation.present? && work_form.auto_generate_citation == false
-            params << CocinaGenerators::Description.note(type: 'preferred citation',
-                                                         value: work_form.citation,
-                                                         label: 'Preferred Citation')
+            params << DescriptionCocinaBuilder.note(type: 'preferred citation',
+                                                    value: work_form.citation,
+                                                    label: 'Preferred Citation')
           end
         end.presence
       end
 
       def related_resource_params
-        CocinaGenerators::Description.related_works(related_works: work_form.related_works_attributes) +
-          CocinaGenerators::Description.related_links(related_links: work_form.related_links_attributes)
+        DescriptionCocinaBuilder.related_works(related_works: work_form.related_works_attributes) +
+          DescriptionCocinaBuilder.related_links(related_links: work_form.related_links_attributes)
       end
 
       def access_contact_params
-        CocinaGenerators::Description.contact_emails(
+        DescriptionCocinaBuilder.contact_emails(
           # Use `#dup` because mutating the passed-in form object would be unexpected
           contact_emails: work_form.contact_emails_attributes.dup.tap do |contact_emails_attributes|
             next if work_form.works_contact_email.blank?
@@ -75,7 +75,7 @@ module ToCocina
       def subject_params
         # Note that deduping only on text.
         keyword_forms = work_form.keywords_attributes.uniq(&:text)
-        CocinaGenerators::Description.keywords(keywords: keyword_forms)
+        DescriptionCocinaBuilder.keywords(keywords: keyword_forms)
       end
     end
   end
