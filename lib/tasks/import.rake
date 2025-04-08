@@ -16,7 +16,7 @@ namespace :import do
       next unless collection_hash['druid']
 
       puts "Importing collection #{collection_hash['druid']}"
-      Importers::Collection.call(collection_hash:)
+      CollectionImporter.call(collection_hash:)
     end
   end
 end

@@ -23,6 +23,8 @@ portfolio of services and some of which are unique to H3:
   <dd>Provide views for reusable UI elements and easier testing (from <a href="https://viewcomponent.org/">ViewComponent</a> gem)</dd>
   <dt>Forms</dt>
   <dd>Define form attributes and validation behaviors (from Rails' <a href="https://guides.rubyonrails.org/active_model_basics.html">ActiveModel</a>)</dd>
+  <dt>Importers</dt>
+  <dd>Import a domain object in JSON/hash format into a database-backed model (plain old Ruby objects)</dd>
   <dt>Policies</dt>
   <dd>Make authorization decisions (from <a href="https://actionpolicy.evilmartians.io/">ActionPolicy</a> gem)</dd>
   <dt>Presenters</dt>
