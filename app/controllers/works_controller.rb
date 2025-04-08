@@ -15,7 +15,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
     # This updates the Work with the latest metadata from the Cocina object.
     # Does not update the Work's collection if the collection cannot be found.
-    ModelSync::Work.call(work: @work, cocina_object: @cocina_object, raise: false)
+    WorkModelSynchronizer.call(work: @work, cocina_object: @cocina_object, raise: false)
 
     @review_form = ReviewForm.new
   end
@@ -42,7 +42,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     end
 
     # This updates the Work with the latest metadata from the Cocina object.
-    ModelSync::Work.call(work: @work, cocina_object: @cocina_object)
+    WorkModelSynchronizer.call(work: @work, cocina_object: @cocina_object)
 
     mark_collection_required_contributors
     add_max_release_date

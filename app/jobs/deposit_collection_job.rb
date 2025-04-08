@@ -18,7 +18,7 @@ class DepositCollectionJob < ApplicationJob
     update_collection_record(druid:)
 
     if new_cocina_object
-      ModelSync::Collection.call(collection:, cocina_object: new_cocina_object)
+      CollectionModelSynchronizer.call(collection:, cocina_object: new_cocina_object)
       collection.accession!
       Sdr::Repository.accession(druid:)
     else

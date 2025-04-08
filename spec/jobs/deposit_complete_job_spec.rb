@@ -13,8 +13,8 @@ RSpec.describe DepositCompleteJob do
   before do
     allow(Sdr::Repository).to receive(:find).with(druid: druid_fixture).and_return(dro_fixture)
     allow(Sdr::Repository).to receive(:find).with(druid: collection_druid_fixture).and_return(collection_fixture)
-    allow(ModelSync::Work).to receive(:call)
-    allow(ModelSync::Collection).to receive(:call)
+    allow(WorkModelSynchronizer).to receive(:call)
+    allow(CollectionModelSynchronizer).to receive(:call)
     allow(Turbo::StreamsChannel).to receive(:broadcast_refresh_to)
   end
 
@@ -29,7 +29,7 @@ RSpec.describe DepositCompleteJob do
 
     it 'syncs, refreshes, and returns ack' do
       expect(job.work(message)).to eq(:ack)
-      expect(ModelSync::Work).to have_received(:call).with(work: object, cocina_object: dro_fixture, raise: false)
+      expect(WorkModelSynchronizer).to have_received(:call).with(work: object, cocina_object: dro_fixture, raise: false)
       expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with(object)
     end
   end
@@ -45,7 +45,8 @@ RSpec.describe DepositCompleteJob do
 
     it 'syncs, refreshes, and returns ack' do
       expect(job.work(message)).to eq(:ack)
-      expect(ModelSync::Collection).to have_received(:call).with(collection: object, cocina_object: collection_fixture)
+      expect(CollectionModelSynchronizer).to have_received(:call)
+        .with(collection: object, cocina_object: collection_fixture)
       expect(Turbo::StreamsChannel).to have_received(:broadcast_refresh_to).with(object)
     end
   end
