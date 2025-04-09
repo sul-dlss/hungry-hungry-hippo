@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ToForm
+module Form
   # Maps related links.
   class RelatedLinksMapper < BaseMapper
     def call

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToWorkForm::CreationDateMapper do
+RSpec.describe Form::WorkCreationDateMapper do
   subject(:event_date) { described_class.call(cocina_object:) }
 
   let(:cocina_object) do

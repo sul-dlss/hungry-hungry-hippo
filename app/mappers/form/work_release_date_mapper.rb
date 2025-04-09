@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-module ToWorkForm
+# The containing namespace for mappers indicates what is being mapped *to*
+module Form
   # Maps release date.
-  class ReleaseDateMapper < ToForm::BaseMapper
+  class WorkReleaseDateMapper < BaseMapper
     def call
       return { release_option: 'immediate' } if release_date.blank?
 

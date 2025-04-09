@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-module ToWorkForm
+# The containing namespace for mappers indicates what is being mapped *to*
+module Form
   # Maps related works.
-  class RelatedWorksMapper < ToForm::BaseMapper
+  class RelatedWorksMapper < BaseMapper
     def call
       return if related_resources.blank?
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ToForm
+module Form
   # Base class for mappers that convert Cocina::Models to form values
   class BaseMapper
     def self.call(...)

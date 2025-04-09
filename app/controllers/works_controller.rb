@@ -148,9 +148,9 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   def set_work_form_from_cocina
     @cocina_object = Sdr::Repository.find(druid: params[:druid])
     version_description = @version_status.open? ? @version_status.version_description : nil
-    @work_form = ToWorkForm::Mapper.call(cocina_object: @cocina_object, doi_assigned: doi_assigned?,
-                                         agree_to_terms: current_user.agree_to_terms?,
-                                         version_description:, collection: @collection)
+    @work_form = Form::WorkMapper.call(cocina_object: @cocina_object, doi_assigned: doi_assigned?,
+                                       agree_to_terms: current_user.agree_to_terms?,
+                                       version_description:, collection: @collection)
   end
 
   def doi_assigned?
@@ -199,7 +199,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     ).tap do |work_form|
       if @collection.contributors.present?
         work_form.contributors_attributes = @collection.contributors.map do |contributor|
-          ToForm::ContributorMapper.call(contributor:)
+          Form::ContributorMapper.call(contributor:)
         end
       end
       work_form.max_release_date = @collection.max_release_date if @collection.depositor_selects_release_option?
@@ -255,7 +255,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   def mark_collection_required_contributors
     collection_contributors = @collection.contributors.map do |contributor|
-      ContributorForm.new(ToForm::ContributorMapper.call(contributor:)).attributes
+      ContributorForm.new(Form::ContributorMapper.call(contributor:)).attributes
     end
 
     @work_form.contributors.each do |contributor|

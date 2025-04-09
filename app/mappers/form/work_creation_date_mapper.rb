@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-module ToWorkForm
+# The containing namespace for mappers indicates what is being mapped *to*
+module Form
   # Maps creation date from Cocina to WorkForm
-  class CreationDateMapper < BaseDateMapper
+  class WorkCreationDateMapper < BaseDateMapper
     def call
       cocina_date = first_cocina_event_date_of(type: 'creation')
       return {} if cocina_date.nil?

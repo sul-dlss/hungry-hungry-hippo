@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-module ToWorkForm
+# The containing namespace for mappers indicates what is being mapped *to*
+module Form
   # Maps work types.
-  class WorkTypeMapper < ToForm::BaseMapper
+  class WorkTypeMapper < BaseMapper
     def call
       if work_type == WorkType::OTHER
         return { work_type:, work_subtypes: [],

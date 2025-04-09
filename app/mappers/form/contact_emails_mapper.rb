@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ToForm
+module Form
   # Maps the value from the accessContact field in the Cocina::DescriptiveAccessMetadata object.
   # to the email value for a contact_email in the WorkForm
   class ContactEmailsMapper < BaseMapper

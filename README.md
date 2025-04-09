@@ -33,6 +33,8 @@ instances, and JSON-based Cocina objects.
   <dd>Provide views for reusable UI elements and easier testing (from <a href="https://viewcomponent.org/">ViewComponent</a> gem)</dd>
   <dt>Forms</dt>
   <dd>Define form attributes and validation behaviors (from Rails' <a href="https://guides.rubyonrails.org/active_model_basics.html">ActiveModel</a>)</dd>
+  <dt>Form Mappers</dt>
+  <dd>Map database-backed models and Cocina models to form instances (plain old Ruby objects)</dd>
   <dt>Importers</dt>
   <dd>Import a domain object in JSON/hash format into a database-backed model (plain old Ruby objects)</dd>
   <dt>Model Synchronizers</dt>

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToForm::NoteMapper do
+RSpec.describe Form::NoteMapper do
   describe '#abstract' do
     let(:cocina_object) do
       # NOTE: the :dro factory in the cocina-models gem does not have a seam

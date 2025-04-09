@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToForm::ContributorMapper do
+RSpec.describe Form::ContributorMapper do
   context 'when a person' do
     let(:contributor) { create(:person_contributor) }
 

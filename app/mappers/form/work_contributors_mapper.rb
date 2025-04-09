@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
-module ToWorkForm
-  # Maps contributors.
-  class ContributorsMapper < ToForm::BaseMapper
+# The containing namespace for mappers indicates what is being mapped *to*
+module Form
+  # Maps contributors to the work form
+  class WorkContributorsMapper < BaseMapper
     def call
       return nil if cocina_object.description.contributor.blank?
 
       cocina_object.description.contributor.filter_map do |contributor|
-        ContributorMapper.new(contributor:).call
+        WorkContributorMapper.new(contributor:).call
       end.presence
     end
 
-    # Maps an individual contributor.
-    class ContributorMapper
+    # Maps an individual contributor
+    class WorkContributorMapper
       def initialize(contributor:)
         @contributor = contributor
       end
