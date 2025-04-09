@@ -33,7 +33,7 @@ RSpec.describe CollectionRoundtripper, type: :mapping do
 
   context 'when cocina raises a validation error' do
     before do
-      allow(ToCocina::Collection::Mapper).to receive(:call).and_raise(Cocina::Models::ValidationError)
+      allow(Cocina::CollectionMapper).to receive(:call).and_raise(Cocina::Models::ValidationError)
     end
 
     let(:cocina_object) { collection_with_metadata_fixture }

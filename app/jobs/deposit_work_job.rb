@@ -54,7 +54,7 @@ class DepositWorkJob < ApplicationJob
   end
 
   def mapped_cocina_object
-    @mapped_cocina_object ||= ToCocina::Work::Mapper.call(work_form:, content:, source_id: "h3:object-#{work.id}")
+    @mapped_cocina_object ||= Cocina::WorkMapper.call(work_form:, content:, source_id: "h3:object-#{work.id}")
   end
 
   def perform_persist

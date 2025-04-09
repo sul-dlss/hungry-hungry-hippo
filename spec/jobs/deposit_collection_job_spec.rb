@@ -10,7 +10,7 @@ RSpec.describe DepositCollectionJob do
   let(:current_user) { create(:user) }
 
   before do
-    allow(ToCocina::Collection::Mapper).to receive(:call).and_call_original
+    allow(Cocina::CollectionMapper).to receive(:call).and_call_original
     allow(Sdr::Repository).to receive(:accession)
   end
 
@@ -29,8 +29,8 @@ RSpec.describe DepositCollectionJob do
       described_class.perform_now(collection_form:, collection:, current_user:)
       new_manager = User.find_by(email_address: 'stepking@stanford.edu')
       new_depositor = User.find_by(email_address: 'joehill@stanford.edu')
-      expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form:,
-                                                                        source_id: "h3:collection-#{collection.id}")
+      expect(Cocina::CollectionMapper).to have_received(:call).with(collection_form:,
+                                                                    source_id: "h3:collection-#{collection.id}")
       expect(Sdr::Repository).to have_received(:register)
         .with(cocina_object: an_instance_of(Cocina::Models::RequestCollection))
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
@@ -101,8 +101,8 @@ RSpec.describe DepositCollectionJob do
 
     it 'updates an existing collection' do
       described_class.perform_now(collection_form:, collection:, current_user:)
-      expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form:,
-                                                                        source_id: "h3:collection-#{collection.id}")
+      expect(Cocina::CollectionMapper).to have_received(:call).with(collection_form:,
+                                                                    source_id: "h3:collection-#{collection.id}")
       expect(Sdr::Repository).to have_received(:open_if_needed)
         .with(cocina_object: an_instance_of(Cocina::Models::CollectionWithMetadata))
       expect(Sdr::Repository).to have_received(:update).with(cocina_object:)
@@ -139,8 +139,8 @@ RSpec.describe DepositCollectionJob do
 
     it 'updates an existing collection' do
       described_class.perform_now(collection_form:, collection:, current_user:)
-      expect(ToCocina::Collection::Mapper).to have_received(:call).with(collection_form:,
-                                                                        source_id: "h3:collection-#{collection.id}")
+      expect(Cocina::CollectionMapper).to have_received(:call).with(collection_form:,
+                                                                    source_id: "h3:collection-#{collection.id}")
       expect(Sdr::Repository).not_to have_received(:open_if_needed)
       expect(Sdr::Repository).not_to have_received(:update)
       expect(Sdr::Repository).not_to have_received(:accession)

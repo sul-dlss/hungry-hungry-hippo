@@ -31,8 +31,8 @@ class DepositCollectionJob < ApplicationJob
   attr_reader :collection_form, :collection
 
   def mapped_cocina_object
-    @mapped_cocina_object ||= ToCocina::Collection::Mapper.call(collection_form:,
-                                                                source_id: "h3:collection-#{collection.id}")
+    @mapped_cocina_object ||= Cocina::CollectionMapper.call(collection_form:,
+                                                            source_id: "h3:collection-#{collection.id}")
   end
 
   def update_collection_record(druid:) # rubocop:disable Metrics/AbcSize

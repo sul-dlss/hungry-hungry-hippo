@@ -25,8 +25,10 @@ reliable transformation between various abstractions including database-backed m
 instances, and JSON-based Cocina objects.
 
 <dl>
-  <dt>CocinaBuilders</dt>
+  <dt>Cocina Builders</dt>
   <dd>Build Cocina data structures from primitive data types</dd>
+  <dt>Cocina Mappers</dt>
+  <dd>Map form instances to Cocina model instances (plain old Ruby objects)</dd>
   <dt>Components</dt>
   <dd>Provide views for reusable UI elements and easier testing (from <a href="https://viewcomponent.org/">ViewComponent</a> gem)</dd>
   <dt>Forms</dt>
@@ -45,7 +47,7 @@ instances, and JSON-based Cocina objects.
   <dd>Handle de-/serialization of form objects in jobs (from Rails' <a href="https://guides.rubyonrails.org/active_job_basics.html#serializers">ActiveJob</a>)</dd>
   <dt>Services</dt>
   <dd>Execute business logic that spans various concerns, ideally with a single responsibility (plain old Ruby objects)</dd>
-  <dt>SubscriptionMailers</dt>
+  <dt>Subscription Mailers</dt>
   <dd>Deliver email notifications in response to subscriptions (plain old Ruby objects)</dd>
   <dt>Validators</dt>
   <dd>Validate forms, particularly for more complex rule sets (from Rails' <a href="https://guides.rubyonrails.org/active_model_basics.html#validations">ActiveModel validations</a>)</dd>

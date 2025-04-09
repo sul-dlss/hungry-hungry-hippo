@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToCocina::Work::EventsMapper do
+RSpec.describe Cocina::WorkEventsMapper do
   describe 'publication events' do
     subject(:events) { described_class.call(work_form:) }
 

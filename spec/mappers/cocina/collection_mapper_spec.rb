@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToCocina::Collection::Mapper, type: :mapping do
+RSpec.describe Cocina::CollectionMapper, type: :mapping do
   subject(:cocina_object) { described_class.call(collection_form:, source_id: collection_source_id_fixture) }
 
   let(:collection_form) { collection_form_fixture }
