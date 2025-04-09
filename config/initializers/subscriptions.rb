@@ -3,46 +3,63 @@
 Rails.application.config.after_initialize do # rubocop:disable Metrics/BlockLength
   # Subscriptions for CollectionsMailer
   # Depositor change notifications
-  Notifier.subscribe_mailer(event_name: Notifier::DEPOSITOR_ADDED, mailer_class: CollectionsMailer,
-                            mailer_method: :invitation_to_deposit_email)
-  Notifier.subscribe_mailer(event_name: Notifier::DEPOSITOR_REMOVED, mailer_class: CollectionsMailer,
-                            mailer_method: :deposit_access_removed_email)
-  Notifier.subscribe_mailer(event_name: Notifier::DEPOSITOR_ADDED, mailer_class: CollectionsMailer,
-                            mailer_method: :participants_changed_email)
-  Notifier.subscribe_mailer(event_name: Notifier::DEPOSITOR_REMOVED, mailer_class: CollectionsMailer,
-                            mailer_method: :participants_changed_email)
-  Notifier.subscribe_action(event_name: Notifier::DEPOSIT_PERSIST_COMPLETE,
-                            action_class: CollectionDepositPersistCompletedSubscriptionMailer)
+  Notifier.subscribe(event_name: Notifier::DEPOSITOR_ADDED) do |payload|
+    CollectionsMailer.with(**payload).invitation_to_deposit_email.deliver_later
+  end
+  Notifier.subscribe(event_name: Notifier::DEPOSITOR_REMOVED) do |payload|
+    CollectionsMailer.with(**payload).deposit_access_removed_email.deliver_later
+  end
+  Notifier.subscribe(event_name: Notifier::DEPOSITOR_ADDED) do |payload|
+    CollectionsMailer.with(**payload).participants_changed_email.deliver_later
+  end
+  Notifier.subscribe(event_name: Notifier::DEPOSITOR_REMOVED) do |payload|
+    CollectionsMailer.with(**payload).participants_changed_email.deliver_later
+  end
+  Notifier.subscribe(event_name: Notifier::DEPOSIT_PERSIST_COMPLETE) do |payload|
+    CollectionDepositPersistCompletedSubscriptionMailer.call(**payload)
+  end
 
   # Manager change notifications
-  Notifier.subscribe_mailer(event_name: Notifier::MANAGER_ADDED, mailer_class: CollectionsMailer,
-                            mailer_method: :manage_access_granted_email)
-  Notifier.subscribe_mailer(event_name: Notifier::MANAGER_ADDED, mailer_class: CollectionsMailer,
-                            mailer_method: :participants_changed_email)
-  Notifier.subscribe_mailer(event_name: Notifier::MANAGER_REMOVED, mailer_class: CollectionsMailer,
-                            mailer_method: :participants_changed_email)
+  Notifier.subscribe(event_name: Notifier::MANAGER_ADDED) do |payload|
+    CollectionsMailer.with(**payload).manage_access_granted_email.deliver_later
+  end
+  Notifier.subscribe(event_name: Notifier::MANAGER_ADDED) do |payload|
+    CollectionsMailer.with(**payload).participants_changed_email.deliver_later
+  end
+  Notifier.subscribe(event_name: Notifier::MANAGER_REMOVED) do |payload|
+    CollectionsMailer.with(**payload).participants_changed_email.deliver_later
+  end
 
   # Reviewer change notifications
-  Notifier.subscribe_mailer(event_name: Notifier::REVIEWER_ADDED, mailer_class: CollectionsMailer,
-                            mailer_method: :review_access_granted_email)
-  Notifier.subscribe_mailer(event_name: Notifier::REVIEWER_ADDED, mailer_class: CollectionsMailer,
-                            mailer_method: :participants_changed_email)
-  Notifier.subscribe_mailer(event_name: Notifier::REVIEWER_REMOVED, mailer_class: CollectionsMailer,
-                            mailer_method: :participants_changed_email)
+  Notifier.subscribe(event_name: Notifier::REVIEWER_ADDED) do |payload|
+    CollectionsMailer.with(**payload).review_access_granted_email.deliver_later
+  end
+  Notifier.subscribe(event_name: Notifier::REVIEWER_ADDED) do |payload|
+    CollectionsMailer.with(**payload).participants_changed_email.deliver_later
+  end
+  Notifier.subscribe(event_name: Notifier::REVIEWER_REMOVED) do |payload|
+    CollectionsMailer.with(**payload).participants_changed_email.deliver_later
+  end
 
   # Subscriptions for ReviewsMailer
-  Notifier.subscribe_mailer(event_name: Notifier::REVIEW_REQUESTED, mailer_class: ReviewsMailer,
-                            mailer_method: :submitted_email)
-  Notifier.subscribe_mailer(event_name: Notifier::REVIEW_REJECTED, mailer_class: ReviewsMailer,
-                            mailer_method: :rejected_email)
-  Notifier.subscribe_mailer(event_name: Notifier::REVIEW_APPROVED, mailer_class: ReviewsMailer,
-                            mailer_method: :approved_email)
-  Notifier.subscribe_action(event_name: Notifier::REVIEW_REQUESTED,
-                            action_class: ReviewRequestSubscriptionMailer)
+  Notifier.subscribe(event_name: Notifier::REVIEW_REQUESTED) do |payload|
+    ReviewsMailer.with(**payload).submitted_email.deliver_later
+  end
+  Notifier.subscribe(event_name: Notifier::REVIEW_REJECTED) do |payload|
+    ReviewsMailer.with(**payload).rejected_email.deliver_later
+  end
+  Notifier.subscribe(event_name: Notifier::REVIEW_APPROVED) do |payload|
+    ReviewsMailer.with(**payload).approved_email.deliver_later
+  end
+  Notifier.subscribe(event_name: Notifier::REVIEW_REQUESTED) do |payload|
+    ReviewRequestSubscriptionMailer.call(**payload)
+  end
 
   # Subscriptions for WorksMailer
-  Notifier.subscribe_action(event_name: Notifier::ACCESSIONING_STARTED,
-                            action_class: WorkAccessioningStartedSubscriptionMailer)
-  Notifier.subscribe_action(event_name: Notifier::ACCESSIONING_COMPLETE,
-                            action_class: WorkAccessioningCompletedSubscriptionMailer)
+  Notifier.subscribe(event_name: Notifier::ACCESSIONING_STARTED) do |payload|
+    WorkAccessioningStartedSubscriptionMailer.call(**payload)
+  end
+  Notifier.subscribe(event_name: Notifier::ACCESSIONING_COMPLETE) do |payload|
+    WorkAccessioningCompletedSubscriptionMailer.call(**payload)
+  end
 end

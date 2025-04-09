@@ -26,15 +26,9 @@ class Notifier
     ActiveSupport::Notifications.instrument(event_name, **payload)
   end
 
-  def self.subscribe_mailer(event_name:, mailer_class:, mailer_method:)
+  def self.subscribe(event_name:)
     ActiveSupport::Notifications.subscribe(event_name) do |event|
-      mailer_class.with(**event.payload).send(mailer_method).deliver_later if Settings.notifications.enabled
-    end
-  end
-
-  def self.subscribe_action(event_name:, action_class:)
-    ActiveSupport::Notifications.subscribe(event_name) do |event|
-      action_class.call(**event.payload) if Settings.notifications.enabled
+      yield event.payload if Settings.notifications.enabled
     end
   end
 end
