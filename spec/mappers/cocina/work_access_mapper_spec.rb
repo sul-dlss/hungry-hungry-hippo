@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToCocina::Work::AccessMapper do
+RSpec.describe Cocina::WorkAccessMapper do
   subject(:access) { described_class.call(work_form:) }
 
   context 'when stanford access' do

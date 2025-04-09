@@ -14,7 +14,7 @@ RSpec.describe DepositWorkJob do
 
   before do
     allow(Contents::Analyzer).to receive(:call)
-    allow(ToCocina::Work::Mapper).to receive(:call).and_call_original
+    allow(Cocina::WorkMapper).to receive(:call).and_call_original
     allow(Contents::Stager).to receive(:call)
     allow(Sdr::Repository).to receive(:accession)
     allow(Sdr::Repository).to receive(:register).and_return(cocina_object)
@@ -29,8 +29,8 @@ RSpec.describe DepositWorkJob do
         described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:)
       end.not_to change(user.reload, :agreed_to_terms_at)
       expect(Contents::Analyzer).to have_received(:call).with(content:)
-      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:, content:,
-                                                                  source_id: "h3:object-#{work.id}")
+      expect(Cocina::WorkMapper).to have_received(:call).with(work_form:, content:,
+                                                              source_id: "h3:object-#{work.id}")
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
       expect(Sdr::Repository).to have_received(:register)
         .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true)
@@ -78,8 +78,8 @@ RSpec.describe DepositWorkJob do
       described_class.perform_now(work_form:, work:, deposit: false, request_review: false,
                                   current_user:)
       expect(Contents::Analyzer).to have_received(:call).with(content:)
-      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:, content:,
-                                                                  source_id: "h3:object-#{work.id}")
+      expect(Cocina::WorkMapper).to have_received(:call).with(work_form:, content:,
+                                                              source_id: "h3:object-#{work.id}")
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
       expect(Sdr::Repository).to have_received(:open_if_needed)
         .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata),
@@ -114,8 +114,8 @@ RSpec.describe DepositWorkJob do
       described_class.perform_now(work_form:, work:, deposit: true, request_review: false,
                                   current_user:)
       expect(Contents::Analyzer).to have_received(:call).with(content:)
-      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:, content:,
-                                                                  source_id: "h3:object-#{work.id}")
+      expect(Cocina::WorkMapper).to have_received(:call).with(work_form:, content:,
+                                                              source_id: "h3:object-#{work.id}")
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
       expect(Sdr::Repository).not_to have_received(:open_if_needed)
       expect(Sdr::Repository).not_to have_received(:update)
@@ -147,8 +147,8 @@ RSpec.describe DepositWorkJob do
 
       described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:)
       expect(Contents::Analyzer).to have_received(:call).with(content:)
-      expect(ToCocina::Work::Mapper).to have_received(:call).with(work_form:, content:,
-                                                                  source_id: "h3:object-#{work.id}")
+      expect(Cocina::WorkMapper).to have_received(:call).with(work_form:, content:,
+                                                              source_id: "h3:object-#{work.id}")
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
       expect(Sdr::Repository).not_to have_received(:open_if_needed)
       expect(Sdr::Repository).not_to have_received(:update)
@@ -200,7 +200,7 @@ RSpec.describe DepositWorkJob do
 
     before do
       allow(Sdr::Repository).to receive(:status).and_return(version_status)
-      allow(ToCocina::Work::Mapper).to receive(:call).and_return(cocina_object)
+      allow(Cocina::WorkMapper).to receive(:call).and_return(cocina_object)
       allow(RoundtripSupport).to receive(:changed?).and_return(false)
     end
 

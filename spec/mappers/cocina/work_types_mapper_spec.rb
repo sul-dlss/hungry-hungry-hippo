@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToCocina::Work::TypesMapper do
+RSpec.describe Cocina::WorkTypesMapper do
   subject(:forms) { described_class.call(work_form:).map(&:deep_symbolize_keys) }
 
   let(:work_form) { WorkForm.new }

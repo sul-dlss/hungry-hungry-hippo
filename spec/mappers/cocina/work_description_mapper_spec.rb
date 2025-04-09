@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToCocina::Work::DescriptionMapper, type: :mapping do
+RSpec.describe Cocina::WorkDescriptionMapper, type: :mapping do
   subject(:description) { described_class.call(work_form:) }
 
   context 'when duplicate keywords' do

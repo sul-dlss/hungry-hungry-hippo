@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToCocina::Work::IdentificationMapper do
+RSpec.describe Cocina::WorkIdentificationMapper do
   subject(:identification) { described_class.call(work_form:, source_id:) }
 
   let(:source_id) { source_id_fixture }
