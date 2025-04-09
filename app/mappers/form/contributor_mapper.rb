@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ToForm
+module Form
   # Maps a Contributor AR model to a ContributorForm attributes
   class ContributorMapper
     def self.call(...)

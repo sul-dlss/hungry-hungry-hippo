@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-module ToWorkForm
+# The containing namespace for mappers indicates what is being mapped *to*
+module Form
   # Maps keywords.
-  class KeywordsMapper < ToForm::BaseMapper
+  class WorkKeywordsMapper < BaseMapper
     def call
       return nil if cocina_object.description.subject.blank?
 

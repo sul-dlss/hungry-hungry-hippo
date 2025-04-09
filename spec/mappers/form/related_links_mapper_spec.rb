@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToForm::RelatedLinksMapper do
+RSpec.describe Form::RelatedLinksMapper do
   context 'when object has related links' do
     let(:cocina_object) do
       # NOTE: the :dro factory in the cocina-models gem does not have a seam

@@ -109,7 +109,7 @@ class CollectionsController < ApplicationController
 
   def set_collection_form_from_cocina
     @cocina_object = Sdr::Repository.find(druid: params[:druid])
-    @collection_form = ToCollectionForm::Mapper.call(cocina_object: @cocina_object, collection: @collection)
+    @collection_form = Form::CollectionMapper.call(cocina_object: @cocina_object, collection: @collection)
   end
 
   def set_status

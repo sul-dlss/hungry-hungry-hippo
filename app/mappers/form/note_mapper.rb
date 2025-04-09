@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ToForm
+module Form
   # Maps notes.
   class NoteMapper
     ABSTRACT_TYPE = 'abstract'

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module ToCollectionForm
+module Form
   # Maps Cocina Collection to CollectionForm
-  class Mapper
+  class CollectionMapper
     def self.call(...)
       new(...).call
     end
@@ -20,15 +20,14 @@ module ToCollectionForm
 
     attr_reader :cocina_object, :collection
 
-    # rubocop:disable Metrics/AbcSize
-    def params
+    def params # rubocop:disable Metrics/AbcSize
       {
         druid: cocina_object.externalIdentifier,
         lock: cocina_object.lock,
         title: Cocina::Parser.title_for(cocina_object:),
-        description: ToForm::NoteMapper.abstract(cocina_object:), # Cocina abstract maps to Collection description
-        contact_emails_attributes: ToForm::ContactEmailsMapper.call(cocina_object:),
-        related_links_attributes: ToForm::RelatedLinksMapper.call(cocina_object:),
+        description: NoteMapper.abstract(cocina_object:), # Cocina abstract maps to Collection description
+        contact_emails_attributes: ContactEmailsMapper.call(cocina_object:),
+        related_links_attributes: RelatedLinksMapper.call(cocina_object:),
         release_option: collection.release_option,
         release_duration: collection.release_duration,
         access: collection.access,
@@ -50,7 +49,6 @@ module ToCollectionForm
         contributors_attributes:
       }.merge(license_params)
     end
-    # rubocop:enable Metrics/AbcSize
 
     # @param [Symbol] role :managers, :reviewers, or :depositors
     # @return [Array<Hash>] an array of participant attributes
@@ -73,7 +71,7 @@ module ToCollectionForm
     def contributors_attributes
       return [{}] if collection.contributors.blank?
 
-      collection.contributors.map { |contributor| ToForm::ContributorMapper.call(contributor:) }
+      collection.contributors.map { |contributor| ContributorMapper.call(contributor:) }
     end
   end
 end

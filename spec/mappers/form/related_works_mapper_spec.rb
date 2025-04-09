@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ToWorkForm::RelatedWorksMapper do
+RSpec.describe Form::RelatedWorksMapper do
   context 'when object has related works' do
     let(:cocina_object) do
       # NOTE: the :dro factory in the cocina-models gem does not have a seam

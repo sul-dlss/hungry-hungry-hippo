@@ -52,7 +52,7 @@ class CollectionImporter
   end
 
   def collection_form
-    @collection_form ||= ToCollectionForm::Mapper.call(cocina_object:, collection:)
+    @collection_form ||= Form::CollectionMapper.call(cocina_object:, collection:)
   end
 
   def option_for(option)
