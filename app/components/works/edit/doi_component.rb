@@ -21,6 +21,10 @@ module Works
       def doi_link
         link_to(nil, Doi.url(druid: form.object.druid))
       end
+
+      def altmetric_link
+        Settings.altmetric_url
+      end
     end
   end
 end
