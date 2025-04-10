@@ -408,6 +408,88 @@ RSpec.describe WorkForm do
     end
   end
 
+  describe 'contact email validation' do
+    let(:form) do
+      described_class.new(
+        title: title_fixture,
+        contact_emails_attributes:,
+        works_contact_email:,
+        contributors_attributes: contributors_fixture,
+        abstract: abstract_fixture,
+        license: license_fixture,
+        work_type: work_type_fixture,
+        whats_changing: 'Initial version'
+      )
+    end
+
+    let(:works_contact_email) { nil }
+
+    context 'when a contact email is provided' do
+      let(:contact_emails_attributes) do
+        [
+          {
+            'email' => 'aperson@example.com'
+          },
+          {
+            'email' => 'anotherperson@example.com'
+          }
+        ]
+      end
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+    end
+
+    context 'when a contact email and a blank is provided' do
+      let(:contact_emails_attributes) do
+        [
+          {
+            'email' => 'aperson@example.com'
+          },
+          {
+            'email' => ''
+          }
+        ]
+      end
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+    end
+
+    context 'when only a blank is provided' do
+      let(:contact_emails_attributes) do
+        [
+          {
+            'email' => ''
+          }
+        ]
+      end
+
+      it 'is invalid' do
+        expect(form.valid?(:deposit)).to be false
+        expect(form.contact_emails.first.errors[:email]).to include('can\'t be blank')
+      end
+    end
+
+    context 'when only a blank is provided but has a required contact email' do
+      let(:contact_emails_attributes) do
+        [
+          {
+            'email' => ''
+          }
+        ]
+      end
+
+      let(:works_contact_email) { 'someone@stanford.edu' }
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+    end
+  end
+
   describe 'Abstract linefeed normalization' do
     let(:form) do
       described_class.new(

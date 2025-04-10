@@ -22,7 +22,8 @@ class WorkForm < ApplicationForm
 
   before_validation do
     blank_contact_emails = contact_emails_attributes.select(&:empty?)
-    next if blank_contact_emails.empty? || blank_contact_emails.length == contact_emails_attributes.length
+    next if blank_contact_emails.empty?
+    next if blank_contact_emails.length == contact_emails_attributes.length && works_contact_email.blank?
 
     self.contact_emails_attributes = (contact_emails_attributes - blank_contact_emails).map(&:attributes)
   end
