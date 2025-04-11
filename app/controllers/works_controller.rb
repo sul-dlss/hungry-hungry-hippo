@@ -162,7 +162,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def set_content
-    @content = Contents::Builder.call(cocina_object: @cocina_object, user: current_user)
+    @content = Contents::Builder.call(cocina_object: @cocina_object, user: current_user, updated_at: @work.updated_at)
     @work_form.content_id = @content.id
   end
 
