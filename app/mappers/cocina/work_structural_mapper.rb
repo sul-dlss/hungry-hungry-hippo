@@ -31,8 +31,6 @@ module Cocina
 
     attr_reader :work_form, :content
 
-    delegate :access, to: :work_form
-
     def params
       {
         contains: content.content_files.map { |content_file| fileset_params_for(content_file) },
@@ -59,7 +57,7 @@ module Cocina
         version: work_form.version,
         label: content_file.label,
         filename: content_file.filepath,
-        access: { view: access, download: access },
+        access:,
         administrative: { publish: !content_file.hidden?, sdrPreserve: true, shelve: !content_file.hidden? },
         hasMimeType: content_file.mime_type,
         hasMessageDigests: message_digests_for(content_file),
@@ -109,6 +107,14 @@ module Cocina
       return Cocina::Models::FileSetType.document if document? && content_file.pdf? && !content_file.hidden?
 
       Cocina::Models::FileSetType.file
+    end
+
+    def access
+      if work_form.release_option == 'delay' # Embargoed
+        { view: 'dark', download: 'none' }
+      else
+        { view: work_form.access, download: work_form.access }
+      end
     end
   end
 end

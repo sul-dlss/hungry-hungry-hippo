@@ -23,6 +23,31 @@ RSpec.describe Cocina::WorkMapper, type: :mapping do
     end
   end
 
+  context 'with an immediate release work' do
+    let(:work_form) do
+      work_form_fixture.tap do |form|
+        form.release_option = 'immediate'
+      end
+    end
+
+    let(:expected_cocina_object) do
+      cocina_attrs = dro_with_structural_and_metadata_fixture.to_h
+      cocina_attrs[:access][:view] = 'stanford'
+      cocina_attrs[:access][:download] = 'stanford'
+      cocina_attrs[:access].delete(:embargo)
+      file_access = cocina_attrs.dig(:structural, :contains, 0, :structural, :contains, 0, :access)
+      file_access[:view] = 'stanford'
+      file_access[:download] = 'stanford'
+
+      cocina_object = Cocina::Models.build(cocina_attrs)
+      Cocina::Models.with_metadata(cocina_object, work_form.lock)
+    end
+
+    it 'maps to cocina' do
+      expect(cocina_object).to equal_cocina(expected_cocina_object)
+    end
+  end
+
   context 'with a work with a hidden file' do
     let(:content) { content_fixture(hide: true) }
 
