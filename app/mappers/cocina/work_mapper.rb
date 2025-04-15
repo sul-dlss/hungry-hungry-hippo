@@ -55,13 +55,7 @@ module Cocina
     end
 
     def document?
-      # All shown (not hidden) files must be PDFs and not be in a hierarchy
-      # in order to be considered a document type
-      shown_files.any? && shown_files.all?(&:pdf?) && shown_files.none?(&:hierarchy?)
-    end
-
-    def shown_files
-      @shown_files ||= content.shown_files
+      @document ||= content.document?
     end
   end
 end
