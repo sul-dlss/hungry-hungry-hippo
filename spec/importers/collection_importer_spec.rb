@@ -129,11 +129,6 @@ RSpec.describe CollectionImporter do
   end
 
   context 'when license is not required' do
-    let(:cocina_object) do
-      original_object = Cocina::Models.with_metadata(collection_fixture, lock_fixture, modified:)
-      original_object.new(access: original_object.access.new(license: collection_hash['default_license']))
-    end
-
     it 'sets the license to the default license' do
       collection_hash['license_option'] = 'depositor_selects'
       collection = described_class.call(collection_hash:)
