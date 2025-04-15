@@ -240,8 +240,8 @@ module WorkMappingFixtures
                                         }
                                       ],
                                       access: {
-                                        view: 'stanford',
-                                        download: 'stanford',
+                                        view: 'dark',
+                                        download: 'none',
                                         controlledDigitalLending: false
                                       },
                                       administrative: {
@@ -331,8 +331,8 @@ module WorkMappingFixtures
                                   }
                                 ],
                                 access: {
-                                  view: 'stanford',
-                                  download: 'stanford',
+                                  view: 'dark',
+                                  download: 'none',
                                   controlledDigitalLending: false
                                 },
                                 administrative: {
