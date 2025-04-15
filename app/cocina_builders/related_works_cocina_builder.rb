@@ -27,7 +27,7 @@ class RelatedWorksCocinaBuilder
   def related_work_params_for(related_work:)
     {
       type: related_work['relationship']
-    }.tap do |related_work_hash|
+    }.compact.tap do |related_work_hash|
       if related_work['identifier'].present?
         related_work_hash[:identifier] =
           [{ uri: related_work['identifier'] }]

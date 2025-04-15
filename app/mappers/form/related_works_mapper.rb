@@ -9,7 +9,6 @@ module Form
 
       cocina_object.description.relatedResource.map do |related_resource|
         citation, identifier = related_work_values_from(related_resource)
-
         next if citation.blank? && identifier.blank?
 
         {
@@ -28,7 +27,7 @@ module Form
     end
 
     def related_work_values_from(related_resource) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-      return [] if RelatedWorkForm::RELATIONSHIP_TYPES.exclude?(related_resource.type)
+      return [] if related_resource.type.present? && RelatedWorkForm::RELATIONSHIP_TYPES.exclude?(related_resource.type)
 
       if related_resource.note&.first&.[](:type) == 'preferred citation'
         [related_resource.note&.first&.[](:value), nil]

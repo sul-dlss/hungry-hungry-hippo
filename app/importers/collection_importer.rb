@@ -6,8 +6,9 @@ class CollectionImporter
     new(...).call
   end
 
-  def initialize(collection_hash:)
+  def initialize(collection_hash:, cocina_object:)
     @collection_hash = collection_hash
+    @cocina_object = cocina_object
   end
 
   def call
@@ -16,13 +17,14 @@ class CollectionImporter
         raise ImportError, "Collection #{druid} cannot be roundtripped"
       end
 
+      add_project_tags
       collection
     end
   end
 
   private
 
-  attr_reader :collection_hash
+  attr_reader :collection_hash, :cocina_object
 
   def collection # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @collection ||= ::Collection.find_or_create_by!(druid:) do |collection|
@@ -45,10 +47,6 @@ class CollectionImporter
       collection.reviewers = users_from('reviewed_by')
       collection.managers = users_from('managed_by')
     end
-  end
-
-  def cocina_object
-    @cocina_object ||= Sdr::Repository.find(druid:)
   end
 
   def collection_form
@@ -102,5 +100,9 @@ class CollectionImporter
 
   def druid
     collection_hash['druid']
+  end
+
+  def add_project_tags
+    Dor::Services::Client.object(druid).administrative_tags.create(tags: ['Project : H3'])
   end
 end

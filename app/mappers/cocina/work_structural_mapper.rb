@@ -33,7 +33,7 @@ module Cocina
 
     def params
       {
-        contains: content.content_files.map { |content_file| fileset_params_for(content_file) },
+        contains: content.content_files.order(:id).map { |content_file| fileset_params_for(content_file) },
         isMemberOf: [work_form.collection_druid]
       }
     end
