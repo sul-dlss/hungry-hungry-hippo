@@ -36,7 +36,7 @@ module Cocina
         description: CollectionDescriptionMapper.call(collection_form:),
         version: collection_form.version,
         access:,
-        identification: { sourceId: source_id },
+        identification: { sourceId: source_id }.compact,
         administrative: { hasAdminPolicy: collection_form.apo }
       }.compact
     end

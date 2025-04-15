@@ -121,9 +121,8 @@ RSpec.describe CollectionImporter do
     let(:cocina_object) { collection_with_metadata_fixture.new(type: Cocina::Models::ObjectType.curated_collection) }
 
     it 'raises an error and does not create a new collection' do
-      expect do
-        described_class.call(collection_hash:)
-      end.to raise_error(ImportError, "Collection #{druid} cannot be roundtripped")
+      expect { described_class.call(collection_hash:) }
+        .to raise_error(ImportError, "Collection #{druid} cannot be roundtripped")
         .and not_change(Collection, :count)
     end
   end

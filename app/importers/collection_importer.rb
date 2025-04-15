@@ -48,7 +48,14 @@ class CollectionImporter
   end
 
   def cocina_object
-    @cocina_object ||= Sdr::Repository.find(druid:)
+    # TODO: Remove the caching
+    @cocina_object ||= if Rails.env.development?
+                         Rails.cache.fetch(druid, expires_in: 1.year) do
+                           Sdr::Repository.find(druid:)
+                         end
+                       else
+                         Sdr::Repository.find(druid:)
+                       end
   end
 
   def collection_form
