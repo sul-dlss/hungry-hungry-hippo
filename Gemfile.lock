@@ -640,6 +640,7 @@ DEPENDENCIES
   mission_control-jobs
   okcomputer
   overmind
+  parallel
   pg
   propshaft
   puma (>= 5.0)

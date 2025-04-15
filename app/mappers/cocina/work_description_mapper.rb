@@ -38,7 +38,7 @@ module Cocina
         relatedResource: related_resource_params,
         access: {
           accessContact: access_contact_params
-        },
+        }.compact_blank.presence,
         adminMetadata: DescriptionCocinaBuilder.admin_metadata(creation_date: work_form.creation_date)
       }.compact
     end
