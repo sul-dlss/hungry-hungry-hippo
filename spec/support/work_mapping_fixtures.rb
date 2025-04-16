@@ -29,7 +29,8 @@ module WorkMappingFixtures
       create_date_range_to_attributes: creation_date_range_to_fixture,
       create_date_type: 'range',
       whats_changing: 'Initial version',
-      works_contact_email: works_contact_email_fixture
+      works_contact_email: works_contact_email_fixture,
+      deposit_creation_date: deposit_creation_date_fixture
     )
   end
 
@@ -137,7 +138,8 @@ module WorkMappingFixtures
               contact_emails: contact_emails_fixture.append(ContactEmailForm.new(email: works_contact_email_fixture))
             )
           },
-          form: form_fixture
+          form: form_fixture,
+          adminMetadata: DescriptionCocinaBuilder.admin_metadata(creation_date: deposit_creation_date_fixture)
         },
         version: 1,
         identification: { sourceId: source_id_fixture },
@@ -285,6 +287,7 @@ module WorkMappingFixtures
             )
           },
           form: form_fixture,
+          adminMetadata: DescriptionCocinaBuilder.admin_metadata(creation_date: deposit_creation_date_fixture),
           purl: Sdr::Purl.from_druid(druid: druid_fixture)
         },
         version: 2,
