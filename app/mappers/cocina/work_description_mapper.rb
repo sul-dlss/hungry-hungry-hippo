@@ -50,9 +50,7 @@ module Cocina
                                                   value: work_form.abstract)
         end
         if work_form.citation.present? && work_form.auto_generate_citation == false
-          params << DescriptionCocinaBuilder.note(type: 'preferred citation',
-                                                  value: work_form.citation,
-                                                  label: 'Preferred Citation')
+          params << DescriptionCocinaBuilder.note(type: 'preferred citation', value: work_form.citation)
         end
       end.presence
     end
