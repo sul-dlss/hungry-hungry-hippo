@@ -128,9 +128,7 @@ module WorkMappingFixtures
             DescriptionCocinaBuilder.event(type: 'publication', date: '2024-12', primary: true)
           ],
           note: [DescriptionCocinaBuilder.note(type: 'abstract', value: abstract_fixture),
-                 DescriptionCocinaBuilder.note(type: 'preferred citation',
-                                               value: citation_fixture,
-                                               label: 'Preferred Citation')],
+                 DescriptionCocinaBuilder.note(type: 'preferred citation', value: citation_fixture)],
           relatedResource: DescriptionCocinaBuilder.related_works(related_works: related_works_fixture) +
                            DescriptionCocinaBuilder.related_links(related_links: related_links_fixture),
           access: {
@@ -276,9 +274,7 @@ module WorkMappingFixtures
             DescriptionCocinaBuilder.event(type: 'publication', date: '2024-12', primary: true)
           ],
           note: [DescriptionCocinaBuilder.note(type: 'abstract', value: abstract_fixture),
-                 DescriptionCocinaBuilder.note(type: 'preferred citation',
-                                               value: citation_fixture,
-                                               label: 'Preferred Citation')],
+                 DescriptionCocinaBuilder.note(type: 'preferred citation', value: citation_fixture)],
           relatedResource: DescriptionCocinaBuilder.related_works(related_works: related_works_fixture) +
                            DescriptionCocinaBuilder.related_links(related_links: related_links_fixture),
           access: {
