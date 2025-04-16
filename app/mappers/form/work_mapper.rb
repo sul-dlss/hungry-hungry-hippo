@@ -46,7 +46,8 @@ module Form
         doi_option:,
         agree_to_terms:,
         works_contact_email:,
-        whats_changing: version_description
+        whats_changing: version_description,
+        deposit_creation_date:
       }.merge(WorkTypeMapper.call(cocina_object:))
         .merge(WorkReleaseDateMapper.call(cocina_object:))
         .merge(WorkCreationDateMapper.call(cocina_object:))
@@ -101,6 +102,13 @@ module Form
     def access
       # When there is an embargo, the embargo view is the access view.
       cocina_object.access&.embargo&.view || cocina_object.access.view
+    end
+
+    def deposit_creation_date
+      creation_event = Array(cocina_object.description&.adminMetadata&.event).find { |event| event.type == 'creation' }
+      return unless creation_event
+
+      creation_event.date.first&.value
     end
   end
 end

@@ -125,6 +125,8 @@ class WorkForm < ApplicationForm
   attribute :whats_changing, :string
   validates :whats_changing, presence: true
 
+  attribute :deposit_creation_date, :date
+
   def content_file_presence
     return if content_id.nil? # This makes test configuration easier.
     return if Content.find(content_id).content_files.exists?

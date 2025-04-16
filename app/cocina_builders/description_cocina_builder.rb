@@ -37,4 +37,8 @@ class DescriptionCocinaBuilder
   def self.related_works(related_works:)
     RelatedWorksCocinaBuilder.call(related_works:)
   end
+
+  def self.admin_metadata(creation_date:)
+    AdminMetadataBuilder.call(creation_date:)
+  end
 end
