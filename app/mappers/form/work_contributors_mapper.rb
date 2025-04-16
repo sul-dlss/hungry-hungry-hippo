@@ -4,6 +4,8 @@
 module Form
   # Maps contributors to the work form
   class WorkContributorsMapper < BaseMapper
+    ORGANIZATION_TYPES = %w[organization conference event].freeze
+
     def call
       return nil if cocina_object.description.contributor.blank?
 
@@ -21,7 +23,7 @@ module Form
       def call
         { 'first_name' => first_name,
           'last_name' => last_name,
-          'role_type' => contributor.type,
+          'role_type' => organization? ? 'organization' : 'person',
           'person_role' => (role if person?),
           'organization_role' => (role if organization?),
           'organization_name' => organization_name,
@@ -63,7 +65,7 @@ module Form
       end
 
       def organization?
-        contributor.type == 'organization'
+        ORGANIZATION_TYPES.include?(contributor.type)
       end
 
       def role
