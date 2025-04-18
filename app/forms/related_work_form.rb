@@ -22,15 +22,14 @@ class RelatedWorkForm < ApplicationForm
   attribute :citation, :string
   attribute :identifier, :string
   attribute :relationship, :string
-  validates :relationship, inclusion: { in: RELATIONSHIP_TYPES }, allow_blank: true
+  validates :relationship, inclusion: { in: RELATIONSHIP_TYPES }, if: (lambda do |related_work|
+    related_work.citation.present? || related_work.identifier.present?
+  end)
   attribute :use_citation, :boolean, default: false
 
   with_options(on: :deposit) do |deposit|
     deposit.validates :citation, absence: true, if: ->(related_work) { related_work.identifier.present? }
     deposit.validates :identifier, absence: true, if: ->(related_work) { related_work.citation.present? }
-    deposit.validates :relationship, presence: true, if: (lambda do |related_work|
-      related_work.citation.present? || related_work.identifier.present?
-    end)
   end
 
   def to_s
