@@ -45,7 +45,7 @@ export default class extends Controller {
     this.orcidMessageTarget.textContent = ''
 
     // Normalize
-    const orcid = this.orcidInputTarget.value.replace(this.orcidPrefixValue, '')
+    const orcid = this.orcidInputTarget.value.replace(`${this.orcidPrefixValue}/`, '')
     // 0000-0003-1527-0030
     if (orcid.length !== 19) return
 

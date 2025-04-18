@@ -26,7 +26,7 @@ autocomplete_lookup:
   identifier_prefix: 'http://id.worldcat.org/fast/'
 
 orcid:
-  url: 'https://orcid.org/'
+  url: 'https://orcid.org'
   public_api_base_url: 'https://pub.orcid.org/v3.0/'
 
 http_headers:
