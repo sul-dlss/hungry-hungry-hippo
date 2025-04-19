@@ -5,11 +5,12 @@ require 'rails_helper'
 RSpec.describe Contents::Builder do
   include WorkMappingFixtures
 
-  subject(:content) { described_class.call(cocina_object: dro_with_structural_fixture(hide:), user:) }
+  subject(:content) { described_class.call(cocina_object: dro_with_structural_fixture(hide:), user:, updated_at:) }
 
   let(:user) { create(:user) }
   let(:expected_content_file) { content_fixture(user:, hide:).content_files.first }
   let(:hide) { false }
+  let(:updated_at) { Time.zone.now }
 
   context 'when file is not hidden' do
     it 'builds Content and Content Files model objects' do
