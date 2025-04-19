@@ -20,7 +20,7 @@
       <b><%= first_name %> <%= last_name %></b> <i>(<%= person_role.titleize %>)</i> will be included in the list of authors and contributors for this work.
       This person <%= cited ? 'will' : 'will not' %> be included in the citation.
     <% else %>
-      <b><%= organization_name %></b> <i>(<%= organization_role.titleize %>)</i> will be included in the list of authors and contributors for this work.
+      <b><%= organization_name %></b> <i>(<%= organization_role.titleize %>)</i><% if suborganization_name.present? %>, <b><%= suborganization_name %></b> <i>(Department)</i><% end %> will be included in the list of authors and contributors for this work.
       This organization <%= cited ? 'will' : 'will not' %> be included in the citation.
     <% end %>
   </p>
