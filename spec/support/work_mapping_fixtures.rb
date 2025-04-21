@@ -129,8 +129,8 @@ module WorkMappingFixtures
           ],
           note: [DescriptionCocinaBuilder.note(type: 'abstract', value: abstract_fixture),
                  DescriptionCocinaBuilder.note(type: 'preferred citation', value: citation_fixture)],
-          relatedResource: DescriptionCocinaBuilder.related_works(related_works: related_works_fixture) +
-                           DescriptionCocinaBuilder.related_links(related_links: related_links_fixture),
+          relatedResource: DescriptionCocinaBuilder.related_links(related_links: related_links_fixture) +
+            DescriptionCocinaBuilder.related_works(related_works: related_works_fixture),
           access: {
             accessContact: DescriptionCocinaBuilder.contact_emails(
               contact_emails: contact_emails_fixture.append(ContactEmailForm.new(email: works_contact_email_fixture))
@@ -275,8 +275,8 @@ module WorkMappingFixtures
           ],
           note: [DescriptionCocinaBuilder.note(type: 'abstract', value: abstract_fixture),
                  DescriptionCocinaBuilder.note(type: 'preferred citation', value: citation_fixture)],
-          relatedResource: DescriptionCocinaBuilder.related_works(related_works: related_works_fixture) +
-                           DescriptionCocinaBuilder.related_links(related_links: related_links_fixture),
+          relatedResource: DescriptionCocinaBuilder.related_links(related_links: related_links_fixture) +
+            DescriptionCocinaBuilder.related_works(related_works: related_works_fixture),
           access: {
             accessContact: DescriptionCocinaBuilder.contact_emails(
               contact_emails: contact_emails_fixture.append(ContactEmailForm.new(email: works_contact_email_fixture))
