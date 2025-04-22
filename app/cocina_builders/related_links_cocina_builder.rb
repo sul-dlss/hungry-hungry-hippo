@@ -25,16 +25,16 @@ class RelatedLinksCocinaBuilder
   attr_reader :related_links
 
   def related_link_params_for(related_link:)
-    {
-      access: {
-        url: [
-          { value: related_link['url'] }
-        ]
-      }
-    }.tap do |related_link_hash|
-      next if (related_link_text = related_link['text']).blank?
+    {}.tap do |related_link_hash|
+      related_link_text = related_link['text']
+      related_link_hash[:title] = [{ value: related_link_text }] if related_link_text.present?
 
-      related_link_hash[:title] = [{ value: related_link_text }]
+      url = related_link['url']
+      if PurlSupport.purl?(url:)
+        related_link_hash[:purl] = url
+      else
+        related_link_hash[:access] = { url: [{ value: related_link['url'] }] }
+      end
     end
   end
 end
