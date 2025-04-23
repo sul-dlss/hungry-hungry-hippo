@@ -189,6 +189,6 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
   attr_reader :role
 
   def role_key
-    role.sub(' ', '_').to_sym
+    role.tr(' ', '_').to_sym
   end
 end
