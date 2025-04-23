@@ -33,6 +33,10 @@ def related_links_fixture
     {
       'text' => 'Stanford University',
       'url' => 'https://www.stanford.edu/'
+    },
+    {
+      'text' => 'Hewatt Transect',
+      'url' => 'https://sul-purl-stage.stanford.edu/qx938nv4212'
     }
   ]
 end

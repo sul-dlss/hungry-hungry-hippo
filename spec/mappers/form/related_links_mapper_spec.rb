@@ -18,6 +18,10 @@ RSpec.describe Form::RelatedLinksMapper do
                   url: [{ value: related_links_fixture.first['url'] }]
                 },
                 title: [{ value: related_links_fixture.first['text'] }]
+              },
+              {
+                purl: related_links_fixture.second['url'],
+                title: [{ value: related_links_fixture.second['text'] }]
               }
             ]
           end

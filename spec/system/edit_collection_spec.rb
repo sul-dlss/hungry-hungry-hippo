@@ -86,14 +86,20 @@ RSpec.describe 'Edit a collection' do
 
     # Filling in related content
     find('.nav-link', text: 'Related links (optional)').click
-    fill_in('Link text', with: 'delete')
-    fill_in('URL', with: 'me')
+    form_instances = all('.form-instance')
+    within form_instances[0] do
+      fill_in('Link text', with: 'delete')
+      fill_in('URL', with: 'me')
+    end
     # Test adding a new nested field
     click_link_or_button('+ Add another related link')
-    fill_in('collection_related_links_attributes_1_text', with: updated_related_links.first['text'])
-    fill_in('collection_related_links_attributes_1_url', with: updated_related_links.first['url'])
+    form_instances = all('.form-instance')
+    within form_instances[2] do
+      fill_in('Link text', with: updated_related_links.first['text'])
+      fill_in('URL', with: updated_related_links.first['url'])
+    end
     # Test removing a nested field
-    within('div[data-index="0"]') do
+    within(form_instances[0]) do
       find('button[data-action="click->nested-form#delete"]').click
     end
 
