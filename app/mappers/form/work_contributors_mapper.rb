@@ -69,7 +69,9 @@ module Form
       end
 
       def role
-        contributor.role.first&.value&.tr(' ', '_')
+        @role ||= ContributorRoleCocinaBuilder::ROLES.keys.find do |key|
+          ContributorRoleCocinaBuilder::ROLES.dig(key, :value) == contributor.role.first&.value
+        end&.to_s
       end
 
       def stanford_degree_granting_institution?
