@@ -61,7 +61,7 @@ module Form
       end
 
       def person?
-        contributor.type == 'person'
+        @person ||= contributor.type == 'person'
       end
 
       def organization?
@@ -69,7 +69,16 @@ module Form
       end
 
       def role
-        contributor.role.first&.value&.tr(' ', '_')
+        @role ||= begin
+          roles_hash = if person?
+                         ContributorRoleCocinaBuilder::PERSON_ROLES
+                       else
+                         ContributorRoleCocinaBuilder::ORGANIZATION_ROLES
+                       end
+          roles_hash.keys.find do |key|
+            roles_hash.dig(key, :value) == contributor.role.first&.value
+          end&.to_s
+        end
       end
 
       def stanford_degree_granting_institution?

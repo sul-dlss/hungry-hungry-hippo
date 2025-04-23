@@ -7,7 +7,8 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
     uri: 'http://id.loc.gov/vocabulary/relators/'
   }.freeze
 
-  ROLES = {
+  # Note the person and organization can have roles that map to the same code, e.g., 'res'
+  PERSON_ROLES = {
     author: {
       value: 'author',
       code: 'aut',
@@ -25,7 +26,7 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       source: SOURCE
     },
     contributing_author: {
-      value: 'contributing author',
+      value: 'contributor',
       code: 'ctb',
       uri: 'http://id.loc.gov/vocabulary/relators/ctb',
       source: SOURCE
@@ -43,9 +44,8 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       source: SOURCE
     },
     data_collector: {
-      value: 'data collector',
+      value: 'compiler',
       code: 'com',
-
       uri: 'http://id.loc.gov/vocabulary/relators/com',
       source: SOURCE
     },
@@ -62,7 +62,7 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       source: SOURCE
     },
     event_organizer: {
-      value: 'event organizer',
+      value: 'organizer',
       code: 'orm',
       uri: 'http://id.loc.gov/vocabulary/relators/orm',
       source: SOURCE
@@ -91,14 +91,8 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       uri: 'http://id.loc.gov/vocabulary/relators/pht',
       source: SOURCE
     },
-    primary_thesis_advisor: {
-      value: 'primary thesis advisor',
-      code: 'ths',
-      uri: 'http://id.loc.gov/vocabulary/relators/ths',
-      source: SOURCE
-    },
     principal_investigator: {
-      value: 'principal investigator',
+      value: 'research team head',
       code: 'rth',
       uri: 'http://id.loc.gov/vocabulary/relators/rth',
       source: SOURCE
@@ -110,7 +104,7 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       source: SOURCE
     },
     software_developer: {
-      value: 'software developer',
+      value: 'programmer',
       code: 'prg',
       uri: 'http://id.loc.gov/vocabulary/relators/prg',
       source: SOURCE
@@ -126,8 +120,10 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       code: 'ths',
       uri: 'http://id.loc.gov/vocabulary/relators/ths',
       source: SOURCE
-    },
-    # organization roles
+    }
+  }.freeze
+
+  ORGANIZATION_ROLES = {
     conference: {
       value: 'conference'
     },
@@ -159,7 +155,7 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       source: SOURCE
     },
     research_group: {
-      value: 'research group',
+      value: 'researcher',
       code: 'res',
       uri: 'http://id.loc.gov/vocabulary/relators/res',
       source: SOURCE
@@ -183,12 +179,12 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
   def call
     return if role.nil?
 
-    ROLES[role_key]
+    PERSON_ROLES[role_key] || ORGANIZATION_ROLES[role_key]
   end
 
   attr_reader :role
 
   def role_key
-    role.tr(' ', '_').to_sym
+    @role_key ||= role.tr(' ', '_').to_sym
   end
 end
