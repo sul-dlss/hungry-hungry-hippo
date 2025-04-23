@@ -8,24 +8,15 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
   }.freeze
 
   ROLES = {
+    # both organization and person roles
     author: {
       value: 'author',
       code: 'aut',
       uri: 'http://id.loc.gov/vocabulary/relators/aut',
       source: SOURCE
     },
-    advisor: {
-      value: 'advisor'
-    },
-    # person roles
-    composer: {
-      value: 'composer',
-      code: 'cmp',
-      uri: 'http://id.loc.gov/vocabulary/relators/cmp',
-      source: SOURCE
-    },
     contributing_author: {
-      value: 'contributing author',
+      value: 'contributor',
       code: 'ctb',
       uri: 'http://id.loc.gov/vocabulary/relators/ctb',
       source: SOURCE
@@ -36,16 +27,9 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       uri: 'http://id.loc.gov/vocabulary/relators/cph',
       source: SOURCE
     },
-    creator: {
-      value: 'creator',
-      code: 'cre',
-      uri: 'http://id.loc.gov/vocabulary/relators/cre',
-      source: SOURCE
-    },
     data_collector: {
-      value: 'data collector',
+      value: 'compiler',
       code: 'com',
-
       uri: 'http://id.loc.gov/vocabulary/relators/com',
       source: SOURCE
     },
@@ -55,16 +39,38 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       uri: 'http://id.loc.gov/vocabulary/relators/dtc',
       source: SOURCE
     },
+    event_organizer: {
+      value: 'organizer',
+      code: 'orm',
+      uri: 'http://id.loc.gov/vocabulary/relators/orm',
+      source: SOURCE
+    },
+    researcher: {
+      value: 'researcher',
+      code: 'res',
+      uri: 'http://id.loc.gov/vocabulary/relators/res',
+      source: SOURCE
+    },
+    # person roles
+    advisor: {
+      value: 'advisor'
+    },
+    composer: {
+      value: 'composer',
+      code: 'cmp',
+      uri: 'http://id.loc.gov/vocabulary/relators/cmp',
+      source: SOURCE
+    },
+    creator: {
+      value: 'creator',
+      code: 'cre',
+      uri: 'http://id.loc.gov/vocabulary/relators/cre',
+      source: SOURCE
+    },
     editor: {
       value: 'editor',
       code: 'edt',
       uri: 'http://id.loc.gov/vocabulary/relators/edt',
-      source: SOURCE
-    },
-    event_organizer: {
-      value: 'event organizer',
-      code: 'orm',
-      uri: 'http://id.loc.gov/vocabulary/relators/orm',
       source: SOURCE
     },
     interviewee: {
@@ -92,25 +98,19 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       source: SOURCE
     },
     primary_thesis_advisor: {
-      value: 'primary thesis advisor',
+      value: 'thesis advisor',
       code: 'ths',
       uri: 'http://id.loc.gov/vocabulary/relators/ths',
       source: SOURCE
     },
     principal_investigator: {
-      value: 'principal investigator',
+      value: 'research team head',
       code: 'rth',
       uri: 'http://id.loc.gov/vocabulary/relators/rth',
       source: SOURCE
     },
-    researcher: {
-      value: 'researcher',
-      code: 'res',
-      uri: 'http://id.loc.gov/vocabulary/relators/res',
-      source: SOURCE
-    },
     software_developer: {
-      value: 'software developer',
+      value: 'programmer',
       code: 'prg',
       uri: 'http://id.loc.gov/vocabulary/relators/prg',
       source: SOURCE
@@ -137,6 +137,12 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       uri: 'http://id.loc.gov/vocabulary/relators/dgg',
       source: SOURCE
     },
+    distributor: {
+      value: 'provider',
+      code: 'prv',
+      uri: 'http://id.loc.gov/vocabulary/relators/prv',
+      source: SOURCE
+    },
     event: {
       value: 'event'
     },
@@ -156,12 +162,6 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       value: 'issuing body',
       code: 'isb',
       uri: 'http://id.loc.gov/vocabulary/relators/isb',
-      source: SOURCE
-    },
-    research_group: {
-      value: 'research group',
-      code: 'res',
-      uri: 'http://id.loc.gov/vocabulary/relators/res',
       source: SOURCE
     },
     sponsor: {
