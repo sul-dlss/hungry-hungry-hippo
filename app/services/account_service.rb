@@ -2,6 +2,8 @@
 
 # Retrieve names from the account API run by UIT
 class AccountService
+  class AccountServiceHiccough < StandardError; end
+
   Account = Struct.new(:sunetid, :name, :description, keyword_init: true)
 
   def self.call(...)
@@ -15,7 +17,7 @@ class AccountService
   # @return [Account, nil] the account or nil if not found
   def call
     return if sunetid.blank?
-    return if params.empty?
+    return if params.blank?
 
     # Using the sunetid returned from the Account API since it will perform some normalization
     # e.g., removing accidental delimiter characters
@@ -56,9 +58,29 @@ class AccountService
   def params
     @params ||= Rails.cache.fetch(sunetid, namespace: 'account', expires_in: 1.month) do
       url = "https://#{Settings.accountws.host}/accounts/#{ERB::Util.url_encode(sunetid)}"
-      response = connection.get(url)
-      doc = response.body
-      doc.slice('name', 'description', 'id')
+
+      # The account service frequently returns 500 errors. Retry the connection five times in rapid succession.
+      begin
+        tries ||= 1
+        response_body = connection.get(url).body
+        # Raise and retry if the response is an HTTP 500.
+        #
+        # If, on the other hand, a bogus sunetid is provided, the `status` of the response will be 404, and then we:
+        #
+        # 1. Do *not* want to retry; but
+        # 2. *Do* want to cache the empty document
+        raise AccountServiceHiccough if response_body['status'] == 500
+
+        # Write the user's name and description to the cache, *or* write an
+        # empty document to the cache if the response is a 404, as that response
+        # has no `name` and `description` keys.
+        response_body.slice('name', 'description', 'id')
+      rescue AccountServiceHiccough
+        retry if (tries += 1) <= 5
+
+        # Prevent writing to the cache of all connection attempts error out
+        nil
+      end
     end
   end
 end
