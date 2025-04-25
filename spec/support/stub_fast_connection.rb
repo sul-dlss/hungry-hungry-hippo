@@ -2,8 +2,15 @@
 
 RSpec.shared_context('with FAST connection') do
   before do
-    stub_request(:get, "#{Settings.autocomplete_lookup.url}?query=#{query}#{other_params}")
-      .with(headers: lookup_headers)
+    stub_request(:get, Settings.autocomplete_lookup.url)
+      .with(headers: lookup_headers, query: {
+              query:,
+              rows: 20,
+              sort: 'usage desc',
+              queryIndex: 'suggestall',
+              queryReturn: 'idroot,suggestall,tag',
+              suggest: 'autoSubject'
+            })
       .to_return(status: lookup_status, body: lookup_response_body, headers: {})
   end
 
@@ -14,9 +21,6 @@ RSpec.shared_context('with FAST connection') do
       'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
       'User-Agent' => 'Stanford Self-Deposit (Hungry Hungry Hippo)'
     }
-  end
-  let(:other_params) do
-    '&rows=20&sort=usage+desc&queryIndex=suggestall&queryReturn=idroot,suggestall,tag&suggest=autoSubject'
   end
   let(:lookup_response_body) do
     {
