@@ -61,7 +61,7 @@ class KeywordResolver
 
   def resolve(query) # rubocop:disable Metrics/AbcSize
     response = connection.get do |req|
-      req.params['query'] = query
+      req.params['query'] = ERB::Util.url_encode(query)
       req.params['queryIndex'] = 'suggestall'
       req.params['queryReturn'] = 'idroot,suggestall,tag'
       req.params['suggest'] = 'autoSubject'
