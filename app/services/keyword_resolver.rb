@@ -73,11 +73,15 @@ class KeywordResolver
 
     return Success(parse(response.body)) if response.success?
 
-    Honeybadger.notify('FAST API Error', context: { response:, query:, url: Settings.autocomplete_lookup.url })
+    Honeybadger.notify('FAST API Error',
+                       context: { response: response.to_hash, query:, url: Settings.autocomplete_lookup.url })
     Failure("Autocomplete results for #{query} returned #{response.status}")
   rescue JSON::ParserError => e
-    Honeybadger.notify('Unexpected response from FAST API',
-                       context: { response:, query:, url: Settings.autocomplete_lookup.url, exception: e })
+    Honeybadger.notify('Unexpected response from FAST API', context: {
+                         response: response.to_hash,
+                         query:,
+                         url: Settings.autocomplete_lookup.url, exception: e
+                       })
     Failure("Autocomplete results for #{query} returned unexpected response '#{response.body}'")
   end
 end
