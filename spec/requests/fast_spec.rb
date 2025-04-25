@@ -61,7 +61,35 @@ RSpec.describe 'Fast Controller' do
       expect(response).to have_http_status :internal_server_error
       expect(response.body).to be_empty
       expect(Rails.logger).to have_received(:warn).with('Autocomplete results for tea returned 404')
-      expect(Honeybadger).to have_received(:notify).with('FAST API Error', context: hash_including(:query, :response))
+      expect(Honeybadger).to have_received(:notify)
+        .with('FAST API Error', context: hash_including(:query, :response, :url)).once
+    end
+  end
+
+  context 'when malformed JSON is received from the lookup server' do
+    let(:lookup_status) { 200 }
+    let(:lookup_response_body) do
+      <<~MALFORMED_JSON
+        Status: 400
+        Reason: Bad Request
+      MALFORMED_JSON
+    end
+
+    before do
+      allow(Rails.logger).to receive(:warn)
+      allow(Honeybadger).to receive(:notify)
+    end
+
+    it 'returns status 500 and an empty body' do
+      get '/fast', params: { q: query }
+      expect(response).to have_http_status :internal_server_error
+      expect(response.body).to be_empty
+      expect(Rails.logger).to have_received(:warn)
+        .with("Autocomplete results for tea returned unexpected response 'Status: 400\n" \
+              "Reason: Bad Request\n" \
+              "'")
+      expect(Honeybadger).to have_received(:notify)
+        .with('Unexpected response from FAST API', context: hash_including(:query, :response, :url, :exception)).once
     end
   end
 end
