@@ -32,7 +32,6 @@ module Form
         contributors_attributes: WorkContributorsMapper.call(cocina_object:),
         abstract: NoteMapper.abstract(cocina_object:),
         citation:,
-        auto_generate_citation: citation.blank?,
         contact_emails_attributes: ContactEmailsMapper.call(cocina_object:, works_contact_email:),
         related_works_attributes: RelatedWorksMapper.call(cocina_object:),
         related_links_attributes: RelatedLinksMapper.call(cocina_object:),

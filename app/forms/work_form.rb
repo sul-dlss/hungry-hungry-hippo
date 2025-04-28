@@ -65,8 +65,6 @@ class WorkForm < ApplicationForm
   end
 
   attribute :citation, :string
-  attribute :auto_generate_citation, :boolean
-  validates :citation, presence: true, if: -> { auto_generate_citation == false }
 
   attribute :license, :string
   validates :license, presence: true, on: :deposit
