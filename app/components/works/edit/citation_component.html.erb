@@ -1,14 +1,3 @@
 <%= tag.div class: 'pane-section' do %>
-  <%= render Elements::Forms::FieldsetComponent.new(label: t('works.edit.fields.citation.label'), data: { controller: 'radio' }) do %>
-    <%= tag.div class: 'form-check mb-4' do %>
-      <%= form.radio_button :auto_generate_citation, true, class: 'form-check-input', checked: true, data: { radio_target: 'radio', action: 'radio#toggle' } %>
-      <%= form.label :auto_generate_citation_true, t('works.edit.fields.citation.auto_citation'), class: 'form-check-label' %>
-    <% end %>
-
-    <%= tag.div class: 'form-check mb-4' do %>
-      <%= form.radio_button :auto_generate_citation, false, class: 'form-check-input', data: { radio_target: 'radio', action: 'radio#toggle' } %>
-      <%= form.label :auto_generate_citation_false, t('works.edit.fields.citation.custom_citation'), class: 'form-check-label' %>
-      <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :citation, label: t('works.edit.fields.citation.label'), hidden_label: true, data: { citation_target: 'citation' }) %>
-    <% end %>
-  <% end %>
+  <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :citation, label: t('works.edit.fields.citation.label')) %>
 <% end %>

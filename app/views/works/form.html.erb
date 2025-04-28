@@ -25,11 +25,11 @@
     <% component.with_tab(label: t('works.edit.panes.abstract.tab_label'), tab_name: :abstract, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.types.tab_label'), tab_name: :types, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.doi.tab_label'), tab_name: :doi, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.citation.tab_label'), tab_name: :citation, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.access.tab_label'), tab_name: :access, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.license.tab_label'), tab_name: :license, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.dates.tab_label'), tab_name: :dates, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.related_content.tab_label'), tab_name: :related_content, active_tab_name:) %>
+    <% component.with_tab(label: t('works.edit.panes.citation.tab_label'), tab_name: :citation, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.deposit.tab_label'), tab_name: :deposit, active_tab_name:) %>
     <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
     <%# TabListComponent will render the actual form. %>
@@ -94,10 +94,6 @@
         <% end %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :citation, label: t('works.edit.panes.citation.label'), tooltip: t('works.edit.panes.citation.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.fields.citation.help_text'), active_tab_name:) do %>
-        <%= render Works::Edit::CitationComponent.new(form:) %>
-      <% end %>
-
       <% component.with_work_pane(tab_name: :access, label: t('works.edit.panes.access.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
         <%= render Works::Edit::AccessSettingsComponent.new(form:, collection: @collection) %>
       <% end %>
@@ -116,6 +112,10 @@
       <% component.with_work_pane(tab_name: :related_content, label: t('works.edit.panes.related_content.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
         <%= render NestedComponentPresenter.for(form:, field_name: :related_works, model_class: RelatedWorkForm, form_component: RelatedWorks::EditComponent, fieldset_classes: 'pane-section') %>
         <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, fieldset_classes: 'pane-section') %>
+      <% end %>
+
+      <% component.with_work_pane(tab_name: :citation, label: t('works.edit.panes.citation.label'), tooltip: t('works.edit.panes.citation.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.citation.help_text'), active_tab_name:) do %>
+        <%= render Works::Edit::CitationComponent.new(form:) %>
       <% end %>
 
       <% component.with_work_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.deposit.help_text'), active_tab_name:, next_tab_btn: false) do |pane_component| %>
