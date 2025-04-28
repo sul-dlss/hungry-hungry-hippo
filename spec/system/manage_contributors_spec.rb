@@ -249,10 +249,11 @@ RSpec.describe 'Manage contributors for a work deposit' do
   context 'with required contributors' do
     let(:required_person) { create(:person_contributor) }
     let(:required_organization) { create(:organization_contributor, cited: false) }
+    let(:required_stanford_organization) { create(:organization_contributor, :stanford) }
 
     before do
       create(:collection, user:, druid: collection_druid_fixture,
-                          contributors: [required_person, required_organization])
+                          contributors: [required_person, required_organization, required_stanford_organization])
     end
 
     it 'manages contributors' do
@@ -266,7 +267,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
 
       # There is a single contributor form
       form_instances = all('.form-instance')
-      expect(form_instances.count).to eq(2)
+      expect(form_instances.count).to eq(3)
 
       within(form_instances[0]) do
         expect(page).to have_text('Required author / contributor')
@@ -284,10 +285,18 @@ RSpec.describe 'Manage contributors for a work deposit' do
                                   'in the citation.')
       end
 
+      within(form_instances[2]) do
+        expect(page).to have_text('Required author / contributor')
+        expect(page).to have_no_button('Clear')
+        expect(page).to have_text('Stanford University (Degree Granting Institution), Department of Philosophy ' \
+                                  '(Department) will be included in the list ' \
+                                  'of authors and contributors for this work.')
+      end
+
       # Add a contributor
       click_link_or_button('Add another contributor')
       form_instances = all('.form-instance')
-      expect(form_instances.count).to eq(3)
+      expect(form_instances.count).to eq(4)
       within(form_instances.last) do
         within('.orcid-section') do
           find('label', text: 'Enter name manually').click
@@ -307,7 +316,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
 
       # There is a single contributor form
       form_instances = all('.form-instance')
-      expect(form_instances.count).to eq(3)
+      expect(form_instances.count).to eq(4)
 
       within(form_instances[0]) do
         expect(page).to have_text('Required author / contributor')
@@ -319,7 +328,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
         expect(page).to have_text("#{required_organization.organization_name} (Funder) will be included")
       end
 
-      within(form_instances[2]) do
+      within(form_instances[3]) do
         expect(page).to have_no_text('Required author / contributor')
         expect(page).to have_field('First name', with: 'Jane')
       end
@@ -346,7 +355,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
           expect(page).to have_css('td:nth-child(1)', text: required_organization.organization_name)
           expect(page).to have_css('td:nth-child(3)', text: 'Funder')
         end
-        within('tbody tr:nth-child(3)') do
+        within('tbody tr:nth-child(4)') do
           expect(page).to have_css('td:nth-child(1)', text: 'Jane Stanford')
         end
       end
