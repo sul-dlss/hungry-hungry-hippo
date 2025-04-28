@@ -98,9 +98,9 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       source: SOURCE
     },
     primary_thesis_advisor: {
-      value: 'thesis advisor',
-      code: 'ths',
-      uri: 'http://id.loc.gov/vocabulary/relators/ths',
+      value: 'degree supervisor',
+      code: 'dgs',
+      uri: 'http://id.loc.gov/vocabulary/relators/dgs',
       source: SOURCE
     },
     principal_investigator: {
@@ -122,9 +122,9 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       source: SOURCE
     },
     thesis_advisor: {
-      value: 'thesis advisor',
-      code: 'ths',
-      uri: 'http://id.loc.gov/vocabulary/relators/ths',
+      value: 'degree committee member',
+      code: 'dgc',
+      uri: 'http://id.loc.gov/vocabulary/relators/dgc',
       source: SOURCE
     },
     # organization roles
