@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
-# Sends the appropriate emails when a collection is persisted.
-class CollectionDepositPersistCompletedSubscriptionMailer
+# Sends the appropriate emails when accessioning is started for a collection.
+class CollectionAccessioningStartedSubscriptionMailer
   def self.call(...)
     new(...).call
   end
 
   # @param [Work|Collection] object the work or collection that was persisted
-  def initialize(object:)
+  def initialize(object:, **args) # rubocop:disable Lint/UnusedMethodArgument
     @object = object
+    # Note that other args are passed to this subscription, but are not used.
   end
 
   def call

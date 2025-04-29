@@ -15,8 +15,8 @@ Rails.application.config.after_initialize do # rubocop:disable Metrics/BlockLeng
   Notifier.subscribe(event_name: Notifier::DEPOSITOR_REMOVED) do |payload|
     CollectionsMailer.with(**payload).participants_changed_email.deliver_later
   end
-  Notifier.subscribe(event_name: Notifier::DEPOSIT_PERSIST_COMPLETE) do |payload|
-    CollectionDepositPersistCompletedSubscriptionMailer.call(**payload)
+  Notifier.subscribe(event_name: Notifier::ACCESSIONING_STARTED) do |payload|
+    CollectionAccessioningStartedSubscriptionMailer.call(**payload)
   end
 
   # Manager change notifications
