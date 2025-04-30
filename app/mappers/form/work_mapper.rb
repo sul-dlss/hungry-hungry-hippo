@@ -46,7 +46,8 @@ module Form
         agree_to_terms:,
         works_contact_email:,
         whats_changing: version_description,
-        deposit_creation_date:
+        deposit_creation_date:,
+        apo: Cocina::Parser.apo_for(cocina_object:)
       }.merge(WorkTypeMapper.call(cocina_object:))
         .merge(WorkReleaseDateMapper.call(cocina_object:))
         .merge(WorkCreationDateMapper.call(cocina_object:))

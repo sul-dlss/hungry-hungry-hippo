@@ -39,7 +39,7 @@ module Cocina
         version: work_form.version,
         access: WorkAccessMapper.call(work_form:),
         identification: WorkIdentificationMapper.call(work_form:, source_id:),
-        administrative: { hasAdminPolicy: Settings.apo },
+        administrative: { hasAdminPolicy: work_form.apo },
         structural: WorkStructuralMapper.call(work_form:, content:, document: document?)
       }.compact
     end

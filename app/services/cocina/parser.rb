@@ -19,5 +19,9 @@ module Cocina
     def self.version_for(cocina_object:)
       cocina_object.version
     end
+
+    def self.apo_for(cocina_object:)
+      cocina_object.administrative.hasAdminPolicy
+    end
   end
 end
