@@ -46,7 +46,8 @@ module Form
         work_type: collection.work_type,
         work_subtypes: collection.work_subtypes,
         works_contact_email: collection.works_contact_email,
-        contributors_attributes:
+        contributors_attributes:,
+        apo: Cocina::Parser.apo_for(cocina_object:)
       }.merge(license_params)
     end
 

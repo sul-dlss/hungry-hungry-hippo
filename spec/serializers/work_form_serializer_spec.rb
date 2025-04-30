@@ -38,7 +38,8 @@ RSpec.describe WorkFormSerializer do
       'whats_changing' => whats_changing_fixture,
       'works_contact_email' => nil,
       'max_release_date' => nil,
-      'deposit_creation_date' => deposit_creation_date_fixture
+      'deposit_creation_date' => deposit_creation_date_fixture,
+      'apo' => 'druid:hv992ry2431'
     }
   end
   let(:work_form) do
@@ -68,7 +69,8 @@ RSpec.describe WorkFormSerializer do
                  create_date_range_to_attributes: creation_date_range_to_fixture,
                  create_date_type: 'single',
                  whats_changing: whats_changing_fixture,
-                 deposit_creation_date: deposit_creation_date_fixture)
+                 deposit_creation_date: deposit_creation_date_fixture,
+                 apo: 'druid:hv992ry2431')
   end
 
   describe '.serialize?' do

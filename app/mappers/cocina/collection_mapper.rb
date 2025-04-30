@@ -37,7 +37,7 @@ module Cocina
         version: collection_form.version,
         access:,
         identification: { sourceId: source_id },
-        administrative: { hasAdminPolicy: Settings.apo }
+        administrative: { hasAdminPolicy: collection_form.apo }
       }.compact
     end
 

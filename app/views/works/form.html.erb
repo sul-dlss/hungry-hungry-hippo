@@ -18,7 +18,7 @@
   <% discard_draft_form_id = dom_id(@work_form, 'discard_form') %>
   <%= render Edit::DiscardDraftFormComponent.new(presenter: @work_presenter, id: discard_draft_form_id) if @work_presenter %>
   <% active_tab_name = params[:tab]&.to_sym || @active_tab_name || :files %>
-  <%= render Edit::TabForm::TabListComponent.new(model: @work_form, form_id:, hidden_fields: %i[lock version collection_druid content_id deposit_creation_date]) do |component| %>
+  <%= render Edit::TabForm::TabListComponent.new(model: @work_form, form_id:, hidden_fields: %i[lock version collection_druid content_id deposit_creation_date apo]) do |component| %>
     <% component.with_tab(label: t('works.edit.panes.files.tab_label'), tab_name: :files, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.title.tab_label'), tab_name: :title, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.contributors.tab_label'), tab_name: :contributors, active_tab_name:) %>

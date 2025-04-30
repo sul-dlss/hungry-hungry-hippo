@@ -41,6 +41,7 @@ module WorkMappingFixtures
       form.doi_option = 'assigned'
       form.agree_to_terms = true
       form.whats_changing = whats_changing_fixture
+      form.apo = 'druid:jv992ry2432'
     end
   end
 
@@ -287,7 +288,7 @@ module WorkMappingFixtures
         },
         version: 2,
         identification: { sourceId: source_id_fixture, doi: doi_fixture },
-        administrative: { hasAdminPolicy: Settings.apo },
+        administrative: { hasAdminPolicy: 'druid:jv992ry2432' },
         access: { view: 'citation-only',
                   download: 'none',
                   license: license_fixture,

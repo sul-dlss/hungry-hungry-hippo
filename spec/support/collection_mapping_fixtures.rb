@@ -33,6 +33,7 @@ module CollectionMappingFixtures
       form.druid = collection_druid_fixture
       form.version = 2
       form.lock = lock_fixture
+      form.apo = 'druid:jv992ry2432'
     end
   end
 
@@ -74,7 +75,7 @@ module CollectionMappingFixtures
         },
         version: 2,
         identification: { sourceId: collection_source_id_fixture },
-        administrative: { hasAdminPolicy: Settings.apo },
+        administrative: { hasAdminPolicy: 'druid:jv992ry2432' },
         access: { view: 'world' }
       }
     )

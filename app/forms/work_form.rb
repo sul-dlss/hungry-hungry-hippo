@@ -125,6 +125,8 @@ class WorkForm < ApplicationForm
 
   attribute :deposit_creation_date, :date
 
+  attribute :apo, :string, default: Settings.apo
+
   def content_file_presence
     return if content_id.nil? # This makes test configuration easier.
     return if Content.find(content_id).content_files.exists?
