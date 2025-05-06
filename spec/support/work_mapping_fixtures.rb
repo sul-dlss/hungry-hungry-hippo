@@ -42,6 +42,7 @@ module WorkMappingFixtures
       form.agree_to_terms = true
       form.whats_changing = whats_changing_fixture
       form.apo = 'druid:jv992ry2432'
+      form.copyright = copyright_fixture
     end
   end
 
@@ -293,6 +294,7 @@ module WorkMappingFixtures
                   download: 'none',
                   license: license_fixture,
                   useAndReproductionStatement: full_custom_rights_statement_fixture,
+                  copyright: copyright_fixture,
                   embargo: { view: 'stanford', download: 'stanford', releaseDate: release_date_fixture } },
         structural: { isMemberOf: [collection_druid_fixture] }
       }
