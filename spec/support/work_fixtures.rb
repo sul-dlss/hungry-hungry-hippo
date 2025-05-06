@@ -262,3 +262,7 @@ end
 def whats_changing_fixture
   'I am changing the title.'
 end
+
+def copyright_fixture
+  'Copyright © 2024 Jane Stanford'
+end

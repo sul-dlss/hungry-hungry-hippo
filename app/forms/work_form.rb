@@ -126,6 +126,7 @@ class WorkForm < ApplicationForm
   attribute :deposit_creation_date, :date
 
   attribute :apo, :string, default: Settings.apo
+  attribute :copyright, :string
 
   def content_file_presence
     return if content_id.nil? # This makes test configuration easier.

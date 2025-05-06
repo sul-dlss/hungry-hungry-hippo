@@ -23,5 +23,9 @@ module Cocina
     def self.apo_for(cocina_object:)
       cocina_object.administrative.hasAdminPolicy
     end
+
+    def self.copyright_for(cocina_object:)
+      cocina_object.access.copyright
+    end
   end
 end
