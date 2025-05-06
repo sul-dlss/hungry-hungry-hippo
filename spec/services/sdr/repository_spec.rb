@@ -65,7 +65,7 @@ RSpec.describe Sdr::Repository do
         described_class.accession(druid:)
 
         expect(Dor::Services::Client).to have_received(:object).with(druid)
-        expect(version_client).to have_received(:close).with(user_versions: 'none')
+        expect(version_client).to have_received(:close).with(user_versions: 'update_if_existing')
       end
     end
 
