@@ -7,6 +7,8 @@ class Work < ApplicationRecord
 
   belongs_to :user
   belongs_to :collection
+  # This association isn't useful from this direction, so don't try to use it.
+  has_many :content, dependent: :destroy
 
   state_machine :review_state, initial: :review_not_in_progress do
     event :request_review do

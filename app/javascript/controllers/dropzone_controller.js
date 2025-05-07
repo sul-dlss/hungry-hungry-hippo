@@ -57,7 +57,7 @@ export default class extends Controller {
       this.updateProgress(0, true)
       // Reload the files section to show the newly uploaded files.
       this.dropzoneFilesOutlets.forEach(dropzoneFiles => dropzoneFiles.reload())
-      this.tabErrorOutlet.clearInvalidStatus('files')
+      if (this.hasTabErrorOutlet) this.tabErrorOutlet.clearInvalidStatus('files')
       this.element.dataset.dropzoneReady = true
     })
     this.dropzone.on('sendingmultiple', (files, xhr, data) => {
@@ -110,5 +110,17 @@ export default class extends Controller {
   clearBasePath () {
     this.basePath = null
     this.folderAlertTarget.classList.add('d-none')
+  }
+
+  disable () {
+    this.element.classList.add('opacity-50')
+    this.dropzone.disable()
+    this.element.dataset.dropzoneReady = false
+  }
+
+  enable () {
+    this.element.classList.remove('opacity-50')
+    this.dropzone.enable()
+    this.element.dataset.dropzoneReady = true
   }
 }

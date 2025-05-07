@@ -1,4 +1,5 @@
 <%= turbo_frame_tag content, 'show' do %>
+  <%= turbo_stream_from 'show', content %>
   <% content_files ||= content.content_files.path_order.page(1) %>
   <% if content_files.empty? %>
     <p>Your files will appear here once they have been uploaded.</p>

@@ -6,10 +6,12 @@ class ContentFile < ApplicationRecord
   belongs_to :content
   has_one_attached :file
 
-  enum :file_type, attached: 'attached', deposited: 'deposited'
+  enum :file_type, attached: 'attached', deposited: 'deposited', globus: 'globus'
 
   scope :path_order, -> { order(path_parts: :asc).order('basename COLLATE "numeric"').order(extname: :asc) }
   scope :shown, -> { where(hide: false) }
+
+  delegate :work, to: :content
 
   def hidden?
     hide
@@ -35,5 +37,13 @@ class ContentFile < ApplicationRecord
 
   def hierarchy?
     path_parts.present?
+  end
+
+  def filepath_on_disk
+    if attached?
+      ActiveStorageSupport.filepath_for_blob(file.blob)
+    elsif globus?
+      File.join(GlobusSupport.local_path(work:), filepath)
+    end
   end
 end
