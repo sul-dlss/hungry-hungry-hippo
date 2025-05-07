@@ -264,7 +264,9 @@ CREATE TABLE public.contents (
     id bigint NOT NULL,
     user_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    globus_state character varying DEFAULT 'globus_not_in_progress'::character varying,
+    work_id bigint
 );
 
 
@@ -659,6 +661,13 @@ CREATE INDEX index_contents_on_user_id ON public.contents USING btree (user_id);
 
 
 --
+-- Name: index_contents_on_work_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_contents_on_work_id ON public.contents USING btree (work_id);
+
+
+--
 -- Name: index_contributors_on_collection_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -712,6 +721,14 @@ CREATE INDEX index_works_on_review_state ON public.works USING btree (review_sta
 --
 
 CREATE INDEX index_works_on_user_id ON public.works USING btree (user_id);
+
+
+--
+-- Name: contents fk_rails_24593c7092; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contents
+    ADD CONSTRAINT fk_rails_24593c7092 FOREIGN KEY (work_id) REFERENCES public.works(id);
 
 
 --
@@ -785,6 +802,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250509151132'),
 ('20250318195336'),
 ('20250313174420'),
 ('20250313120842'),
