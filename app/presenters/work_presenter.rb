@@ -2,6 +2,8 @@
 
 # Presents a work
 class WorkPresenter < FormPresenter
+  include ActionPolicy::Behaviour
+
   def initialize(work:, work_form:, version_status:)
     @work = work
     super(form: work_form, version_status:)
@@ -114,7 +116,7 @@ class WorkPresenter < FormPresenter
   end
 
   def editable?
-    super && !pending_review?
+    super && (!pending_review? || allowed_to?(:edit_pending_review?, work, context: { user: Current.user }))
   end
 
   def contact_emails
