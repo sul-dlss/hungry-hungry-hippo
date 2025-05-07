@@ -266,6 +266,11 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    globus_client (0.16.0)
+      activesupport (>= 4.2)
+      faraday
+      faraday-retry
+      zeitwerk
     hashdiff (1.2.0)
     honeybadger (5.28.0)
       logger
@@ -633,12 +638,14 @@ DEPENDENCIES
   erb_lint
   factory_bot_rails
   frozen_record
+  globus_client
   honeybadger
   hotwire-spark
   importmap-rails
   jbuilder
   kaminari
   kicks
+  marcel
   mission_control-jobs
   okcomputer
   overmind
