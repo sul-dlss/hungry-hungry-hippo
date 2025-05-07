@@ -132,7 +132,7 @@ RSpec.describe 'Show work' do
 
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
-      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:version_status))
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:first_draft_version_status))
       allow(Doi).to receive(:assigned?).and_return(false)
 
       sign_in(user)
@@ -142,7 +142,8 @@ RSpec.describe 'Show work' do
       get "/works/#{druid}"
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include('A DOI will be assigned.')
+      expect(response.body).to include('https://doi.org/10.80343/bc123df4567')
+      expect(response.body).not_to include('https://doi.org/10.80343/bc123df4567</a>')
     end
   end
 end
