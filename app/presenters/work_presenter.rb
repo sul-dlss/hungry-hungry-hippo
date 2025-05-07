@@ -84,14 +84,9 @@ class WorkPresenter < FormPresenter
   end
 
   def doi_value
-    case doi_option
-    when 'yes'
-      'A DOI will be assigned.'
-    when 'no'
-      'A DOI will not be assigned.'
-    else
-      doi_link
-    end
+    return 'A DOI will not be assigned.' if doi_option == 'no'
+
+    doi_link
   end
 
   def status_message
