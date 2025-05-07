@@ -6,7 +6,7 @@ class ContentFile < ApplicationRecord
   belongs_to :content
   has_one_attached :file
 
-  enum :file_type, attached: 'attached', deposited: 'deposited'
+  enum :file_type, attached: 'attached', deposited: 'deposited', globus: 'globus'
 
   scope :path_order, -> { order(path_parts: :asc).order('basename COLLATE "numeric"').order(extname: :asc) }
   scope :shown, -> { where(hide: false) }

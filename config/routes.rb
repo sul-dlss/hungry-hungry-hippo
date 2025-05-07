@@ -65,6 +65,14 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     member do
       get 'show_table', to: 'contents#show_table', as: 'show_table'
     end
+
+    resources :globuses, only: %i[new create] do
+      collection do
+        get 'uploading', to: 'globuses#uploading', as: 'uploading'
+        post 'done_uploading', to: 'globuses#done_uploading', as: 'done_uploading'
+        get 'wait', to: 'globuses#wait', as: 'wait'
+      end
+    end
   end
 
   resources :content_files, only: %i[edit update destroy show]

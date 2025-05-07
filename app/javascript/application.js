@@ -6,3 +6,18 @@ import 'controllers'
 Turbo.StreamActions.full_page_redirect = function () { // eslint-disable-line no-undef
   document.location = this.getAttribute('target')
 }
+
+// This is to redirect a turbo frame.
+Turbo.StreamActions.frame_redirect = function () { // eslint-disable-line no-undef
+  console.log('frame_redirect')
+  const frame = document.querySelector(`turbo-frame#${this.getAttribute('frameTarget')}`)
+  frame.src = this.getAttribute('target')
+}
+
+// This is to reload a turbo frame.
+Turbo.StreamActions.frame_reload = function () { // eslint-disable-line no-undef
+  console.log('frame_reload')
+  const frame = document.querySelector(`turbo-frame#${this.getAttribute('frameTarget')}`)
+  frame.reload()
+}
+

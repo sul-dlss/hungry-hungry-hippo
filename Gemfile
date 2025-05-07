@@ -51,6 +51,7 @@ gem 'druid-tools'
 gem 'dry-monads'
 gem 'edtf'
 gem 'frozen_record' # For licenses
+gem 'globus_client'
 gem 'honeybadger'
 gem 'kaminari' # For pagination
 gem 'kicks' # Background processing of rabbitMQ messages. (Formerly sneakers.)
