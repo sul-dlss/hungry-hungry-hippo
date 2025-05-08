@@ -23,7 +23,7 @@ RSpec.describe Works::Show::HeaderComponent, type: :component do
 
   before do
     allow(vc_test_controller).to receive(:current_user).and_return(user)
-    allow(Current).to receive(:groups).and_return(groups)
+    allow(Current).to receive_messages(groups:, user:)
   end
 
   it 'renders the header' do
@@ -50,6 +50,21 @@ RSpec.describe Works::Show::HeaderComponent, type: :component do
     it 'does not render the edit button' do
       render_inline(described_class.new(presenter:))
       expect(page).to have_no_link('Edit or deposit')
+    end
+  end
+
+  context 'when pending review but user is collection manager' do
+    let(:editable_version_status) { true }
+    let(:review_state) { 'pending_review' }
+
+    before do
+      work.collection.managers = [user]
+      work.collection.save!
+    end
+
+    it 'renders the edit button' do
+      render_inline(described_class.new(presenter:))
+      expect(page).to have_link('Edit or deposit')
     end
   end
 

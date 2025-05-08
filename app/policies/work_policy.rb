@@ -21,6 +21,10 @@ class WorkPolicy < ApplicationPolicy
     collection_reviewer? || collection_manager?
   end
 
+  def edit_pending_review?
+    collection_manager?
+  end
+
   relation_scope(:collection) do |relation, collection:|
     next relation if admin? || user.roles_for(collection:).intersect?(%w[manager reviewer])
 
