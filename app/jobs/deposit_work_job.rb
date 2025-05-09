@@ -13,8 +13,11 @@ class DepositWorkJob < ApplicationJob
     @deposit = deposit
     @request_review = request_review
     @status = Sdr::Repository.status(druid: work_form.druid) if work_form.persisted?
+    @current_user = current_user
     # Setting current user so that it will be available for notifications.
     Current.user = current_user
+
+    update_globus_content if globus?
 
     # Add missing digests and mime types
     Contents::Analyzer.call(content:)
@@ -47,7 +50,7 @@ class DepositWorkJob < ApplicationJob
 
   private
 
-  attr_reader :work_form, :work, :status
+  attr_reader :work_form, :work, :status, :current_user
 
   def content
     @content ||= Content.find(work_form.content_id)
@@ -96,5 +99,27 @@ class DepositWorkJob < ApplicationJob
     # If a new cocina object, then accessionable.
     # If work already opened, then the work has changes and can be accessioned.
     deposit? && (new_cocina_object || status&.open?)
+  end
+
+  def globus?
+    @globus ||= content.content_files.exists?(file_type: 'globus')
+  end
+
+  def endpoint_client_for(path)
+    GlobusClient::Endpoint.new(user_id: user.email_address, path:, notify_email: false)
+  end
+
+  def update_globus_content
+    # rename if not persisted and globus?
+    unless work_form.persisted?
+      endpoint_client_for(GlobusSupport.new_path(user: current_user,
+                                                 with_uploads_directory: true)).rename(new_path: GlobusSupport.path(
+                                                   work:, with_uploads_directory: true
+                                                 ))
+    end
+    # remove permissions
+    endpoint_client_for(GlobusSupport.path(work:)).delete_access_rule
+  rescue StandardError => e
+    raise unless e.message.include?('Access rule not found')
   end
 end

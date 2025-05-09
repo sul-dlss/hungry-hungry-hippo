@@ -1,0 +1,3 @@
+<%= turbo_frame_tag 'globus' do %>
+  <%= render Elements::ButtonFormComponent.new(label: 'I want to upload to Globus', link: content_globuses_path(@content), method: :post, top: false) %>
+<% end %>

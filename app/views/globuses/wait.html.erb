@@ -1,0 +1,5 @@
+<%= turbo_frame_tag 'globus' do %>
+  <%= turbo_stream_from 'globus', @content %>
+  <%= render Elements::SpinnerComponent.new(message: 'Getting list of files from Globus') %>
+  <%= render Elements::ButtonLinkComponent.new(link: new_content_globus_path(@content), label: 'Cancel') %>
+<% end %>
