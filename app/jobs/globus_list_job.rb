@@ -13,6 +13,8 @@ class GlobusListJob < ApplicationJob
     # TODO: Handle cancel
 
     endpoint_client.list_files.each do |file_info|
+      next if IgnoreFileService.call(filepath: file_info.name)
+
       ContentFile.create!(file_type: :globus, size: file_info.size, label: '', content:, filepath: file_info.name)
     end
 

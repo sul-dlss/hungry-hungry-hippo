@@ -11,7 +11,26 @@ class GlobusSupport
     "https://app.globus.org/file-manager?#{params.join('&')}"
   end
 
-  def self.new_path(user:)
-    "#{user.sunetid}/new"
+  def self.new_path(user:, with_uploads_directory: false)
+    path = "#{user.sunetid}/new"
+    return path unless with_uploads_directory
+
+    with_uploads_directory(path:)
+  end
+
+  def self.path(work:, with_uploads_directory: false)
+    path = "work-#{work.id}"
+
+    return path unless with_uploads_directory
+
+    with_uploads_directory(path:)
+  end
+
+  def self.local_path(work:)
+    "#{Settings.globus.local_uploads_directory}#{path(work:)}"
+  end
+
+  def self.with_uploads_directory(path:)
+    "#{Settings.globus.uploads_directory}#{path}"
   end
 end
