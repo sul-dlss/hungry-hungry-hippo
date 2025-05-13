@@ -121,9 +121,20 @@ RSpec.describe CollectionImporter do
     let(:cocina_object) { collection_with_metadata_fixture.new(type: Cocina::Models::ObjectType.curated_collection) }
 
     it 'raises an error and does not create a new collection' do
-      expect do
-        described_class.call(collection_hash:)
-      end.to raise_error(ImportError, "Collection #{druid} cannot be roundtripped")
+      expect { described_class.call(collection_hash:) }
+        .to raise_error(ImportError, "Collection #{druid} cannot be roundtripped")
+        .and not_change(Collection, :count)
+    end
+  end
+
+  context 'when collection has an unexpected APO' do
+    let(:cocina_object) do
+      collection_with_metadata_fixture.new(administrative: { 'hasAdminPolicy' => 'druid:tz369rf4673' })
+    end
+
+    it 'raises an error and does not create a new collection' do
+      expect { described_class.call(collection_hash:) }
+        .to raise_error(UnexpectedApoImportError)
         .and not_change(Collection, :count)
     end
   end

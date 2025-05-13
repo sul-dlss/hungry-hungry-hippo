@@ -11,6 +11,8 @@ class CollectionImporter
   end
 
   def call
+    check_for_folio_id!
+
     ::Collection.transaction do
       unless CollectionRoundtripper.call(collection_form:, cocina_object:)
         raise ImportError, "Collection #{druid} cannot be roundtripped"
@@ -48,7 +50,10 @@ class CollectionImporter
   end
 
   def cocina_object
-    @cocina_object ||= Sdr::Repository.find(druid:)
+    # TODO: Remove the caching
+    @cocina_object ||= Rails.cache.fetch(druid, expires_in: 1.year) do
+      Sdr::Repository.find(druid:)
+    end
   end
 
   def collection_form
@@ -102,5 +107,9 @@ class CollectionImporter
 
   def druid
     collection_hash['druid']
+  end
+
+  def check_for_folio_id!
+    raise CatalogedImportError if cocina_object.identification.catalogLinks.present?
   end
 end
