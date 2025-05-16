@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CollectionPolicy < ApplicationPolicy
-  alias_rule :update?, :edit?, :wait?, :destroy?, to: :manage?
+  alias_rule :update?, :edit?, :destroy?, to: :manage?
   alias_rule :works?, to: :show?
 
   def show?
@@ -24,6 +24,11 @@ class CollectionPolicy < ApplicationPolicy
     collection_reviewer? || collection_manager?
   end
 
+  def wait?
+    # When creating, additional collection roles other than owner may not have been assigned yet.
+    collection_manager? || owner?
+  end
+
   private
 
   def collection_manager?
@@ -36,5 +41,9 @@ class CollectionPolicy < ApplicationPolicy
 
   def collection_reviewer?
     record.reviewers.include?(user)
+  end
+
+  def owner?
+    record.user == user
   end
 end
