@@ -28,8 +28,6 @@ module Cocina
 
     attr_reader :work_form, :source_id
 
-    delegate :doi, to: :work_form
-
     def doi?
       # If a work has not yet been registered, the DOI is assigned as part of the registration request.
       # If the work already has a DOI, it should continue to be added here.
