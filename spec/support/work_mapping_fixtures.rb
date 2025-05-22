@@ -125,6 +125,8 @@ module WorkMappingFixtures
                         DescriptionCocinaBuilder.organization_contributor(**organization_contributor_fixture),
                         DescriptionCocinaBuilder.organization_contributor(**degree_granting_contributor_fixture)],
           event: [
+            DescriptionCocinaBuilder.event(type: 'deposit', date_type: 'publication',
+                                           date: deposit_creation_date_fixture),
             DescriptionCocinaBuilder.event(type: 'creation', date: '2021-03-07/2022-04~'),
             DescriptionCocinaBuilder.event(type: 'publication', date: '2024-12', primary: true)
           ],
@@ -271,6 +273,8 @@ module WorkMappingFixtures
                         DescriptionCocinaBuilder.organization_contributor(**organization_contributor_fixture),
                         DescriptionCocinaBuilder.organization_contributor(**degree_granting_contributor_fixture)],
           event: [
+            DescriptionCocinaBuilder.event(type: 'deposit', date_type: 'publication',
+                                           date: deposit_creation_date_fixture),
             DescriptionCocinaBuilder.event(type: 'creation', date: '2021-03-07/2022-04~'),
             DescriptionCocinaBuilder.event(type: 'publication', date: '2024-12', primary: true)
           ],
