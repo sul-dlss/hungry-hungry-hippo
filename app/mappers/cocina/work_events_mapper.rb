@@ -15,7 +15,7 @@ module Cocina
 
     # @return [Array] the Cocina event parameters
     def call
-      [creation_date_event_params, publication_date_event_params].compact
+      [deposit_publication_date_event_params, creation_date_event_params, publication_date_event_params].compact
     end
 
     private
@@ -42,6 +42,12 @@ module Cocina
       return if date.nil?
 
       DescriptionCocinaBuilder.event(type: 'publication', primary: true, date:)
+    end
+
+    def deposit_publication_date_event_params
+      return if work_form.deposit_creation_date.nil?
+
+      DescriptionCocinaBuilder.event(type: 'deposit', date_type: 'publication', date: work_form.deposit_creation_date)
     end
   end
 end
