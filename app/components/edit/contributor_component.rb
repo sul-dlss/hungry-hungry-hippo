@@ -101,6 +101,7 @@ module Edit
       ['Funder', 'funder'],
       ['Host institution', 'host_institution'],
       ['Issuing body', 'issuing_body'],
+      ['Publisher', 'publisher'],
       ['Research group', 'researcher'],
       ['Sponsor', 'sponsor']
     ].freeze
