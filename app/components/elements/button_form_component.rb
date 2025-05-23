@@ -3,13 +3,18 @@
 module Elements
   # Component for a button that is wrapped in a form
   class ButtonFormComponent < ApplicationComponent
-    def initialize(link:, label: nil, variant: :primary, classes: [], method: :get, confirm: nil) # rubocop:disable Metrics/ParameterLists
+    def initialize(link:, label: nil, variant: :primary, classes: [], form_classes: [], method: :get, confirm: nil, # rubocop:disable Metrics/ParameterLists
+                   top: true, data: {}, **options)
       @link = link
       @label = label
       @variant = variant
       @classes = classes
       @method = method
       @confirm = confirm
+      @options = options
+      @top = top
+      @data = data
+      @form_classes = form_classes
       super()
     end
 
@@ -17,7 +22,9 @@ module Elements
 
     def call
       button_to(link, method: @method,
-                      class: ButtonSupport.classes(variant: @variant, classes:), form: { data: }) do
+                      class: ButtonSupport.classes(variant: @variant, classes:),
+                      form: { data:, **@options },
+                      form_class: form_classes) do
         @label || content
       end
     end
@@ -26,10 +33,13 @@ module Elements
       merge_classes(@classes)
     end
 
+    def form_classes
+      merge_classes(@form_classes)
+    end
+
     def data
-      {
-        turbo_frame: '_top'
-      }.tap do |data|
+      @data.tap do |data|
+        data[:turbo_frame] = '_top' if @top
         data[:turbo_confirm] = @confirm if @confirm
       end
     end
