@@ -109,6 +109,12 @@ class ContributorRoleCocinaBuilder # rubocop:disable Metrics/ClassLength
       uri: 'http://id.loc.gov/vocabulary/relators/rth',
       source: SOURCE
     },
+    publisher: {
+      value: 'publisher',
+      code: 'pbl',
+      uri: 'http://id.loc.gov/vocabulary/relators/pbl',
+      source: SOURCE
+    },
     software_developer: {
       value: 'programmer',
       code: 'prg',
