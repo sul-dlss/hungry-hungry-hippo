@@ -39,7 +39,7 @@ class DepositWorkJob < ApplicationJob
     else
       work.deposit_persist_complete!
     end
-    work.request_review! if request_review? && new_cocina_object
+    work.request_review! if request_review?
 
     # Content isn't needed anymore
     content.destroy!

@@ -239,14 +239,10 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     nil
   end
 
-  def initial_review?
-    request_review? && @work.druid.nil?
-  end
-
   def perform_deposit?
     # Open? indicates that a previous change was made.
     # A previous change is OK for deposit or requesting review, but not saving draft.
-    return true if @version_status.open? && (deposit? || initial_review?)
+    return true if @version_status.open? && (deposit? || request_review?)
 
     # If no previous change, then check for a current change.
     mapped_cocina_object = Cocina::WorkMapper.call(work_form: @work_form, content: @content,
