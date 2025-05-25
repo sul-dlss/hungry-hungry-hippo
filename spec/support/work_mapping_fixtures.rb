@@ -29,11 +29,11 @@ module WorkMappingFixtures
       create_date_type: 'range',
       whats_changing: 'Initial version',
       works_contact_email: works_contact_email_fixture,
-      deposit_creation_date: deposit_creation_date_fixture
+      creation_date: creation_date_fixture
     )
   end
 
-  def work_form_fixture
+  def work_form_fixture # rubocop:disable Metrics/AbcSize
     new_work_form_fixture.tap do |form|
       form.druid = druid_fixture
       form.version = 2
@@ -43,6 +43,7 @@ module WorkMappingFixtures
       form.whats_changing = whats_changing_fixture
       form.apo = 'druid:jv992ry2432'
       form.copyright = copyright_fixture
+      form.deposit_publication_date = deposit_publication_date_fixture
     end
   end
 
@@ -125,8 +126,6 @@ module WorkMappingFixtures
                         DescriptionCocinaBuilder.organization_contributor(**organization_contributor_fixture),
                         DescriptionCocinaBuilder.organization_contributor(**degree_granting_contributor_fixture)],
           event: [
-            DescriptionCocinaBuilder.event(type: 'deposit', date_type: 'publication',
-                                           date: deposit_creation_date_fixture),
             DescriptionCocinaBuilder.event(type: 'creation', date: '2021-03-07/2022-04~'),
             DescriptionCocinaBuilder.event(type: 'publication', date: '2024-12', primary: true)
           ],
@@ -140,7 +139,7 @@ module WorkMappingFixtures
             )
           },
           form: form_fixture,
-          adminMetadata: DescriptionCocinaBuilder.admin_metadata(creation_date: deposit_creation_date_fixture)
+          adminMetadata: DescriptionCocinaBuilder.admin_metadata(creation_date: creation_date_fixture)
         },
         version: 1,
         identification: { sourceId: source_id_fixture },
@@ -274,7 +273,7 @@ module WorkMappingFixtures
                         DescriptionCocinaBuilder.organization_contributor(**degree_granting_contributor_fixture)],
           event: [
             DescriptionCocinaBuilder.event(type: 'deposit', date_type: 'publication',
-                                           date: deposit_creation_date_fixture),
+                                           date: deposit_publication_date_fixture),
             DescriptionCocinaBuilder.event(type: 'creation', date: '2021-03-07/2022-04~'),
             DescriptionCocinaBuilder.event(type: 'publication', date: '2024-12', primary: true)
           ],
@@ -288,7 +287,7 @@ module WorkMappingFixtures
             )
           },
           form: form_fixture,
-          adminMetadata: DescriptionCocinaBuilder.admin_metadata(creation_date: deposit_creation_date_fixture),
+          adminMetadata: DescriptionCocinaBuilder.admin_metadata(creation_date: creation_date_fixture),
           purl: Sdr::Purl.from_druid(druid: druid_fixture)
         },
         version: 2,
