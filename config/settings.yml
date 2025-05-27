@@ -72,3 +72,6 @@ accountws:
   host: accountws-uat.stanford.edu
 
 file_uploads_root: <%= Rails.root.join("storage") %>
+
+ahoy:
+  tooltip: true
