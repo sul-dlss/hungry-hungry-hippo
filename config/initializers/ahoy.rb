@@ -3,9 +3,6 @@
 module Ahoy
   # Store for Ahoy tracking
   class Store < Ahoy::DatabaseStore
-    def authenticate(data)
-      # disables automatic linking of visits and users for privacy
-    end
   end
 end
 

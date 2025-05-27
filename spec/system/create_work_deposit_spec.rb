@@ -254,32 +254,40 @@ RSpec.describe 'Create a work deposit' do
       expect(page).to have_text('Text')
       expect(page).to have_text('Thesis')
       expect(page).to have_text('3D model')
+
+      # Ahoy event is created
+      work = Work.find_by(druid:)
+      expect(work).to be_present
+      expect(Ahoy::Event.where_event(Ahoy::Event::WORK_CREATED, work_id: work.id, deposit: true,
+                                                                review: false).count).to eq(1)
     end
   end
 
   context 'when updating an existing work' do
-    let(:openable_version_status) { build(:openable_version_status) }
+    let(:draft_version_status) { build(:draft_version_status) }
 
-    let(:accessioning_version_status) { build(:accessioning_version_status) }
-
-    let(:cocina_object) { dro_with_metadata_fixture }
+    let(:cocina_object) { dro_with_structural_and_metadata_fixture }
     let(:druid) { cocina_object.externalIdentifier }
 
-    before do
-      create(:work, druid:, user:)
+    let!(:work) { create(:work, druid:, user:) }
 
+    before do
       # Stubbing out for Deposit Job
+      @updated_cocina_object = nil
       allow(Sdr::Repository).to receive(:update) do |args|
-        @registered_cocina_object = args[:cocina_object]
+        @updated_cocina_object = args[:cocina_object]
       end
 
       # Stubbing out for show page
       allow(Sdr::Repository).to receive(:find).with(druid:)
-                                              .and_return(cocina_object, cocina_object, cocina_object,
-                                                          @registered_cocina_object)
+                                              .and_invoke(
+                                                ->(_arg) { cocina_object }, # show
+                                                ->(_arg) { cocina_object }, # edit
+                                                ->(_arg) { cocina_object }, # DepositWorkJob changed?
+                                                ->(_arg) { @updated_cocina_object } # show after deposit
+                                              )
       allow(Sdr::Repository).to receive(:status).with(druid:)
-                                                .and_return(openable_version_status, openable_version_status,
-                                                            openable_version_status, accessioning_version_status)
+                                                .and_return(draft_version_status)
       allow(Sdr::Event).to receive(:list).and_return([])
     end
 
@@ -303,6 +311,10 @@ RSpec.describe 'Create a work deposit' do
       # Waiting page may be too fast to catch so not testing.
       # On show page
       expect(page).to have_css('h1', text: 'My new title')
+
+      # Ahoy event is created
+      expect(Ahoy::Event.where_event(Ahoy::Event::WORK_UPDATED, work_id: work.id, deposit: true,
+                                                                review: false).count).to eq(1)
     end
   end
 end
