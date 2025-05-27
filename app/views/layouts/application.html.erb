@@ -34,7 +34,7 @@
         <%= yield :breadcrumbs %>
       </nav>
     </div>
-    <%= tag.main id: 'main-controller', data: { controller: 'tooltips', tooltips_ahoy_value: Settings.ahoy.tooltip } do %>
+    <%= tag.main id: 'main-container', data: { controller: 'tooltips', tooltips_ahoy_value: Settings.ahoy.tooltip } do %>
       <% if content_for?(:fluid_body) %>
         <div class="fluid-container">
           <%= yield :fluid_body %>

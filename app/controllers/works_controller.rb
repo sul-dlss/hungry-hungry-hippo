@@ -59,26 +59,29 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     if (@valid = @work_form.valid?(validation_context))
       work = Work.create!(title: @work_form.title, user: current_user, collection: @collection)
       @work_form.deposit_creation_date = work.created_at.to_date
+      ahoy.track Ahoy::Event::WORK_CREATED, work_id: work.id, deposit: deposit?, review: request_review?
       perform_deposit(work:)
       redirect_to wait_works_path(work.id)
     else
+      handle_invalid
       @content = Content.find(@work_form.content_id)
       set_license_presenter
       render :form, status: :unprocessable_entity
     end
   end
 
-  def update
+  def update # rubocop:disable Metrics/AbcSize
     authorize! @work
 
     @work_form = WorkForm.new(**update_work_params)
     @content = Content.find(@work_form.content_id)
 
     if (@valid = @work_form.valid?(validation_context)) && perform_deposit?
+      ahoy.track Ahoy::Event::WORK_UPDATED, work_id: @work.id, deposit: deposit?, review: request_review?
       perform_deposit(work: @work)
       redirect_to wait_works_path(@work.id)
     else
-      handle_no_changes if @valid
+      @valid ? handle_no_changes : handle_invalid
       set_license_presenter
       set_presenter
       render :form, status: :unprocessable_entity
@@ -268,5 +271,12 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   def handle_no_changes
     flash.now[:warning] = helpers.t('works.edit.messages.no_changes')
     @active_tab_name = :deposit if deposit?
+    ahoy.track Ahoy::Event::UNCHANGED_WORK_SUBMITTED, work_id: @work.id, deposit: deposit?, review: request_review?
+  end
+
+  def handle_invalid
+    params = { work_id: @work&.id, deposit: deposit?, review: request_review?,
+               errors: @work_form.loggable_errors }.compact
+    ahoy.track Ahoy::Event::INVALID_WORK_SUBMITTED, **params
   end
 end

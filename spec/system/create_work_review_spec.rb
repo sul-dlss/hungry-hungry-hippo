@@ -89,5 +89,11 @@ RSpec.describe 'Create a work that requires review' do
     expect(page).to have_css('h1', text: title_fixture)
     expect(page).to have_css('.status', text: 'Pending review')
     expect(page).to have_no_link('Edit or deposit')
+
+    # Ahoy event is created
+    work = Work.find_by(druid:)
+    expect(work).to be_present
+    expect(Ahoy::Event.where_event(Ahoy::Event::WORK_CREATED, work_id: work.id, deposit: false,
+                                                              review: true).count).to eq(1)
   end
 end
