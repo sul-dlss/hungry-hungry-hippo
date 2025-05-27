@@ -85,3 +85,6 @@ globus:
     oak: 8b3a8b64-d4ab-4551-b37e-ca0092f769a7
     sherlock: 6881ae2e-db26-11e5-9772-22000b9da45e
     onedrive: 9beecf19-601f-47b9-a15b-a0f34845abb1
+
+ahoy:
+  tooltip: true

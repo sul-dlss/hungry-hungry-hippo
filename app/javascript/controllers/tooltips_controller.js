@@ -7,7 +7,9 @@ export default class extends Controller {
   iconTargetConnected (target) {
     const tooltip = new bootstrap.Tooltip(target)
 
-    target.addEventListener('show.bs.tooltip', () => this.hideAllExcept(target))
+    target.addEventListener('show.bs.tooltip', (event) =>
+      this.hideAllExcept(target)
+    )
 
     return tooltip
   }

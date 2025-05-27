@@ -195,3 +195,34 @@ A "nested" field is one that is not "simple" (see prior section).
     ```
 1. Test the triggering of the notification.
 1. Test the email.
+
+## Analytics
+
+First-party analytics is implemented using [Ahoy](https://github.com/ankane/ahoy).
+
+The strategy for analytics is to collect data to answer specific research questions. Once a question has been answered, the code for collecting the events can be removed. Research questions that need to be periodically revisited should have the collection of events controlled by a feature flag.
+
+Current research questions are documented below.
+
+### Tooltips
+
+#### Research question
+Which tooltips are being clicked and how often?
+
+#### Event
+The `tooltip clicked` event is recorded in `tooltips_controller.js` whenever the user clicks a tooltip.
+
+Recording this event is enabled by the `ahoy.tooltip` setting.
+
+#### Querying
+Which tooltips have been clicked?
+```
+> Ahoy::Event.where_event("tooltip clicked").group_prop(:tooltip).count
+=> {"Link for sharing"=>3}
+```
+
+How many visitors have been clicking tooltips?
+```
+> Ahoy::Event.where_event("Tooltip clicked").joins(:visit).group('visit.visitor_token').count
+=> {"aa3d213d-89e8-4186-ac30-7f323b6d396a"=>3}
+```
