@@ -7,7 +7,9 @@ export default class extends Controller {
   static values = {
     existingFiles: { type: Number, default: 0 },
     maxFiles: Number,
-    maxFilesize: Number
+    maxFilesize: Number,
+    ahoy: { type: Boolean, default: false }, // If true, ahoy will track file uploads
+    formId: String
   }
 
   // Expected error handling behavior:
@@ -58,6 +60,8 @@ export default class extends Controller {
       // Reload the files section to show the newly uploaded files.
       this.dropzoneFilesOutlets.forEach(dropzoneFiles => dropzoneFiles.reload())
       this.tabErrorOutlet.clearInvalidStatus('files')
+      // If ahoy is enabled, track the file upload completion.
+      if (this.ahoyValue) { ahoy.track('files uploaded', { form_id: this.formIdValue }) } // eslint-disable-line no-undef
       this.element.dataset.dropzoneReady = true
     })
     this.dropzone.on('sendingmultiple', (files, xhr, data) => {

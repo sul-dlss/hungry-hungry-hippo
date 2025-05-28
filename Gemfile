@@ -41,6 +41,7 @@ gem 'bootsnap', require: false
 
 # Additional gems
 gem 'action_policy'
+gem 'ahoy_matey' # Analytics
 gem 'bunny' # RabbitMQ client
 gem 'cocina-models'
 gem 'config'

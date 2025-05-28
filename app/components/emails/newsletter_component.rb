@@ -10,7 +10,7 @@ module Emails
     end
 
     def newsletter_link
-      link_to 'Subscribe to the SDR newsletter', Settings.newsletter_url
+      link_to 'Subscribe to the SDR newsletter', Settings.newsletter_url, data: { ahoy_track: 'true' }
     end
   end
 end

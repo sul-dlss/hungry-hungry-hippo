@@ -73,6 +73,20 @@ RSpec.describe 'Validate a work deposit' do
     # Alert
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
+    expect(Ahoy::Event.where_event(Ahoy::Event::INVALID_WORK_SUBMITTED,
+                                   errors: ['Work content: must have at least one file',
+                                            'Work create_date_range_from: must have both a start and end date',
+                                            'Work abstract: blank',
+                                            'Work work_type: blank',
+                                            'Work release_date: greater_than_or_equal_to',
+                                            'Work agree_to_terms: accepted',
+                                            'RelatedLink url: url',
+                                            'PublicationDate year: greater_than_or_equal_to',
+                                            'ContactEmail email: blank',
+                                            'Contributor orcid: blank',
+                                            'Keyword text: blank'],
+                                   review: false, deposit: true).count).to eq(1)
+
     # Manage file is marked invalid
     expect(page).to have_css('.nav-link.active.is-invalid', text: 'Manage files')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must have at least one file')

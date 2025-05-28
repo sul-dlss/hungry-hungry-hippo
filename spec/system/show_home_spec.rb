@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Show home', :rack_test do
+RSpec.describe 'Show home' do
   include ActionView::Helpers::SanitizeHelper
   before do
     sign_in(create(:user))
@@ -19,7 +19,11 @@ RSpec.describe 'Show home', :rack_test do
     expect(page).to have_css('.quote-card', count: 5)
 
     # Dropdown menu
-    expect(page).to have_link('Dashboard', href: dashboard_path)
-    expect(page).to have_link('Logout', href: logout_path)
+    expect(page).to have_link('Dashboard', href: dashboard_path, visible: :hidden)
+    expect(page).to have_link('Logout', href: logout_path, visible: :hidden)
+
+    # Click link to test ahoy events
+    click_link_or_button 'Help'
+    expect(Ahoy::Event.where_event('$click', href: 'https://sdr.library.stanford.edu/documentation').count).to eq(1)
   end
 end
