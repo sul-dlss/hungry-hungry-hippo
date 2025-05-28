@@ -73,7 +73,7 @@ class DepositWorkJob < ApplicationJob
     # @changed can be false, so normal ||= won't work here
     return @changed if defined?(@changed)
 
-    @changed = RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
+    @changed = RoundtripSupport.changed?(cocina_object: mapped_cocina_object, original_cocina_object:)
   end
 
   # rubocop:disable Metrics/AbcSize
