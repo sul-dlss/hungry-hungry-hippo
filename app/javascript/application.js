@@ -7,3 +7,6 @@ import 'ahoy'
 Turbo.StreamActions.full_page_redirect = function () { // eslint-disable-line no-undef
   document.location = this.getAttribute('target')
 }
+
+// Add data-ahoy-track to a link to track clicks. The link_to_new_tab helper will add this automatically.
+ahoy.trackClicks('[data-ahoy-track]') // eslint-disable-line no-undef

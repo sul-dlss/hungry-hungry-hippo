@@ -33,9 +33,9 @@ en:
     # To hide dashboard banner, set to ''.
     # Banners can include links, e.g., "Email <a href="mailto:sdr-contact@lists.stanford.edu">sdr-contact@lists.stanford.edu</a> to volunteer!"
     home_html: >-
-      Welcome to our new SDR self-deposit app. We're so happy you're here! Find out <a href="https://sdr.library.stanford.edu/news/spring-pilot-new-self-deposit-application" class="card-link">more about the new app</a>.
+      Welcome to our new SDR self-deposit app. We're so happy you're here! Find out <a href="https://sdr.library.stanford.edu/news/spring-pilot-new-self-deposit-application" class="card-link" data-ahoy-track="true">more about the new app</a>.
     dashboard_html: >-
-      Welcome to our new SDR self-deposit app. We're so happy you're here! Find out <a href="https://sdr.library.stanford.edu/news/spring-pilot-new-self-deposit-application">more about the new app</a>.
+      Welcome to our new SDR self-deposit app. We're so happy you're here! Find out <a href="https://sdr.library.stanford.edu/news/spring-pilot-new-self-deposit-application" data-ahoy-track="true">more about the new app</a>.
   app_name: 'Stanford Digital Repository'
   time:
     formats:

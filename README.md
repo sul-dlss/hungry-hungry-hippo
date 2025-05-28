@@ -314,3 +314,22 @@ end
 > completion_durations.sort[completion_durations.length / 2]
 => 77.909358
 ```
+
+### Help links
+
+#### Research question
+How often are help links clicked?
+
+#### Events
+The `$click` event is recorded when a help link is clicked. Links to be recorded are indicated by having a `data-ahoy-track` attribute. This is added automatically by the `link_to_new_tab` helper.
+
+#### Querying
+
+```
+> Ahoy::Event.where_event('$click').group_prop(:href).count.sort_by {|key, value| -value }.to_h
+=>
+{"https://sdr.library.stanford.edu/documentation/license-options"=>3,
+ "https://sdr.library.stanford.edu/documentation"=>2,
+ "https://sdr.library.stanford.edu/documentation/purls-dois-and-orcid-ids"=>2,
+ "https://sdr.library.stanford.edu/news/spring-pilot-new-self-deposit-application"=>1}
+```
