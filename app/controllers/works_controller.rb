@@ -29,11 +29,12 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     @work_form = new_work_form
     set_license_presenter # Note this requires @collection and @work_form set above.
     mark_collection_required_contributors # Note this requires @collection and @work_form set above.
+    ahoy.track Ahoy::Event::WORK_FORM_STARTED, form_id: @work_form.form_id
 
     render :form
   end
 
-  def edit
+  def edit # rubocop:disable Metrics/AbcSize
     authorize! @work
 
     unless editable?
@@ -46,11 +47,12 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
     mark_collection_required_contributors
     add_max_release_date
+    ahoy.track Ahoy::Event::WORK_FORM_STARTED, form_id: @work_form.form_id, work_id: @work.id
 
     render :form
   end
 
-  def create # rubocop:disable Metrics/AbcSize
+  def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @work_form = WorkForm.new(**work_params)
     @collection = Collection.find_by!(druid: @work_form.collection_druid)
     authorize! @collection, with: WorkPolicy
@@ -59,6 +61,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     if (@valid = @work_form.valid?(validation_context))
       work = Work.create!(title: @work_form.title, user: current_user, collection: @collection)
       @work_form.deposit_creation_date = work.created_at.to_date
+      ahoy.track Ahoy::Event::WORK_FORM_COMPLETED, form_id: @work_form.form_id, work_id: work.id
       ahoy.track Ahoy::Event::WORK_CREATED, work_id: work.id, deposit: deposit?, review: request_review?
       perform_deposit(work:)
       redirect_to wait_works_path(work.id)
@@ -77,6 +80,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     @content = Content.find(@work_form.content_id)
 
     if (@valid = @work_form.valid?(validation_context)) && perform_deposit?
+      ahoy.track Ahoy::Event::WORK_FORM_COMPLETED, form_id: @work_form.form_id, work_id: @work.id
       ahoy.track Ahoy::Event::WORK_UPDATED, work_id: @work.id, deposit: deposit?, review: request_review?
       perform_deposit(work: @work)
       redirect_to wait_works_path(@work.id)

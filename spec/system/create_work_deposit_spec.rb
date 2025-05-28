@@ -311,7 +311,7 @@ RSpec.describe 'Create a work deposit' do
       # On show page
       expect(page).to have_css('h1', text: 'My new title')
 
-      # Ahoy event is created
+      # Ahoy events are created
       expect(Ahoy::Event.where_event(Ahoy::Event::WORK_UPDATED, work_id: work.id, deposit: true,
                                                                 review: false).count).to eq(1)
     end

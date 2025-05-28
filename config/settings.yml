@@ -75,3 +75,4 @@ file_uploads_root: <%= Rails.root.join("storage") %>
 
 ahoy:
   tooltip: true
+  form_changes: true

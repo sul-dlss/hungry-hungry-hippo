@@ -128,6 +128,9 @@ class WorkForm < ApplicationForm
   attribute :apo, :string, default: Settings.apo
   attribute :copyright, :string
 
+  # This is used for tracking with Ahoy. It allows eventing before the form is saved.
+  attribute :form_id, :string, default: -> { SecureRandom.uuid }
+
   def content_file_presence
     return if content_id.nil? # This makes test configuration easier.
     return if Content.find(content_id).content_files.exists?

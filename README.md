@@ -221,7 +221,7 @@ Which tooltips have been clicked?
 
 How many visitors have been clicking tooltips?
 ```
-> Ahoy::Event.where_event("Tooltip clicked").joins(:visit).group('visit.visitor_token').count
+> Ahoy::Event.where_event("tooltip clicked").joins(:visit).group('visit.visitor_token').count
 => {"aa3d213d-89e8-4186-ac30-7f323b6d396a"=>3}
 ```
 
@@ -248,4 +248,69 @@ end.sort_by {|k,v| -v}
  ["Work work_type: blank", 1],
  ["Contributor first_name: must provide a first name", 1],
  ["Keyword text: blank", 1]]
+```
+
+### Abandoned forms
+
+#### Research question
+How many forms for a new work are abandoned after a user has uploaded a file or interacted with the form?
+
+### Events
+* The `work form started` event is recorded when a new work form is displayed for the user.
+* The `work form completed` event is recorded when the user has submitted a valid form for saving or depositing.
+* The `form changed` event is recorded when the user makes a change to the form.
+* The `files uploaded` event is recorded when the user uploads files.
+
+Recording `form changed` and `files uploaded` is enabled by the `ahoy.form_changes` setting.
+
+### Querying
+
+```
+> started_forms = Ahoy::Event.where_event('work form started').map {|event| event.properties['form_id']}
+> started_forms.count
+=> 5
+
+> changed_forms = Ahoy::Event.where_event('form changed').map {|event| event.properties['form_id']}.uniq
+> changed_forms.count
+=> 2
+
+> fo  rms_with_uploads = Ahoy::Event.where_event('files uploaded').map {|event| event.properties['form_id']}.uniq
+> forms_with_uploads.count
+=> 1
+
+> completed_forms = Ahoy::Event.where_event('work form completed').map {|event| event.properties['form_id']}
+> completed_forms.count
+=> 1
+
+# forms that have been started and changed / files uploaded but not completed
+> abandoned_forms = (started_forms.to_set & (changed_forms + forms_with_uploads).to_set) - completed_forms
+> abandoned_forms.count
+=> 2
+```
+
+### Time to complete work form
+
+#### Research question
+How long does it take a user to complete a new work form?
+
+### Events
+* The `work form started` event is recorded when a new work form is displayed for the user.
+* The `work form completed` event is recorded when the user has submitted a valid form for saving or depositing.
+
+### Querying
+
+```
+> completed_events = Ahoy::Event.where_event('work form completed')
+> completion_durations = completed_events.map do |completed_event|
+  started_event = Ahoy::Event.where_event('work form started', form_id: completed_event.properties['form_id']).first
+  completed_event.time - started_event.time
+end
+
+# averge completion time (seconds)
+> completion_durations.sum.to_f / completion_durations.length
+=> 92.01933633333334
+
+# median
+> completion_durations.sort[completion_durations.length / 2]
+=> 77.909358
 ```
