@@ -19,5 +19,13 @@ FactoryBot.define do
         )
       end
     end
+
+    trait :globus do
+      file_type { 'globus' }
+    end
+
+    trait :deposited do
+      file_type { 'deposited' }
+    end
   end
 end

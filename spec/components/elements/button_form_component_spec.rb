@@ -45,4 +45,19 @@ RSpec.describe Elements::ButtonFormComponent, type: :component do
       expect(page).to have_css('form[method="post"]')
     end
   end
+
+  context 'when top is false' do
+    it 'renders the button form without-data-turbo-frame' do
+      render_inline(described_class.new(link:, label: 'Button form', top: false))
+      expect(page).to have_css('form')
+      expect(page).to have_no_css('form[data-turbo-frame="_top"]')
+    end
+  end
+
+  context 'with data' do
+    it 'renders the button form' do
+      render_inline(described_class.new(link:, label: 'Button form', data: { turbo_foo: 'bar' }))
+      expect(page).to have_css('form[data-turbo-foo="bar"][data-turbo-frame="_top"]')
+    end
+  end
 end
