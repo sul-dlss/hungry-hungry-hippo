@@ -73,16 +73,7 @@ module Form
     end
 
     def custom_rights_statement
-      use_statement = cocina_object.access.useAndReproductionStatement
-      return if use_statement.blank?
-      return if use_statement == default_terms_of_use
-
-      # Remove the default terms
-      use_statement.delete_suffix(default_terms_of_use)&.strip
-    end
-
-    def default_terms_of_use
-      I18n.t('license.terms_of_use')
+      TermsOfUseSupport.custom_rights_statement(use_statement: cocina_object.access.useAndReproductionStatement)
     end
 
     def doi_option
