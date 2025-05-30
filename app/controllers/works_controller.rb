@@ -58,7 +58,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     # The validation_context param determines whether extra validations are applied, e.g., for deposits.
     if (@valid = @work_form.valid?(validation_context))
       work = Work.create!(title: @work_form.title, user: current_user, collection: @collection)
-      @work_form.deposit_creation_date = work.created_at.to_date
+      @work_form.creation_date = work.created_at.to_date
       perform_deposit(work:)
       redirect_to wait_works_path(work.id)
     else

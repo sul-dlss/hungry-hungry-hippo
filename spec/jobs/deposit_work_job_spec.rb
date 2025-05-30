@@ -32,8 +32,13 @@ RSpec.describe DepositWorkJob do
       expect(Cocina::WorkMapper).to have_received(:call).with(work_form:, content:,
                                                               source_id: "h3:object-#{work.id}")
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
-      expect(Sdr::Repository).to have_received(:register)
-        .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true)
+      expect(Sdr::Repository).to have_received(:register).with(
+        cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true
+      ) do |args|
+        event = args[:cocina_object].description.event.first
+        expect(event.type).to eq 'deposit'
+        expect(event.date.first.value).to eq Time.zone.today.iso8601
+      end
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
 
       expect(work.reload.accessioning?).to be true
@@ -58,10 +63,11 @@ RSpec.describe DepositWorkJob do
     end
   end
 
-  context 'when an existing work with changed cocina object' do
+  context 'when an existing work with changed cocina object and not depositing' do
     let(:work_form) do
       WorkForm.new(title: title_fixture, druid:, content_id: content.id, lock: 'abc123',
-                   collection_druid: collection.druid, whats_changing: whats_changing_fixture)
+                   collection_druid: collection.druid, whats_changing: whats_changing_fixture,
+                   deposit_publication_date: Date.new(2024, 1, 1))
     end
     let(:work) { create(:work, :registering_or_updating, druid:) }
     let(:version_status) { build(:openable_version_status) }
@@ -83,7 +89,11 @@ RSpec.describe DepositWorkJob do
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
       expect(Sdr::Repository).to have_received(:open_if_needed)
         .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata),
-              version_description: whats_changing_fixture, status: version_status)
+              version_description: whats_changing_fixture, status: version_status) do |args|
+                event = args[:cocina_object].description.event.first
+                expect(event.type).to eq 'deposit'
+                expect(event.date.first.value).to eq '2024-01-01'
+              end
       expect(Sdr::Repository).to have_received(:update).with(cocina_object:)
       expect(Sdr::Repository).not_to have_received(:accession)
       expect(RoundtripSupport).to have_received(:changed?)
@@ -91,6 +101,38 @@ RSpec.describe DepositWorkJob do
       expect(work.reload.title).to eq(title_fixture)
 
       expect(work.deposit_not_in_progress?).to be true
+    end
+  end
+
+  context 'when an existing work with changed cocina object and depositing' do
+    let(:work_form) do
+      WorkForm.new(title: title_fixture, druid:, content_id: content.id, lock: 'abc123',
+                   collection_druid: collection.druid, whats_changing: whats_changing_fixture,
+                   deposit_publication_date: Date.new(2024, 1, 1))
+    end
+    let(:work) { create(:work, :registering_or_updating, druid:) }
+    let(:version_status) { build(:draft_version_status) }
+
+    before do
+      allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
+      allow(RoundtripSupport).to receive(:changed?).and_return(true)
+      allow(Sdr::Repository).to receive(:status).and_return(version_status)
+    end
+
+    it 'updates an existing work' do
+      expect(work.title).not_to eq(title_fixture)
+
+      described_class.perform_now(work_form:, work:, deposit: true, request_review: false,
+                                  current_user:)
+      expect(Sdr::Repository).to have_received(:open_if_needed)
+        .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata),
+              version_description: whats_changing_fixture, status: version_status) do |args|
+                event = args[:cocina_object].description.event.first
+                expect(event.type).to eq 'deposit'
+                expect(event.date.first.value).to eq Time.zone.today.iso8601
+              end
+      expect(Sdr::Repository).to have_received(:update).with(cocina_object:)
+      expect(Sdr::Repository).to have_received(:accession)
     end
   end
 

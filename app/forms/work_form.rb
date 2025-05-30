@@ -123,7 +123,12 @@ class WorkForm < ApplicationForm
   attribute :whats_changing, :string
   validates :whats_changing, presence: true
 
-  attribute :deposit_creation_date, :date
+  # Date the work was first persisted.
+  # This is mapped to the description adminMetadata creation event.
+  attribute :creation_date, :date
+  # Date the latest version was deposited.
+  # This is mapped to the description deposit publication event.
+  attribute :deposit_publication_date, :date
 
   attribute :apo, :string, default: Settings.apo
   attribute :copyright, :string

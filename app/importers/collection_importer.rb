@@ -6,8 +6,9 @@ class CollectionImporter
     new(...).call
   end
 
-  def initialize(collection_hash:)
+  def initialize(collection_hash:, cocina_object:)
     @collection_hash = collection_hash
+    @cocina_object = cocina_object
   end
 
   def call
@@ -22,7 +23,7 @@ class CollectionImporter
 
   private
 
-  attr_reader :collection_hash
+  attr_reader :collection_hash, :cocina_object
 
   def collection # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @collection ||= ::Collection.find_or_create_by!(druid:) do |collection|
@@ -45,10 +46,6 @@ class CollectionImporter
       collection.reviewers = users_from('reviewed_by')
       collection.managers = users_from('managed_by')
     end
-  end
-
-  def cocina_object
-    @cocina_object ||= Sdr::Repository.find(druid:)
   end
 
   def collection_form

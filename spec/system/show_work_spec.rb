@@ -16,7 +16,7 @@ RSpec.describe 'Show a work' do
                                       {
                                         type: 'https://cocina.sul.stanford.edu/models/resources/file',
                                         externalIdentifier: 'https://cocina.sul.stanford.edu/fileSet/kb185hz2713-f6bafda8-5719-4f77-bd76-02aaa542de74',
-                                        label: 'My file',
+                                        label: 'My file1',
                                         version: 2,
                                         structural: {
                                           contains: [
@@ -72,7 +72,7 @@ RSpec.describe 'Show a work' do
                                       {
                                         type: 'https://cocina.sul.stanford.edu/models/resources/file',
                                         externalIdentifier: 'https://cocina.sul.stanford.edu/fileSet/mb185hz2713-f6bafda8-5719-4f77-bd76-02aaa542de74',
-                                        label: 'My file2',
+                                        label: 'My file3',
                                         version: 2,
                                         structural: {
                                           contains: [

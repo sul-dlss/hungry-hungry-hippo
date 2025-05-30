@@ -31,7 +31,7 @@ class DepositWorkJob < ApplicationJob
 
     update_terms_of_deposit!
 
-    if accession?(new_cocina_object:)
+    if accession?
       work.accession!
       Sdr::Repository.accession(druid:)
       # If a collection manager or reviewer has rejected a previous review, we need to approve the work again
@@ -57,11 +57,22 @@ class DepositWorkJob < ApplicationJob
     @mapped_cocina_object ||= Cocina::WorkMapper.call(work_form:, content:, source_id: "h3:object-#{work.id}")
   end
 
+  def mapped_cocina_object_with_update_deposit_publication_date
+    updated_work_form = work_form.dup
+    updated_work_form.deposit_publication_date = Time.zone.today
+    Cocina::WorkMapper.call(work_form: updated_work_form, content:, source_id: "h3:object-#{work.id}")
+  end
+
+  def cocina_object_for_persist
+    # When accessioning, update the deposit publication date to today.
+    accession? ? mapped_cocina_object_with_update_deposit_publication_date : mapped_cocina_object
+  end
+
   def perform_persist
     if !work_form.persisted?
-      Sdr::Repository.register(cocina_object: mapped_cocina_object, assign_doi:)
+      Sdr::Repository.register(cocina_object: cocina_object_for_persist, assign_doi:)
     elsif RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
-      Sdr::Repository.open_if_needed(cocina_object: mapped_cocina_object,
+      Sdr::Repository.open_if_needed(cocina_object: cocina_object_for_persist,
                                      version_description: work_form.whats_changing, status:)
                      .then do |cocina_object|
         Sdr::Repository.update(cocina_object:)
@@ -92,9 +103,9 @@ class DepositWorkJob < ApplicationJob
     @request_review
   end
 
-  def accession?(new_cocina_object:)
+  def accession?
     # If a new cocina object, then accessionable.
     # If work already opened, then the work has changes and can be accessioned.
-    deposit? && (new_cocina_object || status&.open?)
+    @accession ||= deposit? && (!work_form.persisted? || status&.open?)
   end
 end

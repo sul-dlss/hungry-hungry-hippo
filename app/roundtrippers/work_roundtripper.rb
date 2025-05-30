@@ -24,8 +24,9 @@ class WorkRoundtripper
                                     roundtripped_cocina_object:)
       false
     end
-  rescue Cocina::Models::ValidationError
+  rescue Cocina::Models::ValidationError => e
     # Generating the roundtripped cocina object may create an invalid object
+    RoundtripSupport.notify_validation_error(error: e)
     false
   end
 
@@ -40,8 +41,7 @@ class WorkRoundtripper
   end
 
   def normalized_original_cocina_object
-    @normalized_original_cocina_object ||= RoundtripSupport.normalize_cocina_object(
-      cocina_object: @original_cocina_object
-    )
+    @normalized_original_cocina_object ||=
+      RoundtripSupport.normalize_cocina_object(cocina_object: @original_cocina_object)
   end
 end

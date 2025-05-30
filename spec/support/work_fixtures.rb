@@ -247,8 +247,12 @@ def release_date_fixture
   DateTime.new(2027, 6, 10)
 end
 
-def deposit_creation_date_fixture
+def creation_date_fixture
   Date.new(2023, 5, 9)
+end
+
+def deposit_publication_date_fixture
+  Date.new(2024, 6, 10)
 end
 
 def custom_rights_statement_fixture
@@ -256,7 +260,7 @@ def custom_rights_statement_fixture
 end
 
 def full_custom_rights_statement_fixture
-  "#{custom_rights_statement_fixture}\n\n#{I18n.t('license.terms_of_use')}"
+  "#{custom_rights_statement_fixture}\r\n\r\n#{I18n.t('license.terms_of_use')}"
 end
 
 def whats_changing_fixture

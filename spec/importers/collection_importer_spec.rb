@@ -72,29 +72,25 @@ RSpec.describe CollectionImporter do
   end
   let(:modified) { Time.zone.iso8601('2024-12-31T14:00:00') }
 
-  before do
-    allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
-  end
-
   context 'when collection already exists' do
     let!(:collection) { create(:collection, druid:) }
 
     it 'does not create a new collection' do
-      expect { described_class.call(collection_hash:) }.not_to change(Collection, :count)
+      expect { described_class.call(collection_hash:, cocina_object:) }.not_to change(Collection, :count)
     end
 
     it 'returns collection' do
-      expect(described_class.call(collection_hash:)).to eq(collection)
+      expect(described_class.call(collection_hash:, cocina_object:)).to eq(collection)
     end
   end
 
   context 'when collection is roundtrippable' do
     it 'creates a new collection' do
-      expect { described_class.call(collection_hash:) }.to change(Collection, :count).by(1)
+      expect { described_class.call(collection_hash:, cocina_object:) }.to change(Collection, :count).by(1)
     end
 
     it 'populates collection attributes' do
-      collection = described_class.call(collection_hash:)
+      collection = described_class.call(collection_hash:, cocina_object:)
 
       expect(collection.druid).to eq(druid)
       expect(collection.title).to eq(collection_title_fixture)
@@ -121,9 +117,8 @@ RSpec.describe CollectionImporter do
     let(:cocina_object) { collection_with_metadata_fixture.new(type: Cocina::Models::ObjectType.curated_collection) }
 
     it 'raises an error and does not create a new collection' do
-      expect do
-        described_class.call(collection_hash:)
-      end.to raise_error(ImportError, "Collection #{druid} cannot be roundtripped")
+      expect { described_class.call(collection_hash:, cocina_object:) }
+        .to raise_error(ImportError, "Collection #{druid} cannot be roundtripped")
         .and not_change(Collection, :count)
     end
   end
@@ -131,7 +126,7 @@ RSpec.describe CollectionImporter do
   context 'when license is not required' do
     it 'sets the license to the default license' do
       collection_hash['license_option'] = 'depositor_selects'
-      collection = described_class.call(collection_hash:)
+      collection = described_class.call(collection_hash:, cocina_object:)
 
       expect(collection.license).to eq(collection_hash['default_license'])
     end
@@ -140,7 +135,7 @@ RSpec.describe CollectionImporter do
   context 'when depositor selects rights statement but there are no instructions' do
     it 'uses the default custom rights statement instructions' do
       collection_hash['custom_rights_statement_custom_instructions'] = nil
-      collection = described_class.call(collection_hash:)
+      collection = described_class.call(collection_hash:, cocina_object:)
 
       expect(collection.custom_rights_statement_instructions).to eq(
         I18n.t('terms_of_use.default_use_statement_instructions')
@@ -151,7 +146,7 @@ RSpec.describe CollectionImporter do
   context 'when custom rights statement is disallowed' do
     it 'sets the custom rights statement option to "no"' do
       collection_hash['allow_custom_rights_statement'] = false
-      collection = described_class.call(collection_hash:)
+      collection = described_class.call(collection_hash:, cocina_object:)
 
       expect(collection.custom_rights_statement_option).to eq('no')
     end
@@ -160,7 +155,7 @@ RSpec.describe CollectionImporter do
   context 'when custom rights statement is provided' do
     it 'sets the custom rights statement option to "provided"' do
       collection_hash['provided_custom_rights_statement'] = 'Here it is.'
-      collection = described_class.call(collection_hash:)
+      collection = described_class.call(collection_hash:, cocina_object:)
 
       expect(collection.custom_rights_statement_option).to eq('provided')
     end
