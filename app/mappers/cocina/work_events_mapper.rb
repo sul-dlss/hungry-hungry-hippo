@@ -45,9 +45,10 @@ module Cocina
     end
 
     def deposit_publication_date_event_params
-      return if work_form.deposit_creation_date.nil?
+      return if work_form.deposit_publication_date.nil?
 
-      DescriptionCocinaBuilder.event(type: 'deposit', date_type: 'publication', date: work_form.deposit_creation_date)
+      DescriptionCocinaBuilder.event(type: 'deposit', date_type: 'publication',
+                                     date: work_form.deposit_publication_date)
     end
   end
 end

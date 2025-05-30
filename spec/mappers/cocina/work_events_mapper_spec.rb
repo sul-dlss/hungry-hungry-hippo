@@ -37,7 +37,7 @@ RSpec.describe Cocina::WorkEventsMapper do
     end
 
     context 'when deposit publication date' do
-      let(:work_form) { WorkForm.new(deposit_creation_date: Date.new(2021, 1, 11)) }
+      let(:work_form) { WorkForm.new(deposit_publication_date: Date.new(2021, 1, 11)) }
 
       it 'maps to cocina' do
         expect(events).to eq([
