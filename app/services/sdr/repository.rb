@@ -50,11 +50,12 @@ module Sdr
 
     # @param [String] druid the druid of the object
     # @raise [Error] if there is an error initiating accession
-    def self.accession(druid:)
+    def self.accession(druid:, user_name:)
       # Close the version, which will also start accessioning
       # user_versions = mode for handling user versioning.
+      # user_name = the sunetid to use for the operation.
       # Setting to update_if_existing (the default in DSA) for now.
-      Dor::Services::Client.object(druid).version.close(user_versions: 'update_if_existing')
+      Dor::Services::Client.object(druid).version.close(user_versions: 'update_if_existing', user_name:)
     rescue Dor::Services::Client::Error => e
       raise Error, "Initiating accession failed: #{e.message}"
     end

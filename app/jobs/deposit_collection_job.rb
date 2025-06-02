@@ -20,7 +20,7 @@ class DepositCollectionJob < ApplicationJob
     if new_cocina_object
       CollectionModelSynchronizer.call(collection:, cocina_object: new_cocina_object)
       collection.accession!
-      Sdr::Repository.accession(druid:)
+      Sdr::Repository.accession(druid:, user_name: current_user.sunetid)
     else
       collection.deposit_persist_complete!
     end

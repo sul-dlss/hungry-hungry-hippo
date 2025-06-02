@@ -39,7 +39,7 @@ RSpec.describe DepositWorkJob do
         expect(event.type).to eq 'deposit'
         expect(event.date.first.value).to eq Time.zone.today.iso8601
       end
-      expect(Sdr::Repository).to have_received(:accession).with(druid:)
+      expect(Sdr::Repository).to have_received(:accession).with(druid:, user_name: current_user.sunetid)
 
       expect(work.reload.accessioning?).to be true
       expect(work.pending_review?).to be false
@@ -88,7 +88,7 @@ RSpec.describe DepositWorkJob do
 
       expect(Sdr::Repository).to have_received(:register)
         .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true)
-      expect(Sdr::Repository).to have_received(:accession).with(druid:)
+      expect(Sdr::Repository).to have_received(:accession).with(druid:, user_name: current_user.sunetid)
 
       expect(new_endpoint_client).to have_received(:rename).with(new_path: "/uploads/#{work_endpoint_path}")
       expect(work_endpoint_client).to have_received(:delete_access_rule)

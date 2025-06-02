@@ -33,7 +33,7 @@ RSpec.describe DepositCollectionJob do
                                                                     source_id: "h3:collection-#{collection.id}")
       expect(Sdr::Repository).to have_received(:register)
         .with(cocina_object: an_instance_of(Cocina::Models::RequestCollection))
-      expect(Sdr::Repository).to have_received(:accession).with(druid:)
+      expect(Sdr::Repository).to have_received(:accession).with(druid:, user_name: current_user.sunetid)
 
       expect(collection.reload.accessioning?).to be true
 

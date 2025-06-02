@@ -55,6 +55,7 @@ RSpec.describe Sdr::Repository do
   describe '#accession' do
     let(:object_client) { instance_double(Dor::Services::Client::Object, version: version_client) }
     let(:version_client) { instance_double(Dor::Services::Client::ObjectVersion, close: true) }
+    let(:user_name) { 'test_user' }
 
     before do
       allow(Dor::Services::Client).to receive(:object).and_return(object_client)
@@ -62,10 +63,10 @@ RSpec.describe Sdr::Repository do
 
     context 'when successful' do
       it 'closes the version' do
-        described_class.accession(druid:)
+        described_class.accession(druid:, user_name:)
 
         expect(Dor::Services::Client).to have_received(:object).with(druid)
-        expect(version_client).to have_received(:close).with(user_versions: 'update_if_existing')
+        expect(version_client).to have_received(:close).with(user_versions: 'update_if_existing', user_name:)
       end
     end
 
@@ -75,7 +76,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'raises' do
-        expect { described_class.accession(druid:) }.to raise_error(Sdr::Repository::Error)
+        expect { described_class.accession(druid:, user_name:) }.to raise_error(Sdr::Repository::Error)
       end
     end
   end
