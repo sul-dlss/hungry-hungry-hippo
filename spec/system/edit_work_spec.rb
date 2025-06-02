@@ -292,7 +292,7 @@ RSpec.describe 'Edit a work' do
 
       find('.nav-link', text: 'Deposit', exact_text: true).click
       fill_in('What\'s changing?', with: 'Nothing')
-      click_link_or_button('Deposit')
+      find('.btn-primary', text: 'Deposit', exact_text: true).click
 
       expect(page).to have_current_path(edit_work_path(druid))
       expect(page).to have_css('.alert-warning', text: 'You have not made any changes to the form.')
