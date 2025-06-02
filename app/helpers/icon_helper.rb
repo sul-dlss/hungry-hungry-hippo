@@ -84,4 +84,8 @@ module IconHelper
   def quote_icon(**)
     icon(icon_classes: 'bi bi-quote', **)
   end
+
+  def download_icon(**)
+    icon(icon_classes: 'bi bi-download', **)
+  end
 end

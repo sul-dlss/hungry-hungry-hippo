@@ -8,7 +8,17 @@
                                   { label: 'Hide', classes: 'col-6' }
                                 ]) %>
       <% @content_files.each do |content_file| %>
-        <% component.with_row(values: [content_file.filepath, content_file.label, human_boolean(content_file.hide)]) %>
+        <% component.with_row do |row_component| %>
+          <% row_component.with_cell do %>
+            <%= content_file.filepath %><%= render Works::Show::ContentFileDownloadButtonComponent.new(content_file:) %>
+          <% end %>
+          <% row_component.with_cell do %>
+            <%= content_file.label %>
+          <% end %>
+          <% row_component.with_cell do %>
+            <%= human_boolean(content_file.hide) %>
+          <% end %>
+        <% end %>
       <% end %>
     <% end %>
     <div class="mb-5">

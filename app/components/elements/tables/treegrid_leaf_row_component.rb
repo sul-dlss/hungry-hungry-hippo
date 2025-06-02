@@ -4,8 +4,9 @@ module Elements
   module Tables
     # Component for rendering a row for a treegrid leaf.
     class TreegridLeafRowComponent < ApplicationComponent
+      renders_one :label_content
       renders_many :cells
-      def initialize(level:, label:)
+      def initialize(level:, label: nil)
         @level = level
         @label = label
         super()

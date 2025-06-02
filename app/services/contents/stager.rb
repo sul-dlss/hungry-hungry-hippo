@@ -26,20 +26,9 @@ module Contents
 
     def stage_content(content_file)
       filepath = content_file.filepath_on_disk
-      staging_filepath = staging_filepath_for(content_file)
+      staging_filepath = StagingSupport.staging_filepath(druid:, filepath: content_file.filepath)
       create_directory(staging_filepath)
       FileUtils.cp filepath, staging_filepath
-    end
-
-    def staging_filepath_for(content_file)
-      File.join(staging_content_path, content_file.filepath)
-    end
-
-    def staging_content_path
-      @staging_content_path ||= begin
-        druid_tree_folder = DruidTools::Druid.new(druid, Settings.staging_location).path
-        File.join(druid_tree_folder, 'content')
-      end
     end
 
     def create_directory(filepath)
