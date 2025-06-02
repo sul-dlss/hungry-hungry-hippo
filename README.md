@@ -3,6 +3,10 @@
 
 # Hungry Hungry Hippo (H3)
 
+## Deployment
+
+The application is deployed continuously by our on-prem Jenkins service (`sul-ci-prod`) to the H3 staging environment on every merge to `main`. See `Jenkinsfile` for how that is wired up.
+
 ## Development
 
 ### Requirements
