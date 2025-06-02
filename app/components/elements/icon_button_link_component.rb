@@ -13,7 +13,7 @@ module Elements
       super()
     end
 
-    attr_reader :data, :label
+    attr_reader :data, :label, :link
 
     def classes
       merge_classes(%w[border border-0], @classes)

@@ -29,6 +29,16 @@ class ContentFilesController < ApplicationController
     redirect_to content_path(@content_file.content)
   end
 
+  def download
+    authorize! @content_file
+
+    staging_filepath = StagingSupport.staging_filepath(druid: @content_file.content.work.druid,
+                                                       filepath: @content_file.filepath)
+    return head :bad_request unless File.exist?(staging_filepath)
+
+    send_file staging_filepath, filename: @content_file.filename, type: @content_file.mime_type
+  end
+
   private
 
   def set_content_file

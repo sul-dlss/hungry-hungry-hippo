@@ -107,6 +107,9 @@ RSpec.describe 'Show a work' do
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(File).to receive(:exist?).with('tmp/workspace/bc/123/df/4567/bc123df4567/content/my_file1.txt')
+                                   .and_return(true)
+    allow(File).to receive(:exist?).and_call_original
 
     sign_in(user)
   end
@@ -137,6 +140,8 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('th', text: 'File Name')
         expect(page).to have_css('th', text: 'Description')
         expect(page).to have_css('td', text: 'my_file1.txt')
+        content_file = ContentFile.find_by(filepath: 'my_file1.txt')
+        expect(page).to have_link('Download file', href: "/content_files/#{content_file.id}/download")
         expect(page).to have_css('td', text: 'My file1')
         expect(page).to have_css('td', text: 'dir1/my_file2.txt')
         expect(page).to have_no_css('td', text: 'dir1/dir2/my_file3.txt')
@@ -291,6 +296,8 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('th', text: 'Hide')
         row1 = page.find('tbody tr:nth-child(1)')
         expect(row1).to have_css('td', text: 'my_file1.txt')
+        content_file = ContentFile.find_by(filepath: 'my_file1.txt')
+        expect(row1).to have_link('Download file', href: "/content_files/#{content_file.id}/download")
         expect(row1).to have_css('td', text: 'My file1')
         expect(row1).to have_css('td', text: 'Yes')
         row2 = page.find('tr:nth-child(2)')

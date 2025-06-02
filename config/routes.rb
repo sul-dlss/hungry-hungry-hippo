@@ -76,7 +76,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  resources :content_files, only: %i[edit update destroy show]
+  resources :content_files, only: %i[edit update destroy show] do
+    member do
+      get 'download', to: 'content_files#download', as: 'download'
+    end
+  end
 
   resource :terms, only: :show
 
