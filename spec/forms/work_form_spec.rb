@@ -490,6 +490,52 @@ RSpec.describe WorkForm do
     end
   end
 
+  describe 'content file validation' do
+    let(:form) do
+      described_class.new(
+        title: title_fixture,
+        contact_emails_attributes: contact_emails_fixture,
+        contributors_attributes: contributors_fixture,
+        abstract: abstract_fixture,
+        license: license_fixture,
+        work_type: work_type_fixture,
+        content_id: content.id,
+        keywords_attributes: keywords_fixture,
+        whats_changing: 'Initial version'
+      )
+    end
+
+    context 'when no content files' do
+      let(:content) { create(:content) }
+
+      it 'is invalid' do
+        expect(form.valid?(:deposit)).to be false
+        expect(form.errors[:content]).to include('must have at least one file')
+      end
+    end
+
+    context 'when content files' do
+      let(:content) { create(:content, :with_content_files) }
+
+      it 'is valid' do
+        expect(form.valid?(:deposit)).to be true
+      end
+    end
+
+    context 'when too many content files' do
+      let(:content) { create(:content, :with_content_files) }
+
+      before do
+        allow(Settings.file_upload).to receive(:max_files).and_return(1)
+      end
+
+      it 'is invalid' do
+        expect(form.valid?(:deposit)).to be false
+        expect(form.errors[:content]).to include('too many files')
+      end
+    end
+  end
+
   describe 'Abstract linefeed normalization' do
     let(:form) do
       described_class.new(
