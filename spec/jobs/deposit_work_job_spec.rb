@@ -63,6 +63,38 @@ RSpec.describe DepositWorkJob do
     end
   end
 
+  context 'when a new work with globus files' do
+    let(:work_form) { WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid) }
+    let(:work) { create(:work, :registering_or_updating, collection:, user:) }
+    let(:new_endpoint_client) { instance_double(GlobusClient::Endpoint, exists?: true, rename: true) }
+    let(:work_endpoint_client) { instance_double(GlobusClient::Endpoint, exists?: false) }
+
+    let(:new_endpoint_path) { "/uploads/#{current_user.sunetid}/new" }
+    let(:work_endpoint_path) { "work-#{work.id}" }
+
+    before do
+      content.content_files << create(:content_file, :globus)
+      allow(GlobusClient::Endpoint).to receive(:new)
+        .with(user_id: user.email_address, path: new_endpoint_path, notify_email: false)
+        .and_return(new_endpoint_client)
+      allow(GlobusClient::Endpoint).to receive(:new)
+        .with(user_id: user.email_address, path: work_endpoint_path, notify_email: false)
+        .and_return(work_endpoint_client)
+      allow(work_endpoint_client).to receive(:delete_access_rule).and_raise('Access rule not found')
+    end
+
+    it 'registers a new work and updates the globus content' do
+      described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:)
+
+      expect(Sdr::Repository).to have_received(:register)
+        .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true)
+      expect(Sdr::Repository).to have_received(:accession).with(druid:)
+
+      expect(new_endpoint_client).to have_received(:rename).with(new_path: "/uploads/#{work_endpoint_path}")
+      expect(work_endpoint_client).to have_received(:delete_access_rule)
+    end
+  end
+
   context 'when an existing work with changed cocina object and not depositing' do
     let(:work_form) do
       WorkForm.new(title: title_fixture, druid:, content_id: content.id, lock: 'abc123',

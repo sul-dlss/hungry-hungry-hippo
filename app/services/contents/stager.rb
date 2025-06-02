@@ -14,9 +14,9 @@ module Contents
 
     def call
       content.content_files.each do |content_file|
-        next unless content_file.attached?
+        next unless content_file.attached? || content_file.globus?
 
-        stage_attached_content(content_file)
+        stage_content(content_file)
       end
     end
 
@@ -24,8 +24,8 @@ module Contents
 
     attr_reader :content, :druid, :zip_file
 
-    def stage_attached_content(content_file)
-      filepath = ActiveStorageSupport.filepath_for_blob(content_file.file.blob)
+    def stage_content(content_file)
+      filepath = content_file.filepath_on_disk
       staging_filepath = staging_filepath_for(content_file)
       create_directory(staging_filepath)
       FileUtils.cp filepath, staging_filepath

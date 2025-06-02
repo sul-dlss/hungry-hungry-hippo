@@ -55,14 +55,16 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     @collection = Collection.find_by!(druid: @work_form.collection_druid)
     authorize! @collection, with: WorkPolicy
 
+    @content = Content.find(@work_form.content_id)
+
     # The validation_context param determines whether extra validations are applied, e.g., for deposits.
     if (@valid = @work_form.valid?(validation_context))
       work = Work.create!(title: @work_form.title, user: current_user, collection: @collection)
+      @content.update!(work:)
       @work_form.creation_date = work.created_at.to_date
       perform_deposit(work:)
       redirect_to wait_works_path(work.id)
     else
-      @content = Content.find(@work_form.content_id)
       set_license_presenter
       render :form, status: :unprocessable_entity
     end
@@ -163,7 +165,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def set_content
-    @content = Contents::Builder.call(cocina_object: @cocina_object, user: current_user)
+    @content = Contents::Builder.call(cocina_object: @cocina_object, user: current_user, work: @work)
     @work_form.content_id = @content.id
   end
 
