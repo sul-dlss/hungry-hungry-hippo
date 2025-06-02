@@ -28,7 +28,8 @@ class WorkForm < ApplicationForm
     self.contact_emails_attributes = (contact_emails_attributes - blank_contact_emails).map(&:attributes)
   end
 
-  validate :content_file_presence, on: :deposit
+  validate :content_file_count, on: :deposit
+
   with_options if: -> { create_date_type == 'range' } do
     validate :create_date_range_complete
     validate :create_date_range_sequence
@@ -133,11 +134,12 @@ class WorkForm < ApplicationForm
   attribute :apo, :string, default: Settings.apo
   attribute :copyright, :string
 
-  def content_file_presence
+  def content_file_count
     return if content_id.nil? # This makes test configuration easier.
-    return if Content.find(content_id).content_files.exists?
 
-    errors.add(:content, 'must have at least one file')
+    file_count = Content.find(content_id).content_files.count
+    errors.add(:content, 'must have at least one file') if file_count.zero?
+    errors.add(:content, 'too many files') if file_count > Settings.file_upload.max_files
   end
 
   def create_date_range_complete
