@@ -12,7 +12,7 @@ module Edit
       end
 
       def call
-        tag.div(
+        tag.button(
           class: classes,
           id:,
           data: {
@@ -24,7 +24,8 @@ module Edit
           type: 'button',
           'aria-controls': pane_id,
           'aria-selected': selected?,
-          'aria-labelledby': id
+          'aria-labelledby': id,
+          tabindex: '0'
         ) do
           label
         end

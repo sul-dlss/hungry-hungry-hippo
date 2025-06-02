@@ -42,6 +42,7 @@ $enable-smooth-scroll: false;
 
       border-radius: unset;
       display: block flex;
+      text-align: left;
 
       &:not(:first-child) {
         border-top: var(--bs-border-width) var(--bs-border-style) rgba(var(--bs-white-rgb), 1);
