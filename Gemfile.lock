@@ -635,7 +635,7 @@ DEPENDENCIES
   debug
   dlss-capistrano
   dor-event-client
-  dor-services-client
+  dor-services-client (>= 15.9.0)
   dor-workflow-client (>= 7.6.1)
   druid-tools
   dry-monads
