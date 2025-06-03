@@ -25,7 +25,9 @@ module Edit
           'aria-controls': pane_id,
           'aria-selected': selected?,
           'aria-labelledby': id,
-          tabindex: '0'
+          'aria-role': 'tab',
+          tabindex: '0',
+          role: 'tab'
         ) do
           label
         end
