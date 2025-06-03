@@ -65,10 +65,16 @@ class DepositWorkJob < ApplicationJob
     accession? ? mapped_cocina_object_with_update_deposit_publication_date : mapped_cocina_object
   end
 
+  def changed?
+    return @changed if defined?(@changed)
+
+    @changed = RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
+  end
+
   def perform_persist
     if !work_form.persisted?
       Sdr::Repository.register(cocina_object: cocina_object_for_persist, assign_doi:)
-    elsif RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
+    elsif changed?
       Sdr::Repository.open_if_needed(cocina_object: cocina_object_for_persist,
                                      version_description: work_form.whats_changing, status:)
                      .then do |cocina_object|
@@ -103,7 +109,7 @@ class DepositWorkJob < ApplicationJob
   def accession?
     # If a new cocina object, then accessionable.
     # If work already opened, then the work has changes and can be accessioned.
-    @accession ||= deposit? && (!work_form.persisted? || status&.open?)
+    @accession ||= deposit? && (!work_form.persisted? || status&.open? || changed?)
   end
 
   def globus?

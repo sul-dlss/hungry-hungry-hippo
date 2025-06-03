@@ -143,7 +143,7 @@ RSpec.describe DepositWorkJob do
                    deposit_publication_date: Date.new(2024, 1, 1))
     end
     let(:work) { create(:work, :registering_or_updating, druid:) }
-    let(:version_status) { build(:draft_version_status) }
+    let(:version_status) { build(:openable_version_status) }
 
     before do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
