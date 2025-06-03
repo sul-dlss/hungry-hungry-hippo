@@ -80,10 +80,14 @@ module Sdr
     end
 
     # @param [Cocina::Models::DRO] cocina_object
+    # @param [String] description the description of the update for DSA Event
     # @raise [Error] if there is an error updating the object
     # @return [Cocina::Models::DRO] the updated cocina object
-    def self.update(cocina_object:)
-      Dor::Services::Client.object(cocina_object.externalIdentifier).update(params: cocina_object)
+    def self.update(cocina_object:, description: nil)
+      Dor::Services::Client.object(cocina_object.externalIdentifier).update(params: cocina_object,
+                                                                            event_data: {
+                                                                              description:, who: Current.user.sunetid
+                                                                            })
     rescue Dor::Services::Client::Error => e
       raise Error, "Updating failed: #{e.message}"
     end

@@ -77,7 +77,7 @@ class DepositWorkJob < ApplicationJob
       Sdr::Repository.open_if_needed(cocina_object: cocina_object_for_persist,
                                      version_description: work_form.whats_changing, status:)
                      .then do |cocina_object|
-        Sdr::Repository.update(cocina_object:)
+        Sdr::Repository.update(cocina_object:, description: 'metadata and files updated')
       end
     end
   end

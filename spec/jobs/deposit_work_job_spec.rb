@@ -130,7 +130,7 @@ RSpec.describe DepositWorkJob do
                 expect(event.type).to eq 'deposit'
                 expect(event.date.first.value).to eq '2024-01-01'
               end
-      expect(Sdr::Repository).to have_received(:update).with(cocina_object:)
+      expect(Sdr::Repository).to have_received(:update).with(cocina_object:, description: 'metadata and files updated')
       expect(Sdr::Repository).not_to have_received(:accession)
       expect(RoundtripSupport).to have_received(:changed?)
 
@@ -167,7 +167,7 @@ RSpec.describe DepositWorkJob do
                 expect(event.type).to eq 'deposit'
                 expect(event.date.first.value).to eq Time.zone.today.iso8601
               end
-      expect(Sdr::Repository).to have_received(:update).with(cocina_object:)
+      expect(Sdr::Repository).to have_received(:update).with(cocina_object:, description: 'metadata and files updated')
       expect(Sdr::Repository).to have_received(:accession)
     end
   end

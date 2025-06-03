@@ -4,6 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Sdr::Repository do
   let(:druid) { 'druid:bc123df4567' }
+  let(:user_name) { 'test_user' }
+  let(:user) { instance_double(User, sunetid: user_name) }
+
+  before { allow(Current).to receive(:user).and_return(user) }
 
   describe '#register' do
     let(:cocina_object) { instance_double(Cocina::Models::RequestDRO) }
@@ -55,11 +59,8 @@ RSpec.describe Sdr::Repository do
   describe '#accession' do
     let(:object_client) { instance_double(Dor::Services::Client::Object, version: version_client) }
     let(:version_client) { instance_double(Dor::Services::Client::ObjectVersion, close: true) }
-    let(:user_name) { 'test_user' }
-    let(:user) { instance_double(User, sunetid: user_name) }
 
     before do
-      allow(Current).to receive(:user).and_return(user)
       allow(Dor::Services::Client).to receive(:object).and_return(object_client)
     end
 
@@ -227,6 +228,7 @@ RSpec.describe Sdr::Repository do
     let(:updated_cocina_object) { instance_double(Cocina::Models::DRO) }
 
     let(:object_client) { instance_double(Dor::Services::Client::Object, update: updated_cocina_object) }
+    let(:description) { 'stuff changed' }
 
     before do
       allow(Dor::Services::Client).to receive(:object).with(druid).and_return(object_client)
@@ -234,9 +236,12 @@ RSpec.describe Sdr::Repository do
 
     context 'when successful' do
       it 'updates with SDR' do
-        expect(described_class.update(cocina_object:)).to eq(updated_cocina_object)
+        expect(described_class.update(cocina_object:, description:)).to eq(updated_cocina_object)
 
-        expect(object_client).to have_received(:update).with(params: cocina_object)
+        expect(object_client).to have_received(:update).with(params: cocina_object,
+                                                             event_data: {
+                                                               description:, who: user_name
+                                                             })
       end
     end
 
