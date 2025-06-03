@@ -13,9 +13,10 @@ class DepositCollectionJob < ApplicationJob
 
     # If new_cocina_object then persist not performed since not changed.
     new_cocina_object = perform_persist
-    druid = collection.druid || new_cocina_object.externalIdentifier
+    @druid = collection.druid || new_cocina_object.externalIdentifier
 
-    update_collection_record(druid:)
+    submit_sdr_event # This has to be called before the collection is updated
+    update_collection_record
 
     if new_cocina_object
       CollectionModelSynchronizer.call(collection:, cocina_object: new_cocina_object)
@@ -28,14 +29,14 @@ class DepositCollectionJob < ApplicationJob
 
   private
 
-  attr_reader :collection_form, :collection
+  attr_reader :collection_form, :collection, :druid
 
   def mapped_cocina_object
     @mapped_cocina_object ||= Cocina::CollectionMapper.call(collection_form:,
                                                             source_id: "h3:collection-#{collection.id}")
   end
 
-  def update_collection_record(druid:) # rubocop:disable Metrics/AbcSize
+  def update_collection_record # rubocop:disable Metrics/AbcSize
     collection.update!(druid:,
                        release_option: collection_form.release_option,
                        release_duration: collection_form.release_duration,
@@ -52,7 +53,6 @@ class DepositCollectionJob < ApplicationJob
                        work_type: collection_form.work_type,
                        work_subtypes: collection_form.work_subtypes,
                        works_contact_email: collection_form.works_contact_email)
-
     assign_participants(:managers)
     assign_participants(:depositors)
     assign_participants(:reviewers)
@@ -138,5 +138,73 @@ class DepositCollectionJob < ApplicationJob
 
   def suborganization_name_for(contributor_form:)
     contributor_form.stanford_degree_granting_institution ? contributor_form.suborganization_name : nil
+  end
+
+  def submit_sdr_event
+    setting_changes = SettingChangesDiffer.call(collection_form:, collection:)
+
+    return unless collection_form.persisted? && setting_changes.present?
+
+    Sdr::Event.create(druid:,
+                      type: 'h3_collection_settings_updated',
+                      data: {
+                        who: Current.user.sunetid,
+                        changes: setting_changes.join(', ')
+                      })
+  end
+
+  # Determines the setting changes between the current collection and the new collection form.
+  # This must be called before the collection has been updated.
+  class SettingChangesDiffer
+    def self.call(...)
+      new(...).call
+    end
+
+    def initialize(collection_form:, collection:)
+      @collection_form = collection_form
+      @collection = collection
+    end
+
+    # @return [Array<String>] a list of changes made to the collection
+    def call # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+      [].tap do |changes|
+        changes << 'Release settings modified' if changed?(:release_option, :release_duration)
+        changes << 'Access setting modified' if changed?(:access)
+        changes << 'DOI setting modified' if changed?(:doi_option)
+        changes << 'License setting modified' if changed?(:license_option, :license)
+        changes << 'Notification settings modified' if changed?(:email_when_participants_changed,
+                                                                :email_depositors_status_changed)
+        changes << 'Review workflow settings modified' if changed?(:review_enabled)
+        changes << 'Custom terms of use modified' if changed?(:custom_rights_statement_option,
+                                                              :provided_custom_rights_statement,
+                                                              :custom_rights_statement_instructions)
+        changes << "Added depositors: #{added_depositors.join('; ')}" if added_depositors.present?
+        changes << "Removed depositors: #{removed_depositors.join('; ')}" if removed_depositors.present?
+      end
+    end
+
+    private
+
+    attr_reader :collection_form, :collection
+
+    def changed?(*fields)
+      fields.any? { |field| collection_form.send(field) != collection.send(field) }
+    end
+
+    def added_depositors
+      @added_depositors ||= (collection_form_depositors - collection_depositors).to_a
+    end
+
+    def removed_depositors
+      @removed_depositors ||= (collection_depositors - collection_form_depositors).to_a
+    end
+
+    def collection_depositors
+      @collection_depositors ||= collection.depositors.pluck(:name).to_set
+    end
+
+    def collection_form_depositors
+      @collection_form_depositors ||= collection_form.depositors.filter_map(&:name).to_set
+    end
   end
 end

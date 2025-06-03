@@ -12,6 +12,7 @@ RSpec.describe DepositCollectionJob do
   before do
     allow(Cocina::CollectionMapper).to receive(:call).and_call_original
     allow(Sdr::Repository).to receive(:accession)
+    allow(Sdr::Event).to receive(:create)
   end
 
   context 'when a new collection' do
@@ -54,6 +55,8 @@ RSpec.describe DepositCollectionJob do
 
       # Verifying that Current.user is being set for notifications
       expect(Current.user).to eq current_user
+
+      expect(Sdr::Event).not_to have_received(:create)
     end
 
     context 'when a custom rights statement is provided' do
@@ -69,6 +72,8 @@ RSpec.describe DepositCollectionJob do
         described_class.perform_now(collection_form:, collection:, current_user:)
         expect(collection.reload.custom_rights_statement_option).to eq('provided')
         expect(collection.provided_custom_rights_statement).to eq('This is a custom rights statement')
+
+        expect(Sdr::Event).not_to have_received(:create)
       end
     end
 
@@ -85,13 +90,22 @@ RSpec.describe DepositCollectionJob do
         described_class.perform_now(collection_form:, collection:, current_user:)
         expect(collection.reload.custom_rights_statement_option).to eq('depositor_selects')
         expect(collection.reload.custom_rights_statement_instructions).to eq('Please enter a custom rights statement')
+
+        expect(Sdr::Event).not_to have_received(:create)
       end
     end
   end
 
   context 'when an existing collection with changed cocina object' do
     let(:collection_form) { collection_form_fixture }
-    let(:collection) { create(:collection, :registering_or_updating, druid:) }
+    let(:collection) do
+      create(:collection, :registering_or_updating, druid:, access: 'stanford', doi_option: 'no',
+                                                    release_duration: '2 years', license_option: 'depositor_selects',
+                                                    review_enabled: true,
+                                                    provided_custom_rights_statement: 'My original rights statement',
+                                                    depositors: [depositor])
+    end
+    let(:depositor) { create(:user, name: 'A. Depositor') }
 
     before do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
@@ -112,6 +126,7 @@ RSpec.describe DepositCollectionJob do
 
       expect(collection.reload.title).to eq(collection_title_fixture)
       expect(collection.version).to eq(2)
+      expect(collection.access).to eq('depositor_selects')
       expect(collection.release_option).to eq('depositor_selects')
       expect(collection.release_duration).to eq('one_year')
       expect(collection.license_option).to eq('required')
@@ -125,6 +140,17 @@ RSpec.describe DepositCollectionJob do
       expect(collection.work_subtypes).to eq(work_subtypes_fixture)
       expect(collection.works_contact_email).to eq(works_contact_email_fixture)
       expect(collection.deposit_not_in_progress?).to be false
+
+      expect(Sdr::Event).to have_received(:create)
+        .with(druid: collection.druid,
+              type: 'h3_collection_settings_updated',
+              data: {
+                changes: 'Release settings modified, Access setting modified, DOI setting modified, ' \
+                         'License setting modified, Notification settings modified, ' \
+                         'Review workflow settings modified, Custom terms of use modified, ' \
+                         'Added depositors: Joseph Hill, Removed depositors: A. Depositor',
+                who: current_user.sunetid
+              })
     end
   end
 
@@ -275,6 +301,27 @@ RSpec.describe DepositCollectionJob do
       expect(organization_contributor.role_type).to eq('organization')
       expect(organization_contributor.role).to eq('research_group')
       expect(organization_contributor.cited).to be false
+    end
+  end
+
+  context 'when an existing collection with no setting changes' do
+    let(:collection_form) do
+      CollectionForm.new(collection.attributes
+      .except('id', 'user_id', 'created_at', 'updated_at', 'object_updated_at', 'deposit_state')
+                    .merge(lock: 'abc123'))
+    end
+    let(:collection) { create(:collection, :registering_or_updating, druid:) }
+
+    before do
+      allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
+      allow(RoundtripSupport).to receive(:changed?).and_return(true)
+      allow(Notifier).to receive(:publish)
+    end
+
+    it 'does not submit an SDR event' do
+      described_class.perform_now(collection_form:, collection:, current_user:)
+
+      expect(Sdr::Event).not_to have_received(:create)
     end
   end
 end
