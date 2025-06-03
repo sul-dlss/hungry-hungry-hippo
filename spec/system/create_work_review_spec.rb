@@ -26,6 +26,10 @@ RSpec.describe 'Create a work that requires review' do
     # Stubbing out for show page
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+
+    allow(Settings.notifications).to receive(:enabled).and_return(true)
+    allow(Sdr::Event).to receive(:create)
+
     create(:collection, :with_review_workflow, user:, druid: collection_druid_fixture, depositors: [user])
 
     sign_in(user)
@@ -89,5 +93,7 @@ RSpec.describe 'Create a work that requires review' do
     expect(page).to have_css('h1', text: title_fixture)
     expect(page).to have_css('.status', text: 'Pending review')
     expect(page).to have_no_link('Edit or deposit')
+
+    expect(Sdr::Event).to have_received(:create).with(druid:, type: 'h3_review_requested', data: { who: user.sunetid })
   end
 end

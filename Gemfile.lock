@@ -186,6 +186,10 @@ GEM
       capistrano-shared_configs
       ed25519
     docile (1.4.1)
+    dor-event-client (1.1.0)
+      activesupport (>= 4.2)
+      bunny (~> 2.17)
+      zeitwerk (~> 2.1)
     dor-services-client (15.7.3)
       activesupport (>= 7.0.0)
       cocina-models (~> 0.103.2)
@@ -630,6 +634,7 @@ DEPENDENCIES
   datacite
   debug
   dlss-capistrano
+  dor-event-client
   dor-services-client (>= 15.5.0)
   dor-workflow-client (>= 7.6.1)
   druid-tools

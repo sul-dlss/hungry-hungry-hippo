@@ -22,6 +22,9 @@ RSpec.describe 'Review and accept a work' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status, deposit_version_status)
 
+    allow(Settings.notifications).to receive(:enabled).and_return(true)
+    allow(Sdr::Event).to receive(:create)
+
     sign_in(user)
   end
 
@@ -49,5 +52,7 @@ RSpec.describe 'Review and accept a work' do
     expect(page).to have_css('h1', text: title_fixture)
     expect(page).to have_css('.status', text: 'Depositing')
     expect(page).to have_no_text('Review all details below then approve or reject this deposit.')
+
+    expect(Sdr::Event).to have_received(:create).with(druid:, type: 'h3_review_approved', data: { who: user.sunetid })
   end
 end

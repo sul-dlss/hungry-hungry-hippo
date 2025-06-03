@@ -3,8 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Work do
+  let(:user) { instance_double(User) }
+
   before do
     allow(Notifier).to receive(:publish)
+    allow(Current).to receive(:user).and_return(user)
   end
 
   describe '.request_review!' do
@@ -12,7 +15,7 @@ RSpec.describe Work do
 
     it 'changes state and sends a notification' do
       expect { work.request_review! }.to change(work, :review_state).from('review_not_in_progress').to('pending_review')
-      expect(Notifier).to have_received(:publish).with(Notifier::REVIEW_REQUESTED, work:)
+      expect(Notifier).to have_received(:publish).with(Notifier::REVIEW_REQUESTED, work:, current_user: user)
     end
   end
 
@@ -21,7 +24,7 @@ RSpec.describe Work do
 
     it 'changes state and sends a notification' do
       expect { work.approve! }.to change(work, :review_state).from('pending_review').to('review_not_in_progress')
-      expect(Notifier).to have_received(:publish).with(Notifier::REVIEW_APPROVED, work:)
+      expect(Notifier).to have_received(:publish).with(Notifier::REVIEW_APPROVED, work:, current_user: user)
     end
   end
 
@@ -30,7 +33,7 @@ RSpec.describe Work do
 
     it 'changes state and sends a notification' do
       expect { work.reject! }.to change(work, :review_state).from('pending_review').to('rejected_review')
-      expect(Notifier).to have_received(:publish).with(Notifier::REVIEW_REJECTED, work:)
+      expect(Notifier).to have_received(:publish).with(Notifier::REVIEW_REJECTED, work:, current_user: user)
     end
   end
 
