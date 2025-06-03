@@ -1,0 +1,34 @@
+<% content_for :breadcrumbs do %>
+  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
+    <% component.with_breadcrumb(text: 'Admin dashboard', link: admin_dashboard_path) %>
+    <% component.with_breadcrumb(text: 'Generate item report') %>
+  <% end %>
+<% end %>
+
+<div class="d-flex justify-content-end">
+  <%= render Admin::FunctionDropdownComponent.new %>
+</div>
+
+<%= render Elements::HeadingComponent.new(level: :h1, text: 'Generate item report', classes: 'h2 mb-4') %>
+
+<%= form_with model: @work_report_form, url: admin_work_report_path, class: 'mb-5' do |form| %>
+  <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_created_start, label: 'Date created start', container_classes: 'ms-2') %>
+  <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_created_end, label: 'Date created end', container_classes: 'ms-2') %>
+  <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_modified_start, label: 'Date last modified start', container_classes: 'ms-2') %>
+  <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_modified_end, label: 'Date last modified end', container_classes: 'ms-2') %>
+
+  <%= render Elements::Forms::LabelComponent.new(form:, field_name: :collections, label_text: 'Collections') %>
+  <%= form.select :collections, @collections, multiple: true%>
+
+  <%= render Elements::Forms::FieldsetComponent.new(label: 'Item state', classes: 'pane-section') do %>
+    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :draft_not_deposited, label: 'Draft - not deposited') %>
+    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :pending_approval, label: 'Pending approval') %>
+    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :returned, label: 'Returned') %>
+    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :deposit_in_progress, label: 'Deposit in progress') %>
+    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :draft_not_deposited, label: 'Deposited') %>
+    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :version_draft, label: 'New version in draft') %>
+  <% end %>
+
+  <%= render Elements::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-4') %>
+<% end %>

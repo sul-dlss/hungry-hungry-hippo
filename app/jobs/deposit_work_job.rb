@@ -132,7 +132,14 @@ class DepositWorkJob < ApplicationJob
       work.approve! if work.rejected_review?
     else
       work.deposit_persist_complete!
+      update_last_deposited_at!
     end
+
+    update_last_deposited_at!
+  end
+
+  def update_last_deposited_at!
+    work.update!(last_deposited_at: Time.zone.now)
   end
 
   def new_user_version?

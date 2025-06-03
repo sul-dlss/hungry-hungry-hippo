@@ -114,6 +114,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resources :recent_activity_collections, only: :index, param: :days_limit
 
     resource :emulate, only: %i[new create], controller: :emulate
+
+    resource :work_report, only: %i[new create], controller: :work_report
   end
 
   root 'home#show'
