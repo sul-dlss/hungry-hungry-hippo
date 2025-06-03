@@ -17,7 +17,7 @@ class Work < ApplicationRecord
     end
 
     before_transition any => :pending_review do |work|
-      Notifier.publish(Notifier::REVIEW_REQUESTED, work:)
+      Notifier.publish(Notifier::REVIEW_REQUESTED, work:, current_user: Current.user)
     end
 
     event :approve do
@@ -26,7 +26,7 @@ class Work < ApplicationRecord
     end
 
     before_transition pending_review: :review_not_in_progress do |work|
-      Notifier.publish(Notifier::REVIEW_APPROVED, work:)
+      Notifier.publish(Notifier::REVIEW_APPROVED, work:, current_user: Current.user)
     end
 
     event :reject do
@@ -34,7 +34,7 @@ class Work < ApplicationRecord
     end
 
     before_transition pending_review: :rejected_review do |work|
-      Notifier.publish(Notifier::REVIEW_REJECTED, work:)
+      Notifier.publish(Notifier::REVIEW_REJECTED, work:, current_user: Current.user)
     end
   end
 

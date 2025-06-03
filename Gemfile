@@ -45,6 +45,7 @@ gem 'bunny' # RabbitMQ client
 gem 'cocina-models'
 gem 'config'
 gem 'datacite'
+gem 'dor-event-client'
 gem 'dor-services-client', '>= 15.5.0'
 gem 'dor-workflow-client', '>= 7.6.1'
 gem 'druid-tools'

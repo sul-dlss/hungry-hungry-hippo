@@ -6,7 +6,7 @@ class ReviewRequestSubscriptionMailer
     new(...).call
   end
 
-  def initialize(work:)
+  def initialize(work:, **)
     @work = work
   end
 

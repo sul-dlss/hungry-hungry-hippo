@@ -53,8 +53,8 @@ instances, and JSON-based Cocina objects.
   <dd>Handle de-/serialization of form objects in jobs (from Rails' <a href="https://guides.rubyonrails.org/active_job_basics.html#serializers">ActiveJob</a>)</dd>
   <dt>Services</dt>
   <dd>Execute business logic that spans various concerns, ideally with a single responsibility (plain old Ruby objects)</dd>
-  <dt>Subscription Mailers</dt>
-  <dd>Deliver email notifications in response to subscriptions (plain old Ruby objects)</dd>
+  <dt>Subscription Handlers</dt>
+  <dd>Perform actions (e.g., deliver email notifications, submit SDR events) in response to subscriptions (plain old Ruby objects)</dd>
   <dt>Validators</dt>
   <dd>Validate forms, particularly for more complex rule sets (from Rails' <a href="https://guides.rubyonrails.org/active_model_basics.html#validations">ActiveModel validations</a>)</dd>
   <dt>Values</dt>

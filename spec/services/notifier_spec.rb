@@ -30,13 +30,20 @@ RSpec.describe Notifier do
     context 'with a subscribed action' do
       let(:work) { create(:work, :with_druid, collection:, user:) }
 
+      before do
+        allow(Sdr::Event).to receive(:create)
+        allow(Current).to receive(:user).and_return(user)
+      end
+
       it 'sends emails' do
         work.request_review!
 
         expect(ActiveSupport::Notifications).to have_received(:instrument).with(Notifier::REVIEW_REQUESTED,
-                                                                                work:)
+                                                                                work:, current_user: user)
         expect(has_message(user: reviewer, subject: 'Item ready for review in the My Stuff collection')).to be true
         expect(has_message(user: manager, subject: 'Item ready for review in the My Stuff collection')).to be true
+        expect(Sdr::Event).to have_received(:create).with(druid: work.druid, type: 'h3_review_requested',
+                                                          data: { who: user.sunetid })
       end
     end
   end

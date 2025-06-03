@@ -45,11 +45,20 @@ Rails.application.config.after_initialize do # rubocop:disable Metrics/BlockLeng
   Notifier.subscribe(event_name: Notifier::REVIEW_REQUESTED) do |payload|
     ReviewsMailer.with(**payload).submitted_email.deliver_later
   end
+  Notifier.subscribe(event_name: Notifier::REVIEW_REQUESTED) do |payload|
+    ReviewRequestedEventSubmitter.call(**payload)
+  end
   Notifier.subscribe(event_name: Notifier::REVIEW_REJECTED) do |payload|
     ReviewsMailer.with(**payload).rejected_email.deliver_later
   end
+  Notifier.subscribe(event_name: Notifier::REVIEW_REJECTED) do |payload|
+    ReviewRejectedEventSubmitter.call(**payload)
+  end
   Notifier.subscribe(event_name: Notifier::REVIEW_APPROVED) do |payload|
     ReviewsMailer.with(**payload).approved_email.deliver_later
+  end
+  Notifier.subscribe(event_name: Notifier::REVIEW_APPROVED) do |payload|
+    ReviewApprovedEventSubmitter.call(**payload)
   end
   Notifier.subscribe(event_name: Notifier::REVIEW_REQUESTED) do |payload|
     ReviewRequestSubscriptionMailer.call(**payload)

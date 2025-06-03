@@ -12,9 +12,14 @@ RSpec.describe 'Review and reject a work' do
   let(:cocina_object) { dro_with_metadata_fixture }
   let(:version_status) { build(:draft_version_status) }
 
+  let(:comments) { "I don't like the cut of your jib." }
+
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+
+    allow(Settings.notifications).to receive(:enabled).and_return(true)
+    allow(Sdr::Event).to receive(:create)
 
     sign_in(user)
   end
@@ -30,12 +35,15 @@ RSpec.describe 'Review and reject a work' do
 
     # Submit invalid (reason is required)
     choose('Return with comments')
-    fill_in('Reason for returning', with: "I don't like the cut of your jib.")
+    fill_in('Reason for returning', with: comments)
     click_on('Submit')
 
     # On show page
     expect(page).to have_css('h1', text: title_fixture)
     expect(page).to have_css('.status', text: 'Returned')
     expect(page).to have_no_text('Review all details below then approve or reject this deposit.')
+
+    expect(Sdr::Event).to have_received(:create).with(druid:, type: 'h3_review_returned',
+                                                      data: { who: user.sunetid, comments: })
   end
 end
