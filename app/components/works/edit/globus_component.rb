@@ -24,6 +24,10 @@ module Works
         GlobusSupport.endpoint_url(destination_path:, origin: 'stanford_gdrive')
       end
 
+      def onedrive_url
+        GlobusSupport.endpoint_url(destination_path:, origin: 'onedrive')
+      end
+
       def local_url
         GlobusSupport.endpoint_url(destination_path:)
       end

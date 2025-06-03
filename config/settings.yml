@@ -68,7 +68,7 @@ notifications:
   admin_email: h2-administrators@lists.stanford.edu
 
 accountws:
-  pem_file: /etc/ssl/certs/sul-h3-qa.stanford.edu.pem            
+  pem_file: /etc/ssl/certs/sul-h3-qa.stanford.edu.pem
   host: accountws-uat.stanford.edu
 
 file_uploads_root: <%= Rails.root.join("storage") %>
@@ -79,7 +79,9 @@ globus:
   client_secret: ~
   transfer_endpoint_id: fake7087-d32d-4588-8517-b2d0d32d53b8
   uploads_directory: /uploads/
+  instructions_url: https://docs.google.com/document/d/10b7y3yZCOfyVJ_uP4l7QHbkILQKnfdJi9hj-MpmmdIk
   origins:
     stanford_gdrive: e1c8858b-d5aa-4e36-b97e-95913047ec2b
     oak: 8b3a8b64-d4ab-4551-b37e-ca0092f769a7
     sherlock: 6881ae2e-db26-11e5-9772-22000b9da45e
+    onedrive: 9beecf19-601f-47b9-a15b-a0f34845abb1

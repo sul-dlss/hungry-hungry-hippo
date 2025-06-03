@@ -33,7 +33,7 @@ RSpec.describe 'Uploading globus' do
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include('<turbo-frame id="globus"')
-        expect(response.body).to include('I am done uploading to Globus')
+        expect(response.body).to include('Globus file transfer complete')
         expect(response.body).to include("destination_path=/uploads/#{user.sunetid}/new")
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe 'Uploading globus' do
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include('<turbo-frame id="globus"')
-        expect(response.body).to include('I am done uploading to Globus')
+        expect(response.body).to include('Globus file transfer complete')
         expect(response.body).to include("destination_path=/uploads/work-#{work.id}")
       end
     end

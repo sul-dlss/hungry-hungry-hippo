@@ -40,10 +40,7 @@
 
         <%= render 'contents/edit', content: @content %>
 
-        <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
-
         <% if Settings.globus.enabled %>
-          <%= render Edit::SectionHeaderComponent.new(title: 'Globus') %>
           <%= turbo_frame_tag 'globus', src: new_content_globus_path(@content), data: { controller: 'dropzone-files', dropzone_files_dropzone_outlet: '.dropzone' }, class: 'dropzone-files' do %>
             <%= render Elements::SpinnerComponent.new %>
           <% end %>
