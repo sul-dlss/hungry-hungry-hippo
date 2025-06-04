@@ -108,9 +108,9 @@ RSpec.describe 'Show a work' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     # File doesn't matter; it just needs to exist.
+    allow(StagingSupport).to receive(:staging_filepath).and_call_original
     allow(StagingSupport).to receive(:staging_filepath).with(druid: work.druid, filepath: 'my_file1.txt')
                                                        .and_return('spec/fixtures/files/hippo.txt')
-    allow(StagingSupport).to receive(:staging_filepath).and_call_original
 
     sign_in(user)
   end
