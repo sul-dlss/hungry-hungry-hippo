@@ -66,21 +66,23 @@ RSpec.describe DepositWorkJob do
   context 'when a new work with globus files' do
     let(:work_form) { WorkForm.new(title: work.title, content_id: content.id, collection_druid: collection.druid) }
     let(:work) { create(:work, :registering_or_updating, collection:, user:) }
-    let(:new_endpoint_client) { instance_double(GlobusClient::Endpoint, exists?: true, rename: true) }
-    let(:work_endpoint_client) { instance_double(GlobusClient::Endpoint, exists?: false) }
-
-    let(:new_endpoint_path) { "/uploads/#{current_user.sunetid}/new" }
-    let(:work_endpoint_path) { "work-#{work.id}" }
+    let(:user_path) { "/uploads/#{current_user.sunetid}/new" }
+    let(:work_path) { "work-#{work.id}" }
 
     before do
       content.content_files << create(:content_file, :globus)
-      allow(GlobusClient::Endpoint).to receive(:new)
-        .with(user_id: user.email_address, path: new_endpoint_path, notify_email: false)
-        .and_return(new_endpoint_client)
-      allow(GlobusClient::Endpoint).to receive(:new)
-        .with(user_id: user.email_address, path: work_endpoint_path, notify_email: false)
-        .and_return(work_endpoint_client)
-      allow(work_endpoint_client).to receive(:delete_access_rule).and_raise('Access rule not found')
+      allow(GlobusClient).to receive(:exists?)
+        .with(user_id: user.email_address, path: user_path, notify_email: false)
+        .and_return(true)
+      allow(GlobusClient).to receive(:rename)
+        .with(user_id: user.email_address, path: user_path, notify_email: false, new_path: "/uploads/#{work_path}")
+        .and_return(true)
+      allow(GlobusClient).to receive(:exists?)
+        .with(user_id: user.email_address, path: work_path, notify_email: false)
+        .and_return(false)
+      allow(GlobusClient).to receive(:delete_access_rule)
+        .with(user_id: user.email_address, path: work_path, notify_email: false)
+        .and_raise('Access rule not found')
     end
 
     it 'registers a new work and updates the globus content' do
@@ -90,8 +92,8 @@ RSpec.describe DepositWorkJob do
         .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true)
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
 
-      expect(new_endpoint_client).to have_received(:rename).with(new_path: "/uploads/#{work_endpoint_path}")
-      expect(work_endpoint_client).to have_received(:delete_access_rule)
+      expect(GlobusClient).to have_received(:rename)
+      expect(GlobusClient).to have_received(:delete_access_rule)
     end
   end
 

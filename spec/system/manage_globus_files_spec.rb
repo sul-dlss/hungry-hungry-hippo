@@ -3,22 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Manage files for a work' do
-  let(:user) { create(:user) }
   let(:collection) { create(:collection, :with_druid, user:) }
-
-  let(:endpoint_client) { instance_double(GlobusClient::Endpoint, disallow_writes: true, list_files: file_infos) }
-
-  let(:file_infos) do
-    [
-      GlobusClient::Endpoint::FileInfo.new(size: 123, name: "/uploads/#{user.sunetid}/new/file1.txt")
-    ]
-  end
+  let(:file_infos) { [double(size: 123, name: "/uploads/#{user.sunetid}/new/file1.txt")] }
+  let(:user) { create(:user) }
 
   before do
     allow(Settings.globus).to receive(:enabled).and_return(true)
     allow(GlobusSetupJob).to receive(:perform_later)
     allow(GlobusClient).to receive(:tasks_in_progress?).and_return(true, false)
-    allow(GlobusClient::Endpoint).to receive(:new).and_return(endpoint_client)
+    allow(GlobusClient).to receive_messages(disallow_writes: true, list_files: file_infos)
 
     sign_in(user)
   end

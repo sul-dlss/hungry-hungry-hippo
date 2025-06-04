@@ -18,15 +18,15 @@ class GlobusSetupJob < ApplicationJob
 
   def mkdir
     # This will ignore if the directory already exists.
-    path = work.present? ? GlobusSupport.path(work:) : GlobusSupport.new_path(user:)
+    path = work.present? ? GlobusSupport.work_path(work:) : GlobusSupport.user_path(user:)
     GlobusClient.mkdir(user_id: user.email_address, path:, notify_email: false)
   end
 
   def allow_writes
     path = if work.present?
-             GlobusSupport.path(work:, with_uploads_directory: true)
+             GlobusSupport.work_path(work:, with_uploads_directory: true)
            else
-             GlobusSupport.new_path(user:, with_uploads_directory: true)
+             GlobusSupport.user_path(user:, with_uploads_directory: true)
            end
     GlobusClient.allow_writes(user_id: user.email_address, path:, notify_email: false)
   end
