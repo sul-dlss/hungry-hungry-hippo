@@ -1,7 +1,9 @@
 <%= turbo_frame_tag 'globus' do %>
   <%= turbo_stream_from 'globus', @content %>
-  <%= render Elements::SpinnerComponent.new(message: 'Getting list of files from Globus') %>
+  <%= render Elements::SpinnerComponent.new(message: t('works.edit.messages.globus_getting_files'),
+                                            classes: 'row pb-3', message_classes: 'col-8') %>
   <%= render Elements::ButtonFormComponent.new(label: 'Cancel',
+                                               classes: 'btn-outline-primary',
                                                link: cancel_content_globuses_path(@content), data: { action: 'dropzone-files#enableDropzone' },
                                                method: :post, top: false) %>
 <% end %>

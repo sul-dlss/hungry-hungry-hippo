@@ -47,7 +47,7 @@ RSpec.describe 'Manage files for a work' do
     click_link_or_button('Globus file transfer complete')
 
     expect(page).to have_no_css('.alert', text: 'Transfers in progress.')
-    expect(page).to have_text('Getting list of files from Globus')
+    expect(page).to have_text(I18n.t('works.edit.messages.globus_getting_files'))
 
     within('#content-table') do
       expect(page).to have_text('file1.txt')
