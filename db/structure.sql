@@ -388,7 +388,8 @@ CREATE TABLE public.works (
     review_state character varying DEFAULT 'review_not_in_progress'::character varying NOT NULL,
     review_rejected_reason character varying,
     deposit_state character varying DEFAULT 'deposit_not_in_progress'::character varying NOT NULL,
-    version integer DEFAULT 1 NOT NULL
+    version integer DEFAULT 1 NOT NULL,
+    last_deposited_at date
 );
 
 
@@ -802,6 +803,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250604121142'),
 ('20250509151132'),
 ('20250318195336'),
 ('20250313174420'),

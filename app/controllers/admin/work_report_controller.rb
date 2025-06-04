@@ -6,19 +6,29 @@ module Admin
     def new
       authorize!
 
-      @work_report_form = if params[:commit]
-                            Admin::WorkReportForm.new(**work_report_params)
-                            # If the form is submitted, provide a confirmation
-                            # do query and email the results
-                          else
-                            Admin::WorkReportForm.new
-                          end
+      @collections = Collection.pluck(:title, :id)
+      @work_report_form = Admin::WorkReportForm.new
+    end
+
+    def create
+      authorize!
+
+      @work_report_form = Admin::WorkReportForm.new(**work_report_params)
+      # If the form is submitted, provide a confirmation
+      if @work_report_form.valid?
+        Admin::WorkReport.call(work_report_form: @work_report_form)
+        flash[:success] = I18n.t('messages.work_report_generated')
+        redirect_to new_admin_work_report_path
+      else
+        @collections = Collection.pluck(:title, :id)
+        render :new, status: :unprocessable_entity
+      end
     end
 
     private
 
     def work_report_params
-      # params.permit(:date_created_start)
+      params.permit(:date_created_start)
     end
   end
 end

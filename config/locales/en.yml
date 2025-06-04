@@ -51,6 +51,7 @@ en:
       the left to correct the errors and then try saving or depositing again.
     work_deleted: 'Work successfully deleted.'
     work_moved: 'Work moved to the new collection.'
+    work_report_generated: 'Item report requested and will be emailed when completed.'
     wait_for_it: 'We are saving your work. Feel free to navigate away from this page.'
   events:
     registration: 'Created'
