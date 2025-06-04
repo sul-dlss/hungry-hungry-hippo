@@ -6,6 +6,7 @@ RSpec.describe 'Manage files for a work' do
   let(:collection) { create(:collection, :with_druid, user:) }
   let(:file_infos) { [double(size: 123, name: "/uploads/#{user.sunetid}/new/file1.txt")] }
   let(:user) { create(:user) }
+  let(:globus_button_label) { I18n.t('works.edit.buttons.globus_deposit_files') }
 
   before do
     allow(Settings.globus).to receive(:enabled).and_return(true)
@@ -23,7 +24,7 @@ RSpec.describe 'Manage files for a work' do
 
     expect(page).to have_text('Your files will appear here once they have been uploaded.')
 
-    click_link_or_button('I want to upload to Globus')
+    click_link_or_button(globus_button_label)
 
     expect(page).to have_text('Click the link where your files are located')
     # Dropzone is disabled.
@@ -33,10 +34,10 @@ RSpec.describe 'Manage files for a work' do
     within('#globus') do
       click_link_or_button('Cancel')
     end
-    expect(page).to have_button('I want to upload to Globus')
+    expect(page).to have_button(globus_button_label)
     expect(page).to have_css('#file-dropzone:not(.opacity-50)')
 
-    click_link_or_button('I want to upload to Globus')
+    click_link_or_button(globus_button_label)
     expect(page).to have_text('Click the link where your files are located')
 
     click_link_or_button('Globus file transfer complete')
