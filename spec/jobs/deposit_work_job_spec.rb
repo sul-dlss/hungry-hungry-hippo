@@ -82,7 +82,7 @@ RSpec.describe DepositWorkJob do
         .and_return(false)
       allow(GlobusClient).to receive(:delete_access_rule)
         .with(user_id: user.email_address, path: work_path, notify_email: false)
-        .and_raise('Access rule not found')
+        .and_raise(GlobusClient::AccessRuleNotFound, "Access rule not found in #{work_path}")
     end
 
     it 'registers a new work and updates the globus content' do
