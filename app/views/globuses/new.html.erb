@@ -2,5 +2,5 @@
   <%= render Elements::ButtonFormComponent.new(label: 'I want to upload to Globus',
                                                link: content_globuses_path(@content), data: { action: 'dropzone-files#disableDropzone' },
                                                confirm: @content.content_files.exists? ? 'Are you sure? This will replace your files.' : nil,
-                                               method: :post, top: false) %>
+                                               method: :post, top: false, classes: 'my-3') %>
 <% end %>

@@ -32,7 +32,7 @@ RSpec.describe 'Manage files for a work' do
 
     click_link_or_button('I want to upload to Globus')
 
-    expect(page).to have_text('Click a link to open the Globus File Manager')
+    expect(page).to have_text('Click the link where your files are located')
     # Dropzone is disabled.
     expect(page).to have_css('#file-dropzone.opacity-50')
 
@@ -44,13 +44,13 @@ RSpec.describe 'Manage files for a work' do
     expect(page).to have_css('#file-dropzone:not(.opacity-50)')
 
     click_link_or_button('I want to upload to Globus')
-    expect(page).to have_text('Click a link to open the Globus File Manager')
+    expect(page).to have_text('Click the link where your files are located')
 
-    click_link_or_button('I am done uploading to Globus')
+    click_link_or_button('Globus file transfer complete')
 
     expect(page).to have_css('.alert', text: 'Transfers in progress.')
 
-    click_link_or_button('I am done uploading to Globus')
+    click_link_or_button('Globus file transfer complete')
 
     expect(page).to have_no_css('.alert', text: 'Transfers in progress.')
     expect(page).to have_text('Getting list of files from Globus')
