@@ -15,6 +15,7 @@ RSpec.describe 'Discard a work draft' do
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:discard_draft)
+    allow(Sdr::Event).to receive(:list).and_return([])
 
     sign_in(user)
   end

@@ -15,6 +15,8 @@ RSpec.describe 'Delete a work' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
+    allow(Sdr::Event).to receive(:list).and_return([])
+
     sign_in(create(:user), groups: ['dlss:hydrus-app-administrators'])
   end
 

@@ -2,7 +2,7 @@
 
 class WorkPolicy < ApplicationPolicy
   alias_rule :update?, :edit?, :destroy?, to: :manage?
-  alias_rule :wait?, to: :show?
+  alias_rule :wait?, :history?, to: :show?
   alias_rule :new?, to: :create?
 
   def create?

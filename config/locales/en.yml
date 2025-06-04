@@ -52,6 +52,14 @@ en:
     work_deleted: 'Work successfully deleted.'
     work_moved: 'Work moved to the new collection.'
     wait_for_it: 'We are saving your work. Feel free to navigate away from this page.'
+  events:
+    version_close: 'Deposited'
+    update: 'Updated'
+    embargo_released: 'Embargo lifted'
+    h3_collection_settings_updated: 'Collection settings updated'
+    h3_review_approved: 'Review approved'
+    h3_review_returned: 'Review returned'
+    h3_review_requested: 'Review requested'
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'

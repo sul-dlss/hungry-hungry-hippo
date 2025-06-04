@@ -24,6 +24,7 @@ RSpec.describe 'Review and accept a work' do
 
     allow(Settings.notifications).to receive(:enabled).and_return(true)
     allow(Sdr::Event).to receive(:create)
+    allow(Sdr::Event).to receive(:list).and_return([])
 
     sign_in(user)
   end

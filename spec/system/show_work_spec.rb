@@ -104,6 +104,11 @@ RSpec.describe 'Show a work' do
   let(:version_status) { build(:openable_version_status) }
   let(:contact_emails) { (contact_emails_fixture.pluck('email') + [works_contact_email_fixture]) }
 
+  let(:events) do
+    [Dor::Services::Client::Events::Event.new(event_type: 'version_close', timestamp: '2020-01-27T19:10:27.291Z',
+                                              data: { 'who' => 'lstanfordjr', 'description' => 'Version 1 closed' })]
+  end
+
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
@@ -111,6 +116,8 @@ RSpec.describe 'Show a work' do
     allow(StagingSupport).to receive(:staging_filepath).and_call_original
     allow(StagingSupport).to receive(:staging_filepath).with(druid: work.druid, filepath: 'my_file1.txt')
                                                        .and_return('spec/fixtures/files/hippo.txt')
+
+    allow(Sdr::Event).to receive(:list).with(druid:).and_return(events)
 
     sign_in(user)
   end
@@ -276,6 +283,15 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('tr', text: 'Terms of use')
         expect(page).to have_css('td',
                                  text: custom_rights_statement_fixture)
+      end
+
+      # History table
+      within('table#history-table') do
+        expect(page).to have_css('caption', text: 'History')
+        expect(page).to have_css('tr', text: 'Deposited')
+        expect(page).to have_css('td', text: 'lstanfordjr')
+        expect(page).to have_css('td', text: 'January 27, 2020 19:10')
+        expect(page).to have_css('td', text: 'Version 1 closed')
       end
     end
   end

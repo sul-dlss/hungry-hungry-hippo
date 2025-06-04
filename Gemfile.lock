@@ -190,7 +190,7 @@ GEM
       activesupport (>= 4.2)
       bunny (~> 2.17)
       zeitwerk (~> 2.1)
-    dor-services-client (15.7.3)
+    dor-services-client (15.9.1)
       activesupport (>= 7.0.0)
       cocina-models (~> 0.103.2)
       deprecation
@@ -635,7 +635,7 @@ DEPENDENCIES
   debug
   dlss-capistrano
   dor-event-client
-  dor-services-client (>= 15.5.0)
+  dor-services-client
   dor-workflow-client (>= 7.6.1)
   druid-tools
   dry-monads
