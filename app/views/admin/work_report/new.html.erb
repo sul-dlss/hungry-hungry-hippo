@@ -19,7 +19,7 @@
   <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_modified_end, label: 'Date last modified end', container_classes: 'ms-2') %>
 
   <%= render Elements::Forms::LabelComponent.new(form:, field_name: :collections, label_text: 'Collections') %>
-  <%= form.select :collections, @collections, multiple: true%>
+  <%= form.select :collections, @collections, multiple: true %>
 
   <%= render Elements::Forms::FieldsetComponent.new(label: 'Item state', classes: 'pane-section') do %>
     <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :draft_not_deposited, label: 'Draft - not deposited') %>
