@@ -129,8 +129,8 @@ class DepositWorkJob < ApplicationJob
   def update_globus_content
     rename_globus_path if !work_form.persisted? && new_globus_path_exists? && !work_globus_path_exists?
     remove_globus_permissions
-  rescue StandardError => e
-    raise unless e.message.include?('Access rule not found')
+  rescue GlobusClient::AccessRuleNotFound
+    # This exception normally occurs and should be ignored per https://github.com/sul-dlss/hungry-hungry-hippo/pull/1331/files#r2120804945
   end
 
   def new_globus_path_exists?
