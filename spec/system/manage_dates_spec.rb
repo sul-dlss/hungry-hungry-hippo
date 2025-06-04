@@ -24,6 +24,7 @@ RSpec.describe 'Manage dates for a work deposit' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     allow(Doi).to receive(:assigned?).with(druid:).and_return(false)
+    allow(Sdr::Event).to receive(:list).and_return([])
 
     create(:collection, user:, druid: collection_druid_fixture)
 

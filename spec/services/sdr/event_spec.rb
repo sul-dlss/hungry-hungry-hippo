@@ -45,4 +45,31 @@ RSpec.describe Sdr::Event do
       end
     end
   end
+
+  describe '#list' do
+    context 'when listing events succeeds' do
+      let(:events) { [instance_double(Dor::Services::Client::Events::Event)] }
+      let(:event_client) { instance_double(Dor::Services::Client::Events, list: events) }
+
+      before do
+        allow(Dor::Services::Client.object(druid)).to receive(:events).and_return(event_client)
+      end
+
+      it 'returns the list of events' do
+        expect(described_class.list(druid:)).to eq(events)
+        expect(event_client).to have_received(:list).with(event_types: Sdr::Event::EVENT_TYPES)
+      end
+    end
+
+    context 'when listing events fails' do
+      before do
+        allow(Dor::Services::Client.object(druid)).to receive(:events).and_raise(Dor::Services::Client::Error,
+                                                                                 'Failed to list events')
+      end
+
+      it 'raises an error' do
+        expect { described_class.list(druid:) }.to raise_error(Sdr::Event::Error)
+      end
+    end
+  end
 end

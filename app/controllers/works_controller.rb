@@ -2,7 +2,7 @@
 
 # Controller for a Work
 class WorksController < ApplicationController # rubocop:disable Metrics/ClassLength
-  before_action :set_work_and_collection, only: %i[show edit update destroy review]
+  before_action :set_work_and_collection, only: %i[show edit update destroy review history]
   before_action :check_deposit_registering_or_updating, only: %i[show edit]
   before_action :set_status, only: %i[show edit destroy review update]
   before_action :set_work_form_from_cocina, only: %i[show edit review]
@@ -123,6 +123,14 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     else
       render :show, status: :unprocessable_entity
     end
+  end
+
+  def history
+    authorize! @work
+
+    @events = Sdr::Event.list(druid: @work.druid).map { |event| EventPresenter.new(event:) }
+
+    render layout: false
   end
 
   private

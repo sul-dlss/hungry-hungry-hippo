@@ -29,6 +29,7 @@ RSpec.describe 'Create a work that requires review' do
 
     allow(Settings.notifications).to receive(:enabled).and_return(true)
     allow(Sdr::Event).to receive(:create)
+    allow(Sdr::Event).to receive(:list).and_return([])
 
     create(:collection, :with_review_workflow, user:, druid: collection_druid_fixture, depositors: [user])
 

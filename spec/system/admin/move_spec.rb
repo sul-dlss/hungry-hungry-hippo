@@ -20,6 +20,7 @@ RSpec.describe 'Move a work' do
       @updated_cocina_object = args[:cocina_object]
     end
     allow(Sdr::Repository).to receive(:accession)
+    allow(Sdr::Event).to receive(:list).and_return([])
 
     sign_in(create(:user), groups: ['dlss:hydrus-app-administrators'])
   end

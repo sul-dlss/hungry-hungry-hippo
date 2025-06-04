@@ -73,3 +73,7 @@
   <% component.with_row(label: 'License', values: [@work_presenter.license_label]) %>
   <% component.with_row(label: 'Terms of use', values: [simple_format(@work_presenter.terms_of_use).html_safe]) %> <%# erb_lint:disable ErbSafety %>
 <% end %>
+
+<%= turbo_frame_tag 'history', src: history_work_path(druid: @work_presenter.druid) do %>
+  <%= render Elements::SpinnerComponent.new %>
+<% end %>

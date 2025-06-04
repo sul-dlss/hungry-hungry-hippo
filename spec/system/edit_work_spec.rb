@@ -67,6 +67,7 @@ RSpec.describe 'Edit a work' do
     allow(Sdr::Repository).to receive(:update) do |args|
       @updated_cocina_object = args[:cocina_object]
     end
+    allow(Sdr::Event).to receive(:list).and_return([])
 
     sign_in(user)
   end

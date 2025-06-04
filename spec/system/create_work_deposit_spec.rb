@@ -38,6 +38,7 @@ RSpec.describe 'Create a work deposit' do
       # Stubbing out for show page
       allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+      allow(Sdr::Event).to receive(:list).and_return([])
     end
 
     it 'creates and deposits a work' do
@@ -280,6 +281,7 @@ RSpec.describe 'Create a work deposit' do
       allow(Sdr::Repository).to receive(:status).with(druid:)
                                                 .and_return(openable_version_status, openable_version_status,
                                                             openable_version_status, accessioning_version_status)
+      allow(Sdr::Event).to receive(:list).and_return([])
     end
 
     it 'updates and deposits a work' do
