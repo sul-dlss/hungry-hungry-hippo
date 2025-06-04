@@ -13,8 +13,9 @@ module Admin
 
     def call
       # query H3 by the params and get works
-      works
+      items = filter_by_state(works)
 
+      # TODO:
       # query DSA by druids to get cocina
       # parse cocina into CSV
       # mail the result
@@ -33,9 +34,17 @@ module Admin
     end
 
     def filter_by_state
-      return works if work_report_form.states.empty?
+      # filter to checked checkboxes
+      selected_states = work_report_form.attributes.select { |_, value| value == 1 }.keys
 
-      work_report_form.state&.split(',') || []
+      return works if selected_states.empty?
+
+      works.select do |work|
+        if selected_states.include?('draft_not_deposited')
+          work.first_draft?
+          # need to add other states
+        end
+      end
     end
   end
 end
