@@ -389,7 +389,7 @@ CREATE TABLE public.works (
     review_rejected_reason character varying,
     deposit_state character varying DEFAULT 'deposit_not_in_progress'::character varying NOT NULL,
     version integer DEFAULT 1 NOT NULL,
-    last_deposited_at date
+    last_deposited_at timestamp(6) without time zone
 );
 
 

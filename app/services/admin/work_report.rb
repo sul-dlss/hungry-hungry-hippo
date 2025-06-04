@@ -15,8 +15,7 @@ module Admin
       # query H3 by the params and get works
       works
 
-      # query DSA for the druids
-      # query DSA for the cocina
+      # query DSA by druids to get cocina
       # parse cocina into CSV
       # mail the result
     end
