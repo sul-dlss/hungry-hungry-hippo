@@ -13,7 +13,6 @@ class DepositWorkJob < ApplicationJob
     @deposit = deposit
     @request_review = request_review
     @status = Sdr::Repository.status(druid: work_form.druid) if work_form.persisted?
-    @current_user = current_user
     # Setting current user so that it will be available for notifications.
     Current.user = current_user
 
@@ -44,7 +43,7 @@ class DepositWorkJob < ApplicationJob
 
   private
 
-  attr_reader :work_form, :work, :status, :current_user
+  attr_reader :work_form, :work, :status
 
   def content
     @content ||= Content.find(work_form.content_id)
@@ -116,10 +115,6 @@ class DepositWorkJob < ApplicationJob
     @globus ||= content.content_files.exists?(file_type: 'globus')
   end
 
-  def endpoint_client_for(path)
-    GlobusClient::Endpoint.new(user_id: user.email_address, path:, notify_email: false)
-  end
-
   def accession_or_persist_complete(druid:)
     if accession?
       work.accession!
@@ -131,16 +126,43 @@ class DepositWorkJob < ApplicationJob
     end
   end
 
-  def update_globus_content # rubocop:disable Metrics/AbcSize
-    new_endpoint_client = endpoint_client_for(GlobusSupport.new_path(user: current_user, with_uploads_directory: true))
-    work_endpoint_client = endpoint_client_for(GlobusSupport.path(work:))
-    # rename if not persisted and globus?
-    if !work_form.persisted? && new_endpoint_client.exists? && !work_endpoint_client.exists?
-      new_endpoint_client.rename(new_path: GlobusSupport.path(work:, with_uploads_directory: true))
-    end
-    # remove permissions
-    work_endpoint_client.delete_access_rule
+  def update_globus_content
+    rename_globus_path if !work_form.persisted? && new_globus_path_exists? && !work_globus_path_exists?
+    remove_globus_permissions
   rescue StandardError => e
     raise unless e.message.include?('Access rule not found')
+  end
+
+  def new_globus_path_exists?
+    GlobusClient.exists?(
+      user_id: user.email_address,
+      notify_email: false,
+      path: GlobusSupport.user_path(user: Current.user, with_uploads_directory: true)
+    )
+  end
+
+  def work_globus_path_exists?
+    GlobusClient.exists?(
+      user_id: user.email_address,
+      notify_email: false,
+      path: GlobusSupport.work_path(work:)
+    )
+  end
+
+  def rename_globus_path
+    GlobusClient.rename(
+      new_path: GlobusSupport.work_path(work:, with_uploads_directory: true),
+      user_id: user.email_address,
+      notify_email: false,
+      path: GlobusSupport.user_path(user: Current.user, with_uploads_directory: true)
+    )
+  end
+
+  def remove_globus_permissions
+    GlobusClient.delete_access_rule(
+      user_id: user.email_address,
+      notify_email: false,
+      path: GlobusSupport.work_path(work:)
+    )
   end
 end

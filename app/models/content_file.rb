@@ -43,7 +43,7 @@ class ContentFile < ApplicationRecord
     if attached?
       ActiveStorageSupport.filepath_for_blob(file.blob)
     elsif globus?
-      File.join(GlobusSupport.local_path(work:), filepath)
+      File.join(GlobusSupport.local_work_path(work:), filepath)
     end
   end
 end

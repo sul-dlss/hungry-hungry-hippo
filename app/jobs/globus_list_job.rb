@@ -8,7 +8,7 @@ class GlobusListJob < ApplicationJob
     @content = content
     @cancel_check_interval = cancel_check_interval
 
-    endpoint_client.disallow_writes
+    GlobusClient.disallow_writes(user_id: user.email_address, path: globus_path, notify_email: false)
 
     content.globus_list!
     content.content_files.clear
@@ -28,12 +28,13 @@ class GlobusListJob < ApplicationJob
 
   attr_reader :content
 
-  def list_files
-    endpoint_client.list_files.each_with_index do |file_info, index|
+  def list_files # rubocop:disable Metrics/AbcSize
+    GlobusClient.list_files(user_id: user.email_address, path: globus_path, notify_email: false)
+                .each_with_index do |file_info, index|
       # Only check for cancel every 100 files
       break if (index % @cancel_check_interval).zero? && canceled?
 
-      filepath = file_info.name.delete_prefix(globus_path)
+      filepath = Pathname.new(file_info.name).relative_path_from(globus_absolute_path).to_s
       next if IgnoreFileService.call(filepath:)
 
       ContentFile.create!(file_type: :globus, size: file_info.size, label: '', content:,
@@ -41,14 +42,10 @@ class GlobusListJob < ApplicationJob
     end
   end
 
-  def endpoint_client
-    @endpoint_client ||= if work.present?
-                           GlobusClient::Endpoint.new(user_id: user.email_address, path: GlobusSupport.path(work:),
-                                                      notify_email: false)
-                         else
-                           GlobusClient::Endpoint.new(user_id: user.email_address, path: GlobusSupport.new_path(user:),
-                                                      notify_email: false)
-                         end
+  def globus_path
+    return GlobusSupport.work_path(work:) if work.present?
+
+    GlobusSupport.user_path(user:)
   end
 
   def perform_broadcast
@@ -66,12 +63,8 @@ class GlobusListJob < ApplicationJob
                                               }
   end
 
-  def globus_path
-    @globus_path ||= if work.present?
-                       "#{GlobusSupport.path(work:, with_uploads_directory: true)}/"
-                     else
-                       "#{GlobusSupport.new_path(user:, with_uploads_directory: true)}/"
-                     end
+  def globus_absolute_path
+    GlobusSupport.with_uploads_directory(path: globus_path)
   end
 
   def canceled?

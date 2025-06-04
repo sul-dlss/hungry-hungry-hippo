@@ -67,6 +67,11 @@ RSpec/LetSetup:
   Exclude:
     - spec/requests/**/*
 
+RSpec/VerifiedDoubles:
+  Exclude:
+    - spec/jobs/globus_list_job_spec.rb
+    - spec/system/manage_globus_files_spec.rb
+
 Style/Documentation:
   Exclude:
     - 'config/application.rb'

@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe GlobusSetupJob do
   let(:user) { create(:user) }
   let(:path) { "#{user.sunetid}/new" }
-  let(:endpoint_client) { instance_double(GlobusClient::Endpoint, mkdir: true, allow_writes: true) }
   let(:content) { create(:content, :with_content_files, work:) }
   let(:work) { nil }
 
