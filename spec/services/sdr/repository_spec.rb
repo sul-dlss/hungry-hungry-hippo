@@ -74,6 +74,15 @@ RSpec.describe Sdr::Repository do
       end
     end
 
+    context 'when successful and new user version' do
+      it 'closes the version' do
+        described_class.accession(druid:, new_user_version: true)
+
+        expect(Dor::Services::Client).to have_received(:object).with(druid)
+        expect(version_client).to have_received(:close).with(user_versions: 'new', user_name:)
+      end
+    end
+
     context 'when closing version fails' do
       before do
         allow(version_client).to receive(:close).and_raise(Dor::Services::Client::Error, 'Failed to close version')

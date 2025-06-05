@@ -13,8 +13,8 @@ class RoundtripSupport
 
   # @param [Cocina::Models::DRO,Cocina::Models::Collection] cocina_object
   # @return [Boolean] true if the provided cocina object is the same as a cocina object retrieved from SDR.
-  def self.changed?(cocina_object:)
-    original_cocina_object = Sdr::Repository.find(druid: cocina_object.externalIdentifier)
+  def self.changed?(cocina_object:, original_cocina_object: nil)
+    original_cocina_object ||= Sdr::Repository.find(druid: cocina_object.externalIdentifier)
     cocina_object != normalize_cocina_object(cocina_object: original_cocina_object)
   end
 
