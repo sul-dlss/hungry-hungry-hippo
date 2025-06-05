@@ -10,11 +10,11 @@ module Admin
     attribute :date_modified_start, :date
     attribute :date_modified_end, :date
     attribute :collection_ids
-    attribute :draft_not_deposited_state, :string, default: '0'
-    attribute :pending_review_state, :string, default: '0'
-    attribute :returned_state, :string, default: '0'
-    attribute :deposit_in_progress_state, :string, default: '0'
-    attribute :deposited_state, :string, default: '0'
-    attribute :version_draft_state, :string, default: '0'
+    attribute :draft_not_deposited_state, :boolean, default: true
+    attribute :pending_review_state, :boolean, default: true
+    attribute :returned_state, :boolean, default: true
+    attribute :deposit_in_progress_state, :boolean, default: true
+    attribute :deposited_state, :boolean, default: true
+    attribute :version_draft_state, :boolean, default: true
   end
 end
