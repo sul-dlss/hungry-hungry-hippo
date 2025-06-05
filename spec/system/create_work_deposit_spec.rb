@@ -224,6 +224,7 @@ RSpec.describe 'Create a work deposit' do
       5.times { click_link_or_button('Next') }
       expect(page).to have_css('.nav-link.active', text: 'Deposit')
 
+      expect(page).to have_no_text('If you have modified the files, a new public version')
       expect(page).to have_no_text('What\'s changing?')
 
       expect(page).to have_text('You have accepted the Terms of Deposit')

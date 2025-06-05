@@ -13,6 +13,7 @@ class DepositWorkJob < ApplicationJob
     @deposit = deposit
     @request_review = request_review
     @status = Sdr::Repository.status(druid: work_form.druid) if work_form.persisted?
+    @original_cocina_object = Sdr::Repository.find(druid: work_form.druid) if work_form.persisted?
     # Setting current user so that it will be available for notifications.
     Current.user = current_user
 
@@ -43,7 +44,7 @@ class DepositWorkJob < ApplicationJob
 
   private
 
-  attr_reader :work_form, :work, :status
+  attr_reader :work_form, :work, :status, :original_cocina_object
 
   def user_name
     Current.user.sunetid
@@ -69,6 +70,7 @@ class DepositWorkJob < ApplicationJob
   end
 
   def changed?
+    # @changed can be false, so normal ||= won't work here
     return @changed if defined?(@changed)
 
     @changed = RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
@@ -125,12 +127,19 @@ class DepositWorkJob < ApplicationJob
   def accession_or_persist_complete(druid:)
     if accession?
       work.accession!
-      Sdr::Repository.accession(druid:)
+      Sdr::Repository.accession(druid:, new_user_version: new_user_version?)
       # If a collection manager or reviewer has rejected a previous review, we need to approve the work again
       work.approve! if work.rejected_review?
     else
       work.deposit_persist_complete!
     end
+  end
+
+  def new_user_version?
+    return true unless work_form.persisted?
+
+    # return true if structural changed
+    UserVersionChangeService.call(original_cocina_object:, new_cocina_object: mapped_cocina_object)
   end
 
   def update_globus_content

@@ -59,6 +59,7 @@ RSpec.describe 'Edit a work' do
       ->(_arg) { cocina_object },
       ->(_arg) { cocina_object },
       ->(_arg) { cocina_object },
+      ->(_arg) { cocina_object },
       ->(_arg) { @updated_cocina_object }
     )
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
@@ -179,6 +180,7 @@ RSpec.describe 'Edit a work' do
     # Check What's changing
     find('.nav-link', text: 'Deposit', exact_text: true).click
     expect(page).to have_field('What\'s changing?', with: whats_changing_fixture)
+    expect(page).to have_css('.alert', text: 'If you have modified the files, a new public version')
     click_link_or_button('Save as draft')
 
     # Waiting page may be too fast to catch so not testing.

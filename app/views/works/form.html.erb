@@ -134,6 +134,7 @@
         <% end %>
 
         <% if @work_presenter && !@work_presenter.first_draft? %>
+          <%= render Elements::AlertComponent.new(variant: :info, value: t('works.edit.panes.deposit.version_text')) %>
           <div class="pane-section">
             <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: t('works.edit.fields.whats_changing.label'), tooltip: t('works.edit.fields.whats_changing.tooltip_html'), maxlength: 100) %>
           </div>
