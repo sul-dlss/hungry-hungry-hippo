@@ -288,6 +288,10 @@ RSpec.describe 'Show a work' do
       # History table
       within('table#history-table') do
         expect(page).to have_css('caption', text: 'History')
+        expect(page).to have_css('th', text: 'Action')
+        expect(page).to have_css('th', text: 'Modified by')
+        expect(page).to have_css('th', text: 'Last modified')
+        expect(page).to have_css('th', text: 'Description of changes')
         expect(page).to have_css('tr', text: 'Deposited')
         expect(page).to have_css('td', text: 'lstanfordjr')
         expect(page).to have_css('td', text: 'January 27, 2020 19:10')
