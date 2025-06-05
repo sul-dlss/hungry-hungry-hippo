@@ -1,0 +1,24 @@
+<% content_for :breadcrumbs do %>
+  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
+    <% component.with_breadcrumb(text: 'Admin dashboard', link: admin_dashboard_path) %>
+    <% component.with_breadcrumb(text: 'Collections recent activity') %>
+  <% end %>
+<% end %>
+
+<div class="d-flex justify-content-end">
+  <%= render Admin::FunctionDropdownComponent.new %>
+</div>
+
+<%= render Elements::HeadingComponent.new(level: :h1, text: "#{@label} recent activity", classes: 'h2 mb-4') %>
+
+<%= render Admin::RecentActivityFormComponent.new(form: @recent_activity_form, type: @type) %>
+
+<% if @items.present? %>
+  <%= render Elements::HorizontalRuleComponent.new %>
+  <%= render Elements::Tables::TableComponent.new(id: 'collections-table', classes: 'mb-5', label: @label) do |component| %>
+    <% @items.each do |collection| %>
+      <% component.with_row(values: [collection.title], id: collection.druid) %>
+    <% end %>
+  <% end %>
+<% end %>
