@@ -12,35 +12,61 @@ module Admin
     end
 
     def call
-      # query works by data/collection params and get version statuses
-      @statuses = Sdr::Repository.statuses(druids: works_subset_druids)
+      @query = Work.all
+      filter_by_date_created_start
+      filter_by_date_created_end
+      filter_by_date_modified_start
+      filter_by_date_modified_end
+      filter_by_collection
+      works_druids = @query.pluck(:druid)
+
+      @statuses = Sdr::Repository.statuses(druids: works_druids)
       druids = filter_by_state(@statuses)
 
       @cocina_objects = druids.map { |druid| Dor::Services::Client.object(druid).find }
       works = @cocina_objects.map do |cocina_object|
+        # only cocina_object will be used; other arg assignments are irrelevant
         Form::WorkMapper.call(cocina_object:, doi_assigned: true,
                               agree_to_terms: true,
                               version_description: nil, collection: nil)
       end
 
       create_csv(works)
-      debugger
-      # TODO:
-      # mail the result (put this in the job)
     end
 
     attr_reader :work_report_form
 
     private
 
-    # finds works that match the form's date and collection criteria
-    # @return [Array<String>] druids
-    def works_subset_druids
-      Work.where(
-        created_at: work_report_form.date_created_start..work_report_form.date_created_end,
-        object_updated_at: work_report_form.date_modified_start..work_report_form.date_modified_end,
-        collection_id: work_report_form.collection_ids
-      ).pluck(:druid)
+    def filter_by_date_created_start
+      return @query if work_report_form.date_created_start.blank?
+
+      @query.where(created_at: work_report_form.date_created_start..)
+    end
+
+    def filter_by_date_created_end
+      return @query if work_report_form.date_created_end.blank?
+
+      @query.where(created_at: ..work_report_form.date_created_end)
+    end
+
+    def filter_by_date_modified_start
+      return @query if work_report_form.date_modified_start.blank?
+
+      @query.where(object_updated_at: work_report_form.date_modified_start..)
+    end
+
+    def filter_by_date_modified_end
+      return @query if work_report_form.date_modified_end.blank?
+
+      @query.where(object_updated_at: ..work_report_form.date_modified_end)
+    end
+
+    def filter_by_collection
+      return @query if work_report_form.collection_ids.blank?
+
+      # filter by collection ids
+      @query.where(collection_id: work_report_form.collection_ids)
     end
 
     def selected_states
@@ -73,7 +99,7 @@ module Admin
             false
           end
         end
-      end.map(&:first) # just druid
+      end.map(&:first) # just druids
     end
 
     def create_csv(work_forms)
