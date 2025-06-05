@@ -1,11 +1,12 @@
-<div data-controller="admin-days-limit-controller">
-<%= form_with model: form, url: admin_recent_activity_index_path, method: :get, class: 'mb-5' do |form| %>
-  <%= form.hidden_field :type %>
-  <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :days_limit,
-                                                       options: days_limit_options,
-                                                       label: 'Days limit',
-                                                       hidden_label: true,
-                                                       data: { admin_days_limit_target: 'daysLimit' }) %>
-  <%= render Elements::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-4') %>
-<% end %>
+<div class="d-flex flex-row">
+  <div data-controller="admin-days-limit" class="px-2">
+    <%= form_with model: form, url: admin_recent_activity_index_path, method: :get, class: 'mb-5' do |form| %>
+      <%= form.hidden_field :type %>
+      <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :days_limit,
+                                                           options: days_limit_options,
+                                                           label: 'Days limit',
+                                                           hidden_label: true,
+                                                           data: { admin_days_limit_target: 'daysLimit', action: 'change->admin-days-limit#change' }) %>
+    <% end %>
+  </div>
 </div>
