@@ -311,7 +311,6 @@ en:
         globus_notice_html: "* If you have more than 10GB but less than 4TB and fewer than 25,000 files, you can use Globus to upload your files. For anything larger, <a href=\"mailto:%{support_email}\">contact us</a>."
         globus_replace_files_confirm: "This action will delete all the files listed below on this deposit, however, your transferred files remain on Globus and can be retrieved by clicking \"Yes, proceed to Globus\".\n\nAre you sure you want to proceed?"
         globus_instructions_html: "<a href=\"%{instructions_link}\">Instructions to set up Globus</a>&nbsp;(may require software installation)"
-        globus_getting_files: 'Transferring your files from Globus'
       panes:
         abstract:
           tab_label: 'Abstract and keywords'

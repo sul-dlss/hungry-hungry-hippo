@@ -29,7 +29,7 @@ RSpec.describe 'Wait globus' do
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include('<turbo-frame id="globus"')
-      expect(response.body).to include('Transferring your files from Globus')
+      expect(response.body).to include('Getting list of files from Globus')
     end
   end
 end
