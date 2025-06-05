@@ -29,7 +29,7 @@ RSpec.describe 'New globus' do
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include('<turbo-frame id="globus"')
-      expect(response.body).to include(I18n.t('works.edit.buttons.globus_deposit_files'))
+      expect(response.body).to include('Transferring your files from Globus')
     end
   end
 end

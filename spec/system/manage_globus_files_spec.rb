@@ -6,7 +6,7 @@ RSpec.describe 'Manage files for a work' do
   let(:collection) { create(:collection, :with_druid, user:) }
   let(:file_infos) { [double(size: 123, name: "/uploads/#{user.sunetid}/new/file1.txt")] }
   let(:user) { create(:user) }
-  let(:globus_button_label) { I18n.t('works.edit.buttons.globus_deposit_files') }
+  let(:globus_button_label) { 'Use Globus to transfer files' }
 
   before do
     allow(Settings.globus).to receive(:enabled).and_return(true)
@@ -47,7 +47,7 @@ RSpec.describe 'Manage files for a work' do
     click_link_or_button('Globus file transfer complete')
 
     expect(page).to have_no_css('.alert', text: 'Transfers in progress.')
-    expect(page).to have_text(I18n.t('works.edit.messages.globus_getting_files'))
+    expect(page).to have_text('Transferring your files from Globus')
 
     within('#content-table') do
       expect(page).to have_text('file1.txt')
