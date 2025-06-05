@@ -27,7 +27,7 @@ class DepositWorkJob < ApplicationJob
 
     work.update!(druid:)
 
-    Contents::Stager.call(content:, druid:)
+    perform_stage(druid:)
 
     WorkModelSynchronizer.call(work:, cocina_object: mapped_cocina_object)
 
@@ -164,5 +164,12 @@ class DepositWorkJob < ApplicationJob
       notify_email: false,
       path: GlobusSupport.work_path(work:)
     )
+  end
+
+  def perform_stage(druid:)
+    Contents::Stager.call(content:, druid:)
+    return unless content.content_files.exists?(file_type: 'globus')
+
+    Sdr::Event.create(druid:, type: 'h3_globus_staged', data: {})
   end
 end
