@@ -53,6 +53,7 @@ en:
     work_moved: 'Work moved to the new collection.'
     wait_for_it: 'We are saving your work. Feel free to navigate away from this page.'
   events:
+    registration: 'Created'
     version_close: 'Deposited'
     update: 'Updated'
     embargo_released: 'Embargo lifted'

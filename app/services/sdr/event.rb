@@ -7,6 +7,7 @@ module Sdr
 
     # If adding a new event here, make sure to add label to en.yml.
     EVENT_TYPES = %w[
+      registration
       version_close
       update
       embargo_released
