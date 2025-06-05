@@ -39,7 +39,8 @@ module Sdr
     # @return [Cocina::Models::DRO] the registered cocina object
     # @raise [Error] if there is an error depositing the work
     def self.register(cocina_object:, assign_doi: false)
-      response_cocina_object = Dor::Services::Client.objects.register(params: cocina_object, assign_doi:)
+      response_cocina_object = Dor::Services::Client.objects.register(params: cocina_object, assign_doi:,
+                                                                      user_name: Current.user.sunetid)
 
       # Create workflow destroys existing steps if called again, so need to check if already created.
       Sdr::Workflow.create_unless_exists(response_cocina_object.externalIdentifier, 'registrationWF', version: 1)
@@ -72,7 +73,8 @@ module Sdr
       raise Error, 'Object cannot be opened' unless status.openable?
 
       open_cocina_object = Dor::Services::Client.object(cocina_object.externalIdentifier)
-                                                .version.open(description: version_description)
+                                                .version.open(description: version_description,
+                                                              opening_user_name: Current.user.sunetid)
       Cocina::VersionAndLockUpdater.call(cocina_object:, version: open_cocina_object.version,
                                          lock: open_cocina_object.lock)
     rescue Dor::Services::Client::Error => e
@@ -86,7 +88,7 @@ module Sdr
     def self.update(cocina_object:, description: nil)
       Dor::Services::Client.object(cocina_object.externalIdentifier).update(params: cocina_object,
                                                                             description:,
-                                                                            who: Current.user.sunetid)
+                                                                            user_name: Current.user.sunetid)
     rescue Dor::Services::Client::Error => e
       raise Error, "Updating failed: #{e.message}"
     end

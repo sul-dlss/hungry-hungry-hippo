@@ -27,7 +27,8 @@ RSpec.describe Sdr::Repository do
       it 'registers with SDR and creates registrationWF' do
         expect(described_class.register(cocina_object:)).to eq(registered_cocina_object)
 
-        expect(objects_client).to have_received(:register).with(params: cocina_object, assign_doi: false)
+        expect(objects_client).to have_received(:register).with(params: cocina_object, assign_doi: false,
+                                                                user_name:)
         expect(Sdr::Workflow).to have_received(:create_unless_exists).with(druid, 'registrationWF', version: 1)
       end
     end
@@ -207,7 +208,8 @@ RSpec.describe Sdr::Repository do
       it 'opens a new version' do
         expect(open_cocina_object.version).to eq(2)
         expect(open_cocina_object.lock).to eq('bcd234')
-        expect(version_client).to have_received(:open).with(description: version_description)
+        expect(version_client).to have_received(:open).with(description: version_description,
+                                                            opening_user_name: user_name)
       end
     end
 
@@ -239,7 +241,7 @@ RSpec.describe Sdr::Repository do
         expect(described_class.update(cocina_object:, description:)).to eq(updated_cocina_object)
 
         expect(object_client).to have_received(:update).with(params: cocina_object,
-                                                             who: user_name,
+                                                             user_name:,
                                                              description:)
       end
     end
