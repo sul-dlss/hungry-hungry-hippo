@@ -33,7 +33,7 @@ RSpec.describe DepositWorkJob do
                                                               source_id: "h3:object-#{work.id}")
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
       expect(Sdr::Repository).to have_received(:register).with(
-        cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true
+        cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true, user_name: current_user.sunetid
       ) do |args|
         event = args[:cocina_object].description.event.first
         expect(event.type).to eq 'deposit'
@@ -59,7 +59,8 @@ RSpec.describe DepositWorkJob do
       described_class.perform_now(work_form:, work:, deposit: true, request_review: false,
                                   current_user:)
       expect(Sdr::Repository).to have_received(:register)
-        .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: false)
+        .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: false,
+              user_name: current_user.sunetid)
     end
   end
 
@@ -90,7 +91,9 @@ RSpec.describe DepositWorkJob do
       described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:)
 
       expect(Sdr::Repository).to have_received(:register)
-        .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true)
+        .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true,
+              user_name: current_user.sunetid)
+      expect(Contents::Analyzer).to have_received(:call).with(content:)
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
       expect(Sdr::Event).to have_received(:create).with(druid:, type: 'h3_globus_staged', data: {})
 
@@ -125,12 +128,13 @@ RSpec.describe DepositWorkJob do
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
       expect(Sdr::Repository).to have_received(:open_if_needed)
         .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata),
+              user_name: current_user.sunetid,
               version_description: whats_changing_fixture, status: version_status) do |args|
                 event = args[:cocina_object].description.event.first
                 expect(event.type).to eq 'deposit'
                 expect(event.date.first.value).to eq '2024-01-01'
               end
-      expect(Sdr::Repository).to have_received(:update).with(cocina_object:, description: 'metadata and files updated')
+      expect(Sdr::Repository).to have_received(:update).with(cocina_object:, user_name: current_user.sunetid)
       expect(Sdr::Repository).not_to have_received(:accession)
       expect(RoundtripSupport).to have_received(:changed?)
 
@@ -162,12 +166,13 @@ RSpec.describe DepositWorkJob do
                                   current_user:)
       expect(Sdr::Repository).to have_received(:open_if_needed)
         .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata),
+              user_name: current_user.sunetid,
               version_description: whats_changing_fixture, status: version_status) do |args|
                 event = args[:cocina_object].description.event.first
                 expect(event.type).to eq 'deposit'
                 expect(event.date.first.value).to eq Time.zone.today.iso8601
               end
-      expect(Sdr::Repository).to have_received(:update).with(cocina_object:, description: 'metadata and files updated')
+      expect(Sdr::Repository).to have_received(:update).with(cocina_object:, user_name: current_user.sunetid)
       expect(Sdr::Repository).to have_received(:accession)
     end
   end

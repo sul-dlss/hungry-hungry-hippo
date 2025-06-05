@@ -59,14 +59,16 @@ class DepositCollectionJob < ApplicationJob
     assign_contributors
   end
 
+  # rubocop:disable Metrics/AbcSize
   def perform_persist
     if !collection_form.persisted?
-      Sdr::Repository.register(cocina_object: mapped_cocina_object)
+      Sdr::Repository.register(cocina_object: mapped_cocina_object, user_name: Current.user.sunetid)
     elsif RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
-      Sdr::Repository.open_if_needed(cocina_object: mapped_cocina_object)
-                     .then { |cocina_object| Sdr::Repository.update(cocina_object:) }
+      Sdr::Repository.open_if_needed(cocina_object: mapped_cocina_object, user_name: Current.user.sunetid)
+                     .then { |cocina_object| Sdr::Repository.update(cocina_object:, user_name: Current.user.sunetid) }
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   # @param [Symbol] role :managers or :depositors
   #

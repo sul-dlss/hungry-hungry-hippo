@@ -25,7 +25,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'registers with SDR and creates registrationWF' do
-        expect(described_class.register(cocina_object:)).to eq(registered_cocina_object)
+        expect(described_class.register(cocina_object:, user_name:)).to eq(registered_cocina_object)
 
         expect(objects_client).to have_received(:register).with(params: cocina_object, assign_doi: false,
                                                                 user_name:)
@@ -41,7 +41,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'raises' do
-        expect { described_class.register(cocina_object:) }.to raise_error(Sdr::Repository::Error)
+        expect { described_class.register(cocina_object:, user_name:) }.to raise_error(Sdr::Repository::Error)
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'raises' do
-        expect { described_class.register(cocina_object:) }.to raise_error(Sdr::Repository::Error)
+        expect { described_class.register(cocina_object:, user_name:) }.to raise_error(Sdr::Repository::Error)
       end
     end
   end
@@ -164,7 +164,7 @@ RSpec.describe Sdr::Repository do
   end
 
   describe '#open_if_needed' do
-    subject(:open_cocina_object) { described_class.open_if_needed(cocina_object:, version_description:) }
+    subject(:open_cocina_object) { described_class.open_if_needed(cocina_object:, version_description:, user_name:) }
 
     let(:object_client) { instance_double(Dor::Services::Client::Object, version: version_client) }
     let(:version_client) { instance_double(Dor::Services::Client::ObjectVersion, status: version_status) }
@@ -238,7 +238,7 @@ RSpec.describe Sdr::Repository do
 
     context 'when successful' do
       it 'updates with SDR' do
-        expect(described_class.update(cocina_object:, description:)).to eq(updated_cocina_object)
+        expect(described_class.update(cocina_object:, description:, user_name:)).to eq(updated_cocina_object)
 
         expect(object_client).to have_received(:update).with(params: cocina_object,
                                                              user_name:,
@@ -254,7 +254,7 @@ RSpec.describe Sdr::Repository do
       end
 
       it 'raises' do
-        expect { described_class.update(cocina_object:) }.to raise_error(Sdr::Repository::Error)
+        expect { described_class.update(cocina_object:, user_name:) }.to raise_error(Sdr::Repository::Error)
       end
     end
   end

@@ -33,7 +33,7 @@ RSpec.describe DepositCollectionJob do
       expect(Cocina::CollectionMapper).to have_received(:call).with(collection_form:,
                                                                     source_id: "h3:collection-#{collection.id}")
       expect(Sdr::Repository).to have_received(:register)
-        .with(cocina_object: an_instance_of(Cocina::Models::RequestCollection))
+        .with(cocina_object: an_instance_of(Cocina::Models::RequestCollection), user_name: current_user.sunetid)
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
 
       expect(collection.reload.accessioning?).to be true
@@ -118,8 +118,8 @@ RSpec.describe DepositCollectionJob do
       expect(Cocina::CollectionMapper).to have_received(:call).with(collection_form:,
                                                                     source_id: "h3:collection-#{collection.id}")
       expect(Sdr::Repository).to have_received(:open_if_needed)
-        .with(cocina_object: an_instance_of(Cocina::Models::CollectionWithMetadata))
-      expect(Sdr::Repository).to have_received(:update).with(cocina_object:)
+        .with(cocina_object: an_instance_of(Cocina::Models::CollectionWithMetadata), user_name: current_user.sunetid)
+      expect(Sdr::Repository).to have_received(:update).with(cocina_object:, user_name: current_user.sunetid)
       expect(Sdr::Repository).to have_received(:accession)
       expect(RoundtripSupport).to have_received(:changed?)
       expect(Notifier).not_to have_received(:publish).with(Notifier::DEPOSIT_PERSIST_COMPLETE)
