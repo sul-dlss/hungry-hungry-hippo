@@ -83,6 +83,7 @@ RSpec.describe DepositWorkJob do
       allow(GlobusClient).to receive(:delete_access_rule)
         .with(user_id: user.email_address, path: work_path, notify_email: false)
         .and_raise(GlobusClient::AccessRuleNotFound, "Access rule not found in #{work_path}")
+      allow(Sdr::Event).to receive(:create)
     end
 
     it 'registers a new work and updates the globus content' do
@@ -91,6 +92,7 @@ RSpec.describe DepositWorkJob do
       expect(Sdr::Repository).to have_received(:register)
         .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true)
       expect(Sdr::Repository).to have_received(:accession).with(druid:)
+      expect(Sdr::Event).to have_received(:create).with(druid:, type: 'h3_globus_staged', data: {})
 
       expect(GlobusClient).to have_received(:rename)
       expect(GlobusClient).to have_received(:delete_access_rule)

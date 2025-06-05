@@ -60,6 +60,7 @@ en:
     h3_review_approved: 'Review approved'
     h3_review_returned: 'Review returned'
     h3_review_requested: 'Review requested'
+    h3_globus_staged: 'Globus staging completed'
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
