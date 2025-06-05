@@ -28,6 +28,7 @@ RSpec.describe 'Create a collection deposit' do
     # Stubbing out for show page
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(Sdr::Event).to receive(:list).and_return([])
 
     create(:user, name: 'Stephen King', email_address: 'stepking@stanford.edu')
     # Note that Joe Hill is not created yet.

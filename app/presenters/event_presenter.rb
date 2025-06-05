@@ -16,7 +16,10 @@ class EventPresenter < SimpleDelegator
   end
 
   def description
-    data['description'] || data['comments']
+    return data['comments'] if data['comments'].present?
+
+    # Some events just have the cocina object as the data. Don't want to display the description in that case.
+    data['description'] unless data.key?('cocinaVersion')
   end
 
   def timestamp
