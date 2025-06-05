@@ -83,6 +83,7 @@ end
 group :development do
   gem 'hotwire-spark'
   gem 'overmind'
+  gem 'parallel' # Used for importing. Can be removed when importing is done.
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 end

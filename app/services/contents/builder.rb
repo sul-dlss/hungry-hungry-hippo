@@ -38,7 +38,7 @@ module Contents
             path_parts: FilenameSupport.path_parts(filepath:),
             basename: FilenameSupport.basename(filepath:),
             extname: FilenameSupport.extname(filepath:),
-            label: file.label,
+            label: file_set.label,
             external_identifier: file.externalIdentifier,
             fileset_external_identifier: file_set.externalIdentifier,
             size: file.size,
