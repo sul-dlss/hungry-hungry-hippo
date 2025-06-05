@@ -15,5 +15,5 @@
 <%= render Admin::RecentActivityFormComponent.new(form: @recent_activity_form, type: @type) %>
 
 <% if @items.present? %>
-  <%= render Admin::RecentActivityListComponent.new(items: @items) %>
+  <%= render Admin::RecentActivityListComponent.new(items: @items, label: @label) %>
 <% end %>

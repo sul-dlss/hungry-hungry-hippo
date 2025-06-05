@@ -12,17 +12,6 @@ module Admin
       @items = klass.where('updated_at > ?', days_limit.days.ago).order('updated_at DESC')
     end
 
-    def new
-      authorize!
-
-      @type = type
-      @label = label
-      @recent_activity_form = Admin::RecentActivityForm.new(**recent_activity_params)
-      @items = klass.where('updated_at > ?', days_limit.days.ago).order('updated_at DESC')
-    end
-
-    attr_reader :days_limit_options
-
     private
 
     def klass
