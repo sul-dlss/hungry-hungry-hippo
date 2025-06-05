@@ -9,7 +9,7 @@ module Admin
       @type = type
       @label = label
       @recent_activity_form = Admin::RecentActivityForm.new(**recent_activity_params)
-      @items = type.classify.constantize.where('updated_at > ?', days_limit.days.ago).order('updated_at DESC')
+      @items = klass.where('updated_at > ?', days_limit.days.ago).order('updated_at DESC')
     end
 
     def new

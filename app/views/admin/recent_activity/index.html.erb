@@ -15,10 +15,5 @@
 <%= render Admin::RecentActivityFormComponent.new(form: @recent_activity_form, type: @type) %>
 
 <% if @items.present? %>
-  <%= render Elements::HorizontalRuleComponent.new %>
-  <%= render Elements::Tables::TableComponent.new(id: 'collections-table', classes: 'mb-5', label: @label) do |component| %>
-    <% @items.each do |collection| %>
-      <% component.with_row(values: [collection.title], id: collection.druid) %>
-    <% end %>
-  <% end %>
+  <%= render Admin::RecentActivityListComponent.new(items: @items) %>
 <% end %>

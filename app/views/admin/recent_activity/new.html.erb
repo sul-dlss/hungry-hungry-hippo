@@ -10,15 +10,10 @@
   <%= render Admin::FunctionDropdownComponent.new %>
 </div>
 
-<%= render Elements::HeadingComponent.new(level: :h1, text: "#{@type} recent activity", classes: 'h2 mb-4') %>
+<%= render Elements::HeadingComponent.new(level: :h1, text: "#{@label} recent activity", classes: 'h2 mb-4') %>
 
 <%= render Admin::RecentActivityFormComponent.new(form: @recent_activity_form, type: @type) %>
 
-<% if @collections.present? %>
-  <%= render Elements::HorizontalRuleComponent.new %>
-  <%= render Elements::Tables::TableComponent.new(id: 'collections-table', classes: 'mb-5', label: 'Collections') do |component| %>
-    <% @collections.each do |collection| %>
-      <% component.with_row(values: [collection.title], id: collection.druid) %>
-    <% end %>
-  <% end %>
+<% if @items.present? %>
+  <%= render Admin::RecentActivityListComponent.new(items: @items, label: @label) %>
 <% end %>
