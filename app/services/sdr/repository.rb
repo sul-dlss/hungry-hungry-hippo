@@ -85,9 +85,8 @@ module Sdr
     # @return [Cocina::Models::DRO] the updated cocina object
     def self.update(cocina_object:, description: nil)
       Dor::Services::Client.object(cocina_object.externalIdentifier).update(params: cocina_object,
-                                                                            event_data: {
-                                                                              description:, who: Current.user.sunetid
-                                                                            })
+                                                                            description:,
+                                                                            who: Current.user.sunetid)
     rescue Dor::Services::Client::Error => e
       raise Error, "Updating failed: #{e.message}"
     end

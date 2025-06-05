@@ -239,9 +239,8 @@ RSpec.describe Sdr::Repository do
         expect(described_class.update(cocina_object:, description:)).to eq(updated_cocina_object)
 
         expect(object_client).to have_received(:update).with(params: cocina_object,
-                                                             event_data: {
-                                                               description:, who: user_name
-                                                             })
+                                                             who: user_name,
+                                                             description:)
       end
     end
 

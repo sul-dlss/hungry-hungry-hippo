@@ -93,7 +93,7 @@ GEM
       erubi (~> 1.4)
       parser (>= 2.4)
       smart_properties
-    bigdecimal (3.2.1)
+    bigdecimal (3.2.2)
     bindex (0.8.1)
     bootsnap (1.18.6)
       msgpack (~> 1.2)
@@ -190,7 +190,7 @@ GEM
       activesupport (>= 4.2)
       bunny (~> 2.17)
       zeitwerk (~> 2.1)
-    dor-services-client (15.9.1)
+    dor-services-client (15.10.0)
       activesupport (>= 7.0.0)
       cocina-models (~> 0.103.2)
       deprecation
@@ -635,7 +635,7 @@ DEPENDENCIES
   debug
   dlss-capistrano
   dor-event-client
-  dor-services-client (>= 15.9.0)
+  dor-services-client
   dor-workflow-client (>= 7.6.1)
   druid-tools
   dry-monads
