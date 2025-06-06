@@ -2,7 +2,7 @@
   <%= render Elements::BreadcrumbNavComponent.new do |component| %>
     <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
     <% component.with_breadcrumb(text: 'Admin dashboard', link: admin_dashboard_path) %>
-    <% component.with_breadcrumb(text: 'Collections recent activity') %>
+    <% component.with_breadcrumb(text: "#{@label} recent activity") %>
   <% end %>
 <% end %>
 
@@ -15,5 +15,5 @@
 <%= render Admin::RecentActivityFormComponent.new(form: @recent_activity_form, type: @type) %>
 
 <% if @items.present? %>
-  <%= render Admin::RecentActivityListComponent.new(items: @items, label: @label) %>
+  <%= render Admin::RecentActivityListComponent.new(items: @items, label: @label, type: @type) %>
 <% end %>

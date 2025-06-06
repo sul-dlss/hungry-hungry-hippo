@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'List recent activity' do
   let!(:work) { create(:work, :with_druid, object_updated_at: Time.zone.today) }
-  let!(:old_work) { create(:work, :with_druid, updated_at: Time.zone.today - 400.days) }
+  let!(:old_work) { create(:work, :with_druid, updated_at: 40.days.ago) }
   let!(:collection) { create(:collection, :with_druid) }
 
   before do

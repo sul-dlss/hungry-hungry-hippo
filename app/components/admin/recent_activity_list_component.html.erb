@@ -1,6 +1,6 @@
-  <%= render Elements::HorizontalRuleComponent.new %>
-  <%= render Elements::Tables::TableComponent.new(id: 'recent-activity-table', classes: 'mb-5', label:) do |component| %>
-    <% items.each do |item| %>
-      <% component.with_row(values: values_for(item)) %>
-    <% end %>
+<%= render Elements::Tables::TableComponent.new(id: 'recent-activity-table', classes: 'mb-5', label:, show_label: false) do |component| %>
+  <% component.with_headers(headers) %>
+  <% items.each do |item| %>
+    <% component.with_row(values: values_for(item)) %>
   <% end %>
+<% end %>

@@ -10,10 +10,9 @@ RSpec.describe Admin::RecentActivityListComponent, type: :component do
     let(:user) { create(:user) }
 
     it 'renders the recent item activity list table with rows of works' do
-      render_inline(described_class.new(items: [work, work_without_druid], label: 'Items'))
+      render_inline(described_class.new(items: [work, work_without_druid], label: 'Items', type: 'works'))
 
       table = page.find('table#recent-activity-table')
-      expect(table).to have_css('caption', text: 'Items')
       table_body = table.find('tbody')
       expect(table_body).to have_css('tr', count: 2)
       first_row = table_body.find('tr:nth-of-type(1)')
@@ -30,10 +29,11 @@ RSpec.describe Admin::RecentActivityListComponent, type: :component do
     let(:collection_without_druid) { create(:collection) }
 
     it 'renders the recent item activity list table with rows of works' do
-      render_inline(described_class.new(items: [collection, collection_without_druid], label: 'Collections'))
+      render_inline(described_class.new(items: [collection, collection_without_druid],
+                                        label: 'Collections',
+                                        type: 'collections'))
 
       table = page.find('table#recent-activity-table')
-      expect(table).to have_css('caption', text: 'Collections')
       table_body = table.find('tbody')
       expect(table_body).to have_css('tr', count: 2)
       first_row = table_body.find('tr:nth-of-type(1)')

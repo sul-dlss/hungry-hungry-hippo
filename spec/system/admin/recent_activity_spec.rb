@@ -4,8 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Show recent activity for items' do
   let(:user) { create(:user) }
-  let!(:work) { create(:work, :with_druid, user:, updated_at: 10.days.ago, collection:) }
-  let(:collection) { create(:collection, :with_druid, user:, updated_at: 25.days.ago) }
+  let!(:work) { create(:work, :with_druid, user:, updated_at: 5.days.ago, collection:) }
+  let(:collection) { create(:collection, :with_druid, user:, updated_at: 5.days.ago) }
 
   before do
     sign_in(create(:user), groups: ['dlss:hydrus-app-administrators'])
@@ -21,14 +21,23 @@ RSpec.describe 'Show recent activity for items' do
 
     expect(page).to have_css('h1', text: 'Items recent activity')
 
-    expect(page).to have_select('Days limit', selected: '365 days')
+    expect(page).to have_select('Days limit', selected: '7 days')
 
     within('#recent-activity-table') do
-      expect(page).to have_css('caption', text: 'Items')
-      expect(page).to have_css('tr', count: 1)
-      first_row = page.find('tr:nth-of-type(1)')
-      expect(first_row).to have_css('td:nth-of-type(1)', text: work.title)
-      expect(first_row).to have_link(work.title, href: "/works/#{work.druid}")
+      within('thead') do
+        expect(page).to have_css('tr', count: 1)
+        first_row = page.find('tr:nth-of-type(1)')
+        expect(first_row).to have_css('th:nth-of-type(1)', text: 'Items')
+        expect(first_row).to have_css('th:nth-of-type(2)', text: 'Collection')
+      end
+      within('tbody') do
+        expect(page).to have_css('tr', count: 1)
+        first_row = page.find('tr:nth-of-type(1)')
+        expect(first_row).to have_css('td:nth-of-type(1)', text: work.title)
+        expect(first_row).to have_link(work.title, href: "/works/#{work.druid}")
+        expect(first_row).to have_css('td:nth-of-type(2)', text: collection.title)
+        expect(first_row).to have_link(collection.title, href: "/collections/#{collection.druid}")
+      end
     end
 
     select('1 day', from: 'Days limit')
@@ -45,14 +54,20 @@ RSpec.describe 'Show recent activity for items' do
 
     expect(page).to have_css('h1', text: 'Collections recent activity')
 
-    expect(page).to have_select('Days limit', selected: '365 days')
+    expect(page).to have_select('Days limit', selected: '7 days')
 
     within('#recent-activity-table') do
-      expect(page).to have_css('caption', text: 'Collections')
-      expect(page).to have_css('tr', count: 1)
-      first_row = page.find('tr:nth-of-type(1)')
-      expect(first_row).to have_css('td:nth-of-type(1)', text: collection.title)
-      expect(first_row).to have_link(collection.title, href: "/collections/#{collection.druid}")
+      within('thead') do
+        expect(page).to have_css('tr', count: 1)
+        first_row = page.find('tr:nth-of-type(1)')
+        expect(first_row).to have_css('th:nth-of-type(1)', text: 'Collections')
+      end
+      within('tbody') do
+        expect(page).to have_css('tr', count: 1)
+        first_row = page.find('tr:nth-of-type(1)')
+        expect(first_row).to have_css('td:nth-of-type(1)', text: collection.title)
+        expect(first_row).to have_link(collection.title, href: "/collections/#{collection.druid}")
+      end
     end
 
     select('1 day', from: 'Days limit')
