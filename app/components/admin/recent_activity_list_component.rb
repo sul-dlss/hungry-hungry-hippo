@@ -7,10 +7,11 @@ module Admin
       @items = items
       @label = label
       @type = type
+      @empty_message = "No #{label.downcase} activity for time period selected."
       super()
     end
 
-    attr_reader :items, :label, :type
+    attr_reader :empty_message, :items, :label, :type
 
     def values_for(item)
       [item.druid ? link_to(item.title, url_for(item)) : item.title].tap do |value|

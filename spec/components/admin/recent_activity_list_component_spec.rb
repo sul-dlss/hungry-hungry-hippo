@@ -3,6 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe Admin::RecentActivityListComponent, type: :component do
+  context 'when rendering the recent activity list component with no items' do
+    it 'renders the recent item activity list table with no rows' do
+      render_inline(described_class.new(items: [], label: 'Items', type: 'works'))
+
+      expect(page).to have_table('recent-activity-table')
+      expect(page).to have_css('tbody tr', count: 0)
+      expect(page).to have_content('No items activity for time period selected.')
+    end
+  end
+
   context 'when rendering the recent activity list component with works' do
     let(:work) { create(:work, :with_druid, user:, collection:, object_updated_at: Time.zone.now) }
     let(:work_without_druid) { create(:work, user:, collection:) }
