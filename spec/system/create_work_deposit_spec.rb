@@ -226,9 +226,8 @@ RSpec.describe 'Create a work deposit' do
 
       expect(page).to have_no_text('What\'s changing?')
 
-      within('#main-container') do
-        expect(page).to have_no_text('Terms of deposit')
-      end
+      expect(page).to have_text('You have accepted the Terms of Deposit')
+      expect(page).to have_no_text('I agree to the SDR Terms of Deposit')
 
       # Footer buttons
       expect(page).to have_button('Save as draft')

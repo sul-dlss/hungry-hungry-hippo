@@ -125,7 +125,14 @@
         <%= render Works::Edit::CitationComponent.new(form:) %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.deposit.help_text'), active_tab_name:, next_tab_btn: false) do |pane_component| %>
+      <% component.with_work_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, next_tab_btn: false) do |pane_component| %>
+        <% pane_component.with_help do %>
+          <p class="mb-0">
+            <%= t('works.edit.panes.deposit.help_text') %>
+            <% if @work_form.agree_to_terms %>You have accepted the <a href="#" data-bs-toggle="modal" data-bs-target="#tod-modal">Terms of Deposit</a>.<% end %>
+          </p>
+        <% end %>
+
         <% if @work_presenter && !@work_presenter.first_draft? %>
           <div class="pane-section">
             <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: t('works.edit.fields.whats_changing.label'), tooltip: t('works.edit.fields.whats_changing.tooltip_html'), maxlength: 100) %>
