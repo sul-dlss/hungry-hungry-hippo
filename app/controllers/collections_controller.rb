@@ -83,7 +83,7 @@ class CollectionsController < ApplicationController
     authorize! @collection
 
     @works = authorized_scope(@collection.works, as: :collection, scope_options: { collection: @collection })
-             .order(:title).page(params[:page])
+             .order(updated_at: :desc).page(params[:page])
     @work_statuses = Sdr::Repository.statuses(
       druids: @works.where.not(druid: nil).pluck(:druid)
     )
