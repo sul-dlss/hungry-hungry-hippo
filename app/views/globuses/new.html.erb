@@ -1,6 +1,17 @@
 <%= turbo_frame_tag 'globus' do %>
-  <%= render Elements::ButtonFormComponent.new(label: 'I want to upload to Globus',
-                                               link: content_globuses_path(@content), data: { action: 'dropzone-files#disableDropzone' },
-                                               confirm: @content.content_files.exists? ? 'Are you sure? This will replace your files.' : nil,
-                                               method: :post, top: false, classes: 'my-3') %>
+  <div class="row">
+    <div class="col pt-3"><%= t('works.edit.messages.globus_notice_html', support_email: Settings.support_email) %></div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <%= render Elements::ButtonFormComponent.new(label: t('works.edit.buttons.globus_deposit_files'),
+                                                   link: content_globuses_path(@content), data: { action: 'dropzone-files#disableDropzone' },
+                                                   confirm: @content.content_files.exists? ? t('works.edit.messages.globus_replace_files_confirm') : nil,
+                                                   method: :post, top: false, classes: 'my-3') %>
+
+    </div>
+    <div class="col-8 d-flex align-items-center">
+      <%= t('works.edit.messages.globus_instructions_html', instructions_link: Settings.globus.instructions_url) %>
+    </div>
+  <div>
 <% end %>

@@ -303,9 +303,14 @@ en:
           label: 'Which of the following terms further describe your deposit?'
           tooltip_html: >-
             Choose terms from this list to further describe the type of work you are depositing. Click "See more subtype options" for additional terms. An entry here is only required if you have selected "Mixed Materials," "Music," or  "Other" above.
+      buttons:
+        globus_deposit_files: 'Use Globus to transfer files'
       messages:
         cannot_be_edited_html: "If you need to make a change to this work, contact <a href=\"mailto:%{support_email}\">%{support_email}</a>."
         no_changes: "You have not made any changes to the form. Please click 'Cancel' to exit this page."
+        globus_notice_html: "* If you have more than 10GB but less than 4TB and fewer than 25,000 files, you can use Globus to upload your files. For anything larger, <a href=\"mailto:%{support_email}\">contact us</a>."
+        globus_replace_files_confirm: "This action will delete all the files listed below on this deposit, however, your transferred files remain on Globus and can be retrieved by clicking \"Yes, proceed to Globus\".\n\nAre you sure you want to proceed?"
+        globus_instructions_html: "<a href=\"%{instructions_link}\">Instructions to set up Globus</a>&nbsp;(may require software installation)"
       panes:
         abstract:
           tab_label: 'Abstract and keywords'
@@ -321,7 +326,7 @@ en:
           tab_label: 'Citation for this deposit (optional)'
           label: 'Citation for this deposit (optional)'
           help_text: >-
-            You may explicitly state how you would like your work to be cited. 
+            You may explicitly state how you would like your work to be cited.
             Be sure to include the DOI if you're getting one or the link to the public page for your work that begins "https://purl.stanford.edu/..."
           tooltip_html: >-
             To find your PURL link and DOI (if you've elected to get one), click "Save as draft" at the bottom of this screen. The PURL and DOI are listed on the display page for this item. Copy these links, then re-edit this work to add them to the citation below.
