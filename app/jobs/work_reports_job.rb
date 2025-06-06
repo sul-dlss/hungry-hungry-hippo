@@ -6,7 +6,6 @@ class WorkReportsJob < ApplicationJob
   # @param [User] current_user
   def perform(work_report_form:, current_user:)
     # generate the work report CSV
-    debugger
     csv = Admin::WorkReport.call(work_report_form:)
 
     WorkReportsMailer.with(
