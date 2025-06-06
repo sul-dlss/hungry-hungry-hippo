@@ -6,7 +6,7 @@ class WorkReportsMailer < ApplicationMailer
     @user = params[:current_user]
     @csv = params[:csv]
 
+    attachments['item_report.csv'] = { mime_type: 'text/csv', content: @csv }
     mail(to: @user.email_address, subject: 'Item report is ready')
-    mail.attachments['item_report.csv'] = { content: StringIO.new(@csv) }
   end
 end

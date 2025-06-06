@@ -29,9 +29,10 @@ module Admin
 
     def work_report_params
       params.expect(admin_work_report: [:date_created_start, :date_created_end, :date_modified_start,
-                                        :date_modified_end, :draft_not_deposited_state,
-                                        :pending_review_state, :returned_state, :deposit_in_progress_state,
-                                        :deposited_state, :version_draft_state, { collection_ids: [] }])
+                                        :date_modified_end, :last_deposited_start, :last_deposited_end,
+                                        :draft_not_deposited_state, :pending_review_state, :returned_state,
+                                        :deposit_in_progress_state, :deposited_state, :version_draft_state,
+                                        { collection_ids: [] }])
     end
   end
 end

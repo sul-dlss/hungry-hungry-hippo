@@ -7,12 +7,14 @@ module Admin
     attribute :date_created_end, :date
     attribute :date_modified_start, :date
     attribute :date_modified_end, :date
+    attribute :last_deposited_start, :date
+    attribute :last_deposited_end, :date
     attribute :collection_ids
-    attribute :draft_not_deposited_state, :boolean, default: true
-    attribute :pending_review_state, :boolean, default: true
-    attribute :returned_state, :boolean, default: true
-    attribute :deposit_in_progress_state, :boolean, default: true
-    attribute :deposited_state, :boolean, default: true
-    attribute :version_draft_state, :boolean, default: true
+    attribute :draft_not_deposited_state, :boolean, default: false
+    attribute :pending_review_state, :boolean, default: false
+    attribute :returned_state, :boolean, default: false
+    attribute :deposit_in_progress_state, :boolean, default: false
+    attribute :deposited_state, :boolean, default: false
+    attribute :version_draft_state, :boolean, default: false
   end
 end

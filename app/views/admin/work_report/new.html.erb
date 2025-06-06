@@ -10,24 +10,47 @@
   <%= render Admin::FunctionDropdownComponent.new %>
 </div>
 
-<%= render Elements::HeadingComponent.new(level: :h1, text: 'Generate item report', classes: 'h2 mb-4') %>
+<%= render Elements::HeadingComponent.new(level: :h2, text: 'Generate item report', classes: 'h2 mb-4') %>
+<%= render Elements::HeadingComponent.new(level: :h3, text: 'Limit your search with one or more of the options below', classes: 'h3 mb-4') %>
 
 <%= form_with model: @work_report_form, url: admin_work_report_path, class: 'mb-5' do |form| %>
-  <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_created_start, label: 'Date created start', container_classes: 'ms-2') %>
-  <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_created_end, label: 'Date created end', container_classes: 'ms-2') %>
-  <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_modified_start, label: 'Date last modified start', container_classes: 'ms-2') %>
-  <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_modified_end, label: 'Date last modified end', container_classes: 'ms-2') %>
-
-  <%= render Elements::Forms::LabelComponent.new(form:, field_name: :collection_ids, label_text: 'Collections') %>
-  <%= form.collection_select :collection_ids, @collections, :id, :title, multiple: true %>
-
-  <%= render Elements::Forms::FieldsetComponent.new(label: 'Item state', classes: 'pane-section') do %>
-    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :draft_not_deposited_state, label: 'Draft - not deposited') %>
-    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :pending_review_state, label: 'Pending review') %>
-    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :returned_state, label: 'Returned') %>
-    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :deposit_in_progress_state, label: 'Deposit in progress') %>
-    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :deposited_state, label: 'Deposited') %>
-    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :version_draft_state, label: 'New version in draft') %>
+  <%= render Elements::Forms::LabelComponent.new(form:, field_name: :date_created_start, label_text: 'Date created range', classes: 'mb-2') %>
+  <div class='row mb-4'>
+      <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_created_start, label: 'Date created start', hidden_label: true, container_classes: 'col-md-5 ms-2') %>
+      to
+      <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_created_end, label: 'Date created end', hidden_label: true, container_classes: 'col-md-5 ms-2') %>
+  </div>
+  <%= render Elements::Forms::LabelComponent.new(form:, field_name: :date_modified_start, label_text: 'Date modified range', classes: 'mb-2') %>
+  <div class='row mb-4'>
+    <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_modified_start, label: 'Date last modified start', hidden_label: true, container_classes: 'col-md-5 ms-2') %>
+    to
+    <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_modified_end, label: 'Date last_modified end', hidden_label: true, container_classes: 'col-md-5 ms-2') %>
+  </div>
+  <%= render Elements::Forms::LabelComponent.new(form:, field_name: :last_deposited_at_start, label_text: 'Date last deposited range', classes: 'mb-2') %>
+  <div class='row mb-4'>
+    <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :last_deposited_start, label: 'Date last deposited start', hidden_label: true, container_classes: 'col-md-5 ms-2') %>
+    to
+    <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :last_deposited_end, label: 'Date last deposited end', hidden_label: true, container_classes: 'col-md-5 ms-2') %>
+  </div>
+  <%= render Elements::Forms::LabelComponent.new(form:, field_name: :collection_ids, label_text: 'Collection', classes: 'mb-2') %>
+  <div class='mb-4'>
+  <%= form.collection_select :collection_ids, @collections, :id, :title, { multiple: true }, class: 'form-select' %>
+  <%= render Elements::Forms::HelpTextComponent.new(help_text: 'For Mac: Hold down the command button to select multiple collections.
+                                                                For Windows: Hold down the control button to select multiple collections.', id: 'collection-ids-help') %>
+  </div>
+  <%= render Elements::Forms::FieldsetComponent.new(label: 'Item state', classes: 'pane-section mb-2') do %>
+  <div class="row">
+    <div class="col-md-4">
+      <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :draft_not_deposited_state, label: 'Draft - not deposited') %>
+      <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :pending_review_state, label: 'Pending review') %>
+      <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :returned_state, label: 'Returned') %>
+    </div>
+    <div class="col-md-4">
+      <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :deposit_in_progress_state, label: 'Deposit in progress') %>
+      <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :deposited_state, label: 'Deposited') %>
+      <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :version_draft_state, label: 'New version in draft') %>
+    </div>
+  </div>
   <% end %>
 
   <%= render Elements::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-4') %>
