@@ -71,7 +71,7 @@ module Elements
       def row_classes
         extra_classes = []
         extra_classes = %w[p-3 border border-3 border-light-subtle border-opacity-75 mb-3] if bordered?
-        extra_classes = %w[border-top] if separated?
+        extra_classes = %w[border-top border-bottom align-items-center] if separated?
 
         merge_classes(%w[row form-instance], extra_classes)
       end

@@ -13,9 +13,9 @@
       <%= form.fields_for field_name, model_class.new, child_index: 'NEW_RECORD' do |nested_form| %>
         <%# Note that this div is duplicated below. If making a change here, also make the change below. %>
         <%= tag.div(class: row_classes, data: { index: nested_form.options[:child_index], nested_form_target: 'instance', nested_form_reorder_target: 'instance' }) do %>
-          <div class="<%= column_classes.join(' ') %>">
+          <%= tag.div(class: column_classes) do %>
             <%= render form_component.new(form: nested_form) %>
-          </div>
+          <% end %>
           <%= tag.div(class: nested_buttons_classes) do %>
             <%= render Elements::DeleteButtonComponent.new(data: { action: 'click->nested-form#delete' }) %>
             <% if reorderable? %>
@@ -29,10 +29,10 @@
     <%= form.fields_for field_name do |nested_form| %>
       <%# Note that this div is duplicated above. If making a change here, also make the change above. %>
       <%= tag.div(class: row_classes, data: { index: nested_form.options[:child_index], nested_form_target: 'instance', nested_form_reorder_target: 'instance' }) do %>
-        <div class="<%= column_classes.join(' ') %>">
-          <% form_component_instance = form_component.new(form: nested_form) %>
+        <% form_component_instance = form_component.new(form: nested_form) %>
+        <%= tag.div(class: column_classes) do %>
           <%= render form_component_instance %>
-        </div>
+        <% end %>
         <%= tag.div(class: nested_buttons_classes) do %>
           <%# A component can hide the delete button by providing a `hide_repeatable_nested_delete_button?` method that returns true. %>
           <%# This can be used for a required field that the user cannot delete. %>
