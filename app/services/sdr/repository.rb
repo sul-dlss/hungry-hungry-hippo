@@ -36,10 +36,12 @@ module Sdr
 
     # @param [Cocina::Models::RequestDRO] cocina_object
     # @param [Boolean] assign_doi true to assign a DOI; otherwise, false
+    # @param [String] user_name the sunetid of the user performing the action
     # @return [Cocina::Models::DRO] the registered cocina object
     # @raise [Error] if there is an error depositing the work
-    def self.register(cocina_object:, assign_doi: false)
-      response_cocina_object = Dor::Services::Client.objects.register(params: cocina_object, assign_doi:)
+    def self.register(cocina_object:, user_name:, assign_doi: false)
+      response_cocina_object = Dor::Services::Client.objects.register(params: cocina_object, assign_doi:,
+                                                                      user_name:)
 
       # Create workflow destroys existing steps if called again, so need to check if already created.
       Sdr::Workflow.create_unless_exists(response_cocina_object.externalIdentifier, 'registrationWF', version: 1)
@@ -62,17 +64,19 @@ module Sdr
 
     # @param [Cocina::Models::DRO] cocina_object
     # @param [String] version_description the description of the version
+    # @param [String] user_name the sunetid of the user performing the action
     # @param [VersionStatus] status optional status of the object to avoid a redundant status call
     # @raise [Error] if there is an error opening the object
     # @return [Cocina::Models::DRO] the updated cocina object
-    def self.open_if_needed(cocina_object:, version_description: 'Update', status: nil)
+    def self.open_if_needed(cocina_object:, user_name:, version_description: 'Update', status: nil)
       status ||= Sdr::Repository.status(druid: cocina_object.externalIdentifier)
       return cocina_object if status.open?
 
       raise Error, 'Object cannot be opened' unless status.openable?
 
       open_cocina_object = Dor::Services::Client.object(cocina_object.externalIdentifier)
-                                                .version.open(description: version_description)
+                                                .version.open(description: version_description,
+                                                              opening_user_name: user_name)
       Cocina::VersionAndLockUpdater.call(cocina_object:, version: open_cocina_object.version,
                                          lock: open_cocina_object.lock)
     rescue Dor::Services::Client::Error => e
@@ -80,10 +84,14 @@ module Sdr
     end
 
     # @param [Cocina::Models::DRO] cocina_object
+    # @param [String] description the description of the update for DSA Event
+    # @param [String] user_name the sunetid of the user performing the action
     # @raise [Error] if there is an error updating the object
     # @return [Cocina::Models::DRO] the updated cocina object
-    def self.update(cocina_object:)
-      Dor::Services::Client.object(cocina_object.externalIdentifier).update(params: cocina_object)
+    def self.update(cocina_object:, user_name:, description: nil)
+      Dor::Services::Client.object(cocina_object.externalIdentifier).update(params: cocina_object,
+                                                                            description:,
+                                                                            user_name:)
     rescue Dor::Services::Client::Error => e
       raise Error, "Updating failed: #{e.message}"
     end

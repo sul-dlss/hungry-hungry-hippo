@@ -31,6 +31,10 @@ class DepositCollectionJob < ApplicationJob
 
   attr_reader :collection_form, :collection, :druid
 
+  def user_name
+    Current.user.sunetid
+  end
+
   def mapped_cocina_object
     @mapped_cocina_object ||= Cocina::CollectionMapper.call(collection_form:,
                                                             source_id: "h3:collection-#{collection.id}")
@@ -61,10 +65,10 @@ class DepositCollectionJob < ApplicationJob
 
   def perform_persist
     if !collection_form.persisted?
-      Sdr::Repository.register(cocina_object: mapped_cocina_object)
+      Sdr::Repository.register(cocina_object: mapped_cocina_object, user_name:)
     elsif RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
-      Sdr::Repository.open_if_needed(cocina_object: mapped_cocina_object)
-                     .then { |cocina_object| Sdr::Repository.update(cocina_object:) }
+      Sdr::Repository.open_if_needed(cocina_object: mapped_cocina_object, user_name:)
+                     .then { |cocina_object| Sdr::Repository.update(cocina_object:, user_name:) }
     end
   end
 
@@ -148,7 +152,7 @@ class DepositCollectionJob < ApplicationJob
     Sdr::Event.create(druid:,
                       type: 'h3_collection_settings_updated',
                       data: {
-                        who: Current.user.sunetid,
+                        who: user_name,
                         changes: setting_changes.join(', ')
                       })
   end
