@@ -3,8 +3,9 @@
 module Elements
   # It spins.
   class SpinnerComponent < ApplicationComponent
-    def initialize(message: 'Loading...', image_path: nil, variant: nil, hide_message: false, classes: [], # rubocop:disable Metrics/ParameterLists
-                   height: nil, width: nil, message_classes: [], speed: 0.75, data: {}, id: nil)
+    def initialize(message: 'Loading...', message_classes: [], message_position: :right, hide_message: false, # rubocop:disable Metrics/ParameterLists
+                   image_path: nil, variant: nil, classes: [],
+                   height: nil, width: nil, speed: 0.75, data: {}, id: nil)
       @message = message
       @variant = variant
       @hide_message = hide_message
@@ -16,13 +17,14 @@ module Elements
       @speed = speed # In seconds, so a larger number is slower. The default (0.75) is the same as Bootstrap's default.
       @data = data
       @id = id
+      @message_position = message_position # :bottom or :right
       super()
     end
 
     attr_reader :message, :image_path, :data, :id
 
     def spinner_classes
-      merge_classes('spinner-border', variant_class, border_class)
+      merge_classes('spinner-border', variant_class, border_class, 'mx-2')
     end
 
     def message_classes
@@ -30,7 +32,7 @@ module Elements
     end
 
     def classes
-      merge_classes(@classes)
+      merge_classes(@classes, 'd-flex', message_position_classes)
     end
 
     def spinner_style
@@ -40,6 +42,19 @@ module Elements
     end
 
     private
+
+    def message_position_classes
+      case @message_position # rubocop:disable Metrics/HashLikeCase
+      when :bottom
+        'flex-column'
+      when :right
+        'align-items-center'
+      when :top
+        'flex-column-reverse'
+      when :left
+        'flex-row-reverse align-items-center justify-content-end'
+      end
+    end
 
     def variant_class
       return unless @variant
