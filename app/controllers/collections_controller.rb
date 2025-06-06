@@ -2,7 +2,7 @@
 
 # Controller for a Collection
 class CollectionsController < ApplicationController
-  before_action :set_collection, only: %i[show edit update works]
+  before_action :set_collection, only: %i[show edit update works history]
   before_action :check_deposit_registering_or_updating, only: %i[show edit]
   before_action :set_collection_form_from_cocina, only: %i[show edit]
   before_action :set_status, only: %i[show edit]
@@ -87,6 +87,15 @@ class CollectionsController < ApplicationController
     @work_statuses = Sdr::Repository.statuses(
       druids: @works.where.not(druid: nil).pluck(:druid)
     )
+  end
+
+  def history
+    authorize! @collection
+
+    @events = Sdr::Event.list(druid: @collection.druid).map { |event| EventPresenter.new(event:) }
+
+    # The history table is the same for works and collections.
+    render 'works/history', layout: false
   end
 
   private

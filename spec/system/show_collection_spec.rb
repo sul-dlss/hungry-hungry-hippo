@@ -21,11 +21,19 @@ RSpec.describe 'Show a collection' do
   let(:version_status) { build(:openable_version_status) }
   let(:contributor) { create(:person_contributor, first_name: 'Jane', last_name: 'Stanford', orcid: 'https://orcid.org/0001-0002-0003-0004') }
 
+  let(:events) do
+    # This is testing the case in which the data is a cocina object (e.g., registration event)
+    [Dor::Services::Client::Events::Event.new(event_type: 'version_close', timestamp: '2020-01-27T19:10:27.291Z',
+                                              data: { 'who' => 'lstanfordjr', 'cocinaVersion' => '0.1',
+                                                      'description' => 'cocina description' })]
+  end
+
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     allow(Sdr::Repository).to receive(:statuses)
       .and_return(collection.works.where.not(druid: nil).to_h { |work| [work.druid, version_status] })
+    allow(Sdr::Event).to receive(:list).with(druid:).and_return(events)
 
     collection.works.first.request_review!
     collection.works[1].update(user: depositor)
@@ -161,6 +169,19 @@ RSpec.describe 'Show a collection' do
         collection.reviewers.each do |reviewer|
           expect(page).to have_css('td ul li', text: "#{reviewer.sunetid}: #{reviewer.name}")
         end
+      end
+
+      # History table
+      within('table#history-table') do
+        expect(page).to have_css('caption', text: 'History')
+        expect(page).to have_css('th', text: 'Action')
+        expect(page).to have_css('th', text: 'Modified by')
+        expect(page).to have_css('th', text: 'Last modified')
+        expect(page).to have_css('th', text: 'Description of changes')
+        expect(page).to have_css('tr', text: 'Deposited')
+        expect(page).to have_css('td', text: 'lstanfordjr')
+        expect(page).to have_css('td', text: 'January 27, 2020 19:10')
+        expect(page).to have_no_css('td', text: 'cocina description')
       end
 
       # Change tab

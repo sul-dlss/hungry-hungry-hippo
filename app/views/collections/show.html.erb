@@ -86,6 +86,10 @@
         <% row_component.with_cell do %><%= render Elements::Tables::ListCellComponent.new(item_values: @collection_presenter.participants(:reviewers)) %> <% end %>
       <% end %>
     <% end %>
+
+    <%= turbo_frame_tag 'history', src: history_collection_path(druid: @collection_presenter.druid) do %>
+      <%= render Elements::SpinnerComponent.new %>
+    <% end %>
   <% end %>
 
   <%= component.with_pane(id: 'deposits-pane', tab_id: 'deposits-tab', active: deposits_active) do %>

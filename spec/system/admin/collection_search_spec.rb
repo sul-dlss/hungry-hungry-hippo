@@ -13,6 +13,7 @@ RSpec.describe 'Search for a collection' do
     create(:collection, druid:, title: collection_title_fixture)
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(Sdr::Event).to receive(:list).and_return([])
 
     sign_in(create(:user), groups: ['dlss:hydrus-app-administrators'])
   end

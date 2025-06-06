@@ -23,6 +23,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
     member do
       get 'works', to: 'collections#works', as: 'works'
+      get 'history', to: 'collections#history', as: 'history'
     end
 
     namespace :admin do
