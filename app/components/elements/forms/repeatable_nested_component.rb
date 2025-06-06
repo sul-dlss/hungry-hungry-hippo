@@ -7,9 +7,10 @@ module Elements
     class RepeatableNestedComponent < ApplicationComponent
       renders_one :before_section # Optional
 
-      def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists
+      def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength
                      reorderable: false, single_field: false, fieldset_classes: [], skip_tooltip: false,
-                     fieldset_id: nil, hide_add_button: false, add_button_data: {})
+                     fieldset_id: nil, hide_add_button: false, add_button_data: {}, column_classes: ['col'],
+                     separated: false)
         @form = form
         @model_class = model_class
         @field_name = field_name
@@ -29,14 +30,16 @@ module Elements
         @hide_add_button = hide_add_button
         @add_button_data = add_button_data
         @add_button_data[:action] = merge_actions('click->nested-form#add', @add_button_data[:action])
+        @column_classes = column_classes
+        @separated = separated
         super()
       end
 
       attr_reader :form, :model_class, :field_name, :form_component, :hidden_label, :fieldset_classes, :fieldset_id,
-                  :add_button_data
+                  :add_button_data, :column_classes
 
       def label_text
-        helpers.t("#{field_name}.edit.legend")
+        helpers.t("#{field_name}.edit.legend", default: nil)
       end
 
       def tooltip
@@ -53,6 +56,10 @@ module Elements
         @bordered
       end
 
+      def separated?
+        @separated
+      end
+
       def add_button_label
         "+ Add another #{model_class.model_name.singular.humanize(capitalize: false)}"
       end
@@ -62,8 +69,11 @@ module Elements
       end
 
       def row_classes
-        merge_classes(%w[row form-instance],
-                      bordered? ? %w[p-3 border border-3 border-light-subtle border-opacity-75 mb-3] : [])
+        extra_classes = []
+        extra_classes = %w[p-3 border border-3 border-light-subtle border-opacity-75 mb-3] if bordered?
+        extra_classes = %w[border-top border-bottom align-items-center] if separated?
+
+        merge_classes(%w[row form-instance], extra_classes)
       end
 
       def nested_buttons_classes
