@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  # Generate an item report
+  # Generate an item report CSV
   class WorkReport
     def self.call(...)
       new(...).call
@@ -11,6 +11,7 @@ module Admin
       @work_report_form = work_report_form
     end
 
+    # @return [String] CSV string for the work report
     def call
       @query = Work.all
       filter_by_date_created_start
@@ -143,14 +144,15 @@ module Admin
     end
 
     def state(druid:, status:)
-      return 'draft_not_deposited' if status.first_draft?
-      return 'pending_review' if Work.find_by(druid:).pending_review?
-      return 'returned' if Work.find_by(druid:).rejected_review?
-      return 'deposit_in_progress' if status.accessioning?
-      return 'version_draft' if status.open?
-      return 'deposited' if !status.first_draft? && !status.open? && !status.accessioning?
+      states = []
+      states << 'draft_not_deposited' if status.first_draft?
+      states << 'pending_review' if Work.find_by(druid:).pending_review?
+      states << 'returned' if Work.find_by(druid:).rejected_review?
+      states << 'deposit_in_progress' if status.accessioning?
+      states << 'version_draft' if status.open?
+      states << 'deposited' if !status.first_draft? && !status.open? && !status.accessioning?
 
-      nil
+      states.join('; ')
     end
   end
 end
