@@ -36,7 +36,7 @@ module Elements
                   :add_button_data
 
       def label_text
-        helpers.t("#{field_name}.edit.legend")
+        helpers.t("#{field_name}.edit.legend", default: nil)
       end
 
       def tooltip

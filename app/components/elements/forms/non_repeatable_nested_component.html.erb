@@ -1,9 +1,11 @@
 <%= render Elements::Forms::FieldsetComponent.new(id:) do |component| %>
-  <% component.with_legend do %>
-    <h3 class="tooltip-header">
-      <%= render Edit::LabelComponent.new(label_text:, hidden_label:) %>
-      <%= render Elements::TooltipComponent.new(target_label: label_text, tooltip:) %>
-    </h3>
+  <% if label_text %>
+    <% component.with_legend do %>
+      <h3 class="tooltip-header">
+        <%= render Edit::LabelComponent.new(label_text:, hidden_label:) %>
+        <%= render Elements::TooltipComponent.new(target_label: label_text, tooltip:) %>
+      </h3>
+    <% end %>
   <% end %>
   <%= tag.div class: 'mb-3' do %>
     <%= form.fields_for field_name do |nested_form| %>
