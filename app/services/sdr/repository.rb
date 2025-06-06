@@ -51,12 +51,13 @@ module Sdr
     end
 
     # @param [String] druid the druid of the object
+    # @param [boolean] new_user_version true to create a new user version; otherwise, false
     # @raise [Error] if there is an error initiating accession
-    def self.accession(druid:)
+    def self.accession(druid:, new_user_version: false)
       # Close the version, which will also start accessioning
       # user_versions = mode for handling user versioning.
       # Setting to update_if_existing (the default in DSA) for now.
-      Dor::Services::Client.object(druid).version.close(user_versions: 'update_if_existing',
+      Dor::Services::Client.object(druid).version.close(user_versions: new_user_version ? 'new' : 'update_if_existing',
                                                         user_name: Current.user.sunetid)
     rescue Dor::Services::Client::Error => e
       raise Error, "Initiating accession failed: #{e.message}"
