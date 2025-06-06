@@ -41,65 +41,68 @@ module Admin
     def filter_by_date_created_start
       return @query if work_report_form.date_created_start.blank?
 
-      @query.where(created_at: work_report_form.date_created_start..)
+      @query = @query.where(created_at: work_report_form.date_created_start..)
     end
 
     def filter_by_date_created_end
       return @query if work_report_form.date_created_end.blank?
 
-      @query.where(created_at: ..work_report_form.date_created_end)
+      @query = @query.where(created_at: ..work_report_form.date_created_end)
     end
 
     def filter_by_date_modified_start
       return @query if work_report_form.date_modified_start.blank?
 
-      @query.where(object_updated_at: work_report_form.date_modified_start..)
+      @query = @query.where(object_updated_at: work_report_form.date_modified_start..)
     end
 
     def filter_by_date_modified_end
       return @query if work_report_form.date_modified_end.blank?
 
-      @query.where(object_updated_at: ..work_report_form.date_modified_end)
+      @query = @query.where(object_updated_at: ..work_report_form.date_modified_end)
     end
 
     def filter_by_collection
-      return @query if work_report_form.collection_ids.blank?
+      # drop the default empty value from the multi-select
+      collection_ids = work_report_form.collection_ids.compact_blank
+      return @query if collection_ids.empty?
 
-      # filter by collection ids
-      @query.where(collection_id: work_report_form.collection_ids)
+      # filter by collection
+      @query = @query.where(collection_id: collection_ids)
     end
 
     def selected_states
-      # filter to checked checkboxes (the only checkboxes are for item states)
+      # filter to checked checkboxes for item state
       work_report_form.attributes.select { |key, value| key.end_with?('state') && value }.keys
     end
 
     # @param [Array<Sdr::Repository::ObjectVersion::VersionStatus>] statuses
     # @return [Array<String>] druids
     def filter_by_state(statuses)
+      # return all druids if no state selections
       return statuses.map(&:first) if selected_states.empty?
 
-      # for each version status, check if the work matches any selected state
-      statuses.select do |druid, status|
+      results = []
+      statuses.each do |druid, status|
         selected_states.each do |selected_state|
           case selected_state
-          when 'draft_not_deposited'
-            status.first_draft?
-          when 'pending_review'
-            Work.find_by(druid:).pending_review?
-          when 'returned'
-            Work.find_by(druid:).rejected_review?
-          when 'deposit_in_progress'
-            status.accessioning?
-          when 'version_draft'
-            status.open?
-          when 'deposited'
-            !status.first_draft? && !status.open? && !status.accessioning?
-          else
-            false
+          when 'draft_not_deposited_state'
+            results << druid if status.first_draft?
+          when 'pending_review_state'
+            results << druid if Work.find_by(druid:).pending_review?
+          when 'returned_state'
+            results << druid if Work.find_by(druid:).rejected_review?
+          when 'deposit_in_progress_state'
+            results << druid if status.accessioning?
+          when 'version_draft_state'
+            results << druid if status.open?
+          when 'deposited_state'
+            results << druid if !status.first_draft? && !status.open? && !status.accessioning?
           end
         end
       end.map(&:first) # just druids
+
+      results.uniq
     end
 
     def create_csv(work_forms)
