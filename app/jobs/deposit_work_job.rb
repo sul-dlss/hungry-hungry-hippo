@@ -45,6 +45,10 @@ class DepositWorkJob < ApplicationJob
 
   attr_reader :work_form, :work, :status
 
+  def user_name
+    Current.user.sunetid
+  end
+
   def content
     @content ||= Content.find(work_form.content_id)
   end
@@ -73,13 +77,13 @@ class DepositWorkJob < ApplicationJob
   # rubocop:disable Metrics/AbcSize
   def perform_persist
     if !work_form.persisted?
-      Sdr::Repository.register(cocina_object: cocina_object_for_persist, assign_doi:, user_name: Current.user.sunetid)
+      Sdr::Repository.register(cocina_object: cocina_object_for_persist, assign_doi:, user_name:)
     elsif changed?
       Sdr::Repository.open_if_needed(cocina_object: cocina_object_for_persist,
                                      version_description: work_form.whats_changing, status:,
-                                     user_name: Current.user.sunetid)
+                                     user_name:)
                      .then do |cocina_object|
-        Sdr::Repository.update(cocina_object:, user_name: Current.user.sunetid)
+        Sdr::Repository.update(cocina_object:, user_name:)
       end
     end
   end
