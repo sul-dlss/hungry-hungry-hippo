@@ -29,7 +29,7 @@ module Cocina
       date = if create_date_type == 'single'
                create_date_single.to_s
              else
-               "#{create_date_range_from}/#{create_date_range_to}"
+               [create_date_range_from, create_date_range_to].filter_map(&:to_s).join('/').presence
              end
 
       return if date.nil?
