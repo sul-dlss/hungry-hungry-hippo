@@ -62,6 +62,7 @@ RSpec.describe 'Validate a work deposit' do
     # Terms of deposit is required, but skipping.
     find('.nav-link', text: 'Deposit', exact_text: true).click
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
+    expect(page).to have_no_text('You have accepted the Terms of Deposit')
     expect(page).to have_field('I agree to the SDR Terms of Deposit', checked: false)
     expect(page).to have_text('In depositing content to the Stanford Digital Repository')
 
