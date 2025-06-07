@@ -110,6 +110,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get :search
     end
 
+    resources :recent_activity, only: :index
+
     resource :emulate, only: %i[new create], controller: :emulate
   end
 
