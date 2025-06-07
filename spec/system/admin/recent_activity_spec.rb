@@ -27,7 +27,7 @@ RSpec.describe 'Show recent activity for items' do
       within('thead') do
         expect(page).to have_css('tr', count: 1)
         first_row = page.find('tr:nth-of-type(1)')
-        expect(first_row).to have_css('th:nth-of-type(1)', text: 'Items')
+        expect(first_row).to have_css('th:nth-of-type(1)', text: 'Item title')
         expect(first_row).to have_css('th:nth-of-type(2)', text: 'Collection')
       end
       within('tbody') do

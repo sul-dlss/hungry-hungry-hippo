@@ -3,26 +3,15 @@
 module Admin
   # Component for rendering a table of works on the admin user page.
   class RecentActivityListComponent < ApplicationComponent
-    def initialize(items:, label:, type:)
+    def initialize(items:, label:, presenter:, headers:)
       @items = items
       @label = label
-      @type = type
+      @presenter = presenter
+      @headers = headers
       @empty_message = "No #{label.downcase} activity for time period selected."
       super()
     end
 
-    attr_reader :empty_message, :items, :label, :type
-
-    def values_for(item)
-      [item.druid ? link_to(item.title, url_for(item)) : item.title].tap do |value|
-        value << link_to(item.collection.title, url_for(item.collection)) if type == 'works'
-      end
-    end
-
-    def headers
-      [{ label: }].tap do |header|
-        header << { label: 'Collection' } if type == 'works'
-      end
-    end
+    attr_reader :empty_message, :items, :label, :presenter, :headers
   end
 end

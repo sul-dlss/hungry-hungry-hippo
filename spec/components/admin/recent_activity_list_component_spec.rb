@@ -5,7 +5,10 @@ require 'rails_helper'
 RSpec.describe Admin::RecentActivityListComponent, type: :component do
   context 'when rendering the recent activity list component with no items' do
     it 'renders the recent item activity list table with no rows' do
-      render_inline(described_class.new(items: [], label: 'Items', type: 'works'))
+      render_inline(described_class.new(items: [],
+                                        label: 'Items',
+                                        presenter: Admin::RecentActivityWorkPresenter,
+                                        headers: [{ label: 'Item title' }, { label: 'Collection' }]))
 
       expect(page).to have_table('recent-activity-table')
       expect(page).to have_css('tbody tr', count: 0)
@@ -20,7 +23,10 @@ RSpec.describe Admin::RecentActivityListComponent, type: :component do
     let(:user) { create(:user) }
 
     it 'renders the recent item activity list table with rows of works' do
-      render_inline(described_class.new(items: [work, work_without_druid], label: 'Items', type: 'works'))
+      render_inline(described_class.new(items: [work, work_without_druid],
+                                        label: 'Items',
+                                        presenter: Admin::RecentActivityWorkPresenter,
+                                        headers: [{ label: 'Item title' }, { label: 'Collection' }]))
 
       table = page.find('table#recent-activity-table')
       table_body = table.find('tbody')
@@ -41,7 +47,8 @@ RSpec.describe Admin::RecentActivityListComponent, type: :component do
     it 'renders the recent item activity list table with rows of works' do
       render_inline(described_class.new(items: [collection, collection_without_druid],
                                         label: 'Collections',
-                                        type: 'collections'))
+                                        presenter: Admin::RecentActivityCollectionPresenter,
+                                        headers: [{ label: 'Collections' }]))
 
       table = page.find('table#recent-activity-table')
       table_body = table.find('tbody')

@@ -14,4 +14,4 @@
 
 <%= render Admin::RecentActivityFormComponent.new(form: @recent_activity_form, type: @type) %>
 
-<%= render Admin::RecentActivityListComponent.new(items: @items, label: @label, type: @type) %>
+<%= render Admin::RecentActivityListComponent.new(items: @items, label: @label, presenter: @presenter, headers: @headers) %>

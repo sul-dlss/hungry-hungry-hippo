@@ -3,11 +3,18 @@
 module Admin
   # Controller for displaying recent activity for works and collections.
   class RecentActivityController < Admin::ApplicationController
+    TABLE_HEADERS = {
+      'works' => [{ label: 'Item title' }, { label: 'Collection' }],
+      'collections' => [{ label: 'Collections' }]
+    }.freeze
+
     def index
       authorize!
 
       @type = type
       @label = label
+      @presenter = presenter_for_type
+      @headers = TABLE_HEADERS[type]
       @recent_activity_form = Admin::RecentActivityForm.new(**recent_activity_params)
       @items = klass.where('updated_at > ?', days_limit.days.ago).order('updated_at DESC')
     end
@@ -21,6 +28,10 @@ module Admin
 
     def label
       type == 'works' ? 'Items' : 'Collections'
+    end
+
+    def presenter_for_type
+      "Admin::RecentActivity#{type.classify}Presenter".constantize
     end
 
     def type
