@@ -115,7 +115,7 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_text('Managers')
     form_instances = page.all('.form-instance')
     within(form_instances[0]) do
-      expect(page).to have_css('p', text: 'jswithen: John Swithen')
+      expect(page).to have_css('span', text: 'jswithen: John Swithen')
     end
 
     fill_in('managers-textarea', with: 'stepking@stanford.edu')
