@@ -8,6 +8,7 @@
     <%= render Edit::DiscardDraftButtonComponent.new(presenter:, classes: 'ms-2 text-nowrap') %>
     <%= render Admin::FunctionDropdownComponent.new(classes: 'ms-2 text-nowrap') do |component| %>
       <% component.with_function(label: 'Move to another collection', link: new_work_admin_move_path(druid, content_id:), data: { turbo_frame: 'admin-card' }) if editable? %>
+      <% component.with_function(label: 'Change ownership', link: new_work_admin_change_owner_path(druid, content_id:), data: { turbo_frame: 'admin-card' }) if editable? %>
       <% component.with_function(label: 'Delete', link: new_work_admin_delete_path(druid), data: { turbo_frame: 'admin-card' }) %>
     <% end %>
   </div>
