@@ -6,7 +6,14 @@ module Admin
     include ActionView::Helpers::UrlHelper
     include LinkHelper
 
-    def initialize(work)
+    def self.values_for(work:)
+      new(work:).values_for
+    end
+
+    # Initializes the presenter with a work object.
+    #
+    # @param work [Work] the work object to present
+    def initialize(work:)
       @work = work
     end
 

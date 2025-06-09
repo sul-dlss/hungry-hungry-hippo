@@ -14,7 +14,7 @@ RSpec.describe 'List recent activity' do
   describe 'GET /admin/recent_activity' do
     context 'when viewing works' do
       it 'shows the most recent works with activity' do
-        get '/admin/recent_activity?admin_recent_activity[type]=works'
+        get '/admin/recent_activity_works'
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include('Items recent activity')
@@ -25,7 +25,7 @@ RSpec.describe 'List recent activity' do
 
     context 'when viewing collections' do
       it 'shows the most recent collections with activity' do
-        get '/admin/recent_activity?admin_recent_activity[type]=collections'
+        get '/admin/recent_activity_collections'
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to include('Collections recent activity')

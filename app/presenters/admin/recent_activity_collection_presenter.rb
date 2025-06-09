@@ -6,7 +6,14 @@ module Admin
     include ActionView::Helpers::UrlHelper
     include LinkHelper
 
-    def initialize(collection)
+    def self.values_for(collection:)
+      new(collection:).values_for
+    end
+
+    # Initializes the presenter with a collection object.
+    #
+    # @param collection [Collection] the collection object to present
+    def initialize(collection:)
       @collection = collection
     end
 

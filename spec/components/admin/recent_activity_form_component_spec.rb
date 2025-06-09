@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Admin::RecentActivityFormComponent, type: :component do
   let(:form) { Admin::RecentActivityForm.new }
-  let(:type) { 'works' }
+  let(:url) { '/admin/recent_activity' }
 
   it 'renders the recent activity form with select field for days limit' do
-    render_inline(described_class.new(form:, type:))
+    render_inline(described_class.new(form:, url:))
 
     expect(page).to have_css('label.form-label.visually-hidden', text: 'Days limit')
     expect(page).to have_select('admin_recent_activity_days_limit')

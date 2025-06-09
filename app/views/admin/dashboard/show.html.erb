@@ -10,8 +10,8 @@
     <% component.with_function(label: 'Search for user', link: admin_users_path) %>
     <% component.with_function(label: 'Get SUNet IDs of depositors', link: new_admin_depositors_search_path) %>
     <% component.with_function(label: 'Emulate being not an admin', link: new_admin_emulate_path) %>
-    <% component.with_function(label: 'Collections recent activity', link: admin_recent_activity_index_path(params: { admin_recent_activity: { type: 'collections' } })) %>
-    <% component.with_function(label: 'Items recent activity', link: admin_recent_activity_index_path(params: { admin_recent_activity: { type: 'works' } })) %>
+    <% component.with_function(label: 'Collections recent activity', link: admin_recent_activity_collections_path) %>
+    <% component.with_function(label: 'Items recent activity', link: admin_recent_activity_works_path) %>
   <% end %>
 </div>
 

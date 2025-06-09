@@ -3,15 +3,17 @@
 module Admin
   # Component for rendering a table of works on the admin user page.
   class RecentActivityListComponent < ApplicationComponent
-    def initialize(items:, label:, presenter:, headers:)
-      @items = items
+    def initialize(rows:, label:, headers:)
+      @rows = rows
       @label = label
-      @presenter = presenter
       @headers = headers
-      @empty_message = "No #{label.downcase} activity for time period selected."
       super()
     end
 
-    attr_reader :empty_message, :items, :label, :presenter, :headers
+    attr_reader :rows, :label, :headers
+
+    def empty_message
+      "No #{label.downcase} activity for time period selected."
+    end
   end
 end

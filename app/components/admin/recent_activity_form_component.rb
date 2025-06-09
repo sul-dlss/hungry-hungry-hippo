@@ -3,13 +3,13 @@
 module Admin
   # Component for rendering the recent activity form.
   class RecentActivityFormComponent < ApplicationComponent
-    def initialize(form:, type:)
+    def initialize(form:, url:)
       @form = form
-      @type = type
+      @url = url
       super()
     end
 
-    attr_reader :form, :type
+    attr_reader :form, :url
 
     def days_limit_options
       RecentActivityForm::DAYS_LIMIT_OPTIONS

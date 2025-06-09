@@ -5,9 +5,8 @@ require 'rails_helper'
 RSpec.describe Admin::RecentActivityListComponent, type: :component do
   context 'when rendering the recent activity list component with no items' do
     it 'renders the recent item activity list table with no rows' do
-      render_inline(described_class.new(items: [],
+      render_inline(described_class.new(rows: [],
                                         label: 'Items',
-                                        presenter: Admin::RecentActivityWorkPresenter,
                                         headers: [{ label: 'Item title' }, { label: 'Collection' }]))
 
       expect(page).to have_table('recent-activity-table')
@@ -21,11 +20,16 @@ RSpec.describe Admin::RecentActivityListComponent, type: :component do
     let(:work_without_druid) { create(:work, user:, collection:) }
     let(:collection) { create(:collection, :with_druid) }
     let(:user) { create(:user) }
+    let(:rows) do
+      [
+        Admin::RecentActivityWorkPresenter.values_for(work:),
+        Admin::RecentActivityWorkPresenter.values_for(work: work_without_druid)
+      ]
+    end
 
     it 'renders the recent item activity list table with rows of works' do
-      render_inline(described_class.new(items: [work, work_without_druid],
+      render_inline(described_class.new(rows:,
                                         label: 'Items',
-                                        presenter: Admin::RecentActivityWorkPresenter,
                                         headers: [{ label: 'Item title' }, { label: 'Collection' }]))
 
       table = page.find('table#recent-activity-table')
@@ -43,11 +47,16 @@ RSpec.describe Admin::RecentActivityListComponent, type: :component do
   context 'when rendering the recent activity list component with collections' do
     let(:collection) { create(:collection, :with_druid) }
     let(:collection_without_druid) { create(:collection) }
+    let(:rows) do
+      [
+        Admin::RecentActivityCollectionPresenter.values_for(collection:),
+        Admin::RecentActivityCollectionPresenter.values_for(collection: collection_without_druid)
+      ]
+    end
 
     it 'renders the recent item activity list table with rows of works' do
-      render_inline(described_class.new(items: [collection, collection_without_druid],
+      render_inline(described_class.new(rows:,
                                         label: 'Collections',
-                                        presenter: Admin::RecentActivityCollectionPresenter,
                                         headers: [{ label: 'Collections' }]))
 
       table = page.find('table#recent-activity-table')
