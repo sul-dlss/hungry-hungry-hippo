@@ -21,7 +21,7 @@ module Elements
       attr_reader :form, :model_class, :field_name, :form_component, :form_component_args, :hidden_label
 
       def label_text
-        helpers.t("#{field_name}.edit.legend")
+        helpers.t("#{field_name}.edit.legend", default: nil)
       end
 
       def tooltip
