@@ -7,7 +7,7 @@
 # 4. Generate collection.json and run import:collections task.
 # 5. Redeposit works in H2 that are in deposited or purl_reserved state and for which there is not a version mismatch.
 # * Should we allow some version mismatches, e.g., for document types or lifted embargoes?
-# * MERGE_STANFORD_AND_ORGANIZATION and DOCUMENT_TYPE should be enabled in H2.
+# * MERGE_STANFORD_AND_ORGANIZATION, NO_CITATION_STATUS_NOTE, and DOCUMENT_TYPE should be enabled in H2.
 # 6. Generate works.json and run import:works task.
 
 # See https://github.com/sul-dlss/hungry-hungry-hippo/issues/1334
@@ -140,8 +140,9 @@ namespace :import do
   end
 
   desc 'Test import works from json'
+  # rubocop:disable Metrics/LineLength
   # IMPORTANT: Enable merge_stanford_and_organization and document_type feature flags in H2.
-  # For example: SETTINGS__MERGE_STANFORD_AND_ORGANIZATION=true SETTINGS__DOCUMENT_TYPE=true bin/rails c -e p
+  # For example: SETTINGS__MERGE_STANFORD_AND_ORGANIZATION=true SETTINGS__DOCUMENT_TYPE=true SETTINGS__NO_CITATION_STATUS_NOTE=true bin/rails c -e p
   # works_cocina.jsonl can be generated in H2 for some set of works with:
   #   File.open('works_cocina.jsonl', 'w') do |f|
   #     Work.joins(:head).where('head.state': ['deposited', 'purl_reserved']).find_each.with_index do |w, i|
@@ -151,6 +152,7 @@ namespace :import do
   #     end
   #   end
   # It will raise an error if the work cannot be roundtripped or the collection cannot be found.
+  # rubocop:enable Metrics/LineLength
   task :test_works, %i[cocina_filename] => :environment do |_t, args|
     Parallel.each_with_index(File.open(args[:cocina_filename] || 'works_cocina.jsonl'),
                              in_processes: 6) do |line, index|
