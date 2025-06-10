@@ -76,7 +76,7 @@
       <% end %>
 
       <% component.with_work_pane(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text'), tooltip: t('works.edit.panes.contributors.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-        <%# The invalid-feedback controller is used to hide the invalid feedback message (cited contributor required)
+        <%# The invalid-feedback controller is used to hide the invalid feedback message (contributor required)
         when citation radio is changed or a new contributor is added. %>
         <div data-controller="invalid-feedback" data-invalid-feedback-tab-error-outlet=".tab-error" data-invalid-feedback-tab-value="contributors">
           <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :contributors, data: { invalid_feedback_target: 'feedback' }) %>

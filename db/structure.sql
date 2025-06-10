@@ -389,7 +389,6 @@ CREATE TABLE public.contributors (
     role_type character varying,
     suborganization_name character varying,
     orcid character varying,
-    cited boolean DEFAULT true NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -967,6 +966,7 @@ ALTER TABLE ONLY public.active_storage_attachments
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250610120209'),
 ('20250527121840'),
 ('20250509151132'),
 ('20250318195336'),

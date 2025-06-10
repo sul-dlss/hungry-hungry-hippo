@@ -250,10 +250,6 @@ en:
         citation:
           label: 'Enter preferred citation'
         contributors:
-          cited:
-            label: 'Include author / contributor in citation?'
-            tooltip_html: >-
-              "Yes" indicates that the individual or organization entered will be included in the citation for the work. If someone should be credited as being part of the work but should not be listed as an author in the citation, such as an advisor, select "No."
           role:
             tooltip_html: >-
               Choose one role for each individual or organization that best describes their contribution to the work you are depositing.

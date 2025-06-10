@@ -181,7 +181,6 @@ def contributors_fixture
       'organization_name' => nil,
       'stanford_degree_granting_institution' => false,
       'suborganization_name' => nil,
-      'cited' => true,
       'collection_required' => false
     },
     {
@@ -195,7 +194,6 @@ def contributors_fixture
       'organization_name' => 'Stanford University Libraries',
       'stanford_degree_granting_institution' => false,
       'suborganization_name' => nil,
-      'cited' => true,
       'collection_required' => false
     },
     {
@@ -209,7 +207,6 @@ def contributors_fixture
       'organization_name' => 'Stanford University',
       'stanford_degree_granting_institution' => true,
       'suborganization_name' => 'Department of Philosophy',
-      'cited' => false,
       'collection_required' => false
     }
   ]
@@ -238,8 +235,7 @@ def degree_granting_contributor_fixture
     role: 'degree_granting_institution',
     name: 'Stanford University',
     primary: false,
-    suborganization_name: 'Department of Philosophy',
-    cited: false
+    suborganization_name: 'Department of Philosophy'
   }
 end
 

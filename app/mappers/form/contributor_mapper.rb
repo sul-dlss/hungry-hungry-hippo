@@ -24,8 +24,7 @@ module Form
     attr_reader :contributor
 
     def person_attributes
-      contributor.attributes.slice('first_name', 'last_name', 'role_type', 'orcid',
-                                   'cited').symbolize_keys.tap do |attributes|
+      contributor.attributes.slice('first_name', 'last_name', 'role_type', 'orcid').symbolize_keys.tap do |attributes|
         attributes[:person_role] = contributor.role
         attributes[:with_orcid] = contributor.orcid.present?
         attributes[:stanford_degree_granting_institution] = false
@@ -33,7 +32,7 @@ module Form
     end
 
     def organization_attributes
-      contributor.attributes.slice('organization_name', 'role_type', 'cited',
+      contributor.attributes.slice('organization_name', 'role_type',
                                    'suborganization_name').symbolize_keys.tap do |attributes|
         attributes[:organization_role] = contributor.role
         attributes[:stanford_degree_granting_institution] =

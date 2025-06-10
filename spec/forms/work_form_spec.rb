@@ -377,7 +377,7 @@ RSpec.describe WorkForm do
       )
     end
 
-    context 'when a contributor that is cited is provided' do
+    context 'when a contributor is provided' do
       let(:contributors_attributes) { contributors_fixture }
 
       it 'is valid' do
@@ -385,12 +385,23 @@ RSpec.describe WorkForm do
       end
     end
 
-    context 'when no cited contributor is provided' do
+    context 'when no contributor is provided' do
       let(:contributors_attributes) do
-        contributors_fixture.map do |contributor_attrs|
-          contributor_attrs['cited'] = false
-          contributor_attrs
-        end
+        [
+          {
+            'role_type' => 'person',
+            'person_role' => 'author',
+            'organization_role' => nil,
+            'first_name' => '',
+            'last_name' => '',
+            'with_orcid' => true,
+            'orcid' => '',
+            'organization_name' => nil,
+            'stanford_degree_granting_institution' => false,
+            'suborganization_name' => nil,
+            'collection_required' => false
+          }
+        ]
       end
 
       context 'when not depositing' do
@@ -402,7 +413,7 @@ RSpec.describe WorkForm do
       context 'when depositing' do
         it 'is invalid' do
           expect(form.valid?(:deposit)).to be false
-          expect(form.errors[:contributors]).to include('must have at least one cited contributor')
+          expect(form.errors[:contributors]).to include('must have at least one contributor')
         end
       end
     end

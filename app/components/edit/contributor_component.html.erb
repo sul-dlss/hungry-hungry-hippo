@@ -9,7 +9,6 @@
   <%= form.hidden_field :role_type %>
   <%= form.hidden_field :with_orcid %>
   <%= form.hidden_field :orcid %>
-  <%= form.hidden_field :cited %>
   <%= form.hidden_field :collection_required %>
 
   <div class="h5 mb-0">Required author / contributor</div>
@@ -18,10 +17,8 @@
   <p class="mb-1">
     <% if person? %>
       <b><%= first_name %> <%= last_name %></b> <i>(<%= person_role.titleize %>)</i> will be included in the list of authors and contributors for this work.
-      This person <%= cited ? 'will' : 'will not' %> be included in the citation.
     <% else %>
       <b><%= organization_name %></b> <i>(<%= organization_role.titleize %>)</i><% if suborganization_name.present? %>, <b><%= suborganization_name %></b> <i>(Department)</i><% end %> will be included in the list of authors and contributors for this work.
-      This organization <%= cited ? 'will' : 'will not' %> be included in the citation.
     <% end %>
   </p>
 <% else %>
@@ -39,21 +36,6 @@
                                             value: 'organization',
                                             data: { contributors_target: 'organizationOption', action: 'change->contributors#showOrganizationSection change->tooltips#hideAll' }) %>
     <% end %>
-
-    <%= render Elements::Forms::LabelComponent.new(form:, field_name: :cited, label_text: helpers.t('works.edit.fields.contributors.cited.label'), tooltip: helpers.t('works.edit.fields.contributors.cited.tooltip_html'), classes: 'fw-bold') %>
-    <div class="cited-section row mb-3">
-      <div class="col-md-3 form-check">
-        <div class="ps-3">
-          <%= form.radio_button :cited, 'true', class: 'form-check-input', data: { action: 'invalid-feedback#hide' } %>
-          <%= form.label :cited_true, 'Yes', class: 'form-check-label' %>
-        </div>
-      </div>
-
-      <div class="col-md-3 form-check">
-        <%= form.radio_button :cited, 'false', class: 'form-check-input', data: { action: 'invalid-feedback#hide' } %>
-        <%= form.label :cited_false, 'No', class: 'form-check-label' %>
-      </div>
-    </div>
 
     <%# Contributor person name/orcid fields %>
     <%= render Elements::Forms::FieldsetComponent.new(label: 'Person', hidden_label: true, data: { contributors_target: 'personSection' }) do %>

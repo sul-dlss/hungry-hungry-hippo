@@ -13,7 +13,7 @@ module Edit
     delegate :object, to: :form
     delegate :first_name, :last_name, :organization_name, :person_role, :organization_role,
              :stanford_degree_granting_institution, :suborganization_name, :role_type, :with_orcid,
-             :orcid, :cited, to: :object
+             :orcid, to: :object
 
     def user_orcid
       Current.orcid

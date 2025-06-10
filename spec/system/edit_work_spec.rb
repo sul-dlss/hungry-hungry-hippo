@@ -106,9 +106,6 @@ RSpec.describe 'Edit a work' do
     expect(form_instances.count).to eq(3)
     within(form_instances[0]) do
       expect(page).to have_checked_field('Individual', with: 'person')
-      within('.cited-section') do
-        expect(page).to have_checked_field('Yes')
-      end
       expect(page).to have_select('Role', selected: 'Author')
       within('.orcid-section') do
         expect(page).to have_checked_field('Lookup using ORCID iD')
@@ -124,9 +121,6 @@ RSpec.describe 'Edit a work' do
     end
     within(form_instances[2]) do
       expect(page).to have_checked_field('Organization', with: 'organization')
-      within('.cited-section') do
-        expect(page).to have_checked_field('No')
-      end
       expect(page).to have_select('Role', selected: 'Degree granting institution')
       within('.stanford-degree-granting-institution-section') do
         expect(page).to have_checked_field('Yes')

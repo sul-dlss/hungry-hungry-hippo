@@ -77,7 +77,6 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
                        'organization_name' => nil,
                        'stanford_degree_granting_institution' => false,
                        'suborganization_name' => nil,
-                       'cited' => true,
                        'collection_required' => true
                      }
                    ])

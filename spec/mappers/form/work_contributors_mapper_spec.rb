@@ -30,8 +30,7 @@ RSpec.describe Form::WorkContributorsMapper do
                                          'suborganization_name' => nil,
                                          'stanford_degree_granting_institution' => false,
                                          'orcid' => nil,
-                                         'with_orcid' => false,
-                                         'cited' => true
+                                         'with_orcid' => false
                                        ])
     end
   end
@@ -57,8 +56,7 @@ RSpec.describe Form::WorkContributorsMapper do
                                          'suborganization_name' => nil,
                                          'stanford_degree_granting_institution' => false,
                                          'orcid' => nil,
-                                         'with_orcid' => false,
-                                         'cited' => true
+                                         'with_orcid' => false
                                        ])
     end
   end
@@ -84,8 +82,7 @@ RSpec.describe Form::WorkContributorsMapper do
                                          'suborganization_name' => nil,
                                          'stanford_degree_granting_institution' => false,
                                          'orcid' => nil,
-                                         'with_orcid' => false,
-                                         'cited' => true
+                                         'with_orcid' => false
                                        ])
     end
   end

@@ -10,13 +10,11 @@ class OrganizationContributorCocinaBuilder
   # @param role [String] the role of the organization from ROLES
   # @param suborganization_name [String] the name of the suborganization (e.g., department)
   # @param primary [Boolean] whether this is the first contributor
-  # @param cited [Boolean] whether the organization should be cited
-  def initialize(name:, role:, suborganization_name: nil, primary: false, cited: true)
+  def initialize(name:, role:, suborganization_name: nil, primary: false)
     @name = name
     @suborganization_name = suborganization_name
     @role = role
     @primary = primary
-    @cited = cited
   end
 
   def call
@@ -29,7 +27,7 @@ class OrganizationContributorCocinaBuilder
 
   private
 
-  attr_reader :name, :role, :primary, :suborganization_name, :cited
+  attr_reader :name, :role, :primary, :suborganization_name
 
   def organization_params
     {
@@ -37,8 +35,7 @@ class OrganizationContributorCocinaBuilder
       type: contributor_type,
       role: role_params,
       status: status_value,
-      identifier: identifier_params,
-      note: note_params
+      identifier: identifier_params
     }.compact
   end
 
@@ -55,8 +52,7 @@ class OrganizationContributorCocinaBuilder
       }],
       type: contributor_type,
       role: role_params,
-      status: status_value,
-      note: note_params
+      status: status_value
     }.compact
   end
 
@@ -93,11 +89,5 @@ class OrganizationContributorCocinaBuilder
         }
       }
     ]
-  end
-
-  def note_params
-    return if cited
-
-    [{ type: 'citation status', value: 'false' }]
   end
 end

@@ -11,14 +11,12 @@ class PersonContributorCocinaBuilder
   # @param role [String] the role of the person from ROLES
   # @param primary [Boolean] whether this is the first contributor
   # @param orcid [String] the ORCID of the person
-  # @param cited [Boolean] whether the person should be cited
-  def initialize(surname:, forename:, role:, primary: false, orcid: nil, cited: true) # rubocop:disable Metrics/ParameterLists
+  def initialize(surname:, forename:, role:, primary: false, orcid: nil)
     @surname = surname
     @forename = forename
     @role = role
     @primary = primary
     @orcid = orcid
-    @cited = cited
   end
 
   def call
@@ -34,8 +32,7 @@ class PersonContributorCocinaBuilder
       type: 'person',
       role: role_params,
       identifier: identifier_params,
-      status: ('primary' if primary),
-      note: note_params
+      status: ('primary' if primary)
 
       # NOTE: affiliations.map { |affiliation_attrs| affiliation(**affiliation_attrs) }.presence
     }.compact
@@ -43,7 +40,7 @@ class PersonContributorCocinaBuilder
 
   private
 
-  attr_reader :forename, :surname, :role, :primary, :orcid, :cited
+  attr_reader :forename, :surname, :role, :primary, :orcid
 
   def role_params
     cocina_role = ContributorRoleCocinaBuilder.call(role:)
@@ -62,11 +59,5 @@ class PersonContributorCocinaBuilder
         source: { uri: Settings.orcid.url }
       }
     ]
-  end
-
-  def note_params
-    return if cited
-
-    [{ type: 'citation status', value: 'false' }]
   end
 end
