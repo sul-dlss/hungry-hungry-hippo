@@ -20,9 +20,13 @@
   </head>
 
   <body>
-    <div class="red"><%= image_tag('email/StanfordLibraries-logo-whitetext.png', height: 32, class: 'sul-logo', alt: 'Stanford Libraries') %></div>
+    <div><%= image_tag('email/StanfordLibraries-logo-poly_small.png', height: 32, class: 'sul-logo', alt: 'Stanford Libraries') %></div>
     <main>
-      <div class="sdr-logo"><%= image_tag('email/sdr_color_logo.png', height: 32, alt: 'Stanford Digital Repository') %></div>
+      <div class="sdr-logo" style="display: inline-flex; align-items: center;">
+        <%= image_tag('email/rosette_small.png', height: 28, alt: 'Stanford Digital Repository') %>
+        <span style="margin-left: 0.5rem; font-weight: bold; font-size: 25px;">Stanford Digital Repository</span>
+      </div>
+      <hr style="border: none; border-top: 1px solid grey;">
       <%= yield %>
     </main>
   </body>
