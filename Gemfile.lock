@@ -648,7 +648,7 @@ DEPENDENCIES
   cocina-models
   config
   cssbundling-rails
-  csv (~> 3.3)
+  csv
   cyperful
   datacite
   debug

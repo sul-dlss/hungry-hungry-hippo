@@ -18,12 +18,10 @@ RSpec.describe Admin::WorkReport do
                               deposit_in_progress_state: false, deposited_state: false,
                               version_draft_state: false)
   end
-  let(:work) { create(:work, druid:) }
-  let(:work2) { create(:work, druid: druid2) }
+  let!(:work) { create(:work, druid:) }
+  let!(:work2) { create(:work, druid: druid2) }
   let(:version_status) { build(:version_status) }
   let(:version_status2) { build(:version_status) }
-  let(:object_client) { instance_double(Dor::Services::Client::Object, find: cocina_object) }
-  let(:object_client2) { instance_double(Dor::Services::Client::Object, find: cocina_object2) }
   let(:cocina_object) do
     dro_with_metadata_fixture.new(externalIdentifier: druid,
                                   description: { title: [{ value: 'Test Work' }],
@@ -53,8 +51,8 @@ RSpec.describe Admin::WorkReport do
     allow(Sdr::Repository).to receive(:statuses).with(druids: druid_list).and_return({ druid => version_status,
                                                                                        druid2 => version_status2 })
     allow(Sdr::Repository).to receive(:statuses).with(druids: [druid2]).and_return({ druid2 => version_status2 })
-    allow(Dor::Services::Client).to receive(:object).with(work.druid).and_return(object_client)
-    allow(Dor::Services::Client).to receive(:object).with(work2.druid).and_return(object_client2)
+    allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+    allow(Sdr::Repository).to receive(:find).with(druid: druid2).and_return(cocina_object2)
     allow(Current).to receive(:user).and_return(user)
   end
 
@@ -78,7 +76,7 @@ RSpec.describe Admin::WorkReport do
       end
 
       before do
-        allow(Sdr::Repository).to receive(:statuses).with(druids: []).and_return([])
+        allow(Sdr::Repository).to receive(:statuses).with(druids: []).and_return({})
       end
 
       it 'does not include works created before the start date' do
@@ -150,7 +148,7 @@ RSpec.describe Admin::WorkReport do
       end
 
       before do
-        allow(Sdr::Repository).to receive(:statuses).with(druids: []).and_return([])
+        allow(Sdr::Repository).to receive(:statuses).with(druids: []).and_return({})
       end
 
       it 'does not include works created before the start date' do
@@ -165,9 +163,8 @@ RSpec.describe Admin::WorkReport do
         Admin::WorkReportForm.new(date_created_start: nil, date_created_end: nil, date_modified_start: nil,
                                   date_modified_end: nil, last_deposited_start: nil, last_deposited_end:,
                                   collection_ids: [''], draft_not_deposited_state: false,
-                                  pending_review_state: false, returned_state: false,
                                   deposit_in_progress_state: false, deposited_state: false,
-                                  version_draft_state: false)
+                                  version_draft_state: false, pending_review_state: false, returned_state: false)
       end
 
       it 'does not include works deposited after the start date' do
@@ -226,10 +223,10 @@ RSpec.describe Admin::WorkReport do
     context 'when filtering by deposit_in_progess_state' do
       let(:work_report_form) do
         Admin::WorkReportForm.new(date_created_start: nil, date_created_end: nil, date_modified_start: nil,
-                                  date_modified_end: nil, collection_ids: [''], draft_not_deposited_state: false,
-                                  pending_review_state: false, returned_state: false,
+                                  date_modified_end: nil, last_deposited_start: nil, last_deposited_end: nil,
+                                  collection_ids: [''], draft_not_deposited_state: false,
                                   deposit_in_progress_state: true, deposited_state: false,
-                                  version_draft_state: false)
+                                  version_draft_state: false, pending_review_state: false, returned_state: false)
       end
       let(:version_status2) { build(:accessioning_version_status) }
 
@@ -242,10 +239,10 @@ RSpec.describe Admin::WorkReport do
     context 'when filtering by deposited_state' do
       let(:work_report_form) do
         Admin::WorkReportForm.new(date_created_start: nil, date_created_end: nil, date_modified_start: nil,
-                                  date_modified_end: nil, collection_ids: [''], draft_not_deposited_state: false,
-                                  pending_review_state: false, returned_state: false,
-                                  deposit_in_progress_state: false, deposited_state: true,
-                                  version_draft_state: false)
+                                  date_modified_end: nil, last_deposited_start: nil, last_deposited_end: nil,
+                                  collection_ids: [''], draft_not_deposited_state: false,
+                                  pending_review_state: false, returned_state: false, deposit_in_progress_state: false,
+                                  deposited_state: true, version_draft_state: false)
       end
 
       it 'includes works in deposited state' do
@@ -254,14 +251,14 @@ RSpec.describe Admin::WorkReport do
       end
     end
 
-    context 'when work has multiple states' do
+    context 'when work has multiple states that match selected states' do
       let(:work_report_form) do
         Admin::WorkReportForm.new(date_created_start: nil, date_created_end: nil, date_modified_start: nil,
-                                  date_modified_end: nil, collection_ids: [''], draft_not_deposited_state: false,
+                                  date_modified_end: nil, collection_ids: [''],
                                   last_deposited_start: nil, last_deposited_end: nil,
                                   pending_review_state: true, returned_state: false,
-                                  deposit_in_progress_state: false, deposited_state: false,
-                                  version_draft_state: true)
+                                  draft_not_deposited_state: false, deposit_in_progress_state: false,
+                                  deposited_state: false, version_draft_state: true)
       end
       let(:work2) { create(:work, druid: druid2, review_state: 'pending_review') }
       let(:version_status2) { build(:draft_version_status) }
@@ -269,7 +266,8 @@ RSpec.describe Admin::WorkReport do
       it 'includes work once with both statuses' do
         expect(csv).not_to include(druid)
         expect(csv.scan(druid2).count).to eq(1)
-        expect(csv).to include('pending_review; version_draft')
+        expect(csv).to include('Pending review')
+        expect(csv).to include('New version in draft')
       end
     end
   end

@@ -45,6 +45,7 @@ gem 'ahoy_matey' # Analytics
 gem 'bunny' # RabbitMQ client
 gem 'cocina-models'
 gem 'config'
+gem 'csv'
 gem 'datacite'
 gem 'dor-event-client'
 gem 'dor-services-client'
@@ -104,5 +105,3 @@ group :deployment do
   gem 'capistrano-rails', require: false
   gem 'dlss-capistrano', require: false
 end
-
-gem 'csv', '~> 3.3'

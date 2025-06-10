@@ -93,14 +93,23 @@ class WorkPresenter < FormPresenter
   end
 
   def status_message
+    # displayed on work show page header
+    review_message || super
+  end
+
+  def review_message
+    # for reporting on review state
     case review_state
     when 'pending_review'
       'Pending review'
     when 'rejected_review'
       'Returned'
-    else
-      super
     end
+  end
+
+  def version_status_message
+    # for reporting on version state
+    version_status.status_message
   end
 
   def number_of_files_in_deposit

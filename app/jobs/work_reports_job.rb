@@ -11,6 +11,6 @@ class WorkReportsJob < ApplicationJob
     WorkReportsMailer.with(
       current_user:,
       csv:
-    ).work_report_email.deliver_later
+    ).work_report_email.deliver_now
   end
 end

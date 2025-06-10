@@ -9,12 +9,11 @@ module Admin
 
     def initialize(work_report_form:)
       @work_report_form = work_report_form
+      @query = Work.all
     end
 
     # @return [String] CSV string for the work report
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def call
-      @query = Work.all
       filter_by_date_created_start
       filter_by_date_created_end
       filter_by_date_modified_start
@@ -22,70 +21,95 @@ module Admin
       filter_by_date_last_deposited_start
       filter_by_date_last_deposited_end
       filter_by_collection
-      works_druids = @query.pluck(:druid).compact
+      filter_by_states
 
-      @statuses = Sdr::Repository.statuses(druids: works_druids)
-      druids = filter_by_state(@statuses)
-
-      @cocina_objects = druids.map { |druid| Dor::Services::Client.object(druid).find }
-      work_forms = @cocina_objects.map do |cocina_object|
-        # only cocina_object will be used; other arg assignments are irrelevant
-        Form::WorkMapper.call(cocina_object:, doi_assigned: true,
-                              agree_to_terms: true,
-                              version_description: nil, collection: nil)
-      end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
-
-      create_csv(work_forms)
+      create_csv
     end
-
     attr_reader :work_report_form
+    attr_accessor :query
 
     private
 
     def filter_by_date_created_start
-      return @query if work_report_form.date_created_start.blank?
+      return if work_report_form.date_created_start.blank?
 
-      @query = @query.where(created_at: work_report_form.date_created_start..)
+      @query = query.where(created_at: work_report_form.date_created_start..)
     end
 
     def filter_by_date_created_end
-      return @query if work_report_form.date_created_end.blank?
+      return if work_report_form.date_created_end.blank?
 
-      @query = @query.where(created_at: ..work_report_form.date_created_end)
+      @query = query.where(created_at: ..work_report_form.date_created_end)
     end
 
     def filter_by_date_modified_start
-      return @query if work_report_form.date_modified_start.blank?
+      return if work_report_form.date_modified_start.blank?
 
-      @query = @query.where(object_updated_at: work_report_form.date_modified_start..)
+      @query = query.where(object_updated_at: work_report_form.date_modified_start..)
     end
 
     def filter_by_date_modified_end
-      return @query if work_report_form.date_modified_end.blank?
+      return if work_report_form.date_modified_end.blank?
 
-      @query = @query.where(object_updated_at: ..work_report_form.date_modified_end)
+      @query = query.where(object_updated_at: ..work_report_form.date_modified_end)
     end
 
     def filter_by_date_last_deposited_start
-      return @query if work_report_form.last_deposited_start.blank?
+      return if work_report_form.last_deposited_start.blank?
 
-      @query = @query.where(last_deposited_at: work_report_form.last_deposited_start..)
+      @query = query.where(last_deposited_at: work_report_form.last_deposited_start..)
     end
 
     def filter_by_date_last_deposited_end
-      return @query if work_report_form.last_deposited_end.blank?
+      return if work_report_form.last_deposited_end.blank?
 
-      @query = @query.where(last_deposited_at: ..work_report_form.last_deposited_end)
+      @query = query.where(last_deposited_at: ..work_report_form.last_deposited_end)
     end
 
     def filter_by_collection
       # drop the default empty value from the multi-select
       collection_ids = work_report_form.collection_ids.compact_blank
-      return @query if collection_ids.empty?
+      return if collection_ids.empty?
 
       # filter by collection
-      @query = @query.where(collection_id: collection_ids)
+      @query = query.where(collection_id: collection_ids)
+    end
+
+    # Filter druids by the selected states in the work report form
+    # @return [Array<string>] druids filtered by the selected states
+    def filter_by_states
+      # If no states are selected, return all druids.
+      return if selected_states.empty?
+
+      @druids = druids.select { |druid| selected_states?(druid) }
+    end
+
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
+    def selected_states?(druid)
+      version_state = states.dig(druid, :version_state)
+      review_state = states.dig(druid, :review_state)
+      matching = selected_states.select do |selected_state|
+        case selected_state
+        when 'draft_not_deposited_state'
+          version_state == 'Draft - Not deposited'
+        when 'version_draft_state'
+          version_state == 'New version in draft'
+        when 'deposit_in_progress_state'
+          version_state == 'Depositing'
+        when 'deposited_state'
+          version_state == 'Deposited'
+        when 'pending_review_state'
+          review_state == 'Pending review'
+        when 'returned_state'
+          review_state == 'Returned'
+        end
+      end
+      matching.any?
+    end
+    # rubocop:enable Metrics/CyclomaticComplexity, Metrics/MethodLength
+
+    def druids
+      @druids ||= query.pluck(:druid).compact
     end
 
     def selected_states
@@ -93,55 +117,58 @@ module Admin
       work_report_form.attributes.select { |key, value| key.end_with?('state') && value }.keys
     end
 
-    # @param [Array<Sdr::Repository::ObjectVersion::VersionStatus>] statuses
-    # @return [Array<String>] druids
-    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-    def filter_by_state(statuses)
-      # return all druids if no state selections
-      return statuses.map(&:first) if selected_states.empty?
-
-      results = []
-      statuses.each do |druid, status|
-        selected_states.each do |selected_state|
-          case selected_state
-          when 'draft_not_deposited_state'
-            results << druid if status.first_draft?
-          when 'pending_review_state'
-            results << druid if Work.find_by(druid:).pending_review?
-          when 'returned_state'
-            results << druid if Work.find_by(druid:).rejected_review?
-          when 'deposit_in_progress_state'
-            results << druid if status.accessioning?
-          when 'version_draft_state'
-            results << druid if status.open?
-          when 'deposited_state'
-            results << druid if !status.first_draft? && !status.open? && !status.accessioning?
-          end
-        end
-      end.map(&:first) # just druids
-
-      results.uniq
+    # Get the states of works based on version status and work review state
+    # @return [Hash] druids and their version and review states
+    def states
+      @states ||= statuses.to_h do |druid, version_status|
+        work_form = work_forms.select { |work| work.druid == druid }
+        work = Work.find_by(druid:)
+        presenter = WorkPresenter.new(work:, work_form:, version_status:)
+        [druid, { version_state: presenter.version_status_message, review_state: presenter.review_message }]
+      end
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/BlockLength
-    def create_csv(work_forms)
-      headers = ['item title', 'work_id', 'druid', 'state', 'version number', 'owner', 'date created',
-                 'date last modified', 'date last deposited', 'release', 'visibility', 'license', 'custom rights',
-                 'DOI', 'work type', 'work subtypes', 'collection title', 'collection id']
+    def statuses
+      @statuses ||= Sdr::Repository.statuses(druids:)
+    end
+
+    def work_forms
+      @work_forms ||= druids.map do |druid|
+        cocina_object = Sdr::Repository.find(druid:)
+        # only cocina_object will be used; other arg assignments are irrelevant
+        Form::WorkMapper.call(cocina_object:, doi_assigned: true, agree_to_terms: true, version_description: nil,
+                              collection: nil)
+      end
+    end
+
+    def doi_for(druid)
+      return '' if doi_option == 'no'
+
+      Doi.url(druid:) if doi_option == 'yes'
+    end
+
+    # rubocop:disable Metrics/AbcSize, Metrics/BlockLength, Metrics/MethodLength
+    def create_csv
+      headers = ['item title', 'work_id', 'druid', 'deposit state', 'review state', 'version number', 'owner',
+                 'date created', 'date last modified', 'date last deposited', 'release', 'visibility',
+                 'license', 'custom rights', 'DOI', 'work type', 'work subtypes', 'collection title',
+                 'collection id']
 
       CSV.generate(headers: true) do |csv|
         csv << headers
 
         work_forms.each do |work_form|
           druid = work_form.druid
+          next unless druids.include?(druid)
+
           work_model = Work.find_by(druid:)
           row = [work_form.title,
                  work_model.id,
                  work_form.druid,
-                 state(druid:, status: @statuses[druid]),
+                 states[druid][:version_state],
+                 states[druid][:review_state],
                  work_form.version,
-                 work_model.user.email_address.delete_suffix(User::EMAIL_SUFFIX),
+                 work_model.user.sunetid,
                  work_model.created_at,
                  work_model.object_updated_at,
                  work_model.last_deposited_at,
@@ -149,9 +176,7 @@ module Admin
                  work_form.access,
                  work_form.license,
                  work_form.custom_rights_statement.present? ? 'yes' : 'no',
-                 Cocina::Parser.doi_for(cocina_object: @cocina_objects.find do |obj|
-                   obj.externalIdentifier == druid
-                 end),
+                 work_model.doi_assigned? ? Doi.url(druid:) : nil,
                  work_form.work_type,
                  work_form.work_subtypes.present? ? work_form.work_subtypes.join('; ') : nil,
                  work_model.collection.title,
@@ -160,23 +185,6 @@ module Admin
         end
       end
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/BlockLength
-
-    # @param [String] druid
-    # @param [Sdr::Repository::ObjectVersion::VersionStatus] status
-    # @return [String] state(s) of the work
-    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-    def state(druid:, status:)
-      states = []
-      states << 'draft_not_deposited' if status.first_draft?
-      states << 'pending_review' if Work.find_by(druid:).pending_review?
-      states << 'returned' if Work.find_by(druid:).rejected_review?
-      states << 'deposit_in_progress' if status.accessioning?
-      states << 'version_draft' if status.open?
-      states << 'deposited' if !status.first_draft? && !status.open? && !status.accessioning?
-
-      states.join('; ')
-    end
-    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/AbcSize, Metrics/BlockLength, Metrics/MethodLength
   end
 end

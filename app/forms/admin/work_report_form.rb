@@ -9,7 +9,7 @@ module Admin
     attribute :date_modified_end, :date
     attribute :last_deposited_start, :date
     attribute :last_deposited_end, :date
-    attribute :collection_ids
+    attribute :collection_ids, array: true
     attribute :draft_not_deposited_state, :boolean, default: false
     attribute :pending_review_state, :boolean, default: false
     attribute :returned_state, :boolean, default: false
