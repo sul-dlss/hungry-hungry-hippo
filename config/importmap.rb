@@ -10,6 +10,7 @@ pin 'stimulus-autocomplete'
 pin_all_from 'app/javascript/controllers', under: 'controllers'
 pin '@popperjs/core', to: 'https://cdn.skypack.dev/@popperjs/core@2.11.8'
 pin 'bootstrap', to: 'https://cdn.skypack.dev/bootstrap@5.3.3'
+pin 'ahoy', to: 'ahoy.js'
 # Pins for dropzone
 pin 'dropzone' # @6.0.0
 pin 'just-extend' # @5.1.1
