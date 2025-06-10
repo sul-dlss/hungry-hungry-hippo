@@ -11,6 +11,7 @@ module Sdr
       version_close
       update
       embargo_released
+      collection_changed
       h3_collection_settings_updated
       h3_review_approved
       h3_review_returned
