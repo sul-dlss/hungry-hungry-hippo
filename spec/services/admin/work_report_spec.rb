@@ -28,17 +28,19 @@ RSpec.describe Admin::WorkReport do
     dro_with_metadata_fixture.new(externalIdentifier: druid,
                                   description: { title: [{ value: 'Test Work' }],
                                                  form: [{ structuredValue: [
-                                                   {
-                                                     value: 'Mixed Materials',
-                                                     type: 'type'
-                                                   },
-                                                   {
-                                                     value: 'Government document',
-                                                     type: 'subtype'
-                                                   }
-                                                 ], 
-                                                  source: { value: 'image' },
-                                                            type: 'resource type' }],
+                                                            {
+                                                              value: 'Mixed Materials',
+                                                              type: 'type'
+                                                            },
+                                                            {
+                                                              value: 'Government document',
+                                                              type: 'subtype'
+                                                            }
+                                                          ],
+                                                          source: {
+                                                            value: 'Stanford self-deposit resource types'
+                                                          },
+                                                          type: 'resource type' }],
                                                  purl: Sdr::Purl.from_druid(druid:) })
   end
   let(:cocina_object2) do
@@ -200,6 +202,22 @@ RSpec.describe Admin::WorkReport do
       let(:version_status2) { build(:first_draft_version_status) }
 
       it 'includes work in draft_not_deposited state' do
+        expect(csv).not_to include(druid)
+        expect(csv).to include(druid2)
+      end
+    end
+
+    context 'when filtering by returned state' do
+      let(:work_report_form) do
+        Admin::WorkReportForm.new(date_created_start: nil, date_created_end: nil, date_modified_start: nil,
+                                  date_modified_end: nil, collection_ids: [''], draft_not_deposited_state: nil,
+                                  pending_review_state: false, returned_state: true,
+                                  deposit_in_progress_state: false, deposited_state: false,
+                                  version_draft_state: false)
+      end
+      let(:work2) { create(:work, :rejected_review, druid: druid2) }
+
+      it 'includes work in returned state' do
         expect(csv).not_to include(druid)
         expect(csv).to include(druid2)
       end

@@ -12,7 +12,8 @@ RSpec.describe 'Generate an item report' do
 
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
-    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    # allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(Sdr::Repository).to receive(:statuses).with(druids: [druid]).and_return({ druid => version_status })
     allow(Dor::Services::Client).to receive(:object).with(druid).and_return(object_client)
     sign_in(create(:user), groups: ['dlss:hydrus-app-administrators'])
     create(:work, druid:)

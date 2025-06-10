@@ -124,7 +124,7 @@ module Admin
     end
     # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/BlockLength
     def create_csv(work_forms)
       headers = ['item title', 'work_id', 'druid', 'state', 'version number', 'owner', 'date created',
                  'date last modified', 'date last deposited', 'release', 'visibility', 'license', 'custom rights',
@@ -159,11 +159,8 @@ module Admin
           csv << row
         end
       end
-    rescue StandardError => e
-      Rails.logger.error("Error generating item report CSV: #{e.message}")
-      raise e
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/BlockLength
 
     # @param [String] druid
     # @param [Sdr::Repository::ObjectVersion::VersionStatus] status

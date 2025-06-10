@@ -6,7 +6,7 @@ module Admin
     def new
       authorize!
 
-      @collections = Collection.all
+      @collections = Collection.order(:title)
       @work_report_form = Admin::WorkReportForm.new
     end
 
@@ -20,7 +20,7 @@ module Admin
         flash[:success] = I18n.t('messages.work_report_generated')
         redirect_to new_admin_work_report_path
       else
-        @collections = Collection.all
+        @collections = Collection.order(:title)
         render :new, status: :unprocessable_entity
       end
     end
