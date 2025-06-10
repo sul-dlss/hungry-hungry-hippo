@@ -89,7 +89,7 @@ class DepositWorkJob < ApplicationJob
   end
   # rubocop:enable Metrics/AbcSize
 
-  def assign_doi
+  def assign_doi # rubocop:disable Naming/PredicateMethod
     work_form.doi_option == 'yes'
   end
 

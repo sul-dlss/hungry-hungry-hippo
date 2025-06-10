@@ -32,7 +32,7 @@ module ActiveModel
         opts.assert_valid_keys(:allow_destroy)
       end
 
-      def determine_repeatability_of(model)
+      def determine_repeatability_of(model) # rubocop:disable Naming/PredicateMethod
         model.to_s.pluralize == model.to_s
       end
 
