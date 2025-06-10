@@ -200,7 +200,7 @@ RSpec.describe 'Validate a work deposit' do
     end
   end
 
-  context 'when standalone error (must have one cited contributor)' do
+  context 'when standalone error (must have one contributor)' do
     it 'validates a work' do
       visit work_path_with_collection
 
@@ -208,16 +208,10 @@ RSpec.describe 'Validate a work deposit' do
 
       find('.nav-link', text: 'Contributors').click
 
-      # Not cited
-      within('.cited-section') do
-        choose('No')
-      end
-
       # Fill in the author name only
       within('.orcid-section') do
         find('label', text: 'Enter name manually').click
       end
-      fill_in('First name', with: contributors_fixture.first['first_name'])
 
       find('.nav-link', text: 'Deposit', exact_text: true).click
       click_link_or_button('Deposit', class: 'btn-primary')
@@ -225,19 +219,20 @@ RSpec.describe 'Validate a work deposit' do
       expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
       find('.nav-link.is-invalid', text: 'Contributors').click
-      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must have at least one cited contributor')
+      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must have at least one contributor')
       expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must provide a last name')
 
       # Provide a last name
       fill_in('Last name', with: contributors_fixture.first['last_name'])
+      fill_in('First name', with: contributors_fixture.first['first_name'])
       find_field('First name').send_keys(:tab)
-      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must have at least one cited contributor')
+      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must have at least one contributor')
       expect(page).to have_no_css('.invalid-feedback.is-invalid', text: 'must provide a last name')
       expect(page).to have_css('.nav-link.is-invalid', text: 'Contributors')
 
       # Add another contributor to clear the error
       click_link_or_button('Add another contributor')
-      expect(page).to have_no_css('.invalid-feedback.is-invalid', text: 'must have at least one cited contributor')
+      expect(page).to have_no_css('.invalid-feedback.is-invalid', text: 'must have at least one contributor')
       expect(page).to have_css('.nav-link:not(.is-invalid)', text: 'Contributors')
     end
   end

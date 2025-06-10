@@ -36,8 +36,6 @@ class ContributorForm < ApplicationForm
                     if: -> { person? && with_orcid }
   validates :orcid, presence: true, on: :deposit, if: -> { person? && with_orcid? }
 
-  attribute :cited, :boolean, default: true
-
   # When true, indicates that the contributor is required by the collection.
   attribute :collection_required, :boolean, default: false
 

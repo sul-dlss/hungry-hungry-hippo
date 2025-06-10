@@ -208,10 +208,6 @@ RSpec.describe 'Manage contributors for a work deposit' do
         expect(page).to have_no_content('Name associated with this ORCID iD is Michael A. Keller.')
 
         fill_in('ORCID iD', with: 'https://orcid.org/0000-0001-7756-243X')
-
-        within('.cited-section') do
-          find('label', text: 'No').click
-        end
       end
 
       click_link_or_button('Save as draft')
@@ -241,7 +237,6 @@ RSpec.describe 'Manage contributors for a work deposit' do
           expect(page).to have_css('td:nth-child(1)', text: 'Michael A. Keller')
           expect(page).to have_css('td:nth-child(2)', text: 'https://orcid.org/0000-0001-7756-243X')
           expect(page).to have_css('td:nth-child(3)', text: 'Author')
-          expect(page).to have_css('td:nth-child(4)', text: 'No')
         end
       end
     end
@@ -249,7 +244,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
 
   context 'with required contributors' do
     let(:required_person) { create(:person_contributor) }
-    let(:required_organization) { create(:organization_contributor, cited: false) }
+    let(:required_organization) { create(:organization_contributor) }
     let(:required_stanford_organization) { create(:organization_contributor, :stanford) }
 
     before do
@@ -274,16 +269,14 @@ RSpec.describe 'Manage contributors for a work deposit' do
         expect(page).to have_text('Required author / contributor')
         expect(page).to have_no_button('Clear')
         expect(page).to have_text("#{required_person.first_name} #{required_person.last_name} (Author) will be " \
-                                  'included in the list of authors and contributors for this work. This person will ' \
-                                  'be included in the citation.')
+                                  'included in the list of authors and contributors for this work.')
       end
 
       within(form_instances[1]) do
         expect(page).to have_text('Required author / contributor')
         expect(page).to have_no_button('Clear')
         expect(page).to have_text("#{required_organization.organization_name} (Funder) will be included in the list " \
-                                  'of authors and contributors for this work. This organization will not be included ' \
-                                  'in the citation.')
+                                  'of authors and contributors for this work.')
       end
 
       within(form_instances[2]) do

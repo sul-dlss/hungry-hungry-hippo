@@ -245,23 +245,20 @@ RSpec.describe DepositCollectionJob do
           'person_role' => 'researcher',
           'role_type' => 'person',
           'with_orcid' => true,
-          'orcid' => '0000-0000-0000-0000',
-          'cited' => true
+          'orcid' => '0000-0000-0000-0000'
         },
         {
           'organization_name' => 'Stanford University',
           'role_type' => 'organization',
           'organization_role' => 'degree_granting_institution',
           'stanford_degree_granting_institution' => true,
-          'suborganization_name' => 'Graduate School of Business',
-          'cited' => true
+          'suborganization_name' => 'Graduate School of Business'
         },
         {
           'organization_name' => 'Massachusetts Institute of Technology',
           'role_type' => 'organization',
           'organization_role' => 'research_group',
-          'stanford_degree_granting_institution' => false,
-          'cited' => false
+          'stanford_degree_granting_institution' => false
         }
       ]
     end
@@ -287,20 +284,17 @@ RSpec.describe DepositCollectionJob do
       expect(person_contributor.role).to eq('researcher')
       expect(person_contributor.role_type).to eq('person')
       expect(person_contributor.orcid).to eq('0000-0000-0000-0000')
-      expect(person_contributor.cited).to be true
 
       stanford_contributor = collection.contributors[1]
       expect(stanford_contributor.organization_name).to eq('Stanford University')
       expect(stanford_contributor.role_type).to eq('organization')
       expect(stanford_contributor.role).to eq('degree_granting_institution')
       expect(stanford_contributor.suborganization_name).to eq('Graduate School of Business')
-      expect(stanford_contributor.cited).to be true
 
       organization_contributor = collection.contributors[2]
       expect(organization_contributor.organization_name).to eq('Massachusetts Institute of Technology')
       expect(organization_contributor.role_type).to eq('organization')
       expect(organization_contributor.role).to eq('research_group')
-      expect(organization_contributor.cited).to be false
     end
   end
 

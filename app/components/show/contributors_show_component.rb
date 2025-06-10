@@ -16,11 +16,10 @@ module Show
       values = [
         contributor_name(contributor).presence,
         orcid_link(contributor),
-        contributor_role_label(contributor),
-        helpers.human_boolean(contributor.cited)
+        contributor_role_label(contributor)
       ]
-      # Note that this excludes the cited status since it always has a value.
-      return [] unless values.first(3).any?
+
+      return [] if values.all?(&:blank?)
 
       values
     end

@@ -12,7 +12,6 @@ RSpec.describe Form::ContributorMapper do
         last_name: 'Contributor',
         role_type: 'person',
         person_role: 'author',
-        cited: true,
         orcid: '0001-0002-0003-0004',
         with_orcid: true,
         stanford_degree_granting_institution: false
@@ -28,7 +27,6 @@ RSpec.describe Form::ContributorMapper do
         organization_name: contributor.organization_name,
         role_type: 'organization',
         organization_role: 'funder',
-        cited: true,
         suborganization_name: nil,
         stanford_degree_granting_institution: false,
         with_orcid: false
@@ -44,7 +42,6 @@ RSpec.describe Form::ContributorMapper do
         organization_name: 'Stanford University',
         role_type: 'organization',
         organization_role: 'degree_granting_institution',
-        cited: true,
         suborganization_name: 'Department of Philosophy',
         stanford_degree_granting_institution: true,
         with_orcid: false

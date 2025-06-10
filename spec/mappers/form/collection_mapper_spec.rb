@@ -27,7 +27,7 @@ RSpec.describe Form::CollectionMapper, type: :mapping do
     [
       create(:person_contributor, first_name: 'Jane', last_name: 'Stanford', orcid: '0001-0002-0003-0004'),
       create(:organization_contributor, organization_name: 'Stanford University Libraries', role: 'host_institution'),
-      create(:organization_contributor, :stanford, cited: false)
+      create(:organization_contributor, :stanford)
     ]
   end
 

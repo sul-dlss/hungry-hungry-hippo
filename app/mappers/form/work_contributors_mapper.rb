@@ -21,7 +21,8 @@ module Form
       end
 
       def call
-        { 'first_name' => first_name,
+        {
+          'first_name' => first_name,
           'last_name' => last_name,
           'role_type' => organization? ? 'organization' : 'person',
           'person_role' => (role if person?),
@@ -30,8 +31,8 @@ module Form
           'suborganization_name' => suborganization_name,
           'stanford_degree_granting_institution' => stanford_degree_granting_institution?,
           'orcid' => orcid,
-          'with_orcid' => orcid.present?,
-          'cited' => cited? }
+          'with_orcid' => orcid.present?
+        }
       end
 
       private
@@ -83,10 +84,6 @@ module Form
         return unless stanford_degree_granting_institution?
 
         contributor.name.first.structuredValue&.second&.value
-      end
-
-      def cited?
-        contributor.note&.none? { |note| note.type == 'citation status' && note.value == 'false' }
       end
     end
   end

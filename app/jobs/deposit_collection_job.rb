@@ -128,16 +128,14 @@ class DepositCollectionJob < ApplicationJob
                                     last_name: contributor_form.last_name,
                                     role: contributor_form.person_role,
                                     role_type: 'person',
-                                    orcid: contributor_form.with_orcid ? contributor_form.orcid : nil,
-                                    cited: contributor_form.cited)
+                                    orcid: contributor_form.with_orcid ? contributor_form.orcid : nil)
   end
 
   def assign_organization(contributor_form:)
     collection.contributors.create!(organization_name: contributor_form.organization_name,
                                     role: contributor_form.organization_role,
                                     role_type: 'organization',
-                                    suborganization_name: suborganization_name_for(contributor_form:),
-                                    cited: contributor_form.cited)
+                                    suborganization_name: suborganization_name_for(contributor_form:))
   end
 
   def suborganization_name_for(contributor_form:)
