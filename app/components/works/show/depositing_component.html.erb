@@ -1,6 +1,6 @@
 <% if alert? %>
   <%= render Elements::AlertComponent.new(variant: :success, dismissible: true,
-                                          title: 'You have successfully submitted your work for deposit',
+                                          title: 'Work successfully deposited',
                                           data: { turbo_permanent: true }, id: 'depositing-alert') do %>
     <p class="mt-2 mb-1">Here's what to expect next:</p>
     <ul>

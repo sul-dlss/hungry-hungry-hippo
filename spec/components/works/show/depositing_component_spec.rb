@@ -13,7 +13,7 @@ RSpec.describe Works::Show::DepositingComponent, type: :component do
     it 'renders the alert' do
       render_inline(described_class.new(work_presenter:))
 
-      expect(page).to have_css('.alert', text: 'You have successfully submitted your work for deposit')
+      expect(page).to have_css('.alert', text: 'Work successfully deposited')
       expect(page).to have_css('#depositing-alert[data-turbo-permanent]')
     end
   end

@@ -44,7 +44,7 @@ module Elements
     private
 
     def message_position_classes
-      case @message_position # rubocop:disable Metrics/HashLikeCase
+      case @message_position # rubocop:disable Style/HashLikeCase
       when :bottom
         'flex-column'
       when :right
