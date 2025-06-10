@@ -72,10 +72,10 @@ en:
       fields:
         description:
           tooltip_html: >-
-            Enter a brief description (100 characters max) to help others understand what this file contains. This description will appear on the public page for your work next to the name of the file. This description is not required.
+            Enter a brief description (100 characters max) to help others understand what this file contains. This description will appear on the public webpage for your work next to the name of the file. This description is not required.
         hide:
           tooltip_html: >-
-            Check this box to prevent this file from being displayed on or downloaded from the public page for your work. The file will still be preserved in the SDR as part of your deposit. Hidden files should NOT contain any content the University classifies as <a href="https://uit.stanford.edu/guide/riskclassifications" target="_blank">High Risk</a>.
+            Check this box to prevent this file from being displayed on or downloaded from the public webpage for your work. The file will still be preserved in the SDR as part of your deposit. Hidden files should NOT contain any content the University classifies as <a href="https://uit.stanford.edu/guide/riskclassifications" target="_blank">High Risk</a>.
   contributors:
     edit:
       legend: 'Contributor'
@@ -148,7 +148,7 @@ en:
           label: 'Contact email (one per box)'
           collections:
             tooltip_html: >-
-              Enter one or more valid email addresses (one per box) where people can write to ask questions about this collection. Consider using a group address that will be active and monitored for a long time to ensure that questions are received. Email addresses will appear on the public page for the collection.
+              Enter one or more valid email addresses (one per box) where people can write to ask questions about this collection. Consider using a group address that will be active and monitored for a long time to ensure that questions are received. Email addresses will appear on the public webpage for the collection.
           works:
             tooltip_html: >-
               Enter one or more valid email addresses (one per box) where people can write to ask questions about this deposit. Email addresses will be publicly visible. Use an email address that you expect to be functional for many years, if possible.
@@ -173,7 +173,7 @@ en:
     edit:
       fields:
         label: 'License'
-      license_terms_of_use: In addition to the license, the following Terms of Use will also be displayed on the public page for your work.
+      license_terms_of_use: In addition to the license, the following Terms of Use will also be displayed on the public webpage for your work.
   managers:
     edit:
       legend: 'Managers'
@@ -182,7 +182,7 @@ en:
   sharing_link:
     label: 'Link for sharing'
     tooltip_html: >-
-      Use this link for sharing the public page for your deposit. Links become active when the deposit is completed.
+      Use this link for sharing the public webpage for your deposit. Links become active when the deposit is completed.
   publication_date:
     edit:
       legend: 'Publication date (optional)'
@@ -237,7 +237,7 @@ en:
   terms_of_deposit:
     faq: 'FAQs and download Terms of Deposit'
   terms_of_use:
-    default_use_statement_instructions: 'Enter additional terms of use not covered by your chosen license or the default terms shown above, which also display on the PURL page.'
+    default_use_statement_instructions: 'Enter additional terms of use not covered by your chosen license or the default terms shown above, which also display on the public webpage.'
   works:
     edit:
       breadcrumb: 'Edit'
@@ -278,7 +278,7 @@ en:
           help_text: >-
             A unique, descriptive title may improve discovery of your work in web searches.
           tooltip_html: >-
-            Serves as the title of the public page for your work and the title of web search results. Detailed titles similar to those used for scholarly publications will make it easier for users to find your work online. Avoid generic titles such as "Dataset for publication" or "My honors thesis."
+            Serves as the title of the public webpage for your work and the title of web search results. Detailed titles similar to those used for scholarly publications will make it easier for users to find your work online. Avoid generic titles such as "Dataset for publication" or "My honors thesis."
         license:
           help_text: 'Assigning a license may improve discovery of your work in web searches.'
           tooltip_html: >-
@@ -290,7 +290,7 @@ en:
         whats_changing:
           label: "What's changing?"
           tooltip_html: >-
-            Enter a brief description (200 characters max) indicating which fields were changed or what type of correction was made. This information is not displayed on the public page.
+            Enter a brief description (200 characters max) indicating which fields were changed or what type of correction was made. This information is not displayed on the public webpage.
         work_type:
           label: 'What type of content are you depositing?'
           tooltip_html: >-
@@ -323,9 +323,9 @@ en:
           label: 'Citation for this deposit (optional)'
           help_text: >-
             You may explicitly state how you would like your work to be cited.
-            Be sure to include the DOI if you're getting one or the link to the public page for your work that begins "https://purl.stanford.edu/..."
+            Be sure to include the DOI if you're getting one or the link to the public webpage for your work that begins "https://purl.stanford.edu/..."
           tooltip_html: >-
-            To find your PURL link and DOI (if you've elected to get one), click "Save as draft" at the bottom of this screen. The PURL and DOI are listed on the display page for this item. Copy these links, then re-edit this work to add them to the citation below.
+            To find your public webpage link and DOI (if you've elected to get one), click "Save as draft" at the bottom of this screen. The public webpage and DOI are listed on the display page for this item. Copy these links, then re-edit this work to add them to the citation below.
         contributors:
           tab_label: 'Authors / Contributors'
           label: 'Authors / Contributors'
@@ -338,7 +338,7 @@ en:
           tab_label: 'Dates (optional)'
           label: 'Enter dates related to your deposit (optional)'
           tooltip_html: >-
-            This application will automatically record the date that your content is made available on the public page for your work. The date fields below are optional.
+            This application will automatically record the date that your content is made available on the public webpage for your work. The date fields below are optional.
         doi:
           tab_label: 'DOI'
           label: 'DOI assignment'
@@ -386,11 +386,11 @@ en:
           help_text: >-
             A unique, descriptive name may improve discovery of your collection in web searches.
           tooltip_html: >-
-            Enter a name for your collection. This name will serve as the title on the public page for the collection and the title of web search results, as well as in the Stanford University Libraries' catalog. Please do not use the word "Collection" at the end of the title.
+            Enter a name for your collection. This name will serve as the title on the public webpage for the collection and the title of web search results, as well as in the Stanford University Libraries' catalog. Please do not use the word "Collection" at the end of the title.
         release_option:
           label: 'When will files on deposits to this collection be downloadable?'
           tooltip_html: >-
-            As the collection manager, you can decide whether 1) Depositors to this collection are required to make the files on their deposits downloadable as soon as the deposit is completed ("Immediately"), or 2) if Depositors can decide for themselves when downloading of their content will be available ("Depositor selects…"). Note that for both options the public page is always visible as soon as the deposit is complete and all descriptive information on the page is visible to anyone at any time.
+            As the collection manager, you can decide whether 1) Depositors to this collection are required to make the files on their deposits downloadable as soon as the deposit is completed ("Immediately"), or 2) if Depositors can decide for themselves when downloading of their content will be available ("Depositor selects…"). Note that for both options the public webpage is always visible as soon as the deposit is complete and all descriptive information on the page is visible to anyone at any time.
           options:
             immediate: 'Immediately'
             depositor_selects: 'Depositor selects a date up to'
@@ -455,7 +455,7 @@ en:
           tab_label: 'Terms of use'
           label: 'Terms of use'
           tooltip_html: >-
-            As the collection manager, you can decide whether additional terms of use can be added to a deposit and displayed on the public page along with the Standard Terms of Use shown below. You have three options: 1) Leave the custom terms off. No additional terms will be added. 2) Provide custom terms that will appear on every deposit. The depositor will not be able to modify this text. 3) Allow the depositor to type in their own custom terms. With this option, you can choose to display to the depositor the default instructions we have written, or write your own instructions.
+            As the collection manager, you can decide whether additional terms of use can be added to a deposit and displayed on the public webpage along with the Standard Terms of Use shown below. You have three options: 1) Leave the custom terms off. No additional terms will be added. 2) Provide custom terms that will appear on every deposit. The depositor will not be able to modify this text. 3) Allow the depositor to type in their own custom terms. With this option, you can choose to display to the depositor the default instructions we have written, or write your own instructions.
           use_statement_label: 'Include a custom use statement?'
           use_statement_options:
             nope: 'No, do not include a custom use statement.'

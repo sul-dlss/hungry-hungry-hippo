@@ -11,7 +11,7 @@ module Emails
 
       def call
         tag.p do
-          "The persistent URL (PURL) for this deposit is #{purl_link}. Please use this when citing your work.".html_safe # rubocop:disable Rails/OutputSafety
+          "The public webpage for this deposit is #{purl_link}. Please use this when citing your work.".html_safe # rubocop:disable Rails/OutputSafety
         end
       end
 

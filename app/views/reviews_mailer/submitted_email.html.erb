@@ -11,7 +11,7 @@
   Upon review, you will receive another notification indicating if the deposit has been
   returned to you for changes or if it has been approved and published.
   <% if @work.druid %>
-    Once published, your deposit will be available at this persistent URL (PURL): <%= link_to nil, Sdr::Purl.from_druid(druid: @work.druid) %>
+    Once published, your deposit will be available at this public webpage: <%= link_to nil, Sdr::Purl.from_druid(druid: @work.druid) %>
   <% end %>
 </p>
 

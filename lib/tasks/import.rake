@@ -140,7 +140,7 @@ namespace :import do
   end
 
   desc 'Test import works from json'
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   # IMPORTANT: Enable merge_stanford_and_organization and document_type feature flags in H2.
   # For example: SETTINGS__MERGE_STANFORD_AND_ORGANIZATION=true SETTINGS__DOCUMENT_TYPE=true SETTINGS__NO_CITATION_STATUS_NOTE=true bin/rails c -e p
   # works_cocina.jsonl can be generated in H2 for some set of works with:
@@ -152,7 +152,7 @@ namespace :import do
   #     end
   #   end
   # It will raise an error if the work cannot be roundtripped or the collection cannot be found.
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
   task :test_works, %i[cocina_filename] => :environment do |_t, args|
     Parallel.each_with_index(File.open(args[:cocina_filename] || 'works_cocina.jsonl'),
                              in_processes: 6) do |line, index|

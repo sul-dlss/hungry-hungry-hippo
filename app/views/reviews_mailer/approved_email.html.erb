@@ -8,7 +8,7 @@
 <%= render Emails::Works::SubmitClarificationComponent.new %>
 
 <p>
-  The persistent URL (PURL) for this deposit, <%= link_to nil, Sdr::Purl.from_druid(druid: @work.druid) %>,
+  The public webpage for this deposit, <%= link_to nil, Sdr::Purl.from_druid(druid: @work.druid) %>,
   is now active and available for sharing.
 </p>
 
