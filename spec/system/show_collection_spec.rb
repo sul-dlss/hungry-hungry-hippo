@@ -62,7 +62,7 @@ RSpec.describe 'Show a collection' do
       # Collection information
       within('table#info-table') do
         expect(page).to have_css('caption', text: 'Collection information')
-        expect(page).to have_css('th', text: 'PURL')
+        expect(page).to have_css('th', text: 'Public webpage')
         expect(page).to have_link("https://sul-purl-stage.stanford.edu/#{bare_druid}", href: "https://sul-purl-stage.stanford.edu/#{bare_druid}")
         expect(page).to have_css('th', text: 'Created by')
         expect(page).to have_css('td', text: collection.user.name)
