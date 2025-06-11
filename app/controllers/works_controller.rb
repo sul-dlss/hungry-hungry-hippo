@@ -64,8 +64,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       work = Work.create!(title: @work_form.title, user: current_user, collection: @collection)
       @content.update!(work:)
       @work_form.creation_date = work.created_at.to_date
-      ahoy.track Ahoy::Event::WORK_FORM_COMPLETED, form_id: @work_form.form_id, work_id: work.id
-      ahoy.track Ahoy::Event::WORK_CREATED, work_id: work.id, deposit: deposit?, review: request_review?
+      track_work_create(work:)
       perform_deposit(work:)
       redirect_to wait_works_path(work.id)
     else
@@ -82,8 +81,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     @content = Content.find(@work_form.content_id)
 
     if (@valid = @work_form.valid?(validation_context)) && perform_deposit?
-      ahoy.track Ahoy::Event::WORK_FORM_COMPLETED, form_id: @work_form.form_id, work_id: @work.id
-      ahoy.track Ahoy::Event::WORK_UPDATED, work_id: @work.id, deposit: deposit?, review: request_review?
+      track_work_update
       perform_deposit(work: @work)
       redirect_to wait_works_path(@work.id)
     else
@@ -292,5 +290,15 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     params = { work_id: @work&.id, deposit: deposit?, review: request_review?,
                errors: @work_form.loggable_errors }.compact
     ahoy.track Ahoy::Event::INVALID_WORK_SUBMITTED, **params
+  end
+
+  def track_work_create(work:)
+    ahoy.track Ahoy::Event::WORK_FORM_COMPLETED, form_id: @work_form.form_id, work_id: work.id
+    ahoy.track Ahoy::Event::WORK_CREATED, work_id: work.id, deposit: deposit?, review: request_review?
+  end
+
+  def track_work_update
+    ahoy.track Ahoy::Event::WORK_FORM_COMPLETED, form_id: @work_form.form_id, work_id: @work.id
+    ahoy.track Ahoy::Event::WORK_UPDATED, work_id: @work.id, deposit: deposit?, review: request_review?
   end
 end
