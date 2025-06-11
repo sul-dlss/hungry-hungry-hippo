@@ -4,12 +4,13 @@
 class WorkPresenter < FormPresenter
   include ActionPolicy::Behaviour
 
-  def initialize(work:, work_form:, version_status:)
+  def initialize(work:, work_form:, version_status:, user_version: 1)
     @work = work
+    @user_version = user_version
     super(form: work_form, version_status:)
   end
 
-  attr_reader :work, :version_status
+  attr_reader :work, :version_status, :user_version
 
   def purl_link
     # No druid yet, so there's no PURL link yet either. Work is likely still depositing.

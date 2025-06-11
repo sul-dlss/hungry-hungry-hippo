@@ -112,6 +112,7 @@ RSpec.describe 'Show a work' do
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
     # File doesn't matter; it just needs to exist.
     allow(StagingSupport).to receive(:staging_filepath).and_call_original
     allow(StagingSupport).to receive(:staging_filepath).with(druid: work.druid, filepath: 'my_file1.txt')
@@ -174,7 +175,7 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('td', text: collection.title)
         expect(page).to have_css('tr', text: 'Depositor')
         expect(page).to have_css('td', text: user.name)
-        expect(page).to have_css('tr', text: 'Version details')
+        expect(page).to have_css('tr', text: 'Version')
         expect(page).to have_css('td', text: '1')
         expect(page).to have_css('tr', text: 'Total number of files')
         expect(page).to have_css('td', text: '3')

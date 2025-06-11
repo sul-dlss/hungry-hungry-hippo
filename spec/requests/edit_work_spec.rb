@@ -16,7 +16,7 @@ RSpec.describe 'Edit work' do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status)
         .with(druid:).and_return(build(:version_status))
-
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
       create(:work, druid:, collection: create(:collection, druid: collection_druid_fixture))
       sign_in(create(:user))
     end
@@ -36,6 +36,7 @@ RSpec.describe 'Edit work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
       create(:work, druid:, collection: create(:collection, druid: collection_druid_fixture))
       sign_in(admin_user, groups:)
     end
@@ -72,6 +73,7 @@ RSpec.describe 'Edit work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
       allow(WorkRoundtripper).to receive(:call)
     end
 
@@ -102,6 +104,7 @@ RSpec.describe 'Edit work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
       allow(WorkRoundtripper).to receive(:call).and_call_original
 
       sign_in(user)
@@ -129,6 +132,7 @@ RSpec.describe 'Edit work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
       allow(WorkRoundtripper).to receive(:call)
 
       sign_in(user)
@@ -156,6 +160,7 @@ RSpec.describe 'Edit work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid: work.druid).and_return(version_status)
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
       allow(WorkRoundtripper).to receive(:call)
 
       sign_in(user)

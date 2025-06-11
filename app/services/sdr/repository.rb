@@ -24,6 +24,14 @@ module Sdr
       raise NotFoundResponse, "Object not found: #{druid}"
     end
 
+    # @param [String] druid the druid of the object
+    # @return [Integer] the head user version or 1 as default
+    def self.latest_user_version(druid:)
+      Dor::Services::Client.object(druid).user_version.inventory.find(&:head)&.userVersion || 1
+    rescue Dor::Services::Client::NotFoundResponse
+      raise NotFoundResponse, "Object not found: #{druid}"
+    end
+
     # @param [Array<String>] druids the druids of the objects
     # @return [Hash<String,VersionStatus>] map of druid to status
     def self.statuses(druids:)

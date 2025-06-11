@@ -17,6 +17,7 @@ RSpec.describe 'Search for and show a user' do
   before do
     allow(Sdr::Repository).to receive(:statuses).with(druids: [owned_work.druid])
                                                 .and_return({ owned_work.druid => build(:version_status) })
+    allow(Sdr::Repository).to receive(:latest_user_version).with(druid: owned_work.druid).and_return(1)
     sign_in(create(:user), groups: ['dlss:hydrus-app-administrators'])
   end
 

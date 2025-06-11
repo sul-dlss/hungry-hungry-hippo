@@ -15,6 +15,7 @@ RSpec.describe 'Discard a work' do
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
     allow(Sdr::Repository).to receive(:discard_draft)
     allow(Sdr::Event).to receive(:list).and_return([])
 

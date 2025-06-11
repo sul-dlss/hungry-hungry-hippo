@@ -11,6 +11,7 @@ RSpec.describe 'Show work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:version_status))
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
     end
 
     context 'when just some user' do
@@ -51,6 +52,7 @@ RSpec.describe 'Show work' do
       create(:work, druid:)
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:openable_version_status))
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
 
       sign_in(admin_user, groups:)
     end
@@ -87,6 +89,7 @@ RSpec.describe 'Show work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:version_status))
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
 
       sign_in(user)
     end
@@ -112,6 +115,7 @@ RSpec.describe 'Show work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:version_status))
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
 
       sign_in(user)
     end
@@ -133,6 +137,8 @@ RSpec.describe 'Show work' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:first_draft_version_status))
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
+
       allow(Doi).to receive(:assigned?).and_return(false)
 
       sign_in(user)
