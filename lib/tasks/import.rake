@@ -40,7 +40,12 @@ NO_MIGRATE_COLLECTIONS = [
   'druid:zm077xw4254',
   'druid:qx111hs9166',
   # Test collection
-  'druid:qt691tp6756'
+  'druid:qt691tp6756',
+  # Version mismatches
+  'druid:xt984kp6950',
+  'druid:px088wv9627',
+  # Already migrated to H3
+  'druid:db160pg5444'
 ].freeze
 
 namespace :import do
@@ -141,7 +146,7 @@ namespace :import do
 
   desc 'Test import works from json'
   # rubocop:disable Layout/LineLength
-  # IMPORTANT: Enable merge_stanford_and_organization and document_type feature flags in H2.
+  # IMPORTANT: Enable feature flags in H2.
   # For example: SETTINGS__MERGE_STANFORD_AND_ORGANIZATION=true SETTINGS__DOCUMENT_TYPE=true SETTINGS__NO_CITATION_STATUS_NOTE=true bin/rails c -e p
   # works_cocina.jsonl can be generated in H2 for some set of works with:
   #   File.open('works_cocina.jsonl', 'w') do |f|
