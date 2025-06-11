@@ -17,7 +17,7 @@ RSpec.describe 'Validate a work deposit' do
     sign_in(user)
   end
 
-  it 'validates a work' do
+  it 'validates a work', :dropzone do
     visit work_path_with_collection
 
     expect(page).to have_css('h1', text: 'Untitled deposit')

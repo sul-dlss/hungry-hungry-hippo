@@ -37,7 +37,7 @@ RSpec.describe 'Create a work that requires review' do
     sign_in(user)
   end
 
-  it 'creates and deposits a work' do
+  it 'creates and deposits a work', :dropzone do
     visit dashboard_path
     click_link_or_button('Deposit to this collection')
 

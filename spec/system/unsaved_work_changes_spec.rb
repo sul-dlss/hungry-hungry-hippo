@@ -36,7 +36,7 @@ RSpec.describe 'Notifies unsaved changes' do
   end
 
   context 'when the user uploads a file' do
-    it 'asks user to confirm leaving page' do
+    it 'asks user to confirm leaving page', :dropzone do
       visit new_work_path(collection_druid: collection.druid)
 
       expect(page).to have_css('h1', text: 'Untitled deposit')
