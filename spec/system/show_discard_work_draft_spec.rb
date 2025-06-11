@@ -27,6 +27,7 @@ RSpec.describe 'Discard a work draft' do
     before do
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status_discardable,
                                                                          version_status_openable)
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(2)
     end
 
     it 'discards a draft' do
@@ -55,6 +56,7 @@ RSpec.describe 'Discard a work draft' do
     before do
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
       allow(Sdr::Repository).to receive(:status).with(druid: collection.druid).and_return(version_status)
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
       allow(Sdr::Repository).to receive(:find).with(druid: collection.druid).and_return(collection_cocina_object)
     end
 

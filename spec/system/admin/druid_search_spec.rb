@@ -11,6 +11,7 @@ RSpec.describe 'Search for a collection or work by druid' do
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
     allow(Sdr::Event).to receive(:list).and_return([])
 
     sign_in(create(:user), groups: ['dlss:hydrus-app-administrators'])

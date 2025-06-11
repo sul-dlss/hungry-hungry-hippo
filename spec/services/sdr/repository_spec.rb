@@ -149,6 +149,59 @@ RSpec.describe Sdr::Repository do
     end
   end
 
+  describe '#latest_user_version' do
+    context 'when the object is found' do
+      let(:object_client) { instance_double(Dor::Services::Client::Object, user_version: user_version_client) }
+      let(:user_version_client) { instance_double(Dor::Services::Client::UserVersion, inventory:) }
+
+      before do
+        allow(Dor::Services::Client).to receive(:object).and_return(object_client)
+      end
+
+      context 'when there are multiple user versions' do
+        let(:inventory) do
+          [instance_double(Dor::Services::Client::UserVersion::Version, head: false, userVersion: 1),
+           instance_double(Dor::Services::Client::UserVersion::Version, head: true, userVersion: 2)]
+        end
+
+        it 'returns the latest head user version number from the inventory' do
+          expect(described_class.latest_user_version(druid:)).to eq 2
+          expect(Dor::Services::Client).to have_received(:object).with(druid)
+        end
+      end
+
+      context 'when there is one user version' do
+        let(:inventory) do
+          [instance_double(Dor::Services::Client::UserVersion::Version, head: true, userVersion: 1)]
+        end
+
+        it 'returns the only user version from the inventory' do
+          expect(described_class.latest_user_version(druid:)).to eq 1
+          expect(Dor::Services::Client).to have_received(:object).with(druid)
+        end
+      end
+
+      context 'when there are no user versions' do
+        let(:inventory) { [] }
+
+        it 'returns the default of 1' do
+          expect(described_class.latest_user_version(druid:)).to eq 1
+          expect(Dor::Services::Client).to have_received(:object).with(druid)
+        end
+      end
+    end
+
+    context 'when the object is not found' do
+      before do
+        allow(Dor::Services::Client).to receive(:object).and_raise(Dor::Services::Client::NotFoundResponse)
+      end
+
+      it 'raises' do
+        expect { described_class.latest_user_version(druid:) }.to raise_error(Sdr::Repository::NotFoundResponse)
+      end
+    end
+  end
+
   describe '#statuses' do
     context 'when successful' do
       let(:objects_client) { instance_double(Dor::Services::Client::Objects, statuses: { druid => version_status }) }

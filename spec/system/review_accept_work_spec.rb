@@ -21,6 +21,7 @@ RSpec.describe 'Review and accept a work' do
 
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status, deposit_version_status)
+    allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
 
     allow(Settings.notifications).to receive(:enabled).and_return(true)
     allow(Sdr::Event).to receive(:create)

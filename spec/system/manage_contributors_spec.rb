@@ -23,6 +23,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
     # Stubbing out for show page
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
     allow(Doi).to receive(:assigned?).with(druid:).and_return(false)
     allow(Sdr::Event).to receive(:list).and_return([])
 

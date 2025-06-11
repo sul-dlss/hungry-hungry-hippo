@@ -63,6 +63,7 @@ RSpec.describe 'Notifies unsaved changes' do
       create(:work, druid:, user:, collection:)
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
     end
 
     it 'asks user to confirm leaving page' do
@@ -90,6 +91,7 @@ RSpec.describe 'Notifies unsaved changes' do
       create(:work, druid:, user:, collection:)
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
     end
 
     it 'asks user to confirm leaving page' do
@@ -120,6 +122,7 @@ RSpec.describe 'Notifies unsaved changes' do
       create(:work, druid:, user:, collection:)
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
     end
 
     it 'asks user to confirm leaving page' do

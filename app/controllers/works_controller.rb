@@ -39,7 +39,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
     unless editable?
       flash[:warning] = helpers.t('works.edit.messages.cannot_be_edited_html', support_email: Settings.support_email)
-      return redirect_to work_path(params[:druid]), status: :see_other
+      return redirect_to work_path(druid), status: :see_other
     end
 
     # This updates the Work with the latest metadata from the Cocina object.
@@ -142,6 +142,10 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   private
 
+  def druid
+    params[:druid]
+  end
+
   def work_params
     params.expect(work: WorkForm.user_editable_attributes + [WorkForm.nested_attributes])
   end
@@ -151,11 +155,11 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def update_work_params
-    work_params.merge(druid: params[:druid])
+    work_params.merge(druid:)
   end
 
   def set_work_and_collection
-    @work = Work.find_by!(druid: params[:druid])
+    @work = Work.find_by!(druid:)
     @collection = @work.collection
   end
 
@@ -164,7 +168,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def set_work_form_from_cocina
-    @cocina_object = Sdr::Repository.find(druid: params[:druid])
+    @cocina_object = Sdr::Repository.find(druid:)
     version_description = @version_status.open? ? @version_status.version_description : nil
     @work_form = Form::WorkMapper.call(cocina_object: @cocina_object, doi_assigned: doi_assigned?,
                                        agree_to_terms: current_user.agree_to_terms?,
@@ -176,7 +180,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def set_status
-    @version_status = Sdr::Repository.status(druid: params[:druid])
+    @version_status = Sdr::Repository.status(druid:)
   end
 
   def set_content
@@ -196,7 +200,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def set_presenter
-    @work_presenter = WorkPresenter.new(work: @work, work_form: @work_form, version_status: @version_status)
+    @work_presenter = WorkPresenter.new(work: @work, work_form: @work_form, version_status: @version_status,
+                                        user_version: Sdr::Repository.latest_user_version(druid:))
   end
 
   def set_license_presenter
