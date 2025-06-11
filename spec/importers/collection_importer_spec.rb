@@ -134,6 +134,17 @@ RSpec.describe CollectionImporter do
     end
   end
 
+  context 'when roundtrip is skipped' do
+    let(:cocina_object) { collection_with_metadata_fixture.new(type: Cocina::Models::ObjectType.curated_collection) }
+
+    it 'raises an error and does not create a new collection' do
+      expect { described_class.call(collection_hash:, cocina_object:, skip_roundtrip: true) }
+        .to change(Collection, :count).by(1)
+
+      expect(tags_client).to have_received(:create).with(tags: ['Project : H3'])
+    end
+  end
+
   context 'when license is not required' do
     it 'sets the license to the default license' do
       collection_hash['license_option'] = 'depositor_selects'
