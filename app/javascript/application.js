@@ -19,3 +19,6 @@ Turbo.StreamActions.frame_reload = function () { // eslint-disable-line no-undef
   const frame = document.querySelector(`turbo-frame#${this.getAttribute('frameTarget')}`)
   frame.reload()
 }
+
+// Add data-ahoy-track to a link to track clicks. The link_to_new_tab helper will add this automatically.
+ahoy.trackClicks('[data-ahoy-track]') // eslint-disable-line no-undef
