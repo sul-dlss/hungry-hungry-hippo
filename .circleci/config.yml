@@ -35,4 +35,4 @@ workflows:
                 command: |
                   export PLAYWRIGHT_CLI_VERSION=$(bundle exec ruby -e 'require "playwright"; puts Playwright::COMPATIBLE_PLAYWRIGHT_VERSION.strip')
                   yarn add -D "playwright@$PLAYWRIGHT_CLI_VERSION"
-                  yarn run playwright install --with-deps
+                  yarn run playwright install --with-deps --only-shell chromium

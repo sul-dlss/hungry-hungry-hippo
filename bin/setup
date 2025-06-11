@@ -19,7 +19,7 @@ FileUtils.chdir APP_ROOT do
   system("yarn install --check-files")
 
   # Install Playwright's JavaScript library pinned to the version in Rubyland
-  system("export PLAYWRIGHT_CLI_VERSION=$(bundle exec ruby -e 'require \"playwright\"; puts Playwright::COMPATIBLE_PLAYWRIGHT_VERSION.strip') && yarn add -D \"playwright@$PLAYWRIGHT_CLI_VERSION\" && yarn run playwright install")
+  system("export PLAYWRIGHT_CLI_VERSION=$(bundle exec ruby -e 'require \"playwright\"; puts Playwright::COMPATIBLE_PLAYWRIGHT_VERSION.strip') && yarn add -D \"playwright@$PLAYWRIGHT_CLI_VERSION\" && yarn run playwright install --only-shell chromium")
 
   # puts "\n== Copying sample files =="
   # unless File.exist?("config/database.yml")
