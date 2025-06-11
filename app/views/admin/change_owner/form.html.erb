@@ -15,6 +15,7 @@
           <input type="hidden" data-autocomplete-target="hidden" data-autocomplete-owner-sunetid-target="value" data-action="autocomplete-owner-sunetid#change" aria-label="autocomplete">
           <%= tag.p data: { autocomplete_owner_sunetid_target: 'description' }, class: 'm-2', visible: false %>
           <%= form.hidden_field :sunetid, { required: true, 'aria-label': 'sunetid', data: { autocomplete_owner_sunetid_target: 'sunetid' } } %>
+          <%= form.hidden_field :name, { required: true, 'aria-label': 'name', data: { autocomplete_owner_sunetid_target: 'name' } } %>
           <%= render Elements::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-5', disabled: true, data: { autocomplete_owner_sunetid_target: 'submitButton' }) %>
         <% end %>
       <% end %>

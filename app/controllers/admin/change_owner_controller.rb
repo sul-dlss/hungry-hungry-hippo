@@ -6,6 +6,7 @@ module Admin
     def new
       authorize!
 
+      @data = data
       @change_owner_form = Admin::ChangeOwnerForm.new(content_id: params[:content_id])
       render :form
     end
@@ -25,10 +26,19 @@ module Admin
       end
     end
 
+    def data
+      {
+        controller: 'autocomplete autocomplete-owner-sunetid',
+        autocomplete_url_value: '/accounts/search_user',
+        autocomplete_query_param_value: 'sunetid',
+        autocomplete_min_length_value: '3'
+      }
+    end
+
     private
 
     def change_owner_params
-      params.expect(admin_change_owner: %i[content_id sunetid])
+      params.expect(admin_change_owner: %i[content_id sunetid name])
     end
 
     def work
@@ -52,7 +62,7 @@ module Admin
     end
 
     def render_change_owner_success
-      flash[:success] = I18n.t('messages.work_changed_owner')
+      flash[:success] = I18n.t('messages.work_ownership_changed', new_owner: @change_owner_form.owner.name)
       # This breaks out of the turbo frame.
       respond_to do |format|
         format.turbo_stream do
