@@ -12,6 +12,10 @@ RSpec.describe Form::WorkMapper, type: :mapping do
   let(:collection) { create(:collection, :with_required_contact_email, druid: collection_druid_fixture) }
   let(:doi_assigned) { true }
 
+  before do
+    allow(SecureRandom).to receive(:uuid).and_return(form_id_fixture)
+  end
+
   it 'maps to work form' do
     expect(work_form).to equal_form(work_form_fixture)
   end

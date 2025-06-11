@@ -1,4 +1,9 @@
-<div data-controller="unsaved-changes" data-action="change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage">
+<%= tag.div data: {
+      controller: 'ahoy-form-changes unsaved-changes',
+      action: 'change->ahoy-form-changes#changed change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage',
+      ahoy_form_changes_ahoy_value: Settings.ahoy.form_changes,
+      ahoy_form_changes_form_id_value: @work_form.form_id
+    } do %>
   <% content_for :breadcrumbs do %>
     <%= render Elements::BreadcrumbNavComponent.new do |component| %>
       <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
@@ -18,7 +23,7 @@
   <% discard_draft_form_id = dom_id(@work_form, 'discard_form') %>
   <%= render Edit::DiscardDraftFormComponent.new(presenter: @work_presenter, id: discard_draft_form_id) if @work_presenter %>
   <% active_tab_name = params[:tab]&.to_sym || @active_tab_name || :files %>
-  <%= render Edit::TabForm::TabListComponent.new(model: @work_form, form_id:, hidden_fields: %i[lock version collection_druid content_id creation_date deposit_publication_date apo copyright]) do |component| %>
+  <%= render Edit::TabForm::TabListComponent.new(model: @work_form, form_id:, hidden_fields: %i[lock version collection_druid content_id creation_date deposit_publication_date apo copyright form_id]) do |component| %>
     <% component.with_tab(label: t('works.edit.panes.files.tab_label'), tab_name: :files, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.title.tab_label'), tab_name: :title, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.contributors.tab_label'), tab_name: :contributors, active_tab_name:) %>
@@ -38,7 +43,7 @@
       <% component.with_before_form_pane(tab_name: :files, label: t('works.edit.panes.files.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, previous_tab_btn: false) do %>
         <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
 
-        <%= render 'contents/edit', content: @content %>
+        <%= render 'contents/edit', content: @content, form_id: @work_form.form_id %>
 
         <% if Settings.globus.enabled %>
           <%= turbo_frame_tag 'globus', src: new_content_globus_path(@content), data: { controller: 'dropzone-files', dropzone_files_dropzone_outlet: '.dropzone' }, class: 'dropzone-files' do %>
@@ -149,4 +154,4 @@
       <% end %>
     <% end %>
   <% end %>
-</div>
+<% end %>

@@ -56,11 +56,10 @@ RSpec.describe 'Edit a work' do
     # On the second call, this will return the cocina object submitted to update.
     # This will allow us to test the updated values.
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(
-      ->(_arg) { cocina_object },
-      ->(_arg) { cocina_object },
-      ->(_arg) { cocina_object },
-      ->(_arg) { cocina_object },
-      ->(_arg) { @updated_cocina_object }
+      ->(_arg) { cocina_object }, # show
+      ->(_arg) { cocina_object }, # edit
+      ->(_arg) { cocina_object }, # DepositWorkJob
+      ->(_arg) { @updated_cocina_object } # show after update
     )
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     # It is already open.
