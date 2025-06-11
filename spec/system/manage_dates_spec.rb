@@ -47,7 +47,7 @@ RSpec.describe 'Manage dates for a work deposit' do
 
     within_fieldset('publication_date') do
       # Month and day are disabled initially.
-      expect(page).to have_field('Year', disabled: false, text: '')
+      expect(page).to have_field('Year', disabled: false, text: nil)
       expect(page).to have_field('Month', disabled: true)
       expect(page).to have_field('Day', disabled: true)
       # They become enabled as fields are filled in.
@@ -56,7 +56,7 @@ RSpec.describe 'Manage dates for a work deposit' do
       select('10', from: 'Day')
       # Clear
       click_link_or_button('Clear')
-      expect(page).to have_field('Year', disabled: false, text: '')
+      expect(page).to have_field('Year', disabled: false, text: nil)
       expect(page).to have_field('Month', disabled: true)
       expect(page).to have_field('Day', disabled: true)
       fill_in('Year', with: '2024')
@@ -68,7 +68,7 @@ RSpec.describe 'Manage dates for a work deposit' do
     find('label', text: 'Date range').click
     within_fieldset('create_date_range_from') do
       # Month and day are disabled initially.
-      expect(page).to have_field('Year', disabled: false, text: '')
+      expect(page).to have_field('Year', disabled: false, text: nil)
       expect(page).to have_field('Month', disabled: true)
       expect(page).to have_field('Day', disabled: true)
       # Approximate is not checked.
@@ -77,7 +77,7 @@ RSpec.describe 'Manage dates for a work deposit' do
 
     within_fieldset('create_date_range_to') do
       # Month and day are disabled initially.
-      expect(page).to have_field('Year', disabled: false, text: '')
+      expect(page).to have_field('Year', disabled: false, text: nil)
       expect(page).to have_field('Month', disabled: true)
       expect(page).to have_field('Day', disabled: true)
       # Approximate is not checked.
@@ -106,7 +106,7 @@ RSpec.describe 'Manage dates for a work deposit' do
     # Both from and to are cleared.
     within_fieldset('create_date_range_from') do
       # Month and day are disabled initially.
-      expect(page).to have_field('Year', disabled: false, text: '')
+      expect(page).to have_field('Year', disabled: false, text: nil)
       expect(page).to have_field('Month', disabled: true)
       expect(page).to have_field('Day', disabled: true)
       # Approximate is not checked.
@@ -115,7 +115,7 @@ RSpec.describe 'Manage dates for a work deposit' do
 
     within_fieldset('create_date_range_to') do
       # Month and day are disabled initially.
-      expect(page).to have_field('Year', disabled: false, text: '')
+      expect(page).to have_field('Year', disabled: false, text: nil)
       expect(page).to have_field('Month', disabled: true)
       expect(page).to have_field('Day', disabled: true)
       # Approximate is not checked.

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Manage files for a work' do
+RSpec.describe 'Manage files for a work', :dropzone do
   let(:user) { create(:user) }
   let(:collection) { create(:collection, :with_druid, user:) }
 

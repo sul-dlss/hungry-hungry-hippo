@@ -67,8 +67,7 @@ Spin up containers and the app, and then set up the application and solid-* data
 
 ```shell
 docker compose up -d
-bin/rails db:prepare db:seed spec:prepare
-bin/dev
+bin/setup
 ```
 
 Then browse to http://localhost:3000 to see the running application.
@@ -83,13 +82,13 @@ may be cached from a previous session.)
 To remove administrative capabilities and view the site as a collection creator:
 
 ```shell
-ROLES=dlss:hydrus-app-collection-creators bin/dev
+ROLES=dlss:hydrus-app-collection-creators bin/setup
 ```
 
 To view the site as a first-time user, use a bogus role:
 
 ```shell
-ROLES=foobar bin/dev
+ROLES=foobar bin/setup
 ```
 
 ### Mission Control
