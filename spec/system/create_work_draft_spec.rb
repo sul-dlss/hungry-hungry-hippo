@@ -66,5 +66,11 @@ RSpec.describe 'Create a work draft' do
     expect(page).to have_no_css('.alert-success', text: 'Work successfully deposited')
     expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
     expect(page).to have_no_css('#contributors-table td')
+
+    # Ahoy event is created
+    work = Work.find_by(druid:)
+    expect(work).to be_present
+    expect(Ahoy::Event.where_event(Ahoy::Event::WORK_CREATED, work_id: work.id, deposit: false,
+                                                              review: false).count).to eq(1)
   end
 end

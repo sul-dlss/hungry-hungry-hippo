@@ -107,4 +107,38 @@ RSpec.describe ApplicationForm do
       expect(TestForm.nested_attributes).to eq({ widgets_attributes: {}, gadgets_attributes: {} })
     end
   end
+
+  describe '.loggable_errors' do
+    subject(:form) { TestForm.new(widgets_attributes: [{}]) }
+
+    let(:test_form_class) do
+      Class.new(described_class) do
+        attribute :foo, :string
+        validates :foo, presence: true, on: :deposit
+        accepts_nested_attributes_for :widgets
+      end
+    end
+
+    let(:widget_form_class) do
+      Class.new(described_class) do
+        attribute :fake_attr, :string
+        validates :fake_attr, presence: true, on: :deposit
+      end
+    end
+
+    before do
+      stub_const('TestForm', test_form_class)
+      stub_const('WidgetForm', widget_form_class)
+    end
+
+    it 'returns an empty array when there are no errors' do
+      expect(form.valid?).to be true
+      expect(form.loggable_errors).to be_empty
+    end
+
+    it 'returns loggable errors when there are errors' do
+      expect(form.valid?(:deposit)).to be false
+      expect(form.loggable_errors).to eq ['Test foo: blank', 'Widget fake_attr: blank']
+    end
+  end
 end

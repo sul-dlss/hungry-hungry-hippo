@@ -198,9 +198,11 @@ A "nested" field is one that is not "simple" (see prior section).
 
 ## Analytics
 
-First-party analytics is implemented using [Ahoy](https://github.com/ankane/ahoy).
+First-party analytics is implemented using [Ahoy](https://github.com/ankane/ahoy). See `Ahoy::Event` for a list of implemented events.
 
 The strategy for analytics is to collect data to answer specific research questions. Once a question has been answered, the code for collecting the events can be removed. Research questions that need to be periodically revisited should have the collection of events controlled by a feature flag.
+
+Note that for privacy, Visits and Events are not connected with users.
 
 Current research questions are documented below.
 
@@ -225,4 +227,29 @@ How many visitors have been clicking tooltips?
 ```
 > Ahoy::Event.where_event("Tooltip clicked").joins(:visit).group('visit.visitor_token').count
 => {"aa3d213d-89e8-4186-ac30-7f323b6d396a"=>3}
+```
+
+### Validation errors
+
+#### Research question
+What validation errors do users encounter?
+
+#### Event
+The `invalid work submitted` event is recorded in `WorksController` when validation fails.
+
+#### Querying
+What are the most common validation errors?
+```
+> Ahoy::Event.where_event('invalid work submitted').pluck(:properties).inject(Hash.new(0)) do |counter, properties|
+   properties['errors'].each do |error|
+     counter[error] +=1
+   end
+   counter
+end.sort_by {|k,v| -v}
+=>
+[["Contributor last_name: must provide a last name", 2],
+ ["Work content: must have at least one file", 1],
+ ["Work work_type: blank", 1],
+ ["Contributor first_name: must provide a first name", 1],
+ ["Keyword text: blank", 1]]
 ```

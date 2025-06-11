@@ -17,13 +17,13 @@ RSpec.describe 'Submit a work for review without changes' do
     create(:collection, :with_review_workflow, user:, druid: collection_druid_fixture, depositors: [user])
   end
 
+  let!(:work) { create(:work, druid:, user:, collection:) }
+
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(RoundtripSupport).to receive(:changed?).and_return(false)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     allow(Sdr::Event).to receive(:list).and_return([])
-
-    create(:work, druid:, user:, collection:)
 
     sign_in(user)
   end
@@ -43,5 +43,9 @@ RSpec.describe 'Submit a work for review without changes' do
     # On show page
     expect(page).to have_css('h1', text: title_fixture)
     expect(page).to have_css('.status', text: 'Pending review')
+
+    # Ahoy event is created
+    expect(Ahoy::Event.where_event(Ahoy::Event::WORK_UPDATED, work_id: work.id, deposit: false,
+                                                              review: true).count).to eq(1)
   end
 end

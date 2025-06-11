@@ -101,6 +101,10 @@ RSpec.describe 'Edit a work' do
     click_link_or_button('Deposit', class: 'btn-primary')
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
+    expect(Ahoy::Event.where_event(Ahoy::Event::INVALID_WORK_SUBMITTED,
+                                   errors: ['Work abstract: blank'],
+                                   review: false, deposit: true, work_id: work.id).count).to eq(1)
+
     # Fill in in authors
     find('.nav-link', text: 'Contributors').click
     form_instances = all('.form-instance')
@@ -199,6 +203,10 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_css('td', exact_text: 'CAD, Map')
     expect(page).to have_css('.status', text: 'New version in draft')
     expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
+
+    # Ahoy event is created
+    expect(Ahoy::Event.where_event(Ahoy::Event::WORK_UPDATED, work_id: work.id, deposit: false,
+                                                              review: false).count).to eq(1)
   end
 
   context 'when rejected' do
@@ -272,6 +280,10 @@ RSpec.describe 'Edit a work' do
 
       expect(page).to have_css('.alert-warning', text: 'You have not made any changes to the form.')
       expect(page).to have_current_path(edit_work_path(druid))
+
+      # Ahoy event is created
+      expect(Ahoy::Event.where_event(Ahoy::Event::UNCHANGED_WORK_SUBMITTED, work_id: work.id, deposit: false,
+                                                                            review: false).count).to eq(1)
     end
   end
 
@@ -294,6 +306,10 @@ RSpec.describe 'Edit a work' do
       expect(page).to have_current_path(edit_work_path(druid))
       expect(page).to have_css('.alert-warning', text: 'You have not made any changes to the form.')
       expect(page).to have_css('.nav-link.active', text: 'Deposit', exact_text: true)
+
+      # Ahoy event is created
+      expect(Ahoy::Event.where_event(Ahoy::Event::UNCHANGED_WORK_SUBMITTED, work_id: work.id, deposit: true,
+                                                                            review: false).count).to eq(1)
     end
   end
 

@@ -96,5 +96,11 @@ RSpec.describe 'Create a work that requires review' do
     expect(page).to have_no_link('Edit or deposit')
 
     expect(Sdr::Event).to have_received(:create).with(druid:, type: 'h3_review_requested', data: { who: user.sunetid })
+
+    # Ahoy event is created
+    work = Work.find_by(druid:)
+    expect(work).to be_present
+    expect(Ahoy::Event.where_event(Ahoy::Event::WORK_CREATED, work_id: work.id, deposit: false,
+                                                              review: true).count).to eq(1)
   end
 end
