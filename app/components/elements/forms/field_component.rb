@@ -6,8 +6,8 @@ module Elements
     class FieldComponent < ApplicationComponent
       def initialize(form:, field_name:, required: false, hidden_label: false, label: nil, help_text: nil, # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength, Metrics/AbcSize
                      disabled: false, hidden: false, data: {}, input_data: {}, placeholder: nil, width: nil,
-                     label_classes: [], container_classes: [], input_classes: [], tooltip: nil, error_classes: [],
-                     readonly: false, mark_required: false)
+                     label_classes: [], container_classes: [], input_classes: [], tooltip: nil, caption: nil,
+                     error_classes: [], readonly: false, mark_required: false)
         @form = form
         @field_name = field_name
         @required = required
@@ -25,13 +25,14 @@ module Elements
         @container_classes = container_classes
         @input_classes = input_classes
         @tooltip = tooltip
+        @caption = caption
         @error_classes = error_classes
         @readonly = readonly
         super()
       end
 
       attr_reader :form, :field_name, :required, :help_text, :hidden_label, :label, :hidden, :disabled, :data,
-                  :placeholder, :width, :label_classes, :input_data, :tooltip, :readonly
+                  :placeholder, :width, :label_classes, :input_data, :tooltip, :caption, :readonly
 
       def help_text_id
         @help_text_id ||= form.field_id(field_name, 'help')
