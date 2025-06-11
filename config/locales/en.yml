@@ -345,6 +345,9 @@ en:
         deposit:
           tab_label: 'Deposit'
           label: 'Submit your deposit'
+          version_text: >-
+              If you have modified the files, a new public version of this item will be created and will be available
+              from the public webpage. If the item has a DOl, the DOI will be the same for all versions.
           help_text: >-
               Be sure you have completed all the required sections. Your deposit may take several hours
               to complete if your file size is larger than 10GB.
