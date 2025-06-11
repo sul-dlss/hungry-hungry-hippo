@@ -36,37 +36,37 @@ module Admin
     def filter_by_date_created_start
       return if work_report_form.date_created_start.blank?
 
-      self.query = query.where(created_at: work_report_form.date_created_start..)
+      @query = query.where(created_at: work_report_form.date_created_start..)
     end
 
     def filter_by_date_created_end
       return if work_report_form.date_created_end.blank?
 
-      self.query = query.where(created_at: ..work_report_form.date_created_end)
+      @query = query.where(created_at: ..work_report_form.date_created_end)
     end
 
     def filter_by_date_modified_start
       return if work_report_form.date_modified_start.blank?
 
-      self.query = query.where(object_updated_at: work_report_form.date_modified_start..)
+      @query = query.where(object_updated_at: work_report_form.date_modified_start..)
     end
 
     def filter_by_date_modified_end
       return if work_report_form.date_modified_end.blank?
 
-      self.query = query.where(object_updated_at: ..work_report_form.date_modified_end)
+      @query = query.where(object_updated_at: ..work_report_form.date_modified_end)
     end
 
     def filter_by_date_last_deposited_start
       return if work_report_form.last_deposited_start.blank?
 
-      self.query = query.where(last_deposited_at: work_report_form.last_deposited_start..)
+      @query = query.where(last_deposited_at: work_report_form.last_deposited_start..)
     end
 
     def filter_by_date_last_deposited_end
       return if work_report_form.last_deposited_end.blank?
 
-      self.query = query.where(last_deposited_at: ..work_report_form.last_deposited_end)
+      @query = query.where(last_deposited_at: ..work_report_form.last_deposited_end)
     end
 
     def filter_by_collection
@@ -75,7 +75,7 @@ module Admin
       return if collection_ids.empty?
 
       # filter by collection
-      self.query = query.where(collection_id: collection_ids)
+      @query = query.where(collection_id: collection_ids)
     end
 
     # Filter druids by the selected states in the work report form
