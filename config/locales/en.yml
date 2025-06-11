@@ -52,6 +52,9 @@ en:
     work_deleted: 'Work successfully deleted.'
     work_moved: 'Work moved to the new collection.'
     work_report_generated: 'Item report requested and will be emailed when completed.'
+    worker_ownership_changed: >-
+      Ownership of the work has been changed to %{new_owner}.
+      The new owner and mangers will be notified of the change.
     wait_for_it: 'We are saving your work. Feel free to navigate away from this page.'
   events:
     registration: 'Created'
