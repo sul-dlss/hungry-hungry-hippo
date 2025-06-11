@@ -251,12 +251,15 @@ en:
           label: 'Enter preferred citation'
         contributors:
           role:
+            label: Role
+            definitions_link_label_html: <a href="https://sdr.library.stanford.edu/documentation/author-contributor-role-term-definitions" target="_blank">See role definitions</a>
             tooltip_html: >-
               Choose one role for each individual or organization that best describes their contribution to the work you are depositing.
           first_name:
             tooltip_html: >-
               For individuals, use whatever capitalization the individual would normally use for their name. Middle names or initials may be included after the first name in the same box. Both first and last name fields are required.
           organization_name:
+            label: Organization name
             tooltip_html: >-
               Enter the full name of the organization.
           with_orcid:
