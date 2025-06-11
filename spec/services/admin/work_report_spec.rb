@@ -270,5 +270,19 @@ RSpec.describe Admin::WorkReport do
         expect(csv).to include('New version in draft')
       end
     end
+
+    context 'when doi assigned' do
+      it 'includes doi' do
+        expect(csv).to include(doi_fixture)
+      end
+    end
+
+    context 'when DOI not assigned' do
+      let(:work) { create(:work, druid:, doi_assigned: false) }
+
+      it 'does not include DOI' do
+        expect(csv).not_to include(doi_fixture)
+      end
+    end
   end
 end

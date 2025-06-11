@@ -12,6 +12,8 @@ module Admin
       @query = Work.all
     end
 
+    # Generate a work report CSV based on the provided filters in the work report form.
+    # If no selections are made on the the form, all works will be included in the report.
     # @return [String] CSV string for the work report
     def call
       filter_by_date_created_start
@@ -25,6 +27,7 @@ module Admin
 
       create_csv
     end
+
     attr_reader :work_report_form
     attr_accessor :query
 
@@ -84,6 +87,7 @@ module Admin
       @druids = druids.select { |druid| selected_states?(druid) }
     end
 
+    # Check if the work's version state and review state match any of the selected states
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
     def selected_states?(druid)
       version_state = states.dig(druid, :version_state)
@@ -139,12 +143,6 @@ module Admin
         Form::WorkMapper.call(cocina_object:, doi_assigned: true, agree_to_terms: true, version_description: nil,
                               collection: nil)
       end
-    end
-
-    def doi_for(druid)
-      return '' if doi_option == 'no'
-
-      Doi.url(druid:) if doi_option == 'yes'
     end
 
     # rubocop:disable Metrics/AbcSize, Metrics/BlockLength, Metrics/MethodLength
