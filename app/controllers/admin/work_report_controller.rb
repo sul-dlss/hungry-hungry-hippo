@@ -15,14 +15,9 @@ module Admin
 
       @work_report_form = Admin::WorkReportForm.new(**work_report_params)
 
-      if @work_report_form.valid?
-        WorkReportsJob.perform_later(work_report_form: @work_report_form, current_user:)
-        flash[:success] = I18n.t('messages.work_report_generated')
-        redirect_to new_admin_work_report_path
-      else
-        @collections = Collection.order(:title)
-        render :new, status: :unprocessable_entity
-      end
+      WorkReportsJob.perform_later(work_report_form: @work_report_form, current_user:)
+      flash[:success] = I18n.t('messages.work_report_generated')
+      redirect_to new_admin_work_report_path
     end
 
     private
