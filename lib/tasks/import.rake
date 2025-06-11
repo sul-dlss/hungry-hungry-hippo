@@ -48,6 +48,13 @@ NO_MIGRATE_COLLECTIONS = [
   'druid:db160pg5444'
 ].freeze
 
+# These collections will be imported, but will not be editable.
+SKIP_ROUNDTRIP_COLLECTIONS = [
+  'druid:md001qd8892',
+  'druid:xf974wp1364',
+  'druid:db700wz4340'
+].freeze
+
 namespace :import do
   desc 'Import collections from json'
   # collections.json can be generated in H2 for some set of collections with:
@@ -83,7 +90,8 @@ namespace :import do
                       else
                         Sdr::Repository.find(druid:)
                       end
-      CollectionImporter.call(collection_hash:, cocina_object:)
+      CollectionImporter.call(collection_hash:, cocina_object:,
+                              skip_roundtrip: SKIP_ROUNDTRIP_COLLECTIONS.include?(druid))
     end
   end
 

@@ -6,14 +6,15 @@ class CollectionImporter
     new(...).call
   end
 
-  def initialize(collection_hash:, cocina_object:)
+  def initialize(collection_hash:, cocina_object:, skip_roundtrip: false)
     @collection_hash = collection_hash
     @cocina_object = cocina_object
+    @skip_roundtrip = skip_roundtrip
   end
 
   def call
     ::Collection.transaction do
-      unless CollectionRoundtripper.call(collection_form:, cocina_object:)
+      if !skip_roundtrip && !CollectionRoundtripper.call(collection_form:, cocina_object:)
         raise ImportError, "Collection #{druid} cannot be roundtripped"
       end
 
@@ -24,7 +25,7 @@ class CollectionImporter
 
   private
 
-  attr_reader :collection_hash, :cocina_object
+  attr_reader :collection_hash, :cocina_object, :skip_roundtrip
 
   def collection # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @collection ||= ::Collection.find_or_create_by!(druid:) do |collection|
