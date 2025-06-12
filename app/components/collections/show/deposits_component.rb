@@ -4,14 +4,13 @@ module Collections
   module Show
     # Component for rendering a list of deposits for the collection show page.
     class DepositsComponent < ApplicationComponent
-      def initialize(work_statuses:, works:, search_term: nil)
-        @work_statuses = work_statuses
-        @works = works
+      def initialize(presenters:, search_term: nil)
+        @presenters = presenters
         @search_term = search_term
         super()
       end
 
-      attr_reader :work_statuses, :works, :search_term
+      attr_reader :presenters, :search_term
 
       def empty_message
         return 'No deposits to this collection.' if search_term.blank?
@@ -20,16 +19,16 @@ module Collections
       end
 
       def collection_deposits
-        @collection_deposits ||= works.map do |work|
+        @collection_deposits ||= presenters.map do |presenter|
           {
-            id: dom_id(work),
-            values: values_for(work)
+            id: dom_id(presenter),
+            values: values_for(presenter)
           }
         end
       end
 
-      def values_for(work)
-        presenter = work_presenter_for(work)
+      def values_for(presenter)
+        work = presenter.work
         [
           helpers.link_to(work.title, work_or_wait_path(work), data: { turbo_frame: '_top' }),
           work.user.name,
@@ -37,14 +36,6 @@ module Collections
           work.object_updated_at ? helpers.l(work.object_updated_at, format: '%b %d, %Y') : nil,
           presenter.sharing_link
         ]
-      end
-
-      def work_presenter_for(work)
-        WorkPresenter.new(work:,
-                          version_status: work_statuses.fetch(
-                            work.druid, VersionStatus::NilStatus.new
-                          ),
-                          work_form: WorkForm.new(druid: work.druid))
       end
     end
   end

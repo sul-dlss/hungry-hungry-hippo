@@ -10,9 +10,6 @@ RSpec.describe 'Show collection works' do
   context 'when the user is not authorized' do
     before do
       create(:collection, druid:)
-      # allow(Sdr::Repository).to receive(:find).with(druid:).and_return(collection_with_metadata_fixture)
-      # allow(Sdr::Repository).to receive(:status)
-      #   .with(druid:).and_return(instance_double(VersionStatus))
       sign_in(create(:user))
     end
 

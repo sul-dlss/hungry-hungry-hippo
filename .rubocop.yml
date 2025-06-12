@@ -67,6 +67,10 @@ RSpec/LetSetup:
   Exclude:
     - spec/requests/**/*
 
+RSpec/IndexedLet:
+  Exclude:
+    - spec/services/**/*
+
 RSpec/VerifiedDoubles:
   Exclude:
     - spec/jobs/globus_list_job_spec.rb

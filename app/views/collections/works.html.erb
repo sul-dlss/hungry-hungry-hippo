@@ -1,9 +1,9 @@
 <%= turbo_frame_tag 'collection-works' do %>
-  <%= form_with url: works_collection_path, method: :get do |form| %>
-    <div class="row">
-      <div class="col-5">
-      <%# Not using TextFieldComponent because field-container conflicts with input-group. %>
+  <div class="d-flex justify-content-between mb-3">
+    <div>
+      <%= form_with url: works_collection_path, method: :get do |form| %>
       <div class="input-group">
+        <%# Not using TextFieldComponent because field-container conflicts with input-group. %>
         <%= render Elements::Forms::LabelComponent.new(form:, field_name: :q, default_label_class: 'input-group-text', classes: 'bg-white border-end-0') do %>
           <%= search_icon %><span class="visually-hidden">Search collection</span>
         <% end %>
@@ -11,9 +11,23 @@
         <div class="input-group-text bg-white" style="padding: 0.3rem;">
           <%= render Elements::Forms::SubmitComponent.new(label: 'Search', classes: 'btn-sm py-1') %>
         </div>
-      </div>
+      <% end %>
       </div>
     </div>
-    <%= render Collections::Show::DepositsComponent.new(works: @works, work_statuses: @work_statuses, search_term: @search_term) %>
-  <% end %>
+    <div>
+      <%= render Collections::Show::SortDropdownComponent.new(classes: 'ms-2') do |component| %>
+        <% component.with_sort_option(label: 'Deposit (ascending)', link: works_collection_path(@collection, sort_by: 'works.title asc', q: @search_term)) %>
+        <% component.with_sort_option(label: 'Deposit (descending)', link: works_collection_path(@collection, sort_by: 'works.title desc', q: @search_term)) %>
+        <% component.with_sort_option(label: 'Owner (ascending)', link: works_collection_path(@collection, sort_by: 'users.name asc', q: @search_term)) %>
+        <% component.with_sort_option(label: 'Owner (descending)', link: works_collection_path(@collection, sort_by: 'users.name desc', q: @search_term)) %>
+        <% component.with_sort_option(label: 'Status (ascending)', link: works_collection_path(@collection, sort_by: 'status asc', q: @search_term)) %>
+        <% component.with_sort_option(label: 'Status (descending)', link: works_collection_path(@collection, sort_by: 'status desc', q: @search_term)) %>
+        <% component.with_sort_option(label: 'Date modified (Newest first)', link: works_collection_path(@collection, sort_by: 'works.updated_at desc', q: @search_term)) %>
+        <% component.with_sort_option(label: 'Date modified (Oldest first)', link: works_collection_path(@collection, sort_by: 'works.updated_at asc', q: @search_term)) %>
+      <% end %>
+    </div>
+  </div>
+  </div>
+
+  <%= render Collections::Show::DepositsComponent.new(presenters: @presenters, search_term: @search_term) %>
 <% end %>
