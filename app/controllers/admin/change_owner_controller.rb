@@ -16,14 +16,10 @@ module Admin
 
       @change_owner_form = Admin::ChangeOwnerForm.new(work_form:, **change_owner_params)
 
-      if @change_owner_form.valid?
-        work_form.content_id = @change_owner_form.content_id
-        Admin::ChangeOwner.call(work_form:, work:, owner: @change_owner_form.owner, version_status:)
+      work_form.content_id = @change_owner_form.content_id
+      Admin::ChangeOwner.call(work_form:, work:, user: @change_owner_form.user, version_status:)
 
-        render_change_owner_success
-      else
-        render :form, status: :unprocessable_entity
-      end
+      render_change_owner_success
     end
 
     def data
@@ -62,7 +58,7 @@ module Admin
     end
 
     def render_change_owner_success
-      flash[:success] = I18n.t('messages.work_ownership_changed', new_owner: @change_owner_form.owner.name)
+      flash[:success] = I18n.t('messages.work_ownership_changed', new_owner: @change_owner_form.user.name)
       # This breaks out of the turbo frame.
       respond_to do |format|
         format.turbo_stream do

@@ -11,14 +11,14 @@ export default class extends Controller {
     if (this.valueTarget.value) {
       this.submitButtonTarget.disabled = false
       const [sunetid, description] = this.valueTarget.value.split(': ')
-      const [name, department] = description.split(' - ')
+      const [name, _department] = description.split(' - ') // eslint-disable-line no-unused-vars
       this.sunetidTarget.value = sunetid
       this.nameTarget.value = name
       this.descriptionTarget.innerHTML = description
     }
   }
 
-  disableSubmit() {
+  disableSubmit () {
     if (this.inputTarget.value === '') {
       this.submitButtonTarget.disabled = true
       this.sunetidTarget.value = ''

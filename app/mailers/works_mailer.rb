@@ -21,4 +21,8 @@ class WorksMailer < ApplicationMailer
       mail(to: @user.email_address, subject: "Item deposit completed in the #{@collection.title} collection")
     end
   end
+
+  def ownership_changed_email
+    mail(to: @user.email_address, subject: "Ownership of #{@work.title} has been changed")
+  end
 end

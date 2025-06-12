@@ -8,8 +8,8 @@ module Admin
     attribute :content_id, :integer
     attribute :work_form
 
-    def owner
-      @owner ||= User.find_or_create_by!(email_address: "#{sunetid}#{::User::EMAIL_SUFFIX}", name:)
+    def user
+      @user ||= User.find_or_create_by!(email_address: "#{sunetid}#{::User::EMAIL_SUFFIX}", name:)
     end
   end
 end

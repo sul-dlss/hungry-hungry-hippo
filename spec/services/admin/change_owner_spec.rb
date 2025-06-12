@@ -7,10 +7,11 @@ RSpec.describe Admin::ChangeOwner do
   let(:work) { create(:work, user: current_user, collection:) }
   let(:collection) { create(:collection, user: current_user) }
   let(:current_user) { create(:user) }
-  let(:next_user) { create(:user) }
+  let(:user) { create(:user) }
 
   before do
     allow(DepositWorkJob).to receive(:perform_later)
+    allow(Notifier).to receive(:publish)
     Current.user = current_user
   end
 
@@ -19,15 +20,17 @@ RSpec.describe Admin::ChangeOwner do
 
     it 'changes the owner of the work with deposit' do
       expect(work.user).to eq(current_user)
-      described_class.call(work_form:, work:, owner: next_user, version_status:)
+      described_class.call(work_form:, work:, user:, version_status:)
 
-      expect(work.user).to eq(next_user)
+      expect(work.user).to eq(user)
       expect(work_form.collection_druid).to eq(collection.druid)
       expect(collection.depositors).to include(work.user)
       expect(work.reload.deposit_registering_or_updating?).to be(true)
 
       expect(DepositWorkJob).to have_received(:perform_later).with(work:, work_form:, deposit: true,
-                                                                   request_review: false, current_user: next_user)
+                                                                   request_review: false, current_user: user)
+      expect(Notifier).to have_received(:publish).with(Notifier::OWNERSHIP_CHANGED, work:, user:)
+      expect(Notifier).to have_received(:publish).with(Notifier::DEPOSITOR_ADDED, collection:, user:)
     end
   end
 
@@ -36,10 +39,10 @@ RSpec.describe Admin::ChangeOwner do
 
     it 'moves a work to another collection with deposit' do
       expect(work.user).to eq(current_user)
-      described_class.call(work_form:, work:, owner: next_user, version_status:)
+      described_class.call(work_form:, work:, user:, version_status:)
 
       expect(DepositWorkJob).to have_received(:perform_later).with(work:, work_form:, deposit: false,
-                                                                   request_review: false, current_user: next_user)
+                                                                   request_review: false, current_user: user)
     end
   end
 end

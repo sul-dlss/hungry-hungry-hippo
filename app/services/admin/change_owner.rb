@@ -7,28 +7,30 @@ module Admin
       new(...).call
     end
 
-    def initialize(work_form:, work:, owner:, version_status:)
+    def initialize(work_form:, work:, user:, version_status:)
       @work_form = work_form
       @work = work
       @collection = work.collection
-      @owner = owner
+      @user = user
       @version_status = version_status
     end
 
     def call
-      work.user = owner
+      work.user = user
       work.deposit_persist! # Sets the deposit state
 
       update_depositors
 
+      Notifier.publish(Notifier::OWNERSHIP_CHANGED, work:, user:)
+
       # Deposit if not a draft
       DepositWorkJob.perform_later(work:, work_form:, deposit: deposit?,
-                                   request_review: false, current_user: owner)
+                                   request_review: false, current_user: user)
     end
 
     private
 
-    attr_reader :collection, :owner, :work, :work_form, :version_status
+    attr_reader :collection, :user, :work, :work_form, :version_status
 
     def deposit?
       !version_status.open?

@@ -12,9 +12,9 @@ RSpec.describe Admin::ChangeOwnerForm do
 
     context 'when the user does not exist' do
       it 'creates a new user with the given sunetid and name' do
-        expect { form.owner }.to change(User, :count).by(1)
-        expect(form.owner.email_address).to eq(email_address)
-        expect(form.owner.name).to eq(name)
+        expect { form.user }.to change(User, :count).by(1)
+        expect(form.user.email_address).to eq(email_address)
+        expect(form.user.name).to eq(name)
       end
     end
 
@@ -28,9 +28,9 @@ RSpec.describe Admin::ChangeOwnerForm do
       end
 
       it 'finds or creates the user' do
-        expect { form.owner }.to not_change(User, :count)
-        expect(form.owner.email_address).to eq(email_address)
-        expect(form.owner.name).to eq(name)
+        expect { form.user }.to not_change(User, :count)
+        expect(form.user.email_address).to eq(email_address)
+        expect(form.user.name).to eq(name)
       end
     end
   end

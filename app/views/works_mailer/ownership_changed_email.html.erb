@@ -1,0 +1,13 @@
+<%= render Emails::SalutationComponent.new(user: @user) %>
+
+<%= render Emails::Works::OwnershipChangedComponent.new(work: @work) %>
+
+<%= render Emails::Collections::DepositPermissionsComponent.new(collection: @work.collection) %>
+
+<%= render Emails::Works::VerifyContactsComponent.new %>
+
+<%= render Emails::ContactComponent.new %>
+
+<%= render Emails::SignatureComponent.new %>
+
+<%= render Emails::NewsletterComponent.new %>
