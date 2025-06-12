@@ -149,8 +149,9 @@ module Admin
     def create_csv
       headers = ['item title', 'work_id', 'druid', 'deposit state', 'review state', 'version number', 'owner',
                  'date created', 'date last modified', 'date last deposited', 'release', 'visibility',
-                 'license', 'custom rights', 'DOI', 'work type', 'work subtypes', 'collection title',
-                 'collection id', 'collection_druid']
+                 'license', 'custom rights', 'DOI', 'work type', 'work subtypes',
+                 'total number of files', 'total file size (kb)',
+                 'collection title', 'collection id', 'collection_druid']
 
       CSV.generate(headers: true) do |csv|
         csv << headers
@@ -160,6 +161,7 @@ module Admin
           next unless druids.include?(druid)
 
           work_model = Work.find_by(druid:)
+          content_files = work_model.content.last.content_files
           row = [work_form.title,
                  work_model.id,
                  work_form.druid,
@@ -177,6 +179,8 @@ module Admin
                  work_model.doi_assigned? ? Doi.url(druid:) : nil,
                  work_form.work_type,
                  work_form.work_subtypes.present? ? work_form.work_subtypes.join('; ') : nil,
+                 content_files.count,
+                 content_files.sum(&:size) / 1000.0, # size is in bytes, convert to kb (decimal)
                  work_model.collection.title,
                  work_model.collection_id,
                  work_model.collection.druid]
