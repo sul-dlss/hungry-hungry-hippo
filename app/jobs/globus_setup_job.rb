@@ -8,6 +8,10 @@ class GlobusSetupJob < ApplicationJob
     @content = content
 
     clear_content_files
+
+    # stop here if this is an integration test work
+    return true if GlobusSupport.integration_test_work?(work:)
+
     mkdir
     allow_writes
   end
@@ -17,20 +21,9 @@ class GlobusSetupJob < ApplicationJob
   delegate :work, to: :content
 
   def mkdir
-    GlobusClient.mkdir(user_id: user.email_address, path:, notify_email: false)
-  end
-
-  def path
-    # integration tests have a preset path based on work tile
-    return Settings.globus.integration_endpoint if integration_test_work?
-
     # This will ignore if the directory already exists.
-    work.present? ? GlobusSupport.work_path(work:) : GlobusSupport.user_path(user:)
-  end
-
-  # integration_mode is set to true in qa/stage for pre-set globus endpoint in integration tests based on work title
-  def integration_test_work?
-    Settings.globus.integration_mode && work.title&.ends_with?('Integration Test')
+    path = work.present? ? GlobusSupport.work_path(work:) : GlobusSupport.user_path(user:)
+    GlobusClient.mkdir(user_id: user.email_address, path:, notify_email: false)
   end
 
   def allow_writes

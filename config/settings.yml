@@ -80,8 +80,8 @@ globus:
   transfer_endpoint_id: fake7087-d32d-4588-8517-b2d0d32d53b8
   uploads_directory: /uploads/
   instructions_url: https://docs.google.com/document/d/10b7y3yZCOfyVJ_uP4l7QHbkILQKnfdJi9hj-MpmmdIk
-  integration_mode: false # set to true in stage/qa to run glbous integration test
-  integration_endpoint: 'integration_test/work388/version1'
+  integration_mode: false # true in stage/qa via shared_configs to allow globus integration test
+  integration_endpoint: 'integration_test/work388/version1' # fixed globus path for integration test files
   origins:
     stanford_gdrive: e1c8858b-d5aa-4e36-b97e-95913047ec2b
     oak: 8b3a8b64-d4ab-4551-b37e-ca0092f769a7

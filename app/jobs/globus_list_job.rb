@@ -8,7 +8,7 @@ class GlobusListJob < ApplicationJob
     @content = content
     @cancel_check_interval = cancel_check_interval
 
-    GlobusClient.disallow_writes(user_id: user.email_address, path: globus_path, notify_email: false)
+    disallow_writes unless GlobusSupport.integration_test_work?(work:)
 
     content.globus_list!
     content.content_files.clear
@@ -27,6 +27,10 @@ class GlobusListJob < ApplicationJob
   delegate :user, :work, to: :content
 
   attr_reader :content
+
+  def disallow_writes
+    GlobusClient.disallow_writes(user_id: user.email_address, path: globus_path, notify_email: false)
+  end
 
   def list_files # rubocop:disable Metrics/AbcSize
     GlobusClient.list_files(user_id: user.email_address, path: globus_path, notify_email: false)

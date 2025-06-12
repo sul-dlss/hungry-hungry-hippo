@@ -18,7 +18,15 @@ class GlobusSupport
     with_uploads_directory(path:)
   end
 
+  # indicate if we allow integration tests to run (e.g. in qa/stage) and work title matches the pattern
+  def self.integration_test_work?(work:)
+    Settings.globus.integration_mode && work.present? && work.title&.ends_with?('Integration Test')
+  end
+
   def self.work_path(work:, with_uploads_directory: false)
+    # the integration test work path is fixed
+    return Settings.globus.integration_endpoint if integration_test_work?(work:)
+
     path = "work-#{work.id}"
     return path unless with_uploads_directory
 
