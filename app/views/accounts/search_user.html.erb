@@ -3,7 +3,11 @@
     No results for "<%= params[:id] %>"
   <% end %>
 <% else %>
-  <%= tag.li class: 'list-group-item', role: 'option', data: { autocomplete_value: "#{@account.sunetid}: #{@account.name} - #{@account.description}", autocomplete_label: @account.sunetid } do %>
+  <%= tag.li class: 'list-group-item', role: 'option',
+             data: {
+               autocomplete_value: @account.sunetid,
+               autocomplete_label: "#{@account.sunetid}: #{@account.name} - #{@account.description}"
+             } do %>
     <div class="fw-bold"><%= @account.name %> (<%= @account.sunetid %>)</div>
     <p><%= @account.description %></p>
     <p class="text-muted">Click to add</p>

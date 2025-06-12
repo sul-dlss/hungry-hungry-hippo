@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ['description', 'input', 'name', 'value', 'sunetid', 'submitButton']
+  static targets = ['input', 'value', 'sunetid', 'submitButton']
 
   connect () {
     this.change()
@@ -10,11 +10,7 @@ export default class extends Controller {
   change () {
     if (this.valueTarget.value) {
       this.submitButtonTarget.disabled = false
-      const [sunetid, description] = this.valueTarget.value.split(': ')
-      const [name, _department] = description.split(' - ') // eslint-disable-line no-unused-vars
-      this.sunetidTarget.value = sunetid
-      this.nameTarget.value = name
-      this.descriptionTarget.innerHTML = description
+      this.sunetidTarget.value = this.valueTarget.value
     }
   }
 
@@ -22,8 +18,6 @@ export default class extends Controller {
     if (this.inputTarget.value === '') {
       this.submitButtonTarget.disabled = true
       this.sunetidTarget.value = ''
-      this.nameTarget.value = ''
-      this.descriptionTarget.innerHTML = ''
       this.valueTarget.value = ''
     }
   }

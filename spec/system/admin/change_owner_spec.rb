@@ -42,7 +42,8 @@ RSpec.describe 'Change work ownership' do
 
     fill_in('Enter a valid SUNet ID to change to a new owner', with: new_owner.sunetid)
     find('li.list-group-item', text: 'Click to add').click
-    expect(page).to have_text("#{new_owner.name} - Digital Library Systems and Services")
+    expect(page).to have_field('Enter a valid SUNet ID to change to a new owner',
+                               with: "#{new_owner.sunetid}: #{new_owner.name} - Digital Library Systems and Services")
     click_link_or_button('Submit')
 
     # Waiting page may be too fast to catch so not testing.

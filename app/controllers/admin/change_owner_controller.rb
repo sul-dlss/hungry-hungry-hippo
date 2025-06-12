@@ -31,8 +31,18 @@ module Admin
       @work ||= Work.find_by(druid: params[:work_druid])
     end
 
+    def account
+      return AccountService.call(sunetid: @change_owner_form.sunetid) unless Rails.env.development?
+
+      AccountService::Account.new(name: @change_owner_form.sunetid,
+                                  sunetid: @change_owner_form.sunetid,
+                                  description: 'Digital Library Systems and Services')
+    end
+
     def user
-      @user ||= User.find_or_create_by!(email_address:, name: @change_owner_form.name)
+      @user ||= User.find_or_create_by!(email_address:) do |user|
+        user.name = account.name if account.name.blank?
+      end
     end
 
     def email_address

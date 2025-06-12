@@ -4,7 +4,6 @@ module Admin
   # Admin form object for changing the ownership of a work.
   class ChangeOwnerForm < ApplicationForm
     attribute :sunetid, :string
-    attribute :name, :string
     attribute :work_form
     attribute :content_id, :integer
   end
