@@ -45,6 +45,7 @@ gem 'ahoy_matey' # Analytics
 gem 'bunny' # RabbitMQ client
 gem 'cocina-models'
 gem 'config'
+gem 'csv'
 gem 'datacite'
 gem 'dor-event-client'
 gem 'dor-services-client'

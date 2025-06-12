@@ -130,9 +130,14 @@ class DepositWorkJob < ApplicationJob
       Sdr::Repository.accession(druid:, new_user_version: new_user_version?)
       # If a collection manager or reviewer has rejected a previous review, we need to approve the work again
       work.approve! if work.rejected_review?
+      update_last_deposited_at!
     else
       work.deposit_persist_complete!
     end
+  end
+
+  def update_last_deposited_at!
+    work.update!(last_deposited_at: Time.zone.now)
   end
 
   def new_user_version?
