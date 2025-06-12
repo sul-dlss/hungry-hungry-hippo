@@ -6,7 +6,6 @@ module Admin
     def new
       authorize!
 
-      @data = data
       @change_owner_form = Admin::ChangeOwnerForm.new(content_id: params[:content_id])
       render :form
     end
@@ -15,20 +14,11 @@ module Admin
       authorize!
 
       @change_owner_form = Admin::ChangeOwnerForm.new(work_form:, **change_owner_params)
-
       work_form.content_id = @change_owner_form.content_id
-      Admin::ChangeOwner.call(work_form:, work:, user: @change_owner_form.user, version_status:)
+
+      Admin::ChangeOwner.call(work_form:, work:, user:)
 
       render_change_owner_success
-    end
-
-    def data
-      {
-        controller: 'autocomplete autocomplete-owner-sunetid',
-        autocomplete_url_value: '/accounts/search_user',
-        autocomplete_query_param_value: 'sunetid',
-        autocomplete_min_length_value: '3'
-      }
     end
 
     private
@@ -39,6 +29,14 @@ module Admin
 
     def work
       @work ||= Work.find_by(druid: params[:work_druid])
+    end
+
+    def user
+      @user ||= User.find_or_create_by!(email_address:, name: @change_owner_form.name)
+    end
+
+    def email_address
+      @email_address ||= "#{@change_owner_form.sunetid}#{::User::EMAIL_SUFFIX}"
     end
 
     def cocina_object
@@ -53,12 +51,8 @@ module Admin
                                            collection: work.collection)
     end
 
-    def version_status
-      @version_status ||= Sdr::Repository.status(druid: params[:work_druid])
-    end
-
     def render_change_owner_success
-      flash[:success] = I18n.t('messages.work_ownership_changed', new_owner: @change_owner_form.user.name)
+      flash[:success] = I18n.t('messages.work_ownership_changed', new_owner: user.name)
       # This breaks out of the turbo frame.
       respond_to do |format|
         format.turbo_stream do

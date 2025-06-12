@@ -1,10 +1,13 @@
 <%= render Emails::SalutationComponent.new(user: @user) %>
 
-<%= render Emails::Works::OwnershipChangedComponent.new(work: @work) %>
+<p>You are now the owner of the item "<%= @work.title %>" in the Stanford Digital Repository
+  and have access to manage its metadata and files.
+  Click <%= link_to work_url(@work), work_url(@work) %> to view or edit this item.</p>
 
-<%= render Emails::Collections::DepositPermissionsComponent.new(collection: @work.collection) %>
+<p>You now also have permission to deposit items into the <%= @work.title %> collection.
 
-<%= render Emails::Works::VerifyContactsComponent.new %>
+<p>Please check the contact emails information on this item and if it is no longer current,
+  update this field by clicking on the blue pencil icon next to the header "Title and contact."</p>
 
 <%= render Emails::ContactComponent.new %>
 

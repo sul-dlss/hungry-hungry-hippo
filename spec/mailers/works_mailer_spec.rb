@@ -77,7 +77,6 @@ RSpec.describe WorksMailer do
     let(:mail) { described_class.with(work:, current_user: user).ownership_changed_email }
     let(:user) { create(:user, first_name: 'Carter') }
     let(:managers) { [user] }
-    let(:link_to_work) { '<a href="http://example.com/works/druid:bc123df4567">http://example.com/works/druid:bc123df4567</a>' }
 
     it 'renders the headers' do
       expect(mail.subject).to eq 'Ownership of S1.E2: Rakers has been changed'
@@ -87,7 +86,7 @@ RSpec.describe WorksMailer do
 
     it 'renders the body' do
       expect(mail).to match_body('Dear Carter,')
-      expect(mail).to match_body("You are now the owner of the item \"#{link_to_work}\" in the " \
+      expect(mail).to match_body("You are now the owner of the item \"#{work.title}\" in the " \
                                  'Stanford Digital Repository and have access to manage its ' \
                                  'metadata and files.')
     end

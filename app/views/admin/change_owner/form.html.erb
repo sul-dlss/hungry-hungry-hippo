@@ -1,7 +1,13 @@
 <%= turbo_frame_tag 'admin-card' do %>
   <%= render Elements::CardComponent.new(classes: 'admin-card') do |component| %>
     <% component.with_body do %>
-      <%= tag.div data: @data, class: 'mb-3' do %>
+      <%= tag.div data: {
+                    controller: 'autocomplete autocomplete-owner-sunetid',
+                    autocomplete_url_value: '/accounts/search_user',
+                    autocomplete_query_param_value: 'sunetid',
+                    autocomplete_min_length_value: '3'
+                  },
+                  class: 'mb-3' do %>
         <%= render Elements::HeadingComponent.new(level: :h2, text: 'Change Owner', classes: 'mb-3') %>
         <%= form_with model: @change_owner_form, url: work_admin_change_owner_index_path(work_druid: params[:work_druid]) do |form| %>
           <%= form.hidden_field :content_id %>

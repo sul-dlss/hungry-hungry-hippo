@@ -7,12 +7,11 @@ module Admin
       new(...).call
     end
 
-    def initialize(work_form:, work:, user:, version_status:)
+    def initialize(work_form:, work:, user:)
       @work_form = work_form
       @work = work
       @collection = work.collection
       @user = user
-      @version_status = version_status
     end
 
     def call
@@ -30,7 +29,11 @@ module Admin
 
     private
 
-    attr_reader :collection, :user, :work, :work_form, :version_status
+    attr_reader :collection, :user, :work, :work_form
+
+    def version_status
+      @version_status ||= Sdr::Repository.status(druid: work.druid)
+    end
 
     def deposit?
       !version_status.open?

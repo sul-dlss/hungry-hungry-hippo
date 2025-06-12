@@ -12,7 +12,7 @@ RSpec.describe Admin::ChangeOwner do
   before do
     allow(DepositWorkJob).to receive(:perform_later)
     allow(Notifier).to receive(:publish)
-    Current.user = current_user
+    allow(Sdr::Repository).to receive(:status).and_return(version_status)
   end
 
   context 'when the work is not open' do
@@ -20,7 +20,7 @@ RSpec.describe Admin::ChangeOwner do
 
     it 'changes the owner of the work with deposit' do
       expect(work.user).to eq(current_user)
-      described_class.call(work_form:, work:, user:, version_status:)
+      described_class.call(work_form:, work:, user:)
 
       expect(work.user).to eq(user)
       expect(work_form.collection_druid).to eq(collection.druid)
@@ -39,7 +39,7 @@ RSpec.describe Admin::ChangeOwner do
 
     it 'moves a work to another collection with deposit' do
       expect(work.user).to eq(current_user)
-      described_class.call(work_form:, work:, user:, version_status:)
+      described_class.call(work_form:, work:, user:)
 
       expect(DepositWorkJob).to have_received(:perform_later).with(work:, work_form:, deposit: false,
                                                                    request_review: false, current_user: user)
