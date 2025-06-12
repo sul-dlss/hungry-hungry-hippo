@@ -85,7 +85,7 @@ class DepositWorkJob < ApplicationJob
                                      version_description: work_form.whats_changing, status:,
                                      user_name:)
                      .then do |cocina_object|
-        Sdr::Repository.update(cocina_object:, user_name:)
+        Sdr::Repository.update(cocina_object:, user_name:, description: new_user_version? ? 'Files changed' : nil)
       end
     end
   end
