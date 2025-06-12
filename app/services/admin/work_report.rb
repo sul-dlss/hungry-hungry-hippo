@@ -161,7 +161,9 @@ module Admin
           next unless druids.include?(druid)
 
           work_model = Work.find_by(druid:)
-          content_files = work_model.content.last.content_files
+          cocina_object = Sdr::Repository.find(druid:)
+          content = Contents::Builder.call(cocina_object:, user: work_model.user, work: work_model)
+          content_files = content.content_files
           row = [work_form.title,
                  work_model.id,
                  work_form.druid,
