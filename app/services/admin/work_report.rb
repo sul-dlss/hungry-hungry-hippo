@@ -150,7 +150,7 @@ module Admin
       headers = ['item title', 'work_id', 'druid', 'deposit state', 'review state', 'version number', 'owner',
                  'date created', 'date last modified', 'date last deposited', 'release', 'visibility',
                  'license', 'custom rights', 'DOI', 'work type', 'work subtypes', 'collection title',
-                 'collection id']
+                 'collection id', 'collection_druid']
 
       CSV.generate(headers: true) do |csv|
         csv << headers
@@ -178,7 +178,8 @@ module Admin
                  work_form.work_type,
                  work_form.work_subtypes.present? ? work_form.work_subtypes.join('; ') : nil,
                  work_model.collection.title,
-                 work_model.collection_id]
+                 work_model.collection_id,
+                 work_model.collection.druid]
           csv << row
         end
       end
