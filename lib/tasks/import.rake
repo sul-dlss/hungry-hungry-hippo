@@ -71,7 +71,8 @@ namespace :import do
   # File.write('collections.json', JSON.pretty_generate(collections_json))
   # Importing is idempotent, so you can run this multiple times.
   # It will raise an error if the collection cannot be roundtripped.
-  task :collections, [:filename] => :environment do |_t, args|
+  # Skipping roundtripping is useful for local testing, when collections are needed for test_works task.
+  task :collections, %i[skip_roundtrip filename] => :environment do |_t, args|
     Rails.application.config.action_mailer.perform_deliveries = false
     Rails.application.config.cache_store = :file_store, 'tmp/cache/' if Rails.env.development?
 
@@ -90,8 +91,9 @@ namespace :import do
                       else
                         Sdr::Repository.find(druid:)
                       end
+      skip_roundtrip = args[:skip_roundtrip] == 'true' || SKIP_ROUNDTRIP_COLLECTIONS.include?(druid)
       CollectionImporter.call(collection_hash:, cocina_object:,
-                              skip_roundtrip: SKIP_ROUNDTRIP_COLLECTIONS.include?(druid))
+                              skip_roundtrip:)
     end
   end
 
