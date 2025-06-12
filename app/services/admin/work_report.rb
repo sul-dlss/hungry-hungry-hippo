@@ -139,9 +139,12 @@ module Admin
     def work_forms
       @work_forms ||= druids.map do |druid|
         cocina_object = Sdr::Repository.find(druid:)
+        work = Work.find_by(druid:)
         # only cocina_object will be used; other arg assignments are irrelevant
-        Form::WorkMapper.call(cocina_object:, doi_assigned: true, agree_to_terms: true, version_description: nil,
-                              collection: nil)
+        work_form = Form::WorkMapper.call(cocina_object:, doi_assigned: true, agree_to_terms: true,
+                                          version_description: nil, collection: nil)
+        work_form.content_id = Contents::Builder.call(cocina_object:, user: work.user, work:).id
+        work_form
       end
     end
 
@@ -161,9 +164,7 @@ module Admin
           next unless druids.include?(druid)
 
           work_model = Work.find_by(druid:)
-          cocina_object = Sdr::Repository.find(druid:)
-          content = Contents::Builder.call(cocina_object:, user: work_model.user, work: work_model)
-          content_files = content.content_files
+          content = Content.find(work_form.content_id)
           row = [work_form.title,
                  work_model.id,
                  work_form.druid,
@@ -181,12 +182,13 @@ module Admin
                  work_model.doi_assigned? ? Doi.url(druid:) : nil,
                  work_form.work_type,
                  work_form.work_subtypes.present? ? work_form.work_subtypes.join('; ') : nil,
-                 content_files.count,
-                 content_files.sum(&:size) / 1000.0, # size is in bytes, convert to kb (decimal)
+                 content.content_files.count,
+                 content.content_files.sum(&:size) / 1000.0, # size is in bytes, convert to kb (decimal)
                  work_model.collection.title,
                  work_model.collection_id,
                  work_model.collection.druid]
           csv << row
+          content.destroy # cleanup the extra content object created
         end
       end
     end

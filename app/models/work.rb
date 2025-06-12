@@ -7,7 +7,13 @@ class Work < ApplicationRecord
 
   belongs_to :user
   belongs_to :collection
-  # This association isn't useful from this direction, so don't try to use it.
+  # The association below isn't useful from this direction, so don't try to use it.
+  # This is because the content model object is refreshed from cocina before it is
+  # accessed (see the `set_content` method in the WorksController), which generates
+  # a new content object reach time it is done.  We therefore can have many content
+  # objects for a single work, only one of which is relevant.  It should be the
+  # latest one, but there is no guarantee that is up to date unless it has just
+  # been refreshed.
   has_many :content, dependent: :destroy
 
   state_machine :review_state, initial: :review_not_in_progress do
