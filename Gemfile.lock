@@ -418,6 +418,8 @@ GEM
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.1.16)
+    rack-sanitizer (2.0.4)
+      rack (>= 1.0, < 4.0)
     rack-session (2.1.1)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -677,6 +679,7 @@ DEPENDENCIES
   pg
   propshaft
   puma (>= 5.0)
+  rack-sanitizer
   rails (~> 8.0.0)
   rspec-rails
   rspec_junit_formatter
