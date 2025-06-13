@@ -34,6 +34,11 @@ begin
 
   desc 'Run all configured linters'
   task lint: %i[rubocop erblint eslint stylelint]
+
+  # clear the default task injected by rspec
+  task(:default).clear
+
+  task default: %i[lint spec]
 rescue LoadError
   # should only be here when gem group development and test aren't installed
 end
