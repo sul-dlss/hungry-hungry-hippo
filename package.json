@@ -30,8 +30,5 @@
       "doc/**",
       "node_modules/**"
     ]
-  },
-  "devDependencies": {
-    "playwright": "1.52.0"
   }
 }
