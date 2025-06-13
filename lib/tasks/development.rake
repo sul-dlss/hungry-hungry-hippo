@@ -48,7 +48,7 @@ namespace :development do
                                         doi_assigned: DoiAssignedService.call(cocina_object:, work:),
                                         agree_to_terms: true,
                                         version_description: nil, collection: work.collection)
-      unless WorkRoundtripper.call(work_form:, cocina_object:, content:)
+      unless WorkRoundtripper.call(work_form:, cocina_object:, content:, notify: false)
         puts "Work #{work.id} with druid #{work.druid} will not roundtrip, deleting"
         work.destroy! unless dryrun
         next

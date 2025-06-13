@@ -9,10 +9,12 @@ class WorkRoundtripper
   # @param [WorkForm] work_form
   # @param [Content] content
   # @param [Cocina::Models::DRO] cocina_object
-  def initialize(work_form:, content:, cocina_object:)
+  # @param [boolean] notify if the validation fails
+  def initialize(work_form:, content:, cocina_object:, notify: true)
     @work_form = work_form
     @content = content
     @original_cocina_object = cocina_object
+    @notify = notify
   end
 
   # @return [Boolean] true if the work form can be converted to a cocina object and back without loss
@@ -20,19 +22,21 @@ class WorkRoundtripper
     if roundtripped_cocina_object == normalized_original_cocina_object
       true
     else
-      RoundtripSupport.notify_error(original_cocina_object: normalized_original_cocina_object,
-                                    roundtripped_cocina_object:)
+      if notify
+        RoundtripSupport.notify_error(original_cocina_object: normalized_original_cocina_object,
+                                      roundtripped_cocina_object:)
+      end
       false
     end
   rescue Cocina::Models::ValidationError => e
     # Generating the roundtripped cocina object may create an invalid object
-    RoundtripSupport.notify_validation_error(error: e)
+    RoundtripSupport.notify_validation_error(error: e) if notify
     false
   end
 
   private
 
-  attr_reader :work_form, :content
+  attr_reader :work_form, :content, :notify
 
   def roundtripped_cocina_object
     Cocina::WorkMapper.call(work_form:,
