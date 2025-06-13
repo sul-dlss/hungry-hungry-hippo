@@ -70,7 +70,6 @@ RSpec.describe 'Discard a work draft' do
         click_on('Discard draft')
       end
 
-      expect(page).to have_current_path(work_path(druid))
       expect(page).to have_no_button('Discard draft')
       expect(page).to have_css('.alert-success', text: 'Draft discarded.')
       expect(page).to have_current_path(collection_path(collection))

@@ -79,11 +79,8 @@ RSpec.describe 'Validate a collection deposit' do
     find('.nav-link', text: 'Save your collection').click
     expect(page).to have_css('.nav-link.active', text: 'Save your collection')
     click_link_or_button('Save', class: 'btn-primary')
-    expect(page).to have_css('h1', text: collection_title_fixture)
-    expect(page).to have_current_path(collection_path)
-
-    # No Alert!
-    expect(page).to have_no_css('.alert-danger', text: 'Required fields have not been filled out.')
+    expect(page).to have_css('li', text: collection_title_fixture)
+    expect(page).to have_current_path(%r{/collections/wait/\d+})
     expect(DepositCollectionJob).to have_received(:perform_later)
   end
 

@@ -10,6 +10,10 @@ Rails.application.configure do
   require 'test_shibboleth_headers'
   config.middleware.use TestShibbolethHeaders
 
+  # Help system specs avoid failing due to javascript interactions
+  # See https://github.com/makandra/capybara-lockstep#including-the-middleware-optional
+  config.middleware.insert_before 0, Capybara::Lockstep::Middleware
+
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
 
