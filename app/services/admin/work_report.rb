@@ -9,7 +9,8 @@ module Admin
 
     def initialize(work_report_form:)
       @work_report_form = work_report_form
-      @query = Work.all
+      # Sorting makes this deterministic for testing.
+      @query = Work.order(:druid)
     end
 
     # Generate a work report CSV based on the provided filters in the work report form.
