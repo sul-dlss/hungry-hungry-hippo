@@ -46,9 +46,8 @@ RSpec.describe Admin::WorkReport do
 
   before do
     create(:work, druid:)
-    allow(Sdr::Repository).to receive(:statuses).with(druids: druid_list).and_return({ druid => version_status,
-                                                                                       druid2 => version_status2 })
-    allow(Sdr::Repository).to receive(:statuses).with(druids: [druid2]).and_return({ druid2 => version_status2 })
+    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(Sdr::Repository).to receive(:status).with(druid: druid2).and_return(version_status2)
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:find).with(druid: druid2).and_return(cocina_object2)
     allow(Current).to receive(:user).and_return(user)
