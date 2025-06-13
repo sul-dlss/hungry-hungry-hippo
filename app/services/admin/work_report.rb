@@ -140,9 +140,12 @@ module Admin
     def work_forms
       @work_forms ||= druids.map do |druid|
         cocina_object = Sdr::Repository.find(druid:)
+        work = Work.find_by(druid:)
         # only cocina_object will be used; other arg assignments are irrelevant
-        Form::WorkMapper.call(cocina_object:, doi_assigned: true, agree_to_terms: true, version_description: nil,
-                              collection: nil)
+        work_form = Form::WorkMapper.call(cocina_object:, doi_assigned: true, agree_to_terms: true,
+                                          version_description: nil, collection: nil)
+        work_form.content_id = Contents::Builder.call(cocina_object:, user: work.user, work:).id
+        work_form
       end
     end
 
@@ -150,8 +153,9 @@ module Admin
     def create_csv
       headers = ['item title', 'work_id', 'druid', 'deposit state', 'review state', 'version number', 'owner',
                  'date created', 'date last modified', 'date last deposited', 'release', 'visibility',
-                 'license', 'custom rights', 'DOI', 'work type', 'work subtypes', 'collection title',
-                 'collection id', 'collection_druid']
+                 'license', 'custom rights', 'DOI', 'work type', 'work subtypes',
+                 'total number of files', 'total file size (kb)',
+                 'collection title', 'collection id', 'collection_druid']
 
       CSV.generate(headers: true) do |csv|
         csv << headers
@@ -161,6 +165,7 @@ module Admin
           next unless druids.include?(druid)
 
           work_model = Work.find_by(druid:)
+          content = Content.find(work_form.content_id)
           row = [work_form.title,
                  work_model.id,
                  work_form.druid,
@@ -178,10 +183,13 @@ module Admin
                  work_model.doi_assigned? ? Doi.url(druid:) : nil,
                  work_form.work_type,
                  work_form.work_subtypes.present? ? work_form.work_subtypes.join('; ') : nil,
+                 content.content_files.count,
+                 content.content_files.sum(&:size) / 1000.0, # size is in bytes, convert to kb (decimal)
                  work_model.collection.title,
                  work_model.collection_id,
                  work_model.collection.druid]
           csv << row
+          content.destroy # cleanup the extra content object created
         end
       end
     end
