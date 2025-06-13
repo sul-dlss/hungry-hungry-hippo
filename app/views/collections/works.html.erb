@@ -1,3 +1,14 @@
 <%= turbo_frame_tag 'collection-works' do %>
-  <%= render Collections::Show::DepositsComponent.new(works: @works, work_statuses: @work_statuses) %>
+  <%= form_with url: works_collection_path, method: :get do |form| %>
+    <div class="row col-4">
+      <div class="col-10">
+        <%= render Elements::Forms::LabelComponent.new(form:, field_name: :q, label_text: 'Search collection', hidden_label: true) %>
+        <%= form.text_field :q, class: 'form-control', value: @search_term %>
+      </div>
+      <div class="col-2">
+        <%= render Elements::Forms::SubmitComponent.new(label: 'Search') %>
+      </div>
+    </div>
+    <%= render Collections::Show::DepositsComponent.new(works: @works, work_statuses: @work_statuses, search_term: @search_term) %>
+  <% end %>
 <% end %>

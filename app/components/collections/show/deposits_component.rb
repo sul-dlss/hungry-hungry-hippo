@@ -4,13 +4,20 @@ module Collections
   module Show
     # Component for rendering a list of deposits for the collection show page.
     class DepositsComponent < ApplicationComponent
-      def initialize(work_statuses:, works:)
+      def initialize(work_statuses:, works:, search_term: nil)
         @work_statuses = work_statuses
         @works = works
+        @search_term = search_term
         super()
       end
 
-      attr_reader :work_statuses, :works
+      attr_reader :work_statuses, :works, :search_term
+
+      def empty_message
+        return 'No deposits to this collection.' if search_term.blank?
+
+        "No deposits to this collection match the search: '#{search_term}'."
+      end
 
       def collection_deposits
         @collection_deposits ||= works.map do |work|
