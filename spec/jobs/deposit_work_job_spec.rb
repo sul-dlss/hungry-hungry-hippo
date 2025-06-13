@@ -163,7 +163,8 @@ RSpec.describe DepositWorkJob do
                 expect(event.type).to eq 'deposit'
                 expect(event.date.first.value).to eq '2024-06-10'
               end
-      expect(Sdr::Repository).to have_received(:update).with(cocina_object:, user_name: current_user.sunetid)
+      expect(Sdr::Repository).to have_received(:update)
+        .with(cocina_object:, user_name: current_user.sunetid, description: nil)
       expect(Sdr::Repository).not_to have_received(:accession)
       expect(RoundtripSupport).to have_received(:changed?)
 
@@ -202,7 +203,8 @@ RSpec.describe DepositWorkJob do
                 expect(event.type).to eq 'deposit'
                 expect(event.date.first.value).to eq Time.zone.today.iso8601
               end
-      expect(Sdr::Repository).to have_received(:update).with(cocina_object:, user_name: current_user.sunetid)
+      expect(Sdr::Repository).to have_received(:update)
+        .with(cocina_object:, user_name: current_user.sunetid, description: nil)
       expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: false)
     end
   end
@@ -231,7 +233,8 @@ RSpec.describe DepositWorkJob do
       described_class.perform_now(work_form:, work:, deposit: true, request_review: false,
                                   current_user:)
       expect(Sdr::Repository).to have_received(:open_if_needed)
-      expect(Sdr::Repository).to have_received(:update).with(cocina_object:, user_name: current_user.sunetid)
+      expect(Sdr::Repository).to have_received(:update)
+        .with(cocina_object:, user_name: current_user.sunetid, description: 'Files changed')
       expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: true)
     end
   end
