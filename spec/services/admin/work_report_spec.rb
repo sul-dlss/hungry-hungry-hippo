@@ -9,7 +9,7 @@ RSpec.describe Admin::WorkReport do
   let(:user) { User.new(email_address: 'testuser@stanford.edu') }
   let(:druid) { druid_fixture }
   let(:druid2) { 'druid:bc000dd1111' }
-  let(:druid_list) { [druid, druid2] }
+  let(:druid_list) { [druid2, druid] }
   let(:work_report_form) do
     Admin::WorkReportForm.new(date_created_start: nil, date_created_end: nil, date_modified_start: nil,
                               date_modified_end: nil, collection_ids: [''], draft_not_deposited_state: false,
