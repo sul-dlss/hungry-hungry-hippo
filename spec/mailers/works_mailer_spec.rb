@@ -72,4 +72,23 @@ RSpec.describe WorksMailer do
                                  'collection by Max Headroom, a collection manager, or an SDR administrator.')
     end
   end
+
+  describe '.ownership_changed_email' do
+    let(:mail) { described_class.with(work:, current_user: user).ownership_changed_email }
+    let(:user) { create(:user, first_name: 'Carter') }
+    let(:managers) { [user] }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq 'Ownership of S1.E2: Rakers has been changed'
+      expect(mail.to).to eq [user.email_address]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders the body' do
+      expect(mail).to match_body('Dear Carter,')
+      expect(mail).to match_body("You are now the owner of the item \"#{work.title}\" in the " \
+                                 'Stanford Digital Repository and have access to manage its ' \
+                                 'metadata and files.')
+    end
+  end
 end

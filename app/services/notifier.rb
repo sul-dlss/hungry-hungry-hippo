@@ -19,6 +19,9 @@ class Notifier
   ACCESSIONING_STARTED = 'accessioning_started'
   ACCESSIONING_COMPLETE = 'accessioning_complete'
 
+  # When a works ownership is changed
+  OWNERSHIP_CHANGED = 'ownership_changed'
+
   # Publishes an event with the given name and payload
   # @param event_name [String] the name of the event
   # @param payload [Hash] the payload to include with the event

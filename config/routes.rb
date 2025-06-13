@@ -51,6 +51,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
     namespace :admin do
       resources :move, only: %i[new create], controller: 'move'
+      resources :change_owner, only: %i[new create], controller: 'change_owner'
       resources :delete, only: %i[new destroy], controller: 'delete_work', param: :druid
     end
   end
@@ -89,6 +90,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resource :contacts, only: %i[new create]
 
   get 'accounts/search', to: 'accounts#search'
+  get 'accounts/search_user', to: 'accounts#search_user'
 
   get 'dashboard', to: 'dashboard#show'
 
