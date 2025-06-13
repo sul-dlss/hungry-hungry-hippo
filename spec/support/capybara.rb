@@ -2,6 +2,16 @@
 
 # This is to prevent the animation from running in the system tests which can make the tests flaky.
 Capybara.disable_animation = true
+Capybara.default_max_wait_time = 15 # Capybara default is 2
+Capybara.register_driver(:selenium_headless_chrome_lockstep) do |app|
+  # The following option is recommended by the capybara-lockstep gem
+  options = Selenium::WebDriver::Chrome::Options.new(unhandled_prompt_behavior: 'ignore')
+  options.add_argument('--window-size=1400,1400')
+  options.add_argument('--disable-search-engine-choice-screen')
+  options.add_argument('--headless')
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
+end
 
 RSpec.configure do |config|
   config.prepend_before(:example, type: :system) do |example|
@@ -13,7 +23,7 @@ RSpec.configure do |config|
       # Rack tests are faster than Selenium, but they don't support JavaScript
       driven_by :rack_test
     else
-      driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
+      driven_by :selenium_headless_chrome_lockstep
     end
   end
 
