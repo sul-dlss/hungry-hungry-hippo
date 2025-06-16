@@ -17,6 +17,7 @@ module Sdr
       h3_review_returned
       h3_review_requested
       h3_globus_staged
+      h3_owner_changed
     ].freeze
 
     # @param [String] druid

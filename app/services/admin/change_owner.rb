@@ -7,14 +7,26 @@ module Admin
       new(...).call
     end
 
-    def initialize(work_form:, work:, user:)
+    def initialize(work_form:, work:, user:, admin_user:)
       @work_form = work_form
       @work = work
       @collection = work.collection
       @user = user
+      @admin_user = admin_user
     end
 
+    # rubocop:disable Metrics/AbcSize
     def call
+      # user == the requested new owner of the work submitted by the admin
+      # work.user == the current owner of the work
+      # admin_user = the logged in admin performing the action
+      Sdr::Event.create(druid: work.druid,
+                        type: 'h3_owner_changed',
+                        data: {
+                          who: admin_user.sunetid,
+                          description: "Changed owner from #{work.user.sunetid} to #{user.sunetid}"
+                        })
+
       work.user = user
       work.deposit_persist! # Sets the deposit state
 
@@ -26,10 +38,11 @@ module Admin
       DepositWorkJob.perform_later(work:, work_form:, deposit: deposit?,
                                    request_review: false, current_user: user)
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 
-    attr_reader :collection, :user, :work, :work_form
+    attr_reader :collection, :user, :work, :work_form, :admin_user
 
     def version_status
       @version_status ||= Sdr::Repository.status(druid: work.druid)

@@ -66,6 +66,7 @@ en:
     h3_review_returned: 'Review returned'
     h3_review_requested: 'Review requested'
     h3_globus_staged: 'Globus staging completed'
+    h3_owner_changed: 'Owner changed'
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
