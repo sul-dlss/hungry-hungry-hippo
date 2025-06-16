@@ -7,6 +7,7 @@ class Work < ApplicationRecord
 
   belongs_to :user
   belongs_to :collection
+  has_many :shares, dependent: :destroy
   # The association below isn't useful from this direction, so don't try to use it.
   # This is because the content model object is refreshed from cocina before it is
   # accessed (see the `set_content` method in the WorksController), which generates
