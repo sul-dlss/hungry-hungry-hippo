@@ -8,11 +8,13 @@ RSpec.describe Admin::ChangeOwner do
   let(:collection) { create(:collection, user: current_user) }
   let(:current_user) { create(:user) }
   let(:user) { create(:user) }
+  let(:admin_user) { create(:user) }
 
   before do
     allow(DepositWorkJob).to receive(:perform_later)
     allow(Notifier).to receive(:publish)
     allow(Sdr::Repository).to receive(:status).and_return(version_status)
+    allow(Sdr::Event).to receive(:create)
   end
 
   context 'when the work is not open' do
@@ -20,12 +22,19 @@ RSpec.describe Admin::ChangeOwner do
 
     it 'changes the owner of the work with deposit' do
       expect(work.user).to eq(current_user)
-      described_class.call(work_form:, work:, user:)
+      described_class.call(work_form:, work:, user:, admin_user:)
 
       expect(work.user).to eq(user)
       expect(work_form.collection_druid).to eq(collection.druid)
       expect(collection.depositors).to include(work.user)
       expect(work.reload.deposit_registering_or_updating?).to be(true)
+      description = "Changed owner from #{current_user.sunetid} to #{user.sunetid}"
+      expect(Sdr::Event).to have_received(:create).with(druid: work.druid,
+                                                        type: 'h3_owner_changed',
+                                                        data: {
+                                                          who: admin_user.sunetid,
+                                                          description:
+                                                        })
 
       expect(DepositWorkJob).to have_received(:perform_later).with(work:, work_form:, deposit: true,
                                                                    request_review: false, current_user: user)
@@ -39,7 +48,7 @@ RSpec.describe Admin::ChangeOwner do
 
     it 'moves a work to another collection with deposit' do
       expect(work.user).to eq(current_user)
-      described_class.call(work_form:, work:, user:)
+      described_class.call(work_form:, work:, user:, admin_user:)
 
       expect(DepositWorkJob).to have_received(:perform_later).with(work:, work_form:, deposit: false,
                                                                    request_review: false, current_user: user)

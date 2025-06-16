@@ -16,7 +16,7 @@ module Admin
       @change_owner_form = Admin::ChangeOwnerForm.new(work_form:, **change_owner_params)
       work_form.content_id = @change_owner_form.content_id
 
-      Admin::ChangeOwner.call(work_form:, work:, user:)
+      Admin::ChangeOwner.call(work_form:, work:, user:, admin_user: current_user)
 
       render_change_owner_success
     end
