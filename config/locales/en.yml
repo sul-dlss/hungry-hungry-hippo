@@ -45,6 +45,7 @@ en:
   messages:
     collection_deleted: 'Collection successfully deleted.'
     collection_not_empty: 'Collection must be empty to delete.'
+    collection_report_generated: 'Collection report requested and will be emailed when completed.'
     draft_discarded: 'Draft discarded.'
     validation: >-
       Required fields have not been filled out. Click on the sections highlighted on

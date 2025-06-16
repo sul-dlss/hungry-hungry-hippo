@@ -45,9 +45,23 @@ class CollectionPresenter < FormPresenter
     end
   end
 
-  def license_option_label
-    license_label = License.find_by(id: collection.license)&.label
+  def custom_rights_allowed
+    %w[provided depositor_selects].include?(collection.custom_rights_statement_option) ? 'yes' : 'no'
+  end
 
+  def custom_rights_provided
+    collection.provided_custom_rights_statement.present? ? 'yes' : 'no'
+  end
+
+  def custom_rights_statement_instructions_provided
+    collection.custom_rights_statement_instructions.present? ? 'yes' : 'no'
+  end
+
+  def license_label
+    @license_label ||= License.find_by(id: collection.license)&.label
+  end
+
+  def license_option_label
     case collection.license_option
     when 'required'
       "License required: #{license_label}"

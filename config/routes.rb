@@ -117,6 +117,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
     resource :emulate, only: %i[new create], controller: :emulate
 
+    resource :collection_report, only: %i[new create], controller: :collection_report
     resource :work_report, only: %i[new create], controller: :work_report
   end
 
