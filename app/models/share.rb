@@ -2,6 +2,10 @@
 
 # Model for a share permission of a Work to a User.
 class Share < ApplicationRecord
+  VIEW_PERMISSION = 'view'
+  VIEW_EDIT_PERMISSION = 'edit'
+  VIEW_EDIT_DEPOSIT_PERMISSION = 'deposit'
+
   belongs_to :user
   belongs_to :work
 

@@ -12,6 +12,12 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
   let(:active_tab_name) { :test_pane }
   let(:previous_tab_btn) { true }
   let(:next_tab_btn) { true }
+  let(:user) { create(:user) }
+
+  before do
+    Current.user = user
+    Current.groups = []
+  end
 
   context 'when no work presenter (new work)' do
     it 'renders the pane' do
@@ -29,7 +35,7 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
 
   context 'when work presenter (existing work, first_draft)' do
     let(:version_status) { build(:first_draft_version_status) }
-    let(:work) { create(:work, :with_druid) }
+    let(:work) { create(:work, :with_druid, user:) }
     let(:work_presenter) do
       WorkPresenter.new(work:, work_form: WorkForm.new(druid: work.druid), version_status:)
     end
@@ -47,7 +53,7 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
 
   context 'when work presenter (existing work, not first_draft)' do
     let(:version_status) { build(:version_status) }
-    let(:work) { create(:work, :with_druid) }
+    let(:work) { create(:work, :with_druid, user:) }
     let(:work_presenter) do
       WorkPresenter.new(work:, work_form: WorkForm.new(druid: work.druid), version_status:)
     end

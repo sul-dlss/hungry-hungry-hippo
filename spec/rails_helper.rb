@@ -40,6 +40,7 @@ require 'cyperful/rspec' if ENV['CYPERFUL']
 require 'view_component/test_helpers'
 require 'view_component/system_test_helpers'
 require 'capybara/rspec'
+require 'action_policy/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
