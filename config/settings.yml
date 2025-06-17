@@ -12,7 +12,7 @@ workflow:
 purl:
   url: "https://sul-purl-stage.stanford.edu"
 
-staging_location: '/dor/workspace'
+staging_location: '/sdr-deposit-staging'
 
 # mappings from authorization role to workgroup name
 authorization_workgroup_names:
