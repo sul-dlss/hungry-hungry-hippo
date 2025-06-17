@@ -82,7 +82,8 @@ class CollectionsController < ApplicationController
   def works
     authorize! @collection
 
-    @works = authorized_scope(@collection.works, as: :collection, scope_options: { collection: @collection })
+    @search_term = params[:q]
+    @works = authorized_scope(collection_works_result, as: :collection, scope_options: { collection: @collection })
              .order(updated_at: :desc).page(params[:page])
     @work_statuses = Sdr::Repository.statuses(
       druids: @works.where.not(druid: nil).pluck(:druid)
@@ -99,6 +100,23 @@ class CollectionsController < ApplicationController
   end
 
   private
+
+  # @return [ActiveRecord::Relation] the works to display for the collection, filtered by search term if applicable
+  def collection_works_result
+    return @collection.works if @search_term.blank?
+
+    @collection.works.joins(
+      :user
+    ).where('title ILIKE ?', "%#{@search_term}%").or(
+      Work.where('druid ILIKE ?', "%#{@search_term}%")
+    ).or(
+      User.where('email_address ILIKE ?', "%#{@search_term}%")
+    ).or(
+      User.where('name ILIKE ?', "%#{@search_term}%")
+    ).or(
+      User.where('first_name ILIKE ?', "%#{@search_term}%")
+    )
+  end
 
   def collection_params
     params.expect(collection: CollectionForm.user_editable_attributes + [CollectionForm.nested_attributes])
