@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Dashboard::Show::WorksListComponent, type: :component do
+RSpec.describe Dashboard::Show::CollectionWorksListComponent, type: :component do
   let(:work) do
     create(:work, user: current_user, collection:, druid: druid_fixture,
                   object_updated_at: Time.zone.parse('2024-12-3'), doi_assigned: false)

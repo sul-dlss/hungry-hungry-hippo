@@ -11,6 +11,7 @@ RSpec.describe 'Show dashboard', :rack_test do
     let!(:draft_work) { create(:work, :with_druid, user:, collection:) }
     let!(:pending_review_work) { create(:work, user:, collection:, review_state: 'pending_review') }
     let!(:rejected_review_work) { create(:work, user:, collection:, review_state: 'rejected_review') }
+    let(:shared_work) { create(:work, :with_druid) }
     let(:collection) do
       create(:collection, :with_druid, user:, managers: [user], reviewers: [user], review_enabled: true)
     end
@@ -22,6 +23,8 @@ RSpec.describe 'Show dashboard', :rack_test do
     before do
       allow(Sdr::Repository).to receive(:statuses).and_return({ work.druid => version_status,
                                                                 draft_work.druid => draft_version_status })
+      create(:share, work: shared_work, user:)
+
       sign_in(user)
     end
 
@@ -52,6 +55,12 @@ RSpec.describe 'Show dashboard', :rack_test do
       expect(page).to have_css('h2', text: 'Items waiting for collection manager or reviewer to approve')
       within('table#pending-review-table') do
         expect(page).to have_css('td', text: pending_review_work.title)
+      end
+
+      # Shared works section
+      expect(page).to have_css('h2', text: 'Items shared with you')
+      within('table#shares-table') do
+        expect(page).to have_css('td', text: shared_work.title)
       end
 
       # Your collections section
