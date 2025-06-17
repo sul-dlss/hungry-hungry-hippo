@@ -29,4 +29,15 @@ RSpec.describe ContentFile do
       end
     end
   end
+
+  describe '.staging_filepath' do
+    let(:work) { create(:work, :with_druid) }
+    let(:content) { create(:content, :with_content_files, work:) }
+    let(:content_file) { content.content_files.first }
+
+    it 'returns the path in the staging area' do
+      expect(content_file.staging_filepath).to eq StagingSupport.staging_filepath(druid: work.druid,
+                                                                                  filepath: content_file.filepath)
+    end
+  end
 end

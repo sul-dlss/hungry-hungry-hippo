@@ -23,6 +23,12 @@ class ContentFile < ApplicationRecord
     self.extname = FilenameSupport.extname(filepath:)
   end
 
+  # the path on the local staging filesystem
+  # note: depending on status of the object (ie draft vs deposited), there is no guarantee the file will still be there
+  def staging_filepath
+    StagingSupport.staging_filepath(druid: content.work.druid, filepath:)
+  end
+
   def filename
     FilenameSupport.filename(filepath:)
   end

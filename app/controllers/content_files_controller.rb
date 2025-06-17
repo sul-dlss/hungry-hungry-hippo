@@ -32,66 +32,39 @@ class ContentFilesController < ApplicationController
   def download
     authorize! @content_file
 
-    status = Sdr::Repository.status(druid:)
-
-    # if the object is accessioned and the file is not hidden, get it from the stacks
-    if status.openable? && !@content_file.hide
-      download_from_stacks
-    # if the object is accessioned, get it from preservation
-    elsif status.openable?
-      download_from_preservation(status.version)
-    # otherwise, get it from the staging area
-    else
-      download_from_staging
+    # if the file is on the staging path, get it from there
+    if File.exist?(@content_file.staging_filepath)
+      send_file @content_file.staging_filepath, filename: filepath, type: @content_file.mime_type
+    else # if not, get it from preservation
+      download_from_preservation
     end
   end
 
   private
 
   # rubocop:disable Metrics/AbcSize
-  # this was borrowed from Argo without permission
-  def download_from_preservation(version)
+  def download_from_preservation
     # Set headers on the response before writing to the response stream
     send_file_headers!(
       type: 'application/octet-stream',
       disposition: 'attachment',
-      filename: CGI.escape(filepath.split('/').last)
+      filename: @content_file.filename
     )
     response.headers['Last-Modified'] = Time.now.utc.rfc2822 # HTTP requires GMT date/time
 
     Preservation::Client.objects.content(
       druid:,
       filepath:,
-      version:,
       on_data: proc { |data, _count| response.stream.write data }
     )
-  rescue Preservation::Client::NotFoundError => e
-    # Undo the header setting above for the streaming response. Not relevant here.
-    response.headers.delete('Last-Modified')
-    response.headers.delete('Content-Disposition')
-
-    render status: :not_found, plain: "Preserved file not found: #{e}"
-  rescue Preservation::Client::Error => e
+  rescue Preservation::Client::NotFoundError, Preservation::Client::Error => e
     message = "Preservation client error getting content of #{filepath} for #{druid}: #{e}"
-    logger.error(message)
     Honeybadger.notify(message)
-    render status: :internal_server_error, plain: message
+    render status: :bad_request, plain: 'There was a problem downloading your file.  Please try again later.'
   ensure
     response.stream.close
   end
   # rubocop:enable Metrics/AbcSize
-
-  def download_from_stacks
-    redirect_to "#{Settings.stacks.file_url}/#{druid}/#{filepath}", allow_other_host: true
-  end
-
-  def download_from_staging
-    staging_filepath = StagingSupport.staging_filepath(druid:, filepath:)
-
-    return head :bad_request unless File.exist?(staging_filepath)
-
-    send_file staging_filepath, filename: filepath, type: @content_file.mime_type
-  end
 
   def druid
     @content_file.work.druid
