@@ -210,23 +210,14 @@ RSpec.describe 'Show a collection' do
       end
 
       within('div#deposits-pane') do
+        # test the >0 and 0 results cases, leave more exhaustive testing of search fields
+        # to the request specs
+
         fill_in('Search', with: works.to_a[0].title)
         click_link_or_button 'Search'
         expect(page).to have_css('td a', text: works.to_a[0].title)
         expect(page).to have_no_css('td a', text: works.to_a[1].title)
         expect(page).to have_no_css('td a', text: works.to_a[2].title)
-
-        fill_in('Search', with: works.to_a[1].druid)
-        click_link_or_button 'Search'
-        expect(page).to have_css('td a', text: works.to_a[1].title)
-        expect(page).to have_no_css('td a', text: works.to_a[0].title)
-        expect(page).to have_no_css('td a', text: works.to_a[2].title)
-
-        fill_in('Search', with: works.to_a[2].title)
-        click_link_or_button 'Search'
-        expect(page).to have_css('td a', text: works.to_a[2].title)
-        expect(page).to have_no_css('td a', text: works.to_a[0].title)
-        expect(page).to have_no_css('td a', text: works.to_a[1].title)
 
         fill_in('Search', with: 'asdfsdf')
         click_link_or_button 'Search'
@@ -234,24 +225,6 @@ RSpec.describe 'Show a collection' do
         expect(page).to have_no_css('td a', text: works.to_a[0].title)
         expect(page).to have_no_css('td a', text: works.to_a[1].title)
         expect(page).to have_no_css('td a', text: works.to_a[2].title)
-
-        fill_in('Search', with: works.to_a[0].user.email_address)
-        click_link_or_button 'Search'
-        expect(page).to have_css('td a', text: works.to_a[0].title)
-        expect(page).to have_no_css('td a', text: works.to_a[1].title)
-        expect(page).to have_no_css('td a', text: works.to_a[2].title)
-
-        fill_in('Search', with: works.to_a[1].user.name)
-        click_link_or_button 'Search'
-        expect(page).to have_no_css('td a', text: works.to_a[0].title)
-        expect(page).to have_no_css('td a', text: works.to_a[2].title)
-        expect(page).to have_css('td a', text: works.to_a[1].title)
-
-        fill_in('Search', with: works.to_a[2].user.first_name)
-        click_link_or_button 'Search'
-        expect(page).to have_no_css('td a', text: works.to_a[0].title)
-        expect(page).to have_no_css('td a', text: works.to_a[1].title)
-        expect(page).to have_css('td a', text: works.to_a[2].title)
 
         fill_in('Search', with: '') # reset form to no search terms for rest of test
         click_link_or_button 'Search'
@@ -302,6 +275,9 @@ RSpec.describe 'Show a collection' do
 
       # Only owned works make it to search results
       within('div#deposits-pane') do
+        # test the >0 and 0 results cases, leave more exhaustive testing of search fields
+        # to the request specs
+
         fill_in('Search', with: works.to_a[0].title)
         click_link_or_button 'Search'
         expect(page).to have_no_css('td a', text: works.to_a[0].title)
@@ -317,48 +293,7 @@ RSpec.describe 'Show a collection' do
         expect(page).to have_no_css('td a', text: works.to_a[0].title)
         expect(page).to have_no_css('td a', text: works.to_a[2].title)
 
-        fill_in('Search', with: works.to_a[2].title)
-        click_link_or_button 'Search'
-        expect(page).to have_no_css('td a', text: works.to_a[0].title)
-        expect(page).to have_no_css('td a', text: works.to_a[1].title)
-        expect(page).to have_no_css('td a', text: works.to_a[2].title)
-        expect(page).to have_css('p',
-                                 text: "No deposits to this collection match the search: '#{works.to_a[2].title}'.")
-
-        fill_in('Search', with: 'asdfsdf')
-        click_link_or_button 'Search'
-        expect(page).to have_css('p', text: "No deposits to this collection match the search: 'asdfsdf'.")
-        expect(page).to have_no_css('td a', text: works.to_a[0].title)
-        expect(page).to have_no_css('td a', text: works.to_a[1].title)
-        expect(page).to have_no_css('td a', text: works.to_a[2].title)
-
-        fill_in('Search', with: works.to_a[0].user.email_address)
-        click_link_or_button 'Search'
-        expect(page).to have_no_css('td a', text: works.to_a[0].title)
-        expect(page).to have_no_css('td a', text: works.to_a[1].title)
-        expect(page).to have_no_css('td a', text: works.to_a[2].title)
-        expect(page).to have_css(
-          'p',
-          text: "No deposits to this collection match the search: '#{works.to_a[0].user.email_address}'."
-        )
-
-        fill_in('Search', with: works.to_a[1].user.name)
-        click_link_or_button 'Search'
-        expect(page).to have_css('td a', text: works.to_a[1].title)
-        expect(page).to have_no_css('td a', text: works.to_a[0].title)
-        expect(page).to have_no_css('td a', text: works.to_a[2].title)
-
-        fill_in('Search', with: works.to_a[2].user.first_name)
-        click_link_or_button 'Search'
-        expect(page).to have_no_css('td a', text: works.to_a[0].title)
-        expect(page).to have_no_css('td a', text: works.to_a[1].title)
-        expect(page).to have_no_css('td a', text: works.to_a[2].title)
-        expect(page).to have_css(
-          'p',
-          text: "No deposits to this collection match the search: '#{works.to_a[2].user.first_name}'."
-        )
-
-        fill_in('Search', with: '') # reset form to no search terms for rest of test
+        fill_in('Search', with: '') # reset form to no search terms
         click_link_or_button 'Search'
       end
     end

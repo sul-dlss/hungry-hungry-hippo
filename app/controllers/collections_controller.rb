@@ -79,25 +79,10 @@ class CollectionsController < ApplicationController
     redirect_to collection_path(@collection) unless @collection.deposit_registering_or_updating?
   end
 
-  def works # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def works
     authorize! @collection
 
-    collection_works_result = @collection.works
     @search_term = params[:q]
-    if @search_term
-      collection_works_result = collection_works_result.joins(
-        :user
-      ).where('title ILIKE ?', "%#{@search_term}%").or(
-        Work.where('druid ILIKE ?', "%#{@search_term}%")
-      ).or(
-        User.where('email_address ILIKE ?', "%#{@search_term}%")
-      ).or(
-        User.where('name ILIKE ?', "%#{@search_term}%")
-      ).or(
-        User.where('first_name ILIKE ?', "%#{@search_term}%")
-      )
-    end
-
     @works = authorized_scope(collection_works_result, as: :collection, scope_options: { collection: @collection })
              .order(updated_at: :desc).page(params[:page])
     @work_statuses = Sdr::Repository.statuses(
@@ -115,6 +100,23 @@ class CollectionsController < ApplicationController
   end
 
   private
+
+  # @return [ActiveRecord::Relation] the works to display for the collection, filtered by search term if applicable
+  def collection_works_result
+    return @collection.works if @search_term.blank?
+
+    @collection.works.joins(
+      :user
+    ).where('title ILIKE ?', "%#{@search_term}%").or(
+      Work.where('druid ILIKE ?', "%#{@search_term}%")
+    ).or(
+      User.where('email_address ILIKE ?', "%#{@search_term}%")
+    ).or(
+      User.where('name ILIKE ?', "%#{@search_term}%")
+    ).or(
+      User.where('first_name ILIKE ?', "%#{@search_term}%")
+    )
+  end
 
   def collection_params
     params.expect(collection: CollectionForm.user_editable_attributes + [CollectionForm.nested_attributes])
