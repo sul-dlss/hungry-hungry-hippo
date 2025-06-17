@@ -9,6 +9,7 @@ class DashboardController < ApplicationController
 
     set_draft_works_and_status_map
     @your_collections = current_user.your_collections.order(:title)
+    @shared_works = current_user.shared_works.order(:title)
   end
 
   private

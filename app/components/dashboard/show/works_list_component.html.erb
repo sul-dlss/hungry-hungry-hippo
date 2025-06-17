@@ -1,18 +1,14 @@
 <%= render Elements::Tables::TableComponent.new(
-      id:, label:, show_label: false,
-      empty_message: 'You have not made any deposits to this collection.'
+      id:, label: 'Deposits pending review', show_label: false,
+      empty_message: 'You do not have items waiting for approval.'
     ) do |component| %>
     <% component.with_headers([
-                                { label: 'Recent deposits in collection' },
-                                { label: 'Deposit status' },
+                                { label: 'Deposit' },
+                                { label: 'Collection' },
                                 { label: 'Owner' },
-                                { label: 'Last modified' },
-                                { label: t('sharing_link.label'), tooltip: t('sharing_link.tooltip_html') }
+                                { label: 'Last modified' }
                               ]) %>
-  <% works.take(WORK_LIMIT).each do |work| %>
+  <% works.each do |work| %>
     <% component.with_row(values: values_for(work), id: id_for(work)) %>
   <% end %>
 <% end %>
-<div>
-  <%= link_to('See all deposits', collection_path(collection, tab: 'deposits'), class: 'fw-bold') if see_all? %>
-</div>

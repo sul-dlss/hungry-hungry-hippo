@@ -22,7 +22,14 @@
 <% if current_user.your_pending_review_works.exists? %>
   <div class="mb-5">
     <%= render Elements::HeadingComponent.new(level: :h2, text: 'Items waiting for collection manager or reviewer to approve', classes: 'h3 mb-4 w-100 text-nowrap') %>
-    <%= render Dashboard::Show::PendingReviewListComponent.new(works: current_user.your_pending_review_works) %>
+    <%= render Dashboard::Show::WorksListComponent.new(works: current_user.your_pending_review_works, id: 'pending-review-table') %>
+  </div>
+<% end %>
+
+<% if @shared_works.exists? %>
+  <div class="mb-5">
+    <%= render Elements::HeadingComponent.new(level: :h2, text: 'Items shared with you', classes: 'h3 mb-4 w-100 text-nowrap') %>
+    <%= render Dashboard::Show::WorksListComponent.new(works: @shared_works, id: 'shares-table') %>
   </div>
 <% end %>
 
@@ -34,7 +41,7 @@
 <% @your_collections.each do |collection| %>
   <div class="mb-5">
     <%= render Collections::HeaderLinkComponent.new(collection:) %>
-    <%= render Dashboard::Show::WorksListComponent.new(collection:, status_map: @status_map) %>
+    <%= render Dashboard::Show::CollectionWorksListComponent.new(collection:, status_map: @status_map) %>
     <%= render Dashboard::Show::FirstUseAlertComponent.new(user: current_user) %>
     <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary, classes: 'mt-4') %>
   </div>

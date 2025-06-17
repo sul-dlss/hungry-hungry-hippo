@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :depositor_for, through: :collection_depositors, source: :collection
   has_many :reviewer_for, through: :collection_reviewers, source: :collection
   has_many :shares, dependent: :destroy
+  has_many :shared_works, through: :shares, source: :work
 
   EMAIL_SUFFIX = '@stanford.edu'
 
