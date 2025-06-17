@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :manages, through: :collection_managers, source: :collection
   has_many :depositor_for, through: :collection_depositors, source: :collection
   has_many :reviewer_for, through: :collection_reviewers, source: :collection
+  has_many :shares, dependent: :destroy
 
   EMAIL_SUFFIX = '@stanford.edu'
 

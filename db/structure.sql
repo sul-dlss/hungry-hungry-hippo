@@ -423,6 +423,39 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: shares; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.shares (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    work_id bigint NOT NULL,
+    permission character varying DEFAULT 'view'::character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: shares_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.shares_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: shares_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.shares_id_seq OWNED BY public.shares.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -561,6 +594,13 @@ ALTER TABLE ONLY public.contributors ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: shares id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.shares ALTER COLUMN id SET DEFAULT nextval('public.shares_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -660,6 +700,14 @@ ALTER TABLE ONLY public.contributors
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: shares shares_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.shares
+    ADD CONSTRAINT shares_pkey PRIMARY KEY (id);
 
 
 --
@@ -840,6 +888,20 @@ CREATE INDEX index_contributors_on_collection_id ON public.contributors USING bt
 
 
 --
+-- Name: index_shares_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_shares_on_user_id ON public.shares USING btree (user_id);
+
+
+--
+-- Name: index_shares_on_work_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_shares_on_work_id ON public.shares USING btree (work_id);
+
+
+--
 -- Name: index_users_on_email_address; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -937,6 +999,14 @@ ALTER TABLE ONLY public.contents
 
 
 --
+-- Name: shares fk_rails_90b9094a57; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.shares
+    ADD CONSTRAINT fk_rails_90b9094a57 FOREIGN KEY (work_id) REFERENCES public.works(id);
+
+
+--
 -- Name: active_storage_variant_records fk_rails_993965df05; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -961,12 +1031,21 @@ ALTER TABLE ONLY public.active_storage_attachments
 
 
 --
+-- Name: shares fk_rails_d671d25093; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.shares
+    ADD CONSTRAINT fk_rails_d671d25093 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250616125424'),
 ('20250610120209'),
 ('20250604121142'),
 ('20250527121840'),
