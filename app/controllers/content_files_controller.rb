@@ -2,6 +2,8 @@
 
 # Controller for a Work content file
 class ContentFilesController < ApplicationController
+  include ActionController::Live # required for streaming
+
   before_action :set_content_file
 
   def show
