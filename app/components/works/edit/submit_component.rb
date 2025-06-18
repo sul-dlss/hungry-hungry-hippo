@@ -19,12 +19,24 @@ module Works
         render Elements::Forms::SubmitComponent.new(form_id:, label:, classes:, data:)
       end
 
+      def render?
+        review_permissions? || deposit_permissions?
+      end
+
       def label
-        if collection.review_enabled? && !helpers.allowed_to?(:review?, collection)
+        if collection.review_enabled? && !review_permissions?
           'Submit for review'
         else
           'Deposit'
         end
+      end
+
+      def review_permissions?
+        @review_permissions ||= helpers.allowed_to?(:review?, collection)
+      end
+
+      def deposit_permissions?
+        helpers.allowed_to?(:deposit?, work || collection, with: WorkPolicy)
       end
     end
   end

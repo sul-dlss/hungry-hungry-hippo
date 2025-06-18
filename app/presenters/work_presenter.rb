@@ -121,7 +121,13 @@ class WorkPresenter < FormPresenter
   end
 
   def editable?
-    super && (!pending_review? || allowed_to?(:edit_pending_review?, work, context: { user: Current.user }))
+    # super makes sure the work is editable
+    super && edit_permissions?
+  end
+
+  def discardable?
+    # super makes sure the work is discardable
+    super && allowed_to?(:destroy?, work, context: { user: Current.user })
   end
 
   def contact_emails
@@ -150,5 +156,11 @@ class WorkPresenter < FormPresenter
     return false if version_status.first_version? && (version_status.open? || version_status.accessioning?)
 
     true
+  end
+
+  def edit_permissions?
+    return allowed_to?(:edit_pending_review?, work, context: { user: Current.user }) if pending_review?
+
+    allowed_to?(:edit?, work, context: { user: Current.user })
   end
 end

@@ -7,7 +7,7 @@ RSpec.describe Works::Show::HeaderComponent, type: :component do
     WorkPresenter.new(work_form:, version_status:, work:)
   end
   let(:work_form) { WorkForm.new(druid: druid_fixture, title:) }
-  let(:work) { create(:work, review_state:) }
+  let(:work) { create(:work, review_state:, user: owner) }
   let(:version_status) do
     instance_double(VersionStatus, editable?: editable_version_status, discardable?: discardable_version_status,
                                    status_message:)
@@ -19,11 +19,15 @@ RSpec.describe Works::Show::HeaderComponent, type: :component do
   let(:review_state) { 'review_not_in_progress' }
 
   let(:user) { build(:user) }
+  let(:owner) { build(:user) }
   let(:groups) { [] }
+  let(:permission) { 'edit' }
 
   before do
     allow(vc_test_controller).to receive(:current_user).and_return(user)
     allow(Current).to receive_messages(groups:, user:)
+
+    create(:share, work:, user:, permission:)
   end
 
   it 'renders the header' do
@@ -34,12 +38,22 @@ RSpec.describe Works::Show::HeaderComponent, type: :component do
     expect(page).to have_no_button('Discard draft')
   end
 
-  context 'when editable version status' do
+  context 'when editable version status and user has permissions to edit' do
     let(:editable_version_status) { true }
 
     it 'renders the edit button' do
       render_inline(described_class.new(presenter:))
       expect(page).to have_link('Edit or deposit', href: "/works/#{druid_fixture}/edit")
+    end
+  end
+
+  context 'when editable version status and user does not have permissions to edit' do
+    let(:editable_version_status) { true }
+    let(:permission) { 'view' }
+
+    it 'does not render the edit button' do
+      render_inline(described_class.new(presenter:))
+      expect(page).to have_no_link('Edit or deposit')
     end
   end
 
@@ -68,14 +82,24 @@ RSpec.describe Works::Show::HeaderComponent, type: :component do
     end
   end
 
-  context 'when discardable' do
+  context 'when discardable and user has permissions to discard' do
     let(:discardable_version_status) { true }
+    let(:owner) { user } # Owner can discard
 
     it 'renders the discard button' do
       render_inline(described_class.new(presenter:))
       expect(page).to have_button('Discard draft')
       expect(page).to have_css("form[action=\"/works/#{druid_fixture}\"]")
       expect(page).to have_field('_method', with: 'delete', type: :hidden)
+    end
+  end
+
+  context 'when discardable and user does not have permissions to discard' do
+    let(:discardable_version_status) { true }
+
+    it 'does not render the discard button' do
+      render_inline(described_class.new(presenter:))
+      expect(page).to have_no_button('Discard draft')
     end
   end
 
