@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 # This is testing the status page that is provided by the Rails health check gem.
-# This test is being used to establish a coverage baseline for CodeClimat in CI
+# This test is being used to establish a coverage baseline for CodeClimate in CI
 # This can be removed once we have actual tests in place.
 RSpec.describe 'Status Page' do
   describe 'GET /up' do

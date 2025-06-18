@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <% if Settings.google_analytics.enabled %>
+      <!-- Google Tag Manager -->
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-P6SX5MBG');</script>
+      <!-- End Google Tag Manager -->
+    <% end %>
     <title><%= content_for(:title) || 'SDR | Stanford Digital Repository' %></title>
     <meta name='viewport' content='width=device-width,initial-scale=1'>
     <meta name='apple-mobile-web-app-capable' content='yes'>
@@ -28,6 +37,12 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
+    <% if Settings.google_analytics.enabled %>
+      <!-- Google Tag Manager (noscript) -->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P6SX5MBG"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <!-- End Google Tag Manager (noscript) -->
+    <% end %>
     <%= render Elements::SkipLinksComponent.new %>
     <%= render Structure::HeaderComponent.new %>
     <div class="breadcrumbs">

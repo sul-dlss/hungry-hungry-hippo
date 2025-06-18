@@ -89,3 +89,6 @@ globus:
 ahoy:
   tooltip: true
   form_changes: true
+
+google_analytics:
+  enabled: false
