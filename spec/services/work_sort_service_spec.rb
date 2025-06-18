@@ -101,7 +101,7 @@ RSpec.describe WorkSortService do
     end
 
     context 'when sorting by date modified ascending' do
-      let(:sort_by) { 'works.updated_at asc' }
+      let(:sort_by) { 'works.object_updated_at asc' }
 
       it 'orders by updated_at ascending' do
         presenters = described_class.call(works:, sort_by:)
@@ -111,7 +111,7 @@ RSpec.describe WorkSortService do
     end
 
     context 'when sorting by date modified descending' do
-      let(:sort_by) { 'works.updated_at desc' }
+      let(:sort_by) { 'works.object_updated_at desc' }
 
       it 'orders by updated_at descending' do
         presenters = described_class.call(works:, sort_by:)

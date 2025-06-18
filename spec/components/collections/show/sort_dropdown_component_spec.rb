@@ -19,9 +19,9 @@ RSpec.describe Collections::Show::SortDropdownComponent, type: :component do
       component.with_sort_option(label: 'Status (descending)',
                                  link: "/collections/#{druid_fixture}/works?sort_by=status%20desc")
       component.with_sort_option(label: 'Date modified (ascending)',
-                                 link: "/collections/#{druid_fixture}/works?sort_by=works.updated_at%20asc")
+                                 link: "/collections/#{druid_fixture}/works?sort_by=works.object_updated_at%20asc")
       component.with_sort_option(label: 'Date modified (descending)',
-                                 link: "/collections/#{druid_fixture}/works?sort_by=works.updated_at%20desc")
+                                 link: "/collections/#{druid_fixture}/works?sort_by=works.object_updated_at%20desc")
     end
   end
 

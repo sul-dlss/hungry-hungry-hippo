@@ -22,8 +22,8 @@
         <% component.with_sort_option(label: 'Owner (descending)', link: works_collection_path(@collection, sort_by: 'users.name desc', q: @search_term)) %>
         <% component.with_sort_option(label: 'Status (ascending)', link: works_collection_path(@collection, sort_by: 'status asc', q: @search_term)) %>
         <% component.with_sort_option(label: 'Status (descending)', link: works_collection_path(@collection, sort_by: 'status desc', q: @search_term)) %>
-        <% component.with_sort_option(label: 'Date modified (Newest first)', link: works_collection_path(@collection, sort_by: 'works.updated_at desc', q: @search_term)) %>
-        <% component.with_sort_option(label: 'Date modified (Oldest first)', link: works_collection_path(@collection, sort_by: 'works.updated_at asc', q: @search_term)) %>
+        <% component.with_sort_option(label: 'Date modified (Newest first)', link: works_collection_path(@collection, sort_by: 'works.object_updated_at desc', q: @search_term)) %>
+        <% component.with_sort_option(label: 'Date modified (Oldest first)', link: works_collection_path(@collection, sort_by: 'works.object_updated_at asc', q: @search_term)) %>
       <% end %>
     </div>
   </div>
