@@ -185,6 +185,7 @@ RSpec.describe 'Show a collection' do
       # Change tab
       click_link_or_button('Deposits')
       expect(page).to have_css('.nav-link.active', text: 'Deposits')
+      expect(page).to have_button('Sort by')
 
       # Deposits table
       within('table#deposits-table') do
@@ -245,6 +246,16 @@ RSpec.describe 'Show a collection' do
           expect(page).to have_css('td:nth-of-type(1)', text: works[2].title)
           expect(page).to have_css('td:nth-of-type(3)', text: 'Saving')
           expect(page).to have_css('td:nth-of-type(5)', exact_text: '')
+        end
+      end
+
+      # Sort by deposit descending to re-order works
+      click_link_or_button('Sort by')
+      click_link_or_button('Deposit (ascending)')
+      within('table#deposits-table') do
+        all_trs = page.all('tbody tr')
+        within(all_trs.first) do
+          expect(page).to have_css('td:nth-of-type(1)', text: works[0].title)
         end
       end
     end

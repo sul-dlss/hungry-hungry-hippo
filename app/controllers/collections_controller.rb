@@ -83,11 +83,17 @@ class CollectionsController < ApplicationController
     authorize! @collection
 
     @search_term = params[:q]
-    @works = authorized_scope(collection_works_result, as: :collection, scope_options: { collection: @collection })
-             .order(updated_at: :desc).page(params[:page])
-    @work_statuses = Sdr::Repository.statuses(
-      druids: @works.where.not(druid: nil).pluck(:druid)
-    )
+    works = authorized_scope(collection_works_result, as: :collection,
+                                                      scope_options: { collection: @collection }).joins(:user)
+    @presenters = Kaminari.paginate_array(sorted_work_presenters(works)).page(params[:page])
+  end
+
+  def sorted_work_presenters(works)
+    WorkSortService.call(works:, sort_by:)
+  end
+
+  def sort_by
+    params[:sort_by] || 'works.title asc'
   end
 
   def history
