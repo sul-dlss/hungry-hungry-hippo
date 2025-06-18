@@ -45,6 +45,7 @@ class ContentFilesController < ApplicationController
   private
 
   # rubocop:disable Metrics/AbcSize
+  # Note: for streaming to work, you need the include at the top of the controller
   def download_from_preservation
     # Set headers on the response before writing to the response stream
     send_file_headers!(
