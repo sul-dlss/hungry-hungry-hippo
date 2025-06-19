@@ -114,13 +114,11 @@ class CollectionsController < ApplicationController
     @collection.works.joins(
       :user
     ).where('title ILIKE ?', "%#{@search_term}%").or(
-      Work.where('druid ILIKE ?', "%#{@search_term}%")
+      @collection.works.where('druid ILIKE ?', "%#{@search_term}%")
     ).or(
-      User.where('email_address ILIKE ?', "%#{@search_term}%")
-    ).or(
-      User.where('name ILIKE ?', "%#{@search_term}%")
-    ).or(
-      User.where('first_name ILIKE ?', "%#{@search_term}%")
+      # no need to search first_name: it seems like name always contains it. e.g. as of
+      # june 2025, User.where('name !~* first_name').count returned 0.
+      @collection.works.joins(:user).where('name ILIKE ?', "%#{@search_term}%")
     )
   end
 

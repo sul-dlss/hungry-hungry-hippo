@@ -42,12 +42,20 @@ RSpec.describe 'Show collection works' do
     let(:depositor) { create(:user) }
     let(:contributor) { create(:person_contributor, first_name: 'Jane', last_name: 'Stanford', orcid: 'https://orcid.org/0001-0002-0003-0004') }
 
+    let(:works_count) { 3 }
     let!(:collection) do
       create(:collection, :with_review_workflow, :with_works, :with_required_types,
-             :with_required_contact_email, works_count: 3, reviewers_count: 2, druid:, title: collection_title_fixture,
+             :with_required_contact_email, works_count:, reviewers_count: 2, druid:, title: collection_title_fixture,
                                            contributors: [contributor], managers: [manager], depositors: [depositor])
     end
     let(:works) { collection.works.order(:title) }
+
+    let!(:other_collection) do
+      create(:collection, :with_review_workflow, :with_works, :with_required_types,
+             :with_required_contact_email, works_count:, reviewers_count: 2, title: collection_title_fixture,
+                                           contributors: [contributor], managers: [manager], depositors: [depositor])
+    end
+    let(:other_works) { other_collection.works.order(:title) }
 
     let(:cocina_object) { collection_with_metadata_fixture }
     let(:version_status) { build(:openable_version_status) }
@@ -59,6 +67,8 @@ RSpec.describe 'Show collection works' do
                                                         'description' => 'cocina description' })]
     end
 
+    let(:common_druid_prefix) { 'druid:zz' }
+
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
@@ -68,6 +78,17 @@ RSpec.describe 'Show collection works' do
 
       collection.works.first.request_review!
       collection.works[1].update(user: depositor)
+
+      # Despite getting the same titles and owners, nothing in other_works should show up in the
+      # search results, because the search is within collection only, not other_collection.
+      works_count.times.each do |i|
+        other_works[i].update(title: works[i].title, user: works[i].user)
+      end
+
+      # give the second work in each collection a shared prefix, so we can show
+      # searching for it only returns from the target collection
+      works[1].update(druid: "#{common_druid_prefix}#{works[1].druid.slice(8..)}")
+      other_works[1].update(druid: "#{common_druid_prefix}#{other_works[1].druid.slice(8..)}")
     end
 
     context 'when the user is a collection manager' do
@@ -109,21 +130,7 @@ RSpec.describe 'Show collection works' do
         expect(response.body).not_to include(works.to_a[1].title)
         expect(response.body).not_to include(works.to_a[2].title)
 
-        query = works.to_a[0].user.email_address
-        get "/collections/#{druid}/works", params: { q: query }
-        expect(response.body).to include(works.to_a[0].title)
-        expect(response.body).not_to include(works.to_a[1].title)
-        expect(response.body).not_to include(works.to_a[2].title)
-        expect(response.body).not_to include('No deposits to this collection match the search')
-
-        query = works.to_a[1].user.name
-        get "/collections/#{druid}/works", params: { q: query }
-        expect(response.body).to include(works.to_a[1].title)
-        expect(response.body).not_to include(works.to_a[0].title)
-        expect(response.body).not_to include(works.to_a[2].title)
-        expect(response.body).not_to include('No deposits to this collection match the search')
-
-        query = works.to_a[2].user.first_name
+        query = works.to_a[2].user.name
         get "/collections/#{druid}/works", params: { q: query }
         expect(response.body).to include(works.to_a[2].title)
         expect(response.body).not_to include(works.to_a[1].title)
@@ -134,6 +141,34 @@ RSpec.describe 'Show collection works' do
         expect(response).to have_http_status(:ok)
         expect(response.body).to include(works.to_a[0].title)
         expect(response.body).to include(works.to_a[1].title)
+      end
+
+      it 'does not return results from other collections that otherwise match name criteria' do
+        query = works.to_a[1].user.name
+        get "/collections/#{druid}/works", params: { q: query }
+        expect(response.body).to include(works.to_a[1].druid)
+        expect(response.body).not_to include(other_works.to_a[1].druid)
+        expect(response.body).not_to include(works.to_a[0].title)
+        expect(response.body).not_to include(works.to_a[2].title)
+        expect(response.body).not_to include('No deposits to this collection match the search')
+      end
+
+      it 'does not return results from other collections that otherwise match druid criteria' do
+        get "/collections/#{druid}/works", params: { q: common_druid_prefix }
+        expect(response.body).to include(works.to_a[1].druid)
+        expect(response.body).not_to include(other_works.to_a[1].druid)
+        expect(response.body).not_to include(works.to_a[0].title)
+        expect(response.body).not_to include(works.to_a[2].title)
+        expect(response.body).not_to include('No deposits to this collection match the search')
+      end
+
+      it 'does not search on email' do
+        query = works.to_a[0].user.email_address
+        get "/collections/#{druid}/works", params: { q: query }
+        expect(response.body).not_to include(works.to_a[0].title)
+        expect(response.body).not_to include(works.to_a[1].title)
+        expect(response.body).not_to include(works.to_a[2].title)
+        expect(response.body).to include('No deposits to this collection match the search')
       end
     end
 
@@ -171,12 +206,6 @@ RSpec.describe 'Show collection works' do
         expect(response.body).not_to include(works.to_a[1].title)
         expect(response.body).not_to include(works.to_a[2].title)
 
-        query = works.to_a[0].user.email_address
-        get "/collections/#{druid}/works", params: { q: query }
-        expect(response.body).to include(/No deposits to this collection match the search: .*#{query}/)
-        expect(response.body).not_to include(works.to_a[1].title)
-        expect(response.body).not_to include(works.to_a[2].title)
-
         # the user in question only owns this work
         query = works.to_a[1].user.name
         get "/collections/#{druid}/works", params: { q: query }
@@ -185,7 +214,7 @@ RSpec.describe 'Show collection works' do
         expect(response.body).not_to include(works.to_a[2].title)
         expect(response.body).not_to include('No deposits to this collection match the search')
 
-        query = works.to_a[2].user.first_name
+        query = works.to_a[2].user.name
         get "/collections/#{druid}/works", params: { q: query }
         expect(response.body).to include(/No deposits to this collection match the search: .*#{query}/)
         expect(response.body).not_to include(works.to_a[0].title)
@@ -198,6 +227,33 @@ RSpec.describe 'Show collection works' do
         expect(response.body).not_to include(works.to_a[0].title)
         expect(response.body).not_to include(works.to_a[2].title)
         expect(response.body).not_to include('No deposits to this collection match the search')
+      end
+
+      it 'does not return results from other collections that otherwise match name criteria' do
+        query = works.to_a[1].user.name
+        get "/collections/#{druid}/works", params: { q: query }
+        expect(response.body).to include(works.to_a[1].druid)
+        expect(response.body).not_to include(other_works.to_a[1].druid)
+        expect(response.body).not_to include(works.to_a[0].title)
+        expect(response.body).not_to include(works.to_a[2].title)
+        expect(response.body).not_to include('No deposits to this collection match the search')
+      end
+
+      it 'does not return results from other collections that otherwise match druid criteria' do
+        get "/collections/#{druid}/works", params: { q: common_druid_prefix }
+        expect(response.body).to include(works.to_a[1].druid)
+        expect(response.body).not_to include(other_works.to_a[1].druid)
+        expect(response.body).not_to include(works.to_a[0].title)
+        expect(response.body).not_to include(works.to_a[2].title)
+        expect(response.body).not_to include('No deposits to this collection match the search')
+      end
+
+      it 'does not search on email' do
+        query = works.to_a[1].user.email_address
+        get "/collections/#{druid}/works", params: { q: query }
+        expect(response.body).to include(/No deposits to this collection match the search: .*#{query}/)
+        expect(response.body).not_to include(works.to_a[1].title)
+        expect(response.body).not_to include(works.to_a[2].title)
       end
     end
   end
