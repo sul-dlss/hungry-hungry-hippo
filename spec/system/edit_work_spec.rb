@@ -102,7 +102,7 @@ RSpec.describe 'Edit a work' do
     # Fill in in authors
     find('.nav-link', text: 'Contributors').click
     form_instances = all('.form-instance')
-    expect(form_instances.count).to eq(3)
+    expect(form_instances.count).to eq(4)
     within(form_instances[0]) do
       expect(page).to have_checked_field('Individual', with: 'person')
       expect(page).to have_select('Role', selected: 'Author')
@@ -112,13 +112,15 @@ RSpec.describe 'Edit a work' do
       expect(page).to have_field('ORCID iD', with: '0001-0002-0003-0004')
       expect(page).to have_field('First name', with: 'Jane')
       expect(page).to have_field('Last name', with: 'Stanford')
+      expect(page).to have_field('Institution', with: 'Stanford University')
+      expect(page).to have_field('Department/Center', with: 'Department of History')
     end
-    within(form_instances[1]) do
+    within(form_instances[2]) do
       expect(page).to have_checked_field('Organization', with: 'organization')
       expect(page).to have_select('Role', selected: 'Host institution')
       expect(page).to have_field('Organization name', with: 'Stanford University Libraries')
     end
-    within(form_instances[2]) do
+    within(form_instances[3]) do
       expect(page).to have_checked_field('Organization', with: 'organization')
       expect(page).to have_select('Role', selected: 'Degree granting institution')
       within('.stanford-degree-granting-institution-section') do

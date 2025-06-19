@@ -12,7 +12,7 @@ module Cocina
 
     # @param [WorkForm] work_form
     # @param [Content] content
-    # @param [boolean] whether the object type is document
+    # @param [boolean] document whether the object type is document
     def initialize(work_form:, content:, document:)
       @work_form = work_form
       @content = content

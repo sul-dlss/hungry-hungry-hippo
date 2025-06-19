@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ['instance', 'container']
+  static targets = ['container']
 
   connect () {
     this.adjustActions()
@@ -17,9 +17,10 @@ export default class extends Controller {
 
   adjustActions () {
     if (!this.hasContainerTarget) return
-    this.containerTarget.querySelectorAll('.form-instance').forEach((instanceEl, index) => {
+    const instanceEls = this.containerTarget.querySelectorAll(':scope > .form-instance')
+    instanceEls.forEach((instanceEl, index) => {
       instanceEl.querySelectorAll('.move-up').forEach((btnEl) => btnEl.classList.toggle('d-none', index === 0))
-      instanceEl.querySelectorAll('.move-down').forEach((btnEl) => btnEl.classList.toggle('d-none', index === this.instanceTargets.length - 1))
+      instanceEl.querySelectorAll('.move-down').forEach((btnEl) => btnEl.classList.toggle('d-none', index === instanceEls.length - 1))
     })
   }
 
