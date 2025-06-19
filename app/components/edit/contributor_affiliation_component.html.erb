@@ -1,0 +1,12 @@
+<%# Plain-old name fields (not orcid) %>
+<div data-contributors-target="notOrcidSection">
+  <div class="row">
+    <div class="col">
+      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :institution, label:helpers.t('works.edit.fields.contributor_affiliations.institution.label'), tooltip: helpers.t('works.edit.fields.contributor_affiliations.institution.tooltip_html'), container_classes: 'mb-4') %>
+    </div>
+    <div class="col">
+      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :department, label: helpers.t('works.edit.fields.contributor_affiliations.department.label'), tooltip: helpers.t('works.edit.fields.contributor_affiliations.department.tooltip_html'), container_classes: 'mb-4') %>
+    </div>
+  </div>
+</div>
+
