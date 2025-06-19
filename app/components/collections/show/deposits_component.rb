@@ -19,7 +19,7 @@ module Collections
       end
 
       def collection_deposits
-        @collection_deposits ||= presenters.map do |presenter|
+        presenters.map do |presenter|
           {
             id: dom_id(presenter),
             values: values_for(presenter)
