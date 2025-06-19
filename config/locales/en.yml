@@ -243,6 +243,9 @@ en:
       legend: 'Reviewers'
       tooltip_html: >-
         Reviewers can approve, edit, or return works to Depositors. Reviewers cannot edit collection information or settings and cannot add or remove collection participants.
+  shares:
+    edit:
+      legend: 'Search for people to share with and assign permissions'
   terms_of_deposit:
     faq: 'FAQs and download Terms of Deposit'
   terms_of_use:

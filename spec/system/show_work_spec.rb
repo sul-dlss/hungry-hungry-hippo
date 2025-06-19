@@ -7,6 +7,7 @@ RSpec.describe 'Show a work' do
 
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
+  let(:share_user) { create(:user) }
   let(:collection) { create(:collection, :with_druid, user:) }
   let!(:work) { create(:work, druid:, title: title_fixture, collection:, user:) }
   # Need multiple files to test pagination
@@ -120,6 +121,8 @@ RSpec.describe 'Show a work' do
 
     allow(Sdr::Event).to receive(:list).with(druid:).and_return(events)
 
+    create(:share, user: share_user, work:)
+
     sign_in(user)
   end
 
@@ -175,6 +178,8 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('td', text: collection.title)
         expect(page).to have_css('tr', text: 'Depositor')
         expect(page).to have_css('td', text: user.name)
+        expect(page).to have_css('tr', text: 'Shared with')
+        expect(page).to have_css('td', text: share_user.name)
         expect(page).to have_css('tr', text: 'Version')
         expect(page).to have_css('td', text: '1')
         expect(page).to have_css('tr', text: 'Total number of files')
