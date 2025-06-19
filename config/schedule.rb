@@ -23,3 +23,8 @@
 every 1.day do
   runner 'Content.where("created_at < ?", 3.days.ago).destroy_all', output: { standard: '/dev/null' }
 end
+
+# people are more likely to read their emails first thing in the morning?
+every 1.day, at: '8:30 am' do
+  runner 'TermsReminderEmailJob.perform_later'
+end
