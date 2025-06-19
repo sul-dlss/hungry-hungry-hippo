@@ -13,11 +13,11 @@ module Admin
     private
 
     def days_limit
-      params.fetch(:admin_recent_activity, {}).fetch(:days_limit, 7).to_i
+      recent_activity_params.fetch(:days_limit, Admin::RecentActivityForm.new.days_limit).to_i
     end
 
     def recent_activity_params
-      params.permit(:days_limit)
+      params.fetch(:admin_recent_activity, {}).permit(:days_limit)
     end
 
     def rows
