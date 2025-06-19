@@ -195,6 +195,9 @@ A "nested" field is one that is not "simple" (see prior section).
 1. Test the triggering of the notification.
 1. Test the email.
 
+Preview mailers at http://localhost:3000/rails/mailers
+Add new previews at spec/mailers/previews
+
 ## Analytics
 
 First-party analytics is implemented using [Ahoy](https://github.com/ankane/ahoy). See `Ahoy::Event` for a list of implemented events.
