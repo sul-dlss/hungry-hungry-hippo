@@ -13,7 +13,7 @@ module Admin
     private
 
     def days_limit
-      recent_activity_params.fetch(:days_limit, Admin::RecentActivityForm.new.days_limit).to_i
+      recent_activity_params.fetch(:days_limit, Admin::RecentActivityForm::DEFAULT_DAYS_LIMIT).to_i
     end
 
     def recent_activity_params

@@ -3,7 +3,9 @@
 module Admin
   # Admin form object for selecting recent activity days limit.
   class RecentActivityForm < ApplicationForm
-    attribute :days_limit, :string, default: '7'
+    DEFAULT_DAYS_LIMIT = 7
+
+    attribute :days_limit, :string, default: DEFAULT_DAYS_LIMIT
 
     # Days limit options for recent activity.
     DAYS_LIMIT_OPTIONS = { '1 day': '1',
