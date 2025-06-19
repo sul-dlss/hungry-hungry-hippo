@@ -136,7 +136,7 @@ class WorkPresenter < FormPresenter
 
   private
 
-  delegate :collection, :created_at, :user, :review_state, :pending_review?, to: :work
+  delegate :collection, :created_at, :user, :review_state, :pending_review?, :share_users, to: :work
 
   def content_files_in_deposit
     ContentFile.where(content_id: work_form.content_id)

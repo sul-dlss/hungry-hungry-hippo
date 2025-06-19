@@ -1,12 +1,14 @@
 <%= tag.fieldset class: classes, data:, id:, aria: do %>
-  <%= tag.legend class: legend_classes do %>
-    <% if legend? %>
-      <%= legend %>
-    <% else %>
-      <%= tag.label class: label_classes do %><%= label %><% end %>
+  <% if legend? || label %>
+    <%= tag.legend class: legend_classes do %>
+      <% if legend? %>
+        <%= legend %>
+      <% else %>
+        <%= tag.label class: label_classes do %><%= label %><% end %>
+      <% end %>
+      <%= render Elements::TooltipComponent.new(target_label: label, tooltip:) %>
+      <%= help_link if help_link? %>
     <% end %>
-    <%= render Elements::TooltipComponent.new(target_label: label, tooltip:) %>
-    <%= help_link if help_link? %>
   <% end %>
   <%= content %>
 <% end %>
