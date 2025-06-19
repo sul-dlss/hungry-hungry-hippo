@@ -466,7 +466,8 @@ CREATE TABLE public.users (
     first_name character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    agreed_to_terms_at timestamp(6) without time zone
+    agreed_to_terms_at timestamp(6) without time zone,
+    terms_reminder_email_last_sent_at timestamp(6) without time zone
 );
 
 
@@ -1045,6 +1046,7 @@ ALTER TABLE ONLY public.shares
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250619163206'),
 ('20250616125424'),
 ('20250610120209'),
 ('20250604121142'),
