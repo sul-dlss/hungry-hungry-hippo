@@ -130,7 +130,7 @@ RSpec.describe 'Show collection works' do
         expect(response.body).not_to include(works.to_a[1].title)
         expect(response.body).not_to include(works.to_a[2].title)
 
-        query = works.to_a[2].user.first_name
+        query = works.to_a[2].user.name
         get "/collections/#{druid}/works", params: { q: query }
         expect(response.body).to include(works.to_a[2].title)
         expect(response.body).not_to include(works.to_a[1].title)
@@ -214,7 +214,7 @@ RSpec.describe 'Show collection works' do
         expect(response.body).not_to include(works.to_a[2].title)
         expect(response.body).not_to include('No deposits to this collection match the search')
 
-        query = works.to_a[2].user.first_name
+        query = works.to_a[2].user.name
         get "/collections/#{druid}/works", params: { q: query }
         expect(response.body).to include(/No deposits to this collection match the search: .*#{query}/)
         expect(response.body).not_to include(works.to_a[0].title)
