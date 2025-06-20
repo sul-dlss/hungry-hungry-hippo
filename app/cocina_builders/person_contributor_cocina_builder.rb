@@ -34,7 +34,7 @@ class PersonContributorCocinaBuilder
       role: role_params,
       identifier: identifier_params,
       status: ('primary' if primary),
-      note: (ContributorAffiliationsCocinaBuilder.call(affiliations:) unless affiliations.empty?)
+      note: (build_affiliations unless affiliations.empty?)
     }.compact
   end
 
@@ -47,6 +47,16 @@ class PersonContributorCocinaBuilder
     return if cocina_role.nil?
 
     [cocina_role]
+  end
+
+  def build_affiliations
+    affiliations.map do |affiliation|
+      ContributorAffiliationCocinaBuilder.call(
+        department: affiliation.department,
+        institution: affiliation.institution,
+        uri: affiliation.uri
+      )
+    end
   end
 
   def identifier_params

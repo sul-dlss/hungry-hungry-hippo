@@ -43,14 +43,19 @@ module Form
       def affiliations
         return nil unless contributor.note.any? { |note| note.type == 'affiliation' }
 
-        contributor.note.select { |note| note.type == 'affiliation' }.map do |affiliation|
-          {}.tap do |affiliation_params|
-            affiliation.structuredValue.select { |value| value.identifier.any? { |id| id.type == 'ROR' } }.each do |value|
-              affiliation_params['institution'] = value.value
-              affiliation_params['uri'] = value.identifier.find { |id| id.type == 'ROR' }&.uri
-            end
-            affiliation.structuredValue.reject { |value| value.identifier.any? { |id| id.type == 'ROR' } }.each do |value|
-              affiliation_params['department'] = value.value
+        contributor.note.select { |note| note.type == 'affiliation' }.map do |note|
+          affiliation_from_note(note:)
+        end
+      end
+
+      def affiliation_from_note(note:) # rubocop:disable Metrics/AbcSize
+        {}.tap do |affiliation|
+          note.structuredValue.each do |descriptive_value|
+            if descriptive_value.identifier.any? { |id| id.type == 'ROR' }
+              affiliation['institution'] = descriptive_value.value
+              affiliation['uri'] = descriptive_value.identifier.find { |id| id.type == 'ROR' }&.uri
+            else
+              affiliation['department'] = descriptive_value.value
             end
           end
         end
