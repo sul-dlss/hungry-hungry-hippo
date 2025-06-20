@@ -91,4 +91,23 @@ RSpec.describe WorksMailer do
                                  'metadata and files.')
     end
   end
+
+  describe '.share_added_email' do
+    let(:mail) { described_class.with(work:, user_shared_with:, permission:).share_added_email }
+    let(:user_shared_with) { create(:user, first_name: 'SharedWith') }
+    let(:permission) { 'view' }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq 'Someone has shared a work with you in the Stanford Digital Repository'
+      expect(mail.to).to eq [user_shared_with.email_address]
+      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    end
+
+    it 'renders the body' do
+      expect(mail).to match_body('Dear SharedWith,')
+      expect(mail).to match_body("#{user.name} has shared with you the work " \
+                                 "\"<a href=\"http://example.com/works/#{work.druid}\">#{work.title}</a>\" " \
+                                 "in the Stanford Digital Repository. You have permission to #{permission} the work.")
+    end
+  end
 end
