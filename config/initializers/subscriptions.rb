@@ -71,4 +71,7 @@ Rails.application.config.after_initialize do # rubocop:disable Metrics/BlockLeng
   Notifier.subscribe(event_name: Notifier::ACCESSIONING_COMPLETE) do |payload|
     WorkAccessioningCompletedSubscriptionMailer.call(**payload)
   end
+  Notifier.subscribe(event_name: Notifier::SHARE_ADDED) do |payload|
+    WorksMailer.with(**payload).share_added_email.deliver_later
+  end
 end

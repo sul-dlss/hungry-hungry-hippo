@@ -25,4 +25,10 @@ class WorksMailer < ApplicationMailer
   def ownership_changed_email
     mail(to: @user.email_address, subject: "Ownership of #{@work.title} has been changed")
   end
+
+  def share_added_email
+    @share = params[:share]
+    mail(to: @share.user.email_address,
+         subject: 'Someone has shared a work with you in the Stanford Digital Repository')
+  end
 end
