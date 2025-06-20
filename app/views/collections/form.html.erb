@@ -67,8 +67,8 @@
 
       <% component.with_collection_pane(tab_name: :participants, label: t('collections.edit.panes.participants.label'), help_text: t('collections.edit.panes.participants.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do %>
         <%= render Collections::Edit::ParticipantNotificationsComponent.new(form:) %>
-        <%= render Collections::Edit::BulkParticipantsComponent.new(form:, field_name: :managers, model_class: ManagerForm) %>
-        <%= render Collections::Edit::BulkParticipantsComponent.new(form:, field_name: :depositors, model_class: DepositorForm) %>
+        <%= render Edit::BulkParticipantsComponent.new(form:, field_name: :managers, model_class: ManagerForm, form_component: Collections::Edit::ParticipantComponent) %>
+        <%= render Edit::BulkParticipantsComponent.new(form:, field_name: :depositors, model_class: DepositorForm, form_component: Collections::Edit::ParticipantComponent) %>
       <% end %>
 
       <% component.with_collection_pane(tab_name: :workflow, label: t('collections.edit.panes.workflow.label'), help_text: t('collections.edit.panes.workflow.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do %>

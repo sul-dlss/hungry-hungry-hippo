@@ -49,6 +49,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get 'history', to: 'works#history', as: 'history'
     end
 
+    resources :shares, only: %i[new create]
+
     namespace :admin do
       resources :move, only: %i[new create], controller: 'move'
       resources :change_owner, only: %i[new create], controller: 'change_owner'

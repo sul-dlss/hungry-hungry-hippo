@@ -14,6 +14,6 @@
   <% end %>
 
   <%= tag.div data: { workflow_target: 'reviewersSection' }, class: 'd-none' do %>
-    <%= render Collections::Edit::BulkParticipantsComponent.new(form:, field_name: :reviewers, model_class: ReviewerForm) %>
+    <%= render Edit::BulkParticipantsComponent.new(form:, field_name: :reviewers, model_class: ReviewerForm, form_component: Collections::Edit::ParticipantComponent) %>
   <% end %>
 <% end %>
