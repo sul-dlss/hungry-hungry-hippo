@@ -9,10 +9,11 @@ RSpec.describe Works::Show::ContentFileDownloadButtonComponent, type: :component
   let(:content) { create(:content, work:) }
 
   context 'when content file not available for download' do
-    it 'does not render' do
+    it 'renders link (will go to preservation)' do
       render_inline(described_class.new(content_file:))
 
-      expect(page).to have_no_css('a')
+      expect(page).to have_link('Download file', href: "/content_files/#{content_file.id}/download")
+      expect(page).to have_css('a[data-turbo="false"]')
     end
   end
 
@@ -22,7 +23,7 @@ RSpec.describe Works::Show::ContentFileDownloadButtonComponent, type: :component
       allow(File).to receive(:exist?).with('tmp/workspace/bc/123/df/4567/bc123df4567/content/test.txt').and_return(true)
     end
 
-    it 'renders link' do
+    it 'renders link (will download file from staging)' do
       render_inline(described_class.new(content_file:))
 
       expect(page).to have_link('Download file', href: "/content_files/#{content_file.id}/download")

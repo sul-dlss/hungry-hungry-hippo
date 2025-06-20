@@ -14,6 +14,10 @@ purl:
 
 staging_location: '/sdr-deposit-staging'
 
+preservation_catalog:
+  url: 'https://preservation-catalog-stage.stanford.edu'
+  token: 'mint-token-with-target-preservation-catalog-rake-generate-token'
+
 # mappings from authorization role to workgroup name
 authorization_workgroup_names:
   administrators: 'dlss:hydrus-app-administrators'

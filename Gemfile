@@ -60,6 +60,7 @@ gem 'kaminari' # For pagination
 gem 'kicks' # Background processing of rabbitMQ messages. (Formerly sneakers.)
 gem 'marcel' # For MIME type detection
 gem 'okcomputer'
+gem 'preservation-client'
 gem 'rack-sanitizer'
 gem 'state_machines-activerecord'
 gem 'validate_url'

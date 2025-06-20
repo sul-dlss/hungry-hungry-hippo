@@ -19,11 +19,6 @@ module Works
                                                      link: download_content_file_path(content_file),
                                                      data:, **opts)
       end
-
-      def render?
-        File.exist?(StagingSupport.staging_filepath(druid: content_file.content.work.druid,
-                                                    filepath: content_file.filepath))
-      end
     end
   end
 end
