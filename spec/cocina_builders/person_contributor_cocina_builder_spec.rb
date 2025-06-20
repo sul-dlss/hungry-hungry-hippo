@@ -36,11 +36,11 @@ RSpec.describe PersonContributorCocinaBuilder do
   context 'when affiliations are present' do
     let(:affiliations) do
       [
-        {
-          'institution' => 'Stanford University',
-          'uri' => 'https://ror.org/01abcd',
-          'department' => 'Department of History'
-        }
+        AffiliationForm.new(
+          institution: 'Stanford University',
+          uri: 'https://ror.org/01abcd',
+          department: 'Department of History'
+        )
       ]
     end
 
