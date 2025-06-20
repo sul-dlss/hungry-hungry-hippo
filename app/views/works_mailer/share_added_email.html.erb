@@ -1,6 +1,6 @@
-<%= render Emails::SalutationComponent.new(user: @user_shared_with) %>
+<%= render Emails::SalutationComponent.new(user: @share.user) %>
 
-<p><%= @user.name %> has shared with you the work "<%= link_to @work.title, @work %>" in the Stanford Digital Repository. You have permission to <%= @permission %> the work.
+<p><%= @work.user.name %> has shared with you the work "<%= link_to @work.title, @work %>" in the Stanford Digital Repository. You have permission to <%= @share.permission %> the work.
 
 <p>You an access the work by logging into the SDR at <a href="https://sdr.stanford.edu">https://sdr.stanford.edu</a> or clicking the linked work title above.</p>
 

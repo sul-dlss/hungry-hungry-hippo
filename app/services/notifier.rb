@@ -21,6 +21,7 @@ class Notifier
 
   # When a works ownership is changed
   OWNERSHIP_CHANGED = 'ownership_changed'
+  SHARE_ADDED = 'share_added'
 
   # Publishes an event with the given name and payload
   # @param event_name [String] the name of the event

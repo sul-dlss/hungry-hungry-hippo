@@ -27,9 +27,8 @@ class WorksMailer < ApplicationMailer
   end
 
   def share_added_email
-    @user_shared_with = params[:user_shared_with]
-    @permission = params[:permission]
-    mail(to: @user_shared_with.email_address,
+    @share = params[:share]
+    mail(to: @share.user.email_address,
          subject: 'Someone has shared a work with you in the Stanford Digital Repository')
   end
 end

@@ -9,6 +9,8 @@ class Share < ApplicationRecord
   belongs_to :user
   belongs_to :work
 
+  after_create -> { Notifier.publish(Notifier::SHARE_ADDED, share: self, work:) }
+
   enum :permission, { view: 'view', edit: 'edit', deposit: 'deposit' }, default: :view
   validates :permission, presence: true
 end

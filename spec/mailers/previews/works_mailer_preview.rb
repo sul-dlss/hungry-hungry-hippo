@@ -20,8 +20,9 @@ class WorksMailerPreview < ActionMailer::Preview
   end
 
   def share_added_email
-    WorksMailer.with(work: Work.first, permission: 'view',
-                     user_shared_with: User.new(first_name: 'Shared', name: 'With',
-                                                email_address: 'test@test.com')).share_added_email
+    work = Work.first
+    shared_with = User.new(first_name: 'SharedWith', name: 'User', email_address: 'shared_with@test.com')
+    share = Share.new(user: shared_with, work:, permission: Share::VIEW_PERMISSION)
+    WorksMailer.with(share:, work:).share_added_email
   end
 end
