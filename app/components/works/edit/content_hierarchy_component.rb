@@ -4,15 +4,12 @@ module Works
   module Edit
     # Component for rendering an editable file hierarchy table for a Content.
     class ContentHierarchyComponent < ApplicationComponent
-      # NOTE: content is a reserved word in a view component, so using content_obj instead.
-      def initialize(content_obj:)
-        @content_obj = content_obj
+      def initialize(content_files:)
+        @content_files = content_files
         super()
       end
 
-      def content_files
-        @content_obj.content_files.path_order
-      end
+      attr_reader :content_files
     end
   end
 end

@@ -53,7 +53,6 @@
           <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
         <% end %>
 
-        <%= render Edit::SectionHeaderComponent.new(title: t('works.edit.panes.files.list')) %>
         <div id="content-files" class="pane-section">
           <%= turbo_frame_tag @content, 'show', src: content_path(@content), data: { controller: 'dropzone-files' }, class: 'dropzone-files' do %>
             <%= render Elements::SpinnerComponent.new %>

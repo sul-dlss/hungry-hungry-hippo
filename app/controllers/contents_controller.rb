@@ -8,6 +8,12 @@ class ContentsController < ApplicationController
   # Called from work edit/update form.
   def show
     authorize! @content
+
+    # since the user can search by filename when pagination is occurring, this can result in @content_files
+    # query having 0 results or fewer than the max number for pagination ... we want to know how many
+    # files the object has before a search to properly render the "no files" messages or search box
+    @total_files = @content.content_files.count
+    @search_term = search_term
   end
 
   # Called from work show page.
@@ -34,7 +40,13 @@ class ContentsController < ApplicationController
   end
 
   def set_content_files
-    @content_files = @content.content_files.path_order.page(params[:page])
+    @content_files = @content.content_files
+    @content_files = @content_files.where('filepath like ?', "%#{search_term}%") if search_term
+    @content_files = @content_files.path_order.page(params[:page])
+  end
+
+  def search_term
+    params[:q]
   end
 
   def update_files
