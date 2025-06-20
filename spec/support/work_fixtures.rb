@@ -192,7 +192,7 @@ def contributors_fixture
       'stanford_degree_granting_institution' => false,
       'suborganization_name' => nil,
       'collection_required' => false,
-      affiliations_attributes: affiliation_fixture
+      'affiliations_attributes' => [affiliation_fixture]
     },
     {
       'role_type' => 'organization',
@@ -224,13 +224,19 @@ def contributors_fixture
 end
 
 def affiliation_fixture
-  [
-    {
-      'institution' => 'Stanford University',
-      'uri' => 'https://ror.org/01abcd',
-      'department' => 'Department of History'
-    }
-  ]
+  {
+    'institution' => 'Stanford University',
+    'uri' => 'https://ror.org/01abcd',
+    'department' => 'Department of History'
+  }
+end
+
+def affiliation_form_fixture
+  AffiliationForm.new(
+    institution: 'Stanford University',
+    uri: 'https://ror.org/01abcd',
+    department: 'Department of History'
+  )
 end
 
 def person_contributor_fixture
@@ -240,13 +246,7 @@ def person_contributor_fixture
     role: 'author',
     primary: true,
     orcid: '0001-0002-0003-0004',
-    affiliations: [
-      {
-        institution: 'Stanford University',
-        uri:'https://ror.org/01abcd',
-        department: 'Department of History'
-      }
-    ]
+    affiliations: [affiliation_form_fixture]
   }
 end
 
