@@ -1,15 +1,5 @@
 # frozen_string_literal: true
 
-# MIGRATION PLAN:
-# 1. Run import:collections task to import collections.
-# 2. Run import:test_works task to test roundtripping of works.
-# 3. Redeposit collections in H2 that are in deposited state.
-# 4. Generate collection.json and run import:collections task.
-# 5. Redeposit works in H2 that are in deposited or purl_reserved state and for which there is not a version mismatch.
-# * Should we allow some version mismatches, e.g., for document types or lifted embargoes?
-# * MERGE_STANFORD_AND_ORGANIZATION, NO_CITATION_STATUS_NOTE, and DOCUMENT_TYPE should be enabled in H2.
-# 6. Generate works.json and run import:works task.
-
 # See https://github.com/sul-dlss/hungry-hungry-hippo/issues/1334
 ETD_SUPPLEMENTS = [
   'druid:yy758rc6782',
@@ -57,18 +47,7 @@ SKIP_ROUNDTRIP_COLLECTIONS = [
 
 namespace :import do
   desc 'Import collections from json'
-  # collections.json can be generated in H2 for some set of collections with:
-  # collections = Collection.joins(:head).where.not('head.state': 'decommissioned')
-  # collections_json = collections.map do |collection|
-  #   collection.as_json(include: [:creator, :depositors, :reviewed_by, :managed_by]).tap do |collection_hash|
-  #     # Map H2 license ids to URIs
-  #     ['required_license', 'default_license'].each do |field|
-  #       next if (license_id = collection_hash[field]).blank?
-  #       collection_hash[field] = License.find(license_id).uri
-  #     end
-  #   end
-  # end
-  # File.write('collections.json', JSON.pretty_generate(collections_json))
+  # See https://github.com/sul-dlss/hungry-hungry-hippo/wiki/Migration-plan for generating collections.json
   # Importing is idempotent, so you can run this multiple times.
   # It will raise an error if the collection cannot be roundtripped.
   # Skipping roundtripping is useful for local testing, when collections are needed for test_works task.
@@ -98,10 +77,7 @@ namespace :import do
   end
 
   desc 'Import works from json'
-  # works.json can be generated in H2 for some set of works with:
-  #   works = Work.joins(:head).where('head.state': ['deposited', 'purl_reserved'])
-  #   works_json = works.map {|work| work.as_json(include: [:owner, :collection])}
-  #   File.write('works.json', JSON.pretty_generate(works_json))
+  # See https://github.com/sul-dlss/hungry-hungry-hippo/wiki/Migration-plan for generating works.json
   # Importing is idempotent, so you can run this multiple times.
   # It will raise an error if the work cannot be roundtripped or the collection cannot be found.
   task :works, [:filename] => :environment do |_t, args|
@@ -132,15 +108,8 @@ namespace :import do
   end
 
   desc 'Test import collections from json'
-  # collections_cocina.jsonl can be generated in H2 for some set of collections with:
-  #   File.open('collections_cocina.jsonl', 'w') do |f|
-  #     Collection.joins(:head).where('head.state': ['deposited']).find_each.with_index do |coll, i|
-  #       puts "#{coll.druid} (#{i + 1})"
-  #       c = CocinaGenerator::CollectionGenerator.generate_model(collection_version: coll.head)
-  #       f.write("#{c.to_json}\n")
-  #     end
-  #   end
-  # It will raise an error if the work cannot be roundtripped.
+  # See https://github.com/sul-dlss/hungry-hungry-hippo/wiki/Migration-plan for generating collections_cocina.jsonl
+  # It will raise an error if the collection cannot be roundtripped.
   task :test_collections, %i[cocina_filename] => :environment do |_t, args|
     File.foreach(args[:cocina_filename] || 'collections_cocina.jsonl').with_index do |line, index|
       cocina_object = Cocina::Models.with_metadata(Cocina::Models.build(JSON.parse(line)), 'fakelock')
@@ -158,14 +127,7 @@ namespace :import do
   # rubocop:disable Layout/LineLength
   # IMPORTANT: Enable feature flags in H2.
   # For example: SETTINGS__MERGE_STANFORD_AND_ORGANIZATION=true SETTINGS__DOCUMENT_TYPE=true SETTINGS__NO_CITATION_STATUS_NOTE=true bin/rails c -e p
-  # works_cocina.jsonl can be generated in H2 for some set of works with:
-  #   File.open('works_cocina.jsonl', 'w') do |f|
-  #     Work.joins(:head).where('head.state': ['deposited', 'purl_reserved']).find_each.with_index do |w, i|
-  #       puts "#{w.druid} (#{i + 1})"
-  #       c = CocinaGenerator::DROGenerator.generate_model(work_version: w.head, cocina_obj: Repository.find(w.druid))
-  #       f.write("#{c.to_json}\n")
-  #     end
-  #   end
+  # See https://github.com/sul-dlss/hungry-hungry-hippo/wiki/Migration-plan for generating works_cocina.jsonl
   # It will raise an error if the work cannot be roundtripped or the collection cannot be found.
   # rubocop:enable Layout/LineLength
   task :test_works, %i[cocina_filename] => :environment do |_t, args|
