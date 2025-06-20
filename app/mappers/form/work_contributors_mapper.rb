@@ -31,13 +31,30 @@ module Form
           'suborganization_name' => suborganization_name,
           'stanford_degree_granting_institution' => stanford_degree_granting_institution?,
           'orcid' => orcid,
-          'with_orcid' => orcid.present?
+          'with_orcid' => orcid.present?,
+          'affiliations_attributes' => affiliations
         }
       end
 
       private
 
       attr_reader :contributor
+
+      def affiliations
+        return nil unless contributor.note.any? { |note| note.type == 'affiliation' }
+
+        contributor.note.select { |note| note.type == 'affiliation' }.map do |affiliation|
+          {}.tap do |affiliation_params|
+            affiliation.structuredValue.select { |value| value.identifier.any? { |id| id.type == 'ROR' } }.each do |value|
+              affiliation_params['institution'] = value.value
+              affiliation_params['uri'] = value.identifier.find { |id| id.type == 'ROR' }&.uri
+            end
+            affiliation.structuredValue.reject { |value| value.identifier.any? { |id| id.type == 'ROR' } }.each do |value|
+              affiliation_params['department'] = value.value
+            end
+          end
+        end
+      end
 
       def first_name
         full_name.find { |name| name.type == 'forename' }&.value

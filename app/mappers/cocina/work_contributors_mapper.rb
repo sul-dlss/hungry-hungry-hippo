@@ -36,7 +36,8 @@ module Cocina
         surname: contributor.last_name,
         role: contributor.person_role,
         primary:,
-        orcid: contributor.orcid
+        orcid: contributor.orcid,
+        affiliations: contributor.affiliations
       )
     end
 
