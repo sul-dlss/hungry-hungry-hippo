@@ -1,11 +1,9 @@
 <%= turbo_frame_tag content, 'show' do %>
   <%= turbo_stream_from 'show', content %>
-  <% content_files ||= content.content_files.path_order.page(1) %>
-  <% if total_files > Kaminari.config.default_per_page # there is more than one page of results, show search bar with section header %>
+  <% if total_files > Settings.search.file_search_box_min # there is at least this files in the object, so show search bar with section header %>
       <div class="row">
         <div class="col-3">
           <%= render Edit::SectionHeaderComponent.new(title: t('works.edit.panes.files.list')) %>
-          <%= "(#{total_files})" %>
         </div>
         <div class="col-5 ms-auto">
           <%# Not using TextFieldComponent because field-container conflicts with input-group. %>
@@ -29,37 +27,12 @@
       <%= render Edit::SectionHeaderComponent.new(title: t('works.edit.panes.files.list')) %>
     <% end %>
 
-  <% if total_files.zero? # there are no files at all in the object %>
+  <% if total_files.zero? # there are no files at all in the object, show the appropriate message to the user %>
     <p>Your files will appear here once they have been uploaded.</p>
-  <% else # there are files in the object %>
-      <% if total_files > Settings.file_upload.hierarchical_files_limit # we have too many files, and the hierarchy would not work well, show flat list with paging %>
-        <%= render Elements::Tables::TableComponent.new(id: 'content-table', label: 'Files', show_label: false) do |component| %>
-          <%# These headers are duplicated in app/components/works/edit/content_hierarchy_component.html.erb %>
-          <% component.with_headers([
-                                      { label: 'File Name' },
-                                      { label: 'Description', tooltip: t('content_files.edit.fields.description.tooltip_html'), style: 'width: 180px;' },
-                                      { label: 'Hide', tooltip: t('content_files.edit.fields.hide.tooltip_html'), style: 'width: 85px;' },
-                                      { label: 'Action', style: 'width: 85px;' }
-                                    ]) %>
-          <% content_files.each do |content_file| %>
-            <% component.with_row do |row_component| %>
-              <% row_component.with_cell do %>
-                <%= content_file.filepath %>
-              <% end %>
-              <% row_component.with_cell do %>
-                <%= render Works::Edit::ContentFileDescriptionComponent.new(content_file:) %>
-              <% end %>
-              <% row_component.with_cell do %>
-                <%= render Works::Edit::ContentFileHideComponent.new(content_file:) %>
-              <% end %>
-              <% row_component.with_cell do %>
-                <%= render Works::Edit::ContentFileDeleteComponent.new(content_file:) %>
-              <% end %>
-            <% end %>
-          <% end %>
-        <% end %>
-        <%= paginate content_files, params: { controller: 'contents', action: 'show', id: content.id } %>
-      <% else # hierarchy will work fine with less than the configured number of files, show it with paging %>
+  <% else # there is at lesat one file in the object, now decide if we show the hierarchical view without paging or the flat list view with paging %>
+      <% if total_files > Settings.file_upload.hierarchical_files_limit # lots of files, and the hierarchy would not work well, show flat list with paging %>
+        <%= render Works::Edit::ContentNonHierarchyComponent.new(content_obj: content, content_files:) %>
+      <% else # fewer files,  hierarchy will work fine, show hierarchy view without paging %>
         <%= render Works::Edit::ContentHierarchyComponent.new(content_files:) %>
       <% end %>
   <% end %>

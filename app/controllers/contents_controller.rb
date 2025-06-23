@@ -12,7 +12,7 @@ class ContentsController < ApplicationController
     # since the user can search by filename when pagination is occurring, this can result in @content_files
     # query having 0 results even when the object itself has files ... and we want to know how many files the
     # object has before a search to properly render the "no files" or "no search results" message as appropriate
-    @total_files = @content.content_files.count
+    @total_files = total_files
     @search_term = search_term
   end
 
@@ -42,11 +42,18 @@ class ContentsController < ApplicationController
   def set_content_files
     @content_files = @content.content_files
     @content_files = @content_files.where('filepath like ?', "%#{search_term}%") if search_term
-    @content_files = @content_files.path_order.page(params[:page])
+    @content_files = @content_files.path_order
+    # if we have more than the configured number of files that will work with a hiearchical view, we will do a flat list with paging instead
+    @content_files = @content_files.page(params[:page]) if total_files > Settings.file_upload.hierarchical_files_limit
   end
 
   def search_term
     params[:q]
+  end
+
+  # the total number of files in an object before any search filters are applied
+  def total_files
+    @content.content_files.count
   end
 
   def update_files
