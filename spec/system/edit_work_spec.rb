@@ -371,4 +371,71 @@ RSpec.describe 'Edit a work' do
       expect(page).to have_current_path(work_path(druid))
     end
   end
+
+  context 'with file search' do
+    let(:content) { work.content.last }
+
+    context 'when the file does not have enough objects to show a search box' do
+      before do # ensure this is more than the number of files in the test object
+        allow(Settings.search).to receive(:file_search_box_min).and_return(50)
+      end
+
+      it 'does not show a search box' do
+        visit edit_work_path(druid)
+
+        expect(page).to have_css('h1', text: title_fixture)
+
+        find('.nav-link', text: 'Manage files').click
+        expect(content.content_files.size).to eq 1
+        expect(page).to have_text('my_file.txt') # filename in object
+        expect(page).to have_no_css('#content-files-search') # no search box for files with only single file
+      end
+    end
+
+    context 'when the file has enough objects to show a search box' do
+      before do # always show the search box for this test
+        allow(Settings.search).to receive(:file_search_box_min).and_return(0)
+      end
+
+      it 'shows search box and allows searching by filename' do
+        visit edit_work_path(druid)
+
+        expect(page).to have_css('h1', text: title_fixture)
+
+        find('.nav-link', text: 'Manage files').click
+        expect(page).to have_css('#content-files-search') # show search box for files because we changed setting
+        expect(page).to have_text('my_file.txt') # filename in object
+        expect(content.content_files.size).to eq 1
+
+        # add a file
+        find('.dropzone').drop('spec/fixtures/files/hippo.png')
+        expect(content.content_files.size).to eq 2
+        expect(page).to have_text('hippo.png')
+
+        # search for the first file, which will hide the display of the second file
+        within('div#content-files') do
+          fill_in('content-files-search', with: 'my_file')
+          click_link_or_button 'Search'
+        end
+        expect(page).to have_no_text('hippo.png')
+
+        # search for bogus, which will hide the display of both files and show a message
+        within('div#content-files') do
+          fill_in('content-files-search', with: 'bogus')
+          click_link_or_button 'Search'
+        end
+        expect(page).to have_no_text('hippo.png')
+        expect(page).to have_no_text('my_file.txt')
+        expect(page).to have_text('There are no results matching "bogus".')
+
+        # clear search, showing both results again
+        within('div#content-files') do
+          fill_in('content-files-search', with: '')
+          click_link_or_button 'Search'
+        end
+        expect(page).to have_text('hippo.png')
+        expect(page).to have_text('my_file.txt')
+      end
+    end
+  end
 end

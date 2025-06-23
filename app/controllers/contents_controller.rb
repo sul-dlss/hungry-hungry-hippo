@@ -44,7 +44,7 @@ class ContentsController < ApplicationController
     @content_files = @content_files.where('filepath like ?', "%#{search_term}%") if search_term
     @content_files = @content_files.path_order
     # if we have more than the configured number of files that will work with a hiearchical view,
-    # we will do a flat list with paging instead
+    # we will do a flat list with paging, so add the page method and current page param to the query
     @content_files = @content_files.page(params[:page]) if total_files > Settings.file_upload.hierarchical_files_limit
   end
 
