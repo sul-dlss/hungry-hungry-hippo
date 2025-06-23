@@ -45,6 +45,9 @@ file_upload:
   max_filesize: 10000 # 10GB
   max_files: 25000
 
+search:
+  file_search_box_min: 50 # only show search bar above file list in edit page if there are more than this many files in the object
+
 datacite:
   prefix: '10.80343'
   host: api.test.datacite.org
