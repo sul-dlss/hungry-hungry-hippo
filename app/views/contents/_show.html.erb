@@ -61,7 +61,6 @@
         <%= paginate content_files, params: { controller: 'contents', action: 'show', id: content.id } %>
       <% else # hierarchy will work fine with less than the configured number of files, show it with paging %>
         <%= render Works::Edit::ContentHierarchyComponent.new(content_files:) %>
-        <%#= paginate content_files, params: { controller: 'contents', action: 'show', id: content.id } %>
       <% end %>
   <% end %>
 <% end %>
