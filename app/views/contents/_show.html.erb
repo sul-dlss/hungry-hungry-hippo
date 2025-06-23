@@ -1,10 +1,11 @@
 <%= turbo_frame_tag content, 'show' do %>
   <%= turbo_stream_from 'show', content %>
   <% content_files ||= content.content_files.path_order.page(1) %>
-  <% if total_files > Kaminari.config.default_per_page # show search bar with section header %>
+  <% if total_files > Kaminari.config.default_per_page # there is more than one page of results, show search bar with section header %>
       <div class="row">
         <div class="col-3">
           <%= render Edit::SectionHeaderComponent.new(title: t('works.edit.panes.files.list')) %>
+          <%= "(#{total_files})" %>
         </div>
         <div class="col-5 ms-auto">
           <%# Not using TextFieldComponent because field-container conflicts with input-group. %>
@@ -21,17 +22,17 @@
           <% end %>
         </div>
       </div>
-      <% if content_files.empty? %>
+      <% if content_files.empty? # user has executed a search but there were no results %>
         <p>There are no results matching "<%= search_term %>".</p>
       <% end %>
     <% else # just show section header %>
       <%= render Edit::SectionHeaderComponent.new(title: t('works.edit.panes.files.list')) %>
     <% end %>
 
-  <% if total_files.zero? %>
+  <% if total_files.zero? # there are no files at all in the object %>
     <p>Your files will appear here once they have been uploaded.</p>
-  <% else %>
-      <% if total_files > Settings.file_upload.hierarchical_files_limit %>
+  <% else # there are files in the object %>
+      <% if total_files > Settings.file_upload.hierarchical_files_limit # we have too many files, and the hierarchy would not work well, show flat list with paging %>
         <%= render Elements::Tables::TableComponent.new(id: 'content-table', label: 'Files', show_label: false) do |component| %>
           <%# These headers are duplicated in app/components/works/edit/content_hierarchy_component.html.erb %>
           <% component.with_headers([
@@ -58,9 +59,9 @@
           <% end %>
         <% end %>
         <%= paginate content_files, params: { controller: 'contents', action: 'show', id: content.id } %>
-      <% else %>
+      <% else # hierarchy will work fine with less than the configured number of files, show it with paging %>
         <%= render Works::Edit::ContentHierarchyComponent.new(content_files:) %>
-        <%= paginate content_files, params: { controller: 'contents', action: 'show', id: content.id } %>
+        <%#= paginate content_files, params: { controller: 'contents', action: 'show', id: content.id } %>
       <% end %>
   <% end %>
 <% end %>

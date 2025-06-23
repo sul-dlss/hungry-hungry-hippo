@@ -10,8 +10,8 @@ class ContentsController < ApplicationController
     authorize! @content
 
     # since the user can search by filename when pagination is occurring, this can result in @content_files
-    # query having 0 results or fewer than the max number for pagination ... we want to know how many
-    # files the object has before a search to properly render the "no files" messages or search box
+    # query having 0 results even when the object itself has files ... and we want to know how many files the
+    # object has before a search to properly render the "no files" or "no search results" message as appropriate
     @total_files = @content.content_files.count
     @search_term = search_term
   end
