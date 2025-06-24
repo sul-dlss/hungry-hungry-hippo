@@ -21,7 +21,6 @@ AllCops:
     - 'config/environments/*.rb'
     - 'db/**/*'
     - 'vendor/**/*'
-    - 'tmp/**/*'
 
 Layout/LineLength:
   Max: 120
