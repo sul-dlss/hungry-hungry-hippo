@@ -12,7 +12,7 @@ module Dashboard
       end
 
       def render?
-        @user.depositor_for.count == 1 && !@user.works.exists?
+        @user.depositor_for.one? && !@user.works.exists?
       end
     end
   end
