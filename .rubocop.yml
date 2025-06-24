@@ -589,3 +589,8 @@ Style/EmptyStringInsideInterpolation: # new in 1.76
   Enabled: true
 Style/RedundantArrayFlatten: # new in 1.76
   Enabled: true
+
+Gemspec/AttributeAssignment: # new in 1.77
+  Enabled: true
+Style/CollectionQuerying: # new in 1.77
+  Enabled: true
