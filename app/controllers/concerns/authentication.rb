@@ -107,10 +107,12 @@ module Authentication
   # This allows the application session to outlive the shibboleth session
   def groups_from_session
     set_groups_for_emulate_not_admin
+    return ENV.fetch('ROLES', '').split(';') if Rails.env.development?
+    return [] unless authenticated?
+
     session['groups'] ||= begin
-      raw_header = request.headers[Settings.http_headers.user_groups]
-      raw_header = ENV.fetch('ROLES', nil) if Rails.env.development?
-      raw_header&.split(';') || []
+      raw_header = request.headers[Settings.http_headers.user_groups] || ''
+      raw_header.split(';')
     end
   end
 
