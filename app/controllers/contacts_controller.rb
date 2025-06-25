@@ -6,8 +6,17 @@ class ContactsController < ApplicationController
 
   before_action :set_contact_form_conditions
 
+  # the regular contact form
   def new
     @contact_form = ContactForm.new
+
+    render :new
+  end
+
+  # the contact form for a user looking for a different collection
+  def request_collection
+    @contact_form = ContactForm.new
+    @contact_form.help_how = 'Request access to another collection'
 
     render :new
   end

@@ -13,6 +13,7 @@
                                                      container_classes: 'mb-3', required: true) %>
 
   <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :help_how,
+                                                       input_data: { 'contact-target': 'helpHow' },
                                                        label: 'How can we help you? *', options: ContactForm::HELP_HOW_CHOICES,
                                                        container_classes: 'mb-3', required: true,
                                                        data: { action: 'change->contact#toggleCollectionCheckboxes' }) %>
