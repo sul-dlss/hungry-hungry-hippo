@@ -201,11 +201,6 @@ RSpec.describe 'Create a work deposit' do
               with: related_works_fixture.second['identifier'])
       select('My deposit consists of parts, one of which is', from: 'How is your deposit related to this work?')
 
-      # Filling in related links
-      expect(page).to have_text('Related links')
-      fill_in('Link text', with: related_links_fixture.first['text'])
-      fill_in('URL', with: related_links_fixture.first['url'])
-
       # Clicking on Next to go to the citation tab
       click_link_or_button('Next')
       expect(page).to have_css('.nav-link.active', text: 'Citation for this deposit (optional)')

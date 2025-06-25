@@ -34,7 +34,6 @@ module Form
         citation:,
         contact_emails_attributes: ContactEmailsMapper.call(cocina_object:, works_contact_email:),
         related_works_attributes: RelatedWorksMapper.call(cocina_object:),
-        related_links_attributes: RelatedLinksMapper.call(cocina_object:),
         keywords_attributes: WorkKeywordsMapper.call(cocina_object:),
         license:,
         access:,

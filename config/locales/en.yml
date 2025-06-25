@@ -211,7 +211,7 @@ en:
     edit:
       legend: 'Related works (optional)'
       tooltip_html: >-
-        List additional published works related to your deposit. You may provide either a link (preferably a persistent identifier) or the full citation for the work. You must select an option from the list provided to describe how your deposit is related to this work.
+        Enter links (preferably persistent identifiers) or the full citations for other published works or online content related to your work. You must select an option from the list provided to describe how this work is related to your deposit.
       fields:
         citation:
           label: 'Enter full citation for related work'
@@ -224,20 +224,28 @@ en:
           label:
             html: 'How is your deposit related to this work?  <a href="https://sdr.library.stanford.edu/related-works" target="_blank">Get help choosing a term</a>'
           options:
-            supplement to: "My deposit is a supplement to this related work"
-            supplemented by: "My deposit is supplemented by this related work"
-            referenced by: "My deposit is referenced or cited by this related work"
+            is supplement to: "My deposit is a supplement to this related work"
+            is supplemented by: "My deposit is supplemented by this related work"
+            is referenced by: "My deposit is referenced or cited by this related work"
             references: 'My deposit references or cites this related work'
-            derived from: "My deposit is derived from this related work"
-            source of: "My deposit is the source of this related work"
-            version of record: "The version of record / publisher's version of my deposit is this related work"
-            identical to: "My deposit is identical to this related work"
+            is derived from: "My deposit is derived from this related work"
+            is source of: "My deposit is the source of this related work"
+            is version of record: "The version of record / publisher's version of my deposit is this related work"
+            is identical to: "My deposit is identical to this related work"
             has version: 'My deposit has specific versions or instances, one of which is this related work'
-            has original version: "My deposit is a specific version or instance of this related work"
-            preceded by: 'My deposit succeeds or is a continuation of this related work'
-            succeeded by: 'My deposit precedes or is continued by this related work'
-            part of: "My deposit is one part of this related work"
+            is version of: "My deposit is a specific version or instance of this related work"
+            continues: 'My deposit succeeds or is a continuation of this related work'
+            is continued by: 'My deposit precedes or is continued by this related work'
+            is part of: "My deposit is one part of this related work"
             has part: 'My deposit consists of parts, one of which is this related work'
+            is described by: 'My deposit is described by this related work'
+            describes: 'My deposit describes this related work'
+            has metadata: 'My deposit has additional metadata found in this related work'
+            is metadata for: 'My deposit is the metadata for this related work'
+            is documented by: 'My deposit is documented by this related work'
+            documents: 'My deposit documents this related work'
+            is variant form of: 'My deposit is a variant form of this related work'
+            is original form of: 'My deposit is the original form of this related work'
   reviewers:
     edit:
       legend: 'Reviewers'

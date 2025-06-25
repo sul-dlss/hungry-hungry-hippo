@@ -28,23 +28,10 @@ def citation_fixture
   'Dr. Pepper et al., 2024. https://purl.stanford.edu/bc123df4567'
 end
 
-def related_links_fixture
-  [
-    {
-      'text' => 'Stanford University',
-      'url' => 'https://www.stanford.edu/'
-    },
-    {
-      'text' => 'Hewatt Transect',
-      'url' => 'https://sul-purl-stage.stanford.edu/qx938nv4212'
-    }
-  ]
-end
-
 def related_works_fixture
   [
     {
-      'relationship' => 'part of',
+      'relationship' => 'is part of',
       'identifier' => nil,
       'citation' => 'Here is a valid citation.',
       'use_citation' => true
