@@ -36,7 +36,7 @@ class RelatedWorksCocinaBuilder
 
   def call
     related_works.map do |related_work|
-      # NOTE: Sometimes this is an array of hashes and sometimes it's an array of RelatedLinkForm instances
+      # NOTE: Sometimes this is an array of hashes and sometimes it's an array of RelatedWorkForm instances
       related_work = related_work.attributes if related_work.respond_to?(:attributes)
       next if related_work['citation'].blank? && related_work['identifier'].blank?
 
@@ -53,14 +53,33 @@ class RelatedWorksCocinaBuilder
       type: RELATION_TYPES.dig(related_work['relationship'], :cocina_type),
       dataCiteRelationType: RELATION_TYPES.dig(related_work['relationship'], :datacite)
     }.compact.tap do |related_work_hash|
-      if related_work['identifier'].present?
-        related_work_hash[:identifier] =
-          [{ uri: related_work['identifier'] }]
-      end
+      related_work_hash.merge!(build_identifier(related_work['identifier']))
 
       if related_work['citation'].present?
         related_work_hash[:note] = [{ type: 'preferred citation', value: related_work['citation'] }]
       end
     end
+  end
+
+  # Build identifier or access cocina fields from form identifier value if present
+  def build_identifier(identifier)
+    if PurlSupport.purl?(url: identifier)
+      { purl: identifier }
+    # If the identifier is a URI, we need to specify the type
+    elsif uri_type_for(identifier).present?
+      { identifier:
+            [{ uri: identifier, type: uri_type_for(identifier) }] }
+    elsif identifier.blank?
+      {}
+    else
+      { access: { url: [{ value: identifier }] } }
+    end
+  end
+
+  def uri_type_for(identifier)
+    return 'doi' if identifier.include?('doi.org')
+    return 'arxiv' if identifier.include?('arxiv.org')
+
+    'pmid' if identifier.include?('pubmed.ncbi.nlm.nih.gov')
   end
 end

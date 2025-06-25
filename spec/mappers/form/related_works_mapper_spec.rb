@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe Form::RelatedWorksMapper do
   context 'when object has related works' do
     let(:cocina_object) do
+      # NOTE: the :dro factory in the cocina-models gem does not have a seam
+      #       for injecting related links, so we do it manually here
       build(:dro, title: title_fixture).then do |object|
         object.new(object.to_h.tap do |obj|
           obj[:description][:relatedResource] = [
@@ -34,6 +36,43 @@ RSpec.describe Form::RelatedWorksMapper do
 
     it 'returns the related works' do
       expect(described_class.call(cocina_object:)).to eq related_works_fixture
+    end
+  end
+
+  context 'when object has identifiers that are links' do
+    let(:cocina_object) do
+      build(:dro, title: title_fixture).then do |object|
+        object.new(
+          object
+            .to_h
+            .tap do |obj|
+            obj[:description][:relatedResource] = [
+              {
+                type: 'supplemented by',
+                dataCiteRelationType: 'IsSupplementedBy',
+                purl: related_works_links_fixture.first['identifier']
+              },
+              {
+                type: 'has version',
+                dataCiteRelationType: 'IsVersionOf',
+                identifier: [{
+                  uri: related_works_links_fixture.second['identifier'],
+                  type: 'doi'
+                }]
+              },
+              {
+                type: 'referenced by',
+                dataCiteRelationType: 'IsReferencedBy',
+                access: { url: [{ value: related_works_links_fixture.third['identifier'] }] }
+              }
+            ]
+          end
+        )
+      end
+    end
+
+    it 'returns the related links' do
+      expect(described_class.call(cocina_object:)).to eq related_works_links_fixture
     end
   end
 
