@@ -499,6 +499,8 @@ en:
             label_html: 'Enter list of email addresses or SUNet IDs and click "Add managers." <em>(Email aliases are not yet supported.)</em>'
           depositors:
             label_html: 'Enter list of email addresses or SUNet IDs and click "Add depositors." <em>(Email aliases are not yet supported.)</em>'
+          reviewers:
+            label_html: 'Enter list of email addresses or SUNet IDs and click "Add reviewers." <em>(Email aliases are not yet supported.)</em>'
         workflow:
           tab_label: 'Workflow'
           label: 'Review workflow'
