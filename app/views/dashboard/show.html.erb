@@ -46,3 +46,13 @@
     <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary, classes: 'mt-4') %>
   </div>
 <% end %>
+
+<div class="mb-5">
+    <%= link_to('Looking for a different collection?', '#',
+                data: {
+                  bs_toggle: 'modal',
+                  bs_target: '#contact-form-modal',
+                  bs_showCollections: 'true'
+                }) %>
+</a>
+</div>

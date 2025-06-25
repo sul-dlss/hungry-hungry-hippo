@@ -8,6 +8,7 @@ class ContactsController < ApplicationController
 
   def new
     @contact_form = ContactForm.new
+    @contact_form.help_how = 'Request access to another collection' if params[:show_collections] == 'true'
 
     render :new
   end
