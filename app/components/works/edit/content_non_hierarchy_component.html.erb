@@ -9,16 +9,16 @@
     <% content_files.each do |content_file| %>
         <% component.with_row do |row_component| %>
             <% row_component.with_cell do %>
-            <%= content_file.filepath %>
+                <%= content_file.filepath %>
             <% end %>
             <% row_component.with_cell do %>
-            <%= render Works::Edit::ContentFileDescriptionComponent.new(content_file:) %>
+                <%= render Works::Edit::ContentFileDescriptionComponent.new(content_file:) %>
             <% end %>
             <% row_component.with_cell do %>
-            <%= render Works::Edit::ContentFileHideComponent.new(content_file:) %>
+                <%= render Works::Edit::ContentFileHideComponent.new(content_file:) %>
             <% end %>
             <% row_component.with_cell do %>
-            <%= render Works::Edit::ContentFileDeleteComponent.new(content_file:) %>
+                <%= render Works::Edit::ContentFileDeleteComponent.new(content_file:) %>
             <% end %>
         <% end %>
     <% end %>
