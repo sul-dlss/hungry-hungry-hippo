@@ -9,21 +9,23 @@ RSpec.describe Form::RelatedWorksMapper do
         object.new(object.to_h.tap do |obj|
           obj[:description][:relatedResource] = [
             {
-              type: related_works_fixture.first['relationship'],
+              type: 'part of',
               note: [
                 {
                   type: 'preferred citation',
                   value: related_works_fixture.first['citation']
                 }
-              ]
+              ],
+              dataCiteRelationType: 'IsPartOf'
             },
             {
-              type: related_works_fixture.second['relationship'],
+              type: 'has part',
               identifier: [
                 {
                   uri: related_works_fixture.second['identifier']
                 }
-              ]
+              ],
+              dataCiteRelationType: 'HasPart'
             }
           ]
         end)
@@ -66,6 +68,57 @@ RSpec.describe Form::RelatedWorksMapper do
       expect(described_class.call(cocina_object:)).to eq [
         { 'relationship' => nil, 'identifier' => nil, 'citation' => 'my citation', 'use_citation' => true }
       ]
+    end
+  end
+
+  context 'when the object has relationship type but no dataCiteRelationType' do
+    let(:cocina_object) do
+      build(:dro, title: title_fixture).then do |object|
+        object.new(object.to_h.tap do |obj|
+          obj[:description][:relatedResource] = [
+            {
+              type: 'part of',
+              note: [
+                {
+                  type: 'preferred citation',
+                  value: related_works_fixture.first['citation']
+                }
+              ]
+            }
+          ]
+        end)
+      end
+    end
+
+    it 'returns a related work with no relationship' do
+      expect(described_class.call(cocina_object:)).to eq [
+        { 'relationship' => nil, 'identifier' => nil, 'citation' => 'Here is a valid citation.',
+          'use_citation' => true }
+      ]
+    end
+  end
+
+  context 'when the object has cocina type that is not a supported relationship' do
+    let(:cocina_object) do
+      build(:dro, title: title_fixture).then do |object|
+        object.new(object.to_h.tap do |obj|
+          obj[:description][:relatedResource] = [
+            {
+              type: 'reviewed by',
+              note: [
+                {
+                  type: 'preferred citation',
+                  value: related_works_fixture.first['citation']
+                }
+              ]
+            }
+          ]
+        end)
+      end
+    end
+
+    it 'returns nil' do
+      expect(described_class.call(cocina_object:)).to be_nil
     end
   end
 end

@@ -122,7 +122,6 @@
 
       <% component.with_work_pane(tab_name: :related_content, label: t('works.edit.panes.related_content.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
         <%= render NestedComponentPresenter.for(form:, field_name: :related_works, model_class: RelatedWorkForm, form_component: RelatedWorks::EditComponent, fieldset_classes: 'pane-section') %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :related_links, model_class: RelatedLinkForm, form_component: RelatedLinks::EditComponent, fieldset_classes: 'pane-section') %>
       <% end %>
 
       <% component.with_work_pane(tab_name: :citation, label: t('works.edit.panes.citation.label'), tooltip: t('works.edit.panes.citation.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, help_text: t('works.edit.panes.citation.help_text'), active_tab_name:) do %>

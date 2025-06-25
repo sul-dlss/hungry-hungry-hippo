@@ -29,14 +29,6 @@ RSpec.describe 'Edit a work' do
   end
   let(:updated_abstract) { 'This is what my work is really about.' }
   let(:updated_keywords) { ['First Keyword'] }
-  let(:updated_related_links) do
-    [
-      {
-        'text' => 'My new link',
-        'url' => 'https://new.stanford.edu/'
-      }
-    ]
-  end
   let(:updated_related_works) do
     [
       {
@@ -146,28 +138,8 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_text('Citation for this deposit (optional)')
     expect(page).to have_field('Enter preferred citation', with: citation_fixture)
 
-    # Filling in related content, first related links
-    find('.nav-link', text: 'Related content (optional)').click
-    within_fieldset('Related links') do
-      form_instances = all('.form-instance')
-      within(form_instances[0]) do
-        fill_in('Link text', with: 'delete')
-        fill_in('URL', with: 'me')
-      end
-      # Test adding a new nested field
-      click_link_or_button('+ Add another related link')
-      form_instances = all('.form-instance')
-      within(form_instances[2]) do
-        fill_in('Link text', with: updated_related_links.first['text'])
-        fill_in('URL', with: updated_related_links.first['url'])
-      end
-      # Test removing a nested field
-      within(form_instances[0]) do
-        find('button[data-action="click->nested-form#delete"]').click
-      end
-    end
-
     # Then add a related work
+    find('.nav-link', text: 'Related content (optional)').click
     click_link_or_button('+ Add another related work')
     within_fieldset('Related works') do
       within('div[data-index="2"]') do
@@ -196,8 +168,6 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_content('Some other organization')
     expect(page).to have_content('0001-0002-0003-0004')
     expect(page).to have_content(citation_fixture)
-    expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
-    expect(page).to have_content('https://purl.stanford.edu/fake')
     expect(page).to have_content('Immediately')
     expect(page).to have_css('td', exact_text: 'Image')
     expect(page).to have_css('td', exact_text: 'CAD, Map')
