@@ -45,6 +45,29 @@ def related_works_fixture
   ]
 end
 
+def related_works_links_fixture
+  [
+    {
+      'relationship' => 'is supplemented by',
+      'identifier' => 'https://sul-purl-stage.stanford.edu/qx938nv4212',
+      'citation' => nil,
+      'use_citation' => false
+    },
+    {
+      'relationship' => 'is version of',
+      'identifier' => 'https://doi.org/10.1126/science.aar3646',
+      'citation' => nil,
+      'use_citation' => false
+    },
+    {
+      'relationship' => 'is referenced by',
+      'identifier' => 'https://stanford.edu',
+      'citation' => nil,
+      'use_citation' => false
+    }
+  ]
+end
+
 def contact_emails_fixture
   [
     {

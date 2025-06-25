@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Form
-  # Maps related links.
+  # Maps related links for collections only.
   class RelatedLinksMapper < BaseMapper
     def call
       return if related_resources.blank?
