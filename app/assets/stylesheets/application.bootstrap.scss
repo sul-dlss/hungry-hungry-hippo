@@ -112,17 +112,18 @@ $enable-smooth-scroll: false;
   .pane-section:last-child {
     padding-bottom: 80px;
   }
-
-  // Legends by default have a larger font. When used as a form label, want a smaller font.
-  legend.form-label {
-    font-size: unset;
-  }
-
-  // Legend labels are wrapped in h3 for accessibility, but don't want h3 styling.
-  legend h3 {
-    all: unset;
-  }
 }
+
+// Legends by default have a larger font. When used as a form label, want a smaller font.
+legend.form-label {
+  font-size: unset;
+}
+
+// Legend labels are wrapped in h3 for accessibility, but don't want h3 styling.
+legend h3 {
+  all: unset;
+}
+
 
 // Common to styled tables
 table.table-h3 {

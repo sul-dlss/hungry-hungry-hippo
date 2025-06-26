@@ -19,6 +19,12 @@
   <% component.with_row(label: 'Public webpage', tooltip: t('sharing_link.tooltip_html'), values: [@work_presenter.purl_link]) %>
   <% component.with_row(label: 'DOI', tooltip: t('doi_link.tooltip_html'), values: [@work_presenter.doi_value]) %>
   <% component.with_row(label: 'Collection', values: [@work_presenter.collection_link]) %>
+  <% component.with_row(label: 'Shared with') do |row_component| %>
+    <%= row_component.with_cell do %>
+      <div><%= @work_presenter.share_users.map(&:name).join(', ') %></div>
+      <%= render Works::Show::ManageSharingButtonComponent.new(work: @work) %>
+    <% end %>
+  <% end %>
   <% component.with_row(label: 'Depositor', values: [@work_presenter.depositor]) %>
   <% component.with_row(label: 'Version', values: [@work_presenter.user_version]) %>
   <% component.with_row(label: 'Total number of files', values: [@work_presenter.number_of_files_in_deposit]) %>
