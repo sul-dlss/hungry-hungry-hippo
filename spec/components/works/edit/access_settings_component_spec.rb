@@ -44,7 +44,7 @@ RSpec.describe Works::Edit::AccessSettingsComponent, type: :component do
     it 'states the immediate release and renders a hidden field' do
       render_inline(described_class.new(form:, collection:))
 
-      expect(page).to have_text('Your files with be available shortly after you deposit this item.')
+      expect(page).to have_text('Your files will be available shortly after the deposit is completed.')
       expect(page).to have_field('release_option', type: 'hidden', with: 'immediate')
     end
   end

@@ -1,7 +1,7 @@
 <div class="pane-section">
   <%= render Edit::LabelComponent.new(label_text: 'Release date') %>
   <% if immediate_release_option? %>
-    <p>Your files with be available shortly after you deposit this item.</p>
+    <p>Your files will be available shortly after the deposit is completed.</p>
     <%= form.hidden_field :release_option, value: :immediate %>
   <% else %>
     <%= form.hidden_field :max_release_date %>
