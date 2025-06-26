@@ -71,4 +71,6 @@
   </div>
 </header>
 <%= render Structure::TermsOfDepositModalComponent.new %>
-<%= render Structure::ContactFormModalComponent.new %>
+<%# there are two contact us modals; the first is the regular one; the second pre-selects requesting a collection %>
+<%= render Structure::ContactFormModalComponent.new(form_id: 'contact-form-modal', path: new_contacts_path(modal: true)) %>
+<%= render Structure::ContactFormModalComponent.new(form_id: 'request-collection-form-modal', path: new_contacts_path(help_how: 'Request access to another collection', modal: true)) %>

@@ -1,9 +1,9 @@
-<%= render Elements::ModalComponent.new(id: 'contact-form-modal') do |component| %>
+<%= render Elements::ModalComponent.new(id: form_id) do |component| %>
   <% component.with_header do %>
     <h1><%= contact_sdr %></h1>
   <% end %>
   <% component.with_body do %>
-    <%= tag.turbo_frame id: 'contact-form', src: new_contacts_path(modal: true), loading: do %>
+    <%= tag.turbo_frame id: 'contact-form', src: path, loading: do %>
       <%= render Elements::SpinnerComponent.new %>
     <% end %>
   <% end %>

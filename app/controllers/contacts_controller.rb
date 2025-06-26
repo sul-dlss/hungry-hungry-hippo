@@ -8,6 +8,7 @@ class ContactsController < ApplicationController
 
   def new
     @contact_form = ContactForm.new
+    @contact_form.help_how = params[:help_how]
 
     render :new
   end
