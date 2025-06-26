@@ -35,7 +35,9 @@ NO_MIGRATE_COLLECTIONS = [
   'druid:xt984kp6950',
   'druid:px088wv9627',
   # Already migrated to H3
-  'druid:db160pg5444'
+  'druid:db160pg5444',
+  # Not migrating
+  'druid:sy932cg0335'
 ].freeze
 
 # These collections will be imported, but will not be editable.
