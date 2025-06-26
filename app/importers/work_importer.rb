@@ -26,6 +26,7 @@ class WorkImporter
 
   attr_reader :work_hash, :cocina_object
 
+  # rubocop:disable Metrics/AbcSize
   def create_work
     ::Work.find_or_create_by!(druid:) do |work|
       work.user = user
@@ -33,8 +34,10 @@ class WorkImporter
       work.object_updated_at = cocina_object.modified
       work.version = Cocina::Parser.version_for(cocina_object:)
       work.collection = collection
+      work.last_deposited_at = work_hash['head']['published_at']
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def collection
     @collection ||= Collection.find_by!(druid: Cocina::Parser.collection_druid_for(cocina_object:))

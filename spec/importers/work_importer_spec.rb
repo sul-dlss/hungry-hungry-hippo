@@ -48,6 +48,31 @@ RSpec.describe WorkImporter do
         allow_custom_rights_statement: false,
         provided_custom_rights_statement: nil,
         custom_rights_statement_custom_instructions: nil
+      },
+      head: {
+        id: 4386,
+        version: 1,
+        title: 'My Icon Collection for Green Cardamom Green Pepper Integration Test',
+        work_type: 'image',
+        created_edtf: nil,
+        abstract: 'An abstract for Green Cardamom Green Pepper Integration Test logo',
+        citation: 'Scully, D. (2023). My Icon Collection for Green Cardamom Green Pepper',
+        access: 'world',
+        embargo_dat: nil,
+        license: 'CC0-1.0',
+        created_at: '2023-09-28T19:17:35.582Z',
+        updated_at: '2024-05-13T16:14:55.160Z',
+        state: 'deposited',
+        published_edtf: nil,
+        subtype: [],
+        work_id: 4382,
+        version_description: nil,
+        published_at: '2023-09-28T19:17:49.092Z',
+        upload_type: 'browser',
+        globus_endpoint: 'integration_test/work388/version2',
+        globus_origin: nil,
+        custom_rights: nil,
+        user_version: 1
       }
     }.deep_stringify_keys
   end
@@ -70,7 +95,9 @@ RSpec.describe WorkImporter do
       expect(work.user).to eq(user)
       expect(work.collection).to eq(collection)
       expect(work.title).to eq(title_fixture)
-      expect(work.version).to eq(2)
+      expect(work.version).to eq(2) # NOTE: this comes from cocina, not the work_version from H2
+      expect(work.last_deposited_at.class).to be ActiveSupport::TimeWithZone
+      expect(work.last_deposited_at).to eq('2023-09-28T19:17:49.092Z')
 
       expect(tags_client).to have_received(:create).with(tags: ['Project : H3'])
     end
