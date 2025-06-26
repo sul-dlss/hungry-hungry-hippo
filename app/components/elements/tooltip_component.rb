@@ -22,7 +22,7 @@ module Elements
         bs_html: true,
         bs_toggle: 'tooltip',
         bs_title: tooltip,
-        bs_trigger: 'focus',
+        bs_trigger: 'click',
         tooltips_target: 'icon'
       }.tap do |data|
         if Settings.ahoy.tooltip
