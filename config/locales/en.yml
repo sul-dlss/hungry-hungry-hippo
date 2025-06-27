@@ -191,7 +191,7 @@ en:
       If you did not get a DOI for this work, then use this link for sharing the public webpage for your deposit. The link will be active when the deposit is completed.
   doi_link:
     tooltip_html: >-
-      Use this DOI link for sharing the public page for your deposit. If there is no DOI link, use public webpage link above. The link will be active when the deposit is completed.
+      Use this DOI link for sharing the public webpage for your deposit. If there is no DOI link, use public webpage link above. The link will be active when the deposit is completed.
   publication_date:
     edit:
       legend: 'Publication date (optional)'
