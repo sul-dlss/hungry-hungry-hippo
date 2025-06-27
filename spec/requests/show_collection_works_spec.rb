@@ -77,7 +77,8 @@ RSpec.describe 'Show collection works' do
       allow(Sdr::Event).to receive(:list).with(druid:).and_return(events)
 
       collection.works.first.request_review!
-      collection.works[1].update(user: depositor)
+      collection.works[1].update(user: depositor, object_updated_at: 1.day.ago)
+      collection.works.last.update(object_updated_at: 2.days.ago)
 
       # Despite getting the same titles and owners, nothing in other_works should show up in the
       # search results, because the search is within collection only, not other_collection.

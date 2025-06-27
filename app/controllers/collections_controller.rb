@@ -93,7 +93,7 @@ class CollectionsController < ApplicationController
   end
 
   def sort_by
-    params[:sort_by] || 'works.title asc'
+    params[:sort_by] || 'works.object_updated_at desc'
   end
 
   def history
