@@ -15,7 +15,7 @@
       </div>
     </div>
     <div>
-      <%= render Collections::Show::SortDropdownComponent.new(classes: 'ms-2') do |component| %>
+      <%= render Elements::SortDropdownComponent.new(classes: 'ms-2') do |component| %>
         <% component.with_sort_option(label: 'Deposit (ascending)', link: works_collection_path(@collection, sort_by: 'works.title asc', q: @search_term)) %>
         <% component.with_sort_option(label: 'Deposit (descending)', link: works_collection_path(@collection, sort_by: 'works.title desc', q: @search_term)) %>
         <% component.with_sort_option(label: 'Owner (ascending)', link: works_collection_path(@collection, sort_by: 'users.name asc', q: @search_term)) %>
