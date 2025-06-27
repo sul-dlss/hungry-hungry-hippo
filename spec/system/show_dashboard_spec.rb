@@ -9,9 +9,13 @@ RSpec.describe 'Show dashboard', :rack_test do
     let!(:work) { create(:work, :with_druid, user:, collection:) }
     let!(:work_without_druid) { create(:work, user:, collection:) }
     let!(:draft_work) { create(:work, :with_druid, user:, collection:) }
-    let!(:pending_review_work) { create(:work, user:, collection:, review_state: 'pending_review') }
-    let!(:rejected_review_work) { create(:work, user:, collection:, review_state: 'rejected_review') }
-    let(:shared_work) { create(:work, :with_druid) }
+    let!(:pending_review_work) do
+      create(:work, user:, collection:, review_state: 'pending_review', object_updated_at: 1.day.ago)
+    end
+    let!(:rejected_review_work) do
+      create(:work, user:, collection:, review_state: 'rejected_review', object_updated_at: 1.day.ago)
+    end
+    let(:shared_work) { create(:work, :with_druid, object_updated_at: 1.day.ago) }
     let(:collection) do
       create(:collection, :with_druid, user:, managers: [user], reviewers: [user], review_enabled: true)
     end

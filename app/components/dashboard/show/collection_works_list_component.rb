@@ -40,6 +40,7 @@ module Dashboard
 
       def works
         @works ||= helpers.authorized_scope(collection.works, as: :collection, scope_options: { collection: })
+                          .order(object_updated_at: :desc)
       end
 
       def see_all?
