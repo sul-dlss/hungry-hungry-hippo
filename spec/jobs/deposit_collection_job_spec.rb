@@ -145,10 +145,10 @@ RSpec.describe DepositCollectionJob do
         .with(druid: collection.druid,
               type: 'h3_collection_settings_updated',
               data: {
-                changes: 'Release settings modified, Access setting modified, DOI setting modified, ' \
-                         'License setting modified, Notification settings modified, ' \
-                         'Review workflow settings modified, Custom terms of use modified, ' \
-                         'Added depositors: Joseph Hill, Removed depositors: A. Depositor',
+                description: 'Release settings modified, Access setting modified, DOI setting modified, ' \
+                             'License setting modified, Notification settings modified, ' \
+                             'Review workflow settings modified, Custom terms of use modified, ' \
+                             'Added depositors: Joseph Hill, Removed depositors: A. Depositor',
                 who: current_user.sunetid
               })
     end

@@ -151,7 +151,7 @@ class DepositCollectionJob < ApplicationJob
                       type: 'h3_collection_settings_updated',
                       data: {
                         who: user_name,
-                        changes: setting_changes.join(', ')
+                        description: setting_changes.join(', ')
                       })
   end
 
