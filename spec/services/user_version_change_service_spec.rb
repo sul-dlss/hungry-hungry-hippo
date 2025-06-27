@@ -243,4 +243,17 @@ RSpec.describe UserVersionChangeService do
       expect(changed?).to be false
     end
   end
+
+  context 'when collection has changed' do
+    let(:new_cocina_object) do
+      dro_with_structural_fixture.new(structural: {
+                                        contains: dro_with_structural_fixture.structural.contains,
+                                        isMemberOf: ['druid:bb123cc4567']
+                                      })
+    end
+
+    it 'returns false' do
+      expect(changed?).to be false
+    end
+  end
 end
