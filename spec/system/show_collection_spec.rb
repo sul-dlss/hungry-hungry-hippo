@@ -36,7 +36,9 @@ RSpec.describe 'Show a collection' do
     allow(Sdr::Event).to receive(:list).with(druid:).and_return(events)
 
     collection.works.first.request_review!
-    collection.works[1].update(user: depositor)
+    # Setting object_updated_at to ensure the works are sorted as expected.
+    collection.works[1].update(user: depositor, object_updated_at: 1.day.ago)
+    collection.works.last.update(object_updated_at: 2.days.ago)
   end
 
   context 'when a manager' do
