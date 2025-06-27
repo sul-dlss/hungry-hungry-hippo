@@ -88,4 +88,27 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
       expect(page).to have_no_button('Clear')
     end
   end
+
+  context 'when component provides a delete button label' do
+    subject(:component) do
+      described_class.new(form:, field_name: :depositors, model_class: ParticipantForm,
+                          form_component: Collections::Edit::ParticipantComponent)
+    end
+
+    let(:work_form) do
+      CollectionForm.new(depositors_attributes: [
+                           {
+                             'sunetid' => 'jstanford',
+                             'name' => 'Jane Stanford'
+                           }
+                         ])
+    end
+
+    it 'show the delete button with the label specified by the component' do
+      render_inline(component)
+
+      expect(page).to have_css('label', text: 'Depositors')
+      expect(page).to have_button('Clear Jane Stanford')
+    end
+  end
 end

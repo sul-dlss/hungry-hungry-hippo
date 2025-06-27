@@ -105,6 +105,18 @@ module Elements
       def hide_add_button?
         @hide_add_button
       end
+
+      # A component can hide the delete button by providing a `hide_repeatable_nested_delete_button?`
+      # method that returns true.
+      # This can be used for a required field that the user cannot delete.
+      def hide_delete_button?(form_component_instance:)
+        form_component_instance.try(:hide_repeatable_nested_delete_button?) || false
+      end
+
+      # A form component can provide a delete button label by providing a `form_button_label` method.
+      def delete_button_label(form_component_instance:)
+        form_component_instance.try(:delete_button_label) || 'Clear'
+      end
     end
   end
 end
