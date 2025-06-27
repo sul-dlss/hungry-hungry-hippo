@@ -5,6 +5,11 @@
       <%= render Elements::TooltipComponent.new(target_label: label, tooltip:) %>
     </th>
   <% end %>
+  <% if first_value.present? %>
+    <td class="col-3" scope="row">
+      <%= first_value %>
+    </td>
+  <% end %>
   <% values.each do |value| %>
     <td><%= value %></td>
   <% end %>
