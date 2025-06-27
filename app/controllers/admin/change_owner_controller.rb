@@ -41,7 +41,7 @@ module Admin
 
     def user
       @user ||= User.find_or_create_by!(email_address:) do |user|
-        user.name = account.name if account.name.blank?
+        user.name = account.name
       end
     end
 
