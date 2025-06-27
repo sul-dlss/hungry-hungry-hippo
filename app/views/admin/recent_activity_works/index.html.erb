@@ -12,7 +12,19 @@
 
 <%= render Elements::HeadingComponent.new(level: :h1, text: 'Items recent activity', classes: 'h2 mb-4') %>
 
-<%= render Admin::RecentActivityFormComponent.new(form: @form, url: admin_recent_activity_works_path) %>
+<div class="row">
+  <div class="col-6">
+    <%= render Admin::RecentActivityFormComponent.new(form: @form, url: admin_recent_activity_works_path, sort_by: @sort_by) %>
+  </div>
+  <div class="col-6 d-flex justify-content-end">
+    <%= render Elements::SortDropdownComponent.new do |component| %>
+      <% component.with_sort_option(label: 'Deposit (ascending)', link: admin_recent_activity_works_path(sort_by: 'title asc', 'admin_recent_activity[days_limit]': @days_limit)) %>
+      <% component.with_sort_option(label: 'Deposit (descending)', link: admin_recent_activity_works_path(sort_by: 'title desc', 'admin_recent_activity[days_limit]': @days_limit)) %>
+      <% component.with_sort_option(label: 'Date modified (Newest first)', link: admin_recent_activity_works_path(sort_by: 'object_updated_at desc', 'admin_recent_activity[days_limit]': @days_limit)) %>
+      <% component.with_sort_option(label: 'Date modified (Oldest first)', link: admin_recent_activity_works_path(sort_by: 'object_updated_at asc', 'admin_recent_activity[days_limit]': @days_limit)) %>
+    <% end %>
+  </div>
+</div>
 
 <%= render Admin::RecentActivityListComponent.new(rows: @rows,
                                                   label: 'Items',
