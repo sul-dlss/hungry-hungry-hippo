@@ -24,7 +24,8 @@ module Admin
                'deposited count',
                'first draft count',
                'draft count',
-               'pending review'].freeze
+               'pending review',
+               'returned review'].freeze
 
     def self.call(...)
       new(...).call

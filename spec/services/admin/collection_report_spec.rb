@@ -39,6 +39,8 @@ RSpec.describe Admin::CollectionReport do
       it 'returns a csv with all collections' do
         expect(csv).to include(druid)
         expect(csv).to include('My Collection')
+        # 23 headers
+        expect(csv.split("\n").first.split(',').count).to eq(23)
       end
     end
 
