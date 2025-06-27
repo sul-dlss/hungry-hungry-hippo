@@ -20,6 +20,11 @@ module Collections
 
         "#{sunetid}: #{name}"
       end
+
+      # This method is invoked by RepeatableNestedComponent to label the delete button.
+      def delete_button_label
+        "Clear #{name}"
+      end
     end
   end
 end

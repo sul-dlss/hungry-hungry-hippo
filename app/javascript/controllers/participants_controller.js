@@ -54,6 +54,7 @@ export default class extends Controller {
     formInstanceEl.querySelector('.participant-label').innerHTML = `${accountData.sunetid}: ${accountData.name}`
     formInstanceEl.querySelector('input[name$="[sunetid]"]').value = accountData.sunetid
     formInstanceEl.querySelector('input[name$="[name]"]').value = accountData.name
+    formInstanceEl.querySelector('[data-delete-btn] .visually-hidden').innerHTML = `Clear ${accountData.name}`
     this.tabErrorOutlet.clearInvalidStatus('participants')
   }
 }

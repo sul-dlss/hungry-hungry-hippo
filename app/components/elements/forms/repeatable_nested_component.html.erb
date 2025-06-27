@@ -17,7 +17,7 @@
             <%= render form_component.new(form: nested_form) %>
           <% end %>
           <%= tag.div(class: nested_buttons_classes) do %>
-            <%= render Elements::DeleteButtonComponent.new(data: { action: 'click->nested-form#delete' }) %>
+            <%= render Elements::DeleteButtonComponent.new(data: { action: 'click->nested-form#delete', delete_btn: true }) %>
             <% if reorderable? %>
               <%= render Elements::MoveUpButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveUp' }) %>
               <%= render Elements::MoveDownButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveDown' }) %>
@@ -34,9 +34,7 @@
           <%= render form_component_instance %>
         <% end %>
         <%= tag.div(class: nested_buttons_classes) do %>
-          <%# A component can hide the delete button by providing a `hide_repeatable_nested_delete_button?` method that returns true. %>
-          <%# This can be used for a required field that the user cannot delete. %>
-          <%= render Elements::DeleteButtonComponent.new(data: { action: 'click->nested-form#delete' }) unless form_component_instance.try(:hide_repeatable_nested_delete_button?) %>
+          <%= render Elements::DeleteButtonComponent.new(label: delete_button_label(form_component_instance:), data: { action: 'click->nested-form#delete' }) unless hide_delete_button?(form_component_instance:) %>
           <% if reorderable? %>
             <%= render Elements::MoveUpButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveUp' }) %>
             <%= render Elements::MoveDownButtonComponent.new(classes: 'd-none', data: { action: 'click->nested-form-reorder#moveDown' }) %>

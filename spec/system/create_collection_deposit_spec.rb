@@ -116,11 +116,13 @@ RSpec.describe 'Create a collection deposit' do
     form_instances = page.all('.form-instance')
     within(form_instances[0]) do
       expect(page).to have_css('span', text: 'jswithen: John Swithen')
+      expect(page).to have_button('Clear John Swithen')
     end
 
     fill_in('managers-textarea', with: 'stepking@stanford.edu')
     click_link_or_button('Add managers')
     expect(page).to have_css('.participant-label', text: 'stepking: Stephen King')
+    expect(page).to have_button('Clear Stephen King')
 
     fill_in('depositors-textarea', with: 'notjoehill, joehill')
     click_link_or_button('Add depositors')
