@@ -14,5 +14,9 @@ module Elements
         renders: ->(**args) { BreadcrumbComponent.new(truncate_length: 50, **args) }, as: :collection_breadcrumb
       }
     }
+
+    def page_title_from_breadcrumbs
+      breadcrumbs.filter_map(&:truncated_text).unshift('SDR').join(' | ')
+    end
   end
 end

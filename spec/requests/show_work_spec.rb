@@ -152,4 +152,24 @@ RSpec.describe 'Show work' do
       expect(response.body).not_to include('https://doi.org/10.80343/bc123df4567</a>')
     end
   end
+
+  context 'when rendering the page' do
+    before do
+      user = create(:user)
+      collection = create(:collection, :with_druid, depositors: [user], title: 'My collection')
+      create(:work, druid:, user:, collection:, title: 'My work')
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:openable_version_status))
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
+
+      sign_in(user)
+    end
+
+    it 'sets the title' do
+      get "/works/#{druid}"
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('<title>SDR | Dashboard | My collection | My title</title>')
+    end
+  end
 end

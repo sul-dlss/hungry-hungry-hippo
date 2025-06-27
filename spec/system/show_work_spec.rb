@@ -180,6 +180,7 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('td', text: user.name)
         expect(page).to have_css('tr', text: 'Shared with')
         expect(page).to have_css('td', text: share_user.name)
+        expect(page).to have_css('a', text: 'Manage sharing') # .have_link_or_button wasn't working correctly.
         expect(page).to have_css('tr', text: 'Version')
         expect(page).to have_css('td', text: '1')
         expect(page).to have_css('tr', text: 'Total number of files')
