@@ -304,14 +304,14 @@ module WorkMappingFixtures
     )
   end
 
-  def dro_with_structural_fixture(hide: false)
+  def dro_with_structural_fixture(hide: false, version: 2)
     dro_fixture.new(structural: {
                       contains: [
                         {
                           type: 'https://cocina.sul.stanford.edu/models/resources/file',
                           externalIdentifier: fileset_external_identifier_fixture,
                           label: file_label_fixture,
-                          version: 2,
+                          version:,
                           structural: {
                             contains: [
                               {
@@ -320,7 +320,7 @@ module WorkMappingFixtures
                                 label: file_label_fixture,
                                 filename: filename_fixture,
                                 size: file_size_fixture,
-                                version: 2,
+                                version:,
                                 hasMimeType: mime_type_fixture,
                                 sdrGeneratedText: false,
                                 correctedForAccessibility: false,

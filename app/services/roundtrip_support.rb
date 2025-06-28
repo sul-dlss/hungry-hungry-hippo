@@ -6,10 +6,27 @@ class RoundtripSupport
     # Remove created_at and updated_at from the original cocina object
     lock = cocina_object&.lock
     norm_cocina_object = Cocina::Models.without_metadata(cocina_object)
-    norm_cocina_object = norm_cocina_object.new(cocinaVersion: Cocina::Models::VERSION)
+    other_attrs = if cocina_object.dro?
+                    { structural: normalize_structural_attrs(structural_attrs: cocina_object.structural.to_h,
+                                                             version: cocina_object.version) }
+                  else
+                    {}
+                  end
+    norm_cocina_object = norm_cocina_object.new(cocinaVersion: Cocina::Models::VERSION, **other_attrs)
 
     Cocina::Models.with_metadata(norm_cocina_object, lock)
   end
+
+  def self.normalize_structural_attrs(structural_attrs:, version:)
+    Array(structural_attrs[:contains]).each do |fileset_attrs|
+      fileset_attrs[:version] = version
+      Array(fileset_attrs.dig(:structural, :contains)).each do |file_atts|
+        file_atts[:version] = version
+      end
+    end
+    structural_attrs
+  end
+  private_class_method :normalize_structural_attrs
 
   # @param [Cocina::Models::DRO,Cocina::Models::Collection] cocina_object
   # @return [Boolean] true if the provided cocina object is the same as a cocina object retrieved from SDR.
