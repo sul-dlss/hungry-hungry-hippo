@@ -11,8 +11,6 @@ module Works
 
       attr_reader :work_presenter
 
-      delegate :related_links, to: :work_presenter
-
       def related_works
         work_presenter.related_works_attributes.select { |related_work| related_work.to_s.present? }
       end

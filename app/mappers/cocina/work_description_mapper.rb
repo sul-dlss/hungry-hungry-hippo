@@ -56,8 +56,7 @@ module Cocina
     end
 
     def related_resource_params
-      DescriptionCocinaBuilder.related_links(related_links: work_form.related_links_attributes) +
-        DescriptionCocinaBuilder.related_works(related_works: work_form.related_works_attributes)
+      DescriptionCocinaBuilder.related_works(related_works: work_form.related_works_attributes)
     end
 
     def access_contact_params

@@ -28,23 +28,10 @@ def citation_fixture
   'Dr. Pepper et al., 2024. https://purl.stanford.edu/bc123df4567'
 end
 
-def related_links_fixture
-  [
-    {
-      'text' => 'Stanford University',
-      'url' => 'https://www.stanford.edu/'
-    },
-    {
-      'text' => 'Hewatt Transect',
-      'url' => 'https://sul-purl-stage.stanford.edu/qx938nv4212'
-    }
-  ]
-end
-
 def related_works_fixture
   [
     {
-      'relationship' => 'part of',
+      'relationship' => 'is part of',
       'identifier' => nil,
       'citation' => 'Here is a valid citation.',
       'use_citation' => true
@@ -52,6 +39,29 @@ def related_works_fixture
     {
       'relationship' => 'has part',
       'identifier' => 'doi:10.7710/2162-3309.1059',
+      'citation' => nil,
+      'use_citation' => false
+    }
+  ]
+end
+
+def related_works_links_fixture
+  [
+    {
+      'relationship' => 'is supplemented by',
+      'identifier' => 'https://sul-purl-stage.stanford.edu/qx938nv4212',
+      'citation' => nil,
+      'use_citation' => false
+    },
+    {
+      'relationship' => 'is version of',
+      'identifier' => 'https://doi.org/10.1126/science.aar3646',
+      'citation' => nil,
+      'use_citation' => false
+    },
+    {
+      'relationship' => 'is referenced by',
+      'identifier' => 'https://stanford.edu',
       'citation' => nil,
       'use_citation' => false
     }

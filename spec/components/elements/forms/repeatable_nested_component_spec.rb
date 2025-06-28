@@ -10,10 +10,14 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
 
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
   let(:work_form) { WorkForm.new }
+
   let(:hidden_label) { false }
   let(:bordered) { true }
 
   context 'when rendering the default component' do
+    let(:collection_form) { CollectionForm.new }
+    let(:form) { ActionView::Helpers::FormBuilder.new(nil, collection_form, vc_test_controller.view_context, {}) }
+
     it 'renders the nested component' do
       render_inline(component)
       expect(page).to have_text('Related links')
