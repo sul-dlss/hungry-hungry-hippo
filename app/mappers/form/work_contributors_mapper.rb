@@ -31,13 +31,35 @@ module Form
           'suborganization_name' => suborganization_name,
           'stanford_degree_granting_institution' => stanford_degree_granting_institution?,
           'orcid' => orcid,
-          'with_orcid' => orcid.present?
+          'with_orcid' => orcid.present?,
+          'affiliations_attributes' => affiliations
         }
       end
 
       private
 
       attr_reader :contributor
+
+      def affiliations
+        return nil unless contributor.note.any? { |note| note.type == 'affiliation' }
+
+        contributor.note.select { |note| note.type == 'affiliation' }.map do |note|
+          affiliation_from_note(note:)
+        end
+      end
+
+      def affiliation_from_note(note:) # rubocop:disable Metrics/AbcSize
+        {}.tap do |affiliation|
+          note.structuredValue.each do |descriptive_value|
+            if descriptive_value.identifier.any? { |id| id.type == 'ROR' }
+              affiliation['institution'] = descriptive_value.value
+              affiliation['uri'] = descriptive_value.identifier.find { |id| id.type == 'ROR' }&.uri
+            else
+              affiliation['department'] = descriptive_value.value
+            end
+          end
+        end
+      end
 
       def first_name
         full_name.find { |name| name.type == 'forename' }&.value
