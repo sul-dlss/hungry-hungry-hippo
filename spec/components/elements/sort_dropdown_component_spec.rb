@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Collections::Show::SortDropdownComponent, type: :component do
+RSpec.describe Elements::SortDropdownComponent, type: :component do
   let(:collection) { create(:collection, druid: druid_fixture) }
   let(:component) do
     described_class.new(classes: ['sort-dropdown']).tap do |component|
