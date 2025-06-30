@@ -36,9 +36,12 @@ RSpec.describe 'Manage dates for a work deposit' do
     visit new_work_path(collection_druid: collection_druid_fixture)
 
     expect(page).to have_css('h1', text: 'Untitled deposit')
+    expect(page).to have_css('h2', text: 'Manage files')
 
     # Filling in title
     find('.nav-link', text: 'Title and contact').click
+    expect(page).to have_css('h2', text: 'Title of deposit and contact information')
+
     fill_in('work_title', with: title_fixture)
     fill_in('Contact email', with: contact_emails_fixture.first['email'])
 
