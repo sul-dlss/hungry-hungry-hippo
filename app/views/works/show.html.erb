@@ -21,7 +21,7 @@
   <% component.with_row(label: 'Collection', values: [@work_presenter.collection_link]) %>
   <% component.with_row(label: 'Shared with') do |row_component| %>
     <%= row_component.with_cell do %>
-      <div><%= @work_presenter.share_users.map(&:name).join(', ') %></div>
+      <div><%= @work_presenter.share_users.map(&:name).sort.join(', ') %></div>
       <%= render Works::Show::ManageSharingButtonComponent.new(work: @work) %>
     <% end %>
   <% end %>
