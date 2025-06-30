@@ -81,7 +81,7 @@ RSpec.describe 'Manage shares' do
 
       expect(page).to have_current_path(work_path(druid))
 
-      expect(page).to have_text('Jane Stanford, David Starr Jordan')
+      expect(page).to have_text('David Starr Jordan, Jane Stanford')
 
       expect(Share.find_by(work:, user: changing_share_user).permission).to eq(Share::VIEW_EDIT_PERMISSION)
       expect(Share.exists?(work:, user: deleting_share_user)).to be false

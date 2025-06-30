@@ -16,8 +16,10 @@ RSpec.describe 'Edit work type and subtypes for a work' do
       visit new_work_path(collection_druid: collection.druid)
 
       expect(page).to have_css('h1', text: 'Untitled deposit')
+      expect(page).to have_css('h2', text: 'Manage files')
 
       find('.nav-link', text: 'Type of deposit').click
+      expect(page).to have_css('h2', text: 'Type of deposit')
       expect(page).to have_text('What type of content are you depositing?')
       expect(page).to have_field('work[work_type]', type: :radio, count: WorkType.all.count) # rubocop:disable Rails/RedundantActiveRecordAllMethod
 
@@ -134,8 +136,11 @@ RSpec.describe 'Edit work type and subtypes for a work' do
       visit new_work_path(collection_druid: collection.druid)
 
       expect(page).to have_css('h1', text: 'Untitled deposit')
+      expect(page).to have_css('h2', text: 'Manage files')
 
       find('.nav-link', text: 'Type of deposit').click
+      expect(page).to have_css('h2', text: 'Type of deposit')
+
       expect(page).to have_text('What type of content are you depositing?')
       expect(page).to have_text('The collection manager has selected "Image" as the type for all deposits.')
       expect(page).to have_text('The collection manager has selected "CAD" and "Map" as the subtypes')
