@@ -63,14 +63,14 @@ class RelatedWorksCocinaBuilder
 
   # Build identifier or access cocina fields from form identifier value if present
   def build_identifier(identifier)
-    if PurlSupport.purl?(url: identifier)
+    if identifier.blank?
+      {}
+    elsif PurlSupport.purl?(url: identifier)
       { purl: identifier }
     # If the identifier is a URI, we need to specify the type
     elsif uri_type_for(identifier).present?
       { identifier:
             [{ uri: identifier, type: uri_type_for(identifier) }] }
-    elsif identifier.blank?
-      {}
     else
       { access: { url: [{ value: identifier }] } }
     end
