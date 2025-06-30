@@ -6,6 +6,10 @@ RSpec.describe Form::ContributorMapper do
   context 'when a person' do
     let(:contributor) { create(:person_contributor) }
 
+    before do
+      create(:affiliation, contributor:)
+    end
+
     it 'maps to attributes' do
       expect(described_class.call(contributor:)).to eq(
         first_name: contributor.first_name,
@@ -14,7 +18,14 @@ RSpec.describe Form::ContributorMapper do
         person_role: 'author',
         orcid: '0001-0002-0003-0004',
         with_orcid: true,
-        stanford_degree_granting_institution: false
+        stanford_degree_granting_institution: false,
+        affiliations_attributes: [
+          {
+            institution: 'Stanford University',
+            uri: 'https://ror.org/01abcd',
+            department: 'Department of History'
+          }
+        ]
       )
     end
   end
@@ -29,7 +40,8 @@ RSpec.describe Form::ContributorMapper do
         organization_role: 'funder',
         suborganization_name: nil,
         stanford_degree_granting_institution: false,
-        with_orcid: false
+        with_orcid: false,
+        affiliations_attributes: []
       )
     end
   end
@@ -44,7 +56,8 @@ RSpec.describe Form::ContributorMapper do
         organization_role: 'degree_granting_institution',
         suborganization_name: 'Department of Philosophy',
         stanford_degree_granting_institution: true,
-        with_orcid: false
+        with_orcid: false,
+        affiliations_attributes: []
       )
     end
   end

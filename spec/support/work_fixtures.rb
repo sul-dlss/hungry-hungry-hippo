@@ -192,7 +192,7 @@ def contributors_fixture
       'stanford_degree_granting_institution' => false,
       'suborganization_name' => nil,
       'collection_required' => false,
-      'affiliations_attributes' => [affiliation_fixture]
+      'affiliations_attributes' => affiliation_fixture
     },
     {
       'role_type' => 'organization',
@@ -205,7 +205,8 @@ def contributors_fixture
       'organization_name' => 'Stanford University Libraries',
       'stanford_degree_granting_institution' => false,
       'suborganization_name' => nil,
-      'collection_required' => false
+      'collection_required' => false,
+      'affiliations_attributes' => []
     },
     {
       'role_type' => 'organization',
@@ -218,17 +219,37 @@ def contributors_fixture
       'organization_name' => 'Stanford University',
       'stanford_degree_granting_institution' => true,
       'suborganization_name' => 'Department of Philosophy',
-      'collection_required' => false
+      'collection_required' => false,
+      'affiliations_attributes' => []
+    }
+  ]
+end
+
+def person_contributor_no_affiliations_fixture
+  [
+    {
+      'role_type' => 'person',
+      'person_role' => 'author',
+      'organization_role' => nil,
+      'first_name' => 'Jane',
+      'last_name' => 'Stanford',
+      'with_orcid' => true,
+      'orcid' => '0001-0002-0003-0004',
+      'organization_name' => nil,
+      'stanford_degree_granting_institution' => false,
+      'suborganization_name' => nil,
+      'collection_required' => false,
+      'affiliations_attributes' => []
     }
   ]
 end
 
 def affiliation_fixture
-  {
+  [{
     'institution' => 'Stanford University',
     'uri' => 'https://ror.org/01abcd',
     'department' => 'Department of History'
-  }
+  }]
 end
 
 def affiliation_form_fixture
