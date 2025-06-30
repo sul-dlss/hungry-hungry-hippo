@@ -120,6 +120,40 @@ ALTER SEQUENCE public.active_storage_variant_records_id_seq OWNED BY public.acti
 
 
 --
+-- Name: affiliations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.affiliations (
+    id bigint NOT NULL,
+    contributor_id bigint,
+    institution character varying,
+    uri character varying,
+    department character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: affiliations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.affiliations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: affiliations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.affiliations_id_seq OWNED BY public.affiliations.id;
+
+
+--
 -- Name: ahoy_events; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -553,6 +587,13 @@ ALTER TABLE ONLY public.active_storage_variant_records ALTER COLUMN id SET DEFAU
 
 
 --
+-- Name: affiliations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.affiliations ALTER COLUMN id SET DEFAULT nextval('public.affiliations_id_seq'::regclass);
+
+
+--
 -- Name: ahoy_events id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -637,6 +678,14 @@ ALTER TABLE ONLY public.active_storage_blobs
 
 ALTER TABLE ONLY public.active_storage_variant_records
     ADD CONSTRAINT active_storage_variant_records_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: affiliations affiliations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.affiliations
+    ADD CONSTRAINT affiliations_pkey PRIMARY KEY (id);
 
 
 --
@@ -753,6 +802,13 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 --
 
 CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.active_storage_variant_records USING btree (blob_id, variation_digest);
+
+
+--
+-- Name: index_affiliations_on_contributor_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_affiliations_on_contributor_id ON public.affiliations USING btree (contributor_id);
 
 
 --
@@ -1040,12 +1096,21 @@ ALTER TABLE ONLY public.shares
 
 
 --
+-- Name: affiliations fk_rails_e75af2882e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.affiliations
+    ADD CONSTRAINT fk_rails_e75af2882e FOREIGN KEY (contributor_id) REFERENCES public.contributors(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250630163537'),
 ('20250619163206'),
 ('20250616125424'),
 ('20250610120209'),

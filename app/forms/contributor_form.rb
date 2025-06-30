@@ -3,7 +3,13 @@
 # Form for a contributor
 class ContributorForm < ApplicationForm
   accepts_nested_attributes_for :affiliations
-  # validates :affiliations, allow_blank: true, if: -> { person? }
+
+  before_validation do
+    blank_affiliations = affiliations_attributes.select(&:empty?)
+    next if blank_affiliations.empty?
+
+    self.affiliations_attributes = affiliations_attributes - blank_affiliations
+  end
 
   attribute :first_name, :string
   attribute :last_name, :string

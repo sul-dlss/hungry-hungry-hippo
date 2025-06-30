@@ -41,7 +41,7 @@ module Form
       attr_reader :contributor
 
       def affiliations
-        return nil unless contributor.note.any? { |note| note.type == 'affiliation' }
+        return [] unless contributor.note.any? { |note| note.type == 'affiliation' }
 
         contributor.note.select { |note| note.type == 'affiliation' }.map do |note|
           affiliation_from_note(note:)

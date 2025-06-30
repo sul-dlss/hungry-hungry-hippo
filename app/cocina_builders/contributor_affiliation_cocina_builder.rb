@@ -2,11 +2,6 @@
 
 # Generates contributor affiliation for the Cocina object
 class ContributorAffiliationCocinaBuilder
-  SOURCE = {
-    code: 'marcrelator',
-    uri: 'http://id.loc.gov/vocabulary/relators/'
-  }.freeze
-
   def self.call(...)
     new(...).call
   end

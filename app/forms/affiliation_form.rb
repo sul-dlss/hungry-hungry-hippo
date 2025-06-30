@@ -7,4 +7,8 @@ class AffiliationForm < ApplicationForm
   attribute :institution, :string
   attribute :department, :string
   attribute :uri, :string
+
+  def empty?
+    institution.blank? && uri.blank?
+  end
 end
