@@ -94,20 +94,10 @@ RSpec.describe DepositWorkJob do
         form.collection_druid = collection.druid
       end
     end
-    let(:user_path) { "/uploads/#{current_user.sunetid}/new" }
     let(:work_path) { "work-#{work.id}" }
 
     before do
       content.content_files << create(:content_file, :globus)
-      allow(GlobusClient).to receive(:exists?)
-        .with(user_id: user.email_address, path: user_path, notify_email: false)
-        .and_return(true)
-      allow(GlobusClient).to receive(:rename)
-        .with(user_id: user.email_address, path: user_path, notify_email: false, new_path: "/uploads/#{work_path}")
-        .and_return(true)
-      allow(GlobusClient).to receive(:exists?)
-        .with(user_id: user.email_address, path: work_path, notify_email: false)
-        .and_return(false)
       allow(GlobusClient).to receive(:delete_access_rule)
         .with(user_id: user.email_address, path: work_path, notify_email: false)
         .and_raise(GlobusClient::AccessRuleNotFound, "Access rule not found in #{work_path}")
@@ -125,7 +115,6 @@ RSpec.describe DepositWorkJob do
                                                                 version_description: 'Initial version')
       expect(Sdr::Event).to have_received(:create).with(druid:, type: 'h3_globus_staged', data: {})
 
-      expect(GlobusClient).to have_received(:rename)
       expect(GlobusClient).to have_received(:delete_access_rule)
     end
   end

@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Done uploading globus' do
-  let(:content) { create(:content, user:) }
+  let(:content) { create(:content, user:, work:) }
 
+  let(:work) { create(:work, :with_druid) }
   let(:user) { create(:user) }
 
   context 'when the user is not authorized' do
@@ -37,7 +38,7 @@ RSpec.describe 'Done uploading globus' do
 
         expect(GlobusListJob).to have_received(:perform_later).with(content:)
         expect(GlobusClient).to have_received(:tasks_in_progress?)
-          .with(destination_path: "/uploads/#{user.sunetid}/new")
+          .with(destination_path: "/uploads/work-#{work.id}")
       end
     end
 

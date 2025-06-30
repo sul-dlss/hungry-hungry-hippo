@@ -55,8 +55,7 @@ class GlobusesController < ApplicationController
   end
 
   def set_destination_path
-    work = @content.work
-    @destination_path = work.present? ? GlobusSupport.work_path(work:) : GlobusSupport.user_path(user: current_user)
+    @destination_path = GlobusSupport.work_path(work: @content.work)
   end
 
   def implicit_authorization_target
