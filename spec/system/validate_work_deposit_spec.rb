@@ -48,11 +48,6 @@ RSpec.describe 'Validate a work deposit' do
       check('Approximate')
     end
 
-    # Clicking on related content tab & filling in related link text and *not* URL (which is required for deposit)
-    find('.nav-link', text: 'Related content (optional)').click
-    expect(page).to have_css('.nav-link.active', text: 'Related content (optional)')
-    fill_in('Link text', with: related_links_fixture.first['text'])
-
     # Providing an invalid release date
     find('.nav-link', text: 'Access settings').click
     expect(page).to have_css('.nav-link.active', text: 'Access settings')
@@ -81,7 +76,6 @@ RSpec.describe 'Validate a work deposit' do
                                             'Work work_type: blank',
                                             'Work release_date: greater_than_or_equal_to',
                                             'Work agree_to_terms: accepted',
-                                            'RelatedLink url: url',
                                             'PublicationDate year: greater_than_or_equal_to',
                                             'ContactEmail email: blank',
                                             'Contributor orcid: blank',
@@ -162,14 +156,6 @@ RSpec.describe 'Validate a work deposit' do
       select('August', from: 'Month')
       select('2', from: 'Day')
     end
-
-    # Related content is marked invalid
-    find('.nav-link.is-invalid', text: 'Related content (optional)').click
-    expect(page).to have_field('work_related_links_attributes_0_url', class: 'is-invalid')
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'is not a valid URL')
-
-    # Make the related link valid
-    fill_in('URL', with: related_links_fixture.first['url'])
 
     # Access settings is marked invalid
     find('.nav-link.is-invalid', text: 'Access settings').click

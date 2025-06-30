@@ -9,7 +9,6 @@ module WorkMappingFixtures
       contributors_attributes: contributors_fixture,
       abstract: abstract_fixture,
       citation: citation_fixture,
-      related_links_attributes: related_links_fixture,
       related_works_attributes: related_works_fixture,
       license: license_fixture,
       collection_druid: collection_druid_fixture,
@@ -131,8 +130,7 @@ module WorkMappingFixtures
           ],
           note: [DescriptionCocinaBuilder.note(type: 'abstract', value: abstract_fixture),
                  DescriptionCocinaBuilder.note(type: 'preferred citation', value: citation_fixture)],
-          relatedResource: DescriptionCocinaBuilder.related_links(related_links: related_links_fixture) +
-            DescriptionCocinaBuilder.related_works(related_works: related_works_fixture),
+          relatedResource: DescriptionCocinaBuilder.related_works(related_works: related_works_fixture),
           access: {
             accessContact: DescriptionCocinaBuilder.contact_emails(
               contact_emails: contact_emails_fixture.append(ContactEmailForm.new(email: works_contact_email_fixture))
@@ -279,8 +277,7 @@ module WorkMappingFixtures
           ],
           note: [DescriptionCocinaBuilder.note(type: 'abstract', value: abstract_fixture),
                  DescriptionCocinaBuilder.note(type: 'preferred citation', value: citation_fixture)],
-          relatedResource: DescriptionCocinaBuilder.related_links(related_links: related_links_fixture) +
-            DescriptionCocinaBuilder.related_works(related_works: related_works_fixture),
+          relatedResource: DescriptionCocinaBuilder.related_works(related_works: related_works_fixture),
           access: {
             accessContact: DescriptionCocinaBuilder.contact_emails(
               contact_emails: contact_emails_fixture.append(ContactEmailForm.new(email: works_contact_email_fixture))

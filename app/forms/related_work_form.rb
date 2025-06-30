@@ -2,22 +2,7 @@
 
 # Form for a related work
 class RelatedWorkForm < ApplicationForm
-  RELATIONSHIP_TYPES = [
-    'supplement to',
-    'supplemented by',
-    'referenced by',
-    'references',
-    'derived from',
-    'source of',
-    'version of record',
-    'identical to',
-    'has version',
-    'has original version',
-    'preceded by',
-    'succeeded by',
-    'part of',
-    'has part'
-  ].freeze
+  RELATIONSHIP_TYPES = RelatedWorksCocinaBuilder::RELATION_TYPES.keys.freeze
 
   attribute :citation, :string
   attribute :identifier, :string
