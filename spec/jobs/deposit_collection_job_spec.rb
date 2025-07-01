@@ -302,9 +302,9 @@ RSpec.describe DepositCollectionJob do
     let(:collection_form) do
       CollectionForm.new(collection.attributes
       .except('id', 'user_id', 'created_at', 'updated_at', 'object_updated_at', 'deposit_state')
-                    .merge(lock: 'abc123'))
+                    .merge(lock: 'abc123', release_duration: ''))
     end
-    let(:collection) { create(:collection, :registering_or_updating, druid:) }
+    let(:collection) { create(:collection, :registering_or_updating, druid:, release_duration: nil) }
 
     before do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
