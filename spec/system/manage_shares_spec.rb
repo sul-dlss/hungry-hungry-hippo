@@ -72,7 +72,7 @@ RSpec.describe 'Manage shares' do
         click_link_or_button('Dashboard')
       end
 
-      fill_in('Enter list of email addresses', with: 'dsj')
+      fill_in('Enter list of Stanford email addresses', with: 'dsj')
       click_link_or_button('Add')
 
       expect(page).to have_css('span', text: 'dsj: David Starr Jordan')
