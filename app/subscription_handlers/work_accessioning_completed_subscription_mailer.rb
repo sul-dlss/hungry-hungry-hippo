@@ -14,14 +14,28 @@ class WorkAccessioningCompletedSubscriptionMailer
   def call
     return unless object.is_a?(Work)
 
-    if object.first_version?
-      WorksMailer.with(work: object).deposited_email.deliver_later
-    else
-      WorksMailer.with(work: object).new_version_deposited_email.deliver_later
+    users_for(work: object).each do |user|
+      send_to(work: object, user:)
     end
   end
 
   private
 
   attr_reader :object
+
+  def users_for(work:)
+    users = [work.user]
+    work.shares.deposit.each do |share|
+      users << share.user
+    end
+    users.uniq
+  end
+
+  def send_to(work:, user:)
+    if work.first_version?
+      WorksMailer.with(work:, user:).deposited_email.deliver_later
+    else
+      WorksMailer.with(work:, user:).new_version_deposited_email.deliver_later
+    end
+  end
 end
