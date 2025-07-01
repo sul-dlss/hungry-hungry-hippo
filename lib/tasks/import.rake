@@ -128,7 +128,7 @@ namespace :import do
   desc 'Test import works from json'
   # rubocop:disable Layout/LineLength
   # IMPORTANT: Enable feature flags in H2.
-  # For example: SETTINGS__MERGE_STANFORD_AND_ORGANIZATION=true SETTINGS__DOCUMENT_TYPE=true SETTINGS__NO_CITATION_STATUS_NOTE=true bin/rails c -e p
+  # For example: SETTINGS__MERGE_STANFORD_AND_ORGANIZATION=true SETTINGS__DOCUMENT_TYPE=true SETTINGS__NO_CITATION_STATUS_NOTE=true SETTINGS__MAP_RELATED_LINKS_TO_RESOURCES=true bin/rails c -e p
   # See https://github.com/sul-dlss/hungry-hungry-hippo/wiki/Migration-plan for generating works_cocina.jsonl
   # It will raise an error if the work cannot be roundtripped or the collection cannot be found.
   # rubocop:enable Layout/LineLength
