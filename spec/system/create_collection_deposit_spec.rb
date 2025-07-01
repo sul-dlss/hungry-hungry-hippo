@@ -132,7 +132,7 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_checked_field('Send email to Collection Managers and Reviewers ' \
                                        '(see Workflow section of form) when participants are added/removed',
                                        with: '1')
-    expect(page).to have_checked_field('Send email to Depositors whose status has changed.', with: '1')
+    expect(page).to have_checked_field('Send email to Depositors who have been added or removed.', with: '1')
 
     # Clicking on Next to go to Workflow
     click_link_or_button('Next')
