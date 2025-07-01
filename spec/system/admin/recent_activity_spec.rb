@@ -8,6 +8,7 @@ RSpec.describe 'Show recent activity for items' do
   let(:collection) { create(:collection, :with_druid, user:, updated_at: 5.days.ago) }
 
   before do
+    create_list(:work, 5, :with_druid, user:, updated_at: 6.days.ago, collection:)
     sign_in(create(:user), groups: ['dlss:hydrus-app-administrators'])
   end
 
@@ -31,12 +32,21 @@ RSpec.describe 'Show recent activity for items' do
         expect(first_row).to have_css('th:nth-of-type(2)', text: 'Collection')
       end
       within('tbody') do
-        expect(page).to have_css('tr', count: 1)
+        expect(page).to have_css('tr', count: 6)
         first_row = page.find('tr:nth-of-type(1)')
         expect(first_row).to have_css('td:nth-of-type(1)', text: work.title)
         expect(first_row).to have_link(work.title, href: "/works/#{work.druid}")
         expect(first_row).to have_css('td:nth-of-type(2)', text: collection.title)
         expect(first_row).to have_link(collection.title, href: "/collections/#{collection.druid}")
+      end
+    end
+
+    click_link_or_button('Sort by')
+    find('.dropdown-item', text: 'Date modified (Newest first)').click
+    within('#recent-activity-table') do
+      within('tbody') do
+        last_row = page.find('tr:nth-of-type(6)')
+        expect(last_row).to have_link(work.title, href: "/works/#{work.druid}")
       end
     end
 
