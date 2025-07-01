@@ -198,6 +198,22 @@ A "nested" field is one that is not "simple" (see prior section).
 Preview mailers at http://localhost:3000/rails/mailers
 Add new previews at spec/mailers/previews
 
+### Troubleshooting a roundtripping error
+
+Roundtripping errors are reported to Honeybadger. Most roundtripping errors can be identified by copying the original and roundtripped JSON from the context of the Honeybadger alert into https://jsondiff.com/.
+
+Note that the JSON that is logged has been cleaned up by `Cocina::Prettier`. It may be useful to run the WorkRoundtripper to access the unmodified JSON. For troubleshooting purposes this can be instantiated with `WorkRoundtripper.troubleshooting_factory`. For example:
+```
+> work_roundtripper = WorkRoundtripper.troubleshooting_factory(druid: 'druid:nh973qg1177')
+ =>
+#<WorkRoundtripper:0x00007f8a6ca28ac0
+...
+> work_roundtripper.call
+ => false
+> puts work_roundtripper.roundtripped_cocina_object.to_json
+> puts work_roundtripper.normalized_original_cocina_object.to_json
+```
+
 ## Analytics
 
 First-party analytics is implemented using [Ahoy](https://github.com/ankane/ahoy). See `Ahoy::Event` for a list of implemented events.

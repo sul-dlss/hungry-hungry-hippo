@@ -6,6 +6,18 @@ class WorkRoundtripper
     new(...).call
   end
 
+  # Perform a test setup of a WorkRoundtripper for troubleshooting purposes only.
+  # @return [WorkRoundtripper] a new instance of WorkRoundtripper
+  def self.troubleshooting_factory(druid:, notify: false)
+    cocina_object = Sdr::Repository.find(druid:)
+    work = Work.find_by(druid:)
+    content = Contents::Builder.call(cocina_object:, user: work.user, work:)
+    doi_assigned = DoiAssignedService.call(cocina_object:, work:)
+    work_form = Form::WorkMapper.call(cocina_object:, doi_assigned:, agree_to_terms: true,
+                                      version_description: 'test', collection: work.collection)
+    new(work_form:, content:, cocina_object:, notify:)
+  end
+
   # @param [WorkForm] work_form
   # @param [Content] content
   # @param [Cocina::Models::DRO] cocina_object
@@ -34,10 +46,6 @@ class WorkRoundtripper
     false
   end
 
-  private
-
-  attr_reader :work_form, :content, :notify
-
   def roundtripped_cocina_object
     Cocina::WorkMapper.call(work_form:,
                             content:,
@@ -46,6 +54,12 @@ class WorkRoundtripper
 
   def normalized_original_cocina_object
     @normalized_original_cocina_object ||=
-      RoundtripSupport.normalize_cocina_object(cocina_object: @original_cocina_object)
+      RoundtripSupport.normalize_cocina_object(cocina_object: original_cocina_object)
   end
+
+  attr_reader :original_cocina_object
+
+  private
+
+  attr_reader :work_form, :content, :notify
 end
