@@ -127,7 +127,8 @@ class DepositWorkJob < ApplicationJob
   def accession_or_persist_complete(druid:)
     if accession?
       work.accession!
-      Sdr::Repository.accession(druid:, new_user_version: new_user_version?)
+      Sdr::Repository.accession(druid:, new_user_version: new_user_version?,
+                                version_description: work_form.whats_changing)
       # If a collection manager or reviewer has rejected a previous review, we need to approve the work again
       work.approve! if work.rejected_review?
       update_last_deposited_at!
