@@ -159,7 +159,7 @@ RSpec.describe 'Edit a collection' do
 
     find('label', text: 'Send email to Collection Managers and Reviewers ' \
                         '(see Workflow section of form) when participants are added/removed').click
-    find('label', text: 'Send email to Depositors whose status has changed.').click
+    find('label', text: 'Send email to Depositors who have been added or removed.').click
 
     # Clicking on Next to go to Workflow
     click_link_or_button('Next')

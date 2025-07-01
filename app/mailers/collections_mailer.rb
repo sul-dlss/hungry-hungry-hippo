@@ -6,6 +6,8 @@ class CollectionsMailer < ApplicationMailer
   before_action :set_user
 
   def invitation_to_deposit_email
+    return unless @collection.email_depositors_status_changed
+
     mail(to: @user.email_address,
          subject: "Invitation to deposit to the #{@collection.title} collection in the SDR")
   end

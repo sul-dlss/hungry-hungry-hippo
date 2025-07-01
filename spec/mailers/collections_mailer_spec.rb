@@ -4,21 +4,35 @@ require 'rails_helper'
 
 RSpec.describe CollectionsMailer do
   let(:user) { create(:user, name: 'Max Headroom', first_name: 'Maxwell') }
-  let(:collection) { create(:collection, :with_druid, title: '20 Minutes into the Future') }
+  let(:collection) do
+    create(:collection, :with_druid, title: '20 Minutes into the Future', email_depositors_status_changed:, managers:)
+  end
+  let(:email_depositors_status_changed) { true }
+  let(:managers) { [] }
 
   describe '#invitation_to_deposit_email' do
     let(:mail) { described_class.with(user:, collection:).invitation_to_deposit_email }
 
-    it 'renders the headers' do
-      expect(mail.subject).to eq 'Invitation to deposit to the 20 Minutes into the Future collection in the SDR'
-      expect(mail.to).to eq [user.email_address]
-      expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+    context 'when email depositor on status change is enabled' do
+      it 'renders the headers' do
+        expect(mail.subject).to eq 'Invitation to deposit to the 20 Minutes into the Future collection in the SDR'
+        expect(mail.to).to eq [user.email_address]
+        expect(mail.from).to eq ['no-reply@sdr.stanford.edu']
+      end
+
+      it 'renders the body with salutation of first name' do
+        expect(mail).to match_body('Dear Maxwell,')
+        expect(mail).to match_body('You have been invited to deposit to the 20 Minutes into the Future collection')
+        expect(mail).to match_body('Subscribe to the SDR newsletter')
+      end
     end
 
-    it 'renders the body with salutation of first name' do
-      expect(mail).to match_body('Dear Maxwell,')
-      expect(mail).to match_body('You have been invited to deposit to the 20 Minutes into the Future collection')
-      expect(mail).to match_body('Subscribe to the SDR newsletter')
+    context 'when email depositor on status change is disabled' do
+      let(:email_depositors_status_changed) { false }
+
+      it 'does not render an email' do
+        expect(mail.message).to be_a(ActionMailer::Base::NullMail)
+      end
     end
   end
 
@@ -27,12 +41,7 @@ RSpec.describe CollectionsMailer do
 
     context 'when email depositor on status change is enabled' do
       let(:manager) { create(:user) }
-      let(:collection) do
-        create(:collection,
-               title: '20 Minutes into the Future',
-               managers: [manager],
-               email_depositors_status_changed: true)
-      end
+      let(:managers) { [manager] }
 
       it 'renders the headers' do
         expect(mail.subject).to eq 'Your Depositor permissions for the 20 Minutes into the Future collection ' \
@@ -50,7 +59,7 @@ RSpec.describe CollectionsMailer do
     end
 
     context 'when email depositor on status change is disabled' do
-      let(:user) { collection.user }
+      let(:email_depositors_status_changed) { false }
 
       it 'does not render an email' do
         expect(mail.message).to be_a(ActionMailer::Base::NullMail)
