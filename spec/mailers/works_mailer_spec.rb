@@ -74,9 +74,9 @@ RSpec.describe WorksMailer do
   end
 
   describe '.ownership_changed_email' do
-    let(:mail) { described_class.with(work:, current_user: user).ownership_changed_email }
+    let(:mail) { described_class.with(work:, user:).ownership_changed_email }
     let(:user) { create(:user, first_name: 'Carter') }
-    let(:managers) { [user] }
+    let(:managers) { [] }
 
     it 'renders the headers' do
       expect(mail.subject).to eq 'Ownership of S1.E2: Rakers has been changed'

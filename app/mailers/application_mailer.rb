@@ -6,7 +6,7 @@ class ApplicationMailer < ActionMailer::Base
 
   def set_work
     @work = params[:work]
-    @user = @work.user
+    @user = params[:user] || @work.user
     @collection = @work.collection
   end
 

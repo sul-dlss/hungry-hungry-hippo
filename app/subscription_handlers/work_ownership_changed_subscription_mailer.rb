@@ -6,8 +6,8 @@ class WorkOwnershipChangedSubscriptionMailer
     new(...).call
   end
 
-  # @param [Work|Collection] object the work or collection that was accessioned
-  # @param [User] current_user the user who started the accessioning
+  # @param [Work] object the work that was changed
+  # @param [User] current_user the user who made the change
   def initialize(object:, current_user:)
     @object = object
     @current_user = current_user
@@ -16,7 +16,9 @@ class WorkOwnershipChangedSubscriptionMailer
   def call
     return unless object.is_a?(Work)
 
-    WorksMailer.with(work: object, current_user:).ownership_changed_email.deliver_later
+    [current_user, object.user].uniq.each do |user|
+      WorksMailer.with(work: object, user:).ownership_changed_email.deliver_later
+    end
   end
 
   private
