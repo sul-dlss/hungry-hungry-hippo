@@ -67,10 +67,11 @@ RSpec.describe Sdr::Repository do
 
     context 'when successful' do
       it 'closes the version' do
-        described_class.accession(druid:)
+        described_class.accession(druid:, version_description: 'Changed title')
 
         expect(Dor::Services::Client).to have_received(:object).with(druid)
-        expect(version_client).to have_received(:close).with(user_versions: 'update_if_existing', user_name:)
+        expect(version_client).to have_received(:close).with(user_versions: 'update_if_existing', user_name:,
+                                                             description: 'Changed title')
       end
     end
 
@@ -79,7 +80,7 @@ RSpec.describe Sdr::Repository do
         described_class.accession(druid:, new_user_version: true)
 
         expect(Dor::Services::Client).to have_received(:object).with(druid)
-        expect(version_client).to have_received(:close).with(user_versions: 'new', user_name:)
+        expect(version_client).to have_received(:close).with(user_versions: 'new', user_name:, description: nil)
       end
     end
 

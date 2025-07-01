@@ -56,7 +56,8 @@ RSpec.describe DepositWorkJob do
         expect(event.type).to eq 'deposit'
         expect(event.date.first.value).to eq Time.zone.today.iso8601
       end
-      expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: true)
+      expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: true,
+                                                                version_description: 'Initial version')
 
       expect(work.reload.accessioning?).to be true
       expect(work.pending_review?).to be false
@@ -120,7 +121,8 @@ RSpec.describe DepositWorkJob do
         .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true,
               user_name: current_user.sunetid)
       expect(Contents::Analyzer).to have_received(:call).with(content:)
-      expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: true)
+      expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: true,
+                                                                version_description: 'Initial version')
       expect(Sdr::Event).to have_received(:create).with(druid:, type: 'h3_globus_staged', data: {})
 
       expect(GlobusClient).to have_received(:rename)
@@ -205,7 +207,8 @@ RSpec.describe DepositWorkJob do
               end
       expect(Sdr::Repository).to have_received(:update)
         .with(cocina_object:, user_name: current_user.sunetid, description: nil)
-      expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: false)
+      expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: false,
+                                                                version_description: 'I am changing the title.')
     end
   end
 
@@ -235,7 +238,8 @@ RSpec.describe DepositWorkJob do
       expect(Sdr::Repository).to have_received(:open_if_needed)
       expect(Sdr::Repository).to have_received(:update)
         .with(cocina_object:, user_name: current_user.sunetid, description: 'Files changed')
-      expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: true)
+      expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: true,
+                                                                version_description: 'I am changing the title.')
     end
   end
 
@@ -302,7 +306,8 @@ RSpec.describe DepositWorkJob do
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
       expect(Sdr::Repository).not_to have_received(:open_if_needed)
       expect(Sdr::Repository).not_to have_received(:update)
-      expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: false)
+      expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: false,
+                                                                version_description: 'I am changing the title.')
 
       expect(work.reload.title).to eq(title_fixture)
 
