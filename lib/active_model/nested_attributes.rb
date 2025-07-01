@@ -36,7 +36,8 @@ module ActiveModel
         model.to_s.pluralize == model.to_s
       end
 
-      def define_attribute_types_for(model, repeatable) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+      def define_attribute_types_for(model, repeatable)
         return if const_defined?(model.to_s.classify.concat('Type'))
 
         # For a :related_links attr, define a custom RelatedLinksType to be used in the `attribute` call below
@@ -53,7 +54,8 @@ module ActiveModel
                 Array.wrap(attributes_hash_or_list.try(:values) || attributes_hash_or_list || {}).map do |attributes|
                   # This chain of operations converts nested attributes symbols to related form classes,
                   # e.g., :related_links => RelatedLinkForm
-                  form_class.new(**attributes)
+                  # attributes may already be a form class instance, e.g., when multiple layers of nested attributes.
+                  attributes.is_a?(Hash) ? form_class.new(**attributes) : attributes
                 end
               else
                 form_class.new(**(attributes_hash_or_list || {}))
@@ -62,6 +64,7 @@ module ActiveModel
           end
         )
       end
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
       def define_attributes_for(model, repeatable)
         type_class = model.to_s.classify.concat('Type')
