@@ -16,7 +16,7 @@ class CollectionPresenter < FormPresenter
   # @param [Symbol] role :managers or :depositors
   # @return [Array<String>] an array of formatted sunetids and names
   def participants(role)
-    collection.send(role).map { |participant| "#{participant.sunetid}: #{participant.name}" }
+    collection.send(role).map { |participant| "#{participant.name} (#{participant.sunetid})" }
   end
 
   def release

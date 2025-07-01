@@ -44,7 +44,7 @@ class WorkPresenter < FormPresenter
   end
 
   def depositor
-    user.name
+    "#{user.name} (#{user.sunetid})"
   end
 
   def keywords

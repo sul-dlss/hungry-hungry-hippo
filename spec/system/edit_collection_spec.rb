@@ -214,9 +214,9 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_content('3 years in the future')
 
     # Participants
-    expect(page).to have_content('stepking: Stephen King')
-    expect(page).to have_content('joehill: Joe Hill')
-    expect(page).to have_content('pennywise: Pennywise')
+    expect(page).to have_content('Stephen King (stepking)')
+    expect(page).to have_content('Joe Hill (joehill)')
+    expect(page).to have_content('Pennywise (pennywise)')
 
     # License
     expect(page).to have_css('th', text: 'License')
