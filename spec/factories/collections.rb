@@ -60,7 +60,7 @@ FactoryBot.define do
 
     trait :with_required_types do
       work_type { 'Image' }
-      work_subtypes { %w[CAD Map] }
+      work_subtypes { %w[Data Photograph] }
     end
 
     trait :with_required_contact_email do

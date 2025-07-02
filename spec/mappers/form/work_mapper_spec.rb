@@ -76,11 +76,11 @@ RSpec.describe Form::WorkMapper, type: :mapping do
                     type: 'type'
                   },
                   {
-                    value: 'CAD',
+                    value: 'Data',
                     type: 'subtype'
                   },
                   {
-                    value: 'Map',
+                    value: 'Photograph',
                     type: 'subtype'
                   },
                   {

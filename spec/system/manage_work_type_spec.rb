@@ -53,14 +53,14 @@ RSpec.describe 'Edit work type and subtypes for a work' do
       # Image
       choose('Image')
       expect(page).to have_text('Which of the following terms further describe your deposit?')
-      expect(page).to have_field('CAD', type: :checkbox)
+      expect(page).to have_field('Data', type: :checkbox)
       click_link_or_button('See more subtype options')
       expect(page).to have_field('3D model', type: :checkbox)
 
       # Sound
       choose('Sound')
       expect(page).to have_text('Which of the following terms further describe your deposit?')
-      expect(page).to have_field('Interview', type: :checkbox)
+      expect(page).to have_field('Podcast', type: :checkbox)
       click_link_or_button('See more subtype options')
       expect(page).to have_field('3D model', type: :checkbox)
 
@@ -143,14 +143,14 @@ RSpec.describe 'Edit work type and subtypes for a work' do
 
       expect(page).to have_text('What type of content are you depositing?')
       expect(page).to have_text('The collection manager has selected "Image" as the type for all deposits.')
-      expect(page).to have_text('The collection manager has selected "CAD" and "Map" as the subtypes')
-      expect(page).to have_no_field('Text', type: :radio)
+      expect(page).to have_text('The collection manager has selected "Data" and "Photograph" as the subtypes')
+      expect(page).to have_no_field('Photograph', type: :radio)
       expect(page).to have_no_field('Image', type: :radio)
       expect(page).to have_field('work[work_type]', type: :hidden, with: 'Image')
-      expect(page).to have_field('CAD', checked: true, disabled: true)
-      expect(page).to have_field('Map', checked: true, disabled: true)
-      expect(page).to have_field('work[work_subtypes][]', type: :hidden, with: 'CAD')
-      expect(page).to have_field('work[work_subtypes][]', type: :hidden, with: 'Map')
+      expect(page).to have_field('Data', checked: true, disabled: true)
+      expect(page).to have_field('Photograph', checked: true, disabled: true)
+      expect(page).to have_field('work[work_subtypes][]', type: :hidden, with: 'Data')
+      expect(page).to have_field('work[work_subtypes][]', type: :hidden, with: 'Photograph')
     end
   end
 end

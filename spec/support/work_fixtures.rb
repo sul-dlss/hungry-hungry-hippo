@@ -175,7 +175,7 @@ def work_type_fixture
 end
 
 def work_subtypes_fixture
-  %w[CAD Map]
+  %w[Data Photograph]
 end
 
 def contributors_fixture
