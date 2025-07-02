@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 # See https://github.com/sul-dlss/hungry-hungry-hippo/issues/1334
-ETD_SUPPLEMENTS = [
+NO_MIGRATE_WORKS = [
+  # ETD supplements
   'druid:yy758rc6782',
   'druid:kw169cw9976',
   'druid:pv863tb2293',
@@ -12,7 +13,15 @@ ETD_SUPPLEMENTS = [
   'druid:bc883gb2542',
   'druid:vx261tg2712',
   'druid:bd057km5719',
-  'druid:gh030zr1151'
+  'druid:gh030zr1151',
+  # Not migrating
+  'druid:kk645gv9631',
+  'druid:ds987hd4949',
+  'druid:cp878rg4412',
+  # Migrating later
+  'druid:cj061qr5050',
+  'druid:qj212cd3182',
+  'druid:xm245qf7686'
 ].freeze
 
 NO_MIGRATE_COLLECTIONS = [
@@ -37,7 +46,17 @@ NO_MIGRATE_COLLECTIONS = [
   # Already migrated to H3
   'druid:db160pg5444',
   # Not migrating
-  'druid:sy932cg0335'
+  'druid:sy932cg0335',
+  'druid:dn308bq6123',
+  'druid:bp706gv3936',
+  'druid:gs929fm2035',
+  'druid:kr447bp6667',
+  'druid:qz055ds3870',
+  # Migrating later
+  'druid:rr255gf6892',
+  'druid:gs860rq5377',
+  'druid:ty986nn2846',
+  'druid:fh113fq5916'
 ].freeze
 
 # These collections will be imported, but will not be editable.
@@ -91,7 +110,7 @@ namespace :import do
       druid = work_hash['druid']
       next if druid.blank?
 
-      next if ETD_SUPPLEMENTS.include?(druid)
+      next if NO_MIGRATE_WORKS.include?(druid)
       next if NO_MIGRATE_COLLECTIONS.include?(work_hash.dig('collection', 'druid'))
 
       cocina_object = if Rails.env.development?
@@ -138,7 +157,7 @@ namespace :import do
       # File.foreach(args[:cocina_filename] || 'works_cocina.jsonl').with_index do |line, index|
       cocina_object = Cocina::Models.with_metadata(Cocina::Models.build(JSON.parse(line)), 'fakelock')
 
-      next if ETD_SUPPLEMENTS.include?(cocina_object.externalIdentifier)
+      next if NO_MIGRATE_WORKS.include?(cocina_object.externalIdentifier)
 
       collection_druid = Cocina::Parser.collection_druid_for(cocina_object:)
       next if NO_MIGRATE_COLLECTIONS.include?(collection_druid)
