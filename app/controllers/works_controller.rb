@@ -288,13 +288,17 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   def handle_no_changes_or_invalid
     if @valid
       handle_no_changes
-    elsif @work_form.errors.one? && @work_form.errors.first.attribute == :whats_changing
+    elsif invalid_for_whats_changing_only? && (deposit? || request_review?)
       @work_form = WorkForm.new(**update_work_params)
       @valid = true
       handle_no_changes
     else
       handle_invalid
     end
+  end
+
+  def invalid_for_whats_changing_only?
+    @work_form.errors.one? && @work_form.errors.first.attribute == :whats_changing
   end
 
   def handle_no_changes
