@@ -35,6 +35,7 @@ class WorkImporter
       work.version = Cocina::Parser.version_for(cocina_object:)
       work.collection = collection
       work.last_deposited_at = work_hash['head']['published_at']
+      work.created_at = work_hash['created_at']
     end
   end
   # rubocop:enable Metrics/AbcSize
