@@ -60,6 +60,7 @@ gem 'kaminari' # For pagination
 gem 'kicks' # Background processing of rabbitMQ messages. (Formerly sneakers.)
 gem 'marcel' # For MIME type detection
 gem 'okcomputer'
+gem 'parallel' # Used for importing. Can be removed when importing is done.
 gem 'preservation-client'
 gem 'rack-sanitizer'
 gem 'state_machines-activerecord'
@@ -87,7 +88,6 @@ end
 group :development do
   gem 'hotwire-spark'
   gem 'overmind'
-  gem 'parallel' # Used for importing. Can be removed when importing is done.
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 end
