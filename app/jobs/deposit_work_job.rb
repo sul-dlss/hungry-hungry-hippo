@@ -17,7 +17,7 @@ class DepositWorkJob < ApplicationJob
     # Setting current user so that it will be available for notifications.
     Current.user = current_user
 
-    update_globus_content if globus?
+    remove_globus_permissions if globus?
 
     # Add missing digests and mime types
     Contents::Analyzer.call(content:)
@@ -148,44 +148,14 @@ class DepositWorkJob < ApplicationJob
     UserVersionChangeService.call(original_cocina_object:, new_cocina_object: mapped_cocina_object)
   end
 
-  def update_globus_content
-    rename_globus_path if !work_form.persisted? && new_globus_path_exists? && !work_globus_path_exists?
-    remove_globus_permissions
-  rescue GlobusClient::AccessRuleNotFound
-    # This exception normally occurs and should be ignored per https://github.com/sul-dlss/hungry-hungry-hippo/pull/1331/files#r2120804945
-  end
-
-  def new_globus_path_exists?
-    GlobusClient.exists?(
-      user_id: user.email_address,
-      notify_email: false,
-      path: GlobusSupport.user_path(user: Current.user, with_uploads_directory: true)
-    )
-  end
-
-  def work_globus_path_exists?
-    GlobusClient.exists?(
-      user_id: user.email_address,
-      notify_email: false,
-      path: GlobusSupport.work_path(work:)
-    )
-  end
-
-  def rename_globus_path
-    GlobusClient.rename(
-      new_path: GlobusSupport.work_path(work:, with_uploads_directory: true),
-      user_id: user.email_address,
-      notify_email: false,
-      path: GlobusSupport.user_path(user: Current.user, with_uploads_directory: true)
-    )
-  end
-
   def remove_globus_permissions
     GlobusClient.delete_access_rule(
       user_id: user.email_address,
       notify_email: false,
       path: GlobusSupport.work_path(work:)
     )
+  rescue GlobusClient::AccessRuleNotFound
+    # This exception normally occurs and should be ignored per https://github.com/sul-dlss/hungry-hungry-hippo/pull/1331/files#r2120804945
   end
 
   def perform_stage(druid:)

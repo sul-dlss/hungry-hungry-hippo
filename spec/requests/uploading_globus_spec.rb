@@ -25,28 +25,13 @@ RSpec.describe 'Uploading globus' do
       sign_in(user)
     end
 
-    context 'when a new work' do
-      let(:work) { nil }
+    it 'renders' do
+      get "/contents/#{content.id}/globuses/uploading"
 
-      it 'renders' do
-        get "/contents/#{content.id}/globuses/uploading"
-
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include('<turbo-frame id="globus"')
-        expect(response.body).to include('Globus file transfer complete')
-        expect(response.body).to include("destination_path=/uploads/#{user.sunetid}/new")
-      end
-    end
-
-    context 'when an existing work' do
-      it 'renders' do
-        get "/contents/#{content.id}/globuses/uploading"
-
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include('<turbo-frame id="globus"')
-        expect(response.body).to include('Globus file transfer complete')
-        expect(response.body).to include("destination_path=/uploads/work-#{work.id}")
-      end
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('<turbo-frame id="globus"')
+      expect(response.body).to include('Globus file transfer complete')
+      expect(response.body).to include("destination_path=/uploads/work-#{work.id}")
     end
   end
 end

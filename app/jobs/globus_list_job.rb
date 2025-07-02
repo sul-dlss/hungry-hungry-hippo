@@ -43,9 +43,7 @@ class GlobusListJob < ApplicationJob
   end
 
   def globus_path
-    return GlobusSupport.work_path(work:) if work.present?
-
-    GlobusSupport.user_path(user:)
+    GlobusSupport.work_path(work:)
   end
 
   def perform_broadcast
