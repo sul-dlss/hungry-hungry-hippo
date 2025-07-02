@@ -85,7 +85,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       perform_deposit(work: @work)
       redirect_to wait_works_path(@work.id)
     else
-      @valid ? handle_no_changes : handle_invalid
+      handle_no_changes_or_invalid
       set_license_presenter
       set_presenter
       render :form, status: :unprocessable_entity
@@ -283,6 +283,18 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   def add_max_release_date
     # This is to account for when the collection release date is shortened.
     @work_form.max_release_date = [@collection.max_release_date, @work_form.release_date].compact.max
+  end
+
+  def handle_no_changes_or_invalid
+    if @valid
+      handle_no_changes
+    elsif @work_form.errors.one? && @work_form.errors.first.attribute == :whats_changing
+      @work_form = WorkForm.new(**update_work_params)
+      @valid = true
+      handle_no_changes
+    else
+      handle_invalid
+    end
   end
 
   def handle_no_changes

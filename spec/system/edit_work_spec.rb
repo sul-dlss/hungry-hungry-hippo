@@ -270,11 +270,11 @@ RSpec.describe 'Edit a work' do
       expect(page).to have_css('h1', text: title_fixture)
 
       find('.nav-link', text: 'Deposit', exact_text: true).click
-      fill_in('What\'s changing?', with: 'Nothing')
       find('.btn-primary', text: 'Deposit', exact_text: true).click
 
       expect(page).to have_current_path(edit_work_path(druid))
       expect(page).to have_css('.alert-warning', text: 'You have not made any changes to the form.')
+      expect(page).to have_no_text('Required fields have not been filled out.')
       expect(page).to have_css('.nav-link.active', text: 'Deposit', exact_text: true)
 
       # Ahoy event is created
