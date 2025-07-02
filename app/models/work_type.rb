@@ -11,24 +11,26 @@ class WorkType
   OTHER = 'Other'
 
   DATA_TYPES = [
-    '3D model', 'Database', 'Documentation', 'Geospatial data', 'Image',
-    'Tabular data', 'Text corpus'
+    '3D model', 'Code', 'Database', 'Documentation', 'Geospatial data',
+    'Image', 'Tabular data'
   ].freeze
 
   VIDEO_TYPES = [
-    'Conference session', 'Documentary', 'Event', 'Oral history', 'Performance'
+    'Conference session', 'Event', 'Performance', 'Presentation recording',
+    'Unedited recording', 'Speech'
   ].freeze
 
-  SOUND_TYPES = ['Interview', 'Oral history', 'Podcast', 'Speech'].freeze
+  SOUND_TYPES = %w[Podcast Text Transcript].freeze
 
   TEXT_TYPES = [
-    'Article', 'Capstone', 'Government document', 'Policy brief', 'Preprint', 'Report',
-    'Technical report', 'Thesis', 'Working paper'
+    'Article', 'Capstone', 'Documentation', 'Essay', 'Government document',
+    'Journal/periodical issue', 'Preprint', 'Report', 'Technical report',
+    'Thesis', 'Working paper'
   ].freeze
 
-  SOFTWARE_TYPES = %w[Code Documentation Game].freeze
+  SOFTWARE_TYPES = %w[Code Data Documentation].freeze
 
-  IMAGE_TYPES = ['CAD', 'Map', 'Photograph', 'Poster', 'Presentation slides'].freeze
+  IMAGE_TYPES = ['Data', 'Photograph', 'Poster', 'Presentation slides', 'Text'].freeze
 
   MUSIC_TYPES = [
     'Data',

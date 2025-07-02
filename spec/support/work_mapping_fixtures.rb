@@ -159,11 +159,11 @@ module WorkMappingFixtures
             type: 'type'
           },
           {
-            value: 'CAD',
+            value: 'Data',
             type: 'subtype'
           },
           {
-            value: 'Map',
+            value: 'Photograph',
             type: 'subtype'
           }
         ],
@@ -173,17 +173,24 @@ module WorkMappingFixtures
         }
       },
       {
-        value: 'Computer-aided designs',
+        value: 'Data sets',
         type: 'genre',
-        uri: 'http://id.loc.gov/vocabulary/graphicMaterials/tgm002405',
+        uri: 'http://id.loc.gov/authorities/genreForms/gf2018026119',
         source: {
-          code: 'lctgm'
+          code: 'lcgft'
         }
       },
       {
-        value: 'Maps',
+        value: 'dataset',
         type: 'genre',
-        uri: 'http://id.loc.gov/authorities/genreForms/gf2011026387',
+        source: {
+          code: 'local'
+        }
+      },
+      {
+        value: 'Photographs',
+        type: 'genre',
+        uri: 'http://id.loc.gov/authorities/genreForms/gf2017027249',
         source: {
           code: 'lcgft'
         }
@@ -196,10 +203,11 @@ module WorkMappingFixtures
         }
       },
       {
-        value: 'cartographic',
+        value: 'Dataset',
         type: 'resource type',
+        uri: 'http://id.loc.gov/vocabulary/resourceTypes/dat',
         source: {
-          value: 'MODS resource types'
+          uri: 'http://id.loc.gov/vocabulary/resourceTypes/'
         }
       },
       {

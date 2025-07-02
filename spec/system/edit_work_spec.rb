@@ -170,7 +170,7 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_content(citation_fixture)
     expect(page).to have_content('Immediately')
     expect(page).to have_css('td', exact_text: 'Image')
-    expect(page).to have_css('td', exact_text: 'CAD, Map')
+    expect(page).to have_css('td', exact_text: 'Data, Photograph')
     expect(page).to have_css('.status', text: 'New version in draft')
     expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
 

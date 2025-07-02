@@ -176,10 +176,10 @@ RSpec.describe 'Edit a collection' do
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Type of deposit (optional)')
     expect(page).to have_field('Image', checked: true)
-    expect(page).to have_field('CAD', checked: true)
-    expect(page).to have_field('Map', checked: true)
+    expect(page).to have_field('Data', checked: true)
+    expect(page).to have_field('Photograph', checked: true)
     choose('No required work type')
-    expect(page).to have_no_field('CAD')
+    expect(page).to have_no_field('Photograph')
 
     # Clicking on Next to go to works contact email tab
     click_link_or_button('Next')
@@ -205,7 +205,7 @@ RSpec.describe 'Edit a collection' do
 
     # Work types
     expect(page).to have_no_text('Image')
-    expect(page).to have_no_text('CAD')
+    expect(page).to have_no_text('Data')
 
     # Has contact email for deposits
     expect(page).to have_no_text(works_contact_email_fixture)
