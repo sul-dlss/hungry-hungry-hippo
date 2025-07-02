@@ -15,7 +15,7 @@ RSpec.describe 'Show a collection' do
            :with_required_contact_email, works_count: 3, reviewers_count: 2, druid:, title: collection_title_fixture,
                                          contributors: [contributor], managers: [manager], depositors: [depositor])
   end
-  let(:works) { collection.works.order(:title) }
+  let(:works) { collection.works.order(:id) }
 
   let(:cocina_object) { collection_with_metadata_fixture }
   let(:version_status) { build(:openable_version_status) }
