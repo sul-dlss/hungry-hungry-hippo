@@ -22,6 +22,8 @@ RSpec.describe CollectionImporter do
       email_when_participants_changed: true,
       email_depositors_status_changed: false,
       review_enabled: true,
+      created_at: '2021-06-01T00:04:31.604Z',
+      updated_at: '2023-09-20T21:14:40.429Z',
       creator: {
         id: 932,
         email: 'larry@stanford.edu',
@@ -118,6 +120,7 @@ RSpec.describe CollectionImporter do
       expect(collection.depositors.first.email_address).to eq('moe.howard@stanford.edu')
       expect(collection.reviewers.first.email_address).to eq('shemp@stanford.edu')
       expect(collection.managers.first.email_address).to eq('therealcurly@stanford.edu')
+      expect(collection.created_at).to eq('2021-06-01T00:04:31.604Z')
 
       expect(tags_client).to have_received(:create).with(tags: ['Project : H3'])
     end

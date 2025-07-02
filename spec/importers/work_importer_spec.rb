@@ -98,6 +98,7 @@ RSpec.describe WorkImporter do
       expect(work.version).to eq(2) # NOTE: this comes from cocina, not the work_version from H2
       expect(work.last_deposited_at.class).to be ActiveSupport::TimeWithZone
       expect(work.last_deposited_at).to eq('2023-09-28T19:17:49.092Z')
+      expect(work.created_at).to eq('2021-06-01T00:04:31.604Z')
 
       expect(tags_client).to have_received(:create).with(tags: ['Project : H3'])
     end

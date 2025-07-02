@@ -47,6 +47,7 @@ class CollectionImporter
       collection.depositors = users_from('depositors')
       collection.reviewers = users_from('reviewed_by')
       collection.managers = users_from('managed_by')
+      collection.created_at = collection_hash['created_at']
     end
   end
 
