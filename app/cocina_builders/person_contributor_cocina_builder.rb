@@ -51,12 +51,18 @@ class PersonContributorCocinaBuilder
 
   def build_affiliations
     affiliations.map do |affiliation|
-      ContributorAffiliationCocinaBuilder.call(
-        department: affiliation.department,
-        institution: affiliation.institution,
-        uri: affiliation.uri
-      )
+      ContributorAffiliationCocinaBuilder.call(**affiliation_params(affiliation))
     end
+  end
+
+  def affiliation_params(affiliation)
+    return affiliation if affiliation.is_a?(Hash)
+
+    {
+      department: affiliation.department,
+      institution: affiliation.institution,
+      uri: affiliation.uri
+    }
   end
 
   def identifier_params

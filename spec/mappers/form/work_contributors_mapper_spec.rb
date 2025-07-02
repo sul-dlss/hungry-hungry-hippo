@@ -52,7 +52,7 @@ RSpec.describe Form::WorkContributorsMapper do
     end
   end
 
-    context 'when a person with an affiliation' do
+  context 'when a person with an affiliation' do
     let(:cocina_contributor_params) do
       {
         name: [
