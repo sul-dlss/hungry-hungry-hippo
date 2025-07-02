@@ -23,19 +23,16 @@ RSpec.describe Form::CollectionMapper, type: :mapping do
   let(:review_enabled) { false }
   let(:email_when_participants_changed) { true }
   let(:email_depositors_status_changed) { true }
-  let(:person_contributor) do
-    create(:person_contributor, first_name: 'Jane', last_name: 'Stanford', orcid: '0001-0002-0003-0004')
-  end
   let(:contributors) do
     [
-      person_contributor,
+      create(:person_contributor,
+             :with_affiliation,
+             first_name: 'Jane',
+             last_name: 'Stanford',
+             orcid: '0001-0002-0003-0004'),
       create(:organization_contributor, organization_name: 'Stanford University Libraries', role: 'host_institution'),
       create(:organization_contributor, :stanford)
     ]
-  end
-
-  before do
-    create(:affiliation, contributor: person_contributor)
   end
 
   it 'maps to collection form' do

@@ -4,11 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Form::ContributorMapper do
   context 'when a person' do
-    let(:contributor) { create(:person_contributor) }
-
-    before do
-      create(:affiliation, contributor:)
-    end
+    let(:contributor) { create(:person_contributor, :with_affiliation) }
 
     it 'maps to attributes' do
       expect(described_class.call(contributor:)).to eq(
