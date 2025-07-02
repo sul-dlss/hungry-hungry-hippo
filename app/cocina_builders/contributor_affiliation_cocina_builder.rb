@@ -6,7 +6,7 @@ class ContributorAffiliationCocinaBuilder
     new(...).call
   end
 
-  def initialize(department:, institution:, uri:)
+  def initialize(institution:, uri:, department: nil)
     @department = department
     @institution = institution
     @uri = uri
@@ -15,13 +15,13 @@ class ContributorAffiliationCocinaBuilder
   attr_reader :department, :institution, :uri
 
   def call
-    {}.tap do |affiliation|
-      affiliation[:type] = 'affiliation'
-      affiliation[:structuredValue] = [
+    {
+      type: 'affiliation',
+      structuredValue: [
         generate_descriptive_value,
-        { value: department }
-      ].compact_blank
-    end
+        ({ value: department } if department.present?)
+      ].compact
+    }
   end
 
   def generate_descriptive_value

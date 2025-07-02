@@ -34,37 +34,72 @@ RSpec.describe PersonContributorCocinaBuilder do
   end
 
   context 'when affiliations are present' do
-    let(:affiliations) do
-      [
-        AffiliationForm.new(
-          institution: 'Stanford University',
-          uri: 'https://ror.org/01abcd',
-          department: 'Department of History'
-        )
-      ]
+    context 'when a department is present' do
+      let(:affiliations) do
+        [
+          AffiliationForm.new(
+            institution: 'Stanford University',
+            uri: 'https://ror.org/01abcd',
+            department: 'Department of History'
+          )
+        ]
+      end
+
+      it 'includes affiliations in the note' do
+        expected_note = [
+          {
+            type: 'affiliation',
+            structuredValue: [
+              {
+                value: 'Stanford University',
+                identifier: [
+                  {
+                    uri: 'https://ror.org/01abcd',
+                    type: 'ROR',
+                    source: { code: 'ror' }
+                  }
+                ]
+              },
+              { value: 'Department of History' }
+            ]
+          }
+        ]
+
+        expect(contributor_params[:note]).to eq(expected_note)
+      end
     end
 
-    it 'includes affiliations in the note' do
-      expected_note = [
-        {
-          type: 'affiliation',
-          structuredValue: [
-            {
-              value: 'Stanford University',
-              identifier: [
-                {
-                  uri: 'https://ror.org/01abcd',
-                  type: 'ROR',
-                  source: { code: 'ror' }
-                }
-              ]
-            },
-            { value: 'Department of History' }
-          ]
-        }
-      ]
+    context 'when a department is not present' do
+      let(:affiliations) do
+        [
+          AffiliationForm.new(
+            institution: 'Stanford University',
+            uri: 'https://ror.org/01abcd'
+          )
+        ]
+      end
 
-      expect(contributor_params[:note]).to eq(expected_note)
+      it 'includes affiliations in the note' do
+        expected_note = [
+          {
+            type: 'affiliation',
+            structuredValue: [
+              {
+                value: 'Stanford University',
+                identifier: [
+                  {
+                    uri: 'https://ror.org/01abcd',
+                    type: 'ROR',
+                    source: { code: 'ror' }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+
+        expect(contributor_params[:note]).to eq(expected_note)
+      end
     end
   end
 end
