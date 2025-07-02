@@ -119,7 +119,8 @@ RSpec.describe CollectionsMailer do
         create(:collection,
                title: '20 Minutes into the Future',
                managers: [manager],
-               email_when_participants_changed: true)
+               email_when_participants_changed: true,
+               version: 2) # Ensure it's not a first version
       end
       let(:mail) { described_class.with(user:, collection:).participants_changed_email }
       let(:manager) { create(:user) }
@@ -135,6 +136,20 @@ RSpec.describe CollectionsMailer do
         expect(mail).to match_body("Dear #{manager.first_name},")
         expect(mail).to match_body('Members have been either added to or removed from the ' \
                                    '20 Minutes into the Future collection.')
+      end
+
+      context 'when adding participants while setting up a new collection' do
+        let(:collection) do
+          create(:collection,
+                 title: '20 Minutes into the Future',
+                 managers: [manager],
+                 email_when_participants_changed: true,
+                 version: 1)
+        end
+
+        it 'does not render an email' do
+          expect(mail.message).to be_a(ActionMailer::Base::NullMail)
+        end
       end
     end
 

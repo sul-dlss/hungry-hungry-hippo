@@ -35,6 +35,9 @@ class CollectionsMailer < ApplicationMailer
   def participants_changed_email
     return unless @collection.email_when_participants_changed
 
+    # if the collection is a first_version, don't send emails
+    return if @collection.first_version?
+
     (@collection.managers + @collection.reviewers).uniq.each do |user|
       @user = user
       mail(to: @user.email_address, subject: "Participant changes for the #{@collection.title} collection in the SDR")
