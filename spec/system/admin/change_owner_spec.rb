@@ -50,6 +50,6 @@ RSpec.describe 'Change work ownership' do
     # On show page
     expect(page).to have_css('h1', text: title_fixture)
     expect(page).to have_css('.alert', text: "Ownership of the work has been changed to #{new_owner.name}. " \
-                                             'The new owner and mangers will be notified of the change.')
+                                             'The new owner will be notified of the change.')
   end
 end
