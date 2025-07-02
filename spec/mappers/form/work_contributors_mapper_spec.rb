@@ -10,7 +10,49 @@ RSpec.describe Form::WorkContributorsMapper do
     dro.new(description: dro.description.new(contributor: [cocina_contributor_params]))
   end
 
-  context 'when a person' do
+  context 'when a person without an affiliation' do
+    let(:cocina_contributor_params) do
+      {
+        name: [
+          {
+            structuredValue: [
+              { value: 'Jane', type: 'forename' },
+              { value: 'Stanford', type: 'surname' }
+            ]
+          }
+        ],
+        type: 'person',
+        status: 'primary',
+        identifier: [
+          {
+            type: 'ORCID',
+            value: '0000-0000-0000-0000',
+            source: {
+              uri: 'https://orcid.org'
+            }
+          }
+        ]
+      }
+    end
+
+    it 'maps to contributor params' do
+      expect(contributor_params).to eq([
+                                         'first_name' => 'Jane',
+                                         'last_name' => 'Stanford',
+                                         'role_type' => 'person',
+                                         'person_role' => nil,
+                                         'organization_role' => nil,
+                                         'organization_name' => nil,
+                                         'suborganization_name' => nil,
+                                         'stanford_degree_granting_institution' => false,
+                                         'orcid' => '0000-0000-0000-0000',
+                                         'with_orcid' => true,
+                                         'affiliations_attributes' => []
+                                       ])
+    end
+  end
+
+    context 'when a person with an affiliation' do
     let(:cocina_contributor_params) do
       {
         name: [
@@ -70,6 +112,70 @@ RSpec.describe Form::WorkContributorsMapper do
                                              'institution' => 'Stanford University',
                                              'uri' => 'https://ror.org/01abcd',
                                              'department' => 'Department of History'
+                                           }
+                                         ]
+                                       ])
+    end
+  end
+
+  context 'when a persons affiliation does not include department' do
+    let(:cocina_contributor_params) do
+      {
+        name: [
+          {
+            structuredValue: [
+              { value: 'Jane', type: 'forename' },
+              { value: 'Stanford', type: 'surname' }
+            ]
+          }
+        ],
+        type: 'person',
+        status: 'primary',
+        identifier: [
+          {
+            type: 'ORCID',
+            value: '0000-0000-0000-0000',
+            source: {
+              uri: 'https://orcid.org'
+            }
+          }
+        ],
+        note: [
+          {
+            type: 'affiliation',
+            structuredValue: [
+              {
+                value: 'Stanford University',
+                identifier: [
+                  {
+                    type: 'ROR',
+                    uri: 'https://ror.org/01abcd',
+                    source: { code: 'ror' }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    end
+
+    it 'maps to contributor params' do
+      expect(contributor_params).to eq([
+                                         'first_name' => 'Jane',
+                                         'last_name' => 'Stanford',
+                                         'role_type' => 'person',
+                                         'person_role' => nil,
+                                         'organization_role' => nil,
+                                         'organization_name' => nil,
+                                         'suborganization_name' => nil,
+                                         'stanford_degree_granting_institution' => false,
+                                         'orcid' => '0000-0000-0000-0000',
+                                         'with_orcid' => true,
+                                         'affiliations_attributes' => [
+                                           {
+                                             'institution' => 'Stanford University',
+                                             'uri' => 'https://ror.org/01abcd'
                                            }
                                          ]
                                        ])
