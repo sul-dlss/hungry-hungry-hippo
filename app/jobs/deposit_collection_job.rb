@@ -190,7 +190,7 @@ class DepositCollectionJob < ApplicationJob
     attr_reader :collection_form, :collection
 
     def changed?(*fields)
-      fields.any? { |field| collection_form.send(field) != collection.send(field) }
+      fields.any? { |field| collection_form.send(field).presence != collection.send(field).presence }
     end
 
     def added_depositors
