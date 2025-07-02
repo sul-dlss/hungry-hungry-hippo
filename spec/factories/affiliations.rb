@@ -4,6 +4,9 @@ FactoryBot.define do
   factory :affiliation, class: 'Affiliation' do
     institution { 'Stanford University' }
     uri { 'https://ror.org/01abcd' }
-    department { 'Department of History' }
+
+    trait :with_department do
+      department { 'Department of History' }
+    end
   end
 end
