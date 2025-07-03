@@ -4,10 +4,6 @@ import { Controller } from '@hotwired/stimulus'
 export default class extends Controller {
   static targets = ['other']
 
-  connect () {
-    console.debug('DisableOtherController connected', this.otherTargets)
-  }
-
   disable (event) {
     this.otherTargets.forEach((target) => {
       if (target !== event.target) {
