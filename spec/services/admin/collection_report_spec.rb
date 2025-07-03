@@ -45,7 +45,6 @@ RSpec.describe Admin::CollectionReport do
     end
 
     context 'when the collection has works' do
-      # let(:collection_with_works) { create(:collection, druid: druid2) }
       let(:cocina_object) { dro_with_metadata_fixture }
       let(:version_status) { build(:draft_version_status) }
       let(:object_client) { instance_double(Dor::Services::Client::Object, find: cocina_object) }
@@ -134,6 +133,27 @@ RSpec.describe Admin::CollectionReport do
 
       it 'does not include collections modified after the start date' do
         expect(csv_data['collection druid']).to eq([druid2])
+      end
+    end
+
+    context 'when a work druid is not found in SDR' do
+      let(:work_druid) { druid_fixture }
+
+      before do
+        create(:work, druid: work_druid, collection:)
+        allow(Sdr::Repository).to receive(:status).with(druid: work_druid).and_raise(Sdr::Repository::NotFoundResponse)
+        allow(Honeybadger).to receive(:notify)
+      end
+
+      it 'returns a csv without the work and notifies' do
+        expect(csv_data['collection druid']).to eq([collection.druid])
+        expect(csv_data['collection title']).to eq(['My Collection'])
+        expect(Honeybadger).to have_received(:notify)
+          .with('Error looking up work in SDR. This may be a draft work that was purged via Argo.',
+                { context:
+                   { collection_druid: 'druid:cc234dd5678',
+                     exception: Sdr::Repository::NotFoundResponse,
+                     work_druid: druid_fixture } })
       end
     end
   end

@@ -27,6 +27,8 @@ module Admin
 
         works.find_each do |work|
           work_row = WorkRow.new(work:)
+          # skip if there was an error looking up the work in SDR
+          next if work_row.to_row.blank?
           next unless select_by_states?(work_row:)
 
           csv << work_row.to_row
@@ -173,6 +175,13 @@ module Admin
           work.collection_id,
           work.collection.druid
         ]
+      rescue Sdr::Repository::NotFoundResponse => e
+        Honeybadger.notify('Error looking up work in SDR. This may be a draft work that was purged via Argo.',
+                           context: {
+                             druid:,
+                             exception: e
+                           })
+        nil
       end
 
       def cleanup!

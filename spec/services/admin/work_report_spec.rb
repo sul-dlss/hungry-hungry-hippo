@@ -338,5 +338,26 @@ RSpec.describe Admin::WorkReport do
         expect(csv).not_to include(doi_fixture)
       end
     end
+
+    context 'when work is not found in SDR' do
+      before do
+        create(:work, druid: druid2)
+        allow(Sdr::Repository).to receive(:find).with(druid: druid2).and_raise(Sdr::Repository::NotFoundResponse)
+        allow(Honeybadger).to receive(:notify)
+      end
+
+      it 'returns a csv without the missing work' do
+        expect(csv).to include(druid)
+        expect(csv).not_to include(druid2)
+        expect(csv).to include('Test Work')
+        expect(csv).not_to include('Another Work')
+        expect(Honeybadger).to have_received(:notify)
+          .with('Error looking up work in SDR. This may be a draft work that was purged via Argo.',
+                context: {
+                  druid: druid2,
+                  exception: Sdr::Repository::NotFoundResponse
+                })
+      end
+    end
   end
 end
