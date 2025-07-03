@@ -72,6 +72,21 @@ RSpec.describe ContributorForm do
       end
     end
 
+    context 'when an invalid author affiliation is provided' do
+      let(:affiliations_attributes) do
+        [
+          {
+            institution: 'Stanford University',
+            department: 'Department of History'
+          }
+        ]
+      end
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+      end
+    end
+
     context 'when missing first name' do
       let(:first_name) { '' }
       let(:last_name) { 'Stanford' }

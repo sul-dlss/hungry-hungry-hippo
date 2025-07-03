@@ -225,25 +225,6 @@ def contributors_fixture
   ]
 end
 
-def person_contributor_no_affiliations_fixture
-  [
-    {
-      'role_type' => 'person',
-      'person_role' => 'author',
-      'organization_role' => nil,
-      'first_name' => 'Jane',
-      'last_name' => 'Stanford',
-      'with_orcid' => true,
-      'orcid' => '0001-0002-0003-0004',
-      'organization_name' => nil,
-      'stanford_degree_granting_institution' => false,
-      'suborganization_name' => nil,
-      'collection_required' => false,
-      'affiliations_attributes' => []
-    }
-  ]
-end
-
 def affiliation_fixture
   {
     'institution' => 'Stanford University',

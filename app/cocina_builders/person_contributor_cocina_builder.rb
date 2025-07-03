@@ -11,6 +11,7 @@ class PersonContributorCocinaBuilder
   # @param role [String] the role of the person from ROLES
   # @param primary [Boolean] whether this is the first contributor
   # @param orcid [String] the ORCID of the person
+  # @param affiliations [Array<Hash>] the affiliations of the person (:institution, :uri, :department (optional))
   def initialize(surname:, forename:, role:, primary: false, orcid: nil, affiliations: []) # rubocop:disable Metrics/ParameterLists
     @surname = surname
     @forename = forename
@@ -34,7 +35,7 @@ class PersonContributorCocinaBuilder
       role: role_params,
       identifier: identifier_params,
       status: ('primary' if primary),
-      note: (build_affiliations unless affiliations.empty?)
+      note: note_params
     }.compact
   end
 
@@ -49,7 +50,9 @@ class PersonContributorCocinaBuilder
     [cocina_role]
   end
 
-  def build_affiliations
+  def note_params
+    return if affiliations.empty?
+
     affiliations.map do |affiliation|
       ContributorAffiliationCocinaBuilder.call(**affiliation_params(affiliation))
     end
