@@ -330,10 +330,10 @@ en:
         globus_notice_html: "* If you have more than 10GB but less than 4TB and fewer than 25,000 files, you can use Globus to upload your files. For anything larger, <a href=\"mailto:%{support_email}\">contact us</a>."
         globus_replace_files_confirm: >-
           Once your Globus file transfer is complete, the files on Globus will replace the files currently in the deposit.
-          
-          
+
+
           Are you sure you want to proceed?
-        globus_instructions_html: "<a href=\"%{instructions_link}\">Instructions to set up Globus</a>&nbsp;(may require software installation)"
+        globus_instructions: Instructions for using Globus with SDR
       panes:
         abstract:
           tab_label: 'Abstract and keywords'
