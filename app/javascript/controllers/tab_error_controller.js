@@ -12,24 +12,6 @@ export default class extends Controller {
       const paneElement = this.paneTargets[index]
       const invalidElements = paneElement.querySelectorAll('.is-invalid')
       if (invalidElements.length > 0) {
-        invalidElements.forEach(invalidElement => {
-          invalidElement.addEventListener('change', event => {
-            // Mark the invalid target that was changed as no longer invalid, *and* mark any other invalid field
-            // with the same ID as no longer invalid. We think this is both harmless and it marks as valid the
-            // first name and last name fields in the contributor form, which are duplicated due to their being
-            // names in both the ORCID section and the non-ORCID section.
-            const invalidFieldElements = paneElement.querySelectorAll(`#${event.currentTarget.id}`)
-            if (invalidFieldElements) invalidFieldElements.forEach(element => element.classList.remove('is-invalid'))
-
-            // Remove the invalid feedback divs corresponding to invalid fields that are changed.
-            const invalidFeedbackElements = paneElement.querySelectorAll(`#${event.currentTarget.id}_error`)
-            if (invalidFeedbackElements) invalidFeedbackElements.forEach(element => element.remove())
-
-            // If the current pane no longer has fields marked as invalid, mark the tab as no longer
-            // being invalid.
-            if (!paneElement.querySelector('.is-invalid')) tabEl.classList.remove('is-invalid')
-          })
-        })
         tabEl.classList.add('is-invalid')
         const currentLabelledBy = tabEl.getAttribute('aria-labelledby')
         const newLabelledBy = `${currentLabelledBy} ${this.invalidDescriptionTarget.id}`
@@ -42,6 +24,27 @@ export default class extends Controller {
     if (firstErrorTabEl) {
       bootstrap.Tab.getOrCreateInstance(firstErrorTabEl).show() // eslint-disable-line no-undef
     }
+  }
+
+  changed (event) {
+    const target = event.target
+    if (!target.classList.contains('is-invalid')) return
+    const paneElement = target.closest('.tab-pane')
+    // Mark the invalid target that was changed as no longer invalid, *and* mark any other invalid field
+    // with the same ID as no longer invalid. We think this is both harmless and it marks as valid the
+    // first name and last name fields in the contributor form, which are duplicated due to their being
+    // names in both the ORCID section and the non-ORCID section.
+    const invalidFieldElements = paneElement.querySelectorAll(`#${target.id}`)
+    if (invalidFieldElements) invalidFieldElements.forEach(element => element.classList.remove('is-invalid'))
+
+    // Remove the invalid feedback divs corresponding to invalid fields that are changed.
+    const invalidFeedbackElements = paneElement.querySelectorAll(`#${target.id}_error`)
+    if (invalidFeedbackElements) invalidFeedbackElements.forEach(element => element.remove())
+
+    // If the current pane no longer has fields marked as invalid, mark the tab as no longer
+    // being invalid.
+    const tabEl = this.tabElementFromId(paneElement.id.replace('-pane', ''))
+    if (!paneElement.querySelector('.is-invalid')) tabEl.classList.remove('is-invalid')
   }
 
   // Clear all invalid feedbacks on a pane and removes invalid from the tab.

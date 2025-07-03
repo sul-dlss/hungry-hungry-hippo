@@ -11,7 +11,7 @@
       <% before_form_panes.each do |pane| %>
         <%= pane %>
       <% end %>
-      <%= form_with(model:, id: form_id, data: { action: 'change->ahoy-form-changes#changed change->unsaved-changes#changed' }) do |form| %>
+      <%= form_with(model:, id: form_id, data: { action: 'change->ahoy-form-changes#changed change->unsaved-changes#changed change->tab-error#changed' }) do |form| %>
         <% hidden_fields.each do |field| %>
           <%= form.hidden_field field %>
         <% end %>
