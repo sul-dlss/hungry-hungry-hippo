@@ -142,7 +142,13 @@
         <% if @work_presenter && !@work_presenter.first_draft? %>
           <%= render Elements::AlertComponent.new(variant: :info, value: t('works.edit.panes.deposit.version_text')) %>
           <div class="pane-section">
-            <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: t('works.edit.fields.whats_changing.label'), tooltip: t('works.edit.fields.whats_changing.tooltip_html'), maxlength: 100) %>
+            <%#
+              When what's changing textarea is invalid and the user provides a value and then clicks Deposit / Save as draft,
+              the change event is triggered first. The changes made to the DOM cause the form submit to be blocked.
+              By calling tab-error#changed on the input event, the DOM is updated sooner than the change event,
+              allowing the form to be submitted without blocking.
+            %>
+            <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: t('works.edit.fields.whats_changing.label'), tooltip: t('works.edit.fields.whats_changing.tooltip_html'), maxlength: 100, data: { action: 'input->tab-error#changed' }) %>
           </div>
         <% else %>
           <%# This is a dummy value that is needed for validation, but won't be used for the version description. %>
