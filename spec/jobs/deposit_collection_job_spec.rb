@@ -12,6 +12,7 @@ RSpec.describe DepositCollectionJob do
   before do
     allow(Cocina::CollectionMapper).to receive(:call).and_call_original
     allow(Sdr::Repository).to receive(:accession)
+    allow(Sdr::Repository).to receive(:find).and_return(cocina_object)
     allow(Sdr::Event).to receive(:create)
   end
 
@@ -107,6 +108,14 @@ RSpec.describe DepositCollectionJob do
     end
     let(:depositor) { create(:user, name: 'A. Depositor') }
 
+    let(:cocina_object) do
+      collection_with_metadata_fixture
+        .new(description: collection_fixture.description
+        .new(access: {
+               accessContact: DescriptionCocinaBuilder.contact_emails(contact_emails: [contact_emails_fixture.first])
+             }))
+    end
+
     before do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
       allow(RoundtripSupport).to receive(:changed?).and_return(true)
@@ -145,10 +154,12 @@ RSpec.describe DepositCollectionJob do
         .with(druid: collection.druid,
               type: 'h3_collection_settings_updated',
               data: {
-                description: 'Release settings modified, Access setting modified, DOI setting modified, ' \
+                description: 'When files are downloadable modified, Who can download files modified, ' \
+                             'DOI setting modified, ' \
                              'License setting modified, Notification settings modified, ' \
                              'Review workflow settings modified, Custom terms of use modified, ' \
-                             'Added depositors: Joseph Hill, Removed depositors: A. Depositor',
+                             'Added depositors: Joseph Hill, Removed depositors: A. Depositor, ' \
+                             'Type of deposit modified, Work email modified, Work contributors modified',
                 who: current_user.sunetid
               })
     end
@@ -302,7 +313,7 @@ RSpec.describe DepositCollectionJob do
     let(:collection_form) do
       CollectionForm.new(collection.attributes
       .except('id', 'user_id', 'created_at', 'updated_at', 'object_updated_at', 'deposit_state')
-                    .merge(lock: 'abc123', release_duration: ''))
+                    .merge(lock: 'abc123', release_duration: '', contact_emails_attributes: contact_emails_fixture))
     end
     let(:collection) { create(:collection, :registering_or_updating, druid:, release_duration: nil) }
 
