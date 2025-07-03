@@ -19,7 +19,8 @@ module Works
         {
           turbo_method: :delete,
           turbo_frame: dom_id(content_file.content, 'show'),
-          action: 'unsaved-changes#changed'
+          disable_other_target: 'other',
+          action: 'disable-other#disable unsaved-changes#changed'
         }
       end
     end

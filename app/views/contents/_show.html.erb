@@ -29,11 +29,13 @@
 
   <% if total_files.zero? # there are no files at all in the object, show the appropriate message to the user %>
     <p>Your files will appear here once they have been uploaded.</p>
-  <% else # there is at lesat one file in the object, now decide if we show the hierarchical view without paging or the flat list view with paging %>
-      <% if total_files > Settings.file_upload.hierarchical_files_limit # lots of files, and the hierarchy would not work well, show flat list with paging %>
-        <%= render Works::Edit::ContentNonHierarchyComponent.new(content_obj: content, content_files:) %>
-      <% else # fewer files,  hierarchy will work fine, show hierarchy view without paging %>
-        <%= render Works::Edit::ContentHierarchyComponent.new(content_files:) %>
-      <% end %>
+  <% else # there is at least one file in the object, now decide if we show the hierarchical view without paging or the flat list view with paging %>
+      <div data-controller="disable-other">
+        <% if total_files > Settings.file_upload.hierarchical_files_limit # lots of files, and the hierarchy would not work well, show flat list with paging %>
+          <%= render Works::Edit::ContentNonHierarchyComponent.new(content_obj: content, content_files:) %>
+        <% else # fewer files,  hierarchy will work fine, show hierarchy view without paging %>
+          <%= render Works::Edit::ContentHierarchyComponent.new(content_files:) %>
+        <% end %>
+      </div>
   <% end %>
 <% end %>
