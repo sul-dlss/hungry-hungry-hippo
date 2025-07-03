@@ -36,7 +36,7 @@ en:
       Welcome to our new SDR self-deposit app. We're so happy you're here! Find out <a href="https://sdr.library.stanford.edu/news/spring-pilot-new-self-deposit-application" class="card-link" data-ahoy-track="true">more about the new app</a>.
     dashboard_html: >-
       Welcome to our new SDR self-deposit app. We're so happy you're here! Find out <a href="https://sdr.library.stanford.edu/news/spring-pilot-new-self-deposit-application" data-ahoy-track="true">more about the new app</a>.
-  app_name: 'Stanford Digital Repository'
+  app_name: 'Stanford Digital Repository Self-deposit'
   time:
     formats:
       long: '%B %d, %Y'
