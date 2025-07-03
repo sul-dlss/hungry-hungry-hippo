@@ -327,7 +327,7 @@ en:
       messages:
         cannot_be_edited_html: "If you need to make a change to this work, contact <a href=\"mailto:%{support_email}\">%{support_email}</a>."
         no_changes: "You have not made any changes to the form. Please click 'Cancel' to exit this page."
-        globus_notice_html: "* If you have more than 10GB but less than 4TB and fewer than 25,000 files, you can use Globus to upload your files. For anything larger, <a href=\"mailto:%{support_email}\">contact us</a>."
+        globus_notice_html: "* If you have more than 10GB but less than 4TB and fewer than 25,000 files, you can use Globus to upload your files."
         globus_replace_files_confirm: >-
           Once your Globus file transfer is complete, the files on Globus will replace the files currently in the deposit.
           
