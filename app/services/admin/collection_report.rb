@@ -163,9 +163,18 @@ module Admin
       end
 
       def deposit_stats
-        @deposit_stats ||= collection.works
-                                     .map { |work| Sdr::Repository.status(druid: work.druid).status_message }
-                                     .group_by(&:itself).transform_values(&:count)
+        @deposit_stats ||= collection.works.filter_map do |work|
+          Sdr::Repository.status(druid: work.druid).status_message
+        rescue Sdr::Repository::NotFoundResponse => e
+          Honeybadger.notify('Error looking up work in SDR. This may be a draft work that was purged via Argo.',
+                             context: {
+                               collection_druid: collection.druid,
+                               work_druid: work.druid,
+                               exception: e
+                             })
+          nil
+        end.compact
+           .group_by(&:itself).transform_values(&:count)
       end
     end
   end
