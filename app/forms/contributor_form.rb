@@ -70,6 +70,12 @@ class ContributorForm < ApplicationForm
     !(person?(with_names: true) || organization?(with_names: true))
   end
 
+  # Override serializable_hash to include nested attributes
+  # This is used by the WorkFormSerializer to serialize the form.
+  def serializable_hash(*)
+    super(include: self.class.nested_attributes)
+  end
+
   private
 
   # Name validation:
