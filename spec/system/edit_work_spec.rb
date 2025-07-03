@@ -257,6 +257,30 @@ RSpec.describe 'Edit a work' do
     end
   end
 
+  context 'when something changed, not providing whats changing, and saving as draft' do
+    let(:version_status) { build(:openable_version_status, version: cocina_object.version, version_description: nil) }
+
+    before do
+      allow(RoundtripSupport).to receive(:changed?).and_return(true)
+    end
+
+    it 'notifies user the user that whats changing is required' do
+      visit edit_work_path(druid)
+
+      expect(page).to have_css('h1', text: title_fixture)
+
+      find('.nav-link', text: 'Title').click
+      expect(page).to have_css('.nav-link.active', text: 'Title')
+      expect(page).to have_field('Title of deposit', with: title_fixture)
+
+      fill_in('Title of deposit', with: updated_title)
+
+      click_link_or_button('Save as draft')
+
+      expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+    end
+  end
+
   context 'when nothing changed and depositing' do
     let(:version_status) { build(:openable_version_status, version: cocina_object.version) }
 
