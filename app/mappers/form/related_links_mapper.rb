@@ -7,7 +7,9 @@ module Form
       return if related_resources.blank?
 
       related_resources.filter_map do |related_resource|
-        next if related_resource.access&.url.blank? && related_resource.purl.blank?
+        if related_resource.access&.url.blank? && related_resource.purl.blank? && related_resource.identifier.empty?
+          next
+        end
 
         related_link_for(related_resource)
       end.presence
@@ -19,11 +21,15 @@ module Form
       @related_resources ||= cocina_object.description.relatedResource
     end
 
+    # rubocop:disable Style/SafeNavigationChainLength
     def related_link_for(related_resource)
       {
-        'url' => related_resource.purl || related_resource.access.url.first[:value],
+        'url' => related_resource.purl ||
+          related_resource.access&.url&.first&.[](:value) ||
+          related_resource.identifier.first[:uri],
         'text' => related_resource.title.first&.[](:value)
       }
     end
+    # rubocop:enable Style/SafeNavigationChainLength
   end
 end
