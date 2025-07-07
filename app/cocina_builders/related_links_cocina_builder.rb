@@ -32,9 +32,18 @@ class RelatedLinksCocinaBuilder
       url = related_link['url']
       if PurlSupport.purl?(url:)
         related_link_hash[:purl] = url
+      elsif uri_type_for(url).present?
+        related_link_hash[:identifier] = [{ uri: url, type: uri_type_for(url) }]
       else
         related_link_hash[:access] = { url: [{ value: related_link['url'] }] }
       end
     end
+  end
+
+  def uri_type_for(identifier)
+    return 'doi' if identifier.include?('doi.org')
+    return 'arxiv' if identifier.include?('arxiv.org')
+
+    'pmid' if identifier.include?('pubmed.ncbi.nlm.nih.gov')
   end
 end
