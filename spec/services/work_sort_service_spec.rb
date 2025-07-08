@@ -24,6 +24,7 @@ RSpec.describe WorkSortService do
   end
   let(:user) { create(:user, name: 'Amelia') }
   let(:user2) { create(:user, name: 'Zoe') }
+  let(:page) { 1 }
 
   before do
     allow(Sdr::Repository).to receive(:statuses).and_return(
@@ -36,11 +37,12 @@ RSpec.describe WorkSortService do
   end
 
   describe '.call' do
+    subject(:presenters) { described_class.call(works:, sort_by:, page:) }
+
     context 'when no sort order provided' do
       let(:sort_by) { 'works.title asc' }
 
       it 'orders by title' do
-        presenters = described_class.call(works:, sort_by:)
         expect(presenters.first.work).to have_attributes(title: 'AAA Title')
         expect(presenters.last.work).to have_attributes(title: 'ZZZ Title')
       end
@@ -50,7 +52,6 @@ RSpec.describe WorkSortService do
       let(:sort_by) { 'works.title desc' }
 
       it 'orders by title descending' do
-        presenters = described_class.call(works:, sort_by:)
         expect(presenters.first.work).to have_attributes(title: 'ZZZ Title')
         expect(presenters.last.work).to have_attributes(title: 'AAA Title')
       end
@@ -64,7 +65,6 @@ RSpec.describe WorkSortService do
       end
 
       it 'orders by owner name ascending' do
-        presenters = described_class.call(works:, sort_by:)
         expect(presenters.first.work.user.name).to eq('Amelia')
         expect(presenters.last.work.user.name).to eq('Zoe')
       end
@@ -74,9 +74,19 @@ RSpec.describe WorkSortService do
       let(:sort_by) { 'users.name desc' }
 
       it 'orders by owner name descending' do
-        presenters = described_class.call(works:, sort_by:)
         expect(presenters.first.work.user.name).to eq('Zoe')
         expect(presenters.last.work.user.name).to eq('Amelia')
+      end
+    end
+
+    context 'when sorting by owner descending and paginating', :default_per_page2 do
+      let(:sort_by) { 'users.name desc' }
+      let(:page) { 2 }
+
+      it 'orders by owner name descending' do
+        expect(presenters).to be_a(Kaminari::PaginatableArray)
+        expect(presenters.count).to eq(1)
+        expect(presenters.first.work.user.name).to eq('Amelia')
       end
     end
 
@@ -84,9 +94,19 @@ RSpec.describe WorkSortService do
       let(:sort_by) { 'status asc' }
 
       it 'orders by status message ascending' do
-        presenters = described_class.call(works:, sort_by:)
         expect(presenters.first.status_message).to eq('Deposited')
         expect(presenters.last.status_message).to eq('New version in draft')
+      end
+    end
+
+    context 'when sorting by status ascending and paginating', :default_per_page2 do
+      let(:sort_by) { 'status asc' }
+      let(:page) { 2 }
+
+      it 'orders by status message ascending' do
+        expect(presenters).to be_a(Kaminari::PaginatableArray)
+        expect(presenters.count).to eq(1)
+        expect(presenters.first.status_message).to eq('New version in draft')
       end
     end
 
@@ -94,7 +114,6 @@ RSpec.describe WorkSortService do
       let(:sort_by) { 'status desc' }
 
       it 'orders by status message descending' do
-        presenters = described_class.call(works:, sort_by:)
         expect(presenters.first.status_message).to eq('New version in draft')
         expect(presenters.last.status_message).to eq('Deposited')
       end
@@ -104,7 +123,6 @@ RSpec.describe WorkSortService do
       let(:sort_by) { 'works.object_updated_at asc' }
 
       it 'orders by updated_at ascending' do
-        presenters = described_class.call(works:, sort_by:)
         expect(presenters.first.work.title).to eq('AAA Title')
         expect(presenters.last.work.title).to eq('ZZZ Title')
       end
@@ -114,7 +132,6 @@ RSpec.describe WorkSortService do
       let(:sort_by) { 'works.object_updated_at desc' }
 
       it 'orders by updated_at descending' do
-        presenters = described_class.call(works:, sort_by:)
         expect(presenters.first.work.title).to eq('ZZZ Title')
         expect(presenters.last.work.title).to eq('AAA Title')
       end

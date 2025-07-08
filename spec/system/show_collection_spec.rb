@@ -41,7 +41,7 @@ RSpec.describe 'Show a collection' do
     collection.works.last.update(object_updated_at: 2.days.ago)
   end
 
-  context 'when a manager' do
+  context 'when a manager', :default_per_page2 do
     before do
       sign_in(manager)
     end

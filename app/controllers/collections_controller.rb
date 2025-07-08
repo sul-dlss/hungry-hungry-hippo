@@ -85,11 +85,7 @@ class CollectionsController < ApplicationController
     @search_term = params[:q]
     works = authorized_scope(collection_works_result, as: :collection,
                                                       scope_options: { collection: @collection }).joins(:user)
-    @presenters = Kaminari.paginate_array(sorted_work_presenters(works)).page(params[:page])
-  end
-
-  def sorted_work_presenters(works)
-    WorkSortService.call(works:, sort_by:)
+    @presenters = WorkSortService.call(works:, sort_by:, page: params[:page])
   end
 
   def sort_by
