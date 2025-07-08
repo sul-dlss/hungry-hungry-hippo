@@ -298,7 +298,11 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def invalid_for_whats_changing_only?
-    @work_form.errors.one? && @work_form.errors.first.attribute == :whats_changing
+    @work_form.errors.one? && @work_form.errors.first.attribute == :whats_changing && !attached_files_changed?
+  end
+
+  def attached_files_changed?
+    @content.content_files.any? { |content_file| content_file.file_type == 'attached' }
   end
 
   def handle_no_changes

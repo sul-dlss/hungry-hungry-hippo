@@ -281,6 +281,29 @@ RSpec.describe 'Edit a work' do
     end
   end
 
+  context 'when files have changed, not providing whats changing, and saving as draft' do
+    let(:version_status) { build(:openable_version_status, version: cocina_object.version, version_description: nil) }
+
+    before do
+      allow(RoundtripSupport).to receive(:changed?).and_return(true)
+    end
+
+    it 'notifies user the user that whats changing is required' do
+      visit edit_work_path(druid)
+
+      expect(page).to have_css('h1', text: title_fixture)
+
+      # Add a file
+      find('.dropzone').drop('spec/fixtures/files/hippo.png')
+
+      expect(page).to have_css('table#content-table td', text: 'hippo.png')
+
+      click_link_or_button('Save as draft')
+
+      expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+    end
+  end
+
   context 'when nothing changed and depositing' do
     let(:version_status) { build(:openable_version_status, version: cocina_object.version) }
 
