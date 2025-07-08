@@ -2,6 +2,7 @@
 
 # Controller for the contact form
 class ContactsController < ApplicationController
+  allow_unauthenticated_access
   skip_verify_authorized
 
   before_action :set_contact_form_conditions
