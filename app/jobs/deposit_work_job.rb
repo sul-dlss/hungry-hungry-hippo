@@ -13,7 +13,6 @@ class DepositWorkJob < ApplicationJob
     @deposit = deposit
     @request_review = request_review
     @status = Sdr::Repository.status(druid: work_form.druid) if work_form.persisted?
-    @original_cocina_object = Sdr::Repository.find(druid: work_form.druid) if work_form.persisted?
     # Setting current user so that it will be available for notifications.
     Current.user = current_user
 
@@ -44,7 +43,7 @@ class DepositWorkJob < ApplicationJob
 
   private
 
-  attr_reader :work_form, :work, :status, :original_cocina_object
+  attr_reader :work_form, :work, :status
 
   def user_name
     Current.user.sunetid
@@ -73,6 +72,7 @@ class DepositWorkJob < ApplicationJob
     # @changed can be false, so normal ||= won't work here
     return @changed if defined?(@changed)
 
+    original_cocina_object = Sdr::Repository.find(druid: work_form.druid)
     @changed = RoundtripSupport.changed?(cocina_object: mapped_cocina_object, original_cocina_object:)
   end
 
@@ -142,10 +142,14 @@ class DepositWorkJob < ApplicationJob
   end
 
   def new_user_version?
-    return true unless work_form.persisted?
+    # @new_user_version can be false, so normal ||= won't work here
+    return @new_user_version if defined?(@new_user_version)
 
-    # return true if structural changed
-    UserVersionChangeService.call(original_cocina_object:, new_cocina_object: mapped_cocina_object)
+    return (@new_user_version = true) unless work_form.persisted?
+
+    # return true if structural changed since last user version
+    original_cocina_object = Sdr::Repository.find_latest_user_version(druid: work_form.druid)
+    @new_user_version = UserVersionChangeService.call(original_cocina_object:, new_cocina_object: mapped_cocina_object)
   end
 
   def remove_globus_permissions

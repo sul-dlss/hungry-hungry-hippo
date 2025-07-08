@@ -378,4 +378,38 @@ RSpec.describe Sdr::Repository do
       end
     end
   end
+
+  describe '#find_latest_user_version' do
+    let(:object_client) { instance_double(Dor::Services::Client::Object, user_version: user_version_client) }
+    let(:user_version_client) { instance_double(Dor::Services::Client::UserVersion, find: cocina_object, inventory:) }
+
+    let(:cocina_object) { instance_double(Cocina::Models::DRO) }
+
+    before do
+      allow(Dor::Services::Client).to receive(:object).and_return(object_client)
+    end
+
+    context 'when the object is found' do
+      let(:inventory) do
+        [
+          instance_double(Dor::Services::Client::UserVersion::Version, head?: false, userVersion: 1),
+          instance_double(Dor::Services::Client::UserVersion::Version, head?: true, userVersion: 2)
+        ]
+      end
+
+      it 'returns the object' do
+        expect(described_class.find_latest_user_version(druid:)).to eq(cocina_object)
+        expect(Dor::Services::Client).to have_received(:object).with(druid)
+        expect(user_version_client).to have_received(:find).with(2)
+      end
+    end
+
+    context 'when the object is not found' do
+      let(:inventory) { [] }
+
+      it 'returns nil' do
+        expect(described_class.find_latest_user_version(druid:)).to be_nil
+      end
+    end
+  end
 end

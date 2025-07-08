@@ -135,6 +135,7 @@ RSpec.describe DepositWorkJob do
       allow(RoundtripSupport).to receive(:changed?).and_call_original
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(original_cocina_object)
       allow(Sdr::Repository).to receive(:status).and_return(version_status)
+      allow(Sdr::Repository).to receive(:find_latest_user_version).with(druid:).and_return(original_cocina_object)
     end
 
     it 'updates an existing work' do
@@ -179,6 +180,7 @@ RSpec.describe DepositWorkJob do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(original_cocina_object)
       allow(Sdr::Repository).to receive(:status).and_return(version_status)
+      allow(Sdr::Repository).to receive(:find_latest_user_version).with(druid:).and_return(original_cocina_object)
     end
 
     it 'updates an existing work' do
@@ -217,6 +219,7 @@ RSpec.describe DepositWorkJob do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:status).and_return(version_status)
+      allow(Sdr::Repository).to receive(:find_latest_user_version).with(druid:).and_return(cocina_object)
     end
 
     it 'updates an existing work' do
@@ -283,6 +286,7 @@ RSpec.describe DepositWorkJob do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
       # Returning cocina_object will make this unchanged.
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:find_latest_user_version).with(druid:).and_return(cocina_object)
     end
 
     it 'updates an existing work' do
@@ -346,6 +350,7 @@ RSpec.describe DepositWorkJob do
       allow(Cocina::WorkMapper).to receive(:call).and_return(cocina_object)
       allow(RoundtripSupport).to receive(:changed?).and_return(false)
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:find_latest_user_version).with(druid:).and_return(cocina_object)
     end
 
     it 'approves the work and deposits' do
