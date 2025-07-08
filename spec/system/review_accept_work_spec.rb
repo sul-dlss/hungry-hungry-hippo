@@ -20,6 +20,8 @@ RSpec.describe 'Review and accept a work' do
     allow(Sdr::Repository).to receive(:accession)
 
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+    allow(Sdr::Repository).to receive(:find_latest_user_version).and_return(cocina_object)
+
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status, deposit_version_status)
     allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
 

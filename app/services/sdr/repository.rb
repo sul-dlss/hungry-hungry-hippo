@@ -121,5 +121,15 @@ module Sdr
     rescue Dor::Services::Client::Error => e
       raise Error, "Updating failed: #{e.message}"
     end
+
+    # @param [String] druid
+    # @return [Cocina::Models::DRO] the latest user version of the object, or nil if not found
+    def self.find_latest_user_version(druid:)
+      version_client = Dor::Services::Client.object(druid).user_version
+      head_user_version = version_client.inventory.find(&:head?)
+      return unless head_user_version
+
+      version_client.find(head_user_version.userVersion)
+    end
   end
 end

@@ -21,6 +21,7 @@ RSpec.describe 'Submit a work for review without changes' do
 
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+    allow(Sdr::Repository).to receive(:find_latest_user_version).and_return(cocina_object)
     allow(RoundtripSupport).to receive(:changed?).and_return(false)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)

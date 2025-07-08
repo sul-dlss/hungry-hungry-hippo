@@ -53,6 +53,7 @@ RSpec.describe 'Edit a work' do
       ->(_arg) { cocina_object }, # DepositWorkJob
       ->(_arg) { @updated_cocina_object } # show after update
     )
+    allow(Sdr::Repository).to receive(:find_latest_user_version).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
     # It is already open.
