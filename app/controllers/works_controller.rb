@@ -302,7 +302,15 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def attached_files_changed?
-    @content.content_files.any? { |content_file| content_file.file_type == 'attached' }
+    @content.content_files.any? { |content_file| content_file.file_type == 'attached' } ||
+      filepaths_from_cocina.sort != @content.content_files.pluck(:filepath).sort
+  end
+
+  def filepaths_from_cocina
+    @cocina_object = Sdr::Repository.find(druid:)
+    @cocina_object.structural.contains.flat_map do |file_set|
+      file_set.structural.contains.map(&:filename)
+    end
   end
 
   def handle_no_changes
