@@ -302,7 +302,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def attached_files_changed?
-    @content.content_files.any? { |content_file| content_file.file_type == 'attached' } ||
+    @content.content_files.any? { |content_file| %w[attached globus].include?(content_file.file_type) } ||
       filepaths_from_cocina.sort != @content.content_files.pluck(:filepath).sort
   end
 
