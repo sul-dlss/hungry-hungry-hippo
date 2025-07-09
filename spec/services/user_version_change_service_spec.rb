@@ -256,4 +256,13 @@ RSpec.describe UserVersionChangeService do
       expect(changed?).to be false
     end
   end
+
+  context 'when original cocina object is nil' do
+    let(:original_cocina_object) { nil }
+    let(:new_cocina_object) { dro_with_structural_fixture }
+
+    it 'returns true' do
+      expect(changed?).to be true
+    end
+  end
 end

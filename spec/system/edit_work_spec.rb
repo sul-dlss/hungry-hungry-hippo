@@ -50,6 +50,7 @@ RSpec.describe 'Edit a work' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(
       ->(_arg) { cocina_object }, # show
       ->(_arg) { cocina_object }, # edit
+      ->(_arg) { cocina_object }, # update
       ->(_arg) { cocina_object }, # DepositWorkJob
       ->(_arg) { @updated_cocina_object } # show after update
     )

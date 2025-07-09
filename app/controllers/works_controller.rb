@@ -265,9 +265,15 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     return true if @version_status.open? && (deposit? || request_review?)
 
     # If no previous change, then check for a current change.
-    mapped_cocina_object = Cocina::WorkMapper.call(work_form: @work_form, content: @content,
-                                                   source_id: "h3:object-#{@work.id}")
-    RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
+    cocina_object_changed?
+  end
+
+  def cocina_object_changed?
+    @cocina_object_changed ||= begin
+      mapped_cocina_object = Cocina::WorkMapper.call(work_form: @work_form, content: @content,
+                                                     source_id: "h3:object-#{@work.id}")
+      RoundtripSupport.changed?(cocina_object: mapped_cocina_object)
+    end
   end
 
   def mark_collection_required_contributors
@@ -286,14 +292,14 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def handle_no_changes_or_invalid
-    if @valid
-      handle_no_changes
-    elsif invalid_for_whats_changing_only? && (deposit? || request_review?)
-      @work_form = WorkForm.new(**update_work_params)
-      @valid = true
-      handle_no_changes
-    else
+    if cocina_object_changed?
       handle_invalid
+    else
+      if invalid_for_whats_changing_only?
+        @work_form = WorkForm.new(**update_work_params)
+        @valid = true
+      end
+      handle_no_changes
     end
   end
 

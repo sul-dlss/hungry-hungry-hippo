@@ -13,6 +13,8 @@ class UserVersionChangeService
 
   # @return [Boolean] true if the change requires a new user version
   def call
+    return true if original_cocina_object.nil?
+
     contains_hash_for(original_cocina_object.structural) != contains_hash_for(new_cocina_object.structural)
   end
 
