@@ -27,6 +27,7 @@ export default class extends Controller {
   }
 
   changed (event) {
+    console.log('TabErrorController changed', event)
     const target = event.target
     if (!target.classList.contains('is-invalid')) return
     const paneElement = target.closest('.tab-pane')

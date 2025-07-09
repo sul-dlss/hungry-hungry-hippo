@@ -322,9 +322,9 @@ RSpec.describe 'Create a work deposit' do
     let(:cocina_object) { dro_with_structural_and_metadata_fixture }
     let(:druid) { cocina_object.externalIdentifier }
 
-    let!(:work) { create(:work, druid:, user:) }
-
     before do
+      create(:work, druid:, user:)
+
       # Stubbing out for Deposit Job
       @updated_cocina_object = nil
       allow(Sdr::Repository).to receive(:update) do |args|
@@ -354,9 +354,6 @@ RSpec.describe 'Create a work deposit' do
       expect(page).to have_css('.nav-link.active', text: 'Manage files')
 
       check('Hide this file')
-
-      # find('.nav-link', text: 'Title and contact').click
-      # fill_in('work_title', with: 'My new title')
 
       find('.nav-link', text: 'Deposit', exact_text: true).click
 
