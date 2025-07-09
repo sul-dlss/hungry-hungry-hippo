@@ -126,7 +126,7 @@ RSpec.describe 'Show a work' do
     sign_in(user)
   end
 
-  context 'without hierarchical display' do
+  context 'without hierarchical display', :default_per_page2 do
     before do
       allow(Settings.file_upload).to receive(:hierarchical_files_limit).and_return(0)
     end

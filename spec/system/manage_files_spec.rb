@@ -79,7 +79,7 @@ RSpec.describe 'Manage files for a work', :dropzone do
     end
   end
 
-  context 'when non-hierarchical display' do
+  context 'when non-hierarchical display', :default_per_page2 do
     before do
       allow(Settings.file_upload).to receive(:hierarchical_files_limit).and_return(0)
     end
