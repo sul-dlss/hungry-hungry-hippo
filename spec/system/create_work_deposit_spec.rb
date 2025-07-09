@@ -366,9 +366,6 @@ RSpec.describe 'Create a work deposit' do
 
       fill_in('What\'s changing?', with: 'Hiding a file.')
 
-      # Can be removed once https://github.com/sul-dlss/hungry-hungry-hippo/issues/1618 is fixed.
-      find_field('What\'s changing?').send_keys(:tab)
-
       click_link_or_button('Deposit', class: 'btn-primary')
 
       # Waiting page may be too fast to catch so not testing.
