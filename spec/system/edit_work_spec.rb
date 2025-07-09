@@ -145,7 +145,7 @@ RSpec.describe 'Edit a work' do
     click_link_or_button('+ Add another related work')
     within_fieldset('Related works') do
       within('div[data-index="2"]') do
-        fill_in('Link for a related work (e.g., DOI, arXiv, PMID, PURL, or other URL)',
+        fill_in('Full link for a related work (e.g., DOI, arXiv, PMID, PURL, or other URL). Include "https://".',
                 with: updated_related_works.first['identifier'])
         select('My deposit references or cites', from: 'work_related_works_attributes_2_relationship')
       end
