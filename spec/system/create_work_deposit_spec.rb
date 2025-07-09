@@ -315,4 +315,64 @@ RSpec.describe 'Create a work deposit' do
                                                                 review: false).count).to eq(1)
     end
   end
+
+  context 'when updating an existing work and only changing a file' do
+    let(:draft_version_status) { build(:draft_version_status) }
+
+    let(:cocina_object) { dro_with_structural_and_metadata_fixture }
+    let(:druid) { cocina_object.externalIdentifier }
+
+    let!(:work) { create(:work, druid:, user:) }
+
+    before do
+      # Stubbing out for Deposit Job
+      @updated_cocina_object = nil
+      allow(Sdr::Repository).to receive(:update) do |args|
+        @updated_cocina_object = args[:cocina_object]
+      end
+
+      # Stubbing out for show page
+      allow(Sdr::Repository).to receive(:find).with(druid:)
+                                              .and_invoke(
+                                                ->(_arg) { cocina_object }, # show
+                                                ->(_arg) { cocina_object }, # edit
+                                                ->(_arg) { cocina_object }, # DepositWorkJob
+                                                ->(_arg) { @updated_cocina_object } # show after deposit
+                                              )
+      allow(Sdr::Repository).to receive(:find_latest_user_version).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(draft_version_status)
+      allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
+      allow(Sdr::Event).to receive(:list).and_return([])
+    end
+
+    it 'updates and deposits a work' do
+      visit work_path(druid)
+
+      expect(page).to have_css('h1', text: title_fixture)
+      click_link_or_button('Edit or deposit')
+
+      expect(page).to have_css('.nav-link.active', text: 'Manage files')
+
+      check('Hide this file')
+
+      # find('.nav-link', text: 'Title and contact').click
+      # fill_in('work_title', with: 'My new title')
+
+      find('.nav-link', text: 'Deposit', exact_text: true).click
+
+      fill_in('What\'s changing?', with: '')
+
+      click_link_or_button('Deposit', class: 'btn-primary')
+
+      expect(page).to have_css('.alert', text: 'Required fields have not been filled out')
+
+      fill_in('What\'s changing?', with: 'Hiding a file.')
+
+      click_link_or_button('Deposit', class: 'btn-primary')
+
+      # Waiting page may be too fast to catch so not testing.
+      # On show page
+      expect(page).to have_css('h1', text: 'My new title')
+    end
+  end
 end

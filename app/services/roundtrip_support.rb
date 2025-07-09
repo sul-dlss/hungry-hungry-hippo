@@ -20,8 +20,8 @@ class RoundtripSupport
   def self.normalize_structural_attrs(structural_attrs:, version:)
     Array(structural_attrs[:contains]).each do |fileset_attrs|
       fileset_attrs[:version] = version
-      Array(fileset_attrs.dig(:structural, :contains)).each do |file_atts|
-        file_atts[:version] = version
+      Array(fileset_attrs.dig(:structural, :contains)).each do |file_attrs|
+        file_attrs[:version] = version
       end
     end
     structural_attrs

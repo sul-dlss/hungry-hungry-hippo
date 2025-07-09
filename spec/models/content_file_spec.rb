@@ -40,4 +40,43 @@ RSpec.describe ContentFile do
                                                                                   filepath: content_file.filepath)
     end
   end
+
+  describe 'marking content as dirty' do
+    let(:content) { create(:content) }
+    let!(:content_file) { create(:content_file, content:) }
+
+    before do
+      content.update(dirty: false) # Ensure the content is not dirty before destruction
+    end
+
+    context 'when creating a new content file' do
+      it 'marks the content as dirty' do
+        expect { create(:content_file, content:) }.to change { content.reload.dirty? }.from(false).to(true)
+      end
+    end
+
+    context 'when updating a content file' do
+      it 'marks the content as dirty' do
+        expect { content_file.update(hide: true) }.to change { content.reload.dirty? }.from(false).to(true)
+      end
+    end
+
+    context 'when updating a content file attachment' do
+      it 'marks the content as dirty' do
+        expect do
+          content_file.file.attach(
+            io: Rails.root.join('spec/fixtures/files/hippo.txt').open,
+            filename: 'hippo.png',
+            content_type: 'image/png'
+          )
+        end.to change { content.reload.dirty? }.from(false).to(true)
+      end
+    end
+
+    context 'when destroying a content file' do
+      it 'marks the content as dirty' do
+        expect { content_file.destroy }.to change { content.reload.dirty? }.from(false).to(true)
+      end
+    end
+  end
 end

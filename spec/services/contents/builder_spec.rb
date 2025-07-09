@@ -16,6 +16,7 @@ RSpec.describe Contents::Builder do
     it 'builds Content and Content Files model objects' do
       expect(content).to be_a(Content)
       expect(content.content_files.length).to eq(1)
+      expect(content.dirty?).to be false
 
       content_file = content.content_files.first
       expect(content_file.hidden?).to be false
@@ -30,6 +31,7 @@ RSpec.describe Contents::Builder do
     it 'builds Content and Content Files model objects' do
       expect(content).to be_a(Content)
       expect(content.content_files.length).to eq(1)
+      expect(content.dirty?).to be false
 
       content_file = content.content_files.first
       expect(content_file.hidden?).to be true

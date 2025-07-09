@@ -286,9 +286,10 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def handle_no_changes_or_invalid
+    Rails.logger.info("WORK: #{@content.dirty?} - #{invalid_for_whats_changing_only?}")
     if @valid
       handle_no_changes
-    elsif invalid_for_whats_changing_only? && (deposit? || request_review?)
+    elsif invalid_for_whats_changing_only? && (deposit? || request_review?) && !@content.dirty?
       @work_form = WorkForm.new(**update_work_params)
       @valid = true
       handle_no_changes

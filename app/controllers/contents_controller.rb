@@ -64,8 +64,8 @@ class ContentsController < ApplicationController
       filepath = params[:content][:paths][index]
       next if IgnoreFileService.call(filepath:)
 
-      content_file = ContentFile.create_with(file_type: :attached, size: file.size, label: '')
-                                .find_or_create_by!(content: @content, filepath:)
+      ContentFile.find_by(content: @content, filepath:)&.destroy
+      content_file = ContentFile.create(file_type: :attached, size: file.size, label: '', content: @content, filepath:)
       content_file.file.attach(file)
     end
   end

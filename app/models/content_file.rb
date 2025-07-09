@@ -5,6 +5,8 @@ class ContentFile < ApplicationRecord
   before_save :set_filepath_parts
   belongs_to :content
   has_one_attached :file
+  after_destroy :mark_content_as_dirty
+  after_save :mark_content_as_dirty
 
   enum :file_type, attached: 'attached', deposited: 'deposited', globus: 'globus'
 
@@ -51,5 +53,10 @@ class ContentFile < ApplicationRecord
     elsif globus?
       File.join(GlobusSupport.local_work_path(work:), filepath)
     end
+  end
+
+  def mark_content_as_dirty
+    # If the content is not already dirty, mark it as dirty
+    content.update(dirty: true) unless content.dirty?
   end
 end
