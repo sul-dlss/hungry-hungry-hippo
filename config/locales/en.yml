@@ -509,7 +509,7 @@ en:
         participants:
           tab_label: 'Participants'
           label: 'Collection participants'
-          help_text: 'Select the appropriate option below to add one or more managers or depositors.'
+          help_text: 'Add one or more managers or depositors to this collection.'
         workflow:
           tab_label: 'Workflow'
           label: 'Review workflow'
