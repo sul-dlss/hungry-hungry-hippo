@@ -131,8 +131,11 @@
       <% component.with_work_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, next_tab_btn: false) do |pane_component| %>
         <% pane_component.with_help do %>
           <p class="mb-0">
-            <%= t('works.edit.panes.deposit.help_text') %>
-            <% if @work_form.agree_to_terms %>You have accepted the <a href="#" data-bs-toggle="modal" data-bs-target="#tod-modal">Terms of Deposit</a>.<% end %>
+            <ul>
+              <li>Be sure you have completed all the required sections.</li>
+              <% if @work_form.agree_to_terms %><li>You have accepted the <a href="#" data-bs-toggle="modal" data-bs-target="#tod-modal">Terms of Deposit</a>.</li><% end %>
+              <li>Your deposit may take several hours to complete if the total file size is larger than 10GB.</li>
+            </ul>
           </p>
         <% end %>
 
