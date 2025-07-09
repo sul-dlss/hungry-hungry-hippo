@@ -5,10 +5,10 @@
   <div class="d-flex align-items-baseline">
     <% if @content.work %>
       <div class="me-4">
-        <%= render Elements::ButtonFormComponent.new(label: t('works.edit.buttons.globus_deposit_files'),
-                                                     link: content_globuses_path(@content), data: { action: 'dropzone-files#disableDropzone' },
-                                                     confirm: @content.content_files.exists? ? t('works.edit.messages.globus_replace_files_confirm') : nil,
-                                                     method: :post, top: false, classes: 'my-3') %>
+        <%= render Works::Edit::GlobusButtonComponent.new(confirm: @content.content_files.exists?,
+                                                          label: t('works.edit.buttons.globus_deposit_files'),
+                                                          link: content_globuses_path(@content),
+                                                          method: :post, top: false, classes: 'my-3') %>
 
       </div>
       <div>
