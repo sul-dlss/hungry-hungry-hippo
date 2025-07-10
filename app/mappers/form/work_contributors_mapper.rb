@@ -41,24 +41,20 @@ module Form
       attr_reader :contributor
 
       def affiliations
-        return [] unless contributor.note.any? { |note| note.type == 'affiliation' }
-
         contributor.note.select { |note| note.type == 'affiliation' }.map do |note|
           affiliation_from_note(note:)
         end
       end
 
-      def affiliation_from_note(note:) # rubocop:disable Metrics/AbcSize
-        {}.tap do |affiliation|
-          note.structuredValue.each do |descriptive_value|
-            if descriptive_value.identifier.any? { |id| id.type == 'ROR' }
-              affiliation['institution'] = descriptive_value.value
-              affiliation['uri'] = descriptive_value.identifier.find { |id| id.type == 'ROR' }&.uri
-            else
-              affiliation['department'] = descriptive_value.value
-            end
-          end
-        end
+      def affiliation_from_note(note:)
+        institution = note.structuredValue.find { |descriptive_value| descriptive_value.identifier.present? }
+        department = note.structuredValue.find { |descriptive_value| descriptive_value.identifier.blank? }
+
+        {
+          'institution' => institution.value,
+          'uri' => institution.identifier.find { |id| id.type == 'ROR' }&.uri,
+          'department' => department&.value
+        }.compact
       end
 
       def first_name

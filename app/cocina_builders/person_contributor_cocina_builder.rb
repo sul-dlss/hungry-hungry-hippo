@@ -61,11 +61,8 @@ class PersonContributorCocinaBuilder
   def affiliation_params(affiliation)
     return affiliation if affiliation.is_a?(Hash)
 
-    {
-      department: affiliation.department,
-      institution: affiliation.institution,
-      uri: affiliation.uri
-    }
+    # return the attributes as a hash with symbolized keys if it's an AffiliationForm object
+    affiliation.attributes.symbolize_keys
   end
 
   def identifier_params

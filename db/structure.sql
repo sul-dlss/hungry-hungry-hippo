@@ -126,8 +126,8 @@ ALTER SEQUENCE public.active_storage_variant_records_id_seq OWNED BY public.acti
 CREATE TABLE public.affiliations (
     id bigint NOT NULL,
     contributor_id bigint,
-    institution character varying,
-    uri character varying,
+    institution character varying NOT NULL,
+    uri character varying NOT NULL,
     department character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL

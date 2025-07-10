@@ -5,8 +5,8 @@ class AddAffiliationsToContributors < ActiveRecord::Migration[8.0]
     create_table :affiliations do |t|
       t.belongs_to :contributor, foreign_key: true
 
-      t.string :institution
-      t.string :uri
+      t.string :institution, null: false
+      t.string :uri, null: false
       t.string :department
 
       t.timestamps
