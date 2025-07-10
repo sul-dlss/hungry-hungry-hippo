@@ -189,15 +189,16 @@ RSpec.describe 'Create a work deposit' do
 
       # Filling in related works
       expect(page).to have_text('Related works')
-      expect(page).to have_field('Link for a related work (e.g., DOI, arXiv, PMID, PURL, or other URL)',
+      expect(page).to have_field('Full link for a related work (e.g., DOI, arXiv, PMID, PURL, or other URL). Include "https://".',
                                  type: 'radio',
                                  checked: true)
       expect(page).to have_field('Enter full citation for related work', disabled: true)
       choose('Enter full citation for related work')
       expect(page).to have_field('Enter full citation for related work')
-      expect(page).to have_field('Link for a related work (e.g., DOI, arXiv, PMID, PURL, or other URL)', disabled: true)
-      choose('Link for a related work (e.g., DOI, arXiv, PMID, PURL, or other URL)')
-      fill_in('Link for a related work (e.g., DOI, arXiv, PMID, PURL, or other URL)',
+      expect(page).to have_field('Full link for a related work (e.g., DOI, arXiv, PMID, PURL, or other URL). Include "https://".',
+                                 disabled: true)
+      choose('Full link for a related work (e.g., DOI, arXiv, PMID, PURL, or other URL). Include "https://".')
+      fill_in('Full link for a related work (e.g., DOI, arXiv, PMID, PURL, or other URL). Include "https://".',
               with: related_works_fixture.second['identifier'])
       select('My deposit consists of parts, one of which is', from: 'How is your deposit related to this work?')
 

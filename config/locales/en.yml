@@ -219,7 +219,7 @@ en:
           label: 'Related work'
         identifier:
           label:
-            html: 'Link for a related work <em>(e.g., DOI, arXiv, PMID, PURL, or other URL)</em>'
+            html: 'Full link for a related work <em>(e.g., DOI, arXiv, PMID, PURL, or other URL)</em>. Include "https://".'
         relationship:
           label:
             html: 'How is your deposit related to this work?  <a href="https://sdr.library.stanford.edu/related-works" target="_blank">Get help choosing a term</a>'
