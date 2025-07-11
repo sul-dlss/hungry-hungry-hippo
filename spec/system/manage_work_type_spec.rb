@@ -5,12 +5,12 @@ require 'rails_helper'
 RSpec.describe 'Edit work type and subtypes for a work' do
   let(:user) { create(:user) }
 
-  before do
-    sign_in(user)
-  end
-
   context 'without required types' do
     let(:collection) { create(:collection, :with_druid, user:) }
+
+    before do
+      sign_in(user)
+    end
 
     it 'creates a work' do
       visit new_work_path(collection_druid: collection.druid)
@@ -131,6 +131,10 @@ RSpec.describe 'Edit work type and subtypes for a work' do
 
   context 'with required types' do
     let(:collection) { create(:collection, :with_druid, :with_required_types, user:) }
+
+    before do
+      sign_in(user)
+    end
 
     it 'creates a work' do
       visit new_work_path(collection_druid: collection.druid)

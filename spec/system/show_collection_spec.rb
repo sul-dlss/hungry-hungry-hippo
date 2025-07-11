@@ -15,7 +15,7 @@ RSpec.describe 'Show a collection' do
            :with_required_contact_email, works_count: 3, reviewers_count: 2, druid:, title: collection_title_fixture,
                                          contributors: [contributor], managers: [manager], depositors: [depositor])
   end
-  let(:works) { collection.works.order(:id) }
+  let(:works) { collection.works.order(object_updated_at: :desc) }
 
   let(:cocina_object) { collection_with_metadata_fixture }
   let(:version_status) { build(:openable_version_status) }
@@ -257,7 +257,7 @@ RSpec.describe 'Show a collection' do
       within('table#deposits-table') do
         all_trs = page.all('tbody tr')
         within(all_trs.first) do
-          expect(page).to have_css('td:nth-of-type(1)', text: works[0].title)
+          expect(page).to have_css('td:nth-of-type(1)', text: collection.works.order(title: :asc).first.title)
         end
       end
     end
