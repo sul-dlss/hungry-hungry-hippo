@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Edit
-  # Component for editing contributors
-  class ContributorAffiliationComponent < ApplicationComponent
+  # Component for editing contributor affiliation
+  class AffiliationComponent < ApplicationComponent
     def initialize(form:)
       @form = form
       super()
