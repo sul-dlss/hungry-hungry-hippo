@@ -5,8 +5,6 @@ export default class extends Controller {
   static outlets = ['dropzone-files', 'tab-error']
   static targets = ['progress', 'error', 'folderAlert', 'folderAlertText']
   static values = {
-    existingFiles: { type: Number, default: 0 },
-    maxFiles: Number,
     maxFilesize: Number,
     ahoy: { type: Boolean, default: false }, // If true, ahoy will track file uploads
     formId: String
@@ -15,8 +13,6 @@ export default class extends Controller {
   // Expected error handling behavior:
   // - A blank directory is ignored.
   // - Files that are larger than maxFilesize will not be uploaded.
-  // - Only maxFiles files are accepted. This includes existing files.
-  // - For each file that is not accepted, an error message is shown.
   // - Error messages are cleared when the next file is added.
 
   connect () {
@@ -26,8 +22,7 @@ export default class extends Controller {
       createImageThumbnails: false,
       addRemoveLinks: false,
       disablePreviews: true,
-      maxFilesize: this.maxFilesizeValue,
-      maxFiles: this.maxFilesValue - this.existingFilesValue
+      maxFilesize: this.maxFilesizeValue
     })
     this.progress = 0
     this.shouldClearErrors = false

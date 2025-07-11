@@ -541,8 +541,8 @@ RSpec.describe WorkForm do
       end
 
       it 'is invalid' do
-        expect(form.valid?(:deposit)).to be false
-        expect(form.errors[:content]).to include('too many files')
+        expect(form.valid?).to be false
+        expect(form.errors[:content]).to include('too many files (maximum is 1)')
       end
     end
   end

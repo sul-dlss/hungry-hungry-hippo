@@ -187,29 +187,6 @@ RSpec.describe 'Manage files for a work', :dropzone do
     end
   end
 
-  context 'when too many files' do
-    before do
-      allow(Settings.file_upload).to receive(:max_files).and_return(1)
-    end
-
-    it 'does not accept the file' do
-      visit new_work_path(collection_druid: collection.druid)
-
-      expect(page).to have_css('h1', text: 'Untitled deposit')
-
-      # Add one file
-      find('.dropzone').drop('spec/fixtures/files/hippo.png')
-      await_upload
-
-      within('table#content-table') do
-        expect(page).to have_css('td:nth-of-type(1)', text: 'hippo.png') # Filename
-      end
-
-      find('.dropzone').drop('spec/fixtures/files/hippo.svg')
-      expect(page).to have_text('hippo.svg: You can not upload any more files.')
-    end
-  end
-
   def await_upload
     expect(page).to have_css('#file-dropzone[data-dropzone-ready="true"]')
     expect(page).to have_css('.dropzone-files[complete]')
