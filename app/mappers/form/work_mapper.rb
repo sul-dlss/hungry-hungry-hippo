@@ -57,7 +57,7 @@ module Form
     def works_contact_email
       return unless collection&.works_contact_email
 
-      return unless cocina_object.description.access.accessContact.any? do |access_contact|
+      return unless cocina_object.description.access&.accessContact&.any? do |access_contact|
         access_contact.value == collection.works_contact_email
       end
 
