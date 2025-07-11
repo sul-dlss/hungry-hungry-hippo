@@ -28,9 +28,13 @@ class ContentsController < ApplicationController
   def update
     authorize! @content
 
-    update_files
-
-    head :ok
+    if valid?
+      update_files
+      head :ok
+    else
+      render json: { error: 'Unable to upload file due to: Duplicate file. Delete the file and try again.' },
+             status: :unprocessable_entity
+    end
   end
 
   private
@@ -55,6 +59,19 @@ class ContentsController < ApplicationController
   # the total number of files in an object before any search filters are applied
   def total_files
     @content.content_files.count
+  end
+
+  def valid?
+    files = params[:content][:files]
+    files.each_key do |index|
+      # Dropzone controller is modified to provide the full path as content[:paths][index]
+      filepath = params[:content][:paths][index]
+      next if IgnoreFileService.call(filepath:)
+
+      return false if ContentFile.find_by(content: @content, filepath:)
+    end
+
+    true
   end
 
   def update_files

@@ -80,7 +80,8 @@ export default class extends Controller {
       this.errorTarget.classList.remove('d-none')
       files.forEach(file => {
         const errorElement = document.createElement('li')
-        errorElement.textContent = `${file.name}: ${message}`
+        console.log(message)
+        errorElement.textContent = `${file.name}: ${message.error}`
         this.errorTarget.appendChild(errorElement)
       })
     })
