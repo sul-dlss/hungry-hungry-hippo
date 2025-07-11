@@ -19,6 +19,12 @@ module Authentication
   MAX_URL_SIZE = ActionDispatch::Cookies::MAX_COOKIE_SIZE / 2
   SHIBBOLETH_LOGOUT_PATH = '/Shibboleth.sso/Logout'
 
+  USER_GROUPS_HEADER = 'X-Groups'
+  FIRST_NAME_HEADER =  'X-Person-Name'
+  FULL_NAME_HEADER = 'X-Person-Formal-Name'
+  REMOTE_USER_HEADER = 'X-Remote-User'
+  ORCID_ID_HEADER =  'X-Orcid-Id'
+
   included do
     # authentication will be called before require_authentication.
     # It will authenticate the user if there is a user.
@@ -44,7 +50,7 @@ module Authentication
   def remote_user
     return Settings.seed_user.email_address if Rails.env.development?
 
-    request.headers[Settings.http_headers.remote_user]
+    request.headers[REMOTE_USER_HEADER]
   end
 
   def authenticated?
@@ -53,8 +59,14 @@ module Authentication
 
   def authentication
     # This adds the cookie in development/test so that action cable can authenticate.
-    start_new_session if Rails.env.local?
+    start_new_session if start_new_session?
     resume_session
+  end
+
+  def start_new_session?
+    return true if Rails.env.development?
+
+    Rails.env.test? && user_attrs[:email_address].present?
   end
 
   def require_authentication
@@ -97,9 +109,9 @@ module Authentication
     return Settings.seed_user.to_h.except(:orcid_id) if Rails.env.development?
 
     {
-      email_address: request.headers[Settings.http_headers.remote_user],
-      name: request.headers[Settings.http_headers.full_name],
-      first_name: request.headers[Settings.http_headers.first_name]
+      email_address: request.headers[REMOTE_USER_HEADER] || request.cookies[:test_shibboleth_remote_user],
+      name: request.headers[FULL_NAME_HEADER] || request.cookies[:test_shibboleth_full_name],
+      first_name: request.headers[FIRST_NAME_HEADER] || request.cookies[:test_shibboleth_first_name]
     }
   end
 
@@ -111,7 +123,7 @@ module Authentication
     return [] unless authenticated?
 
     session['groups'] ||= begin
-      raw_header = request.headers[Settings.http_headers.user_groups] || ''
+      raw_header = request.headers[USER_GROUPS_HEADER] || ''
       raw_header.split(';')
     end
   end
@@ -134,7 +146,7 @@ module Authentication
     session['orcid'] ||= if Rails.env.development?
                            Settings.seed_user.orcid_id
                          else
-                           orcid = request.headers[Settings.http_headers.orcid_id]
+                           orcid = request.headers[ORCID_ID_HEADER]
                            orcid == '(null)' ? nil : orcid
                          end
   end

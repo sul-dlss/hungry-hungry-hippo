@@ -26,8 +26,6 @@ RSpec.describe 'Manage contributors for a work deposit' do
     allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
     allow(Doi).to receive(:assigned?).with(druid:).and_return(false)
     allow(Sdr::Event).to receive(:list).and_return([])
-
-    sign_in(user)
   end
 
   context 'without required contributors' do
@@ -57,6 +55,8 @@ RSpec.describe 'Manage contributors for a work deposit' do
           headers: { 'Accept' => 'application/json' }
         )
         .to_return(status: 404)
+
+      sign_in(user)
     end
 
     it 'manages contributors' do
@@ -251,6 +251,8 @@ RSpec.describe 'Manage contributors for a work deposit' do
     before do
       create(:collection, user:, druid: collection_druid_fixture,
                           contributors: [required_person, required_organization, required_stanford_organization])
+
+      sign_in(user)
     end
 
     it 'manages contributors' do
