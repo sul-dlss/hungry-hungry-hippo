@@ -11,12 +11,14 @@ class PersonContributorCocinaBuilder
   # @param role [String] the role of the person from ROLES
   # @param primary [Boolean] whether this is the first contributor
   # @param orcid [String] the ORCID of the person
-  def initialize(surname:, forename:, role:, primary: false, orcid: nil)
+  # @param affiliations [Array<Hash>] the affiliations of the person (:institution, :uri, :department (optional))
+  def initialize(surname:, forename:, role:, primary: false, orcid: nil, affiliations: []) # rubocop:disable Metrics/ParameterLists
     @surname = surname
     @forename = forename
     @role = role
     @primary = primary
     @orcid = orcid
+    @affiliations = affiliations
   end
 
   def call
@@ -32,21 +34,35 @@ class PersonContributorCocinaBuilder
       type: 'person',
       role: role_params,
       identifier: identifier_params,
-      status: ('primary' if primary)
-
-      # NOTE: affiliations.map { |affiliation_attrs| affiliation(**affiliation_attrs) }.presence
+      status: ('primary' if primary),
+      note: note_params
     }.compact
   end
 
   private
 
-  attr_reader :forename, :surname, :role, :primary, :orcid
+  attr_reader :forename, :surname, :role, :primary, :orcid, :affiliations
 
   def role_params
     cocina_role = ContributorRoleCocinaBuilder.call(role:)
     return if cocina_role.nil?
 
     [cocina_role]
+  end
+
+  def note_params
+    return if affiliations.empty?
+
+    affiliations.map do |affiliation|
+      ContributorAffiliationCocinaBuilder.call(**affiliation_params(affiliation))
+    end
+  end
+
+  def affiliation_params(affiliation)
+    return affiliation if affiliation.is_a?(Hash)
+
+    # return the attributes as a hash with symbolized keys if it's an AffiliationForm object
+    affiliation.attributes.symbolize_keys
   end
 
   def identifier_params

@@ -28,6 +28,7 @@ module Form
         attributes[:person_role] = contributor.role
         attributes[:with_orcid] = contributor.orcid.present?
         attributes[:stanford_degree_granting_institution] = false
+        attributes[:affiliations_attributes] = affiliation_attributes
       end
     end
 
@@ -38,6 +39,15 @@ module Form
         attributes[:stanford_degree_granting_institution] =
           contributor.role == 'degree_granting_institution' && contributor.organization_name == 'Stanford University'
         attributes[:with_orcid] = false
+        attributes[:affiliations_attributes] = [] # Required to avoid empty Affiliations form(s)
+      end
+    end
+
+    def affiliation_attributes
+      return [] unless contributor.affiliations.any?
+
+      contributor.affiliations.map do |affiliation|
+        affiliation.attributes.slice('institution', 'uri', 'department').symbolize_keys
       end
     end
   end

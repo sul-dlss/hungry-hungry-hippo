@@ -8,6 +8,12 @@ FactoryBot.define do
     role { 'author' }
     role_type { 'person' }
     orcid { '0001-0002-0003-0004' }
+
+    trait :with_affiliation do
+      after(:create) do |contributor|
+        create(:affiliation, :with_department, contributor:)
+      end
+    end
   end
 
   factory :organization_contributor, class: 'Contributor' do

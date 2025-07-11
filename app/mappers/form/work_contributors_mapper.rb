@@ -31,13 +31,31 @@ module Form
           'suborganization_name' => suborganization_name,
           'stanford_degree_granting_institution' => stanford_degree_granting_institution?,
           'orcid' => orcid,
-          'with_orcid' => orcid.present?
+          'with_orcid' => orcid.present?,
+          'affiliations_attributes' => affiliations
         }
       end
 
       private
 
       attr_reader :contributor
+
+      def affiliations
+        contributor.note.select { |note| note.type == 'affiliation' }.map do |note|
+          affiliation_from_note(note:)
+        end
+      end
+
+      def affiliation_from_note(note:)
+        institution = note.structuredValue.find { |descriptive_value| descriptive_value.identifier.present? }
+        department = note.structuredValue.find { |descriptive_value| descriptive_value.identifier.blank? }
+
+        {
+          'institution' => institution.value,
+          'uri' => institution.identifier.find { |id| id.type == 'ROR' }&.uri,
+          'department' => department&.value
+        }.compact
+      end
 
       def first_name
         full_name.find { |name| name.type == 'forename' }&.value

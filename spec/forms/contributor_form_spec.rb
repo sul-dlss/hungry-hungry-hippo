@@ -6,7 +6,7 @@ RSpec.describe ContributorForm do
   describe 'validations' do
     let(:form) do
       described_class.new(role_type:, person_role:, organization_role:, first_name:, last_name:,
-                          with_orcid:, orcid:, organization_name:)
+                          with_orcid:, orcid:, organization_name:, affiliations_attributes:)
     end
 
     let(:role_type) { 'person' }
@@ -17,6 +17,7 @@ RSpec.describe ContributorForm do
     let(:first_name) { '' }
     let(:last_name) { '' }
     let(:organization_name) { '' }
+    let(:affiliations_attributes) { nil }
 
     context 'when empty form' do
       it 'is valid' do
@@ -52,6 +53,37 @@ RSpec.describe ContributorForm do
 
       it 'is valid' do
         expect(form).to be_valid
+      end
+    end
+
+    context 'when an author affiliation is provided' do
+      let(:affiliations_attributes) do
+        [
+          {
+            institution: 'Stanford University',
+            uri: 'https://ror.org/01abcd',
+            department: 'Department of History'
+          }
+        ]
+      end
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+    end
+
+    context 'when an invalid author affiliation is provided' do
+      let(:affiliations_attributes) do
+        [
+          {
+            institution: 'Stanford University',
+            department: 'Department of History'
+          }
+        ]
+      end
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
       end
     end
 
