@@ -1,13 +1,24 @@
-<%# Plain-old name fields (not orcid) %>
-<div data-contributors-target="notOrcidSection">
+<%= tag.div data: {
+              controller: 'autocomplete autocomplete-organization-ror',
+              autocomplete_url_value: '/affiliations/search',
+              autocomplete_query_param_value: 'query',
+              autocomplete_min_length_value: '3'
+            },
+            class: 'mb-3' do %>
   <div class="row">
     <div class="col">
-      <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :institution, label:helpers.t('works.edit.fields.contributor_affiliations.institution.label'), tooltip: helpers.t('works.edit.fields.contributor_affiliations.institution.tooltip_html'), container_classes: 'mb-4') %>
-      <%= form.hidden_field :uri, { required: true, 'aria-label': "#{unique_field_id}_uri", data: { autocomplete_affiliations_target: 'uri' } } %>
+      <%= render Elements::Forms::TextFieldComponent.new(form:,
+                                                         field_name: :institution,
+                                                         label: helpers.t('works.edit.fields.contributor_affiliations.institution.label'),
+                                                         tooltip: helpers.t('works.edit.fields.contributor_affiliations.institution.tooltip_html'),
+                                                         container_classes: 'mb-4',
+                                                         input_data: { autocomplete_target: 'input', autocomplete_organization_ror_target: 'input' }) %>
+      <ul class="list-group" data-autocomplete-target="results" style="overflow-y: scroll; max-height: 425px;"></ul>
+      <input type="hidden" data-autocomplete-target="hidden" data-autocomplete-organization-ror-target="value" data-action="autocomplete-organization-ror#change" aria-label="autocomplete">
+      <%= form.hidden_field :uri, { required: true, 'aria-label': 'uri', data: { autocomplete_organization_ror_target: 'uri' } } %>
     </div>
     <div class="col">
       <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :department, label: helpers.t('works.edit.fields.contributor_affiliations.department.label'), tooltip: helpers.t('works.edit.fields.contributor_affiliations.department.tooltip_html'), container_classes: 'mb-4') %>
     </div>
   </div>
-</div>
-
+<% end %>

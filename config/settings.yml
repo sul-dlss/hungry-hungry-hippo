@@ -94,4 +94,4 @@ google_analytics:
   enabled: false
 
 ror:
-  url: 'https://api.ror.org/v2'
+  url: https://api.ror.org
