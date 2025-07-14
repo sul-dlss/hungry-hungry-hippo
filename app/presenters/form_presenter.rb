@@ -25,4 +25,8 @@ class FormPresenter < SimpleDelegator
       link_to_new_tab(related_link.text || related_link.url, related_link.url)
     end
   end
+
+  def user_display(user)
+    "#{user.name} (#{user.sunetid})"
+  end
 end

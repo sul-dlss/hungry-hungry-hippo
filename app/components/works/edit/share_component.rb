@@ -18,7 +18,7 @@ module Works
       def value
         return unless sunetid
 
-        "#{sunetid}: #{name}"
+        "#{name} (#{sunetid})"
       end
 
       def aria_label

@@ -143,19 +143,19 @@ RSpec.describe 'Edit a collection' do
 
     # Remove the manager
     within form_instances[0] do
-      expect(page).to have_css('.participant-label', text: 'alborland: Al Borland') # Manager
+      expect(page).to have_css('.participant-label', text: 'Al Borland (alborland)') # Manager
       find('button[data-action="click->nested-form#delete"]').click
     end
-    expect(page).to have_no_text('alborland: Al Borland')
+    expect(page).to have_no_text('Al Borland (alborland)')
 
     fill_in('managers-textarea', with: 'stepking@stanford.edu')
     click_link_or_button('Add managers')
-    expect(page).to have_css('.participant-label', text: 'stepking: Stephen King')
+    expect(page).to have_css('.participant-label', text: 'Stephen King (stepking)')
 
     # Fill in the depositor form
     fill_in('depositors-textarea', with: 'joehill')
     click_link_or_button('Add depositors')
-    expect(page).to have_css('.participant-label', text: 'joehill: Joe Hill')
+    expect(page).to have_css('.participant-label', text: 'Joe Hill (joehill)')
 
     find('label', text: 'Send email to Collection Managers and Reviewers ' \
                         '(see Workflow section of form) when participants are added/removed').click
@@ -170,7 +170,7 @@ RSpec.describe 'Edit a collection' do
 
     fill_in('reviewers-textarea', with: 'pennywise')
     click_link_or_button('Add reviewers')
-    expect(page).to have_css('.participant-label', text: 'pennywise: Pennywise')
+    expect(page).to have_css('.participant-label', text: 'Pennywise (pennywise')
 
     # Clicking on Next to go to type of deposit tab
     click_link_or_button('Next')

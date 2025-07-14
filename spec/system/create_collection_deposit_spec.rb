@@ -115,18 +115,18 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_text('Managers')
     form_instances = page.all('.form-instance')
     within(form_instances[0]) do
-      expect(page).to have_css('span', text: 'jswithen: John Swithen')
+      expect(page).to have_css('span', text: 'John Swithen (jswithen)')
       expect(page).to have_button('Clear John Swithen')
     end
 
     fill_in('managers-textarea', with: 'stepking@stanford.edu')
     click_link_or_button('Add managers')
-    expect(page).to have_css('.participant-label', text: 'stepking: Stephen King')
+    expect(page).to have_css('.participant-label', text: 'Stephen King (stepking)')
     expect(page).to have_button('Clear Stephen King')
 
     fill_in('depositors-textarea', with: 'notjoehill, joehill')
     click_link_or_button('Add depositors')
-    expect(page).to have_css('.participant-label', text: 'joehill: Joe Hill')
+    expect(page).to have_css('.participant-label', text: 'Joe Hill (joehill)')
     expect(page).to have_field('depositors-textarea', with: 'notjoehill')
 
     expect(page).to have_checked_field('Send email to Collection Managers and Reviewers ' \
@@ -142,7 +142,7 @@ RSpec.describe 'Create a collection deposit' do
     find('label', text: 'Yes').click
     fill_in('reviewers-textarea', with: 'pennywise')
     click_link_or_button('Add reviewers')
-    expect(page).to have_css('.participant-label', text: 'pennywise: Pennywise')
+    expect(page).to have_css('.participant-label', text: 'Pennywise (pennywise)')
 
     # Clicking on Next to go to the type of deposit tab
     click_link_or_button('Next')

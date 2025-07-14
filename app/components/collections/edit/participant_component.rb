@@ -18,7 +18,7 @@ module Collections
       def value
         return unless sunetid
 
-        "#{sunetid}: #{name}"
+        "#{name} (#{sunetid})"
       end
 
       # This method is invoked by RepeatableNestedComponent to label the delete button.
