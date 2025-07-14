@@ -267,6 +267,11 @@ en:
           label: 'Abstract'
           tooltip_html: >-
             The abstract should describe the content you are depositing and its relation to or context within any other published works or larger projects. If you are depositing a dataset related to a publication, please describe the dataset itself and not the publication.
+        affiliations:
+          institution:
+            label: 'Institution'
+          department:
+            label: 'Department'
         citation:
           label: 'Enter preferred citation'
         contributors:
