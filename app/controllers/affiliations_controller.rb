@@ -2,11 +2,9 @@
 
 # Looks up data for organizations from the ROR service
 class AffiliationsController < ApplicationController
-  verify_authorized
+  skip_verify_authorized only: %i[search]
 
   def search
-    authorize! with: WorkPolicy
-
     @organizations = lookup_organization
     return head :not_found if @organizations.empty?
 
