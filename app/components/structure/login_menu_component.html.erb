@@ -7,6 +7,9 @@
       Logged in: <%= helpers.current_user.name || helpers.current_user.sunetid %><% if admin? %> (Admin)<% end %>
     </button>
     <ul class="dropdown-menu">
+      <% if admin? %>
+        <li><%= link_to 'Admin dashboard', admin_dashboard_path, class: 'dropdown-item' %></li>
+      <% end %>
       <li><%= link_to 'Dashboard', dashboard_path, class: 'dropdown-item' %></li>
       <li><%= link_to 'Logout', logout_path, class: 'dropdown-item' %></li>
     </ul>
