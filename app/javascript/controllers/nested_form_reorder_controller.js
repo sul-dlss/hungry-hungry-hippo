@@ -19,7 +19,7 @@ export default class extends Controller {
     if (!this.hasContainerTarget) return
     this.containerTarget.querySelectorAll('.form-instance').forEach((instanceEl, index) => {
       instanceEl.querySelectorAll('.move-up').forEach((btnEl) => btnEl.classList.toggle('d-none', index === 0))
-      instanceEl.querySelectorAll('.move-down').forEach((btnEl) => btnEl.classList.toggle('d-none', index === this.instanceTargets.length - 1))
+      instanceEl.querySelectorAll('.move-down').forEach((btnEl) => btnEl.classList.toggle('d-none', index === this.instanceTargets.length - 2))
     })
   }
 

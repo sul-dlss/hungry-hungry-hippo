@@ -9,7 +9,9 @@ class AffiliationForm < ApplicationForm
 
   attribute :uri, :string
   validates :uri, presence: true, if: ->(affiliation) { affiliation.institution.present? }
-
+  # validates :uri, format: { with: /\Ahttps:\/\/ror\.org\/0\w{6}\z/,
+  #                           message: I18n.t('contributors.validation.affiliations.uri.invalid') },
+  #                 allow_blank: true
   attribute :department, :string
 
   def empty?

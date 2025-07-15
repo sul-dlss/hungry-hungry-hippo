@@ -82,7 +82,6 @@ RSpec.describe 'Manage contributors for a work deposit' do
       form_instances = all('.form-instance')
       expect(form_instances.count).to eq(2)
       expect(form_instances[0]).to have_no_css('.move-up')
-      debugger
       expect(form_instances[0]).to have_no_css('.move-down')
 
       # Fill in the contributor form
@@ -96,14 +95,14 @@ RSpec.describe 'Manage contributors for a work deposit' do
         fill_in('Last name', with: 'Stanford')
         fill_in('Institution', with: 'Stanford University')
         find('li.list-group-item', text: 'Stanford University').click
-        fill_in('Department', with: 'Department of History')
+        fill_in('Department/Center', with: 'Department of History')
       end
 
       click_link_or_button('Add another contributor')
 
       # There are now two contributor forms
       form_instances = all('.form-instance')
-      expect(form_instances.count).to eq(3)
+      expect(form_instances.count).to eq(4)
       expect(form_instances[0]).to have_no_css('.move-up')
       expect(form_instances[0]).to have_css('.move-down')
       expect(form_instances[2]).to have_css('.move-up')
@@ -118,7 +117,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
 
       click_link_or_button('Add another contributor')
       form_instances = all('.form-instance')
-      expect(form_instances.count).to eq(4)
+      expect(form_instances.count).to eq(5)
       expect(form_instances[0]).to have_no_css('.move-up')
       expect(form_instances[0]).to have_css('.move-down')
       expect(form_instances[2]).to have_css('.move-up')
@@ -132,38 +131,38 @@ RSpec.describe 'Manage contributors for a work deposit' do
       end
 
       form_instances = all('.form-instance')
-      expect(form_instances.pluck('data-index')).to eq %w[1 0 2]
+      expect(form_instances.pluck('data-index')).to eq %w[1 0 0 2 0]
       expect(form_instances[0]).to have_no_css('.move-up')
       expect(form_instances[0]).to have_css('.move-down')
-      expect(form_instances[2]).to have_css('.move-up')
-      expect(form_instances[2]).to have_css('.move-down')
+      expect(form_instances[1]).to have_css('.move-up')
+      expect(form_instances[1]).to have_css('.move-down')
       expect(form_instances[3]).to have_css('.move-up')
       expect(form_instances[3]).to have_no_css('.move-down')
 
       # Move up the last contributor form
-      within form_instances.last do
+      within form_instances[3] do
         click_link_or_button('Move up')
       end
 
       form_instances = all('.form-instance')
-      expect(form_instances.pluck('data-index')).to eq %w[1 2 0]
+      expect(form_instances.pluck('data-index')).to eq %w[1 2 0 0 0]
 
       # Delete the (empty) second contributor form
       within form_instances[1] do
-        click_link_or_button('Clear')
+        first('button', text: 'Clear').click
       end
 
       form_instances = all('.form-instance')
-      expect(form_instances.count).to eq(3)
+      expect(form_instances.count).to eq(5)
       expect(form_instances[0]).to have_no_css('.move-up')
       expect(form_instances[0]).to have_css('.move-down')
-      expect(form_instances[2]).to have_css('.move-up')
-      expect(form_instances[2]).to have_no_css('.move-down')
+      expect(form_instances[1]).to have_css('.move-up')
+      expect(form_instances[3]).to have_no_css('.move-down')
 
       # Add a degree granting institution that is Stanford.
       click_link_or_button('Add another contributor')
       form_instances = all('.form-instance')
-      within form_instances[3] do
+      within form_instances[5] do
         find('label', text: 'Organization').click
         expect(page).to have_no_text('Is Stanford the institution?')
         select('Degree granting institution', from: 'Role')
@@ -177,7 +176,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
       # Add a degree granting institution that is not Stanford.
       click_link_or_button('Add another contributor')
       form_instances = all('.form-instance')
-      within form_instances[4] do
+      within form_instances[6] do
         find('label', text: 'Organization').click
         select('Degree granting institution', from: 'Role')
         within('.stanford-degree-granting-institution-section') do
@@ -189,7 +188,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
       # Add a contributor with an ORCID
       click_link_or_button('Add another contributor')
       form_instances = all('.form-instance')
-      within form_instances[5] do
+      within form_instances[7] do
         expect(page).to have_field('First name', disabled: true)
         expect(page).to have_field('Last name', disabled: true)
 
@@ -303,7 +302,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
       click_link_or_button('Add another contributor')
       form_instances = all('.form-instance')
       expect(form_instances.count).to eq(5)
-      within(form_instances.last) do
+      within(form_instances[3]) do
         within('.orcid-section') do
           find('label', text: 'Enter name manually').click
         end
@@ -332,6 +331,12 @@ RSpec.describe 'Manage contributors for a work deposit' do
       within(form_instances[1]) do
         expect(page).to have_text('Required author / contributor')
         expect(page).to have_text("#{required_organization.organization_name} (Funder) will be included")
+      end
+
+      within(form_instances[2]) do
+        expect(page).to have_text('Required author / contributor')
+        expect(page).to have_text('Stanford University (Degree Granting Institution), ' \
+                                  'Department of Philosophy (Department) will be included')
       end
 
       within(form_instances[3]) do

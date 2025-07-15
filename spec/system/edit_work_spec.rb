@@ -113,7 +113,7 @@ RSpec.describe 'Edit a work' do
       expect(page).to have_field('First name', with: 'Jane')
       expect(page).to have_field('Last name', with: 'Stanford')
       expect(page).to have_field('Institution', with: 'Stanford University')
-      expect(page).to have_field('Department', with: 'Department of History')
+      expect(page).to have_field('Department/Center', with: 'Department of History')
     end
     within(form_instances[2]) do
       expect(page).to have_checked_field('Organization', with: 'organization')

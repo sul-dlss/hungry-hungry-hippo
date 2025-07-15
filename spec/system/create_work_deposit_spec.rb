@@ -108,7 +108,7 @@ RSpec.describe 'Create a work deposit' do
       fill_in('Last name', with: 'Stanford')
       fill_in('Institution', with: 'Stanford University')
       find('li.list-group-item', text: 'Stanford University').click
-      fill_in('Department', with: 'Department of History')
+      fill_in('Department/Center', with: 'Department of History')
 
       click_link_or_button('Add another contributor')
       form_instance = page.all('.form-instance')[2]

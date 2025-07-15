@@ -5,7 +5,7 @@
               autocomplete_min_length_value: '3'
             },
             class: 'mb-3' do %>
-  <div class="row">
+  <div class="row" class="mb-3">
     <div class="col">
       <%= render Elements::Forms::TextFieldComponent.new(form:,
                                                          field_name: :institution,
@@ -19,6 +19,12 @@
     </div>
     <div class="col">
       <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :department, label: helpers.t('works.edit.fields.affiliations.department.label'), tooltip: helpers.t('works.edit.fields.affiliations.department.tooltip_html'), container_classes: 'mb-4') %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div data-controller="invalid-feedback" data-invalid-feedback-tab-error-outlet=".tab-error" data-invalid-feedback-tab-value="affiliations">
+      <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :uri, data: { invalid_feedback_target: 'feedback' }, classes: 'mb-2') %>
     </div>
   </div>
 <% end %>

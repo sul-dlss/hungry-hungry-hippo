@@ -107,12 +107,11 @@
       </div>
 
       <%= render Elements::HorizontalRuleComponent.new %>
-
-      <div data-controller="invalid-feedback" data-invalid-feedback-tab-error-outlet=".tab-error" data-invalid-feedback-tab-value="affiliations">
-        <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :affiliations, data: { invalid_feedback_target: 'feedback' }) %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :affiliations, model_class: AffiliationForm, form_component: Edit::AffiliationComponent, bordered: false, fieldset_classes: 'pane-section') %>
+      <div class="row mb-3 p-3">
+        <div class="col">
+          <%= render NestedComponentPresenter.for(form:, field_name: :affiliations, model_class: AffiliationForm, form_component: Edit::AffiliationComponent, bordered: false, fieldset_classes: 'pane-section') %>
+        </div>
       </div>
-
     <% end %>
 
     <%# Contributor organization name field %>
