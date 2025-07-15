@@ -51,7 +51,7 @@ export default class extends Controller {
 
   addParticipant (accountData) {
     const formInstanceEl = this.nestedFormOutlet.add()
-    formInstanceEl.querySelector('.participant-label').innerHTML = `${accountData.sunetid}: ${accountData.name}`
+    formInstanceEl.querySelector('.participant-label').innerHTML = `${accountData.name} (${accountData.sunetid})`
     formInstanceEl.querySelector('input[name$="[sunetid]"]').value = accountData.sunetid
     formInstanceEl.querySelector('input[name$="[name]"]').value = accountData.name
     formInstanceEl.querySelector('[data-delete-btn] .visually-hidden').innerHTML = `Clear ${accountData.name}`

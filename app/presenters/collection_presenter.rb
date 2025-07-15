@@ -16,7 +16,7 @@ class CollectionPresenter < FormPresenter
   # @param [Symbol] role :managers or :depositors
   # @return [Array<String>] an array of formatted sunetids and names
   def participants(role)
-    collection.send(role).map { |participant| "#{participant.name} (#{participant.sunetid})" }
+    collection.send(role).map { |participant| user_display(participant) }
   end
 
   def release
@@ -82,7 +82,7 @@ class CollectionPresenter < FormPresenter
   end
 
   def created_by
-    collection.user.name
+    user_display(collection.user)
   end
 
   def created_datetime

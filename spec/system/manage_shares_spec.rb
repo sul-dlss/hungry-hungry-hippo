@@ -39,7 +39,7 @@ RSpec.describe 'Manage shares' do
 
       expect(page).to have_css('h1', text: work.title)
 
-      expect(page).to have_text('Jane Stanford, Leland Stanford Jr.')
+      expect(page).to have_text('Jane Stanford (jane), Leland Stanford Jr. (junior)')
 
       click_link_or_button('Manage sharing')
 
@@ -56,14 +56,14 @@ RSpec.describe 'Manage shares' do
       expect(form_instances.size).to eq(2)
 
       within(form_instances[0]) do
-        expect(page).to have_css('span', text: 'jane: Jane Stanford')
+        expect(page).to have_css('span', text: 'Jane Stanford (jane)')
         expect(page).to have_field('Share permission', with: Share::VIEW_PERMISSION)
         expect(page).to have_css('section[aria-label="Set sharing permissions for Jane Stanford"]')
         select('View and edit', from: 'Share permission')
       end
 
       within(form_instances[1]) do
-        expect(page).to have_css('span', text: 'junior: Leland Stanford Jr.')
+        expect(page).to have_css('span', text: 'Leland Stanford Jr. (junior)')
         expect(page).to have_field('Share permission', with: Share::VIEW_EDIT_DEPOSIT_PERMISSION)
         click_link_or_button('Clear')
       end
@@ -75,13 +75,13 @@ RSpec.describe 'Manage shares' do
       fill_in('Enter list of Stanford email addresses', with: 'dsj')
       click_link_or_button('Add')
 
-      expect(page).to have_css('span', text: 'dsj: David Starr Jordan')
+      expect(page).to have_css('span', text: 'David Starr Jordan (dsj)')
 
       click_link_or_button('Save')
 
       expect(page).to have_current_path(work_path(druid))
 
-      expect(page).to have_text('David Starr Jordan, Jane Stanford')
+      expect(page).to have_text('David Starr Jordan (dsj), Jane Stanford (jane)')
 
       expect(Share.find_by(work:, user: changing_share_user).permission).to eq(Share::VIEW_EDIT_PERMISSION)
       expect(Share.exists?(work:, user: deleting_share_user)).to be false

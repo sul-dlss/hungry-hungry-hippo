@@ -44,7 +44,7 @@ class WorkPresenter < FormPresenter
   end
 
   def depositor
-    "#{user.name} (#{user.sunetid})"
+    user_display(user)
   end
 
   def keywords
@@ -132,6 +132,10 @@ class WorkPresenter < FormPresenter
 
   def contact_emails
     (contact_emails_attributes.map(&:email) + [works_contact_email]).compact.join(', ')
+  end
+
+  def shared_with
+    share_users.order(:name).map { |user| user_display(user) }.join(', ')
   end
 
   private
