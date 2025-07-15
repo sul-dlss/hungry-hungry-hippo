@@ -39,5 +39,4 @@ class RorService
       'User-Agent' => 'Stanford Self-Deposit (Hungry Hungry Hippo)'
     }
   end
-
 end

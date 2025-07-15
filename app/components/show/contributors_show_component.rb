@@ -63,7 +63,7 @@ module Show
     def contributor_affiliations(contributor)
       return if contributor.affiliations.empty?
 
-      contributor.affiliations.map(&:institution).compact.join(', ')
+      contributor.affiliations.filter_map(&:institution).compact.join(', ')
     end
   end
 end
