@@ -15,7 +15,7 @@ class DepositCollectionJob < ApplicationJob
     new_cocina_object = perform_persist
     @druid = collection.druid || new_cocina_object.externalIdentifier
 
-    submit_sdr_event # This has to be called before the collection is updated
+    submit_sdr_event # This has to be called before persisting to SDR.
     update_collection_record
 
     if new_cocina_object
@@ -143,9 +143,11 @@ class DepositCollectionJob < ApplicationJob
   end
 
   def submit_sdr_event
+    return unless collection_form.persisted?
+
     setting_changes = SettingChangesDiffer.call(collection_form:, collection:)
 
-    return unless collection_form.persisted? && setting_changes.present?
+    return if setting_changes.blank?
 
     Sdr::Event.create(druid:,
                       type: 'h3_collection_settings_updated',
@@ -168,10 +170,10 @@ class DepositCollectionJob < ApplicationJob
     end
 
     # @return [Array<String>] a list of changes made to the collection
-    def call # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+    def call # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength
       [].tap do |changes|
-        changes << 'Release settings modified' if changed?(:release_option, :release_duration)
-        changes << 'Access setting modified' if changed?(:access)
+        changes << 'When files are downloadable modified' if changed?(:release_option, :release_duration)
+        changes << 'Who can download files modified' if changed?(:access)
         changes << 'DOI setting modified' if changed?(:doi_option)
         changes << 'License setting modified' if changed?(:license_option, :license)
         changes << 'Notification settings modified' if changed?(:email_when_participants_changed,
@@ -182,6 +184,11 @@ class DepositCollectionJob < ApplicationJob
                                                               :custom_rights_statement_instructions)
         changes << "Added depositors: #{added_depositors.join('; ')}" if added_depositors.present?
         changes << "Removed depositors: #{removed_depositors.join('; ')}" if removed_depositors.present?
+        changes << "Added managers: #{added_managers.join('; ')}" if added_managers.present?
+        changes << "Removed managers: #{removed_managers.join('; ')}" if removed_managers.present?
+        changes << 'Type of deposit modified' if changed?(:work_type, :work_subtypes)
+        changes << 'Work email modified' if changed?(:works_contact_email)
+        changes << 'Work contributors modified' if nested_changed?(:contributors)
       end
     end
 
@@ -189,8 +196,16 @@ class DepositCollectionJob < ApplicationJob
 
     attr_reader :collection_form, :collection
 
+    def original_collection_form
+      @original_collection_form ||= Form::CollectionMapper.call(cocina_object:, collection:)
+    end
+
+    def cocina_object
+      Sdr::Repository.find(druid: collection.druid)
+    end
+
     def changed?(*fields)
-      fields.any? { |field| collection_form.send(field).presence != collection.send(field).presence }
+      fields.any? { |field| collection_form.send(field).presence != original_collection_form.send(field).presence }
     end
 
     def added_depositors
@@ -207,6 +222,33 @@ class DepositCollectionJob < ApplicationJob
 
     def collection_form_depositors
       @collection_form_depositors ||= collection_form.depositors.filter_map(&:name).to_set
+    end
+
+    def added_managers
+      @added_managers ||= (collection_form_managers - collection_managers).to_a
+    end
+
+    def removed_managers
+      @removed_managers ||= (collection_managers - collection_form_managers).to_a
+    end
+
+    def collection_managers
+      @collection_managers ||= collection.managers.pluck(:name).to_set
+    end
+
+    def collection_form_managers
+      @collection_form_managers ||= collection_form.managers.filter_map(&:name).to_set
+    end
+
+    def nested_changed?(*fields)
+      fields.any? do |field|
+        nested_field(collection_form, field) != nested_field(original_collection_form, field)
+      end
+    end
+
+    def nested_field(form, field)
+      nested_forms = form.send(field).reject(&:empty?)
+      nested_forms.to_set(&:attributes)
     end
   end
 end
