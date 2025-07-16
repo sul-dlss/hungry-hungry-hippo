@@ -458,8 +458,17 @@ en:
         deposit:
           tab_label: 'Save your collection'
           label: 'Save your collection'
-          help_text: >-
-              If required sections are incomplete, you will be directed to update the information.
+          help_text_html: >-
+              <p>If required sections are incomplete, you will be directed to update the information.</p>
+              <p>If you made changes to the any of the following and want these changes to apply to existing items in this collection, you must redeposit the items:
+                <ul>
+                  <li>Access settings</li>
+                  <li>License</li>
+                  <li>Terms of use</li>
+                  <li>Type of deposit</li>
+                  <li>Contact email for deposits</li>
+                  <li>Contributors</li>
+                </ul></p>
         contributors:
           tab_label: 'Contributors (optional)'
           label: 'Add contributors for all deposits (optional)'
