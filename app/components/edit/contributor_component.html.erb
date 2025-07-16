@@ -107,10 +107,8 @@
       </div>
 
       <%= render Elements::HorizontalRuleComponent.new %>
-      <div class="row mb-3 p-3">
-        <div class="col">
-          <%= render NestedComponentPresenter.for(form:, field_name: :affiliations, model_class: AffiliationForm, form_component: Edit::AffiliationComponent, bordered: false, fieldset_classes: 'pane-section') %>
-        </div>
+      <div class="mb-3 p-3">
+        <%= render NestedComponentPresenter.for(form:, field_name: :affiliations, model_class: AffiliationForm, form_component: Edit::AffiliationComponent, bordered: false, fieldset_classes: 'pane-section') %>
       </div>
     <% end %>
 
