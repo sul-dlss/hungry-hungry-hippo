@@ -9,16 +9,17 @@ RSpec.describe Dashboard::Show::CollectionWorksListComponent, type: :component d
   end
   let(:work_without_druid) { create(:work, user: current_user, collection:) }
   let(:work_in_collection) { create(:work, :with_druid, user: work_in_collection_user, collection:) }
-  let(:work_with_doi) { create(:work, :with_druid, user: current_user, collection:) }
+  let!(:work_with_doi) { create(:work, :with_druid, user: current_user, collection:) }
   let(:work_in_review) { create(:work, :with_druid, user: current_user, collection:, review_state: 'pending_review') }
   let(:collection) { create(:collection, druid: collection_druid_fixture, depositors: [current_user]) }
   let(:current_user) { create(:user) }
   let(:status_map) do
+    # work_with_doi is intentionally not included in the status map to test handling when status is
+    # missing (possibly due to race)
     {
       work.id => build(:first_draft_version_status),
       work_without_druid.id => VersionStatus::NilStatus.new,
       work_in_collection.id => VersionStatus::NilStatus.new,
-      work_with_doi.id => VersionStatus::NilStatus.new,
       work_in_review.id => VersionStatus::NilStatus.new
     }
   end
