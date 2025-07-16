@@ -14,4 +14,8 @@ export default class extends Controller {
       this.typeTarget.value = cocinaType
     }
   }
+
+  preventEnter (event) {
+    if (event.key === 'Enter') event.preventDefault()
+  }
 }
