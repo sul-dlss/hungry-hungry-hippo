@@ -27,7 +27,7 @@ module Dashboard
       end
 
       def values_for(work)
-        presenter = WorkPresenter.new(work:, version_status: @status_map[work.id],
+        presenter = WorkPresenter.new(work:, version_status: @status_map.fetch(work.id, VersionStatus::NilStatus.new),
                                       work_form: WorkForm.new(druid: work.druid))
         [
           link_to(work.title, work_or_wait_path(work)),
