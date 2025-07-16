@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe RorService do
-  subject(:organizations) { described_class.organizations(query:) }
+  subject(:organizations) { described_class.call(search:) }
 
-  let(:query) { 'stanford' }
+  let(:search) { 'stanford' }
   let(:body) { File.read('spec/fixtures/files/stanford_ror.json') }
 
   before do
-    stub_request(:get, "https://api.ror.org/organizations?query=#{query}")
+    stub_request(:get, "https://api.ror.org/organizations?query=#{search}")
       .with(headers: { 'Accept' => 'application/json' })
       .to_return(status: 200, body:, headers: { 'Content-Type': 'application/json;charset=UTF-8' })
   end

@@ -14,6 +14,6 @@ class AffiliationsController < ApplicationController
   private
 
   def lookup_organization
-    RorService.organizations(query: params[:query])
+    RorService.call(search: params[:query])
   end
 end

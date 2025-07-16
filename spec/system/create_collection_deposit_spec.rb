@@ -11,14 +11,14 @@ RSpec.describe 'Create a collection deposit' do
     cocina_object = build(:collection, title: collection_title_fixture, id: druid)
     Cocina::Models.with_metadata(cocina_object, 'abc123')
   end
-  let(:affiliation_query) { { query: 'Stanford University' } }
+  let(:affiliation_query) { { search: 'Stanford University' } }
   let(:affiliation_ror) { [{ 'id' => 'https://ror.org/00f54p054', 'name' => 'Stanford University' }] }
 
   let(:version_status) { build(:first_accessioning_version_status) }
 
   before do
     # Stubbing out ROR
-    allow(RorService).to receive(:organizations).with(affiliation_query).and_return(affiliation_ror)
+    allow(RorService).to receive(:call).with(affiliation_query).and_return(affiliation_ror)
 
     # Stubbing out for Deposit Job
     allow(Sdr::Repository).to receive(:register) do |args|

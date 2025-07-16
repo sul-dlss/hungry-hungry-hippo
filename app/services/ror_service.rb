@@ -2,28 +2,33 @@
 
 # Class for ROR support
 class RorService
-  def self.organizations(query:)
-    organizations = new.query(path: '/organizations', params: { query: })
-    return [] if organizations['number_of_results'].to_i.zero?
-
-    organizations['items'].map { |org| org.slice('id', 'name') }
+  def self.call(...)
+    new(...).call
   end
 
-  def initialize
+  def initialize(search:)
+    @search = search
     @conn = new_conn
   end
 
-  attr_reader :conn
+  def call
+    results = organizations
+    return [] if results['number_of_results'].to_i.zero?
 
-  def query(path:, params: {})
-    conn.get(path, params.compact, headers).body
+    results['items'].map { |org| org.slice('id', 'name') }
+  end
+
+  attr_reader :conn, :search
+
+  private
+
+  def organizations
+    conn.get('/organizations', params, headers).body
   rescue Faraday::Error => e
     raise Error, "Connection err: #{e.message}"
   rescue JSON::ParserError => e
     raise Error, "JSON parsing error: #{e.message}"
   end
-
-  private
 
   def new_conn
     Faraday.new({ url: Settings.ror.url }) do |f|
@@ -38,5 +43,9 @@ class RorService
       'Accept' => 'application/json',
       'User-Agent' => 'Stanford Self-Deposit (Hungry Hungry Hippo)'
     }
+  end
+
+  def params
+    { query: search }
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
   let(:version_status) { build(:first_accessioning_version_status) }
-  let(:affiliation_query) { { query: 'Stanford University' } }
+  let(:affiliation_query) { { search: 'Stanford University' } }
   let(:affiliation_ror) { [{ 'id' => 'https://ror.org/00f54p054', 'name' => 'Stanford University Affiliation' }] }
 
   before do
@@ -30,7 +30,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
     allow(Sdr::Event).to receive(:list).and_return([])
 
     # Stubbing out ROR
-    allow(RorService).to receive(:organizations).with(affiliation_query).and_return(affiliation_ror)
+    allow(RorService).to receive(:call).with(affiliation_query).and_return(affiliation_ror)
   end
 
   context 'without required contributors' do
