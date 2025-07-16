@@ -26,8 +26,6 @@ class RorService
     conn.get('/organizations', params, headers).body
   rescue Faraday::Error => e
     raise Error, "Connection err: #{e.message}"
-  rescue JSON::ParserError => e
-    raise Error, "JSON parsing error: #{e.message}"
   end
 
   def new_conn
