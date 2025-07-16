@@ -1,5 +1,5 @@
 <%= tag.div data: {
-              controller: 'autocomplete autocomplete-organization-ror',
+              controller: 'autocomplete',
               autocomplete_url_value: '/affiliations/search',
               autocomplete_query_param_value: 'query',
               autocomplete_min_length_value: '3'
@@ -12,10 +12,9 @@
                                                          label: helpers.t('works.edit.fields.affiliations.institution.label'),
                                                          tooltip: helpers.t('works.edit.fields.affiliations.institution.tooltip_html'),
                                                          container_classes: 'mb-4',
-                                                         input_data: { autocomplete_target: 'input', autocomplete_organization_ror_target: 'input' }) %>
+                                                         input_data: { autocomplete_target: 'input' }) %>
       <ul class="list-group" data-autocomplete-target="results" style="overflow-y: scroll; max-height: 425px;"></ul>
-      <input type="hidden" data-autocomplete-target="hidden" data-autocomplete-organization-ror-target="value" data-action="autocomplete-organization-ror#change" aria-label="autocomplete">
-      <%= form.hidden_field :uri, { required: true, 'aria-label': 'uri', data: { autocomplete_organization_ror_target: 'uri' } } %>
+      <%= form.hidden_field :uri, { required: true, 'aria-label': 'uri', data: { autocomplete_target: 'hidden' } } %>
     </div>
     <div class="col">
       <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :department, label: helpers.t('works.edit.fields.affiliations.department.label'), tooltip: helpers.t('works.edit.fields.affiliations.department.tooltip_html'), container_classes: 'mb-4') %>

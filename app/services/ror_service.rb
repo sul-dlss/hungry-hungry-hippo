@@ -26,7 +26,7 @@ class RorService
   private
 
   def new_conn
-    Faraday.new({ url: Settings.ror.url }.compact) do |f|
+    Faraday.new({ url: Settings.ror.url }) do |f|
       f.request :json
       f.response :json
       f.response :raise_error

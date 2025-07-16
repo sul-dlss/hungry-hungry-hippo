@@ -13,7 +13,6 @@ class AffiliationsController < ApplicationController
 
   private
 
-  # Does a lookup from the account service in production mode, otherwise examines local database for users
   def lookup_organization
     RorService.organizations(query: params[:query])
   end
