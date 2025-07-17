@@ -20,7 +20,7 @@ RSpec.describe GlobusSetupJob do
       expect(GlobusClient).to have_received(:mkdir)
         .with(user_id: user.email_address, path: "work-#{work.id}", notify_email: false)
       expect(GlobusClient).to have_received(:allow_writes)
-        .with(user_id: user.email_address, path: "/uploads/work-#{work.id}", notify_email: false)
+        .with(user_id: user.email_address, path: "work-#{work.id}", notify_email: false)
       expect(content.reload.content_files).to be_empty
       expect(Turbo::StreamsChannel).to have_received(:broadcast_action_to).once
     end
