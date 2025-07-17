@@ -31,7 +31,9 @@ RSpec.describe 'Search for a collection or work by druid' do
       expect(page).to have_css('h1', text: 'Admin dashboard')
 
       fill_in 'Search for DRUID', with: druid
-      click_link_or_button('Search')
+      within('#druid-search') do
+        click_link_or_button('Search')
+      end
 
       # Redirect to collection page
       expect(page).to have_css('h1', text: collection_title_fixture)
@@ -53,7 +55,9 @@ RSpec.describe 'Search for a collection or work by druid' do
 
       # Note that this tests a bare druid. The form will add the 'druid:' prefix.
       fill_in 'Search for DRUID', with: druid.delete_prefix('druid:')
-      click_link_or_button('Search')
+      within('#druid-search') do
+        click_link_or_button('Search')
+      end
 
       # Redirect to work page
       expect(page).to have_css('h1', text: title_fixture)

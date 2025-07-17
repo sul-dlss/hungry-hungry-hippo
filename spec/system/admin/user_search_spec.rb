@@ -26,17 +26,16 @@ RSpec.describe 'Search for and show a user' do
 
     expect(page).to have_css('h1', text: 'Admin dashboard')
 
-    click_link_or_button('Admin functions')
-    click_link_or_button('Search for user')
+    fill_in('Search for user by SUNet', with: 'not_a_real_sunet_id')
+    within('#user-search') do
+      click_link_or_button('Search')
+    end
+    expect(page).to have_css('.invalid-feedback', text: 'not found')
 
-    expect(page).to have_css('h1', text: 'Search for user')
-
-    fill_in('Enter SUNet ID', with: 'not_a_real_sunet_id')
-    click_link_or_button('Submit')
-    expect(page).to have_css('.invalid-feedback', text: 'user not found')
-
-    fill_in('Enter SUNet ID', with: user.sunetid)
-    click_link_or_button('Submit')
+    fill_in('Search for user by SUNet', with: user.sunetid)
+    within('#user-search') do
+      click_link_or_button('Search')
+    end
 
     expect(page).to have_css('h1', text: user.name)
 

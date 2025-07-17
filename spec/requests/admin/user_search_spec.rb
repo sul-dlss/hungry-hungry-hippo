@@ -3,14 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe 'Show user' do
-  describe 'GET /admin/users' do
+  describe 'GET /admin/users_search/new' do
     context 'when the user is not authorized' do
       before do
         sign_in(create(:user))
       end
 
       it 'redirects to root' do
-        get '/admin/users'
+        get '/admin/users_search/new'
 
         expect(response).to redirect_to(root_path)
       end
@@ -22,14 +22,14 @@ RSpec.describe 'Show user' do
       end
 
       it 'show admin page' do
-        get '/admin/users'
+        get '/admin/users_search/new'
 
         expect(response).to have_http_status(:ok)
       end
     end
   end
 
-  describe 'GET /admin/users/:sunetid' do
+  describe 'POST /admin/users_search/search' do
     before do
       create(:user, email_address: 'h2o2ver@stanford.edu')
     end
@@ -40,7 +40,7 @@ RSpec.describe 'Show user' do
       end
 
       it 'redirects to root' do
-        get '/admin/users/h2o2ver'
+        post '/admin/users_search/search', params: { admin_user_search: { sunetid: 'h2o2ver' } }
 
         expect(response).to redirect_to(root_path)
       end
@@ -52,7 +52,7 @@ RSpec.describe 'Show user' do
       end
 
       it 'show admin page' do
-        get '/admin/users/h2o2ver'
+        post '/admin/users_search/search', params: { admin_user_search: { sunetid: 'h2o2ver' } }
 
         expect(response).to have_http_status(:ok)
       end
