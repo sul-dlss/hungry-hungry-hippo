@@ -94,7 +94,7 @@ en:
         invalid: 'must be formatted as "XXXX-XXXX-XXXX-XXXX"'
       affiliations:
         uri:
-          invalid: 'please select a valid ROR institution'
+          invalid: 'select a valid ROR institution'
   date:
     formats:
       slashes_short: "%m/%d/%Y"

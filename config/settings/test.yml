@@ -2,3 +2,6 @@ staging_location: 'tmp/workspace'
 
 notifications:
   enabled: false
+
+affiliations:
+  enabled: true

@@ -228,6 +228,13 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_css('th', text: 'Additional terms of use')
     expect(page).to have_css('td', text: 'My custom rights statement')
 
+    # Contributors
+    within('#contributors-table') do
+      expect(page).to have_css('tr:nth-of-type(1) td:nth-of-type(1)', text: 'Jane Stanford')
+      expect(page).to have_css('tr:nth-of-type(1) td:nth-of-type(4)', text: 'Stanford University')
+      expect(page).to have_css('tr:nth-of-type(2) td:nth-of-type(1)', text: 'Stanford University')
+    end
+
     # Joe Hill was created
     expect(User.find_by(email_address: 'joehill@stanford.edu', name: 'Joe Hill')).to be_present
   end

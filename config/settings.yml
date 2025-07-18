@@ -95,3 +95,6 @@ google_analytics:
 
 ror:
   url: https://api.ror.org
+
+affiliations:
+  enabled: false

@@ -1,11 +1,11 @@
 <div class="row mb-3">
   <div class="col">
-    <%= tag.div data: { controller: 'autocomplete', autocomplete_url_value: '/affiliations/search', autocomplete_query_param_value: 'query', autocomplete_min_length_value: '3' } do %>
+    <%= tag.div data: { controller: 'autocomplete', autocomplete_url_value: affiliations_search_path, autocomplete_query_param_value: 'query', autocomplete_min_length_value: '3' } do %>
       <%= render Elements::Forms::TextFieldComponent.new(form:,
-                                                          field_name: :institution,
-                                                          label: helpers.t('works.edit.fields.affiliations.institution.label'),
-                                                          tooltip: helpers.t('works.edit.fields.affiliations.institution.tooltip_html'),
-                                                          input_data: { autocomplete_target: 'input' }) %>
+                                                         field_name: :institution,
+                                                         label: helpers.t('works.edit.fields.affiliations.institution.label'),
+                                                         tooltip: helpers.t('works.edit.fields.affiliations.institution.tooltip_html'),
+                                                         input_data: { autocomplete_target: 'input' }) %>
       <ul class="list-group" data-autocomplete-target="results" style="overflow-y: scroll; max-height: 425px;"></ul>
       <%= form.hidden_field :uri, { data: { autocomplete_target: 'hidden' } } %>
     <% end %>
