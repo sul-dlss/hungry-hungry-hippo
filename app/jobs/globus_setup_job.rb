@@ -18,12 +18,10 @@ class GlobusSetupJob < ApplicationJob
 
   def mkdir
     # This will ignore if the directory already exists.
-    path = GlobusSupport.work_path(work:)
     GlobusClient.mkdir(user_id: user.email_address, path:, notify_email: false)
   end
 
   def allow_writes
-    path = GlobusSupport.work_path(work:, with_uploads_directory: true)
     GlobusClient.allow_writes(user_id: user.email_address, path:, notify_email: false)
   end
 
@@ -35,5 +33,9 @@ class GlobusSetupJob < ApplicationJob
                                               attributes: {
                                                 frameTarget: ActionView::RecordIdentifier.dom_id(content, 'show')
                                               }
+  end
+
+  def path
+    @path ||= GlobusSupport.work_path(work:)
   end
 end

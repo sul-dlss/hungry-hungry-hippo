@@ -281,7 +281,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    globus_client (0.17.0)
+    globus_client (0.18.0)
       activesupport (>= 4.2)
       faraday
       faraday-retry
