@@ -67,7 +67,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  resources :contents, only: %i[update show] do
+  resources :contents, only: %i[update show destroy] do
     member do
       get 'show_table', to: 'contents#show_table', as: 'show_table'
     end

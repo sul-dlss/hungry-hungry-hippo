@@ -1,6 +1,6 @@
 <%= turbo_frame_tag content, 'show' do %>
   <%= turbo_stream_from 'show', content %>
-  <% if total_files > Settings.search.file_search_box_min # there is at least this files in the object, so show search bar with section header %>
+  <% if total_files > Settings.search.file_search_box_min # there is at least this many files in the object, so show search bar with section header %>
       <div class="row">
         <div class="col-3">
           <%= render Edit::SectionHeaderComponent.new(title: t('works.edit.panes.files.list')) %>
@@ -31,6 +31,7 @@
     <p>Your files will appear here once they have been uploaded.</p>
   <% else # there is at least one file in the object, now decide if we show the hierarchical view without paging or the flat list view with paging %>
       <div data-controller="disable-other">
+        <div class="row"><div class="col-12 m-2 text-end"><%= link_to 'Delete all files', content_path, data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete all files?' } %></div></div>
         <% if total_files > Settings.file_upload.hierarchical_files_limit # lots of files, and the hierarchy would not work well, show flat list with paging %>
           <%= render Works::Edit::ContentNonHierarchyComponent.new(content_obj: content, content_files:) %>
         <% else # fewer files,  hierarchy will work fine, show hierarchy view without paging %>
