@@ -105,6 +105,13 @@
           </div>
         </div>
       </div>
+
+      <% if Settings.affiliations.enabled %>
+        <%= render Elements::HorizontalRuleComponent.new %>
+        <div class="mb-3 p-3">
+          <%= render NestedComponentPresenter.for(form:, field_name: :affiliations, model_class: AffiliationForm, form_component: Edit::AffiliationComponent, bordered: false, fieldset_classes: 'pane-section') %>
+        </div>
+      <% end %>
     <% end %>
 
     <%# Contributor organization name field %>

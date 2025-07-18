@@ -11,10 +11,15 @@ RSpec.describe 'Create a collection deposit' do
     cocina_object = build(:collection, title: collection_title_fixture, id: druid)
     Cocina::Models.with_metadata(cocina_object, 'abc123')
   end
+  let(:affiliation_query) { { search: 'Stanford University' } }
+  let(:affiliation_ror) { [{ 'id' => 'https://ror.org/00f54p054', 'name' => 'Stanford University' }] }
 
   let(:version_status) { build(:first_accessioning_version_status) }
 
   before do
+    # Stubbing out ROR
+    allow(RorService).to receive(:call).with(affiliation_query).and_return(affiliation_ror)
+
     # Stubbing out for Deposit Job
     allow(Sdr::Repository).to receive(:register) do |args|
       cocina_params = args[:cocina_object].to_h
@@ -24,6 +29,7 @@ RSpec.describe 'Create a collection deposit' do
       cocina_object = Cocina::Models.build(cocina_params)
       Cocina::Models.with_metadata(cocina_object, 'abc123')
     end
+
     allow(Sdr::Repository).to receive(:accession)
     # Stubbing out for show page
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
@@ -167,10 +173,13 @@ RSpec.describe 'Create a collection deposit' do
     end
     fill_in('First name', with: 'Jane')
     fill_in('Last name', with: 'Stanford')
+    fill_in('Institution', with: 'Stanford University')
+    find('li.list-group-item', text: 'Stanford University').click
+    fill_in('Department/Center', with: 'Department of History')
 
     click_link_or_button('Add another contributor')
-    form_instance = page.all('.form-instance').last
-    within(form_instance) do
+    form_instances = page.all('.form-instance')
+    within(form_instances[2]) do
       find('label', text: 'Organization').click
       select('Author', from: 'Role')
       fill_in('Organization name', with: 'Stanford University')
@@ -218,6 +227,13 @@ RSpec.describe 'Create a collection deposit' do
     # Terms of use
     expect(page).to have_css('th', text: 'Additional terms of use')
     expect(page).to have_css('td', text: 'My custom rights statement')
+
+    # Contributors
+    within('#contributors-table') do
+      expect(page).to have_css('tr:nth-of-type(1) td:nth-of-type(1)', text: 'Jane Stanford')
+      expect(page).to have_css('tr:nth-of-type(1) td:nth-of-type(4)', text: 'Stanford University')
+      expect(page).to have_css('tr:nth-of-type(2) td:nth-of-type(1)', text: 'Stanford University')
+    end
 
     # Joe Hill was created
     expect(User.find_by(email_address: 'joehill@stanford.edu', name: 'Joe Hill')).to be_present

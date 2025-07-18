@@ -16,15 +16,14 @@ class ContributorAffiliationCocinaBuilder
 
   def call
     {
-      type: 'affiliation',
       structuredValue: [
-        generate_descriptive_value,
+        institution_params,
         ({ value: department } if department.present?)
       ].compact
     }
   end
 
-  def generate_descriptive_value
+  def institution_params
     {
       value: institution,
       identifier: [

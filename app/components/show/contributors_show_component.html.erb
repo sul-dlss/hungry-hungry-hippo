@@ -3,7 +3,8 @@
   <% component.with_headers([
                               { label: 'Contributor' },
                               { label: 'ORCID' },
-                              { label: 'Role' }
+                              { label: 'Role' },
+                              { label: 'Affiliation' }
                             ]) %>
   <% contributors.each do |contributor| %>
     <% component.with_row(values: values_for(contributor)) %>

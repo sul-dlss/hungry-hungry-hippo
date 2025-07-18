@@ -92,6 +92,9 @@ en:
         blank: 'must provide a last name'
       orcid:
         invalid: 'must be formatted as "XXXX-XXXX-XXXX-XXXX"'
+      affiliations:
+        uri:
+          invalid: 'select a valid ROR institution'
   date:
     formats:
       slashes_short: "%m/%d/%Y"
@@ -267,6 +270,15 @@ en:
           label: 'Abstract'
           tooltip_html: >-
             The abstract should describe the content you are depositing and its relation to or context within any other published works or larger projects. If you are depositing a dataset related to a publication, please describe the dataset itself and not the publication.
+        affiliations:
+          institution:
+            label: 'Institution'
+            tooltip_html: >-
+              Begin typing the name of the institution to see potential matches. Selections must be made from the list; you are not permitted to type in your own entry.
+          department:
+            label: 'Department/Center'
+            tooltip_html: >-
+              Enter the name of the department, center, institute, or program at the institution on the left with which this person is affiliated. This field is not required. You must enter an institution in order to enter a department.
         citation:
           label: 'Enter preferred citation'
         contributors:

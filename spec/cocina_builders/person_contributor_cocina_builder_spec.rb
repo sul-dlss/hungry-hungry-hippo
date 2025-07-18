@@ -45,10 +45,9 @@ RSpec.describe PersonContributorCocinaBuilder do
         ]
       end
 
-      it 'includes affiliations in the note' do
-        expected_note = [
+      it 'includes affiliations' do
+        expected_affiliations = [
           {
-            type: 'affiliation',
             structuredValue: [
               {
                 value: 'Stanford University',
@@ -65,7 +64,7 @@ RSpec.describe PersonContributorCocinaBuilder do
           }
         ]
 
-        expect(contributor_params[:note]).to eq(expected_note)
+        expect(contributor_params[:affiliation]).to eq(expected_affiliations)
       end
     end
 
@@ -80,9 +79,8 @@ RSpec.describe PersonContributorCocinaBuilder do
       end
 
       it 'includes affiliations in the note' do
-        expected_note = [
+        expected_affiliations = [
           {
-            type: 'affiliation',
             structuredValue: [
               {
                 value: 'Stanford University',
@@ -98,7 +96,7 @@ RSpec.describe PersonContributorCocinaBuilder do
           }
         ]
 
-        expect(contributor_params[:note]).to eq(expected_note)
+        expect(contributor_params[:affiliation]).to eq(expected_affiliations)
       end
     end
   end

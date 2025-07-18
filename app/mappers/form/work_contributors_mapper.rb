@@ -41,14 +41,14 @@ module Form
       attr_reader :contributor
 
       def affiliations
-        contributor.note.select { |note| note.type == 'affiliation' }.map do |note|
-          affiliation_from_note(note:)
+        Array(contributor.affiliation).map do |affiliation|
+          affiliation_from(affiliation)
         end
       end
 
-      def affiliation_from_note(note:)
-        institution = note.structuredValue.find { |descriptive_value| descriptive_value.identifier.present? }
-        department = note.structuredValue.find { |descriptive_value| descriptive_value.identifier.blank? }
+      def affiliation_from(affiliation)
+        institution = affiliation.structuredValue.find { |descriptive_value| descriptive_value.identifier.present? }
+        department = affiliation.structuredValue.find { |descriptive_value| descriptive_value.identifier.blank? }
 
         {
           'institution' => institution.value,

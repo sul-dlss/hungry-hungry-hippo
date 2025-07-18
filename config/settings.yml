@@ -92,3 +92,9 @@ ahoy:
 
 google_analytics:
   enabled: false
+
+ror:
+  url: https://api.ror.org
+
+affiliations:
+  enabled: false
