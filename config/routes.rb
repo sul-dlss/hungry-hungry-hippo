@@ -101,7 +101,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     get 'dashboard', to: 'dashboard#show'
 
     resource :users_search, only: :new, controller: :users_search do
-      post :search
+      get :search
     end
 
     resource :collection_search, only: :new, controller: :collection_search do

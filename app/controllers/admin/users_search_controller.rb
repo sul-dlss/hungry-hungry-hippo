@@ -16,13 +16,7 @@ module Admin
       if @user_search_form.valid?
         @user = @user_search_form.user
         @status_map = get_status_map(@user)
-
-        respond_to do |format|
-          format.turbo_stream do
-            render turbo_stream: turbo_stream.replace('user-search', template: 'admin/users_search/new')
-          end
-          format.html { render 'admin/users_search/new' }
-        end
+        render :new
       else
         render :new, status: :unprocessable_entity
       end

@@ -29,7 +29,7 @@ RSpec.describe 'Show user' do
     end
   end
 
-  describe 'POST /admin/users_search/search' do
+  describe 'GET /admin/users_search/search' do
     before do
       create(:user, email_address: 'h2o2ver@stanford.edu')
     end
@@ -40,7 +40,7 @@ RSpec.describe 'Show user' do
       end
 
       it 'redirects to root' do
-        post '/admin/users_search/search', params: { admin_user_search: { sunetid: 'h2o2ver' } }
+        get '/admin/users_search/search', params: { admin_user_search: { sunetid: 'h2o2ver' } }
 
         expect(response).to redirect_to(root_path)
       end
@@ -52,7 +52,7 @@ RSpec.describe 'Show user' do
       end
 
       it 'show admin page' do
-        post '/admin/users_search/search', params: { admin_user_search: { sunetid: 'h2o2ver' } }
+        get '/admin/users_search/search', params: { admin_user_search: { sunetid: 'h2o2ver' } }
 
         expect(response).to have_http_status(:ok)
       end
