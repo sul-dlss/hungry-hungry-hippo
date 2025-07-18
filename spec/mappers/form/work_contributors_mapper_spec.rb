@@ -74,9 +74,8 @@ RSpec.describe Form::WorkContributorsMapper do
             }
           }
         ],
-        note: [
+        affiliation: [
           {
-            type: 'affiliation',
             structuredValue: [
               {
                 value: 'Stanford University',
@@ -140,9 +139,8 @@ RSpec.describe Form::WorkContributorsMapper do
             }
           }
         ],
-        note: [
+        affiliation: [
           {
-            type: 'affiliation',
             structuredValue: [
               {
                 value: 'Stanford University',
