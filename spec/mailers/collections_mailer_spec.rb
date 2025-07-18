@@ -151,6 +151,40 @@ RSpec.describe CollectionsMailer do
           expect(mail.message).to be_a(ActionMailer::Base::NullMail)
         end
       end
+
+      context 'when adding participants while saving a collection that is still on v1 but has previously been saved' do
+        let(:collection) do
+          create(:collection,
+                 title: '20 Minutes into the Future',
+                 managers: [manager],
+                 email_when_participants_changed: true,
+                 version: 1)
+        end
+
+        before { collection.update(title: '21 Minutes into the Future') } # simulate an update when on v1
+
+        it 'renders the body' do
+          expect(mail).to match_body("Dear #{manager.first_name},")
+          expect(mail).to match_body('Members have been either added to or removed from the ' \
+                                     '21 Minutes into the Future collection.')
+        end
+      end
+
+      context 'when adding participants while saving a collection for the first time on v2' do
+        let(:collection) do
+          create(:collection,
+                 title: '20 Minutes into the Future',
+                 managers: [manager],
+                 email_when_participants_changed: true,
+                 version: 2)
+        end
+
+        it 'renders the body' do
+          expect(mail).to match_body("Dear #{manager.first_name},")
+          expect(mail).to match_body('Members have been either added to or removed from the ' \
+                                     '20 Minutes into the Future collection.')
+        end
+      end
     end
 
     context 'when notify managers and reviewers on participant changes is disabled' do
