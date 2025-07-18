@@ -24,7 +24,7 @@ module Admin
     def collection_or_work_present
       return if collection.present? || work.present?
 
-      errors.add(:druid, 'not found')
+      errors.add(:druid, 'druid not found')
     end
   end
 end

@@ -7,7 +7,6 @@
 
 <div class="d-flex justify-content-end">
   <%= render Admin::FunctionDropdownComponent.new do |component| %>
-    <% component.with_function(label: 'Search for user', link: admin_users_path) %>
     <% component.with_function(label: 'Get SUNet IDs of depositors', link: new_admin_depositors_search_path) %>
     <% component.with_function(label: 'Emulate being not an admin', link: new_admin_emulate_path) %>
     <% component.with_function(label: 'Collections recent activity', link: admin_recent_activity_collections_path) %>
@@ -27,6 +26,12 @@
 
 <div class="mb-5">
   <%= turbo_frame_tag 'druid-search', src: new_admin_druid_search_path do %>
+    <%= render Elements::SpinnerComponent.new %>
+  <% end %>
+</div>
+
+<div class="mb-5">
+  <%= turbo_frame_tag 'user-search', src: new_admin_users_search_path do %>
     <%= render Elements::SpinnerComponent.new %>
   <% end %>
 </div>
