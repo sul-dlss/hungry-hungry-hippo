@@ -172,7 +172,7 @@ RSpec.describe ContributorForm do
       end
     end
 
-    context 'when with orcid and missing names' do
+    context 'when with orcid and missing both names' do
       let(:with_orcid) { true }
       let(:orcid) { '0000-0000-0000-0000' }
       let(:first_name) { '' }
@@ -180,6 +180,17 @@ RSpec.describe ContributorForm do
 
       it 'is not valid' do
         expect(form.valid?(:deposit)).to be false
+      end
+    end
+
+    context 'when with orcid and missing last name' do
+      let(:with_orcid) { true }
+      let(:orcid) { '0000-0000-0000-0000' }
+      let(:first_name) { 'Jane' }
+      let(:last_name) { '' }
+
+      it 'is valid' do
+        expect(form.valid?(:deposit)).to be true
       end
     end
   end
