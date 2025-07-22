@@ -33,7 +33,7 @@
     <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
     <%# TabListComponent will render the actual form. %>
     <% form_with(model: @collection_form) do |form| %>
-      <% component.with_collection_pane(tab_name: :details, label: t('collections.edit.panes.details.label'), active_tab_name:, collection_presenter: @collection_presenter) do %>
+      <% component.with_collection_pane(tab_name: :details, label: t('collections.edit.panes.details.label'), active_tab_name:, collection_presenter: @collection_presenter, previous_tab_btn: false) do %>
         <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: t('collections.edit.fields.title.label'), tooltip: t('collections.edit.fields.title.tooltip_html'), container_classes: 'pane-section', mark_required: true) %>
         <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: t('collections.edit.fields.description.label'), tooltip: t('collections.edit.fields.description.tooltip_html'), container_classes: 'pane-section', mark_required: true) %>
         <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: Collections::Edit::ContactEmailsComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
@@ -87,7 +87,7 @@
         <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Edit::ContributorComponent, hidden_label: true, fieldset_classes: 'pane-section') %>
       <% end %>
 
-      <% component.with_collection_pane(tab_name: :deposit, label: t('collections.edit.panes.deposit.label'), help_text: t('collections.edit.panes.deposit.help_text_html'), active_tab_name:, collection_presenter: @collection_presenter) do |pane_component| %>
+      <% component.with_collection_pane(tab_name: :deposit, label: t('collections.edit.panes.deposit.label'), help_text: t('collections.edit.panes.deposit.help_text_html'), active_tab_name:, collection_presenter: @collection_presente, next_tab_btn: false) do |pane_component| %>
         <%# For spacing %>
         <div class="pane-section"></div>
         <% pane_component.with_deposit_button do %>

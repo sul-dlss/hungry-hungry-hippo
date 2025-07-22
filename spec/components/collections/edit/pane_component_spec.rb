@@ -4,10 +4,13 @@ require 'rails_helper'
 
 RSpec.describe Collections::Edit::PaneComponent, type: :component do
   let(:component) do
-    described_class.new(tab_name: :test_pane, label: 'Test Pane', active_tab_name:, collection_presenter:)
+    described_class.new(tab_name: :test_pane, label: 'Test Pane', active_tab_name:, collection_presenter:,
+                        previous_tab_btn:, next_tab_btn:)
   end
   let(:active_tab_name) { :test_pane }
   let(:collection_presenter) { nil }
+  let(:previous_tab_btn) { true }
+  let(:next_tab_btn) { true }
 
   context 'when no deposit button provided' do
     it 'renders the pane' do
@@ -17,6 +20,7 @@ RSpec.describe Collections::Edit::PaneComponent, type: :component do
       expect(tab_pane).to have_css('div', text: 'Test Pane Content')
       expect(tab_pane).to have_button('Next')
       expect(tab_pane).to have_link('Cancel')
+      expect(tab_pane).to have_no_button('Deposit')
     end
   end
 
@@ -26,9 +30,30 @@ RSpec.describe Collections::Edit::PaneComponent, type: :component do
         component.with_deposit_button { '<button>Deposit</button>'.html_safe }
       end) { '<div>Test Pane Content</div>'.html_safe }
       tab_pane = page.find('div.tab-pane')
-      expect(tab_pane).to have_no_button('Next')
       expect(tab_pane).to have_link('Cancel')
       expect(tab_pane).to have_button('Deposit')
+    end
+  end
+
+  context 'when no previous tab button' do
+    let(:previous_tab_btn) { false }
+
+    it 'renders the pane' do
+      render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
+      tab_pane = page.find('div.tab-pane')
+      expect(tab_pane).to have_button('Next')
+      expect(tab_pane).to have_no_button('Previous')
+    end
+  end
+
+  context 'when no next tab button' do
+    let(:next_tab_btn) { false }
+
+    it 'renders the pane' do
+      render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
+      tab_pane = page.find('div.tab-pane')
+      expect(tab_pane).to have_no_button('Next')
+      expect(tab_pane).to have_button('Previous')
     end
   end
 
