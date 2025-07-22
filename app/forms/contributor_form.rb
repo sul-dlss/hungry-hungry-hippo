@@ -97,7 +97,8 @@ class ContributorForm < ApplicationForm
 
     if first_name.blank?
       errors.add(:first_name, I18n.t('contributors.validation.first_name.blank'))
-    else
+    elsif !with_orcid?
+      # Orcids can provide only a single name so we don't require last name if with_orcid is true
       errors.add(:last_name, I18n.t('contributors.validation.last_name.blank'))
     end
   end

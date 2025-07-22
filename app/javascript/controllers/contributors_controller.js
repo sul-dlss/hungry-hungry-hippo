@@ -76,7 +76,8 @@ export default class extends Controller {
         this.orcidLastNameInputTarget.dataset.disabled = 'false'
         this.orcidLastNameInputTarget.value = data.last_name
         this.orcidLastNameInputTarget.dispatchEvent(new Event('change')) // To clear validation errors on changes
-        this.orcidMessageTarget.textContent = `Name associated with this ORCID iD is ${data.first_name} ${data.last_name}.`
+        const nameString = (data.last_name) ? `${data.first_name} ${data.last_name}` : data.first_name
+        this.orcidMessageTarget.textContent = `Name associated with this ORCID iD is ${nameString}.`
       })
       .catch(error => console.dir(error))
   }
