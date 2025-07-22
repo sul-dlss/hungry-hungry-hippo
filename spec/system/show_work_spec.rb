@@ -214,7 +214,7 @@ RSpec.describe 'Show a work' do
           expect(page).to have_css('td:nth-of-type(1)', text: 'Jane Stanford')
           expect(page).to have_css('td:nth-of-type(2)', text: 'https://orcid.org/0001-0002-0003-0004')
           expect(page).to have_css('td:nth-of-type(3)', text: 'Author')
-          expect(page).to have_css('td:nth-of-type(4)', text: 'Stanford University')
+          expect(page).to have_css('td:nth-of-type(4)', text: 'Stanford University: Department of History')
         end
         within('tbody tr:nth-of-type(3)') do
           expect(page).to have_css('td:nth-of-type(1)', text: 'Department of Philosophy, Stanford University')
