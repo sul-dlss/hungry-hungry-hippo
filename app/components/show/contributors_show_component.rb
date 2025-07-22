@@ -61,9 +61,15 @@ module Show
     end
 
     def contributor_affiliations(contributor)
-      return if contributor.affiliations.empty?
+      return nil if contributor.affiliations.empty?
 
-      contributor.affiliations.filter_map(&:institution).join(', ')
+      safe_join(contributor.affiliations.map do |affiliation|
+        next if affiliation.institution.blank?
+
+        department = affiliation.department.present? ? affiliation.department.prepend(': ') : nil
+
+        content_tag(:p, [affiliation.institution, department].join, class: 'mb-0')
+      end)
     end
   end
 end
