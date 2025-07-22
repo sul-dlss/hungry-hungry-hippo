@@ -12,7 +12,7 @@ RSpec.describe 'Create a collection deposit' do
     Cocina::Models.with_metadata(cocina_object, 'abc123')
   end
   let(:affiliation_query) { { search: 'Stanford University' } }
-  let(:affiliation_ror) { [{ 'id' => 'https://ror.org/00f54p054', 'name' => 'Stanford University' }] }
+  let(:affiliation_ror) { [RorOrg.new({ 'id' => 'https://ror.org/00f54p054', 'name' => 'Stanford University Affiliation' })] }
 
   let(:version_status) { build(:first_accessioning_version_status) }
 

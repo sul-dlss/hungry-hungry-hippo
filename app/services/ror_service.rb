@@ -15,7 +15,7 @@ class RorService
     results = organizations
     return [] if results['number_of_results'].to_i.zero?
 
-    results['items'].map { |org| org.slice('id', 'name') }
+    results['items'].map { |org| RorOrg.new(org.slice('id', 'name', 'aliases', 'addresses', 'country', 'types')) }
   end
 
   attr_reader :conn, :search

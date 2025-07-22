@@ -1,3 +1,8 @@
 <% @organizations.map do |organization| %>
-  <%= tag.li class: 'list-group-item', role: 'option', data: { autocomplete_value: organization['id'], autocomplete_label: organization['name'] } do %><%= organization['name'] %><% end %>
+  <%= tag.li class: 'list-group-item', role: 'option', data: { autocomplete_value: organization.id, autocomplete_label: organization.name } do %>
+    <strong><%= organization.name %></strong><br>
+    <%= organization.location %><br>
+    (<%= organization.org_types %>)<br>
+    <em><%= organization.aliases %></em>
+  <% end %>
 <% end %>
