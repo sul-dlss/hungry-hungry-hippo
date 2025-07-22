@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Manage files for a work', :dropzone do
   let(:user) { create(:user) }
   let(:collection) { create(:collection, :with_druid, user:) }
+  let(:no_files_message) { 'Your files will appear here once they have been uploaded.' }
 
   before do
     sign_in(user)
@@ -16,7 +17,7 @@ RSpec.describe 'Manage files for a work', :dropzone do
 
       expect(page).to have_css('h1', text: 'Untitled deposit')
 
-      expect(page).to have_text('Your files will appear here once they have been uploaded.')
+      expect(page).to have_text(no_files_message)
 
       # Add one file
       # Can't test folder upload, so no hierarchy.
@@ -89,11 +90,13 @@ RSpec.describe 'Manage files for a work', :dropzone do
 
       expect(page).to have_css('h1', text: 'Untitled deposit')
 
-      expect(page).to have_text('Your files will appear here once they have been uploaded.')
+      expect(page).to have_text(no_files_message)
 
       # Add one file
       find('.dropzone').drop('spec/fixtures/files/hippo.png')
       await_upload
+
+      expect(page).to have_no_text(no_files_message)
 
       within('table#content-table') do
         expect(page).to have_css('td:nth-of-type(1)', text: 'hippo.png') # Filename
@@ -156,6 +159,12 @@ RSpec.describe 'Manage files for a work', :dropzone do
       expect(page).to have_field('Hide this file', checked: true)
       sleep 0.25 # Wait for the form to submit.
       expect(content_file.reload.hide).to be true
+
+      # Delete all of the files
+      accept_confirm do
+        click_link_or_button('Delete all files')
+      end
+      expect(page).to have_text(no_files_message)
     end
   end
 
@@ -174,7 +183,7 @@ RSpec.describe 'Manage files for a work', :dropzone do
 
       expect(page).to have_text('hippo.tiff: File is too big (4.61MiB). Max filesize: 1MiB.')
 
-      expect(page).to have_text('Your files will appear here once they have been uploaded.')
+      expect(page).to have_text(no_files_message)
 
       # Upload a smaller file
       find('.dropzone').drop('spec/fixtures/files/hippo.png')

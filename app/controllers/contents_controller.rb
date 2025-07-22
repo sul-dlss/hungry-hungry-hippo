@@ -2,7 +2,7 @@
 
 # Controller for a Work contents (files)
 class ContentsController < ApplicationController
-  before_action :set_content, only: %i[update show show_table]
+  before_action :set_content, only: %i[update show destroy show_table]
   before_action :set_content_files, only: %i[show show_table]
 
   # Called from work edit/update form.
@@ -31,6 +31,14 @@ class ContentsController < ApplicationController
     update_files
 
     head :ok
+  end
+
+  def destroy
+    authorize! @content
+
+    @content.content_files.destroy_all
+
+    redirect_to content_path(@content)
   end
 
   private
