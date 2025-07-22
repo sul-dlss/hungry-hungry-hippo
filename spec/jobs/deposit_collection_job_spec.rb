@@ -255,7 +255,14 @@ RSpec.describe DepositCollectionJob do
           'person_role' => 'researcher',
           'role_type' => 'person',
           'with_orcid' => true,
-          'orcid' => '0000-0000-0000-0000'
+          'orcid' => '0000-0000-0000-0000',
+          'affiliations_attributes' => [
+            {
+              'institution' => 'Stanford University',
+              'uri' => 'https://ror.org/01abcd',
+              'department' => 'Department of History'
+            }
+          ]
         },
         {
           'organization_name' => 'Stanford University',
@@ -294,6 +301,12 @@ RSpec.describe DepositCollectionJob do
       expect(person_contributor.role).to eq('researcher')
       expect(person_contributor.role_type).to eq('person')
       expect(person_contributor.orcid).to eq('0000-0000-0000-0000')
+      expect(person_contributor.affiliations.count).to eq(1)
+
+      affiliation = person_contributor.affiliations.first
+      expect(affiliation.institution).to eq('Stanford University')
+      expect(affiliation.uri).to eq('https://ror.org/01abcd')
+      expect(affiliation.department).to eq('Department of History')
 
       stanford_contributor = collection.contributors[1]
       expect(stanford_contributor.organization_name).to eq('Stanford University')

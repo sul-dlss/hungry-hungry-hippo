@@ -35,7 +35,7 @@ class PersonContributorCocinaBuilder
       role: role_params,
       identifier: identifier_params,
       status: ('primary' if primary),
-      note: note_params
+      affiliation: affiliation_params
     }.compact
   end
 
@@ -50,15 +50,15 @@ class PersonContributorCocinaBuilder
     [cocina_role]
   end
 
-  def note_params
+  def affiliation_params
     return if affiliations.empty?
 
     affiliations.map do |affiliation|
-      ContributorAffiliationCocinaBuilder.call(**affiliation_params(affiliation))
-    end
+      ContributorAffiliationCocinaBuilder.call(**form_affiliation_params(affiliation))
+    end.presence
   end
 
-  def affiliation_params(affiliation)
+  def form_affiliation_params(affiliation)
     return affiliation if affiliation.is_a?(Hash)
 
     # return the attributes as a hash with symbolized keys if it's an AffiliationForm object

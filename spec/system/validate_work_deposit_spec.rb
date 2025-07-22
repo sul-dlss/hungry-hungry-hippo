@@ -115,7 +115,7 @@ RSpec.describe 'Validate a work deposit' do
 
     # Add a blank contributor. It will be ignored.
     click_link_or_button('Add another contributor')
-    expect(page).to have_css('.form-instance', count: 2)
+    expect(page).to have_css('.form-instance', count: 3)
 
     # Abstract is marked invalid
     find('.nav-link.is-invalid', text: 'Abstract').click

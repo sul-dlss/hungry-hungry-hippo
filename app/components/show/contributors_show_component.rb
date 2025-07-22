@@ -16,7 +16,8 @@ module Show
       values = [
         contributor_name(contributor).presence,
         orcid_link(contributor),
-        contributor_role_label(contributor)
+        contributor_role_label(contributor),
+        contributor_affiliations(contributor)
       ]
 
       return [] if values.all?(&:blank?)
@@ -57,6 +58,12 @@ module Show
       return contributor.person_role if contributor.role_type == 'person'
 
       contributor.organization_role
+    end
+
+    def contributor_affiliations(contributor)
+      return if contributor.affiliations.empty?
+
+      contributor.affiliations.filter_map(&:institution).join(', ')
     end
   end
 end

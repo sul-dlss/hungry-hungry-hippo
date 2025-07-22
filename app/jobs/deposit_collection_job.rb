@@ -124,11 +124,16 @@ class DepositCollectionJob < ApplicationJob
   end
 
   def assign_person(contributor_form:)
-    collection.contributors.create!(first_name: contributor_form.first_name,
-                                    last_name: contributor_form.last_name,
-                                    role: contributor_form.person_role,
-                                    role_type: 'person',
-                                    orcid: contributor_form.with_orcid ? contributor_form.orcid : nil)
+    contributor = collection.contributors.create!(first_name: contributor_form.first_name,
+                                                  last_name: contributor_form.last_name,
+                                                  role: contributor_form.person_role,
+                                                  role_type: 'person',
+                                                  orcid: contributor_form.with_orcid ? contributor_form.orcid : nil)
+    contributor_form.affiliations.each do |affiliation_form|
+      contributor.affiliations.create!(institution: affiliation_form.institution,
+                                       uri: affiliation_form.uri,
+                                       department: affiliation_form.department)
+    end
   end
 
   def assign_organization(contributor_form:)
