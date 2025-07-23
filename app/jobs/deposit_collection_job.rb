@@ -113,7 +113,7 @@ class DepositCollectionJob < ApplicationJob
   end
 
   def assign_contributors
-    collection.contributors.clear
+    collection.contributors.destroy_all
     collection_form.contributors.each do |contributor_form|
       if contributor_form.person?(with_names: true)
         assign_person(contributor_form:)
