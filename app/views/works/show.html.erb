@@ -8,6 +8,12 @@
   <% end %>
 <% end %>
 
+<% if Rails.env.development? && @work_presenter.work.accessioning? %>
+    <%= render Elements::AlertComponent.new(variant: :info, dismissible: true) do %>
+      Note: run "bin/rake development:accession[<%= @work_presenter.druid %>]" to complete deposit for this work.
+    <% end %>
+<% end %>
+
 <%= render Works::Show::ReviewComponent.new(work: @work, review_form: @review_form) %>
 <%= render Works::Show::ReviewRejectedComponent.new(work: @work) %>
 <%= render Works::Show::PendingReviewComponent.new(work_presenter: @work_presenter) %>

@@ -104,7 +104,7 @@ See [overmind documentation](https://github.com/DarthSim/overmind) for more abou
 
 ### Completing accessioning workflow
 
-accessionWF steps can be completed with:
+In order to complete certain actions (such as editing a saved collection), accessionWF needs to be complete.  In localhost development, this can be simulated with a rake task:
 
 ```
 bin/rake "development:accession[druid:dh414dd1590]"
