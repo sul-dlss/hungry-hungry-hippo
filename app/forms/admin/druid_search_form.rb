@@ -16,6 +16,8 @@ module Admin
     end
 
     def normalize_druid
+      druid.strip! # remove any trailing or leading whitespace the user may have inadvertently entered via a copy/paste
+
       return if druid.starts_with?('druid:') || druid.blank?
 
       self.druid = druid.prepend('druid:')
