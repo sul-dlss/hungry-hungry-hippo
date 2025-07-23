@@ -7,10 +7,10 @@ module Elements
     class RepeatableNestedComponent < ApplicationComponent
       renders_one :before_section # Optional
 
-      def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength
+      def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength, Metrics/AbcSize
                      reorderable: false, single_field: false, fieldset_classes: [], skip_tooltip: false,
                      fieldset_id: nil, hide_add_button: false, add_button_data: {}, column_classes: ['col'],
-                     separated: false)
+                     separated: false, nested_buttons_classes: [])
         @form = form
         @model_class = model_class
         @field_name = field_name
@@ -32,6 +32,7 @@ module Elements
         @add_button_data[:action] = merge_actions('click->nested-form#add', @add_button_data[:action])
         @column_classes = column_classes
         @separated = separated
+        @nested_buttons_classes = nested_buttons_classes
         super()
       end
 
@@ -77,7 +78,7 @@ module Elements
       end
 
       def nested_buttons_classes
-        merge_classes(%w[col-md-auto d-flex],
+        merge_classes(@nested_buttons_classes, %w[col-md-auto d-flex],
                       single_field? ? %w[align-items-stretch] : %w[flex-column])
       end
 
