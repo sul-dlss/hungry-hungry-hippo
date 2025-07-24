@@ -5,7 +5,7 @@
 
 ## Deployment
 
-The application is deployed continuously by our on-prem Jenkins service (`sul-ci-prod`) to the H3 staging environment on every merge to `main`. See `Jenkinsfile` for how that is wired up. Notifications for deployments are sent to the `#dlss-access-cd` Slack channel.
+During work cycles, the application is deployed continuously by our on-prem Jenkins service (`sul-ci-prod`) to the H3 staging environment on every merge to `main`. See `Jenkinsfile` for how that is wired up. Notifications for deployments are sent to the `#dlss-access-cd` Slack channel.
 
 ## Development
 
