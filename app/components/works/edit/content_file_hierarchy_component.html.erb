@@ -6,7 +6,7 @@
   <% end %>
 <% end %>
 
-<% component.with_row_leaf(level: path_parts.length + 1, label: filename) do |row_component| %>
+<% component.with_row_leaf(level: path_parts.length + 1, label: filename, badge_content:) do |row_component| %>
   <% row_component.with_cell do %>
     <%= render Works::Edit::ContentFileDescriptionComponent.new(content_file:) %>
   <% end %>

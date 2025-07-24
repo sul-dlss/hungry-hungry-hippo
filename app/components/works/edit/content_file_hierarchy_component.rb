@@ -29,6 +29,10 @@ module Works
         range_end = path_parts.length - new_path_parts.length + level
         path_parts.slice(0..range_end).join('/')
       end
+
+      def badge_content
+        'New' if content_file.new?
+      end
     end
   end
 end
