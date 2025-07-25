@@ -44,7 +44,7 @@ RSpec.describe Notifier do
         expect(ActiveSupport::Notifications).to have_received(:instrument).with(Notifier::REVIEW_REQUESTED,
                                                                                 work:, current_user: user)
         expect(has_message(user: reviewer, subject: 'Item ready for review in the My Stuff collection')).to be true
-        expect(has_message(user: manager, subject: 'Item ready for review in the My Stuff collection')).to be true
+        expect(has_message(user: manager, subject: 'Item ready for review in the My Stuff collection')).to be false
         expect(Sdr::Event).to have_received(:create).with(druid: work.druid, type: 'h3_review_requested',
                                                           data: { who: user.sunetid })
       end
