@@ -252,7 +252,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
   end
 
   context 'with required contributors' do
-    let(:required_person) { create(:person_contributor) }
+    let(:required_person) { create(:person_contributor, :with_affiliation) }
     let(:required_organization) { create(:organization_contributor) }
     let(:required_stanford_organization) { create(:organization_contributor, :stanford) }
 

@@ -278,11 +278,11 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   def mark_collection_required_contributors
     collection_contributors = @collection.contributors.map do |contributor|
-      ContributorForm.new(Form::ContributorMapper.call(contributor:)).attributes
+      ContributorForm.new(Form::ContributorMapper.call(contributor:)).attributes.except('affiliations_attributes')
     end
-
     @work_form.contributors.each do |contributor|
-      contributor.collection_required = collection_contributors.include?(contributor.attributes)
+      contributor.collection_required = collection_contributors
+                                        .include?(contributor.attributes.except('affiliations_attributes'))
     end
   end
 
