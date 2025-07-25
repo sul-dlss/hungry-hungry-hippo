@@ -15,6 +15,7 @@ export default class extends Controller {
   disableDropzoneConfirm (event) {
     if (this.hasDropzoneOutlet) {
       if (window.confirm('Once your Globus file transfer is complete, the files on Globus will replace the files currently in the deposit.')) {
+        this.dropzoneOutlet.clearBasePath()
         this.dropzoneOutlet.disable()
       } else {
         event.preventDefault()
