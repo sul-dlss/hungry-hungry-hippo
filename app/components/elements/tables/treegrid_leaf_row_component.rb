@@ -6,23 +6,16 @@ module Elements
     class TreegridLeafRowComponent < ApplicationComponent
       renders_one :label_content
       renders_many :cells
-      def initialize(level:, label: nil, badge_content: nil)
+      def initialize(level:, label: nil)
         @level = level
         @label = label
-        @badge_content = badge_content
         super()
       end
 
-      attr_reader :level, :label, :badge_content
+      attr_reader :level, :label
 
       def styles
         "padding-left: #{((level - 1) * 20) + 8}px;"
-      end
-
-      def badge
-        return unless badge_content
-
-        tag.span badge_content, class: 'badge new-file ms-2'
       end
     end
   end
