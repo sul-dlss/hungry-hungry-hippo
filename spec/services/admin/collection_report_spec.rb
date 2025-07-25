@@ -54,6 +54,8 @@ RSpec.describe Admin::CollectionReport do
         allow(Sdr::Repository).to receive(:status).with(druid: druid_fixture).and_return(version_status)
         allow(Dor::Services::Client).to receive(:object).with(druid).and_return(object_client)
         create(:work, druid: druid_fixture, collection:)
+        # This collection will be ignored since it does not have a druid
+        create(:collection)
       end
 
       it 'returns a csv with all collections including work stats' do
