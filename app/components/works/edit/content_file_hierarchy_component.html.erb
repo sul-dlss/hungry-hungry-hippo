@@ -6,7 +6,13 @@
   <% end %>
 <% end %>
 
-<% component.with_row_leaf(level: path_parts.length + 1, label: filename) do |row_component| %>
+<% component.with_row_leaf(level: path_parts.length + 1) do |row_component| %>
+  <% row_component.with_label_content do %>
+    <%= filename %>
+    <% if content_file.new? %>
+      <%= tag.span 'New', class: 'badge new-file ms-2' %>
+    <% end %>
+  <% end %>
   <% row_component.with_cell do %>
     <%= render Works::Edit::ContentFileDescriptionComponent.new(content_file:) %>
   <% end %>

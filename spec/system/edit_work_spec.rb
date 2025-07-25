@@ -370,6 +370,26 @@ RSpec.describe 'Edit a work' do
     end
   end
 
+  context 'when adding a file' do
+    let(:content) { work.content.last }
+
+    it 'renders the file with the new file badge' do
+      visit edit_work_path(druid)
+
+      expect(page).to have_css('h1', text: title_fixture)
+
+      find('.nav-link', text: 'Manage files').click
+      expect(content.content_files.size).to eq 1
+      expect(page).to have_text('my_file.txt') # filename in object
+
+      # Adding a file
+      find('.dropzone').drop('spec/fixtures/files/hippo.png')
+
+      expect(page).to have_css('table#content-table td', text: 'hippo.png')
+      expect(page).to have_css('span.badge', text: 'New')
+    end
+  end
+
   context 'with file search' do
     let(:content) { work.content.last }
 

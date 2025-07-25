@@ -353,7 +353,8 @@ CREATE TABLE public.content_files (
     hide boolean DEFAULT false NOT NULL,
     path_parts character varying[],
     basename character varying,
-    extname character varying
+    extname character varying,
+    new boolean DEFAULT false
 );
 
 
@@ -1110,6 +1111,7 @@ ALTER TABLE ONLY public.affiliations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250723233849'),
 ('20250630163537'),
 ('20250619163206'),
 ('20250616125424'),
