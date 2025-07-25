@@ -14,6 +14,9 @@
     <% end %>
   <% end %>
   <% row_component.with_cell do %>
+    <%= render Works::Edit::ContentFileUploadedTimeComponent.new(content_file:) %>
+  <% end %>
+  <% row_component.with_cell do %>
     <%= render Works::Edit::ContentFileDescriptionComponent.new(content_file:) %>
   <% end %>
   <% row_component.with_cell do %>
