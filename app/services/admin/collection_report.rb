@@ -163,7 +163,7 @@ module Admin
       end
 
       def deposit_stats
-        @deposit_stats ||= collection.works.filter_map do |work|
+        @deposit_stats ||= collection.works.where.not(druid: nil).filter_map do |work|
           Sdr::Repository.status(druid: work.druid).status_message
         rescue Sdr::Repository::NotFoundResponse => e
           Honeybadger.notify('Error looking up work in SDR. This may be a draft work that was purged via Argo.',
