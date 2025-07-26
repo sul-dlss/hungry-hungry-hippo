@@ -12,6 +12,15 @@ class CollectionForm < ApplicationForm
   validates :managers_attributes, length: { minimum: 1, message: 'must have at least one manager' } # rubocop:disable Rails/I18nLocaleTexts
 
   before_validation do
+    blank_reviewers = reviewers_attributes.select(&:empty?)
+    next if blank_reviewers.empty?
+
+    self.reviewers_attributes = reviewers_attributes - blank_reviewers
+  end
+  validates :reviewers_attributes, length: { minimum: 1, message: 'must have at least one reviewer' }, # rubocop:disable Rails/I18nLocaleTexts
+                                   if: -> { review_enabled }
+
+  before_validation do
     blank_contributors = contributors_attributes.select(&:empty?)
     next if blank_contributors.empty?
 

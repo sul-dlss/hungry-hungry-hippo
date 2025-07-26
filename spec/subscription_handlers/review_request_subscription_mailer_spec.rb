@@ -16,8 +16,8 @@ RSpec.describe ReviewRequestSubscriptionMailer, :active_job_test_adapter do
   it 'sends an email to each reviewer and manager' do
     described_class.call(work:)
 
+    assert_enqueued_emails 2
     assert_enqueued_email_with ReviewsMailer.with(user: reviewer, work:), :pending_email
-    assert_enqueued_email_with ReviewsMailer.with(user: manager, work:), :pending_email
     assert_enqueued_email_with ReviewsMailer.with(user: reviewer_and_manager, work:), :pending_email
   end
 end

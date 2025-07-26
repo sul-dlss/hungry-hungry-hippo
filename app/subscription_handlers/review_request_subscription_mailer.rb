@@ -11,7 +11,7 @@ class ReviewRequestSubscriptionMailer
   end
 
   def call
-    work.collection.reviewers_and_managers.each do |user|
+    work.collection.reviewers.each do |user|
       ReviewsMailer.with(work:, user:).pending_email.deliver_later
     end
   end
