@@ -5,7 +5,7 @@ class CollectionPolicy < ApplicationPolicy
   alias_rule :works?, :history?, to: :show?
 
   def show?
-    collection_depositor? || manage?
+    collection_depositor? || manage? || collection_reviewer?
   end
 
   def manage?

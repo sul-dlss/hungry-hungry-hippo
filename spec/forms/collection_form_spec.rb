@@ -68,5 +68,17 @@ RSpec.describe CollectionForm do
         expect(form.errors[:managers_attributes]).to include('must have at least one manager')
       end
     end
+
+    context 'with review enabled and no reviewers' do
+      before do
+        form_hash[:review_enabled] = true
+        form_hash[:reviewers_attributes] = [{}]
+      end
+
+      it 'validates presence of at least one reviewer' do
+        expect(form).not_to be_valid
+        expect(form.errors[:reviewers_attributes]).to include('must have at least one reviewer')
+      end
+    end
   end
 end

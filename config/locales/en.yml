@@ -531,7 +531,12 @@ en:
         workflow:
           tab_label: 'Workflow'
           label: 'Review workflow'
-          help_text: >-
-            A Reviewer checks a deposit for clarity, accuracy, and completeness before approving the publication.
-            Only one Reviewer is required to review each deposit. A Reviewer can edit a deposit or return it to the
-            Depositor with a request for changes. The Depositor will receive a notification when their deposit is returned or approved.
+          help_text_html: >-
+            If the review workflow is enabled, each deposit will need to be reviewed and approved by one of the Managers or Reviewers listed on this collection before its public webpage is made available.
+
+            <ul>
+              <li>Reviewers will receive an email every time an item is submitted for review.</li>
+              <li>Everyone who should receive this email should be included in the list of Reviewers below.</li>
+              <li>Reviewers do not need to also be Managers.</li>
+              <li>Details about the review workflow are available in our <a href="https://sdr.library.stanford.edu/documentation/sdr-submission-workflows">documentation</a>.</li>
+            </ul>
