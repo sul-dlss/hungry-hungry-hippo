@@ -188,7 +188,7 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('tr', text: 'Size')
         expect(page).to have_css('td', text: '599 KB')
         expect(page).to have_css('tr', text: 'Deposit created')
-        expect(page).to have_css('td', text: I18n.l(Time.zone.now, format: :long))
+        expect(page).to have_css("td time[datetime='#{work.created_at.iso8601}']")
       end
 
       # Title table
@@ -273,7 +273,7 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('caption', text: 'Access settings')
         expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'access'))
         expect(page).to have_css('tr', text: 'Available')
-        expect(page).to have_css('td', text: 'June 10, 2027')
+        expect(page).to have_css("td time[datetime='2027-06-10T00:00:00Z']")
         expect(page).to have_css('tr', text: 'Access')
         expect(page).to have_css('td', text: 'Stanford Community')
       end
@@ -298,7 +298,7 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('th', text: 'Description of changes')
         expect(page).to have_css('tr', text: 'Deposited')
         expect(page).to have_css('td', text: 'lstanfordjr')
-        expect(page).to have_css('td', text: 'January 27, 2020 19:10')
+        expect(page).to have_css("td time[datetime='2020-01-27T19:10:00Z']")
         expect(page).to have_css('td', text: 'Version 1 closed')
       end
     end

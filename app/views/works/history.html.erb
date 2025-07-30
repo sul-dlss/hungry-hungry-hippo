@@ -6,7 +6,7 @@
     <% component.with_header(label: 'Last modified') %>
     <% component.with_header(label: 'Description of changes') %>
     <% @events.each do |event| %>
-      <% component.with_row(first_value: event.label, values: [event.who, event.timestamp, event.description]) %>
+      <% component.with_row(first_value: event.label, values: [event.who, local_time(event.timestamp), event.description]) %>
     <% end %>
   <% end %>
 <% end %>

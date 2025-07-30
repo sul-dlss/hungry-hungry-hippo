@@ -24,7 +24,7 @@ module Admin
         link_to(work.collection.title, collection_or_wait_path(work.collection), data: { turbo_frame: '_top' }),
         @status_map[work.id].status_message,
         work.bare_druid,
-        work.object_updated_at ? I18n.l(work.object_updated_at, format: '%b %d, %Y') : nil
+        work.object_updated_at ? helpers.local_date(work.object_updated_at, format: '%b %d, %Y') : nil
       ]
     end
   end

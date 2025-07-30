@@ -14,3 +14,4 @@ pin 'ahoy', to: 'ahoy.js'
 # Pins for dropzone
 pin 'dropzone' # @6.0.0
 pin 'just-extend' # @5.1.1
+pin 'local-time' # @3.0.3

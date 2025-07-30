@@ -180,7 +180,7 @@ RSpec.describe 'Show a collection' do
         expect(page).to have_css('th', text: 'Description of changes')
         expect(page).to have_css('tr', text: 'Deposited')
         expect(page).to have_css('td', text: 'lstanfordjr')
-        expect(page).to have_css('td', text: 'January 27, 2020 19:10')
+        expect(page).to have_css("td time[datetime='2020-01-27T19:10:00Z']")
         expect(page).to have_no_css('td', text: 'cocina description')
       end
 

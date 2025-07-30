@@ -58,6 +58,7 @@ gem 'globus_client'
 gem 'honeybadger'
 gem 'kaminari' # For pagination
 gem 'kicks' # Background processing of rabbitMQ messages. (Formerly sneakers.)
+gem 'local_time'
 gem 'marcel' # For MIME type detection
 gem 'okcomputer'
 gem 'parallel' # Used for importing. Can be removed when importing is done.
