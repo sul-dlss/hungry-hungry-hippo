@@ -6,7 +6,7 @@ module Emails
     class SubmitClarificationComponent < ApplicationComponent
       def call
         tag.p do
-          'If you did not recently submit your item for review, the submission was made by your ' \
+          'If you did not recently submit your item for deposit, the submission was made by your ' \
             'collection manager or an SDR admin.'
         end
       end
