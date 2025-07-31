@@ -29,7 +29,7 @@ module Cocina
     delegate :access, :release_option, :release_date, :custom_rights_statement, :copyright, to: :work_form
 
     def access_params
-      return access_params_with_embargo if release_option == 'delay'
+      return access_params_with_embargo if release_option == 'delay' && release_date.present?
 
       {
         view: access,

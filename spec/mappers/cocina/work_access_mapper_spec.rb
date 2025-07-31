@@ -62,6 +62,14 @@ RSpec.describe Cocina::WorkAccessMapper do
     end
   end
 
+  context 'when delay selected but embargo date not provided' do
+    let(:work_form) { WorkForm.new(release_option: 'delay') }
+
+    it 'maps to cocina' do
+      expect(access).not_to have_key(:embargo)
+    end
+  end
+
   context 'when embargoed' do
     let(:work_form) { WorkForm.new(release_option: 'delay', release_date: Date.new(2025, 1, 11)) }
 
