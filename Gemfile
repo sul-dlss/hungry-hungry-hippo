@@ -65,7 +65,7 @@ gem 'preservation-client'
 gem 'rack-sanitizer'
 gem 'state_machines-activerecord'
 gem 'validate_url'
-gem 'view_component'
+gem 'view_component', '~> 3.0' # Pinned due to form issues. See https://github.com/sul-dlss/hungry-hungry-hippo/issues/1722
 gem 'whenever', require: false
 
 group :development, :test do

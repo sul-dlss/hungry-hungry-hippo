@@ -711,7 +711,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   validate_url
-  view_component
+  view_component (~> 3.0)
   web-console
   webmock
   whenever
