@@ -10,7 +10,7 @@ module Show
       @presenter = presenter
       # Specify a tab to include in edit link (e.g., ?tab=contributors)
       @tab = tab
-      super
+      super()
     end
 
     def classes

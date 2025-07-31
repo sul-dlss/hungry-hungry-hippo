@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Works::Edit::TermsOfDepositComponent, type: :component do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_view_context, {}) }
   let(:work_form) { WorkForm.new(agree_to_terms:) }
 
   context 'when the user has already agreed to terms of deposit' do
