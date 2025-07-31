@@ -7,7 +7,7 @@ module Edit
       def initialize(tab_id:, classes: [])
         @tab_id = tab_id
         @classes = classes
-        super
+        super()
       end
 
       def call
