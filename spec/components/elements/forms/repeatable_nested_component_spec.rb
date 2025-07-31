@@ -8,7 +8,7 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
                         form_component: RelatedLinks::EditComponent, hidden_label:, bordered:)
   end
 
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_view_context, {}) }
   let(:work_form) { WorkForm.new }
 
   let(:hidden_label) { false }
@@ -16,7 +16,7 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
 
   context 'when rendering the default component' do
     let(:collection_form) { CollectionForm.new }
-    let(:form) { ActionView::Helpers::FormBuilder.new(nil, collection_form, vc_test_controller.view_context, {}) }
+    let(:form) { ActionView::Helpers::FormBuilder.new(nil, collection_form, vc_test_view_context, {}) }
 
     it 'renders the nested component' do
       render_inline(component)
