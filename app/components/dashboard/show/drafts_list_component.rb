@@ -23,7 +23,7 @@ module Dashboard
         [
           link_to(work.title, work_or_wait_path(work)),
           link_to(work.collection.title, collection_path(work.collection.druid)),
-          I18n.l(work.updated_at, format: '%b %d, %Y')
+          helpers.local_date(work.updated_at, format: '%b %d, %Y')
         ]
       end
     end

@@ -9,7 +9,11 @@ module Emails
         super()
       end
 
-      delegate :license_label, :access_label, :release_date_label, to: :@work_presenter
+      delegate :license_label, :access_label, to: :@work_presenter
+
+      def release_date_label
+        @work_presenter.release_date_label(local: false)
+      end
     end
   end
 end

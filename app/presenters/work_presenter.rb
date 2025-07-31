@@ -3,6 +3,9 @@
 # Presents a work
 class WorkPresenter < FormPresenter
   include ActionPolicy::Behaviour
+  include ActionView::Helpers::TagHelper
+  include ActionView::Helpers::DateHelper
+  include LocalTimeHelper
 
   def initialize(work:, work_form:, version_status:, user_version: 1)
     @work = work
@@ -40,7 +43,7 @@ class WorkPresenter < FormPresenter
   end
 
   def deposited_at
-    I18n.l(created_at, format: :long)
+    local_date(created_at, format: :long)
   end
 
   def depositor
@@ -76,10 +79,10 @@ class WorkPresenter < FormPresenter
     I18n.t("access.#{access}")
   end
 
-  def release_date_label
+  def release_date_label(local: true)
     return 'Immediately' if release_option == 'immediate'
 
-    I18n.l(release_date, format: :long)
+    local ? local_date(release_date, format: :long) : I18n.l(release_date, format: :long)
   end
 
   def terms_of_use
