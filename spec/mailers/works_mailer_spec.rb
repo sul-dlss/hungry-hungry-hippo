@@ -28,7 +28,7 @@ RSpec.describe WorksMailer do
 
     it 'renders the body' do
       expect(mail).to match_body('Dear Maxwell,')
-      expect(mail).to match_body('Your deposit, "S1.E2: Rakers" is now published in the ' \
+      expect(mail).to match_body('Your deposit, "S1.E2: Rakers," is now published in the ' \
                                  '20 Minutes into the Future collection in the Stanford Digital Repository.')
       expect(mail).to match_body('If you did not recently submit')
       expect(mail).to match_body('License: CC-BY-4.0 Attribution International')
