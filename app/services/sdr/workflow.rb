@@ -5,6 +5,7 @@ module Sdr
   class Workflow
     class Error < StandardError; end
 
+    # Create a workflow unless it already exists for any version.
     # @param [String] druid
     # @param [String] workflow_name
     # @param [Integer] version (1)
@@ -12,17 +13,19 @@ module Sdr
     #                                      Value may be 'low' or 'default'
     # @raise [Error] if there is an error creating the workflow
     def self.create_unless_exists(druid, workflow_name, version: 1, priority: 'default')
-      return unless workflow_client.workflow(pid: druid, workflow_name:).empty?
-
-      workflow_client.create_workflow_by_name(druid, workflow_name, version:, lane_id: priority)
-    rescue Dor::WorkflowException => e
+      Dor::Services::Client.object(druid).workflow(workflow_name).create(version:, lane_id: priority) unless exists?(
+        druid, workflow_name
+      )
+    rescue Dor::Services::Client::Error => e
       raise Error, "Creating workflow failed: #{e.message}"
     end
 
-    def self.workflow_client
-      Dor::Workflow::Client.new(url: Settings.workflow.url,
-                                logger: Rails.logger,
-                                timeout: 60)
+    def self.exists?(druid, workflow_name)
+      Dor::Services::Client.object(druid).workflow(workflow_name).find
+      true
+    rescue Dor::Services::Client::NotFoundResponse
+      false
     end
+    private_class_method :exists?
   end
 end
