@@ -36,11 +36,10 @@ services:
       SECRET_KEY_BASE: 769171f88c527d564fb65b4b7ef712d5ae9761a21e26a41cd7c88eb0af89c74f857b9be4089119f71cf806dfc8bf9d9d2f0df91c00b119c96f462b46ebf43b0f
       SETTINGS__ENABLED_FEATURES__CREATE_UR_ADMIN_POLICY: 'true'
       SETTINGS__SURI__URL: http://suri:3000
-      SETTINGS__WORKFLOW__URL: http://workflow:3000
-      SETTINGS__WORKFLOW__LOGFILE: rails
       SETTINGS__RABBITMQ__ENABLED: 'false'
       SETTINGS__VERSION_SERVICE__SYNC_WITH_PRESERVATION: 'false'
       SETTINGS__REDIS_URL: redis://redis:6379/
+      SETTINGS__ROBOTS_REDIS_URL: redis://redis:6379/
       SETTINGS__SOLR__ENABLED: 'false'
       SETTINGS__RELEASE__PURL_BASE_URL: https://sul-purl-stage.stanford.edu
     depends_on:
@@ -62,25 +61,6 @@ services:
       DATABASE_PORT: 5432
       RAILS_LOG_TO_STDOUT: 'true'
 
-  workflow:
-    image: suldlss/workflow-server:latest
-    environment:
-      - RAILS_LOG_TO_STDOUT=true
-      - DATABASE_NAME=workflow-server
-      - DATABASE_USERNAME=postgres
-      - DATABASE_PASSWORD=postgres
-      - DATABASE_HOSTNAME=db
-      - DATABASE_PORT=5432
-      - SETTINGS__DOR_SERVICES__URL=http://dor-services-app:3000
-      - SETTINGS__DOR_SERVICES__TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJGb28ifQ.-BVfLTW9Q1_ZQEsGv4tuzGLs5rESN7LgdtEwUltnKv4
-      - SETTINGS__ENABLE_STOMP=false
-      - SETTINGS__REDIS__HOSTNAME=redis
-      - PAGER='more'
-    depends_on:
-      - db
-      - redis
-    ports:
-      - 3001:3000
 volumes:
   postgres-data:
   redis-data:

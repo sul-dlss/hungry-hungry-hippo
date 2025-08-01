@@ -7,8 +7,7 @@ namespace :development do
 
     druid = args[:druid]
 
-    client = Dor::Workflow::Client.new(url: Settings.workflow.url)
-    client.skip_all(druid:, workflow: 'accessionWF', note: 'Testing')
+    Dor::Services::Client.object(druid).workflow('accessionWF').skip_all(note: 'Testing')
 
     object = Work.find_by(druid:) || Collection.find_by!(druid:)
     object.accession_complete!
