@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Elements::Forms::InputCollectionCheckboxesComponent, type: :component do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_view_context, {}) }
   let(:form_class) do
     Class.new(ApplicationForm) do
       attribute :work_subtypes, array: true
