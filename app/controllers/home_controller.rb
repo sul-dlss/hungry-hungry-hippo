@@ -6,6 +6,6 @@ class HomeController < ApplicationController
   skip_verify_authorized only: :show
 
   def show
-    @hero_image = "home#{rand(1..20)}.webp"
+    @hero_image = "home#{rand(1..19)}.webp"
   end
 end
