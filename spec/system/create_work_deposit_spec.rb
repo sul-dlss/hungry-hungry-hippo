@@ -11,7 +11,22 @@ RSpec.describe 'Create a work deposit' do
 
   let(:query) { 'Biology' } # Used in stubbing out FAST connection
   let(:affiliation_query) { { search: 'Stanford University' } }
-  let(:affiliation_ror) { [RorService::Org.new({ 'id' => 'https://ror.org/00f54p054', 'name' => 'Stanford University Affiliation' })] }
+  let(:affiliation_ror) do
+    [
+      RorService::Org.new(
+        {
+          'id' => 'https://ror.org/00f54p054',
+          'names' => [
+            {
+              'lang' => 'en',
+              'value' => 'Stanford University Affiliation',
+              'types' => %w[ror_display label]
+            }
+          ]
+        }
+      )
+    ]
+  end
 
   before do
     allow(Sdr::Repository).to receive(:accession)
