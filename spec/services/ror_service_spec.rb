@@ -9,7 +9,7 @@ RSpec.describe RorService do
 
   context 'when the ror service returns results' do
     before do
-      stub_request(:get, "https://api.ror.org/organizations?query=#{search}")
+      stub_request(:get, "https://api.ror.org/v2/organizations?query=#{search}")
         .with(headers: { 'Accept' => 'application/json' })
         .to_return(status: 200, body:, headers: { 'Content-Type': 'application/json;charset=UTF-8' })
     end
@@ -18,20 +18,33 @@ RSpec.describe RorService do
       let(:body) do
         {
           number_of_results: 1,
-          items:
-          [
+          items: [
             {
               id: 'https://ror.org/00f54p054',
-              name: 'Stanford University',
-              aliases: ['Leland Stanford Junior University, Stanford U'],
+              names: [
+                {
+                  lang: 'en',
+                  value: 'Stanford University',
+                  types: %w[ror_display label]
+                },
+                {
+                  lang: 'en',
+                  value: 'Leland Stanford Junior University',
+                  types: %w[alias]
+                }
+              ],
               types: ['Education'],
-              country: { country_name: 'United States', country_code: 'US' },
-              addresses:
-                [{ lat: 37.42411,
-                   lng: -122.16608,
-                   state: nil,
-                   state_code: nil,
-                   city: 'Palo Alto' }],
+              locations: [
+                {
+                  geonames_details: {
+                    country_code: 'US',
+                    country_name: 'United States',
+                    name: 'Stanford',
+                    lat: 37.42411,
+                    lng: -122.16608
+                  }
+                }
+              ],
               status: 'active'
             }
           ]
@@ -42,11 +55,9 @@ RSpec.describe RorService do
         expect(organizations.count).to eq(1)
         expect(organizations.first.name).to eq('Stanford University')
         expect(organizations.first.id).to eq('https://ror.org/00f54p054')
-        expect(organizations.first.country).to eq('United States')
-        expect(organizations.first.city).to eq('Palo Alto')
-        expect(organizations.first.aliases).to eq('Leland Stanford Junior University, Stanford U')
+        expect(organizations.first.location).to eq('Stanford, United States')
+        expect(organizations.first.aliases).to eq('Leland Stanford Junior University')
         expect(organizations.first.org_types).to eq('Education')
-        expect(organizations.first.location).to eq('Palo Alto, United States')
       end
     end
 
@@ -58,7 +69,13 @@ RSpec.describe RorService do
           [
             {
               id: 'https://ror.org/00f54p054',
-              name: 'Stanford University'
+              names: [
+                {
+                  lang: 'en',
+                  value: 'Stanford University',
+                  types: %w[ror_display label]
+                }
+              ]
             }
           ]
         }.to_json
@@ -67,11 +84,9 @@ RSpec.describe RorService do
       it 'returns a successful response with only the available data' do
         expect(organizations.count).to eq(1)
         expect(organizations.first.name).to eq('Stanford University')
-        expect(organizations.first.country).to be_nil
-        expect(organizations.first.city).to be_nil
-        expect(organizations.first.aliases).to be_nil
+        expect(organizations.first.aliases).to eq ''
         expect(organizations.first.org_types).to be_nil
-        expect(organizations.first.location).to eq ''
+        expect(organizations.first.location).to be_nil
       end
     end
   end
@@ -85,7 +100,7 @@ RSpec.describe RorService do
     end
 
     before do
-      stub_request(:get, "https://api.ror.org/organizations?query=#{search}")
+      stub_request(:get, "https://api.ror.org/v2/organizations?query=#{search}")
         .with(headers: { 'Accept' => 'application/json' })
         .to_return(status: 200, body:, headers: { 'Content-Type': 'application/json;charset=UTF-8' })
     end
@@ -99,7 +114,7 @@ RSpec.describe RorService do
     let(:body) { nil }
 
     before do
-      stub_request(:get, "https://api.ror.org/organizations?query=#{search}")
+      stub_request(:get, "https://api.ror.org/v2/organizations?query=#{search}")
         .with(headers: { 'Accept' => 'application/json' })
         .to_return(status: 404, body:, headers: { 'Content-Type': 'application/json;charset=UTF-8' })
     end

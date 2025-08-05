@@ -7,7 +7,22 @@ RSpec.describe 'Manage contributors for a work deposit' do
   let(:user) { create(:user) }
   let(:version_status) { build(:first_accessioning_version_status) }
   let(:affiliation_query) { { search: 'Stanford University' } }
-  let(:affiliation_ror) { [RorService::Org.new({ 'id' => 'https://ror.org/00f54p054', 'name' => 'Stanford University Affiliation' })] }
+  let(:affiliation_ror) do
+    [
+      RorService::Org.new(
+        {
+          'id' => 'https://ror.org/00f54p054',
+          'names' => [
+            {
+              'lang' => 'en',
+              'value' => 'Stanford University Affiliation',
+              'types' => %w[ror_display label]
+            }
+          ]
+        }
+      )
+    ]
+  end
 
   before do
     # Stubbing out for Deposit Job
