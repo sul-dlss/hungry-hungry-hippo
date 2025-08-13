@@ -33,16 +33,7 @@ class CollectionsMailer < ApplicationMailer
   end
 
   def participants_changed_email
-    return unless @collection.email_when_participants_changed
-
-    # if the collection is a first_version and has not already been saved at least once, don't send emails
-    # i.e. emails are only NOT sent the very first time a brand new collection is saved
-    return if @collection.first_version? && @collection.updated_at == @collection.created_at
-
-    (@collection.managers + @collection.reviewers).uniq.each do |user|
-      @user = user
-      mail(to: @user.email_address, subject: "Participant changes for the #{@collection.title} collection in the SDR")
-    end
+    mail(to: @user.email_address, subject: "Participant changes for the #{@collection.title} collection in the SDR")
   end
 
   def first_version_created_email
