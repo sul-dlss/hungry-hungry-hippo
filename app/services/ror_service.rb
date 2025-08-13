@@ -25,8 +25,6 @@ class RorService
 
   def organizations
     conn.get('/v2/organizations', params, headers).body
-  rescue Faraday::Error => e
-    raise Error, "Connection err: #{e.message}"
   end
 
   def new_conn
