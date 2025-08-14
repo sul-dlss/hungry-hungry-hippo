@@ -203,7 +203,7 @@ RSpec.describe DepositCollectionJob do
       allow(Notifier).to receive(:publish)
     end
 
-    it 'publishes a MANGER_ADDED notification' do
+    it 'publishes a MANAGER_ADDED notification' do
       described_class.perform_now(collection_form:, collection:, current_user:)
       expect(collection.managers).to include(manager)
       expect(Notifier).to have_received(:publish).with(Notifier::MANAGER_ADDED, collection:, user: manager)
