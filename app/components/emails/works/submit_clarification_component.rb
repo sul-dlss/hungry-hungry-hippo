@@ -7,7 +7,7 @@ module Emails
       def call
         tag.p do
           'If you did not recently submit your item for deposit, the submission was made by your ' \
-            'collection manager or an SDR admin.'
+            'collection manager, a person with whom you shared this item, or an SDR admin.'
         end
       end
     end
