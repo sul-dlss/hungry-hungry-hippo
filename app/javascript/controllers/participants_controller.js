@@ -11,7 +11,7 @@ export default class extends Controller {
     if (this.inputTarget.value === '') return
 
     this.invalidFeedbackContainerTarget.innerHTML = ''
-    const ids = this.inputTarget.value.split(/[,;]? |\n/)
+    const ids = this.inputTarget.value.split(/[,;| ]+|\n/)
     await Promise.all(ids.map(id => this.lookupId(id)))
       .then((errorIds) => {
         this.inputTarget.value = ''
