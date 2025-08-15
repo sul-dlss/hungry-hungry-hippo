@@ -38,9 +38,11 @@ class WorkSortService
   private
 
   def statuses_for(works)
-    Sdr::Repository.statuses(
-      druids: works.where.not(druid: nil).pluck(:druid)
-    )
+    # Rather than using pluck on the ActiveRecord Relation, convert to an array first.
+    # This is because we are using distinct previously in the work_policy collection scope.
+    druids = works.where.not(druid: nil).map(&:druid)
+
+    Sdr::Repository.statuses(druids:)
   end
 
   def presenters_from(works:, statuses:)
