@@ -46,7 +46,7 @@ class WorkPolicy < ApplicationPolicy
       relation.left_outer_joins(:shares)
             # This is any share, not a specific permission
             .where(shares: { user: })
-    )
+    ).distinct
   end
 
   private
