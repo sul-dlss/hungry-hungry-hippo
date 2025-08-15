@@ -240,7 +240,7 @@ RSpec.describe WorkPolicy do
       policy.apply_scope(target, name: :collection, type: :active_record_relation, scope_options: { collection: }).to_a
     end
 
-    let!(:unowned_work) { create(:work, collection:, title: 'unknowned') }
+    let!(:unowned_work) { create(:work, collection:, title: 'unowned') }
 
     let(:policy) { described_class.new(user:) }
 
@@ -284,6 +284,18 @@ RSpec.describe WorkPolicy do
       let(:permission) { 'deposit' }
 
       it { is_expected.to eq([shared_work]) }
+    end
+
+    context 'when there are shares for the work in the collection' do
+      let(:user) { owner }
+      let!(:shared_work) { create(:work, user: owner, collection:, title: 'shared') }
+      let(:permission) { 'deposit' }
+
+      before do
+        create(:share, user: plain_old_user, work: shared_work, permission:)
+      end
+
+      it { is_expected.to eq([owned_work, shared_work]) }
     end
   end
 end
