@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Elements::Forms::ToggleComponent, type: :component do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, contributor_form, vc_test_controller.view_context, {}) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, contributor_form, vc_test_view_context, {}) }
   let(:contributor_form) { ContributorForm.new }
   let(:field_name) { 'role_type' }
   let(:label) { 'Role Type' }

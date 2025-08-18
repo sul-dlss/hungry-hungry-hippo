@@ -5,7 +5,7 @@ module Edit
   class SectionHeaderComponent < ApplicationComponent
     def initialize(title:)
       @title = title
-      super
+      super()
     end
 
     def call
