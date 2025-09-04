@@ -1,4 +1,4 @@
-<%= tag.th class: classes, style: do %>
+<%= tag.th scope: 'col', class: classes, style: do %>
   <%= label %>
   <%= render Elements::TooltipComponent.new(target_label: label, tooltip:) %>
 <% end %>
