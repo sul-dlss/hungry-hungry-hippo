@@ -6,7 +6,7 @@ module Works
     class ContentFolderUploadComponent < ApplicationComponent
       def initialize(path:)
         @path = path
-        super
+        super()
       end
 
       attr_reader :path
