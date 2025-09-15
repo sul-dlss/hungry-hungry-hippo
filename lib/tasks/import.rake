@@ -19,7 +19,6 @@ NO_MIGRATE_WORKS = [
   'druid:ds987hd4949',
   'druid:cp878rg4412',
   # Migrating later
-  'druid:cj061qr5050',
   'druid:qj212cd3182',
   'druid:xm245qf7686'
 ].freeze
@@ -51,12 +50,7 @@ NO_MIGRATE_COLLECTIONS = [
   'druid:bp706gv3936',
   'druid:gs929fm2035',
   'druid:kr447bp6667',
-  'druid:qz055ds3870',
-  # Migrating later
-  'druid:rr255gf6892',
-  'druid:gs860rq5377',
-  'druid:ty986nn2846',
-  'druid:fh113fq5916'
+  'druid:qz055ds3870'
 ].freeze
 
 # These collections will be imported, but will not be editable.
