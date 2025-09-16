@@ -30,7 +30,7 @@ class GlobusesController < ApplicationController
   def done_uploading
     authorize! with: GlobusPolicy
 
-    return render :uploading, status: :unprocessable_entity if (@tasks_in_progress = tasks_in_progress?)
+    return render :uploading, status: :unprocessable_content if (@tasks_in_progress = tasks_in_progress?)
 
     GlobusListJob.perform_later(content: @content)
 

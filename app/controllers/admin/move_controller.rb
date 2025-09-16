@@ -21,7 +21,7 @@ module Admin
 
         render_move_success
       else
-        render :form, status: :unprocessable_entity
+        render :form, status: :unprocessable_content
       end
     end
 

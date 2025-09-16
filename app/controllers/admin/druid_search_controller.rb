@@ -16,7 +16,7 @@ module Admin
       if @druid_search_form.valid?
         redirect_to_work_or_collection
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
 

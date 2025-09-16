@@ -70,7 +70,7 @@ RSpec.describe 'Search for depositor IDs' do
 
         it 're-renders the form with errors' do
           get "/admin/depositors_search/search?admin_depositors_search[druids]=#{URI.encode_uri_component(druids)}"
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.body).to match(/work not found: druid:foobar/)
         end
       end

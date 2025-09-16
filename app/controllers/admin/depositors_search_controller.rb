@@ -19,7 +19,7 @@ module Admin
       if @depositors_search_form.valid?
         @druid_to_sunetid_map = Admin::DepositorsSearch.call(form: @depositors_search_form)
       else
-        render :search, status: :unprocessable_entity
+        render :search, status: :unprocessable_content
       end
     end
 

@@ -38,7 +38,7 @@ RSpec.describe 'Create work' do
       it 'is able to submit the new work form' do
         post '/works', params: { work: { collection_druid: collection_druid_fixture, content_id: content.id } }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
 
@@ -51,7 +51,7 @@ RSpec.describe 'Create work' do
       it 'is able to submit the new work form' do
         post '/works', params: { work: { collection_druid: collection_druid_fixture, content_id: content.id } }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
 
@@ -64,7 +64,7 @@ RSpec.describe 'Create work' do
       it 'is able to submit the new work form' do
         post '/works', params: { work: { collection_druid: collection_druid_fixture, content_id: content.id } }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end
