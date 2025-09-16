@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Works::Edit::AccessSettingsComponent, type: :component do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_view_context, {}) }
   let(:work_form) do
     WorkForm.new(access: 'stanford', release_option: work_release_option, release_date: work_release_date,
                  max_release_date: work_max_release_date)

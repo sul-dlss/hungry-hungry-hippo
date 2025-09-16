@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Elements::Forms::CheckboxComponent, type: :component do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, related_work_form, vc_test_controller.view_context, {}) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, related_work_form, vc_test_view_context, {}) }
   let(:field_name) { :use_citation }
   let(:related_work_form) { RelatedWorkForm.new(use_citation:) }
   let(:use_citation) { false }

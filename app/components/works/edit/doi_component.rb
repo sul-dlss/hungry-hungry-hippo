@@ -7,7 +7,7 @@ module Works
       def initialize(form:, collection:)
         @form = form
         @collection = collection
-        super
+        super()
       end
 
       attr_reader :form

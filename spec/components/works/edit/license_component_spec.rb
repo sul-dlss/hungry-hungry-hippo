@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Works::Edit::LicenseComponent, type: :component do
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_controller.view_context, {}) }
+  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_view_context, {}) }
   let(:work_form) { WorkForm.new(license:) }
   let(:collection) { instance_double(Collection, required_license_option?: required) }
   let(:license_presenter) { LicensePresenter.new(work_form:, collection:) }

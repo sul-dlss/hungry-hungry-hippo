@@ -23,4 +23,4 @@
         <% end %>
     <% end %>
 <% end %>
-<%= paginate content_files, params: { controller: 'contents', action: 'show', id: content_obj.id } %>
+<%= helpers.paginate content_files, params: { controller: 'contents', action: 'show', id: content_obj.id } %>

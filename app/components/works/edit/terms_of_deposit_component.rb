@@ -6,7 +6,7 @@ module Works
     class TermsOfDepositComponent < ApplicationComponent
       def initialize(form:)
         @form = form
-        super
+        super()
       end
 
       attr_reader :form

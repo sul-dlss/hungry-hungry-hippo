@@ -11,7 +11,7 @@ module Edit
     def initialize(presenter:, **btn_args)
       @presenter = presenter
       @btn_args = btn_args
-      super
+      super()
     end
 
     def render?

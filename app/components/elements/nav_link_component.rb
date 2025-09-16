@@ -7,7 +7,7 @@ module Elements
       @title = title
       @path = path
       @data = data
-      super
+      super()
     end
 
     attr_reader :title, :path, :data
