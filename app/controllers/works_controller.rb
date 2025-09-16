@@ -70,7 +70,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     else
       handle_invalid
       set_license_presenter
-      render :form, status: :unprocessable_entity
+      render :form, status: :unprocessable_content
     end
   end
 
@@ -88,7 +88,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       handle_no_changes_or_invalid
       set_license_presenter
       set_presenter
-      render :form, status: :unprocessable_entity
+      render :form, status: :unprocessable_content
     end
   end
 
@@ -126,7 +126,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       redirect_path = perform_review
       redirect_to redirect_path
     else
-      render :show, status: :unprocessable_entity
+      render :show, status: :unprocessable_content
     end
   end
 

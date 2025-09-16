@@ -20,7 +20,7 @@ class ContentFilesController < ApplicationController
     if @content_file.update(content_file_params)
       redirect_to content_file_path(@content_file)
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

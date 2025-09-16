@@ -53,7 +53,7 @@ class CollectionsController < ApplicationController
       redirect_to wait_collections_path(collection.id)
     else
       add_blank_contributor
-      render :form, status: :unprocessable_entity
+      render :form, status: :unprocessable_content
     end
   end
 
@@ -68,7 +68,7 @@ class CollectionsController < ApplicationController
       redirect_to wait_collections_path(@collection.id)
     else
       add_blank_contributor
-      render :form, status: :unprocessable_entity
+      render :form, status: :unprocessable_content
     end
   end
 
