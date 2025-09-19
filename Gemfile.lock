@@ -143,7 +143,7 @@ GEM
       capybara (>= 3.0)
       ruby2_keywords
     chronic (0.10.2)
-    cocina-models (0.105.2)
+    cocina-models (0.106.0)
       activesupport
       deprecation
       dry-struct (~> 1.0)
@@ -199,9 +199,9 @@ GEM
       activesupport (>= 4.2)
       bunny (~> 2.17)
       zeitwerk (~> 2.1)
-    dor-services-client (15.19.3)
+    dor-services-client (15.20.0)
       activesupport (>= 7.0.0)
-      cocina-models (~> 0.105.0)
+      cocina-models (~> 0.106.0)
       deprecation
       faraday (~> 2.0)
       faraday-retry
@@ -301,7 +301,7 @@ GEM
     jbuilder (2.14.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (2.13.2)
+    json (2.14.1)
     jsonpath (1.1.5)
       multi_json
     kaminari (1.2.2)
