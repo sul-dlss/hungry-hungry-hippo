@@ -39,8 +39,6 @@ instances, and JSON-based Cocina objects.
   <dd>Define form attributes and validation behaviors (from Rails' <a href="https://guides.rubyonrails.org/active_model_basics.html">ActiveModel</a>)</dd>
   <dt>Form Mappers</dt>
   <dd>Map database-backed models and Cocina models to form instances (plain old Ruby objects)</dd>
-  <dt>Importers</dt>
-  <dd>Import a domain object in JSON/hash format into a database-backed model (plain old Ruby objects)</dd>
   <dt>Model Synchronizers</dt>
   <dd>Synchronize changes from Cocina objects into database-backed models (plain old Ruby objects)</dd>
   <dt>Policies</dt>
