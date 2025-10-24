@@ -33,9 +33,9 @@ en:
     # To hide dashboard banner, set to ''.
     # Banners can include links, e.g., "Email <a href="mailto:sdr-contact@lists.stanford.edu" >sdr-contact@lists.stanford.edu</a> to volunteer!"
     home_html: >-
-      Learn more by watching <a href="https://sdr.library.stanford.edu/tutorial-videos" class="card-link" target="_blank" data-ahoy-track="true">quick tutorial videos</a> about depositing content and managing collections!
+      Our exciting new feature allows SDR depositors to invite others at Stanford to work together on a deposit. Read more about <a href="https://sdr.library.stanford.edu/news/new-sdr-self-deposit-feature-makes-collaboration-easy" class="card-link" target="_blank" data-ahoy-track="true">how to invite your colleagues to work on draft or already deposited works with you</a>.
     dashboard_html: >-
-      Watch <a href="https://sdr.library.stanford.edu/tutorial-videos" class="card-link" target="_blank" data-ahoy-track="true">quick tutorial videos</a> about depositing content and managing collections!
+      Learn <a href="https://sdr.library.stanford.edu/news/new-sdr-self-deposit-feature-makes-collaboration-easy" class="card-link" target="_blank" data-ahoy-track="true">how to invite Stanford colleagues to work together on your deposit</a>.
   app_name: 'Stanford Digital Repository Self-deposit'
   time:
     formats:
