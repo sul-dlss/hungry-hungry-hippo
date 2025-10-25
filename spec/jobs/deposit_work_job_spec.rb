@@ -235,7 +235,43 @@ RSpec.describe DepositWorkJob do
     end
   end
 
-  context 'when an existing work with an unchanged, closed cocina object' do
+  context 'when an existing work with an unchanged, closed cocina object and not depositing' do
+    let(:work) { create(:work, :registering_or_updating, druid:) }
+    let(:work_form) do
+      work_form_fixture.tap do |form|
+        form.content_id = content.id
+        form.collection_druid = collection.druid
+      end
+    end
+    let(:version_status) { build(:version_status) }
+
+    before do
+      allow(Sdr::Repository).to receive(:status).and_return(version_status)
+      allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
+      # Returning cocina_object will make this unchanged.
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+    end
+
+    it 'updates an existing work' do
+      expect(work.title).not_to eq(title_fixture)
+
+      described_class.perform_now(work_form:, work:, deposit: false, request_review: false,
+                                  current_user:)
+      expect(Contents::Analyzer).to have_received(:call).with(content:)
+      expect(Cocina::WorkMapper).to have_received(:call).with(work_form:, content:,
+                                                              source_id: "h3:object-#{work.id}")
+      expect(Contents::Stager).to have_received(:call).with(content:, druid:)
+      expect(Sdr::Repository).not_to have_received(:open_if_needed)
+      expect(Sdr::Repository).not_to have_received(:update)
+      expect(Sdr::Repository).not_to have_received(:accession)
+
+      expect(work.reload.title).to eq(title_fixture)
+
+      expect(work.deposit_not_in_progress?).to be true
+    end
+  end
+
+  context 'when an existing work with an unchanged, closed cocina object and depositing' do
     let(:work) { create(:work, :registering_or_updating, druid:) }
     let(:work_form) do
       work_form_fixture.tap do |form|
@@ -262,7 +298,13 @@ RSpec.describe DepositWorkJob do
                                                               source_id: "h3:object-#{work.id}")
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
       expect(Sdr::Repository).not_to have_received(:open_if_needed)
-      expect(Sdr::Repository).not_to have_received(:update)
+      expect(Sdr::Repository).to have_received(:update)
+        .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata),
+              user_name: current_user.sunetid) do |args|
+        event = args[:cocina_object].description.event.first
+        expect(event.type).to eq 'deposit'
+        expect(event.date.first.value).to eq Time.zone.today.iso8601
+      end
       expect(Sdr::Repository).not_to have_received(:accession)
 
       expect(work.reload.title).to eq(title_fixture)
@@ -298,7 +340,7 @@ RSpec.describe DepositWorkJob do
                                                               source_id: "h3:object-#{work.id}")
       expect(Contents::Stager).to have_received(:call).with(content:, druid:)
       expect(Sdr::Repository).not_to have_received(:open_if_needed)
-      expect(Sdr::Repository).not_to have_received(:update)
+      expect(Sdr::Repository).to have_received(:update)
       expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: false,
                                                                 version_description: 'I am changing the title.')
 
@@ -351,6 +393,7 @@ RSpec.describe DepositWorkJob do
       allow(RoundtripSupport).to receive(:changed?).and_return(false)
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
       allow(Sdr::Repository).to receive(:find_latest_user_version).with(druid:).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:update)
     end
 
     it 'approves the work and deposits' do
@@ -359,6 +402,7 @@ RSpec.describe DepositWorkJob do
 
       expect(work.review_not_in_progress?).to be true
       expect(Sdr::Repository).to have_received(:accession)
+      expect(Sdr::Repository).to have_received(:update)
     end
   end
 end
