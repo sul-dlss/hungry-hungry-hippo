@@ -87,6 +87,9 @@ class DepositWorkJob < ApplicationJob
                      .then do |cocina_object|
         Sdr::Repository.update(cocina_object:, user_name:, description: new_user_version? ? 'Files changed' : nil)
       end
+    elsif deposit?
+      # If the work is not changed but is being deposited, still need to update the deposit publication date.
+      Sdr::Repository.update(cocina_object: mapped_cocina_object_with_update_deposit_publication_date, user_name:)
     end
   end
   # rubocop:enable Metrics/AbcSize
