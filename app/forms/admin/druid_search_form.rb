@@ -8,11 +8,15 @@ module Admin
     validate :collection_or_work_present
 
     def collection
-      @collection ||= Collection.find_by(druid:)
+      return @collection if defined?(@collection)
+
+      @collection = Collection.find_by(druid:)
     end
 
     def work
-      @work ||= Work.find_by(druid:)
+      return @work if defined?(@work)
+
+      @work = Work.find_by(druid:)
     end
 
     def normalize_druid

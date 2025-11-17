@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe DoiAssignedService do
   include WorkMappingFixtures
+
   subject(:assigned?) { described_class.call(work:, cocina_object:) }
 
   let(:work) { create(:work, doi_assigned: false) }

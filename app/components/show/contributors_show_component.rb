@@ -66,7 +66,7 @@ module Show
       safe_join(contributor.affiliations.map do |affiliation|
         next if affiliation.institution.blank?
 
-        department = affiliation.department.present? ? affiliation.department.prepend(': ') : nil
+        department = affiliation.department.presence&.prepend(': ')
 
         content_tag(:p, [affiliation.institution, department].join, class: 'mb-0')
       end)

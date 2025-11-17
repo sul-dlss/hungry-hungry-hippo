@@ -3,6 +3,7 @@
 # Called when accessioning / deposit is complete.
 class DepositCompleteJob
   include Sneakers::Worker
+
   # This worker will connect to "h3.deposit_complete" queue
   # env is set to nil since by default the actual queue name would be
   # "h3.deposit_complete_development"

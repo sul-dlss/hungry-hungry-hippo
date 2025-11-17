@@ -595,3 +595,18 @@ Gemspec/AttributeAssignment: # new in 1.77
   Enabled: true
 Style/CollectionQuerying: # new in 1.77
   Enabled: true
+
+Layout/EmptyLinesAfterModuleInclusion: # new in 1.79
+  Enabled: true
+Style/ArrayIntersectWithSingleElement: # new in 1.81
+  Enabled: true
+Rails/FindByOrAssignmentMemoization: # new in 2.33
+  Enabled: true
+Rails/HttpStatusNameConsistency: # new in 2.34
+  Enabled: true
+Rails/OrderArguments: # new in 2.33
+  Enabled: true
+Rails/RedirectBackOrTo: # new in 2.34
+  Enabled: true
+RSpec/LeakyLocalVariable: # new in 3.8
+  Enabled: true

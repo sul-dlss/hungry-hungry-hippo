@@ -11,7 +11,9 @@ module Admin
     attribute :work_form
 
     def collection
-      @collection ||= Collection.find_by(druid: collection_druid)
+      return @collection if defined?(@collection)
+
+      @collection = Collection.find_by(druid: collection_druid)
     end
 
     def normalize_druid

@@ -168,7 +168,7 @@ module Admin
           work_form.custom_rights_statement.present? ? 'yes' : 'no',
           work.doi_assigned? ? Doi.url(druid:) : nil,
           work_form.work_type,
-          work_form.work_subtypes.present? ? work_form.work_subtypes.join('; ') : nil,
+          work_form.work_subtypes.presence&.join('; '),
           content.content_files.count,
           content.content_files.sum(&:size) / 1000.0, # size is in bytes, convert to kb (decimal)
           work.collection.title,

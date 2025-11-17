@@ -21,7 +21,9 @@ module Admin
     private
 
     def work
-      @work ||= Work.find_by(druid: params[:druid])
+      return @work if defined?(@work)
+
+      @work = Work.find_by(druid: params[:druid])
     end
 
     def render_delete_success
