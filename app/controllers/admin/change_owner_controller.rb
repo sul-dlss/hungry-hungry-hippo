@@ -28,7 +28,9 @@ module Admin
     end
 
     def work
-      @work ||= Work.find_by(druid: params[:work_druid])
+      return @work if defined?(@work)
+
+      @work = Work.find_by(druid: params[:work_druid])
     end
 
     def account

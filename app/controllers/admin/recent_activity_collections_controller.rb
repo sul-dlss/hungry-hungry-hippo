@@ -21,7 +21,7 @@ module Admin
     end
 
     def rows
-      Collection.where('updated_at > ?', days_limit.days.ago).order('updated_at DESC').map do |collection|
+      Collection.where('updated_at > ?', days_limit.days.ago).order(updated_at: :desc).map do |collection|
         Admin::RecentActivityCollectionPresenter.values_for(collection:)
       end
     end

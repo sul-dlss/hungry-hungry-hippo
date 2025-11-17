@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Show home' do
   include ActionView::Helpers::SanitizeHelper
+
   before do
     sign_in(create(:user))
   end
