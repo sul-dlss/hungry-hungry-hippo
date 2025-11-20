@@ -12,7 +12,7 @@
 <% end %>
 
 <% if Rails.env.development? && @collection_presenter.collection.accessioning? %>
-    <%= render Elements::AlertComponent.new(variant: :info, dismissible: true) do %>
+    <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :info, dismissible: true) do %>
       Note: run "bin/rake development:accession[<%= @collection_presenter.druid %>]" to complete deposit for this collection.
     <% end %>
 <% end %>

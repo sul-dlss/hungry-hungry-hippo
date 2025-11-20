@@ -18,7 +18,11 @@
   <% end %>
   <%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: @work_form.title || t('works.edit.no_title'), classes: 'mb-3') %>
   <%= render Works::Show::ReviewRejectedComponent.new(work: @work) if @work %>
-  <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if defined?(@valid) && !@valid %>
+  <% if defined?(@valid) && !@valid %>
+    <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :danger ) do %>
+      <%= t('messages.validation') %>
+    <% end %>
+  <% end %>
   <% form_id = dom_id(@work_form, 'tabbed_form') %>
   <% discard_draft_form_id = dom_id(@work_form, 'discard_form') %>
   <%= render Edit::DiscardDraftFormComponent.new(presenter: @work_presenter, id: discard_draft_form_id) if @work_presenter %>
@@ -140,7 +144,9 @@
         <% end %>
 
         <% if @work_presenter && !@work_presenter.first_draft? %>
-          <%= render Elements::AlertComponent.new(variant: :info, value: t('works.edit.panes.deposit.version_text')) %>
+          <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :info) do %>
+            <%= t('works.edit.panes.deposit.version_text') %>
+          <% end %>
           <div class="pane-section">
             <%#
               When what's changing textarea is invalid and the user provides a value and then clicks Deposit / Save as draft,

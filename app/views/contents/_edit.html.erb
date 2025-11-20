@@ -8,7 +8,7 @@
         dropzone_tab_error_outlet: '.tab-error',
         action: 'change->unsaved-changes#changed'
       }, id: 'file-dropzone', class: 'dropzone' do |form| %>
-    <%= render Elements::AlertComponent.new(classes: 'd-none', data: { dropzone_target: 'folderAlert' }) do %>
+    <%= render SdrViewComponents::Elements::AlertComponent.new(classes: 'd-none', data: { dropzone_target: 'folderAlert' }) do %>
       <span data-dropzone-target="folderAlertText"></span>
       <%= render Elements::ButtonComponent.new(label: 'Reset', variant: 'outline-primary', classes: 'ms-3', data: { action: 'dropzone#clearBasePath' }) %>
     <% end %>

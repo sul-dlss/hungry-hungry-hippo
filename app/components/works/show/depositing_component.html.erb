@@ -1,5 +1,5 @@
 <% if alert? %>
-  <%= render Elements::AlertComponent.new(variant: :success, dismissible: true,
+  <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :success, dismissible: true,
                                           title: 'Work successfully deposited',
                                           data: { turbo_permanent: true }, id: 'depositing-alert') do %>
     <p class="mt-2 mb-1">Here's what to expect next:</p>
