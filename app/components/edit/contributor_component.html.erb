@@ -71,7 +71,7 @@
           </div>
           <div class="col-lg-3">
             <%= if user_orcid?
-                  render Elements::ButtonComponent.new(label: 'Use my ORCID iD', variant: 'link',
+                  render SdrViewComponents::Elements::ButtonComponent.new(label: 'Use my ORCID iD', variant: 'link',
                                                        data: { action: 'contributors#useMyOrcid' })
                 end %>
           </div>
