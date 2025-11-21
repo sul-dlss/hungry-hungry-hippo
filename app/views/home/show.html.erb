@@ -9,7 +9,7 @@
             </div>
             <p class="card-text">Learn more about how the Stanford Digital Repository supports long term preservation of scholarly works.</p>
             <%# Can't find a non-hacky way to make this non-transparent. %>
-            <%= render Elements::ButtonLinkComponent.new(link: 'https://sdr.sites.stanford.edu/', label: 'Learn more', variant: 'outline-primary') %>
+            <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: 'https://sdr.sites.stanford.edu/', label: 'Learn more', variant: 'outline-primary') %>
           <% end %>
         <% end %>
       </div>
@@ -20,7 +20,7 @@
               <%= upload_icon(fill: false, classes: 'icon-xl') %>
             </div>
             <p class="h4 card-text mb-3">Create or manage your deposits</p>
-            <%= render Elements::ButtonLinkComponent.new(link: dashboard_path, label: 'Enter here', variant: 'primary', size: 'lg') %>
+            <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: dashboard_path, label: 'Enter here', variant: 'primary', size: 'lg') %>
           <% end %>
         <% end %>
       </div>

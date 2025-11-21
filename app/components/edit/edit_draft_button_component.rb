@@ -2,7 +2,7 @@
 
 module Edit
   # Component for a button to edit a draft
-  class EditDraftButtonComponent < Elements::ButtonLinkComponent
+  class EditDraftButtonComponent < SdrViewComponents::Elements::ButtonLinkComponent
     def initialize(presenter:, **args)
       @presenter = presenter
       args[:label] ||= 'Edit or deposit'

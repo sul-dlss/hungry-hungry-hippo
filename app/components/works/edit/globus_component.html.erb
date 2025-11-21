@@ -21,9 +21,10 @@
                                                      method: :post, top: false) %>
       </div>
       <div class="p-2">
-        <%= render Elements::ButtonLinkComponent.new(link: new_content_globus_path(content_obj), label: 'Cancel',
-                                                     data: { action: 'dropzone-files#enableDropzone' },
-                                                     variant: :'outline-primary') %>
+        <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: new_content_globus_path(content_obj),
+                                                                        label: 'Cancel',
+                                                                        data: { action: 'dropzone-files#enableDropzone' },
+                                                                        variant: :'outline-primary') %>
       </div>
     </div>
   </div>
