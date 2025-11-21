@@ -10,8 +10,9 @@ module Works
       end
 
       def call
-        render Elements::ButtonLinkComponent.new(link: new_work_share_path(work), label: 'Manage sharing',
-                                                 variant: 'outline-primary')
+        render SdrViewComponents::Elements::ButtonLinkComponent.new(link: new_work_share_path(work),
+                                                                    label: 'Manage sharing',
+                                                                    variant: 'outline-primary')
       end
 
       def render?

@@ -1,3 +1,11 @@
+PATH
+  remote: ../sdr_view_components
+  specs:
+    sdr_view_components (0.1.0)
+      rails (~> 8.0)
+      view_component
+      zeitwerk
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -704,6 +712,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-rspec_rails
+  sdr_view_components!
   selenium-webdriver
   simplecov
   solid_cable
