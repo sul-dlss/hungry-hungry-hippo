@@ -6,7 +6,7 @@
         <%= form.text_field :druid, class: 'form-control', aria: Elements::Forms::InvalidFeedbackSupport.arias_for(form:, field_name: :druid) %>
         <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :druid) %>
       </div>
-      <%= render Elements::Forms::SubmitComponent.new(label: 'Search', classes: 'col-md-1') %>
+      <%= render SdrViewComponents::Forms::SubmitComponent.new(label: 'Search', classes: 'col-md-1') %>
     </div>
   <% end %>
 <% end %>

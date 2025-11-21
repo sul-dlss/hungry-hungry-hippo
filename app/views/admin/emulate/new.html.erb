@@ -15,5 +15,5 @@
 <%= form_with url: admin_emulate_path, class: 'mb-5' do |form| %>
   <p>By clicking "Submit" you will temporarily lose admin privileges.</p>
   <p>Admin privileges will be restored when you start a new browser session or delete the "emulate_not_admin" cookie.</p>
-  <%= render Elements::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-4') %>
+  <%= render SdrViewComponents::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-4') %>
 <% end %>

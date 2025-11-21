@@ -42,7 +42,7 @@
 
   <div class="d-flex mb-5">
     <%= render Elements::CancelButtonComponent.new(data: { bs_dismiss: 'modal' }, classes: 'me-2', link: '#') if modal %>
-    <%= render Elements::Forms::SubmitComponent.new(label: 'Submit') %>
+    <%= render SdrViewComponents::Forms::SubmitComponent.new(label: 'Submit') %>
   </div>
 
   <p>You may email us at <%= link_to(Settings.support_email, "mailto:#{Settings.support_email}") %>.

@@ -27,5 +27,5 @@
     <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_modified_end, label: 'Date last_modified end', hidden_label: true, container_classes: 'col-md-5 ms-2') %>
   </div>
 
-  <%= render Elements::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-4') %>
+  <%= render SdrViewComponents::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-4') %>
 <% end %>

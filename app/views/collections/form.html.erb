@@ -96,7 +96,7 @@
         <%# For spacing %>
         <div class="pane-section"></div>
         <% pane_component.with_deposit_button do %>
-          <%= render Elements::Forms::SubmitComponent.new(label: 'Save', data: { action: 'unsaved-changes#allowFormSubmission' }) %>
+          <%= render SdrViewComponents::Forms::SubmitComponent.new(label: 'Save', data: { action: 'unsaved-changes#allowFormSubmission' }) %>
         <% end %>
       <% end %>
     <% end %>

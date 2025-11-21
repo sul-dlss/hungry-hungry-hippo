@@ -20,7 +20,7 @@
           <ul class="list-group" data-autocomplete-target="results" style="overflow-y: scroll; max-height: 425px;"></ul>
           <input type="hidden" data-autocomplete-target="hidden" data-autocomplete-owner-sunetid-target="value" data-action="autocomplete-owner-sunetid#change" aria-label="autocomplete">
           <%= form.hidden_field :sunetid, { required: true, 'aria-label': 'sunetid', data: { autocomplete_owner_sunetid_target: 'sunetid' } } %>
-          <%= render Elements::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-5', disabled: true, data: { autocomplete_owner_sunetid_target: 'submitButton' }) %>
+          <%= render SdrViewComponents::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-5', disabled: true, data: { autocomplete_owner_sunetid_target: 'submitButton' }) %>
         <% end %>
       <% end %>
     <% end %>
