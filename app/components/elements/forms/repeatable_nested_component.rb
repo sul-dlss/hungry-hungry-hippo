@@ -118,6 +118,12 @@ module Elements
       def delete_button_label(form_component_instance:)
         form_component_instance.try(:delete_button_label) || 'Clear'
       end
+
+      def field_instance
+        form.object.public_send(field_name).tap do |nested_instance|
+          return model_class.new if nested_instance == []
+        end
+      end
     end
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Form for a related link
-class RelatedLinkForm < ApplicationForm
+class RelatedLinkForm < RefactoredApplicationForm
   attribute :text, :string
   validates :text, presence: true, if: ->(link) { link.url.present? }
   attribute :url, :string

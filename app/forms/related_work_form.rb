@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Form for a related work
-class RelatedWorkForm < ApplicationForm
+class RelatedWorkForm < RefactoredApplicationForm
   RELATIONSHIP_TYPES = RelatedWorksCocinaBuilder::RELATION_TYPES.keys.freeze
 
   attribute :citation, :string

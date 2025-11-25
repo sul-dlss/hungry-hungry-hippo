@@ -31,7 +31,7 @@ class SharesController < ApplicationController
 
   def share_params
     if params.include?(:work_share)
-      params.expect(work_share: [WorkShareForm.nested_attributes])
+      params.expect(work_share: WorkShareForm.permitted_params)
     else
       { shares_attributes: [] }
     end

@@ -145,7 +145,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def work_params
-    params.expect(work: WorkForm.user_editable_attributes + [WorkForm.nested_attributes])
+    params.expect(work: WorkForm.permitted_params)
   end
 
   def review_form_params
@@ -278,11 +278,10 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   def mark_collection_required_contributors
     collection_contributors = @collection.contributors.map do |contributor|
-      ContributorForm.new(Form::ContributorMapper.call(contributor:)).attributes.except('affiliations_attributes')
+      ContributorForm.new(Form::ContributorMapper.call(contributor:)).attributes.except('affiliations')
     end
     @work_form.contributors.each do |contributor|
-      contributor.collection_required = collection_contributors
-                                        .include?(contributor.attributes.except('affiliations_attributes'))
+      contributor.collection_required = collection_contributors.include?(contributor.attributes.except('affiliations'))
     end
   end
 

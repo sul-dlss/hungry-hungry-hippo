@@ -3,17 +3,13 @@
 # Form for a contributor affiliation
 # This form is used to collect information about an affiliation for a contributor
 # It includes fields for the institution, department, and ROR identifier
-class AffiliationForm < ApplicationForm
+class AffiliationForm < RefactoredApplicationForm
   attribute :institution, :string
   validates :institution, presence: true, if: -> { department.present? }
   validate :validate_institution
 
   attribute :uri, :string
   attribute :department, :string
-
-  def empty?
-    institution.blank? && uri.blank? && department.blank?
-  end
 
   def validate_institution
     # uri must be present if institution is present.

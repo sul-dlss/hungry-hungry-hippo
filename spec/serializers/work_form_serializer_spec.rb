@@ -77,7 +77,7 @@ RSpec.describe WorkFormSerializer do
                  form_id: form_id_fixture)
   end
 
-  describe '.serialize?' do
+  describe '#serialize?' do
     context 'with a Work Form' do
       it 'returns true' do
         expect(described_class.serialize?(WorkForm.new)).to be true
@@ -91,13 +91,13 @@ RSpec.describe WorkFormSerializer do
     end
   end
 
-  describe '.serialize' do
+  describe '#serialize' do
     it 'serializes a Work Form' do
       expect(described_class.serialize(work_form)).to eq(serialized_form)
     end
   end
 
-  describe '.deserialize' do
+  describe '#deserialize' do
     it 'deserializes a Work Form' do
       expect(described_class.deserialize(serialized_form)).to equal_form(work_form)
     end

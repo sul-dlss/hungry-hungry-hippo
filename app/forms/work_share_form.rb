@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 # Form for a Work's shares
-class WorkShareForm < ApplicationForm
+class WorkShareForm < RefactoredApplicationForm
   accepts_nested_attributes_for :shares
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Form object for the contact form
-class ContactForm < ApplicationForm
+class ContactForm < RefactoredApplicationForm
   HELP_HOW_CHOICES = [
     'I want to become an SDR depositor',
     'I want to report a problem',

@@ -26,7 +26,8 @@
         <% end %>
       <% end %>
     </template>
-    <%= form.fields_for field_name do |nested_form| %>
+
+    <%= form.fields_for field_name, field_instance do |nested_form| %>
       <%# Note that this div is duplicated above. If making a change here, also make the change above. %>
       <%= tag.div(class: row_classes, data: { index: nested_form.options[:child_index], nested_form_target: 'instance' }) do %>
         <% form_component_instance = form_component.new(form: nested_form) %>

@@ -17,7 +17,7 @@ RSpec.describe ContributorForm do
     let(:first_name) { '' }
     let(:last_name) { '' }
     let(:organization_name) { '' }
-    let(:affiliations_attributes) { nil }
+    let(:affiliations_attributes) { [] }
 
     context 'when empty form' do
       it 'is valid' do

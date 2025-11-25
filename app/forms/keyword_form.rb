@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Form for keywords
-class KeywordForm < ApplicationForm
+class KeywordForm < RefactoredApplicationForm
   attribute :text, :string
   validates :text, presence: true, on: :deposit
   # NOTE: These two attributes are parsed from the keyword resolution service

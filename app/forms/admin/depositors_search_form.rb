@@ -2,7 +2,7 @@
 
 module Admin
   # Admin form object for searching for depositor information
-  class DepositorsSearchForm < ApplicationForm
+  class DepositorsSearchForm < RefactoredApplicationForm
     before_validation :normalize_druids
     attribute :druids, :string
     validate :works_present
