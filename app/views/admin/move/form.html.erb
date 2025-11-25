@@ -5,7 +5,7 @@
         <%= form.hidden_field :content_id %>
         <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :collection_druid, label: 'Enter DRUID of the collection you want to move this item to', label_classes: 'fw-bold', width: 500) %>
 
-        <%= render Elements::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-5') %>
+        <%= render SdrViewComponents::Forms::SubmitComponent.new(label: 'Submit', classes: 'mt-5') %>
       <% end %>
     <% end %>
   <% end %>

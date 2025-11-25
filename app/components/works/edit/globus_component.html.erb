@@ -15,15 +15,16 @@
 
     <div class="d-flex flex-row">
       <div class="p-2">
-        <%= render Elements::ButtonFormComponent.new(label: 'Globus file transfer complete',
-                                                     link: done_uploading_content_globuses_path(content_obj),
-                                                     data: { action: 'dropzone-files#enableDropzone' },
-                                                     method: :post, top: false) %>
+        <%= render SdrViewComponents::Forms::ButtonComponent.new(label: 'Globus file transfer complete',
+                                                                 link: done_uploading_content_globuses_path(content_obj),
+                                                                 data: { action: 'dropzone-files#enableDropzone' },
+                                                                 method: :post, top: false) %>
       </div>
       <div class="p-2">
-        <%= render Elements::ButtonLinkComponent.new(link: new_content_globus_path(content_obj), label: 'Cancel',
-                                                     data: { action: 'dropzone-files#enableDropzone' },
-                                                     variant: :'outline-primary') %>
+        <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: new_content_globus_path(content_obj),
+                                                                        label: 'Cancel',
+                                                                        data: { action: 'dropzone-files#enableDropzone' },
+                                                                        variant: :'outline-primary') %>
       </div>
     </div>
   </div>

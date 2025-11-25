@@ -3,7 +3,7 @@
 module Works
   module Edit
     # Component for rendering the Globus button with the appropriate data action.
-    class GlobusButtonComponent < Elements::ButtonFormComponent
+    class GlobusButtonComponent < SdrViewComponents::Forms::ButtonComponent
       def initialize(confirm: false, **args)
         @confirm = confirm
         super(data: data_action, **args)

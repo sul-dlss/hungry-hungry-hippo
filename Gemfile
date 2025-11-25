@@ -63,6 +63,7 @@ gem 'okcomputer'
 gem 'parallel' # Used for importing. Can be removed when importing is done.
 gem 'preservation-client'
 gem 'rack-sanitizer'
+gem 'sdr_view_components', path: '../sdr_view_components'
 gem 'state_machines-activerecord'
 gem 'validate_url'
 gem 'view_component'
