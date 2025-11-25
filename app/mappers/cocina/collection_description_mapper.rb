@@ -32,11 +32,11 @@ module Cocina
         note: note_params,
         purl: Sdr::Purl.from_druid(druid: collection_form.druid),
         relatedResource: DescriptionCocinaBuilder.related_links(
-          related_links: collection_form.related_links_attributes
+          related_links: collection_form.related_links
         ),
         access: {
           accessContact: DescriptionCocinaBuilder.contact_emails(
-            contact_emails: collection_form.contact_emails_attributes
+            contact_emails: collection_form.contact_emails
           )
         }
       }.compact

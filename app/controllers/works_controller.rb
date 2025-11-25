@@ -145,7 +145,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def work_params
-    params.expect(work: WorkForm.user_editable_attributes + [WorkForm.nested_attributes])
+    params.expect(work: WorkForm.permitted_params)
   end
 
   def review_form_params
@@ -170,7 +170,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     version_description = @version_status.open? ? @version_status.version_description : nil
     @work_form = Form::WorkMapper.call(cocina_object: @cocina_object, doi_assigned: doi_assigned?,
                                        agree_to_terms: current_user.agree_to_terms?,
-                                       version_description:, collection: @collection)
+                                       version_description:, collection: @collection).prepopulate
   end
 
   def doi_assigned?
@@ -225,6 +225,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       end
       work_form.max_release_date = @collection.max_release_date if @collection.depositor_selects_release_option?
     end
+      .prepopulate
   end
 
   def perform_deposit(work:)
@@ -278,11 +279,10 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   def mark_collection_required_contributors
     collection_contributors = @collection.contributors.map do |contributor|
-      ContributorForm.new(Form::ContributorMapper.call(contributor:)).attributes.except('affiliations_attributes')
+      ContributorForm.new(Form::ContributorMapper.call(contributor:)).attributes.except('affiliations')
     end
     @work_form.contributors.each do |contributor|
-      contributor.collection_required = collection_contributors
-                                        .include?(contributor.attributes.except('affiliations_attributes'))
+      contributor.collection_required = collection_contributors.include?(contributor.attributes.except('affiliations'))
     end
   end
 

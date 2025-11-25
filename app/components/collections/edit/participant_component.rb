@@ -16,7 +16,7 @@ module Collections
       delegate :object, to: :form
 
       def value
-        return unless sunetid
+        return if sunetid.blank?
 
         "#{name} (#{sunetid})"
       end

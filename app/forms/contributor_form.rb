@@ -5,10 +5,10 @@ class ContributorForm < ApplicationForm
   accepts_nested_attributes_for :affiliations
 
   before_validation do
-    blank_affiliations = affiliations_attributes.select(&:empty?)
+    blank_affiliations = affiliations.select(&:empty?)
     next if blank_affiliations.empty?
 
-    self.affiliations_attributes = affiliations_attributes - blank_affiliations
+    self.affiliations = affiliations - blank_affiliations
   end
 
   attribute :first_name, :string
@@ -68,12 +68,6 @@ class ContributorForm < ApplicationForm
 
   def empty?
     !(person?(with_names: true) || organization?(with_names: true))
-  end
-
-  # Override serializable_hash to include nested attributes
-  # This is used by the WorkFormSerializer to serialize the form.
-  def serializable_hash(*)
-    super(include: self.class.nested_attributes)
   end
 
   private

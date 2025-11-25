@@ -44,9 +44,8 @@ class ContentFilesController < ApplicationController
 
   private
 
-  # rubocop:disable Metrics/AbcSize
-  # Note: for streaming to work, you need the include at the top of the controller
-  def download_from_preservation
+  # NOTE: for streaming to work, you need the include at the top of the controller
+  def download_from_preservation # rubocop:disable Metrics/AbcSize
     # Set headers on the response before writing to the response stream
     send_file_headers!(
       type: 'application/octet-stream',
@@ -60,14 +59,13 @@ class ContentFilesController < ApplicationController
       filepath:,
       on_data: proc { |data, _count| response.stream.write data }
     )
-  rescue Preservation::Client::NotFoundError, Preservation::Client::Error => e
+  rescue Preservation::Client::Error => e
     message = "Preservation client error getting content of #{filepath} for #{druid}: #{e}"
     Honeybadger.notify(message)
     render status: :bad_request, plain: 'There was a problem downloading your file.  Please try again later.'
   ensure
     response.stream.close
   end
-  # rubocop:enable Metrics/AbcSize
 
   def druid
     @content_file.work.druid

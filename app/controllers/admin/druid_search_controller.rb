@@ -32,7 +32,7 @@ module Admin
     end
 
     def druid_search_form_params
-      params.expect(admin_druid_search: DruidSearchForm.user_editable_attributes)
+      params.expect(admin_druid_search: DruidSearchForm.permitted_params)
     end
   end
 end

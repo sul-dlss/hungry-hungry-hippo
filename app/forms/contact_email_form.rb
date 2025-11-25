@@ -12,10 +12,6 @@ class ContactEmailForm < ApplicationForm
 
   before_validation :strip_whitespace
 
-  def empty?
-    email.blank?
-  end
-
   private
 
   def strip_whitespace

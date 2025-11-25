@@ -13,6 +13,11 @@ class CollectionPresenter < FormPresenter
 
   delegate :license, to: :collection
 
+  def collection_form
+    # Get the object being delegated to (since this is a SimpleDelegator)
+    __getobj__
+  end
+
   # @param [Symbol] role :managers or :depositors
   # @return [Array<String>] an array of formatted sunetids and names
   def participants(role)
@@ -90,7 +95,17 @@ class CollectionPresenter < FormPresenter
   end
 
   def contact_emails
-    contact_emails_attributes.map(&:email).join(', ')
+    collection_form.contact_emails.map(&:email).join(', ')
+  end
+
+  def related_links
+    return ['None provided'] if collection_form.related_links.blank?
+
+    collection_form.related_links.filter_map do |related_link|
+      next if related_link.url.blank?
+
+      link_to_new_tab(related_link.text || related_link.url, related_link.url)
+    end
   end
 
   def editable?

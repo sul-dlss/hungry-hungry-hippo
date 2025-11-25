@@ -11,10 +11,6 @@ class AffiliationForm < ApplicationForm
   attribute :uri, :string
   attribute :department, :string
 
-  def empty?
-    institution.blank? && uri.blank? && department.blank?
-  end
-
   def validate_institution
     # uri must be present if institution is present.
     # However, error should be reported for institution, not uri.

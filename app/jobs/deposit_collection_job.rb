@@ -77,29 +77,26 @@ class DepositCollectionJob < ApplicationJob
   # Based on the provided role (:managers or :depositors), first clears the existing participants
   # in order to apply any deletes, then adds the participants from the form. If the added user
   # does not exist, it will be created and the name set to the sunetid until they login for the first time.
-  # rubocop:disable Metrics/AbcSize
-  def assign_participants(role)
+  def assign_participants(role) # rubocop:disable Metrics/AbcSize
     updated_users_for_role = []
-    collection_form.send(:"#{role}_attributes").each do |participant|
-      participant = participant.attributes if participant.respond_to?(:attributes)
-      next if participant['sunetid'].blank?
+    collection_form.public_send(role.to_sym).each do |participant|
+      next if participant.sunetid.blank?
 
-      user = User.create_with(name: participant['name'])
-                 .find_or_create_by!(email_address: sunetid_to_email_address(participant['sunetid']))
+      user = User.create_with(name: participant.name)
+                 .find_or_create_by!(email_address: sunetid_to_email_address(participant.sunetid))
 
-      collection.send(role).append(user) unless collection.send(role).include?(user)
+      collection.public_send(role).append(user) unless collection.public_send(role).include?(user)
       updated_users_for_role.append(user)
     end
 
     remove_deleted_participants(role, updated_users_for_role)
   end
-  # rubocop:enable Metrics/AbcSize
 
   # Remove any participants that are no longer in the form
   def remove_deleted_participants(role, participants)
-    collection.send(role)
+    collection.public_send(role)
               .reject { |user| participants.include?(user) }
-              .map { |user| collection.send(role).destroy(user) }
+              .map { |user| collection.public_send(role).destroy(user) }
   end
 
   def sunetid_to_email_address(sunetid)

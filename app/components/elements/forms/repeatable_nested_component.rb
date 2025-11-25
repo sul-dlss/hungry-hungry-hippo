@@ -10,7 +10,7 @@ module Elements
       def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength, Metrics/AbcSize
                      reorderable: false, single_field: false, fieldset_classes: [], skip_tooltip: false,
                      fieldset_id: nil, hide_add_button: false, add_button_data: {}, column_classes: ['col'],
-                     separated: false, nested_buttons_classes: [])
+                     separated: false, nested_buttons_classes: [], render_empty: true)
         @form = form
         @model_class = model_class
         @field_name = field_name
@@ -33,6 +33,7 @@ module Elements
         @column_classes = column_classes
         @separated = separated
         @nested_buttons_classes = nested_buttons_classes
+        @render_empty = render_empty
         super()
       end
 
@@ -47,6 +48,10 @@ module Elements
         return if skip_tooltip?
 
         helpers.t("#{field_name}.edit.tooltip_html", default: nil)
+      end
+
+      def render_empty?
+        @render_empty
       end
 
       def skip_tooltip?
@@ -117,6 +122,12 @@ module Elements
       # A form component can provide a delete button label by providing a `form_button_label` method.
       def delete_button_label(form_component_instance:)
         form_component_instance.try(:delete_button_label) || 'Clear'
+      end
+
+      def template_model
+        model_class
+          .new
+          .then { |form_instance| form_instance.try(:prepopulate) || form_instance }
       end
     end
   end
