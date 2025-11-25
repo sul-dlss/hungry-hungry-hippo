@@ -3,28 +3,29 @@
 # Form for a Collection
 class CollectionForm < ApplicationForm
   accepts_nested_attributes_for :related_links, :contact_emails, :managers, :depositors, :reviewers, :contributors
+
   before_validation do
-    blank_managers = managers_attributes.select(&:empty?)
+    blank_managers = managers.select(&:empty?)
     next if blank_managers.empty?
 
-    self.managers_attributes = managers_attributes - blank_managers
+    self.managers = managers - blank_managers
   end
-  validates :managers_attributes, length: { minimum: 1, message: 'must have at least one manager' } # rubocop:disable Rails/I18nLocaleTexts
+  validates :managers, length: { minimum: 1, message: 'must have at least one manager' } # rubocop:disable Rails/I18nLocaleTexts
 
   before_validation do
-    blank_reviewers = reviewers_attributes.select(&:empty?)
+    blank_reviewers = reviewers.select(&:empty?)
     next if blank_reviewers.empty?
 
-    self.reviewers_attributes = reviewers_attributes - blank_reviewers
+    self.reviewers = reviewers - blank_reviewers
   end
-  validates :reviewers_attributes, length: { minimum: 1, message: 'must have at least one reviewer' }, # rubocop:disable Rails/I18nLocaleTexts
-                                   if: -> { review_enabled }
+  validates :reviewers, length: { minimum: 1, message: 'must have at least one reviewer' }, # rubocop:disable Rails/I18nLocaleTexts
+                        if: -> { review_enabled }
 
   before_validation do
-    blank_contributors = contributors_attributes.select(&:empty?)
+    blank_contributors = contributors.select(&:empty?)
     next if blank_contributors.empty?
 
-    self.contributors_attributes = contributors_attributes - blank_contributors
+    self.contributors = contributors - blank_contributors
   end
 
   def self.immutable_attributes

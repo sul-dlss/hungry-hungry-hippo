@@ -4,19 +4,23 @@ require 'rails_helper'
 
 RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
   subject(:component) do
-    described_class.new(form:, field_name: :related_links, model_class: RelatedLinkForm,
-                        form_component: RelatedLinks::EditComponent, hidden_label:, bordered:)
+    described_class.new(form: ActionView::Helpers::FormBuilder.new(nil, form, vc_test_view_context, {}),
+                        field_name:, model_class:, form_component:, hidden_label:, bordered:, single_field:)
   end
 
-  let(:form) { ActionView::Helpers::FormBuilder.new(nil, work_form, vc_test_view_context, {}) }
-  let(:work_form) { WorkForm.new }
-
+  let(:field_name) { :related_works }
+  let(:form) { WorkForm.new.prepopulate }
+  let(:form_component) { RelatedWorks::EditComponent }
+  let(:model_class) { RelatedWorkForm }
   let(:hidden_label) { false }
   let(:bordered) { true }
+  let(:single_field) { false }
 
   context 'when rendering the default component' do
-    let(:collection_form) { CollectionForm.new }
-    let(:form) { ActionView::Helpers::FormBuilder.new(nil, collection_form, vc_test_view_context, {}) }
+    let(:field_name) { :related_links }
+    let(:form) { CollectionForm.new.prepopulate }
+    let(:form_component) { RelatedLinks::EditComponent }
+    let(:model_class) { RelatedLinkForm }
 
     it 'renders the nested component' do
       render_inline(component)
@@ -49,11 +53,10 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
   end
 
   context 'when a single field' do
-    subject(:component) do
-      described_class.new(form:, field_name: :contact_emails, model_class: ContactEmailForm,
-                          form_component: Works::Edit::ContactEmailsComponent, hidden_label:, bordered:, single_field:)
-    end
-
+    let(:field_name) { :contact_emails }
+    let(:form) { WorkForm.new(contact_emails_attributes: contact_emails_fixture).prepopulate }
+    let(:form_component) { Works::Edit::ContactEmailsComponent }
+    let(:model_class) { ContactEmailForm }
     let(:single_field) { true }
 
     it 'aligns the delete icon' do
@@ -63,12 +66,8 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
   end
 
   context 'when hiding delete button' do
-    subject(:component) do
-      described_class.new(form:, field_name: :contributors, model_class: ContributorForm,
-                          form_component: Edit::ContributorComponent)
-    end
-
-    let(:work_form) do
+    let(:field_name) { :contributors }
+    let(:form) do
       WorkForm.new(contributors_attributes: [
                      {
                        'role_type' => 'person',
@@ -83,8 +82,10 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
                        'suborganization_name' => nil,
                        'collection_required' => true
                      }
-                   ])
+                   ]).prepopulate
     end
+    let(:form_component) { Edit::ContributorComponent }
+    let(:model_class) { ContributorForm }
 
     it 'does not show the delete button' do
       render_inline(component)
@@ -94,19 +95,17 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
   end
 
   context 'when component provides a delete button label' do
-    subject(:component) do
-      described_class.new(form:, field_name: :depositors, model_class: ParticipantForm,
-                          form_component: Collections::Edit::ParticipantComponent)
-    end
-
-    let(:work_form) do
+    let(:field_name) { :depositors }
+    let(:form) do
       CollectionForm.new(depositors_attributes: [
                            {
                              'sunetid' => 'jstanford',
                              'name' => 'Jane Stanford'
                            }
-                         ])
+                         ]).prepopulate
     end
+    let(:form_component) { Collections::Edit::ParticipantComponent }
+    let(:model_class) { ParticipantForm }
 
     it 'show the delete button with the label specified by the component' do
       render_inline(component)

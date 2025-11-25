@@ -12,7 +12,7 @@ module Works
       attr_reader :work_presenter
 
       def related_works
-        work_presenter.related_works_attributes.select { |related_work| related_work.to_s.present? }
+        work_presenter.related_works.select { |related_work| related_work.to_s.present? }
       end
 
       def relationship_label_for(related_work)

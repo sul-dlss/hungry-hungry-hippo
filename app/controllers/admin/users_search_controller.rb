@@ -33,7 +33,7 @@ module Admin
     end
 
     def user_search_form_params
-      params.expect(admin_user_search: UserSearchForm.user_editable_attributes)
+      params.expect(admin_user_search: UserSearchForm.permitted_params)
     end
   end
 end
