@@ -2,7 +2,7 @@
 
 module Admin
   # Admin form object for moving a work to a different collection.
-  class MoveForm < ApplicationForm
+  class MoveForm < RefactoredApplicationForm
     before_validation :normalize_druid
     attribute :collection_druid, :string
     validates_with Admin::MoveFormValidator

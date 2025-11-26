@@ -2,7 +2,7 @@
 
 module Admin
   # Admin form object for searching by druid
-  class DruidSearchForm < ApplicationForm
+  class DruidSearchForm < RefactoredApplicationForm
     before_validation :normalize_druid
     attribute :druid, :string
     validate :collection_or_work_present

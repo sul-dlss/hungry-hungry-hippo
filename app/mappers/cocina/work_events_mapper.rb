@@ -32,20 +32,21 @@ module Cocina
                [create_date_range_from, create_date_range_to].filter_map(&:to_s).join('/').presence
              end
 
-      return if date.nil?
+      return if date.blank?
 
       DescriptionCocinaBuilder.event(type: 'creation', date:)
     end
 
     def publication_date_event_params
       date = publication_date.to_s
-      return if date.nil?
+
+      return if date.blank?
 
       DescriptionCocinaBuilder.event(type: 'publication', primary: true, date:)
     end
 
     def deposit_publication_date_event_params
-      return if work_form.deposit_publication_date.nil?
+      return if work_form.deposit_publication_date.blank?
 
       DescriptionCocinaBuilder.event(type: 'deposit', date_type: 'publication',
                                      date: work_form.deposit_publication_date)

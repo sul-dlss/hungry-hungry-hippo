@@ -15,6 +15,10 @@ module Edit
 
     attr_reader :form, :field_name, :model_class, :form_component, :help_text
 
+    def render?
+      !form.object.empty?
+    end
+
     def data
       {
         controller: 'participants',

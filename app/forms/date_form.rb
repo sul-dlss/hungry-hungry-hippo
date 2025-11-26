@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Form object for handling date input
-class DateForm < ApplicationForm
+class DateForm < RefactoredApplicationForm
   attribute :year, :integer
   validates :year, numericality: { greater_than_or_equal_to: 1000, allow_nil: true }
   validates :year, numericality: { less_than_or_equal_to: Time.zone.now.year,

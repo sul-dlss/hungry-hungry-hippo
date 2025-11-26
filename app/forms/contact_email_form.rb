@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Form for contact emails
-class ContactEmailForm < ApplicationForm
+class ContactEmailForm < RefactoredApplicationForm
   attribute :email, :string
   validates :email, presence: true, on: :deposit
   validates :email, format: {
@@ -11,10 +11,6 @@ class ContactEmailForm < ApplicationForm
   }
 
   before_validation :strip_whitespace
-
-  def empty?
-    email.blank?
-  end
 
   private
 

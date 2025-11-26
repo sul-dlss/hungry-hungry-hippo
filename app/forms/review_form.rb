@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Form object for reviewing a work.
-class ReviewForm < ApplicationForm
+class ReviewForm < RefactoredApplicationForm
   attribute :review_option, :string, default: 'approve'
   validates :review_option, inclusion: { in: %w[approve reject] }
 

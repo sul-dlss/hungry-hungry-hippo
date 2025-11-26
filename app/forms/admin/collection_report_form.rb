@@ -2,7 +2,7 @@
 
 module Admin
   # Admin form object for generating collection reports
-  class CollectionReportForm < ApplicationForm
+  class CollectionReportForm < RefactoredApplicationForm
     attribute :date_created_start, :date
     attribute :date_created_end, :date
     attribute :date_modified_start, :date

@@ -119,7 +119,7 @@ class CollectionsController < ApplicationController
   end
 
   def collection_params
-    params.expect(collection: CollectionForm.user_editable_attributes + [CollectionForm.nested_attributes])
+    params.expect(collection: CollectionForm.permitted_params)
   end
 
   def update_collection_params
@@ -156,6 +156,6 @@ class CollectionsController < ApplicationController
   end
 
   def add_blank_contributor
-    @collection_form.contributors_attributes = [{}] if @collection_form.contributors_attributes.empty?
+    @collection_form.contributors_attributes = [{}] if @collection_form.contributors.empty?
   end
 end

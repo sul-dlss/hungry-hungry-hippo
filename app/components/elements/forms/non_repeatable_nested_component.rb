@@ -31,6 +31,10 @@ module Elements
       def id
         field_name
       end
+
+      def field_instance
+        form.object.public_send(field_name).presence || model_class.new
+      end
     end
   end
 end

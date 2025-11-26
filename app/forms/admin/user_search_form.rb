@@ -2,7 +2,7 @@
 
 module Admin
   # Admin form object for searching for a user by SUNet ID.
-  class UserSearchForm < ApplicationForm
+  class UserSearchForm < RefactoredApplicationForm
     attribute :sunetid, :string
     validate :user_exists
 
