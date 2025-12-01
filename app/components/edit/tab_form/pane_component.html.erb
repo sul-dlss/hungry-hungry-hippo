@@ -4,7 +4,7 @@
       <% if label || help_text || help? %>
         <div class="pane-header">
           <% if label %><h2 class="h4 tooltip-header"><%= label %></h2><% end %>
-          <%= render Elements::TooltipComponent.new(target_label: label, tooltip:) %>
+          <%= render SdrViewComponents::Elements::TooltipComponent.new(target_label: label, tooltip:) %>
           <% if help_text %><p class="mb-0"><%= help_text || help %></p><% end %>
           <%= help if help? %>
         </div>

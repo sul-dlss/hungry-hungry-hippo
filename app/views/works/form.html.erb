@@ -74,7 +74,7 @@
 
           <div class="pane-section">
             <p>
-              Contact email provided by collection manager <%= render Elements::TooltipComponent.new(target_label: 'Provided contact email', tooltip: t('works.edit.fields.works_contact_email.tooltip_html')) %>
+              Contact email provided by collection manager <%= render SdrViewComponents::Elements::TooltipComponent.new(target_label: 'Provided contact email', tooltip: t('works.edit.fields.works_contact_email.tooltip_html')) %>
             </p>
             <p>
               <%= @work_form.works_contact_email %>
