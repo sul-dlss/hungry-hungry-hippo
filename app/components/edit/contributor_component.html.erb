@@ -66,7 +66,7 @@
                 <%= Settings.orcid.url %>
               </span>
               <%= form.text_field :orcid, class: 'form-control', data: { contributors_target: 'orcidInput', action: 'input->contributors#resolveOrcid' }, aria: orcid_aria %>
-              <%= render Elements::Forms::LabelComponent.new(form:, field_name: :orcid, label_text: 'ORCID iD', hidden_label: true) %>
+              <%= render SdrViewComponents::Forms::LabelComponent.new(form:, field_name: :orcid, text: 'ORCID iD', hidden: true) %>
             </div>
           </div>
           <div class="col-lg-3">

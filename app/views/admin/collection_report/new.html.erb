@@ -14,13 +14,13 @@
 <%= render Elements::HeadingComponent.new(level: :h3, text: 'Limit your search with one or more of the options below', classes: 'h3 mb-4') %>
 
 <%= form_with model: @collection_report_form, url: admin_collection_report_path, class: 'mb-5' do |form| %>
-  <%= render Elements::Forms::LabelComponent.new(form:, field_name: :date_created_start, label_text: 'Date created range', classes: 'mb-2') %>
+  <%= render SdrViewComponents::Forms::LabelComponent.new(form:, field_name: :date_created_start, text: 'Date created range', classes: 'mb-2') %>
   <div class='row mb-4'>
       <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_created_start, label: 'Date created start', hidden_label: true, container_classes: 'col-md-5 ms-2') %>
       to
       <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_created_end, label: 'Date created end', hidden_label: true, container_classes: 'col-md-5 ms-2') %>
   </div>
-  <%= render Elements::Forms::LabelComponent.new(form:, field_name: :date_modified_start, label_text: 'Date modified range', classes: 'mb-2') %>
+  <%= render SdrViewComponents::Forms::LabelComponent.new(form:, field_name: :date_modified_start, text: 'Date modified range', classes: 'mb-2') %>
   <div class='row mb-4'>
     <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :date_modified_start, label: 'Date last modified start', hidden_label: true, container_classes: 'col-md-5 ms-2') %>
     to

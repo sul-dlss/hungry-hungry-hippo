@@ -1,7 +1,7 @@
 <%= turbo_frame_tag 'druid-search' do %>
   <%= form_with model: @druid_search_form, url: search_admin_druid_search_path, method: :get do |form| %>
     <div class="row align-items-start">
-      <%= render Elements::Forms::LabelComponent.new(form:, field_name: :druid, label_text: 'Search for DRUID', classes: 'col-md-2') %>
+      <%= render SdrViewComponents::Forms::LabelComponent.new(form:, field_name: :druid, text: 'Search for DRUID', classes: 'col-md-2') %>
       <div class="col-md-6">
         <%= form.text_field :druid, class: 'form-control', aria: SdrViewComponents::Forms::InvalidFeedbackSupport.arias_for(form:, field_name: :druid) %>
         <%= render SdrViewComponents::Forms::InvalidFeedbackComponent.new(form:, field_name: :druid) %>
