@@ -76,7 +76,7 @@
                 end %>
           </div>
         </div>
-        <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :orcid) %>
+        <%= render SdrViewComponents::Forms::InvalidFeedbackComponent.new(form:, field_name: :orcid) %>
         <div class="invalid-feedback" data-contributors-target="orcidFeedback"></div>
         <p class="mb-4" data-contributors-target="orcidMessage">
           Name fields will be autopopulated based on the ORCID entry above.

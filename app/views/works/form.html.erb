@@ -45,7 +45,7 @@
     <% form_with(model: @work_form) do |form| %>
       <%# This pane is outside the work form because it contains its own forms for files. %>
       <% component.with_before_form_pane(tab_name: :files, label: t('works.edit.panes.files.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, previous_tab_btn: false) do %>
-        <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
+        <%= render SdrViewComponents::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
 
         <%= render 'contents/edit', content: @content, form_id: @work_form.form_id %>
 
@@ -87,7 +87,7 @@
         <%# The invalid-feedback controller is used to hide the invalid feedback message (contributor required)
         when citation radio is changed or a new contributor is added. %>
         <div data-controller="invalid-feedback" data-invalid-feedback-tab-error-outlet=".tab-error" data-invalid-feedback-tab-value="contributors">
-          <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :contributors, data: { invalid_feedback_target: 'feedback' }) %>
+          <%= render SdrViewComponents::Forms::InvalidFeedbackComponent.new(form:, field_name: :contributors, data: { invalid_feedback_target: 'feedback' }) %>
           <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Edit::ContributorComponent, hidden_label: true, reorderable: true, fieldset_classes: 'pane-section', add_button_data: { action: 'invalid-feedback#hide' }) %>
         </div>
       <% end %>

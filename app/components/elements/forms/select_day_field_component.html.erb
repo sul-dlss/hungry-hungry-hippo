@@ -2,5 +2,5 @@
   <%= render Elements::Forms::LabelComponent.new(form:, field_name:, label_text: label, hidden_label:) %>
   <%= render SdrViewComponents::Forms::HelpTextComponent.new(id: help_text_id, text: help_text) %>
   <%= select_day(value, { prompt: '', field_name:, prefix: }, { class: classes, aria: field_aria, data: input_data }) %>
-  <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name:) %>
+  <%= render SdrViewComponents::Forms::InvalidFeedbackComponent.new(form:, field_name:) %>
 </div>

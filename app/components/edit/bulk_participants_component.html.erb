@@ -4,7 +4,7 @@
       <% if help_text %><p><%= help_text %></p><% end %>
       <%= tag.label class: 'form-label', for: textarea_id do %>Enter list of Stanford email addresses or SUNet IDs and click "<%= add_button_label %>." <em>(Email aliases are not yet supported.)</em><% end %>
       <%= tag.textarea id: textarea_id, class: 'form-control mb-2', rows: 5, data: { participants_target: 'input' } %>
-      <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: validation_field_name, classes: 'mb-2') %>
+      <%= render SdrViewComponents::Forms::InvalidFeedbackComponent.new(form:, field_name: validation_field_name, classes: 'mb-2') %>
       <%= render SdrViewComponents::Elements::ButtonComponent.new(label: add_button_label, variant: :'outline-primary', data: { action: 'participants#lookup' }) %>
       <div data-participants-target="invalidFeedbackContainer"></div>
       <template data-participants-target="invalidFeedbackTemplate">

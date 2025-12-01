@@ -50,7 +50,7 @@ module Elements
       end
 
       def error_aria
-        InvalidFeedbackSupport.arias_for(field_name:, form:).tap do |arias|
+        SdrViewComponents::Forms::InvalidFeedbackSupport.arias_for(field_name:, form:).tap do |arias|
           arias[:describedby] = merge_actions(arias[:describedby], help_text_id) if help_text.present?
         end
       end
