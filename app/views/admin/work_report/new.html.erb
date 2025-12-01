@@ -33,7 +33,7 @@
     <%= render Elements::Forms::DatepickerComponent.new(form:, field_name: :last_deposited_end, label: 'Date last deposited end', hidden_label: true, container_classes: 'col-md-5 ms-2') %>
   </div>
   <%= render Elements::Forms::LabelComponent.new(form:, field_name: :collection_ids, label_text: 'Collection(s)', classes: 'mb-2') %>
-  <%= render Elements::Forms::HelpTextComponent.new(id: 'collection-ids-help') do %>
+  <%= render SdrViewComponents::Forms::HelpTextComponent.new(id: 'collection-ids-help') do %>
     <ul>
       <li>To include all collections in the report, do not make any selections from this list.</li>
       <li>To select multiple collections, hold down the command button for Mac, or hold down the control button for Windows.</li>

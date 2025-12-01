@@ -2,5 +2,5 @@
   <%= render Elements::Forms::LabelComponent.new(form:, field_name:, tooltip:, label_text: label, hidden_label:, classes: label_classes) %>
   <%= form.date_field field_name, class: input_classes, required:, aria: field_aria, disabled:, data: input_data, placeholder:, style: styles, form: form_id, readonly:, min:, max: %>
   <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name:, classes: error_classes) %>
-  <%= render Elements::Forms::HelpTextComponent.new(id: help_text_id, help_text:) %>
+  <%= render SdrViewComponents::Forms::HelpTextComponent.new(id: help_text_id, text: help_text) %>
 <% end %>
