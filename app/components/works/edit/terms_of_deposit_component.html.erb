@@ -12,6 +12,6 @@
       <%= tag.turbo_frame id: 'terms-of-deposit', src: terms_path %>
     </div>
 
-    <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :agree_to_terms, label: 'I agree to the SDR Terms of Deposit', label_classes: 'fw-bold') %>
+    <%= render SdrViewComponents::Forms::CheckboxComponent.new(form:, field_name: :agree_to_terms, label_text: 'I agree to the SDR Terms of Deposit', label_classes: 'fw-bold') %>
   </div>
 <% end %>

@@ -45,16 +45,16 @@
   <div class="row">
     <div class="col-md-6">
       <%= render Elements::Forms::FieldsetComponent.new(label: 'Item deposit state', classes: 'pane-section mb-2') do %>
-        <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :draft_not_deposited_state, label: 'Draft - not deposited') %>
-        <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :deposit_in_progress_state, label: 'Deposit in progress') %>
-        <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :deposited_state, label: 'Deposited') %>
-        <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :version_draft_state, label: 'New version in draft') %>
+        <%= render SdrViewComponents::Forms::CheckboxComponent.new(form:, field_name: :draft_not_deposited_state, label_text: 'Draft - not deposited') %>
+        <%= render SdrViewComponents::Forms::CheckboxComponent.new(form:, field_name: :deposit_in_progress_state, label_text: 'Deposit in progress') %>
+        <%= render SdrViewComponents::Forms::CheckboxComponent.new(form:, field_name: :deposited_state, label_text: 'Deposited') %>
+        <%= render SdrViewComponents::Forms::CheckboxComponent.new(form:, field_name: :version_draft_state, label_text: 'New version in draft') %>
        <% end %>
     </div>
     <div class="col-md-6">
       <%= render Elements::Forms::FieldsetComponent.new(label: 'Item review state', classes: 'pane-section mb-2') do %>
-        <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :pending_review_state, label: 'Pending review') %>
-        <%= render Elements::Forms::CheckboxComponent.new(form:, field_name: :returned_state, label: 'Returned') %>
+        <%= render SdrViewComponents::Forms::CheckboxComponent.new(form:, field_name: :pending_review_state, label_text: 'Pending review') %>
+        <%= render SdrViewComponents::Forms::CheckboxComponent.new(form:, field_name: :returned_state, label_text: 'Returned') %>
       <% end %>
     </div>
   </div>

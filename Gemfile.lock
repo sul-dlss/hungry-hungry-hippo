@@ -2,7 +2,6 @@ PATH
   remote: ../sdr_view_components
   specs:
     sdr_view_components (0.1.0)
-      rails (~> 8.0)
       view_component
       zeitwerk
 
