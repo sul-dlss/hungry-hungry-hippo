@@ -1,6 +1,6 @@
 <%= tag.div data: { controller: 'workflow' }, class: 'pane-section' do %>
-  <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :review_enabled, label_classes: 'fw-bold',
-                                                  label: 'Enable Review Workflow', container_classes: 'mb-4') do |component| %>
+  <%= render SdrViewComponents::Forms::ToggleComponent.new(form:, field_name: :review_enabled, label_classes: 'fw-bold',
+                                                  label_text: 'Enable Review Workflow', container_classes: 'mb-4') do |component| %>
     <% component.with_left_toggle_option(form:,
                                          field_name: :review_enabled,
                                          label: 'Yes',
