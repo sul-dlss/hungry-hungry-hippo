@@ -95,4 +95,4 @@ google_analytics:
 
 ror:
   url: https://api.ror.org
-  client_id: hungry-hungry-hippo-stanford-university # actual client ID in shared_configs
+  client_id: hungry-hungry-hippo-stanford-university # actual client ID in deployed envs coming from vault/puppet
