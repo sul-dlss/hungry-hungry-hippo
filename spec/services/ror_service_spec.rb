@@ -6,11 +6,16 @@ RSpec.describe RorService do
   subject(:organizations) { described_class.call(search:) }
 
   let(:search) { 'stanford' }
+  let(:headers) do
+    { 'Accept' => 'application/json',
+      'User-Agent' => 'Stanford Self-Deposit (Hungry Hungry Hippo)',
+      'Client-Id' => Settings.ror.client_id }
+  end
 
   context 'when the ror service returns results' do
     before do
       stub_request(:get, "https://api.ror.org/v2/organizations?query=#{search}")
-        .with(headers: { 'Accept' => 'application/json' })
+        .with(headers:)
         .to_return(status: 200, body:, headers: { 'Content-Type': 'application/json;charset=UTF-8' })
     end
 
@@ -101,7 +106,7 @@ RSpec.describe RorService do
 
     before do
       stub_request(:get, "https://api.ror.org/v2/organizations?query=#{search}")
-        .with(headers: { 'Accept' => 'application/json' })
+        .with(headers:)
         .to_return(status: 200, body:, headers: { 'Content-Type': 'application/json;charset=UTF-8' })
     end
 
@@ -115,7 +120,7 @@ RSpec.describe RorService do
 
     before do
       stub_request(:get, "https://api.ror.org/v2/organizations?query=#{search}")
-        .with(headers: { 'Accept' => 'application/json' })
+        .with(headers:)
         .to_return(status: 404, body:, headers: { 'Content-Type': 'application/json;charset=UTF-8' })
     end
 

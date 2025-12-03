@@ -38,7 +38,8 @@ class RorService
   def headers
     {
       'Accept' => 'application/json',
-      'User-Agent' => 'Stanford Self-Deposit (Hungry Hungry Hippo)'
+      'User-Agent' => 'Stanford Self-Deposit (Hungry Hungry Hippo)',
+      'Client-Id' => Settings.ror.client_id
     }
   end
 
