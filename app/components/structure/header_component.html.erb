@@ -1,75 +1,20 @@
-<header>
-  <!-- Stanford bar -->
-  <div class="identity-bar">
-    <div class="container">
-      <a class="su-brand-bar__logo" href="https://www.stanford.edu">Stanford University</a>
-    </div>
-  </div>
-
-  <!-- SUL bar & user util links -->
-  <nav class="navbar navbar-expand-md">
-    <div class="container">
-      <a
-        class="mb-0 navbar-brand navbar-logo polychrome"
-        href="https://library.stanford.edu">Stanford University Libraries</a>
-      <button
-        class="navbar-toggler navbar-toggler-right collapsed"
-        type="button"
-        data-toggle="collapse"
-        data-bs-toggle="collapse"
-        data-target="#user-util-collapse"
-        data-bs-target="#user-util-collapse"
-        aria-controls="user-util-collapse"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="d-md-block d-none">
-        <ul class="navbar-nav">
-          <%= render Structure::LoginMenuComponent.new %>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- App masthead -->
-  <div class="masthead border-bottom">
-    <div class="container">
-      <div
-        class="d-flex flex-wrap align-items-end justify-content-between pt-3 pb-1 pb-md-3 gap-3">
-        <div>
-          <div class="h1 my-0">
-            <%= link_to helpers.t('app_name'), root_path %>
-          </div>
-        </div>
-        <div class="navbars ms-md-auto">
-          <nav
-            class="collapse navbar-collapse align-items-start justify-content-md-end navbar-expand-md d-md-flex flex-column flex-md-row"
-            aria-label="browse"
-            id="user-util-collapse">
-            <hr class="d-md-none vw-100 my-0">
-            <ul
-              class="navbar-nav justify-content-md-end gap-0 gap-md-4 w-100 fw-semibold">
-              <li class="nav-item">
-                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#contact-form-modal"><%= t('contact_sdr') %></a>
-              </li>
-              <%= render Elements::NavLinkComponent.new(title: 'Help', path: 'https://sdr.library.stanford.edu/documentation', data: { ahoy_track: 'true' }) %>
-              <%= render Elements::NavLinkComponent.new(title: 'Why SDR?', path: 'https://sdr.library.stanford.edu/', data: { ahoy_track: 'true' }) %>
-              <li class="nav-item">
-                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#tod-modal">Terms of Deposit</a>
-              </li>
-            </ul>
-            <hr class="d-md-none vw-100 my-0">
-            <ul class="navbar-nav d-md-none gap-0 w-100">
-              <%= render Structure::LoginMenuComponent.new %>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
+<%= render SdrViewComponents::Structure::HeaderComponent.new(title: t('app_name'), variant: :white) do |header| %>
+  <%= header.with_primary_navigation_link do %>
+    <%= render Structure::LoginMenuComponent.new %>
+  <% end %>
+  <%= header.with_secondary_navigation_link do %>
+    <%= render SdrViewComponents::Elements::Navigation::NavItemComponent.new(text: t('contact_sdr'), path: '#', data: { "bs-toggle": "modal", "bs-target": "#contact-form-modal" }) %>
+  <% end %>
+  <%= header.with_secondary_navigation_link do %>
+    <%= render SdrViewComponents::Elements::Navigation::NavItemComponent.new(text: 'Help', path: 'https://sdr.library.stanford.edu/documentation', data: { ahoy_track: 'true' }) %>
+  <% end %>
+  <%= header.with_secondary_navigation_link do %>
+    <%= render SdrViewComponents::Elements::Navigation::NavItemComponent.new(text: 'Why SDR?', path: 'https://sdr.library.stanford.edu/', data: { ahoy_track: 'true' }) %>
+  <% end %>
+  <%= header.with_secondary_navigation_link do %>
+    <%= render SdrViewComponents::Elements::Navigation::NavItemComponent.new(text: 'Terms of Deposit', path: '#', data: { "bs-toggle": "modal", "bs-target": "#tod-modal" }) %>
+  <% end %>
+<% end %>
 <%= render Structure::TermsOfDepositModalComponent.new %>
 <%# there are two contact us modals; the first is the regular one; the second pre-selects requesting a collection %>
 <%= render Structure::ContactFormModalComponent.new(form_id: 'contact-form-modal', path: new_contacts_path(modal: true)) %>
