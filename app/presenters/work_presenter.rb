@@ -51,7 +51,7 @@ class WorkPresenter < FormPresenter
   end
 
   def keywords
-    keywords_attributes.map(&:text).join(', ')
+    work_form.keywords.map(&:text).join(', ')
   end
 
   def all_work_subtypes
@@ -134,7 +134,7 @@ class WorkPresenter < FormPresenter
   end
 
   def contact_emails
-    (contact_emails_attributes.map(&:email) + [works_contact_email]).compact.join(', ')
+    (work_form.contact_emails.map(&:email) + [works_contact_email]).compact.join(', ')
   end
 
   def shared_with

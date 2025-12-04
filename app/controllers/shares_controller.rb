@@ -7,11 +7,15 @@ class SharesController < ApplicationController
   def new
     authorize! @work, with: SharePolicy
 
-    @form = WorkShareForm.new(shares_attributes: @work.shares.map do |share|
-      { sunetid: share.user.sunetid,
-        name: share.user.name,
-        permission: share.permission }
-    end)
+    @form = WorkShareForm.new(
+      shares_attributes: @work.shares.map do |share|
+        {
+          sunetid: share.user.sunetid,
+          name: share.user.name,
+          permission: share.permission
+        }
+      end
+    )
   end
 
   def create
@@ -31,7 +35,7 @@ class SharesController < ApplicationController
 
   def share_params
     if params.include?(:work_share)
-      params.expect(work_share: [WorkShareForm.nested_attributes])
+      params.expect(work_share: WorkShareForm.permitted_params)
     else
       { shares_attributes: [] }
     end

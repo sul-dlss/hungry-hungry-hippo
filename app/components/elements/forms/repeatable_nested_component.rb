@@ -118,6 +118,12 @@ module Elements
       def delete_button_label(form_component_instance:)
         form_component_instance.try(:delete_button_label) || 'Clear'
       end
+
+      def template_model
+        model_class
+          .new
+          .then { |form_instance| form_instance.try(:prepopulate) || form_instance }
+      end
     end
   end
 end

@@ -45,7 +45,7 @@ RSpec.describe ApplicationForm do
     end
 
     it 'returns attributes not declared as immutable' do
-      expect(TestForm.user_editable_attributes).to eq([:foo, { bar: [] }])
+      expect(TestForm.send(:user_editable_attributes)).to eq([:foo, { bar: [] }])
     end
   end
 
@@ -72,35 +72,31 @@ RSpec.describe ApplicationForm do
     end
 
     before do
-      stub_const('TestForm', test_form_class)
       stub_const('WidgetForm', widget_form_class)
       stub_const('GadgetForm', gadget_form_class)
+      stub_const('TestForm', test_form_class)
     end
 
-    %i[widgets_attributes gadgets_attributes].each do |model|
-      it 'defines an instance getter that defaults to an array with an empty form object' do
-        expect(form_instance.public_send(model)).to contain_exactly(
-          instance_of(
-            model.to_s.delete_suffix('_attributes').classify.concat(described_class::FORM_CLASS_SUFFIX).constantize
-          )
-        )
+    %i[widgets gadgets].each do |model|
+      it 'defines an instance getter that defaults to an array' do
+        expect(form_instance.public_send(model)).to eq([])
       end
 
-      it 'defines an instance setter that can take a hash argument' do
-        form_instance.public_send(:"#{model}=", { 'fake_id_here' => { 'fake_attr' => 'real_value' } })
+      it 'defines an instance attributes setter that can take a hash argument' do
+        form_instance.public_send(:"#{model}_attributes=", { 'fake_id_here' => { 'fake_attr' => 'real_value' } })
 
         expect(form_instance.public_send(model).map(&:fake_attr)).to eq(['real_value'])
       end
 
-      it 'defines an instance setter that can take an array argument' do
-        form_instance.public_send(:"#{model}=", [{ 'fake_attr' => 'real_value' }])
+      it 'defines an instance attributes setter that can take an array argument' do
+        form_instance.public_send(:"#{model}_attributes=", [{ 'fake_attr' => 'real_value' }])
 
         expect(form_instance.public_send(model).map(&:fake_attr)).to eq(['real_value'])
       end
     end
 
     it 'overrides the instance-level attributes method to include nested attributes' do
-      expect(form_instance.attributes.keys).to contain_exactly('foo', 'widgets_attributes', 'gadgets_attributes')
+      expect(form_instance.attributes.keys).to contain_exactly('foo', 'widgets', 'gadgets')
     end
 
     it 'defines a class-level nested_attributes method that returns nested attribute names' do
@@ -127,18 +123,18 @@ RSpec.describe ApplicationForm do
     end
 
     before do
-      stub_const('TestForm', test_form_class)
       stub_const('WidgetForm', widget_form_class)
+      stub_const('TestForm', test_form_class)
     end
 
     it 'returns an empty array when there are no errors' do
-      expect(form.valid?).to be true
+      expect(form).to be_valid
       expect(form.loggable_errors).to be_empty
     end
 
     it 'returns loggable errors when there are errors' do
       expect(form.valid?(:deposit)).to be false
-      expect(form.loggable_errors).to eq ['Test foo: blank', 'Widget fake_attr: blank']
+      expect(form.loggable_errors).to eq ['Test foo: blank', 'Test widgets: invalid']
     end
   end
 end

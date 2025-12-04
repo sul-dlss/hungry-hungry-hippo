@@ -222,7 +222,6 @@ RSpec.describe WorkForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-
         expect(form.errors[:create_date_range_from]).to eq(['must be before end date'])
       end
     end
@@ -333,7 +332,7 @@ RSpec.describe WorkForm do
 
       it 'is invalid when depositing' do
         expect(form.valid?(:deposit)).to be false
-        expect(form.keywords.first.errors[:text]).to include('can\'t be blank')
+        expect(form.errors[:keywords].first).to eq('is invalid')
       end
     end
 
@@ -359,7 +358,7 @@ RSpec.describe WorkForm do
 
       it 'is invalid when depositing' do
         expect(form.valid?(:deposit)).to be false
-        expect(form.keywords.first.errors[:text]).to include('can\'t be blank')
+        expect(form.errors[:keywords].first).to eq('is invalid')
       end
     end
   end
@@ -372,6 +371,7 @@ RSpec.describe WorkForm do
         contributors_attributes:,
         abstract: abstract_fixture,
         license: license_fixture,
+        keywords_attributes: keywords_fixture,
         work_type: work_type_fixture,
         whats_changing: 'Initial version'
       )
@@ -381,7 +381,7 @@ RSpec.describe WorkForm do
       let(:contributors_attributes) { contributors_fixture }
 
       it 'is valid' do
-        expect(form.valid?(:deposit)).to be false
+        expect(form.valid?(:deposit)).to be true
       end
     end
 
@@ -480,7 +480,7 @@ RSpec.describe WorkForm do
 
       it 'is invalid' do
         expect(form.valid?(:deposit)).to be false
-        expect(form.contact_emails.first.errors[:email]).to include('can\'t be blank')
+        expect(form.errors[:contact_emails].first).to eq('is invalid')
       end
     end
 
