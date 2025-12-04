@@ -38,7 +38,7 @@ class DepositWorkJob < ApplicationJob
     work.request_review! if request_review?
 
     # Content isn't needed anymore
-    content.destroy!
+    content.destroy
   end
 
   private
