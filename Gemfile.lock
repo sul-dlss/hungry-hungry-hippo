@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/sul-dlss-labs/sdr_view_components.git
+  revision: 282a62f6402451a6beaddd2af24e09a96d797dc0
+  branch: reusable-header
+  specs:
+    sdr_view_components (0.1.0)
+      rails (~> 8.0)
+      view_component
+      zeitwerk
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -742,6 +752,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-rspec_rails
+  sdr_view_components!
   selenium-webdriver
   simplecov
   solid_cable
