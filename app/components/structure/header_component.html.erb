@@ -1,9 +1,9 @@
-<%= render SdrViewComponents::Structure::HeaderComponent.new(title: t('app_name'), variant: :white) do |header| %>
+<%= render SdrViewComponents::Structure::HeaderComponent.new(title: t('app_name'), variant: :white, sul_logo: 'polychrome') do |header| %>
   <%= header.with_primary_navigation_link do %>
     <%= render Structure::LoginMenuComponent.new %>
   <% end %>
   <%= header.with_secondary_navigation_link do %>
-    <%= render SdrViewComponents::Elements::Navigation::NavItemComponent.new(text: t('contact_sdr'), path: '#', data: { "bs-toggle": "modal", "bs-target": "#contact-form-modal" }) %>
+    <%= render SdrViewComponents::Elements::Navigation::NavItemComponent.new(text: t('contact_sdr'), path: '#', data: { 'bs-toggle': 'modal', 'bs-target': '#contact-form-modal' }) %>
   <% end %>
   <%= header.with_secondary_navigation_link do %>
     <%= render SdrViewComponents::Elements::Navigation::NavItemComponent.new(text: 'Help', path: 'https://sdr.library.stanford.edu/documentation', data: { ahoy_track: 'true' }) %>
@@ -12,7 +12,7 @@
     <%= render SdrViewComponents::Elements::Navigation::NavItemComponent.new(text: 'Why SDR?', path: 'https://sdr.library.stanford.edu/', data: { ahoy_track: 'true' }) %>
   <% end %>
   <%= header.with_secondary_navigation_link do %>
-    <%= render SdrViewComponents::Elements::Navigation::NavItemComponent.new(text: 'Terms of Deposit', path: '#', data: { "bs-toggle": "modal", "bs-target": "#tod-modal" }) %>
+    <%= render SdrViewComponents::Elements::Navigation::NavItemComponent.new(text: 'Terms of Deposit', path: '#', data: { 'bs-toggle': 'modal', 'bs-target': '#tod-modal' }) %>
   <% end %>
 <% end %>
 <%= render Structure::TermsOfDepositModalComponent.new %>
