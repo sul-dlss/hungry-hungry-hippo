@@ -569,7 +569,7 @@ GEM
     sawyer (0.9.3)
       addressable (>= 2.3.5)
       faraday (>= 0.17.3, < 3)
-    sdr_view_components (0.1.1)
+    sdr_view_components (0.1.9)
       rails (~> 8.0)
       view_component
       zeitwerk
