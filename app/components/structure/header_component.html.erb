@@ -1,4 +1,4 @@
-<%= render SdrViewComponents::Structure::HeaderComponent.new(title: t('app_name'), variant: :white, sul_logo: 'polychrome') do |header| %>
+<%= render SdrViewComponents::Structure::HeaderComponent.new(title: t('app_name'), variant: :white, sul_logo: 'polychrome', rosette: false) do |header| %>
   <%= header.with_primary_navigation_link do %>
     <%= render Structure::LoginMenuComponent.new %>
   <% end %>
