@@ -4,7 +4,7 @@
   <% else %>
     <%= render Elements::Forms::FieldsetComponent.new(label:, tooltip:, aria: fieldset_aria) do %>
       <p class="mb-3"><%= help_text %></p>
-      <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: error_field_name) %>
+      <%= render SdrViewComponents::Forms::InvalidFeedbackComponent.new(form:, field_name: error_field_name) %>
 
       <% if required_subtypes.present? %>
         <p><%= required_subtype_text %></p>

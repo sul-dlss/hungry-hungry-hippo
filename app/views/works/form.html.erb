@@ -5,7 +5,7 @@
       ahoy_form_changes_form_id_value: @work_form.form_id
     } do %>
   <% content_for :breadcrumbs do %>
-    <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <%= render SdrViewComponents::Elements::BreadcrumbNavComponent.new do |component| %>
       <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
       <% component.with_collection_breadcrumb(text: @collection.title, link: collection_path(@work_form.collection_druid)) %>
       <% if (current_page?(action: :new) || (controller.action_name == 'create')) %>
@@ -18,7 +18,11 @@
   <% end %>
   <%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: @work_form.title || t('works.edit.no_title'), classes: 'mb-3') %>
   <%= render Works::Show::ReviewRejectedComponent.new(work: @work) if @work %>
-  <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if defined?(@valid) && !@valid %>
+  <% if defined?(@valid) && !@valid %>
+    <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :danger) do %>
+      <%= t('messages.validation') %>
+    <% end %>
+  <% end %>
   <% form_id = dom_id(@work_form, 'tabbed_form') %>
   <% discard_draft_form_id = dom_id(@work_form, 'discard_form') %>
   <%= render Edit::DiscardDraftFormComponent.new(presenter: @work_presenter, id: discard_draft_form_id) if @work_presenter %>
@@ -41,7 +45,7 @@
     <% form_with(model: @work_form) do |form| %>
       <%# This pane is outside the work form because it contains its own forms for files. %>
       <% component.with_before_form_pane(tab_name: :files, label: t('works.edit.panes.files.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, previous_tab_btn: false) do %>
-        <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
+        <%= render SdrViewComponents::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
 
         <%= render 'contents/edit', content: @content, form_id: @work_form.form_id %>
 
@@ -70,7 +74,7 @@
 
           <div class="pane-section">
             <p>
-              Contact email provided by collection manager <%= render Elements::TooltipComponent.new(target_label: 'Provided contact email', tooltip: t('works.edit.fields.works_contact_email.tooltip_html')) %>
+              Contact email provided by collection manager <%= render SdrViewComponents::Elements::TooltipComponent.new(target_label: 'Provided contact email', tooltip: t('works.edit.fields.works_contact_email.tooltip_html')) %>
             </p>
             <p>
               <%= @work_form.works_contact_email %>
@@ -83,7 +87,7 @@
         <%# The invalid-feedback controller is used to hide the invalid feedback message (contributor required)
         when citation radio is changed or a new contributor is added. %>
         <div data-controller="invalid-feedback" data-invalid-feedback-tab-error-outlet=".tab-error" data-invalid-feedback-tab-value="contributors">
-          <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :contributors, data: { invalid_feedback_target: 'feedback' }) %>
+          <%= render SdrViewComponents::Forms::InvalidFeedbackComponent.new(form:, field_name: :contributors, data: { invalid_feedback_target: 'feedback' }) %>
           <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Edit::ContributorComponent, hidden_label: true, reorderable: true, fieldset_classes: 'pane-section', add_button_data: { action: 'invalid-feedback#hide' }) %>
         </div>
       <% end %>
@@ -140,7 +144,9 @@
         <% end %>
 
         <% if @work_presenter && !@work_presenter.first_draft? %>
-          <%= render Elements::AlertComponent.new(variant: :info, value: t('works.edit.panes.deposit.version_text')) %>
+          <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :info) do %>
+            <%= t('works.edit.panes.deposit.version_text') %>
+          <% end %>
           <div class="pane-section">
             <%#
               When what's changing textarea is invalid and the user provides a value and then clicks Deposit / Save as draft,

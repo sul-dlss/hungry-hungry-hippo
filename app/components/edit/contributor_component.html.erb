@@ -23,8 +23,8 @@
   </p>
 <% else %>
   <%= tag.div data: contributors_data do %>
-    <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :role_type, label_classes: 'fw-bold',
-                                                    label: 'Author / Contributor type', container_classes: 'mb-4') do |component| %>
+    <%= render SdrViewComponents::Forms::ToggleComponent.new(form:, field_name: :role_type, label_classes: 'fw-bold',
+                                                    label_text: 'Author / Contributor type', container_classes: 'mb-4') do |component| %>
       <% component.with_left_toggle_option(form:,
                                            field_name: :role_type,
                                            label: 'Individual',
@@ -43,8 +43,8 @@
                                                            options: PERSON_ROLES, label: role_label, container_classes: 'mb-4',
                                                            caption: helpers.t('works.edit.fields.contributors.role.definitions_link_label_html')) %>
 
-      <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :with_orcid, label_classes: 'fw-bold', tooltip: helpers.t('works.edit.fields.contributors.with_orcid.tooltip_html'),
-                                                      label: helpers.t('works.edit.fields.contributors.with_orcid.label'), container_classes: 'orcid-section mb-4') do |component| %>
+      <%= render SdrViewComponents::Forms::ToggleComponent.new(form:, field_name: :with_orcid, label_classes: 'fw-bold', tooltip: helpers.t('works.edit.fields.contributors.with_orcid.tooltip_html'),
+                                                      label_text: helpers.t('works.edit.fields.contributors.with_orcid.label'), container_class: 'orcid-section mb-4') do |component| %>
         <% component.with_left_toggle_option(form:,
                                              field_name: :with_orcid,
                                              label: 'Lookup using ORCID iD',
@@ -66,17 +66,17 @@
                 <%= Settings.orcid.url %>
               </span>
               <%= form.text_field :orcid, class: 'form-control', data: { contributors_target: 'orcidInput', action: 'input->contributors#resolveOrcid' }, aria: orcid_aria %>
-              <%= render Elements::Forms::LabelComponent.new(form:, field_name: :orcid, label_text: 'ORCID iD', hidden_label: true) %>
+              <%= render SdrViewComponents::Forms::LabelComponent.new(form:, field_name: :orcid, text: 'ORCID iD', hidden: true) %>
             </div>
           </div>
           <div class="col-lg-3">
             <%= if user_orcid?
-                  render Elements::ButtonComponent.new(label: 'Use my ORCID iD', variant: 'link',
-                                                       data: { action: 'contributors#useMyOrcid' })
+                  render SdrViewComponents::Elements::ButtonComponent.new(label: 'Use my ORCID iD', variant: 'link',
+                                                                          data: { action: 'contributors#useMyOrcid' })
                 end %>
           </div>
         </div>
-        <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :orcid) %>
+        <%= render SdrViewComponents::Forms::InvalidFeedbackComponent.new(form:, field_name: :orcid) %>
         <div class="invalid-feedback" data-contributors-target="orcidFeedback"></div>
         <p class="mb-4" data-contributors-target="orcidMessage">
           Name fields will be autopopulated based on the ORCID entry above.
@@ -120,8 +120,8 @@
 
       <%# Degree granting institution fields %>
       <div data-contributors-target="degreeGrantingSection">
-        <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :stanford_degree_granting_institution, label_classes: 'fw-bold',
-                                                        label: 'Is Stanford the institution?', container_classes: 'stanford-degree-granting-institution-section mb-4') do |component| %>
+        <%= render SdrViewComponents::Forms::ToggleComponent.new(form:, field_name: :stanford_degree_granting_institution, label_classes: 'fw-bold',
+                                                        label_text: 'Is Stanford the institution?', container_class: 'stanford-degree-granting-institution-section mb-4') do |component| %>
           <% component.with_left_toggle_option(form:,
                                                field_name: :stanford_degree_granting_institution,
                                                label: 'Yes',

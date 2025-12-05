@@ -5,8 +5,8 @@
   </div>
 
 <%= render Elements::Forms::FieldsetComponent.new(label: t('works.edit.fields.create_date.label'), tooltip: t('works.edit.fields.create_date.tooltip_html'), classes: 'pane-section', data: { controller: 'dates' }, id: 'creation_date') do %>
-  <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :create_date_type, hidden_label: true,
-                                                  label: 'Date type') do |component| %>
+  <%= render SdrViewComponents::Forms::ToggleComponent.new(form:, field_name: :create_date_type, hidden_label: true,
+                                                  label_text: 'Date type') do |component| %>
     <% component.with_left_toggle_option(form:,
                                          field_name: :create_date_type,
                                          label: 'Single date',
@@ -38,6 +38,6 @@
     <% if create_date_range_from_error? %>
       <%# Invalid feedback needs to be a sibling of .is-invalid %>
       <div class="is-invalid">
-      <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :create_date_range_from) %>
+      <%= render SdrViewComponents::Forms::InvalidFeedbackComponent.new(form:, field_name: :create_date_range_from) %>
     <% end %>
 <% end %>

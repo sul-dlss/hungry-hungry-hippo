@@ -17,6 +17,6 @@
 <div class="row">
   <div class="col">
     <div data-controller="invalid-feedback" data-invalid-feedback-tab-error-outlet=".tab-error" data-invalid-feedback-tab-value="affiliations"></div>
-    <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :uri, data: { invalid_feedback_target: 'feedback' }, classes: 'mb-2') %>
+    <%= render SdrViewComponents::Forms::InvalidFeedbackComponent.new(form:, field_name: :uri, data: { invalid_feedback_target: 'feedback' }, classes: 'mb-2') %>
   </div>
 </div>

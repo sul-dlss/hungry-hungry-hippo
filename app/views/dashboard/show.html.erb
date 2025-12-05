@@ -7,10 +7,12 @@
     <%= render Elements::HeadingComponent.new(level: :h1, text: "#{current_user.name} - Dashboard", classes: 'h2 mb-4') %>
   </div>
   <div class="col-1">
-    <%= render Elements::ButtonLinkComponent.new(link: admin_dashboard_path, label: 'Admin') if allowed_to?(:show?, with: AdminPolicy) %>
+    <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: admin_dashboard_path, label: 'Admin') if allowed_to?(:show?, with: AdminPolicy) %>
   </div>
 </div>
-<%= render Elements::AlertComponent.new(value: t('banner.dashboard_html'), dismissible: false) %>
+<%= render SdrViewComponents::Elements::AlertComponent.new(dismissible: false) do %>
+  <%= t('banner.dashboard_html') %>
+<% end %>
 
 <% if @draft_works.present? %>
   <div class="mb-5">
@@ -35,7 +37,7 @@
 
 <div class="d-flex justify-content-between mb-4">
   <%= render Elements::HeadingComponent.new(level: :h2, text: 'Your collections', classes: 'h3 mb-0') %>
-  <%= render Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary) if allowed_to?(:new?, Collection) %>
+  <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary) if allowed_to?(:new?, Collection) %>
 </div>
 
 <% @your_collections.each do |collection| %>
@@ -43,7 +45,7 @@
     <%= render Collections::HeaderLinkComponent.new(collection:) %>
     <%= render Dashboard::Show::CollectionWorksListComponent.new(collection:, status_map: @status_map) %>
     <%= render Dashboard::Show::FirstUseAlertComponent.new(user: current_user) %>
-    <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary, classes: 'mt-4') %>
+    <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary, classes: 'mt-4') %>
   </div>
 <% end %>
 
