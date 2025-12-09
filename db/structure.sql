@@ -262,6 +262,40 @@ CREATE TABLE public.collection_depositors (
 
 
 --
+-- Name: collection_github_repos; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.collection_github_repos (
+    id bigint NOT NULL,
+    collection_id bigint NOT NULL,
+    github_repo_id character varying,
+    github_repo_name character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    webhook_id integer
+);
+
+
+--
+-- Name: collection_github_repos_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.collection_github_repos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: collection_github_repos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.collection_github_repos_id_seq OWNED BY public.collection_github_repos.id;
+
+
+--
 -- Name: collection_managers; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -502,7 +536,11 @@ CREATE TABLE public.users (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     agreed_to_terms_at timestamp(6) without time zone,
-    terms_reminder_email_last_sent_at timestamp(6) without time zone
+    terms_reminder_email_last_sent_at timestamp(6) without time zone,
+    github_access_token character varying,
+    github_uid character varying,
+    github_nickname character varying,
+    github_connected_date timestamp(6) without time zone
 );
 
 
@@ -609,6 +647,13 @@ ALTER TABLE ONLY public.ahoy_visits ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: collection_github_repos id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.collection_github_repos ALTER COLUMN id SET DEFAULT nextval('public.collection_github_repos_id_seq'::regclass);
+
+
+--
 -- Name: collections id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -711,6 +756,14 @@ ALTER TABLE ONLY public.ahoy_visits
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: collection_github_repos collection_github_repos_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.collection_github_repos
+    ADD CONSTRAINT collection_github_repos_pkey PRIMARY KEY (id);
 
 
 --
@@ -869,6 +922,13 @@ CREATE UNIQUE INDEX index_collection_depositors_on_collection_id_and_user_id ON 
 
 
 --
+-- Name: index_collection_github_repos_on_collection_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_collection_github_repos_on_collection_id ON public.collection_github_repos USING btree (collection_id);
+
+
+--
 -- Name: index_collection_managers_on_collection_id_and_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -967,6 +1027,13 @@ CREATE UNIQUE INDEX index_users_on_email_address ON public.users USING btree (em
 
 
 --
+-- Name: index_users_on_github_uid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_github_uid ON public.users USING btree (github_uid);
+
+
+--
 -- Name: index_works_on_collection_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1006,6 +1073,14 @@ CREATE INDEX index_works_on_review_state ON public.works USING btree (review_sta
 --
 
 CREATE INDEX index_works_on_user_id ON public.works USING btree (user_id);
+
+
+--
+-- Name: collection_github_repos fk_rails_0089abdee2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.collection_github_repos
+    ADD CONSTRAINT fk_rails_0089abdee2 FOREIGN KEY (collection_id) REFERENCES public.collections(id);
 
 
 --
@@ -1111,6 +1186,9 @@ ALTER TABLE ONLY public.affiliations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20251204221546'),
+('20251204220919'),
+('20251204220917'),
 ('20250723233849'),
 ('20250630163537'),
 ('20250619163206'),
