@@ -1,6 +1,6 @@
 <div data-controller="unsaved-changes" data-action="change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage">
   <% content_for :breadcrumbs do %>
-    <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <%= render SdrViewComponents::Elements::BreadcrumbNavComponent.new do |component| %>
       <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
       <% if (current_page?(action: :new) || (controller.action_name == 'create')) %>
         <% component.with_breadcrumb(text: t('collections.edit.no_title')) %>
@@ -14,7 +14,11 @@
     <% end %>
   <% end %>
   <%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: @collection_form.title || 'Untitled collection', classes: 'mb-3') %>
-  <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if defined?(@valid) && !@valid %>
+  <% if defined?(@valid) && !@valid %>
+    <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :danger) do %>
+      <%= t('messages.validation') %>
+    <% end %>
+  <% end %>
   <% discard_draft_form_id = dom_id(@collection_form, 'discard_form') %>
   <%= render Edit::DiscardDraftFormComponent.new(presenter: @collection_presenter, id: discard_draft_form_id) if @collection_presenter %>
   <% active_tab_name = params[:tab]&.to_sym || :details %>
@@ -92,7 +96,7 @@
         <%# For spacing %>
         <div class="pane-section"></div>
         <% pane_component.with_deposit_button do %>
-          <%= render Elements::Forms::SubmitComponent.new(label: 'Save', data: { action: 'unsaved-changes#allowFormSubmission' }) %>
+          <%= render SdrViewComponents::Forms::SubmitComponent.new(label: 'Save', data: { action: 'unsaved-changes#allowFormSubmission' }) %>
         <% end %>
       <% end %>
     <% end %>

@@ -60,7 +60,7 @@ module Edit
     end
 
     def fieldset_aria
-      Elements::Forms::InvalidFeedbackSupport.arias_for(form:, field_name: error_field_name)
+      SdrViewComponents::Forms::InvalidFeedbackSupport.arias_for(form:, field_name: error_field_name)
     end
 
     def disabled_params

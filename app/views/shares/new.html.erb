@@ -1,6 +1,6 @@
 <div data-controller="unsaved-changes" data-action="change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage">
   <% content_for :breadcrumbs do %>
-    <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <%= render SdrViewComponents::Elements::BreadcrumbNavComponent.new do |component| %>
       <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
       <% component.with_collection_breadcrumb(text: @work.collection.title, link: collection_path(@work.collection)) %>
       <% component.with_title_breadcrumb(text: @work.title, link: work_path(@work)) %>
@@ -17,7 +17,7 @@
 
     <div class="d-flex align-items-baseline">
       <%= render Elements::CancelButtonComponent.new(link: work_path(@work), classes: 'me-2') %>
-      <%= render Elements::Forms::SubmitComponent.new(label: 'Save', classes: 'mt-3 mb-4', data: { action: 'unsaved-changes#allowFormSubmission' }) %>
+      <%= render SdrViewComponents::Forms::SubmitComponent.new(label: 'Save', classes: 'mt-3 mb-4', data: { action: 'unsaved-changes#allowFormSubmission' }) %>
     </div>
   <% end %>
 </div>

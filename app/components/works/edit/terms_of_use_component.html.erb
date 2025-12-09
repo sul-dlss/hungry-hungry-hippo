@@ -1,7 +1,7 @@
 <div class="pane-section">
   <% if provided_custom_rights_statement_option? %>
     <%= render Edit::LabelComponent.new(label_text: label) %>
-    <%= render Elements::TooltipComponent.new(target_label: label, tooltip:) %>
+    <%= render SdrViewComponents::Elements::TooltipComponent.new(target_label: label, tooltip:) %>
     <p><%= provided_custom_rights_statement %></p>
     <%= form.hidden_field :custom_rights_statement, value: provided_custom_rights_statement %>
   <% else %>

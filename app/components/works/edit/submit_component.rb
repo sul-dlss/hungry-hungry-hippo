@@ -16,7 +16,7 @@ module Works
       attr_reader :form_id, :work, :collection, :classes, :data
 
       def call
-        render Elements::Forms::SubmitComponent.new(form_id:, label:, classes:, data:)
+        render SdrViewComponents::Forms::SubmitComponent.new(form_id:, label:, classes:, data:)
       end
 
       def render?

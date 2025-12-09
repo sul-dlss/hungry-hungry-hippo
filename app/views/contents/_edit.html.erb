@@ -8,9 +8,9 @@
         dropzone_tab_error_outlet: '.tab-error',
         action: 'change->unsaved-changes#changed'
       }, id: 'file-dropzone', class: 'dropzone' do |form| %>
-    <%= render Elements::AlertComponent.new(classes: 'd-none', data: { dropzone_target: 'folderAlert' }) do %>
+    <%= render SdrViewComponents::Elements::AlertComponent.new(classes: 'd-none', data: { dropzone_target: 'folderAlert' }) do %>
       <span data-dropzone-target="folderAlertText"></span>
-      <%= render Elements::ButtonComponent.new(label: 'Reset', variant: 'outline-primary', classes: 'ms-3', data: { action: 'dropzone#clearBasePath' }) %>
+      <%= render SdrViewComponents::Elements::ButtonComponent.new(label: 'Reset', variant: 'outline-primary', classes: 'ms-3', data: { action: 'dropzone#clearBasePath' }) %>
     <% end %>
     <%= render Elements::ProgressBarComponent.new(label: 'Upload progress', classes: 'd-none', data: { dropzone_target: 'progress' }) %>
     <ul data-dropzone-target="error" class="d-none list-unstyled text-danger"></ul>
@@ -18,7 +18,7 @@
       <div class="fs-1"><%= upload_icon %></div>
       <div class="fs-5">Drag and drop your files here, up to 10GB or 25,000 files.</div>
       <div class="fs-5">or</div>
-      <%= render Elements::ButtonComponent.new(label: 'Select files to upload', variant: :'outline-primary', classes: 'mt-2') %>
+      <%= render SdrViewComponents::Elements::ButtonComponent.new(label: 'Select files to upload', variant: :'outline-primary', classes: 'mt-2') %>
     </div>
   <% end %>
 <% end %>
