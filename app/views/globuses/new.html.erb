@@ -12,7 +12,7 @@
 
       </div>
       <div>
-        <%= link_to t('works.edit.messages.globus_instructions'), Settings.globus.instructions_url %>
+        <%= link_to_new_tab t('works.edit.messages.globus_instructions'), Settings.globus.instructions_url %>
       </div>
     <% else %>
       <div class="me-4">
@@ -20,7 +20,7 @@
 
       </div>
       <div>
-        Save a draft to enable Globus file deposit. <%= link_to t('works.edit.messages.globus_instructions'), Settings.globus.instructions_url %>
+        Save a draft to enable Globus file deposit. <%= link_to_new_tab t('works.edit.messages.globus_instructions'), Settings.globus.instructions_url %>
       </div>
     <% end %>
   <div>
