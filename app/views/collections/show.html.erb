@@ -48,7 +48,22 @@
       <% end %>
     <% end %>
 
-    <%= render Elements::Tables::TableComponent.new(id: 'work-type-table', classes: 'mb-5') do |component| %>
+    <%= render Elements::Tables::TableComponent.new(id: 'github-integration-table', classes: 'mb-5') do |component| %>
+      <% component.with_caption do %>
+        <div class="d-flex justify-content-between align-items-center">
+          <h3 class="h5 mb-0">GitHub Integration</h3>
+          <% if allowed_to?(:manage?, @collection) %>
+            <%= link_to 'Manage GitHub connection', collection_github_integrations_path(@collection.druid), class: 'btn btn-sm btn-outline-primary' %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if @collection.collection_github_repos.any? %>
+        <% component.with_row(label: 'Linked Repositories', values: [@collection.collection_github_repos.map(&:github_repo_name).join(', ')]) %>
+      <% else %>
+        <% component.with_row(label: 'Status', values: ['Not linked']) %>
+      <% end %>
+    <% end %>    <%= render Elements::Tables::TableComponent.new(id: 'work-type-table', classes: 'mb-5') do |component| %>
       <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Type of deposits', presenter: @collection_presenter, tab: :types) %><% end %>
       <% component.with_row(label: 'Deposit type', values: [@collection_presenter.work_type]) %>
       <% component.with_row(label: 'Deposit subtypes', values: [@collection_presenter.work_subtypes.join(', ')]) %>
