@@ -1,0 +1,59 @@
+<h1><%= @collection.title %></h1>
+
+<p class="lead">Link GitHub repositories to this collection. When a release is created in a linked repository, a new work will be created in this collection.</p>
+
+<div class="mb-5">
+  <h2>Linked Repositories</h2>
+  <% if @linked_repos.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Repository</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @linked_repos.each do |repo| %>
+          <tr>
+            <td><%= repo.github_repo_name %></td>
+            <td>
+              <%= button_to 'Unlink', collection_github_integration_path(@collection, repo), method: :delete, class: 'btn btn-sm btn-outline-danger', form: { data: { turbo_confirm: 'Are you sure? This will stop automatic deposits from this repository.' } } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text-muted">No repositories linked yet.</p>
+  <% end %>
+</div>
+
+<% if current_user.github_access_token.present? && !@github_token_invalid %>
+  <div class="card">
+    <div class="card-header">
+      Link a new repository
+    </div>
+    <div class="card-body">
+      <%= form_with url: collection_github_integrations_path(@collection.druid), local: true do |form| %>
+        <div class="mb-3">
+          <%= form.label :github_repo_id, 'Select Repository', class: 'form-label' %>
+          <%= form.select :github_repo_id, @repos, { prompt: 'Select a repository...' }, { class: 'form-select', required: true, onchange: "document.getElementById('github_repo_name').value = this.options[this.selectedIndex].text" } %>
+          <%= form.hidden_field :github_repo_name, id: 'github_repo_name' %>
+        </div>
+
+        <%= form.submit 'Link Repository', class: 'btn btn-primary' %>
+        <%= link_to 'Back to Collection', collection_path(@collection), class: 'btn btn-primary text-white ms-2' %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <div class="alert alert-info">
+    <h4 class="alert-heading">Connect to GitHub</h4>
+    <p>To link a repository, you first need to connect your GitHub account and authorize access.</p>
+    <hr>
+    <div class="d-flex">
+      <%= button_to 'Connect GitHub Account', '/auth/github', method: :post, data: { turbo: false }, form: { authenticity_token: true }, class: 'btn btn-primary text-white' %>
+      <%= link_to 'Back to Collection', collection_path(@collection), class: 'btn btn-primary text-white ms-2' %>
+    </div>
+  </div>
+<% end %>

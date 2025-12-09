@@ -20,6 +20,8 @@ require 'action_cable/engine'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+OmniAuth.config.request_validation_phase = OmniAuth::AuthenticityTokenProtection.new(key: :_csrf_token)
+
 module HungryHungryHippo
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
