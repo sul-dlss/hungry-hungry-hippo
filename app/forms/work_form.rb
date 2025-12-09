@@ -10,22 +10,25 @@ class WorkForm < ApplicationForm
   validate :contributor_presence, on: :deposit
 
   before_validation do
-    self.keywords_attributes = keywords_attributes.reject(&:empty?).map(&:attributes).presence || [{}]
+    blank_keywords = keywords.select(&:empty?)
+    next if blank_keywords.empty? || blank_keywords.length == keywords.length
+
+    self.keywords = keywords - blank_keywords
   end
 
   before_validation do
-    blank_contributors = contributors_attributes.select(&:empty?)
-    next if blank_contributors.empty? || blank_contributors.length == contributors_attributes.length
+    blank_contributors = contributors.select(&:empty?)
+    next if blank_contributors.empty? || blank_contributors.length == contributors.length
 
-    self.contributors_attributes = (contributors_attributes - blank_contributors).map(&:attributes)
+    self.contributors = contributors - blank_contributors
   end
 
   before_validation do
-    blank_contact_emails = contact_emails_attributes.select(&:empty?)
+    blank_contact_emails = contact_emails.select(&:empty?)
     next if blank_contact_emails.empty?
-    next if blank_contact_emails.length == contact_emails_attributes.length && works_contact_email.blank?
+    next if blank_contact_emails.length == contact_emails.length && works_contact_email.blank?
 
-    self.contact_emails_attributes = (contact_emails_attributes - blank_contact_emails).map(&:attributes)
+    self.contact_emails = (contact_emails - blank_contact_emails)
   end
 
   validate :min_content_file_count, on: :deposit
@@ -186,7 +189,7 @@ class WorkForm < ApplicationForm
   end
 
   def contributor_presence
-    return if contributors_attributes.any? { |contributor| !contributor.empty? }
+    return if contributors.any? { |contributor| !contributor.empty? }
 
     errors.add(:contributors, 'must have at least one contributor')
   end

@@ -29,7 +29,7 @@ module Cocina
     def params # rubocop:disable Metrics/AbcSize
       {
         title: DescriptionCocinaBuilder.title(title: work_form.title),
-        contributor: WorkContributorsMapper.call(contributor_forms: work_form.contributors_attributes),
+        contributor: WorkContributorsMapper.call(contributor_forms: work_form.contributors),
         note: note_params,
         event: WorkEventsMapper.call(work_form:),
         subject: subject_params,
@@ -56,23 +56,23 @@ module Cocina
     end
 
     def related_resource_params
-      DescriptionCocinaBuilder.related_works(related_works: work_form.related_works_attributes)
+      DescriptionCocinaBuilder.related_works(related_works: work_form.related_works)
     end
 
     def access_contact_params
       DescriptionCocinaBuilder.contact_emails(
         # Use `#dup` because mutating the passed-in form object would be unexpected
-        contact_emails: work_form.contact_emails_attributes.dup.tap do |contact_emails_attributes|
+        contact_emails: work_form.contact_emails.dup.tap do |contact_emails|
           next if work_form.works_contact_email.blank?
 
-          contact_emails_attributes << ContactEmailForm.new(email: work_form.works_contact_email)
+          contact_emails << ContactEmailForm.new(email: work_form.works_contact_email)
         end
       )
     end
 
     def subject_params
       # Note that deduping only on text.
-      keyword_forms = work_form.keywords_attributes.uniq(&:text)
+      keyword_forms = work_form.keywords.uniq(&:text)
       DescriptionCocinaBuilder.keywords(keywords: keyword_forms)
     end
   end

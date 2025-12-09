@@ -32,7 +32,7 @@ class ContactsController < ApplicationController
   private
 
   def contact_form_params
-    params.expect(contact: ContactForm.user_editable_attributes)
+    params.expect(contact: ContactForm.permitted_params)
   end
 
   def set_contact_form_conditions

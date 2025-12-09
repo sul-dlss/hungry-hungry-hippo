@@ -9,8 +9,8 @@ RSpec::Matchers.define :equal_form do |expected|
 
   failure_message do |actual|
     SuperDiff::EqualityMatchers::Hash.new(
-      expected: expected.serializable_hash(include: expected.class.nested_attributes).deep_symbolize_keys,
-      actual: actual.serializable_hash(include: actual.class.nested_attributes).deep_symbolize_keys
+      expected: expected.serializable_hash.deep_symbolize_keys,
+      actual: actual.serializable_hash.deep_symbolize_keys
     ).fail
   rescue StandardError => e
     "Error in FormMatchers: #{e}"

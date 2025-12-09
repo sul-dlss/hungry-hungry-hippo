@@ -23,7 +23,7 @@ class CollectionsController < ApplicationController
       # This gets rid of the default empty nested forms.
       reviewers_attributes: [],
       depositors_attributes: []
-    )
+    ).prepopulate
 
     render :form
   end
@@ -119,7 +119,7 @@ class CollectionsController < ApplicationController
   end
 
   def collection_params
-    params.expect(collection: CollectionForm.user_editable_attributes + [CollectionForm.nested_attributes])
+    params.expect(collection: CollectionForm.permitted_params)
   end
 
   def update_collection_params
@@ -136,7 +136,7 @@ class CollectionsController < ApplicationController
 
   def set_collection_form_from_cocina
     @cocina_object = Sdr::Repository.find(druid: params[:druid])
-    @collection_form = Form::CollectionMapper.call(cocina_object: @cocina_object, collection: @collection)
+    @collection_form = Form::CollectionMapper.call(cocina_object: @cocina_object, collection: @collection).prepopulate
   end
 
   def set_status
@@ -156,6 +156,6 @@ class CollectionsController < ApplicationController
   end
 
   def add_blank_contributor
-    @collection_form.contributors_attributes = [{}] if @collection_form.contributors_attributes.empty?
+    @collection_form.contributors_attributes = [{}] if @collection_form.contributors.empty?
   end
 end

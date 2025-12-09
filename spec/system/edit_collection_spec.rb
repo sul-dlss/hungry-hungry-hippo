@@ -137,9 +137,9 @@ RSpec.describe 'Edit a collection' do
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Participants')
 
-    # There is a manager form and a depositor form
+    # There is a manager form instance only
     form_instances = all('.form-instance')
-    expect(form_instances.count).to eq(2)
+    expect(form_instances.count).to eq(1)
 
     # Remove the manager
     within form_instances[0] do

@@ -1,4 +1,4 @@
-<%= render NestedComponentPresenter.for(form:, field_name:, column_classes: ['col-auto d-flex align-items-center'], model_class:, form_component:, fieldset_classes: 'pane-section', bordered: false, separated: true, fieldset_id:, hide_add_button: true) do |component| %>
+<%= render NestedComponentPresenter.for(form:, field_name:, column_classes: ['col-auto d-flex align-items-center'], model_class:, form_component:, fieldset_classes: 'pane-section', bordered: false, separated: true, fieldset_id:, hide_add_button: true, render_empty: false) do |component| %>
   <% component.with_before_section do %>
     <%= tag.div data:, class: 'mb-3' do %>
       <% if help_text %><p><%= help_text %></p><% end %>

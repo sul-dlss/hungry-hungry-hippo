@@ -26,7 +26,7 @@ module Admin
     private
 
     def depositors_search_params
-      params.expect(admin_depositors_search: Admin::DepositorsSearchForm.user_editable_attributes)
+      params.expect(admin_depositors_search: Admin::DepositorsSearchForm.permitted_params)
     end
   end
 end
