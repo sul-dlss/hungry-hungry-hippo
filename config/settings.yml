@@ -98,9 +98,9 @@ ror:
   url: https://api.ror.org
   client_id: hungry-hungry-hippo-stanford-university # actual client ID in deployed envs coming from vault/puppet
 
-# GitHub OAuth application credentials
+# GitHub Integration OAuth application credentials
 github:
   client_id: h3_client_app_id
   client_secret: h3_client_app_secret
-  webhook_url: http://localhost:3000/github/webhook
-  webhook_secret: super_secret_time
+  webhook_url: http://localhost:3000/github/webhook # where GitHub will send webhook events
+  webhook_secret: super_secret_time # used to verify webhook payloads
