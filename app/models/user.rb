@@ -50,6 +50,46 @@ class User < ApplicationRecord
     end
   end
 
+  def authorize_github_connection(auth)
+    update(github_access_token: auth.credentials.token,
+           github_uid: auth.uid,
+           github_nickname: auth.info.nickname,
+           github_connected_date: Time.zone.now)
+  end
+
+  def revoke_github_connection
+    return if github_access_token.blank?
+
+    client = Octokit::Client.new(client_id: Settings.github.client_id, client_secret: Settings.github.client_secret)
+    begin
+      client.delete_app_authorization(github_access_token)
+    rescue Octokit::Error => e
+      # Token may already be revoked or other error occurred
+      Rails.logger.warn("Failed to revoke GitHub app access: #{e.message}")
+    ensure
+      # Clear the token from the user record regardless
+      update(
+        github_access_token: nil,
+        github_uid: nil,
+        github_nickname: nil,
+        github_connected_date: nil
+      )
+    end
+  end
+
+  # Checks if the user's GitHub access token exists and is valid.
+  def github_connected?
+    return false if github_access_token.blank?
+
+    client = Octokit::Client.new(access_token: github_access_token)
+    begin
+      client.user # Make a lightweight API call to check validity
+      true
+    rescue Octokit::Unauthorized
+      false
+    end
+  end
+
   def self.find_by_sunetid(sunetid:)
     find_by(email_address: "#{sunetid}#{EMAIL_SUFFIX}")
   end
