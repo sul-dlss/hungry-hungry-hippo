@@ -43,7 +43,7 @@ class GithubWebhooksController < ApplicationController
     repo_name = payload['repository']['full_name']
     repo_description = payload['repository']['description']
     repo_zipball = payload['release']['zipball_url'] # URL to download the release as a zip
-    integration = CollectionGithubRepo.find_by(github_repo_id: repo_id)
+    integration = GithubRepo.find_by(repo_id:, user_id: current_user.id)
     return unless integration
 
     collection = integration.collection

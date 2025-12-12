@@ -1,9 +1,17 @@
+<% content_for :breadcrumbs do %>
+  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
+    <% component.with_breadcrumb(text: @collection.title, link: collection_path(@collection)) %>
+    <% component.with_breadcrumb(text: 'Manage Github Connection', active: true) %>
+  <% end %>
+<% end %>
+
 <h1><%= @collection.title %></h1>
 
-<p class="lead">Link GitHub repositories to this collection. When a release is created in a linked repository, a new work will be created in this collection.</p>
+<h2 class="h3">Your GitHub account is connected to SDR.</h2>
+<p>Select which repositories you want to connect to SDR.  Connected repositories will automatically update in SDR in this collection with each Github release.</p>
 
 <div class="mb-5">
-  <h2>Linked Repositories</h2>
   <% if @linked_repos.any? %>
     <table class="table">
       <thead>
@@ -15,7 +23,7 @@
       <tbody>
         <% @linked_repos.each do |repo| %>
           <tr>
-            <td><%= repo.github_repo_name %></td>
+            <td><%= repo.repo_name %></td>
             <td>
               <%= button_to 'Unlink', collection_github_integration_path(@collection, repo), method: :delete, class: 'btn btn-sm btn-outline-danger', form: { data: { turbo_confirm: 'Are you sure? This will stop automatic deposits from this repository.' } } %>
             </td>
@@ -28,7 +36,7 @@
   <% end %>
 </div>
 
-<% if current_user.github_access_token.present? && !@github_token_invalid %>
+<div class="mb-5">
   <div class="card">
     <div class="card-header">
       Link a new repository
@@ -36,9 +44,9 @@
     <div class="card-body">
       <%= form_with url: collection_github_integrations_path(@collection.druid), local: true do |form| %>
         <div class="mb-3">
-          <%= form.label :github_repo_id, 'Select Repository', class: 'form-label' %>
-          <%= form.select :github_repo_id, @repos, { prompt: 'Select a repository...' }, { class: 'form-select', required: true, onchange: "document.getElementById('github_repo_name').value = this.options[this.selectedIndex].text" } %>
-          <%= form.hidden_field :github_repo_name, id: 'github_repo_name' %>
+          <%= form.label :repo_id, 'Select Repository', class: 'form-label' %>
+          <%= form.select :repo_id, @repos, { prompt: 'Select a repository...' }, { class: 'form-select', required: true, onchange: "document.getElementById('repo_name').value = this.options[this.selectedIndex].text" } %>
+          <%= form.hidden_field :repo_name, id: 'repo_name' %>
         </div>
 
         <%= form.submit 'Link Repository', class: 'btn btn-primary' %>
@@ -46,14 +54,4 @@
       <% end %>
     </div>
   </div>
-<% else %>
-  <div class="alert alert-info">
-    <h4 class="alert-heading">Connect to GitHub</h4>
-    <p>To link a repository, you first need to connect your GitHub account and authorize access.</p>
-    <hr>
-    <div class="d-flex">
-      <%= button_to 'Connect GitHub Account', '/auth/github', method: :post, data: { turbo: false }, form: { authenticity_token: true }, class: 'btn btn-primary text-white' %>
-      <%= link_to 'Back to Collection', collection_path(@collection), class: 'btn btn-primary text-white ms-2' %>
-    </div>
-  </div>
-<% end %>
+</div>
