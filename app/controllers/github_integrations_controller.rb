@@ -13,10 +13,10 @@ class GithubIntegrationsController < ApplicationController
 
     current_user.authorize_github_connection(request.env['omniauth.auth'])
 
-    flash[:success] = 'You Github account has been successfully connected to SDR.'
+    flash[:success] = I18n.t('github.connected_account')
     redirect_to session.delete(:return_to) || dashboard_path
   rescue StandardError => e
-    flash[:danger] = "Failed to connect Github account: #{e.message}"
+    flash[:danger] = I18n.t('github.error_connecting_account', error_message: e.message)
     redirect_to dashboard_path
   end
 
@@ -25,10 +25,10 @@ class GithubIntegrationsController < ApplicationController
 
     current_user.revoke_github_connection
 
-    flash[:success] = 'Your Github account has been disconnected from SDR.'
+    flash[:success] = I18n.t('github.disconnected_account')
     redirect_to dashboard_path
   rescue StandardError => e
-    flash[:danger] = "Failed to disconnect Github account: #{e.message}"
+    flash[:danger] = I18n.t('github.error_disconnecting_account', error_message: e.message)
     redirect_to github_integrations_path
   end
 end

@@ -45,7 +45,7 @@ class GithubWebhooksController < ApplicationController
     repo_description = payload['repository']['description']
     repo_zipball = payload['release']['zipball_url'] # URL to download the release as a zip
     github_repo = GithubRepo.find_by(repo_id:, user: current_user)
-    return unless github_repo # TODO log if no integration found?  HB Alert?
+    return unless github_repo # TODO: log if no integration found?  HB Alert?
 
     # TODO: this should all happen in a job to be async
     # since the repo dowwnload may take a while
