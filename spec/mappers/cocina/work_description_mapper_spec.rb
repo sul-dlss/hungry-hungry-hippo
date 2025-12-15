@@ -38,4 +38,35 @@ RSpec.describe Cocina::WorkDescriptionMapper, type: :mapping do
       expect(description.subject[1].value).to eq 'MyBespokeKeyword'
     end
   end
+
+  context 'with a contributor containing only empty affiliations' do
+    let(:work_form) do
+      work_form_fixture.tap do |form|
+        form.contributors_attributes = contributors_attributes
+      end
+    end
+
+    let(:contributors_attributes) do
+      [
+        {
+          'affiliations_attributes' => [{ 'institution' => nil, 'uri' => nil, 'department' => nil }],
+          'first_name' => 'Dana',
+          'last_name' => 'Scully',
+          'organization_name' => nil,
+          'person_role' => 'author',
+          'organization_role' => nil,
+          'stanford_degree_granting_institution' => false,
+          'suborganization_name' => nil,
+          'role_type' => 'person',
+          'with_orcid' => false,
+          'orcid' => nil,
+          'collection_required' => false
+        }
+      ]
+    end
+
+    it 'maps to cocina with the expected number of contributors' do
+      expect(description.contributor.size).to eq(4)
+    end
+  end
 end
