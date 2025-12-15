@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+
 RSpec.describe WorkPolicy do
   let(:owner) { create(:user) }
   let(:plain_old_user) { create(:user) }
@@ -8,10 +9,8 @@ RSpec.describe WorkPolicy do
   let(:manager) { create(:user) }
   let(:shared_user) { create(:user) }
   let(:collection_owner) { create(:user) }
-
   let!(:owned_work) { create(:work, user: owner, collection:, title: 'owned') }
   let(:shared_work) { create(:work, collection:, title: 'shared') }
-
   let(:collection) { create(:collection, reviewers: [reviewer], managers: [manager], user: collection_owner) }
   let(:permission) { 'view' }
 
@@ -236,14 +235,12 @@ RSpec.describe WorkPolicy do
   end
 
   describe 'collection scope' do
-    subject do
+    subject(:scope) do
       policy.apply_scope(target, name: :collection, type: :active_record_relation, scope_options: { collection: }).to_a
     end
 
     let!(:unowned_work) { create(:work, collection:, title: 'unowned') }
-
     let(:policy) { described_class.new(user:) }
-
     let(:target) do
       collection.works.order(title: :asc)
     end
@@ -251,39 +248,51 @@ RSpec.describe WorkPolicy do
     context 'when owner' do
       let(:user) { owner }
 
-      it { is_expected.to eq([owned_work]) }
+      it 'includes only the owned work' do
+        expect(scope).to contain_exactly(owned_work)
+      end
     end
 
     context 'when reviewer' do
       let(:user) { reviewer }
 
-      it { is_expected.to eq([owned_work, shared_work, unowned_work]) }
+      it 'includes the owned, shared, and unowned works' do
+        expect(scope).to contain_exactly(owned_work, shared_work, unowned_work)
+      end
     end
 
     context 'when manager' do
       let(:user) { manager }
 
-      it { is_expected.to eq([owned_work, shared_work, unowned_work]) }
+      it 'includes the owned, shared, and unowned works' do
+        expect(scope).to contain_exactly(owned_work, shared_work, unowned_work)
+      end
     end
 
     context 'when user with view permissions' do
       let(:user) { shared_user }
 
-      it { is_expected.to eq([shared_work]) }
+      it 'includes only the shared work' do
+        expect(scope).to contain_exactly(shared_work)
+      end
     end
 
     context 'when user with view/edit permissions' do
       let(:user) { shared_user }
       let(:permission) { 'edit' }
 
-      it { is_expected.to eq([shared_work]) }
+      it 'includes only the shared work' do
+        expect(scope).to contain_exactly(shared_work)
+      end
     end
 
     context 'when user with view/edit/deposit permissions' do
       let(:user) { shared_user }
       let(:permission) { 'deposit' }
 
-      it { is_expected.to eq([shared_work]) }
+      it 'includes only the shared work' do
+        expect(scope).to contain_exactly(shared_work)
+      end
     end
 
     context 'when there are shares for the work in the collection' do
@@ -295,7 +304,9 @@ RSpec.describe WorkPolicy do
         create(:share, user: plain_old_user, work: shared_work, permission:)
       end
 
-      it { is_expected.to eq([owned_work, shared_work]) }
+      it 'includes the owned and shared works' do
+        expect(scope).to contain_exactly(owned_work, shared_work)
+      end
     end
   end
 end
