@@ -65,10 +65,27 @@ class GithubWebhooksController < ApplicationController
     end
 
     work = Work.find(github_repo.work_id)
+    collection = work.collection
     content.update(work:)
+    cocina_object = Sdr::Repository.find(druid: work.druid)
     work.deposit_persist! # Sets the deposit state
-    work_form = WorkForm.new(abstract: repo_description) # TODO: Map more metadata here
-    DepositWorkJob.perform_later(work:, work_form:, deposit: false, request_review: false,
-                                 current_user:)
+
+    # TODO: Map more metadata here
+    work_form = WorkForm.new(
+      collection_druid: collection.druid,
+      lock: cocina_object.lock,
+      druid: work.druid,
+      title: repo_name,
+      abstract: repo_description,
+      content_id: content.id,
+      license: collection.license,
+      access: collection.stanford_access? ? 'stanford' : 'world',
+      agree_to_terms: collection.user.agree_to_terms?,
+      contact_emails_attributes: [{ email: collection.user.email_address }],
+      work_type: collection.work_type,
+      work_subtypes: collection.work_subtypes,
+      works_contact_email: collection.works_contact_email
+    )
+    DepositWorkJob.perform_now(work:, work_form:, deposit: false, request_review: false, current_user:)
   end
 end

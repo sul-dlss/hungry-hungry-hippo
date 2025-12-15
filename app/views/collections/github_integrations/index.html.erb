@@ -8,54 +8,55 @@
 
 <h1><%= @collection.title %></h1>
 
-<h2 class="h3">Your GitHub account is connected to SDR.</h2>
-<p>Select which repositories you want to connect to SDR.  Connected repositories will automatically update in SDR in this collection with each Github release.</p>
+<p>Toggle repositories on to automatically deposit in SDR with each GitHub release.</p>
 
 <div class="mb-5">
-  <% if @linked_repos.any? %>
+  <% if @repos.any? %>
     <table class="table">
       <thead>
         <tr>
-          <th>Work</th>
-          <th>DOI</th>
           <th>Repository</th>
-          <th>Actions</th>
+          <th>Linked</th>
+          <th>Work / DOI</th>
         </tr>
       </thead>
       <tbody>
-        <% @linked_repos.each do |repo| %>
+        <% @repos.each do |repo| %>
           <tr>
-            <td><%= link_to repo.work.title, work_path(repo.work) %></td>
-            <td><%= Doi.url(druid: repo.work.druid) %></td>
-            <td><%= repo.repo_name %></td>
+            <td><%= repo[:name] %></td>
             <td>
-              <%= button_to 'Unlink', collection_github_integration_path(@collection, repo), method: :delete, class: 'btn btn-sm btn-outline-danger', form: { data: { turbo_confirm: 'Are you sure? This will stop automatic deposits from this repository.' } } %>
+              <div class="form-check form-switch">
+                <%= check_box_tag "repo_toggle_#{repo[:id]}",
+                                  '1',
+                                  repo[:linked],
+                                  class: 'form-check-input',
+                                  data: {
+                                    controller: 'repo-toggle',
+                                    action: 'change->repo-toggle#toggle',
+                                    repo_toggle_repo_name_value: repo[:name],
+                                    repo_toggle_repo_id_value: repo[:id],
+                                    repo_toggle_github_repo_id_value: repo[:github_repo_id],
+                                    repo_toggle_collection_druid_value: @collection.druid,
+                                    repo_toggle_link_url_value: collection_github_integrations_path(@collection.druid),
+                                    repo_toggle_unlink_url_value: repo[:github_repo_id] ? collection_github_integration_path(collection_druid: @collection.druid, id: repo[:github_repo_id]) : ''
+                                  } %>
+              </div>
+            </td>
+            <td>
+              <% if repo[:linked] && (work = @linked_repos[repo[:name]]&.work) %>
+                <%= link_to work.title, work_path(work) %><br>
+                <small class="text-muted"><%= Doi.url(druid: work.druid) %></small>
+              <% end %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
   <% else %>
-    <p class="text-muted">No repositories linked yet.</p>
+    <p class="text-muted">No public repositories found in your GitHub account.</p>
   <% end %>
 </div>
 
-<div class="mb-5">
-  <div class="card">
-    <div class="card-header">
-      Link a new repository
-    </div>
-    <div class="card-body">
-      <%= form_with url: collection_github_integrations_path(@collection.druid), local: true do |form| %>
-        <div class="mb-3">
-          <%= form.label :repo_id, 'Select Repository', class: 'form-label' %>
-          <%= form.select :repo_id, @repos, { prompt: 'Select a repository...' }, { class: 'form-select', required: true, onchange: "document.getElementById('repo_name').value = this.options[this.selectedIndex].text" } %>
-          <%= form.hidden_field :repo_name, id: 'repo_name' %>
-        </div>
-
-        <%= form.submit 'Link Repository', class: 'btn btn-primary' %>
-        <%= link_to 'Back to Collection', collection_path(@collection), class: 'btn btn-primary text-white ms-2' %>
-      <% end %>
-    </div>
-  </div>
+<div class="mb-3">
+  <%= link_to 'Back to Collection', collection_path(@collection), class: 'btn btn-primary text-white' %>
 </div>

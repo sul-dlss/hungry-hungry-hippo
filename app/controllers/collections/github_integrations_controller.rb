@@ -16,13 +16,17 @@ module Collections
       end
 
       # currently linked repos for this collection
-      @linked_repos = @collection.github_repos.where(user: current_user)
+      @linked_repos = @collection.github_repos.where(user: current_user).index_by(&:repo_name)
 
       # Fetching all repos the user has access to. Pagination might be needed for users with many repos.
-      # Repos can only be connected once to SDR for any collection and any user, so filter out already connected repos.
       client = Octokit::Client.new(access_token: current_user.github_access_token)
-      @repos = client.repos(nil, type: 'public', sort: :updated, per_page: 100).filter_map do |repo|
-        [repo.full_name, repo.id] unless GithubRepo.exists?(repo_name: repo.full_name)
+      @repos = client.repos(nil, type: 'public', sort: :updated, per_page: 100).map do |repo|
+        {
+          name: repo.full_name,
+          id: repo.id,
+          linked: @linked_repos.key?(repo.full_name),
+          github_repo_id: @linked_repos[repo.full_name]&.id
+        }
       end
     end
 
@@ -85,11 +89,21 @@ module Collections
         webhook_id: hook.id
       )
 
-      flash[:success] = I18n.t('github.connected_to_collection')
-      redirect_to collection_github_integrations_path(@collection.druid)
+      respond_to do |format|
+        format.html do
+          flash[:success] = I18n.t('github.connected_to_collection')
+          redirect_to collection_github_integrations_path(@collection.druid)
+        end
+        format.json { head :ok }
+      end
     rescue Octokit::Error => e
-      flash[:danger] = I18n.t('github.error_connecting_to_collection', error_message: e.message)
-      redirect_to collection_github_integrations_path(@collection.druid)
+      respond_to do |format|
+        format.html do
+          flash[:danger] = I18n.t('github.error_connecting_to_collection', error_message: e.message)
+          redirect_to collection_github_integrations_path(@collection.druid)
+        end
+        format.json { render json: { error: e.message }, status: :unprocessable_content }
+      end
     end
 
     def destroy
@@ -110,8 +124,13 @@ module Collections
       end
 
       repo.destroy
-      flash[:success] = I18n.t('github.disconnected_from_collection')
-      redirect_to collection_github_integrations_path(@collection.druid)
+      respond_to do |format|
+        format.html do
+          flash[:success] = I18n.t('github.disconnected_from_collection')
+          redirect_to collection_github_integrations_path(@collection.druid)
+        end
+        format.json { head :ok }
+      end
     end
 
     private
