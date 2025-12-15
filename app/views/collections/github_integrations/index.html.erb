@@ -16,6 +16,8 @@
     <table class="table">
       <thead>
         <tr>
+          <th>Work</th>
+          <th>DOI</th>
           <th>Repository</th>
           <th>Actions</th>
         </tr>
@@ -23,6 +25,8 @@
       <tbody>
         <% @linked_repos.each do |repo| %>
           <tr>
+            <td><%= link_to repo.work.title, work_path(repo.work) %></td>
+            <td><%= Doi.url(druid: repo.work.druid) %></td>
             <td><%= repo.repo_name %></td>
             <td>
               <%= button_to 'Unlink', collection_github_integration_path(@collection, repo), method: :delete, class: 'btn btn-sm btn-outline-danger', form: { data: { turbo_confirm: 'Are you sure? This will stop automatic deposits from this repository.' } } %>

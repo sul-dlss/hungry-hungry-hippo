@@ -51,8 +51,8 @@
         </div>
       <% end %>
 
-      <% if @collection.collection_github_repos.any? %>
-        <% component.with_row(label: 'Linked Repositories', values: [@collection.collection_github_repos.map(&:repo_name).join(', ')]) %>
+      <% if @collection.github_repos.any? %>
+        <% component.with_row(label: 'Linked Repositories', values: [@collection.github_repos.map(&:repo_name).join(', ')]) %>
       <% else %>
         <% component.with_row(label: 'Status', values: ['Not linked']) %>
       <% end %>

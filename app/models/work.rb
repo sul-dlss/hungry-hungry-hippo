@@ -17,6 +17,7 @@ class Work < ApplicationRecord
   # latest one, but there is no guarantee that is up to date unless it has just
   # been refreshed.
   has_many :content, dependent: :destroy
+  has_one :github_repo, dependent: :destroy
 
   state_machine :review_state, initial: :review_not_in_progress do
     event :request_review do

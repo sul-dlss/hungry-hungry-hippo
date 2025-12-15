@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :reviewer_for, through: :collection_reviewers, source: :collection
   has_many :shares, dependent: :destroy
   has_many :shared_works, through: :shares, source: :work
+  has_many :github_repos, dependent: :destroy
 
   EMAIL_SUFFIX = '@stanford.edu'
 

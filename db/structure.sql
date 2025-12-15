@@ -456,6 +456,7 @@ CREATE TABLE public.github_repos (
     id bigint NOT NULL,
     collection_id bigint NOT NULL,
     user_id bigint NOT NULL,
+    work_id bigint NOT NULL,
     repo_id character varying,
     repo_name character varying,
     webhook_id integer,
@@ -1014,6 +1015,13 @@ CREATE INDEX index_github_repos_on_user_id ON public.github_repos USING btree (u
 
 
 --
+-- Name: index_github_repos_on_work_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_github_repos_on_work_id ON public.github_repos USING btree (work_id);
+
+
+--
 -- Name: index_shares_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1153,6 +1161,14 @@ ALTER TABLE ONLY public.active_storage_variant_records
 
 ALTER TABLE ONLY public.collections
     ADD CONSTRAINT fk_rails_9b33697360 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: github_repos fk_rails_9f594f3b95; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.github_repos
+    ADD CONSTRAINT fk_rails_9f594f3b95 FOREIGN KEY (work_id) REFERENCES public.works(id);
 
 
 --
