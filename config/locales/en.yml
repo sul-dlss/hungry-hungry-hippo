@@ -57,6 +57,14 @@ en:
       Ownership of the work has been changed to %{new_owner}.
       The new owner will be notified of the change.
     wait_for_it: 'We are saving your work. Feel free to navigate away from this page.'
+  github:
+    connected_account: 'You Github account has been successfully connected to SDR.'
+    error_connecting_account: 'Failed to connect Github account: %{error_message}'
+    disconnected_account: 'Your Github account has been disconnected from SDR.'
+    error_disconnecting_account: 'Failed to disconnect Github account: %{error_message}'
+    connected_to_collection: 'The GitHub repository has been successfully linked to this collection.'
+    error_connecting_to_collection: 'Failed to link GitHub repository: %{error_message}'
+    disconnected_from_collection: 'The GitHub repository has been successfully unlinked from this collection.'
   events:
     registration: 'Created'
     version_close: 'Deposited'

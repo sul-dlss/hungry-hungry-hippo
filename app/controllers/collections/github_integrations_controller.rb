@@ -8,7 +8,7 @@ module Collections
     def index
       authorize! @collection, to: :manage?
 
-      # if the user has not connected their GitHub account yet, redirect to the page that lets them connect their account
+      # if the user hasn't connected their GitHub account yet, redirect to the page that lets them connect their account
       unless current_user.github_connected?
         # store this page so we can redirect back here after auth is complete with github
         session[:return_to] = request.fullpath
@@ -58,7 +58,7 @@ module Collections
       work_form.max_release_date = @collection.max_release_date if @collection.depositor_selects_release_option?
       work_form.creation_date = work.created_at.to_date
       DepositWorkJob.perform_later(work:, work_form:, deposit: false, request_review: false,
-                                  current_user:)
+                                   current_user:)
 
       # Create the webhook on GitHub
       client = Octokit::Client.new(access_token: current_user.github_access_token)
@@ -85,10 +85,10 @@ module Collections
         webhook_id: hook.id
       )
 
-      flash[:success] = 'The GitHub repository has been successfully linked to this collection.'
+      flash[:success] = I18n.t('github.connected_to_collection')
       redirect_to collection_github_integrations_path(@collection.druid)
     rescue Octokit::Error => e
-      flash[:danger] = "Failed to link GitHub repository: #{e.message}"
+      flash[:danger] = I18n.t('github.error_connecting_to_collection', error_message: e.message)
       redirect_to collection_github_integrations_path(@collection.druid)
     end
 
@@ -110,7 +110,7 @@ module Collections
       end
 
       repo.destroy
-      flash[:success] = 'The GitHub repository has been successfully unlinked from this collection.'
+      flash[:success] = I18n.t('github.disconnected_from_collection')
       redirect_to collection_github_integrations_path(@collection.druid)
     end
 
