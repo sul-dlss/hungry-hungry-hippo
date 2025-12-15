@@ -53,8 +53,8 @@ class PersonContributorCocinaBuilder
   def affiliation_params
     return if affiliations.empty?
 
-    affiliations.map do |affiliation|
-      ContributorAffiliationCocinaBuilder.call(**form_affiliation_params(affiliation))
+    affiliations.filter_map do |affiliation|
+      ContributorAffiliationCocinaBuilder.call(**form_affiliation_params(affiliation)) unless affiliation.empty?
     end.presence
   end
 
