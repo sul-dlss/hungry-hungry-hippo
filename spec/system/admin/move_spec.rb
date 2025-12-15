@@ -33,7 +33,7 @@ RSpec.describe 'Move a work' do
 
     expect(page).to have_css('h1', text: work.title)
     click_link_or_button('Admin functions')
-    click_link_or_button('Move to another collection')
+    click_link_or_button('Move to another collection', wait: 1)
 
     fill_in('Enter DRUID of the collection you want to move this item to', with: 'foo')
     click_link_or_button('Submit')
