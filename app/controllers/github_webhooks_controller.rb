@@ -10,6 +10,7 @@ class GithubWebhooksController < ApplicationController
 
   before_action :verify_signature
 
+  # Handle incoming GitHub webhook events
   def create
     event = request.headers['X-GitHub-Event']
     if event == 'release'
@@ -43,16 +44,15 @@ class GithubWebhooksController < ApplicationController
     repo_name = payload['repository']['full_name']
     repo_description = payload['repository']['description']
     repo_zipball = payload['release']['zipball_url'] # URL to download the release as a zip
-    integration = GithubRepo.find_by(repo_id:, user_id: current_user.id)
-    return unless integration
+    github_repo = GithubRepo.find_by(repo_id:, user: current_user)
+    return unless github_repo # TODO log if no integration found?  HB Alert?
 
-    collection = integration.collection
     # TODO: this should all happen in a job to be async
     # since the repo dowwnload may take a while
-    # Create a new work draft
-    content = Content.create!(user: collection.user)
 
-    # Download and attach the repository zipball
+    content = Content.create!(user: current_user)
+
+    # Download and attach the repository zipball to the existing work
     zip_filename = "#{repo_name.tr('/', '-')}-#{payload['release']['tag_name']}.zip"
     URI.open(repo_zipball) do |file|
       content_file = content.content_files.create!(
@@ -64,25 +64,11 @@ class GithubWebhooksController < ApplicationController
       content_file.file.attach(io: file, filename: zip_filename, content_type: 'application/zip')
     end
 
-    work = Work.create!(collection:, title: repo_name, user: collection.user)
+    work = Work.find(github_repo.work_id)
     content.update(work:)
     work.deposit_persist! # Sets the deposit state
-    work_form = WorkForm.new(
-      collection_druid: collection.druid,
-      title: repo_name,
-      abstract: repo_description,
-      content_id: content.id,
-      license: collection.license,
-      access: collection.stanford_access? ? 'stanford' : 'world',
-      agree_to_terms: collection.user.agree_to_terms?,
-      contact_emails_attributes: [{ email: collection.user.email_address }],
-      work_type: collection.work_type,
-      work_subtypes: collection.work_subtypes,
-      works_contact_email: collection.works_contact_email
-    )
-    work_form.max_release_date = collection.max_release_date if collection.depositor_selects_release_option?
-    work_form.creation_date = work.created_at.to_date
+    work_form = WorkForm.new(abstract: repo_description) # TODO: Map more metadata here
     DepositWorkJob.perform_later(work:, work_form:, deposit: false, request_review: false,
-                                 current_user: collection.user)
+                                 current_user:)
   end
 end

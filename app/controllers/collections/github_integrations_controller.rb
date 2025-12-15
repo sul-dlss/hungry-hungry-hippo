@@ -26,14 +26,42 @@ module Collections
       end
     end
 
+    # Link a GitHub repository to the collection and set up a webhook
     def create
       authorize! @collection, to: :manage?
 
-      client = Octokit::Client.new(access_token: current_user.github_access_token)
+      # TODO: this should all happen in a job and be async
+      # TODO: if any parts of it fail, we need to roll back the previous steps
+      # We then need to use ActionCable or similar to update the UI when done
+
       repo_name = params[:repo_name] # This should be full_name e.g. "owner/repo"
       repo_id = params[:repo_id]
 
+      # Create the draft work immediately so we can get a druid and DOI
+      content = Content.create!(user: current_user)
+
+      work = Work.create!(collection: @collection, title: repo_name, user: current_user)
+      content.update(work:)
+      work.deposit_persist! # Sets the deposit state
+      work_form = WorkForm.new(
+        collection_druid: @collection.druid,
+        title: repo_name,
+        content_id: content.id,
+        license: @collection.license,
+        access: @collection.stanford_access? ? 'stanford' : 'world',
+        agree_to_terms: @collection.user.agree_to_terms?,
+        contact_emails_attributes: [{ email: @collection.user.email_address }],
+        work_type: @collection.work_type,
+        work_subtypes: @collection.work_subtypes,
+        works_contact_email: @collection.works_contact_email
+      )
+      work_form.max_release_date = @collection.max_release_date if @collection.depositor_selects_release_option?
+      work_form.creation_date = work.created_at.to_date
+      DepositWorkJob.perform_later(work:, work_form:, deposit: false, request_review: false,
+                                  current_user:)
+
       # Create the webhook on GitHub
+      client = Octokit::Client.new(access_token: current_user.github_access_token)
       hook = client.create_hook(
         repo_name,
         'web',
@@ -48,12 +76,15 @@ module Collections
         }
       )
 
+      # Save the GitHub repo integration
       @collection.github_repos.create!(
         repo_id:,
         repo_name:,
+        work_id: work.id,
         user: current_user,
         webhook_id: hook.id
       )
+
       flash[:success] = 'The GitHub repository has been successfully linked to this collection.'
       redirect_to collection_github_integrations_path(@collection.druid)
     rescue Octokit::Error => e
