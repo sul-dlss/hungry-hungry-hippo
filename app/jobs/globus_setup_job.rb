@@ -2,7 +2,7 @@
 
 # Creates a Globus directory for a user than can be used to upload files for a new work.
 # Note that until a draft is saved / deposited, the druid or work id is not known, hence using /new.
-class GlobusSetupJob < ApplicationJob
+class GlobusSetupJob < RetriableJob
   def perform(user:, content:)
     @user = user
     @content = content

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Job to list files in a Globus endpoint and create ContentFile records.
-class GlobusListJob < ApplicationJob
+class GlobusListJob < RetriableJob
   include Rails.application.routes.url_helpers
 
   def perform(content:, cancel_check_interval: 100)
