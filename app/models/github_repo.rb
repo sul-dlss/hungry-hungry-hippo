@@ -9,6 +9,10 @@ class GithubRepo < ApplicationRecord
   before_create :create_github_webhook
   before_destroy :delete_github_webhook
 
+  def repo_url
+    "#{Settings.github.base_repos_url}/#{repo_name}"
+  end
+
   private
 
   # if github webhook does not exist and user has a connected account, create the webhook
