@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Creates a collection report requested via the admin UI and emails it to the user.
-class CollectionReportsJob < ApplicationJob
+class CollectionReportsJob < RetriableJob
   # @param [Admin::CollectionReportForm] collection_report_form
   # @param [User] current_user
   def perform(collection_report_form:, current_user:)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Creates a work item report requested via the admin UI and emails it to the user.
-class WorkReportsJob < ApplicationJob
+class WorkReportsJob < RetriableJob
   # @param [Admin::WorkReportForm] work_report_form
   # @param [User] current_user
   def perform(work_report_form:, current_user:)
