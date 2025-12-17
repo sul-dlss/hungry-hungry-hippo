@@ -25,22 +25,22 @@
           <tr>
             <td><%= repo[:name] %></td>
             <td>
-              <div class="form-check form-switch">
-                <%= check_box_tag "repo_toggle_#{repo[:id]}",
-                                  '1',
-                                  repo[:linked],
-                                  class: 'form-check-input',
-                                  data: {
-                                    controller: 'repo-toggle',
-                                    action: 'change->repo-toggle#toggle',
-                                    repo_toggle_repo_name_value: repo[:name],
-                                    repo_toggle_repo_id_value: repo[:id],
-                                    repo_toggle_github_repo_id_value: repo[:github_repo_id],
-                                    repo_toggle_collection_druid_value: @collection.druid,
-                                    repo_toggle_link_url_value: collection_github_integrations_path(@collection.druid),
-                                    repo_toggle_unlink_url_value: repo[:github_repo_id] ? collection_github_integration_path(collection_druid: @collection.druid, id: repo[:github_repo_id]) : ''
-                                  } %>
-              </div>
+              <% if repo[:linked] %>
+                <%= button_to 'Unlink',
+                              collection_github_integration_path(collection_druid: @collection.druid, id: repo[:github_repo_id]),
+                              method: :delete,
+                              class: 'btn btn-sm btn-outline-danger',
+                              form: { data: { turbo_confirm: 'Are you sure? This will stop automatic deposits from this repository.' } } %>
+              <% elsif repo[:globally_linked] %>
+                <span class="badge bg-warning">Already linked</span>
+                <div class="text-muted small mt-1"><%= I18n.t('github.repo_already_linked') %></div>
+              <% else %>
+                <%= form_with url: collection_github_integrations_path(@collection.druid), method: :post do |form| %>
+                  <%= form.hidden_field :repo_name, value: repo[:name] %>
+                  <%= form.hidden_field :repo_id, value: repo[:id] %>
+                  <%= form.submit 'Link', class: 'btn btn-sm btn-primary' %>
+                <% end %>
+              <% end %>
             </td>
             <td>
               <% if repo[:linked] && (work = @linked_repos[repo[:name]]&.work) %>

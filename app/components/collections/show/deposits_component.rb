@@ -29,13 +29,20 @@ module Collections
 
       def values_for(presenter)
         work = presenter.work
+        title_with_icon = work.github_repo.present? ? "#{work.title} #{github_icon}" : work.title
         [
-          helpers.link_to(work.title, work_or_wait_path(work), data: { turbo_frame: '_top' }),
+          helpers.link_to(title_with_icon.html_safe, work_or_wait_path(work), data: { turbo_frame: '_top' }),
           work.user.name,
           presenter.status_message,
           work.object_updated_at ? helpers.l(work.object_updated_at, format: '%b %d, %Y') : nil,
           presenter.sharing_link
         ]
+      end
+
+      private
+
+      def github_icon
+        '<i class="bi bi-github" title="Linked to GitHub"></i>'
       end
     end
   end

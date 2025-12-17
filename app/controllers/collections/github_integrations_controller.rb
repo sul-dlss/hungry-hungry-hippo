@@ -22,11 +22,13 @@ module Collections
       # Fetching all repos the user has access to. Pagination might be needed for users with many repos.
       client = Octokit::Client.new(access_token: current_user.github_access_token)
       @repos = client.repos(nil, type: 'public', sort: :updated, per_page: 100).map do |repo|
+        globally_linked = GithubRepo.exists?(repo_name: repo.full_name)
         {
           name: repo.full_name,
           id: repo.id,
           linked: @linked_repos.key?(repo.full_name),
-          github_repo_id: @linked_repos[repo.full_name]&.id
+          github_repo_id: @linked_repos[repo.full_name]&.id,
+          globally_linked: globally_linked
         }
       end
     end
@@ -35,12 +37,15 @@ module Collections
     def create
       authorize! @collection, to: :manage?
 
-      # TODO: this should all happen in a job and be async
-      # TODO: if any parts of it fail, we need to roll back the previous steps
-      # We then need to use ActionCable or similar to update the UI when done
-
-      repo_name = params[:repo_name] # This should be full_name e.g. "owner/repo"
+      repo_name = params[:repo_name]
       repo_id = params[:repo_id]
+
+      # Prevent linking if already linked by any user
+      if GithubRepo.exists?(repo_name: repo_name)
+        flash[:danger] = I18n.t('github.repo_already_linked')
+        redirect_to collection_github_integrations_path(@collection.druid)
+        return
+      end
 
       # Create the draft work immediately so we can get a druid and DOI
       content = Content.create!(user: current_user)
@@ -73,46 +78,24 @@ module Collections
         user: current_user
       )
 
-      respond_to do |format|
-        format.html do
-          flash[:success] = I18n.t('github.connected_to_collection')
-          redirect_to collection_github_integrations_path(@collection.druid)
-        end
-        format.json { head :ok }
-      end
+      flash[:success] = I18n.t('github.connected_to_collection')
+      redirect_to collection_github_integrations_path(@collection.druid)
     rescue StandardError => e
-      respond_to do |format|
-        format.html do
-          flash[:danger] = I18n.t('github.error_connecting_to_collection', error_message: e.message)
-          redirect_to collection_github_integrations_path(@collection.druid)
-        end
-        format.json { render json: { error: e.message }, status: :unprocessable_content }
-      end
+      flash[:danger] = I18n.t('github.error_connecting_to_collection', error_message: e.message)
+      redirect_to collection_github_integrations_path(@collection.druid)
     end
 
     def destroy
       authorize! @collection, to: :manage?
 
-      begin
-        repo = @collection.github_repos.find_by(id: params[:id], user: current_user)
-        repo.destroy
+      repo = @collection.github_repos.find_by(id: params[:id], user: current_user)
+      repo.destroy
 
-        respond_to do |format|
-          format.html do
-            flash[:success] = I18n.t('github.disconnected_from_collection')
-            redirect_to collection_github_integrations_path(@collection.druid)
-          end
-          format.json { head :ok }
-        end
-      rescue StandardError => e
-        respond_to do |format|
-          format.html do
-            flash[:danger] = I18n.t('github.error_disconnecting_from_collection', error_message: e.message)
-            redirect_to collection_github_integrations_path(@collection.druid)
-          end
-          format.json { render json: { error: e.message }, status: :unprocessable_content }
-        end
-      end
+      flash[:success] = I18n.t('github.disconnected_from_collection')
+      redirect_to collection_github_integrations_path(@collection.druid)
+    rescue StandardError => e
+      flash[:danger] = I18n.t('github.error_disconnecting_from_collection', error_message: e.message)
+      redirect_to collection_github_integrations_path(@collection.druid)
     end
 
     private
