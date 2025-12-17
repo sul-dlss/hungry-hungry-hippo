@@ -65,29 +65,12 @@ module Collections
       DepositWorkJob.perform_later(work:, work_form:, deposit: false, request_review: false,
                                    current_user:)
 
-      # Create the webhook on GitHub
-      client = Octokit::Client.new(access_token: current_user.github_access_token)
-      hook = client.create_hook(
-        repo_name,
-        'web',
-        {
-          url: Settings.github.webhook_url,
-          content_type: 'json',
-          secret: Settings.github.webhook_secret
-        },
-        {
-          events: ['release'],
-          active: true
-        }
-      )
-
-      # Save the GitHub repo integration
+      # Create the GitHub repo integration, which will also create a webhook via before_create callback
       @collection.github_repos.create!(
         repo_id:,
         repo_name:,
         work_id: work.id,
-        user: current_user,
-        webhook_id: hook.id
+        user: current_user
       )
 
       respond_to do |format|
@@ -97,7 +80,7 @@ module Collections
         end
         format.json { head :ok }
       end
-    rescue Octokit::Error => e
+    rescue StandardError => e
       respond_to do |format|
         format.html do
           flash[:danger] = I18n.t('github.error_connecting_to_collection', error_message: e.message)
@@ -110,27 +93,25 @@ module Collections
     def destroy
       authorize! @collection, to: :manage?
 
-      repo = @collection.github_repos.find_by(id: params[:id], user: current_user)
+      begin
+        repo = @collection.github_repos.find_by(id: params[:id], user: current_user)
+        repo.destroy
 
-      if repo.webhook_id
-        client = Octokit::Client.new(access_token: current_user.github_access_token)
-        begin
-          client.remove_hook(
-            repo.repo_name,
-            repo.webhook_id
-          )
-        rescue Octokit::Error
-          # Ignore if hook is already gone or user lost access
+        respond_to do |format|
+          format.html do
+            flash[:success] = I18n.t('github.disconnected_from_collection')
+            redirect_to collection_github_integrations_path(@collection.druid)
+          end
+          format.json { head :ok }
         end
-      end
-
-      repo.destroy
-      respond_to do |format|
-        format.html do
-          flash[:success] = I18n.t('github.disconnected_from_collection')
-          redirect_to collection_github_integrations_path(@collection.druid)
+      rescue StandardError => e
+        respond_to do |format|
+          format.html do
+            flash[:danger] = I18n.t('github.error_disconnecting_from_collection', error_message: e.message)
+            redirect_to collection_github_integrations_path(@collection.druid)
+          end
+          format.json { render json: { error: e.message }, status: :unprocessable_content }
         end
-        format.json { head :ok }
       end
     end
 
