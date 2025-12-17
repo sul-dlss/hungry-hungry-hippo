@@ -65,6 +65,7 @@ en:
     connected_to_collection: 'The GitHub repository has been successfully linked to this collection.'
     error_connecting_to_collection: 'Failed to link GitHub repository: %{error_message}'
     disconnected_from_collection: 'The GitHub repository has been successfully unlinked from this collection.'
+    error_disconnecting_from_collection: 'Failed to unlink GitHub repository: %{error_message}'
   events:
     registration: 'Created'
     version_close: 'Deposited'
