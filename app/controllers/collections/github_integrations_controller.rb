@@ -13,6 +13,7 @@ module Collections
         # store this page so we can redirect back here after auth is complete with github
         session[:return_to] = request.fullpath
         redirect_to github_integrations_path
+        return
       end
 
       # currently linked repos for this collection
