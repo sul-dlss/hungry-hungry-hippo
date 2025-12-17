@@ -1,5 +1,6 @@
 apo: 'druid:hv992ry2431'
 project_tag: 'H3'
+abstract_maximum_length: 5000
 
 dor_services:
   url: http://localhost:3003

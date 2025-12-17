@@ -547,24 +547,35 @@ RSpec.describe WorkForm do
     end
   end
 
-  describe 'Abstract linefeed normalization' do
+  describe 'abstract validation and normalization' do
     let(:form) do
       described_class.new(
         title: title_fixture,
         contact_emails_attributes: contact_emails_fixture,
         contributors_attributes: contributors_fixture,
         abstract:,
-        custom_rights_statement:,
+        custom_rights_statement: "This is a test.\n\nThis is a second paragraph.",
         whats_changing: 'Initial version'
       )
     end
-    let(:abstract) { "This is a test.\n\nThis is a second paragraph." }
-    let(:custom_rights_statement) { "This is a test.\n\nThis is a second paragraph." }
 
-    it 'normalizes linefeeds' do
-      expect(form).to be_valid
-      expect(form.abstract).to eq("This is a test.\r\n\r\nThis is a second paragraph.")
-      expect(form.custom_rights_statement).to eq("This is a test.\r\n\r\nThis is a second paragraph.")
+    context 'when abstract is too long' do
+      let(:abstract) { 'a' * (Settings.abstract_maximum_length + 1) }
+
+      it 'validates the maximum length' do
+        expect(form).not_to be_valid
+        expect(form.errors[:abstract]).to include('is too long (maximum is 5000 characters)')
+      end
+    end
+
+    context 'when abstract contains linefeed characters' do
+      let(:abstract) { "This is a test.\n\nThis is a second paragraph." }
+
+      it 'normalizes linefeeds' do
+        expect(form).to be_valid
+        expect(form.abstract).to eq("This is a test.\r\n\r\nThis is a second paragraph.")
+        expect(form.custom_rights_statement).to eq("This is a test.\r\n\r\nThis is a second paragraph.")
+      end
     end
   end
 end

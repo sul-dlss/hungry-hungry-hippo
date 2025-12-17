@@ -65,6 +65,7 @@ class WorkForm < ApplicationForm
 
   attribute :abstract, :string
   validates :abstract, presence: true, on: :deposit
+  validates :abstract, length: { maximum: Settings.abstract_maximum_length }
   before_validation do
     self.abstract = LinebreakSupport.normalize(abstract)
   end
