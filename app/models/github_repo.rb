@@ -16,6 +16,7 @@ class GithubRepo < ApplicationRecord
   private
 
   # if github webhook does not exist and user has a connected account, create the webhook
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def create_github_webhook
     Rails.logger.info "Creating webhook for repo: #{repo_name}, user: #{user.id}"
 
@@ -44,6 +45,7 @@ class GithubRepo < ApplicationRecord
     Rails.logger.error "Octokit error creating webhook: #{e.message}"
     raise
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   # if github webhook exists and user has a connected account, delete the webhook
   def delete_github_webhook
