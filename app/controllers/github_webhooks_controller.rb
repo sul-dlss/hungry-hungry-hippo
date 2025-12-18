@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'open-uri'
+require 'net/http'
+require 'uri'
 
 # Controller to handle GitHub webhooks for repository events.
 class GithubWebhooksController < ApplicationController
@@ -54,15 +55,33 @@ class GithubWebhooksController < ApplicationController
 
     # Download and attach the repository zipball to the existing work
     zip_filename = "#{repo_name.tr('/', '-')}-#{payload['release']['tag_name']}.zip"
-    URI.open(repo_zipball) do |file|
-      content_file = content.content_files.create!(
-        filepath: zip_filename,
-        file_type: :attached,
-        size: file.size,
-        label: "Repository zipball for release #{payload['release']['tag_name']}"
-      )
-      content_file.file.attach(io: file, filename: zip_filename, content_type: 'application/zip')
+
+    # Use Net::HTTP instead of URI.open for security
+    uri = URI.parse(repo_zipball)
+    response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+      request = Net::HTTP::Get.new(uri.request_uri)
+      http.request(request)
     end
+
+    # Follow redirects if necessary (GitHub often redirects to CDN)
+    if response.is_a?(Net::HTTPRedirection)
+      redirect_uri = URI.parse(response['location'])
+      response = Net::HTTP.start(redirect_uri.host, redirect_uri.port,
+                                 use_ssl: redirect_uri.scheme == 'https') do |http|
+        request = Net::HTTP::Get.new(redirect_uri.request_uri)
+        http.request(request)
+      end
+    end
+
+    raise "Failed to download GitHub release zipball: HTTP #{response.code}" unless response.is_a?(Net::HTTPSuccess)
+
+    content_file = content.content_files.create!(
+      filepath: zip_filename,
+      file_type: :attached,
+      size: response.body.bytesize,
+      label: "Repository zipball for release #{payload['release']['tag_name']}"
+    )
+    content_file.file.attach(io: StringIO.new(response.body), filename: zip_filename, content_type: 'application/zip')
 
     work = Work.find(github_repo.work_id)
     collection = work.collection
