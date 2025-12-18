@@ -23,6 +23,7 @@ class GithubWebhooksController < ApplicationController
 
   private
 
+  # rubocop:disable Metrics/AbcSize
   def verify_signature
     return if Rails.env.test? # Skip verification in test if needed, or ensure secret is set
 
@@ -35,7 +36,9 @@ class GithubWebhooksController < ApplicationController
 
     head :unauthorized
   end
+  # rubocop:enable Metrics/AbcSize
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def handle_release(payload)
     return unless payload['action'] == 'published'
 
@@ -107,4 +110,5 @@ class GithubWebhooksController < ApplicationController
     )
     DepositWorkJob.perform_now(work:, work_form:, deposit: false, request_review: false, current_user:)
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

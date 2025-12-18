@@ -15,7 +15,7 @@
     <% else %>
         <p>You can connect your Github account to the Stanford Digital Repository (SDR).  You can then select which repositories you would like to preserve in SDR, and they will be synced each time you create a new release on your repository.</p>
         <div class="d-flex">
-            <% # Note: the endpoint below is provided by the omniauth gem %>
+# NOTE: the endpoint below is provided by the omniauth gem %>
             <%= button_to 'Connect your GitHub Account', '/auth/github', method: :post, data: { turbo: false }, form: { authenticity_token: true }, class: 'btn btn-primary text-white' %>
         </div>
     <% end %>

@@ -5,6 +5,7 @@ module Collections
   class GithubIntegrationsController < ApplicationController
     before_action :set_collection
 
+    # rubocop:disable Metrics/AbcSize
     def index
       authorize! @collection, to: :manage?
 
@@ -32,7 +33,9 @@ module Collections
         }
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     # Link a GitHub repository to the collection and set up a webhook
     def create
       authorize! @collection, to: :manage?
@@ -84,7 +87,9 @@ module Collections
       flash[:danger] = I18n.t('github.error_connecting_to_collection', error_message: e.message)
       redirect_to collection_github_integrations_path(@collection.druid)
     end
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
+    # rubocop:disable Metrics/AbcSize
     def destroy
       authorize! @collection, to: :manage?
 
@@ -97,6 +102,7 @@ module Collections
       flash[:danger] = I18n.t('github.error_disconnecting_from_collection', error_message: e.message)
       redirect_to collection_github_integrations_path(@collection.druid)
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 

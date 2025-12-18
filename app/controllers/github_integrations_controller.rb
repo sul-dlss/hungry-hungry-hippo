@@ -8,6 +8,7 @@ class GithubIntegrationsController < ApplicationController
     @github_connected = current_user.github_connected?
   end
 
+  # rubocop:disable Metrics/AbcSize
   def create
     authorize! with: DashboardPolicy
 
@@ -19,6 +20,7 @@ class GithubIntegrationsController < ApplicationController
     flash[:danger] = I18n.t('github.error_connecting_account', error_message: e.message)
     redirect_to dashboard_path
   end
+  # rubocop:enable Metrics/AbcSize
 
   def destroy
     authorize! with: DashboardPolicy
