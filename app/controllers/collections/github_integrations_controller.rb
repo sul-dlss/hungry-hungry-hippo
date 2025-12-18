@@ -28,7 +28,7 @@ module Collections
           id: repo.id,
           linked: @linked_repos.key?(repo.full_name),
           github_repo_id: @linked_repos[repo.full_name]&.id,
-          globally_linked: globally_linked
+          globally_linked:
         }
       end
     end
@@ -41,7 +41,7 @@ module Collections
       repo_id = params[:repo_id]
 
       # Prevent linking if already linked by any user
-      if GithubRepo.exists?(repo_name: repo_name)
+      if GithubRepo.exists?(repo_name:)
         flash[:danger] = I18n.t('github.repo_already_linked')
         redirect_to collection_github_integrations_path(@collection.druid)
         return
