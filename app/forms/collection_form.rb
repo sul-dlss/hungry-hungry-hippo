@@ -49,7 +49,6 @@ class CollectionForm < ApplicationForm
   # The Collection description maps to the cocina abstract
   attribute :description, :string
   validates :description, presence: true
-  validates :description, length: { maximum: Settings.abstract_maximum_length }
 
   attribute :access, :string, default: 'world'
   validates :access, inclusion: { in: %w[world stanford depositor_selects] }

@@ -24,15 +24,6 @@ RSpec.describe CollectionForm do
     }
   end
 
-  describe 'description validation' do
-    before { form_hash[:description] = 'a' * (Settings.abstract_maximum_length + 1) }
-
-    it 'validates the maximum length' do
-      expect(form).not_to be_valid
-      expect(form.errors[:description]).to include('is too long (maximum is 5000 characters)')
-    end
-  end
-
   describe 'custom rights statement validations' do
     it 'defaults to no custom rights statement' do
       expect(form.custom_rights_statement_option).to eq 'no'
