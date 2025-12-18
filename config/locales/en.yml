@@ -412,7 +412,7 @@ en:
         description:
           label: 'Description'
           help_text: >-
-            Enter a summary statement (up to 5,000 characters) describing the collection that you are creating.
+            Enter a summary statement describing the collection that you are creating.
             A detailed statement may improve the discovery of your collection in web searches.
           tooltip_html: >-
             Enter an approximately 2-3 sentence description of the works to be included in this collection. You may want to include information on who the creators of the works are/will be, general subject matter of the works, types of works (technical reports, datasets, video archives, etc), and the scholarly value of the content.
