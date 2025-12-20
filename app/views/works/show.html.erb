@@ -25,6 +25,9 @@
   <% component.with_row(label: 'Public webpage', tooltip: t('sharing_link.tooltip_html'), values: [@work_presenter.purl_link]) %>
   <% component.with_row(label: 'DOI', tooltip: t('doi_link.tooltip_html'), values: [@work_presenter.doi_value]) %>
   <% component.with_row(label: 'Collection', values: [@work_presenter.collection_link]) %>
+  <% if @work.github_repo.present? %>
+    <% component.with_row(label: 'Linked GitHub Repository', values: [link_to(work_title_with_github_icon(@work), "#{Settings.github.base_repos_url}/#{@work.github_repo.repo_name}")]) %>
+  <% end %>
   <% component.with_row(label: 'Shared with') do |row_component| %>
     <%= row_component.with_cell do %>
       <div><%= @work_presenter.shared_with %></div>

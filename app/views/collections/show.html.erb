@@ -41,10 +41,20 @@
       <% component.with_row(label: 'Contact emails', values: [@collection_presenter.contact_emails]) %>
     <% end %>
 
-    <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'mb-5') do |component| %>
-      <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Links to related information', presenter: @collection_presenter, tab: :related_links) %><% end %>
-      <% component.with_row(label: 'Related links') do |row_component| %>
-        <% row_component.with_cell do %><%= render Elements::Tables::ListCellComponent.new(item_values: @collection_presenter.related_links) %> <% end %>
+    <%= render Elements::Tables::TableComponent.new(id: 'github-integration-table', classes: 'mb-5') do |component| %>
+      <% component.with_caption do %>
+        <div class="d-flex justify-content-between align-items-center">
+          <h2 class="h3">GitHub Integration</h3>
+          <% if allowed_to?(:manage?, @collection) %>
+            <%= link_to 'Manage GitHub connection', collection_github_integrations_path(@collection.druid), class: 'btn btn-primary ms-2 text-nowrap' %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if @collection.github_repos.any? %>
+        <% component.with_row(label: 'Linked Repositories', values: [@collection.github_repos.map(&:repo_name).join(', ')]) %>
+      <% else %>
+        <% component.with_row(label: 'Status', values: ['Not linked']) %>
       <% end %>
     <% end %>
 
@@ -52,6 +62,13 @@
       <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Type of deposits', presenter: @collection_presenter, tab: :types) %><% end %>
       <% component.with_row(label: 'Deposit type', values: [@collection_presenter.work_type]) %>
       <% component.with_row(label: 'Deposit subtypes', values: [@collection_presenter.work_subtypes.join(', ')]) %>
+    <% end %>
+
+    <%= render Elements::Tables::TableComponent.new(id: 'related-content-table', classes: 'mb-5') do |component| %>
+      <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Links to related information', presenter: @collection_presenter, tab: :related_links) %><% end %>
+      <% component.with_row(label: 'Related links') do |row_component| %>
+        <% row_component.with_cell do %><%= render Elements::Tables::ListCellComponent.new(item_values: @collection_presenter.related_links) %> <% end %>
+      <% end %>
     <% end %>
 
     <%= render Elements::Tables::TableComponent.new(id: 'works-contact-email-table', classes: 'mb-5') do |component| %>

@@ -449,6 +449,42 @@ ALTER SEQUENCE public.contributors_id_seq OWNED BY public.contributors.id;
 
 
 --
+-- Name: github_repos; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.github_repos (
+    id bigint NOT NULL,
+    collection_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    work_id bigint NOT NULL,
+    repo_id character varying,
+    repo_name character varying,
+    webhook_id integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: github_repos_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.github_repos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: github_repos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.github_repos_id_seq OWNED BY public.github_repos.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -502,7 +538,11 @@ CREATE TABLE public.users (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     agreed_to_terms_at timestamp(6) without time zone,
-    terms_reminder_email_last_sent_at timestamp(6) without time zone
+    terms_reminder_email_last_sent_at timestamp(6) without time zone,
+    github_access_token character varying,
+    github_uid character varying,
+    github_nickname character varying,
+    github_connected_date timestamp(6) without time zone
 );
 
 
@@ -637,6 +677,13 @@ ALTER TABLE ONLY public.contributors ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: github_repos id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.github_repos ALTER COLUMN id SET DEFAULT nextval('public.github_repos_id_seq'::regclass);
+
+
+--
 -- Name: shares id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -743,6 +790,14 @@ ALTER TABLE ONLY public.contents
 
 ALTER TABLE ONLY public.contributors
     ADD CONSTRAINT contributors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: github_repos github_repos_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.github_repos
+    ADD CONSTRAINT github_repos_pkey PRIMARY KEY (id);
 
 
 --
@@ -946,6 +1001,27 @@ CREATE INDEX index_contributors_on_collection_id ON public.contributors USING bt
 
 
 --
+-- Name: index_github_repos_on_collection_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_github_repos_on_collection_id ON public.github_repos USING btree (collection_id);
+
+
+--
+-- Name: index_github_repos_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_github_repos_on_user_id ON public.github_repos USING btree (user_id);
+
+
+--
+-- Name: index_github_repos_on_work_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_github_repos_on_work_id ON public.github_repos USING btree (work_id);
+
+
+--
 -- Name: index_shares_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -964,6 +1040,13 @@ CREATE INDEX index_shares_on_work_id ON public.shares USING btree (work_id);
 --
 
 CREATE UNIQUE INDEX index_users_on_email_address ON public.users USING btree (email_address);
+
+
+--
+-- Name: index_users_on_github_uid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_github_uid ON public.users USING btree (github_uid);
 
 
 --
@@ -1081,6 +1164,22 @@ ALTER TABLE ONLY public.collections
 
 
 --
+-- Name: github_repos fk_rails_9f594f3b95; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.github_repos
+    ADD CONSTRAINT fk_rails_9f594f3b95 FOREIGN KEY (work_id) REFERENCES public.works(id);
+
+
+--
+-- Name: github_repos fk_rails_bbb82bb7f1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.github_repos
+    ADD CONSTRAINT fk_rails_bbb82bb7f1 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: active_storage_attachments fk_rails_c3b3935057; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1094,6 +1193,14 @@ ALTER TABLE ONLY public.active_storage_attachments
 
 ALTER TABLE ONLY public.shares
     ADD CONSTRAINT fk_rails_d671d25093 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: github_repos fk_rails_e5472a606b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.github_repos
+    ADD CONSTRAINT fk_rails_e5472a606b FOREIGN KEY (collection_id) REFERENCES public.collections(id);
 
 
 --
@@ -1111,6 +1218,10 @@ ALTER TABLE ONLY public.affiliations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20251212222733'),
+('20251204221546'),
+('20251204220919'),
+('20251204220917'),
 ('20250723233849'),
 ('20250630163537'),
 ('20250619163206'),

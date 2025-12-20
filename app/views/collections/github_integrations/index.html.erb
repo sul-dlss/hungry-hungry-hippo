@@ -1,0 +1,62 @@
+<% content_for :breadcrumbs do %>
+  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
+    <% component.with_breadcrumb(text: @collection.title, link: collection_path(@collection)) %>
+    <% component.with_breadcrumb(text: 'Manage Github Connection', active: true) %>
+  <% end %>
+<% end %>
+
+<h1><%= @collection.title %></h1>
+
+<p>Toggle repositories on to automatically deposit in SDR with each GitHub release.</p>
+
+<div class="mb-5">
+  <% if @repos.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Repository</th>
+          <th>Linked</th>
+          <th>Work / DOI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @repos.each do |repo| %>
+          <tr>
+            <td><%= repo[:name] %></td>
+            <td>
+              <% if repo[:linked] %>
+                <%= button_to 'Unlink',
+                              collection_github_integration_path(collection_druid: @collection.druid, id: repo[:github_repo_id]),
+                              method: :delete,
+                              class: 'btn btn-sm btn-outline-danger',
+                              form: { data: { turbo_confirm: 'Are you sure? This will stop automatic deposits from this repository.' } } %>
+              <% elsif repo[:globally_linked] %>
+                <span class="badge bg-warning">Already linked</span>
+                <div class="text-muted small mt-1"><%= I18n.t('github.repo_already_linked') %></div>
+              <% else %>
+                <%= form_with url: collection_github_integrations_path(@collection.druid), method: :post do |form| %>
+                  <%= form.hidden_field :repo_name, value: repo[:name] %>
+                  <%= form.hidden_field :repo_id, value: repo[:id] %>
+                  <%= form.submit 'Link', class: 'btn btn-sm btn-primary' %>
+                <% end %>
+              <% end %>
+            </td>
+            <td>
+              <% if repo[:linked] && (work = @linked_repos[repo[:name]]&.work) %>
+                <%= link_to work.title, work_path(work) %><br>
+                <small class="text-muted"><%= Doi.url(druid: work.druid) %></small>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text-muted">No public repositories found in your GitHub account.</p>
+  <% end %>
+</div>
+
+<div class="mb-3">
+  <%= link_to 'Back to Collection', collection_path(@collection), class: 'btn btn-primary text-white' %>
+</div>

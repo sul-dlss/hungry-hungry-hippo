@@ -18,7 +18,7 @@ module Dashboard
 
       def values_for(work)
         [
-          link_to(work.title, work_or_wait_path(work)),
+          link_to(helpers.work_title_with_github_icon(work), work_or_wait_path(work)),
           link_to(work.collection.title, collection_path(work.collection.druid)),
           work.user.name,
           helpers.local_date(work.updated_at, format: '%b %d, %Y')

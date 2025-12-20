@@ -1,0 +1,22 @@
+<% content_for :breadcrumbs do %>
+  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
+    <% component.with_breadcrumb(text: 'Manage Github Connection', active: true) %>
+  <% end %>
+<% end %>
+
+<div class="mb-5">
+    <h3 class="h2">Manage Github connection</h4>
+    <% if @github_connected %>
+        <p>Your Github account <strong><%= current_user.github_nickname %></strong> is already connected to SDR.  To deposit repositories, you can manage the
+            connection for the collection you want to deposit to.
+        </p>
+        <%= button_to 'Disconnect your Github account', github_integration_path(current_user), method: :delete, class: 'btn btn-sm btn-outline-danger', form: { data: { turbo_confirm: 'Are you sure? This will stop automatic deposits from this repository and prevent you from creating new repository links.' } } %>
+    <% else %>
+        <p>You can connect your Github account to the Stanford Digital Repository (SDR).  You can then select which repositories you would like to preserve in SDR, and they will be synced each time you create a new release on your repository.</p>
+        <div class="d-flex">
+# NOTE: the endpoint below is provided by the omniauth gem %>
+            <%= button_to 'Connect your GitHub Account', '/auth/github', method: :post, data: { turbo: false }, form: { authenticity_token: true }, class: 'btn btn-primary text-white' %>
+        </div>
+    <% end %>
+</div>
