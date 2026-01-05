@@ -33,9 +33,9 @@ en:
     # To hide dashboard banner, set to ''.
     # Banners can include links, e.g., "Email <a href="mailto:sdr-contact@lists.stanford.edu" >sdr-contact@lists.stanford.edu</a> to volunteer!"
     home_html: >-
-      Stanford University Libraries is closed for Winter Break from Dec. 20, 2025 until Jan 5, 2026. You may deposit to the SDR during this time, but staff assistance will be unavailable until we return from break in January.
+      If you have more than 10 GB of content to deposit to the SDR, check out <a href="https://youtu.be/Qe1DPXW553A" target="_blank" data-ahoy-track="true">this brief tutorial video</a> on how to use our Globus integration to smoothly move files from Oak, Sherlock, OneDrive, Google Drive, or your local machine to the SDR.
     dashboard_html: >-
-      Stanford University Libraries is closed for Winter Break from Dec. 20, 2025 until Jan 5, 2026. You may deposit to the SDR during this time, but staff assistance will be unavailable until we return from break in January.
+      Transfer more than 10 GB to the SDR easily with our Globus integration. Watch the <a href="https://youtu.be/Qe1DPXW553A" target="_blank" data-ahoy-track="true">brief tutorial video</a>!
   app_name: 'Stanford Digital Repository Self-deposit'
   time:
     formats:
