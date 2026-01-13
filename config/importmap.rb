@@ -8,8 +8,8 @@ pin '@hotwired/stimulus', to: 'stimulus.min.js'
 pin '@hotwired/stimulus-loading', to: 'stimulus-loading.js'
 pin 'stimulus-autocomplete'
 pin_all_from 'app/javascript/controllers', under: 'controllers'
-pin '@popperjs/core', to: 'https://cdn.skypack.dev/@popperjs/core@2.11.8'
-pin 'bootstrap', to: 'https://cdn.skypack.dev/bootstrap@5.3.3'
+pin '@popperjs/core', to: 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8'
+pin 'bootstrap', to: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/+esm'
 pin 'ahoy', to: 'ahoy.js'
 # Pins for dropzone
 pin 'dropzone' # @6.0.0
