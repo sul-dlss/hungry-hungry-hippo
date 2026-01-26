@@ -33,8 +33,10 @@ class CollectionRoundtripper
   attr_reader :collection_form, :content
 
   def roundtripped_cocina_object
-    Cocina::CollectionMapper.call(collection_form:,
-                                  source_id: normalized_original_cocina_object.identification&.sourceId)
+    Cocina::CollectionMapper.call(
+      collection_form:,
+      source_id: normalized_original_cocina_object.identification&.sourceId
+    ).then { |roundtripped_obj| RoundtripSupport.normalize_cocina_object(cocina_object: roundtripped_obj) }
   end
 
   def normalized_original_cocina_object
