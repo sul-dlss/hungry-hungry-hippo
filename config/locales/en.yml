@@ -33,9 +33,9 @@ en:
     # To hide dashboard banner, set to ''.
     # Banners can include links, e.g., "Email <a href="mailto:sdr-contact@lists.stanford.edu" >sdr-contact@lists.stanford.edu</a> to volunteer!"
     home_html: >-
-      If you have more than 10 GB of content to deposit to the SDR, check out <a href="https://youtu.be/Qe1DPXW553A" target="_blank" data-ahoy-track="true">this brief tutorial video</a> on how to use our Globus integration to smoothly move files from Oak, Sherlock, OneDrive, Google Drive, or your local machine to the SDR.
+      The SDR supports upload and management of complex file structures for your deposits. Explore all the features of our file upload interface in this <a href="https://youtu.be/70OaryKxurc" target="_blank" data-ahoy-track="true">tutorial video</a>.
     dashboard_html: >-
-      Transfer more than 10 GB to the SDR easily with our Globus integration. Watch the <a href="https://youtu.be/Qe1DPXW553A" target="_blank" data-ahoy-track="true">brief tutorial video</a>!
+      Explore all the features of our file upload interface in this <a href="https://youtu.be/70OaryKxurc" target="_blank" data-ahoy-track="true">tutorial video</a>.
   app_name: 'Stanford Digital Repository Self-deposit'
   time:
     formats:
