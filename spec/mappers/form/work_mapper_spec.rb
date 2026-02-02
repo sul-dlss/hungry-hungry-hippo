@@ -27,21 +27,21 @@ RSpec.describe Form::WorkMapper, type: :mapping do
           object
             .to_h
             .tap do |obj|
-              obj[:description][:form] = [
-                {
-                  structuredValue: [
-                    { value: 'Other', type: 'type' },
-                    { value: 'coloring books', type: 'subtype' }
-                  ],
-                  source: { value: 'Stanford self-deposit resource types' },
-                  type: 'resource type'
-                },
-                {
-                  value: 'Other',
-                  source: { value: 'DataCite resource types' },
-                  type: 'resource type'
-                }
-              ]
+            obj[:description][:form] = [
+              {
+                structuredValue: [
+                  { value: 'Other', type: 'type' },
+                  { value: 'coloring books', type: 'subtype' }
+                ],
+                source: { value: 'Stanford self-deposit resource types' },
+                type: 'resource type'
+              },
+              {
+                value: 'Other',
+                source: { value: 'DataCite resource types' },
+                type: 'resource type'
+              }
+            ]
           end
         )
       end
@@ -68,69 +68,69 @@ RSpec.describe Form::WorkMapper, type: :mapping do
           object
             .to_h
             .tap do |obj|
-              obj[:description][:form] = [
-                {
-                  structuredValue: [
-                    {
-                      value: 'Image',
-                      type: 'type'
-                    },
-                    {
-                      value: 'Data',
-                      type: 'subtype'
-                    },
-                    {
-                      value: 'Photograph',
-                      type: 'subtype'
-                    },
-                    {
-                      type: 'subtype',
-                      value: ''
-                    }
-                  ],
-                  type: 'resource type',
-                  source: {
-                    value: 'Stanford self-deposit resource types'
+            obj[:description][:form] = [
+              {
+                structuredValue: [
+                  {
+                    value: 'Image',
+                    type: 'type'
+                  },
+                  {
+                    value: 'Data',
+                    type: 'subtype'
+                  },
+                  {
+                    value: 'Photograph',
+                    type: 'subtype'
+                  },
+                  {
+                    type: 'subtype',
+                    value: ''
                   }
-                },
-                {
-                  value: 'Computer-aided designs',
-                  type: 'genre',
-                  uri: 'http://id.loc.gov/vocabulary/graphicMaterials/tgm002405',
-                  source: {
-                    code: 'lctgm'
-                  }
-                },
-                {
-                  value: 'Maps',
-                  type: 'genre',
-                  uri: 'http://id.loc.gov/authorities/genreForms/gf2011026387',
-                  source: {
-                    code: 'lcgft'
-                  }
-                },
-                {
-                  value: 'still image',
-                  type: 'resource type',
-                  source: {
-                    value: 'MODS resource types'
-                  }
-                },
-                {
-                  value: 'cartographic',
-                  type: 'resource type',
-                  source: {
-                    value: 'MODS resource types'
-                  }
-                },
-                {
-                  value: 'Image',
-                  type: 'resource type',
-                  source: {
-                    value: 'DataCite resource types'
-                  }
+                ],
+                type: 'resource type',
+                source: {
+                  value: 'Stanford self-deposit resource types'
                 }
-              ]
+              },
+              {
+                value: 'Computer-aided designs',
+                type: 'genre',
+                uri: 'http://id.loc.gov/vocabulary/graphicMaterials/tgm002405',
+                source: {
+                  code: 'lctgm'
+                }
+              },
+              {
+                value: 'Maps',
+                type: 'genre',
+                uri: 'http://id.loc.gov/authorities/genreForms/gf2011026387',
+                source: {
+                  code: 'lcgft'
+                }
+              },
+              {
+                value: 'still image',
+                type: 'resource type',
+                source: {
+                  value: 'MODS resource types'
+                }
+              },
+              {
+                value: 'cartographic',
+                type: 'resource type',
+                source: {
+                  value: 'MODS resource types'
+                }
+              },
+              {
+                value: 'Image',
+                type: 'resource type',
+                source: {
+                  value: 'DataCite resource types'
+                }
+              }
+            ]
           end
         )
       end
@@ -148,7 +148,7 @@ RSpec.describe Form::WorkMapper, type: :mapping do
           object
             .to_h
             .tap do |obj|
-              obj[:description][:form] = []
+            obj[:description][:form] = []
           end
         )
       end

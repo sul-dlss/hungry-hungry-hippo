@@ -12,16 +12,16 @@ RSpec.describe Form::WorkKeywordsMapper do
           object
             .to_h
             .tap do |obj|
-              obj[:description][:subject] = [
-                {
-                  value: keywords_fixture.first['text'],
-                  type: keywords_fixture.first['cocina_type'],
-                  uri: keywords_fixture.first['uri']
-                },
-                {
-                  value: keywords_fixture.second['text']
-                }
-              ]
+            obj[:description][:subject] = [
+              {
+                value: keywords_fixture.first['text'],
+                type: keywords_fixture.first['cocina_type'],
+                uri: keywords_fixture.first['uri']
+              },
+              {
+                value: keywords_fixture.second['text']
+              }
+            ]
           end
         )
       end
