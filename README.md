@@ -200,7 +200,9 @@ Add new previews at spec/mailers/previews
 
 Roundtripping errors are reported to Honeybadger. Most roundtripping errors can be identified by copying the original and roundtripped JSON from the context of the Honeybadger alert into https://jsondiff.com/.
 
-Note that the JSON that is logged has been cleaned up by `Cocina::Prettier`. It may be useful to run the WorkRoundtripper to access the unmodified JSON. For troubleshooting purposes this can be instantiated with `WorkRoundtripper.troubleshooting_factory`. For example:
+Note that the JSON that is logged has been cleaned up by `Cocina::Prettier`. It may be useful to run the WorkRoundtripper or CollectionRoundtripper to access the unmodified JSON. For troubleshooting purposes this can be instantiated as follows:
+
+For Works:
 ```
 > work_roundtripper = WorkRoundtripper.troubleshooting_factory(druid: 'druid:nh973qg1177')
  =>
@@ -210,6 +212,18 @@ Note that the JSON that is logged has been cleaned up by `Cocina::Prettier`. It 
  => false
 > puts work_roundtripper.roundtripped_cocina_object.to_json
 > puts work_roundtripper.normalized_original_cocina_object.to_json
+```
+
+For Collections:
+```
+> collection_roundtripper = CollectionRoundtripper.troubleshooting_factory(druid: 'druid:wc766kk4825')
+ =>
+#<CollectionRoundtripper:0x00007f8a6ca28ac0
+...
+> collection_roundtripper.call
+ => false
+> puts collection_roundtripper.roundtripped_cocina_object.to_json
+> puts collection_roundtripper.normalized_original_cocina_object.to_json
 ```
 
 ## Analytics

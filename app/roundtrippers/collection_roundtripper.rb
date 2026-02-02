@@ -6,6 +6,15 @@ class CollectionRoundtripper
     new(...).call
   end
 
+  # Perform a test setup of a CollectionRoundtripper for troubleshooting purposes only.
+  # @return [CollectionRoundtripper] a new instance of CollectionRoundtripper
+  def self.troubleshooting_factory(druid:)
+    cocina_object = Sdr::Repository.find(druid:)
+    collection = Collection.find_by(druid:)
+    collection_form = Form::CollectionMapper.call(cocina_object:, collection:)
+    new(collection_form:, cocina_object:)
+  end
+
   # @param [CollectoinForm] collection_form
   # @param [Cocina::Models::Collection] cocina_object
   def initialize(collection_form:, cocina_object:)
@@ -28,9 +37,7 @@ class CollectionRoundtripper
     false
   end
 
-  private
-
-  attr_reader :collection_form, :content
+  attr_reader :collection_form
 
   def roundtripped_cocina_object
     Cocina::CollectionMapper.call(collection_form:,
