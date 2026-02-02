@@ -46,26 +46,26 @@ RSpec.describe Form::RelatedWorksMapper do
           object
             .to_h
             .tap do |obj|
-              obj[:description][:relatedResource] = [
-                {
-                  type: 'supplemented by',
-                  dataCiteRelationType: 'IsSupplementedBy',
-                  purl: related_works_links_fixture.first['identifier']
-                },
-                {
-                  type: 'has version',
-                  dataCiteRelationType: 'IsVersionOf',
-                  identifier: [{
-                    uri: related_works_links_fixture.second['identifier'],
-                    type: 'doi'
-                  }]
-                },
-                {
-                  type: 'referenced by',
-                  dataCiteRelationType: 'IsReferencedBy',
-                  access: { url: [{ value: related_works_links_fixture.third['identifier'] }] }
-                }
-              ]
+            obj[:description][:relatedResource] = [
+              {
+                type: 'supplemented by',
+                dataCiteRelationType: 'IsSupplementedBy',
+                purl: related_works_links_fixture.first['identifier']
+              },
+              {
+                type: 'has version',
+                dataCiteRelationType: 'IsVersionOf',
+                identifier: [{
+                  uri: related_works_links_fixture.second['identifier'],
+                  type: 'doi'
+                }]
+              },
+              {
+                type: 'referenced by',
+                dataCiteRelationType: 'IsReferencedBy',
+                access: { url: [{ value: related_works_links_fixture.third['identifier'] }] }
+              }
+            ]
           end
         )
       end
