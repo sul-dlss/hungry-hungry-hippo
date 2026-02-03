@@ -26,7 +26,7 @@ class AccountsController < ApplicationController
 
   # Returns the sunetid from the params, either from :id (search) or :sunetid (search_user).
   def sunetid
-    @sunetid ||= params[:id] || params[:sunetid]
+    @sunetid ||= (params[:id] || params[:sunetid])&.downcase
   end
 
   # Does a lookup from the account service in production mode, otherwise examines local database for users
