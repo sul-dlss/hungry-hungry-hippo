@@ -23,6 +23,7 @@ RSpec.describe DepositWorkJob do
   let(:collection) { create(:collection, druid: collection_druid_fixture) }
   let(:user) { create(:user) }
   let(:current_user) { create(:user) }
+  let(:ahoy_visit) { Ahoy::Visit.new }
 
   before do
     allow(Contents::Analyzer).to receive(:call)
@@ -43,7 +44,7 @@ RSpec.describe DepositWorkJob do
 
     it 'registers a new work' do
       expect do
-        described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:)
+        described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:, ahoy_visit:)
       end.not_to change(user.reload, :agreed_to_terms_at)
       expect(Contents::Analyzer).to have_received(:call).with(content:)
       expect(Cocina::WorkMapper).to have_received(:call).with(work_form:, content:,
@@ -79,7 +80,7 @@ RSpec.describe DepositWorkJob do
 
     it 'registers a new work' do
       described_class.perform_now(work_form:, work:, deposit: true, request_review: false,
-                                  current_user:)
+                                  current_user:, ahoy_visit:)
       expect(Sdr::Repository).to have_received(:register)
         .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: false,
               user_name: current_user.sunetid)
@@ -105,7 +106,7 @@ RSpec.describe DepositWorkJob do
     end
 
     it 'registers a new work and updates the globus content' do
-      described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:)
+      described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:, ahoy_visit:)
 
       expect(Sdr::Repository).to have_received(:register)
         .with(cocina_object: an_instance_of(Cocina::Models::RequestDRO), assign_doi: true,
@@ -142,7 +143,7 @@ RSpec.describe DepositWorkJob do
       expect(work.title).not_to eq(title_fixture)
 
       described_class.perform_now(work_form:, work:, deposit: false, request_review: false,
-                                  current_user:)
+                                  current_user:, ahoy_visit:)
       expect(Contents::Analyzer).to have_received(:call).with(content:)
       expect(Cocina::WorkMapper).to have_received(:call).with(work_form:, content:,
                                                               source_id: "h3:object-#{work.id}")
@@ -187,7 +188,7 @@ RSpec.describe DepositWorkJob do
       expect(work.title).not_to eq(title_fixture)
 
       described_class.perform_now(work_form:, work:, deposit: true, request_review: false,
-                                  current_user:)
+                                  current_user:, ahoy_visit:)
       expect(Sdr::Repository).to have_received(:open_if_needed)
         .with(cocina_object: an_instance_of(Cocina::Models::DROWithMetadata),
               user_name: current_user.sunetid,
@@ -226,7 +227,7 @@ RSpec.describe DepositWorkJob do
       expect(work.title).not_to eq(title_fixture)
 
       described_class.perform_now(work_form:, work:, deposit: true, request_review: false,
-                                  current_user:)
+                                  current_user:, ahoy_visit:)
       expect(Sdr::Repository).to have_received(:open_if_needed)
       expect(Sdr::Repository).to have_received(:update)
         .with(cocina_object:, user_name: current_user.sunetid, description: 'Files changed')
@@ -256,7 +257,7 @@ RSpec.describe DepositWorkJob do
       expect(work.title).not_to eq(title_fixture)
 
       described_class.perform_now(work_form:, work:, deposit: false, request_review: false,
-                                  current_user:)
+                                  current_user:, ahoy_visit:)
       expect(Contents::Analyzer).to have_received(:call).with(content:)
       expect(Cocina::WorkMapper).to have_received(:call).with(work_form:, content:,
                                                               source_id: "h3:object-#{work.id}")
@@ -292,7 +293,7 @@ RSpec.describe DepositWorkJob do
       expect(work.title).not_to eq(title_fixture)
 
       described_class.perform_now(work_form:, work:, deposit: true, request_review: false,
-                                  current_user:)
+                                  current_user:, ahoy_visit:)
       expect(Contents::Analyzer).to have_received(:call).with(content:)
       expect(Cocina::WorkMapper).to have_received(:call).with(work_form:, content:,
                                                               source_id: "h3:object-#{work.id}")
@@ -334,7 +335,7 @@ RSpec.describe DepositWorkJob do
     it 'updates an existing work' do
       expect(work.title).not_to eq(title_fixture)
 
-      described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:)
+      described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:, ahoy_visit:)
       expect(Contents::Analyzer).to have_received(:call).with(content:)
       expect(Cocina::WorkMapper).to have_received(:call).with(work_form:, content:,
                                                               source_id: "h3:object-#{work.id}")
@@ -362,7 +363,7 @@ RSpec.describe DepositWorkJob do
 
     it 'update the user' do
       expect do
-        described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:)
+        described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:, ahoy_visit:)
       end.to change(user.reload, :agreed_to_terms_at)
     end
   end
@@ -372,7 +373,7 @@ RSpec.describe DepositWorkJob do
     let(:work) { create(:work, :registering_or_updating, collection:) }
 
     it 'registers a new work' do
-      described_class.perform_now(work_form:, work:, deposit: true, request_review: true, current_user:)
+      described_class.perform_now(work_form:, work:, deposit: true, request_review: true, current_user:, ahoy_visit:)
 
       expect(work.reload.pending_review?).to be true
       expect(Sdr::Repository).not_to have_received(:accession)
@@ -398,7 +399,7 @@ RSpec.describe DepositWorkJob do
 
     it 'approves the work and deposits' do
       expect(work.rejected_review?).to be true
-      described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:)
+      described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:, ahoy_visit:)
 
       expect(work.review_not_in_progress?).to be true
       expect(Sdr::Repository).to have_received(:accession)

@@ -16,7 +16,7 @@ module Admin
       @change_owner_form = Admin::ChangeOwnerForm.new(work_form:, **change_owner_params)
       work_form.content_id = @change_owner_form.content_id
 
-      Admin::ChangeOwner.call(work_form:, work:, user:, admin_user: current_user)
+      Admin::ChangeOwner.call(work_form:, work:, user:, admin_user: current_user, ahoy_visit:)
 
       render_change_owner_success
     end
@@ -71,6 +71,10 @@ module Admin
           render turbo_stream: turbo_stream.action(:full_page_redirect, wait_works_path(work.id))
         end
       end
+    end
+
+    def ahoy_visit
+      @ahoy_visit ||= ahoy.visit
     end
   end
 end

@@ -7,6 +7,7 @@ RSpec.describe GlobusSetupJob do
   let(:path) { "work-#{work.id}" }
   let(:content) { create(:content, :with_content_files, work:) }
   let(:work) { create(:work) }
+  let(:ahoy_visit) { Ahoy::Visit.new }
 
   describe '#perform' do
     before do
@@ -16,13 +17,17 @@ RSpec.describe GlobusSetupJob do
     end
 
     it 'creates a Globus directory for the work' do
-      described_class.perform_now(user:, content:)
+      described_class.perform_now(user:, content:, ahoy_visit:)
       expect(GlobusClient).to have_received(:mkdir)
         .with(user_id: user.email_address, path: "work-#{work.id}", notify_email: false)
       expect(GlobusClient).to have_received(:allow_writes)
         .with(user_id: user.email_address, path: "work-#{work.id}", notify_email: false)
       expect(content.reload.content_files).to be_empty
       expect(Turbo::StreamsChannel).to have_received(:broadcast_action_to).once
+      expect(Ahoy::Event.where_event(Ahoy::Event::GLOBUS_CREATED,
+                                     user_id: user.email_address,
+                                     work_id: work.id,
+                                     druid: work.druid).count).to eq 1
     end
   end
 end

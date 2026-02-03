@@ -36,7 +36,7 @@ RSpec.describe 'Done uploading globus' do
 
         expect(response).to redirect_to("/contents/#{content.id}/globuses/wait")
 
-        expect(GlobusListJob).to have_received(:perform_later).with(content:)
+        expect(GlobusListJob).to have_received(:perform_later).with(content:, ahoy_visit: Ahoy::Visit.last)
         expect(GlobusClient).to have_received(:tasks_in_progress?)
           .with(destination_path: "/uploads/work-#{work.id}")
       end

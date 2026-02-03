@@ -15,6 +15,10 @@ module Ahoy
     WORK_UPDATED = 'work updated'
     UNCHANGED_WORK_SUBMITTED = 'unchanged work submitted'
     INVALID_WORK_SUBMITTED = 'invalid work submitted'
+    GLOBUS_CREATED = 'globus created' # User has initiated Globus upload
+    GLOBUS_CANCELLED = 'globus cancelled' # User has cancelled or list has timed out
+    GLOBUS_LISTED = 'globus listed' # User has completed Globus upload
+    GLOBUS_STAGED = 'globus staged' # User has confirmed Globus upload is complete
 
     self.table_name = 'ahoy_events'
 

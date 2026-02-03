@@ -16,7 +16,7 @@ class GlobusesController < ApplicationController
   def create
     authorize! with: GlobusPolicy
 
-    GlobusSetupJob.perform_later(user: current_user, content: @content)
+    GlobusSetupJob.perform_later(user: current_user, content: @content, ahoy_visit:)
 
     redirect_to uploading_content_globuses_path(@content)
   end
@@ -32,7 +32,7 @@ class GlobusesController < ApplicationController
 
     return render :uploading, status: :unprocessable_content if (@tasks_in_progress = tasks_in_progress?)
 
-    GlobusListJob.perform_later(content: @content)
+    GlobusListJob.perform_later(content: @content, ahoy_visit:)
 
     redirect_to wait_content_globuses_path(@content)
   end
@@ -65,5 +65,9 @@ class GlobusesController < ApplicationController
   def tasks_in_progress?
     # Note that this does not work for direct uploads in the browser.
     GlobusClient.tasks_in_progress?(destination_path: GlobusSupport.with_uploads_directory(path: @destination_path))
+  end
+
+  def ahoy_visit
+    @ahoy_visit ||= ahoy.visit
   end
 end

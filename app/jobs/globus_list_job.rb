@@ -4,9 +4,10 @@
 class GlobusListJob < RetriableJob
   include Rails.application.routes.url_helpers
 
-  def perform(content:, cancel_check_interval: 100)
+  def perform(content:, ahoy_visit:, cancel_check_interval: 100)
     @content = content
     @cancel_check_interval = cancel_check_interval
+    @ahoy_visit = ahoy_visit
 
     GlobusClient.disallow_writes(user_id: user.email_address, path: globus_path, notify_email: false)
 
@@ -17,8 +18,10 @@ class GlobusListJob < RetriableJob
 
     if canceled?
       content.content_files.clear
+      @event_name = Ahoy::Event::GLOBUS_CANCELLED
     else
       content.globus_list_complete!
+      @event_name = Ahoy::Event::GLOBUS_LISTED
     end
 
     perform_broadcast
@@ -59,6 +62,7 @@ class GlobusListJob < RetriableJob
                                               attributes: {
                                                 target: new_content_globus_path(content), frameTarget: 'globus'
                                               }
+    AhoyEventService.call(name: @event_name, visit: @ahoy_visit, properties: ahoy_event_properties)
   end
 
   def globus_absolute_path
@@ -67,5 +71,15 @@ class GlobusListJob < RetriableJob
 
   def canceled?
     content.reload.globus_not_in_progress?
+  end
+
+  def ahoy_event_properties
+    {
+      user_id: user.email_address,
+      work_id: content.work.id,
+      druid: content.work.druid,
+      file_count: content.content_files.count,
+      total_size: content.content_files.sum(:size)
+    }
   end
 end

@@ -32,7 +32,7 @@ RSpec.describe 'New globus' do
 
       expect(response).to redirect_to("/contents/#{content.id}/globuses/uploading")
 
-      expect(GlobusSetupJob).to have_received(:perform_later).with(user:, content:)
+      expect(GlobusSetupJob).to have_received(:perform_later).with(user:, content:, ahoy_visit: Ahoy::Visit.last)
     end
   end
 end
