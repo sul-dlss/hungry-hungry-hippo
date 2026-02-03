@@ -5,6 +5,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/webauth/login', to: 'authentication#login', as: 'login'
   get '/webauth/logout', to: 'authentication#logout', as: 'logout'
   get '/test_login/:id', to: 'authentication#test_login', as: 'test_login', param: :id if Rails.env.test?
+  get '/auth/github/callback', to: 'github_integrations#create' # the callback endpoint for omniauth github
+  post '/webhooks/github', to: 'github_webhooks#create', as: :github_webhooks # GH webhook endpoint for receiving events
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
@@ -16,6 +18,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+
+  # link a github account to the current user
+  resources :github_integrations, only: %i[index destroy]
 
   resources :collections, only: %i[new create show edit update], param: :druid do
     collection do
@@ -30,6 +35,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     namespace :admin do
       resources :delete, only: %i[new destroy], controller: 'delete_collection', param: :collection_druid
     end
+
+    # link a github repository to this collection
+    resources :github_integrations, only: %i[index create destroy], controller: 'collections/github_integrations'
   end
 
   direct :collection_or_wait do |model, options|

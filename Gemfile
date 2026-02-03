@@ -107,3 +107,7 @@ group :deployment do
   gem 'capistrano-rails', require: false
   gem 'dlss-capistrano', require: false
 end
+
+gem 'octokit' # GitHub API client
+gem 'omniauth', '~> 2.0'
+gem 'omniauth-github'

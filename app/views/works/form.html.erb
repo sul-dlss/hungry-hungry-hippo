@@ -43,8 +43,13 @@
       <% component.with_before_form_pane(tab_name: :files, label: t('works.edit.panes.files.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, previous_tab_btn: false) do %>
         <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
 
-        <%= render 'contents/edit', content: @content, form_id: @work_form.form_id %>
+        <% if @work&.github_repo.present? %>
+          <div class="pane-section">
+            <strong>Linked GitHub Repository</strong>: <%= link_to @work.github_repo.repo_name, @work.github_repo.repo_url %>
+          </div>
+        <% end %>
 
+        <%= render 'contents/edit', content: @content, form_id: @work_form.form_id %>
         <% if Settings.globus.enabled %>
           <%= turbo_frame_tag 'globus', src: new_content_globus_path(@content), data: { controller: 'dropzone-files', dropzone_files_dropzone_outlet: '.dropzone' }, class: 'dropzone-files' do %>
             <%= render Elements::SpinnerComponent.new %>

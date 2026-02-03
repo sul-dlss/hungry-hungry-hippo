@@ -44,6 +44,7 @@
     <%= render Dashboard::Show::CollectionWorksListComponent.new(collection:, status_map: @status_map) %>
     <%= render Dashboard::Show::FirstUseAlertComponent.new(user: current_user) %>
     <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary, classes: 'mt-4') %>
+    <%= render Elements::ButtonLinkComponent.new(link: collection_github_integrations_path(collection.druid), label: 'Manage GitHub connection', variant: :primary, classes: 'mt-4 ms-2') if allowed_to?(:manage?, collection) %>
   </div>
 <% end %>
 

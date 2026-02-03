@@ -1,0 +1,114 @@
+# frozen_string_literal: true
+
+require 'net/http'
+require 'uri'
+
+# Controller to handle GitHub webhooks for repository events.
+class GithubWebhooksController < ApplicationController
+  skip_before_action :verify_authenticity_token
+  allow_unauthenticated_access
+  skip_verify_authorized
+
+  before_action :verify_signature
+
+  # Handle incoming GitHub webhook events
+  def create
+    event = request.headers['X-GitHub-Event']
+    if event == 'release'
+      payload = JSON.parse(request.body.read)
+      handle_release(payload)
+    end
+    head :ok
+  end
+
+  private
+
+  # rubocop:disable Metrics/AbcSize
+  def verify_signature
+    return if Rails.env.test? # Skip verification in test if needed, or ensure secret is set
+
+    request.body.rewind
+    payload_body = request.body.read
+    signature = "sha256=#{OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), Settings.github.webhook_secret,
+                                                  payload_body)}"
+
+    return if Rack::Utils.secure_compare(signature, request.headers['X-Hub-Signature-256'] || '')
+
+    head :unauthorized
+  end
+  # rubocop:enable Metrics/AbcSize
+
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def handle_release(payload)
+    return unless payload['action'] == 'published'
+
+    # see https://docs.github.com/en/webhooks/webhook-events-and-payloads?actionType=published#release
+
+    repo_id = payload['repository']['id'].to_s
+    repo_name = payload['repository']['full_name']
+    repo_description = payload['repository']['description']
+    repo_zipball = payload['release']['zipball_url'] # URL to download the release as a zip
+    github_repo = GithubRepo.find_by(repo_id:, user: current_user)
+    return unless github_repo # TODO: log if no integration found?  HB Alert?
+
+    # TODO: this should all happen in a job to be async
+    # since the repo dowwnload may take a while
+
+    content = Content.create!(user: current_user)
+
+    # Download and attach the repository zipball to the existing work
+    zip_filename = "#{repo_name.tr('/', '-')}-#{payload['release']['tag_name']}.zip"
+
+    # Use Net::HTTP instead of URI.open for security
+    uri = URI.parse(repo_zipball)
+    response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+      request = Net::HTTP::Get.new(uri.request_uri)
+      http.request(request)
+    end
+
+    # Follow redirects if necessary (GitHub often redirects to CDN)
+    if response.is_a?(Net::HTTPRedirection)
+      redirect_uri = URI.parse(response['location'])
+      response = Net::HTTP.start(redirect_uri.host, redirect_uri.port,
+                                 use_ssl: redirect_uri.scheme == 'https') do |http|
+        request = Net::HTTP::Get.new(redirect_uri.request_uri)
+        http.request(request)
+      end
+    end
+
+    raise "Failed to download GitHub release zipball: HTTP #{response.code}" unless response.is_a?(Net::HTTPSuccess)
+
+    content_file = content.content_files.create!(
+      filepath: zip_filename,
+      file_type: :attached,
+      size: response.body.bytesize,
+      label: "Repository zipball for release #{payload['release']['tag_name']}"
+    )
+    content_file.file.attach(io: StringIO.new(response.body), filename: zip_filename, content_type: 'application/zip')
+
+    work = Work.find(github_repo.work_id)
+    collection = work.collection
+    content.update(work:)
+    cocina_object = Sdr::Repository.find(druid: work.druid)
+    work.deposit_persist! # Sets the deposit state
+
+    # TODO: Map more metadata here
+    work_form = WorkForm.new(
+      collection_druid: collection.druid,
+      lock: cocina_object.lock,
+      druid: work.druid,
+      title: repo_name,
+      abstract: repo_description,
+      content_id: content.id,
+      license: collection.license,
+      access: collection.stanford_access? ? 'stanford' : 'world',
+      agree_to_terms: collection.user.agree_to_terms?,
+      contact_emails_attributes: [{ email: collection.user.email_address }],
+      work_type: collection.work_type,
+      work_subtypes: collection.work_subtypes,
+      works_contact_email: collection.works_contact_email
+    )
+    DepositWorkJob.perform_now(work:, work_form:, deposit: false, request_review: false, current_user:)
+  end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+end

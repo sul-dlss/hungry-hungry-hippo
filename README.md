@@ -110,6 +110,10 @@ bin/rake "development:accession[druid:dh414dd1590]"
 
 ### Tests
 
+Run tests: `bin/rake spec`
+Run linters: `bin/rake lint`
+Run both linters and tests: `bin/rake`
+
 #### Speeding up system tests
 
 By default, system tests will use the headless Chrome browser driver, which supports JavaScript.
