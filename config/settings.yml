@@ -97,3 +97,12 @@ google_analytics:
 ror:
   url: https://api.ror.org
   client_id: hungry-hungry-hippo-stanford-university # actual client ID in deployed envs coming from vault/puppet
+
+# GitHub Integration
+github:
+  enabled: false
+  base_repos_url: https://github.com
+  client_id: h3_client_app_id # actual values from vault/puppet
+  client_secret: h3_client_app_secret # actual values from vault/puppet
+  webhook_url: http://localhost:3000/github/webhook # where GitHub will send webhook events, environment specific setting
+  webhook_secret: super_secret_time # actual values from vault/puppet

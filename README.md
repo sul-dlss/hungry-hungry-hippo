@@ -110,6 +110,10 @@ bin/rake "development:accession[druid:dh414dd1590]"
 
 ### Tests
 
+Run tests: `bin/rake spec`
+Run linters: `bin/rake lint`
+Run both linters and tests: `bin/rake`
+
 #### Speeding up system tests
 
 By default, system tests will use the headless Chrome browser driver, which supports JavaScript.
@@ -235,3 +239,13 @@ The strategy for analytics is to collect data to answer specific research questi
 Note that for privacy, Visits and Events are not connected with users.
 
 Current research questions are documented in the [Analytics research questions](https://github.com/sul-dlss/hungry-hungry-hippo/wiki/Analytics-research-questions) wiki page.
+
+
+## GitHub Integration
+
+GitHub integration works via a GitHub OAuth App, which each user first authorizes when they want to connect a repo.  When connecting a repo, we use the authorization provided to create a webhook in their repository which is fired when they create a release on GitHub.  The webhook is handled in our code, which then makes the deposit using the code in their release.  For this to work, we need
+
+1. GitHub OAuth Apps - these are created in sul-dlss org, one per environment (including localhost for development): https://github.com/organizations/sul-dlss/settings/applications
+2. Properly configured client ids, secrets, webhook secrets, and webhook callback URLs - these are configured in vault/puppet/shared_configs
+3. The webhook callback URL must be visibile on the internet.  For localhost/qa/stage, you must use a tunneling solution to forward to the webhook callback from GitHub to that particular server.  For localhost, you can use [smee](https://smee.io/), for servers, we use [ngrok](https://ngrok.com/).  The callback URL needs to be configured in the OAuth apps in GitHub, as well as in shared_configs (or `settings.local.yml` for localhost).
+4. The OAuth app client id/secret/webhook secret values needed for `settings.local.yml` are in vault in the localhost section of h3.
