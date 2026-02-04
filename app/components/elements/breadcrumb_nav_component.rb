@@ -16,7 +16,7 @@ module Elements
     }
 
     def page_title_from_breadcrumbs
-      breadcrumbs.filter_map(&:truncated_text).unshift('SDR').join(' | ')
+      CGI.unescapeHTML(breadcrumbs.filter_map(&:truncated_text).unshift('SDR').join(' | '))
     end
   end
 end
