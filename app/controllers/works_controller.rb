@@ -328,8 +328,4 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     ahoy.track Ahoy::Event::WORK_FORM_COMPLETED, form_id: @work_form.form_id, work_id: @work.id
     ahoy.track Ahoy::Event::WORK_UPDATED, work_id: @work.id, deposit: deposit?, review: request_review?
   end
-
-  def ahoy_visit
-    @ahoy_visit ||= ahoy.visit
-  end
 end

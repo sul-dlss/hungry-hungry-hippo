@@ -14,7 +14,6 @@ RSpec.describe GlobusListJob do
         double(size: 123, name: "/uploads/#{path}/.DS_Store")
       ]
     end
-    let(:ahoy_visit) { Ahoy::Visit.new }
 
     before do
       allow(GlobusClient).to receive_messages(disallow_writes: true, list_files: file_infos)
@@ -23,7 +22,7 @@ RSpec.describe GlobusListJob do
 
     context 'when an existing work' do
       it 'creates ContentFiles for the files in the Globus directory' do
-        described_class.perform_now(content:, ahoy_visit:)
+        described_class.perform_now(content:)
         expect(GlobusClient).to have_received(:disallow_writes)
           .with(user_id: user.email_address, path:, notify_email: false)
         expect(GlobusClient).to have_received(:list_files)
@@ -37,12 +36,6 @@ RSpec.describe GlobusListJob do
         expect(content_file.size).to eq 123
         expect(content_file.label).to eq ''
         expect(content_file.filepath).to eq 'file1.txt'
-        expect(Ahoy::Event.where_event(Ahoy::Event::GLOBUS_LISTED,
-                                       user_id: user.email_address,
-                                       work_id: work.id,
-                                       druid: work.druid,
-                                       file_count: content.content_files.count,
-                                       total_size: content.content_files.sum(:size)).count).to eq 1
       end
     end
 
@@ -61,7 +54,7 @@ RSpec.describe GlobusListJob do
       end
 
       it 'creates ContentFiles for the files in the Globus directory' do
-        described_class.perform_now(content:, cancel_check_interval: 1, ahoy_visit:)
+        described_class.perform_now(content:, cancel_check_interval: 1)
         expect(GlobusClient).to have_received(:disallow_writes)
           .with(user_id: user.email_address, path:, notify_email: false)
         expect(GlobusClient).to have_received(:list_files)
@@ -69,12 +62,6 @@ RSpec.describe GlobusListJob do
         expect(Turbo::StreamsChannel).to have_received(:broadcast_action_to).exactly(2).times
         expect(content.reload.globus_not_in_progress?).to be true
         expect(content.content_files).to be_empty
-        expect(Ahoy::Event.where_event(Ahoy::Event::GLOBUS_CANCELLED,
-                                       user_id: user.email_address,
-                                       work_id: work.id,
-                                       druid: work.druid,
-                                       file_count: 0,
-                                       total_size: 0).count).to eq 1
       end
     end
   end

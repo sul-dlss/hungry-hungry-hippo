@@ -17,7 +17,7 @@ module Admin
 
       if @move_form.valid?
         work_form.content_id = @move_form.content_id
-        Admin::Move.call(work_form:, work:, collection: @move_form.collection, version_status:, ahoy_visit:)
+        Admin::Move.call(work_form:, work:, collection: @move_form.collection, version_status:)
 
         render_move_success
       else
@@ -61,10 +61,6 @@ module Admin
           render turbo_stream: turbo_stream.action(:full_page_redirect, wait_works_path(work.id))
         end
       end
-    end
-
-    def ahoy_visit
-      @ahoy_visit ||= ahoy.visit
     end
   end
 end

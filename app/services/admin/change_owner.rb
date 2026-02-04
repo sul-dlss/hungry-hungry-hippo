@@ -7,13 +7,12 @@ module Admin
       new(...).call
     end
 
-    def initialize(work_form:, work:, user:, admin_user:, ahoy_visit:)
+    def initialize(work_form:, work:, user:, admin_user:)
       @work_form = work_form
       @work = work
       @collection = work.collection
       @user = user
       @admin_user = admin_user
-      @ahoy_visit = ahoy_visit
     end
 
     # rubocop:disable Metrics/AbcSize
@@ -37,13 +36,13 @@ module Admin
 
       # Deposit if not a draft
       DepositWorkJob.perform_later(work:, work_form:, deposit: deposit?,
-                                   request_review: false, current_user: user, ahoy_visit:)
+                                   request_review: false, current_user: user)
     end
     # rubocop:enable Metrics/AbcSize
 
     private
 
-    attr_reader :collection, :user, :work, :work_form, :admin_user, :ahoy_visit
+    attr_reader :collection, :user, :work, :work_form, :admin_user
 
     def version_status
       @version_status ||= Sdr::Repository.status(druid: work.druid)

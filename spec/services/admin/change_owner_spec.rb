@@ -9,7 +9,6 @@ RSpec.describe Admin::ChangeOwner do
   let(:current_user) { create(:user) }
   let(:user) { create(:user) }
   let(:admin_user) { create(:user) }
-  let(:ahoy_visit) { Ahoy::Visit.new }
 
   before do
     allow(DepositWorkJob).to receive(:perform_later)
@@ -23,7 +22,7 @@ RSpec.describe Admin::ChangeOwner do
 
     it 'changes the owner of the work with deposit' do
       expect(work.user).to eq(current_user)
-      described_class.call(work_form:, work:, user:, admin_user:, ahoy_visit:)
+      described_class.call(work_form:, work:, user:, admin_user:)
 
       expect(work.user).to eq(user)
       expect(work_form.collection_druid).to eq(collection.druid)
@@ -38,8 +37,7 @@ RSpec.describe Admin::ChangeOwner do
                                                         })
 
       expect(DepositWorkJob).to have_received(:perform_later).with(work:, work_form:, deposit: true,
-                                                                   request_review: false, current_user: user,
-                                                                   ahoy_visit:)
+                                                                   request_review: false, current_user: user)
       expect(Notifier).to have_received(:publish).with(Notifier::OWNERSHIP_CHANGED, work:, user:)
       expect(Notifier).to have_received(:publish).with(Notifier::DEPOSITOR_ADDED, collection:, user:)
     end
@@ -50,11 +48,10 @@ RSpec.describe Admin::ChangeOwner do
 
     it 'moves a work to another collection with deposit' do
       expect(work.user).to eq(current_user)
-      described_class.call(work_form:, work:, user:, admin_user:, ahoy_visit:)
+      described_class.call(work_form:, work:, user:, admin_user:)
 
       expect(DepositWorkJob).to have_received(:perform_later).with(work:, work_form:, deposit: false,
-                                                                   request_review: false, current_user: user,
-                                                                   ahoy_visit:)
+                                                                   request_review: false, current_user: user)
     end
   end
 end

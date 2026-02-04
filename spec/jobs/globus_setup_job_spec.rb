@@ -25,8 +25,9 @@ RSpec.describe GlobusSetupJob do
       expect(content.reload.content_files).to be_empty
       expect(Turbo::StreamsChannel).to have_received(:broadcast_action_to).once
       expect(Ahoy::Event.where_event(Ahoy::Event::GLOBUS_CREATED,
-                                     user_id: user.email_address,
+                                     sunetid: user.sunetid,
                                      work_id: work.id,
+                                     version: work.version,
                                      druid: work.druid).count).to eq 1
     end
   end

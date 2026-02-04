@@ -48,8 +48,9 @@ class GlobusSetupJob < RetriableJob
 
   def ahoy_event_properties
     {
-      user_id: user.email_address,
+      sunetid: user.sunetid,
       work_id: content.work.id,
+      version: content.work.version,
       druid: content.work.druid
     }
   end

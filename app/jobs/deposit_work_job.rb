@@ -7,7 +7,8 @@ class DepositWorkJob < ApplicationJob
   # @param [Boolean] deposit if true and review is not requested, deposit the work; otherwise, leave as draft
   # @param [Boolean] request_review if true, request view of the work
   # @param [User] current_user
-  def perform(work_form:, work:, deposit:, request_review:, current_user:, ahoy_visit:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/ParameterLists
+  # @param [Ahoy::Visit, nil] ahoy_visit for logging events related to this job
+  def perform(work_form:, work:, deposit:, request_review:, current_user:, ahoy_visit: nil) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/ParameterLists
     @work_form = work_form
     @work = work
     @deposit = deposit
@@ -173,17 +174,14 @@ class DepositWorkJob < ApplicationJob
 
     Sdr::Event.create(druid:, type: 'h3_globus_staged', data: {})
 
-    AhoyEventService.call(
-      name: Ahoy::Event::GLOBUS_STAGED,
-      visit: ahoy_visit,
-      properties: ahoy_event_properties
-    )
+    AhoyEventService.call(name: Ahoy::Event::GLOBUS_STAGED, visit: ahoy_visit, properties: ahoy_event_properties)
   end
 
   def ahoy_event_properties
     {
-      user_id: Current.user.email_address,
+      sunetid: Current.user.sunetid,
       work_id: work.id,
+      version: work.version,
       druid: work.druid,
       file_count: content.content_files.count,
       total_size: content.content_files.sum(:size)

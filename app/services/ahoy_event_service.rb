@@ -6,14 +6,17 @@ class AhoyEventService
     new(...).call
   end
 
-  def initialize(name:, visit:, properties: {})
+  # @param name [String] the name of the event (see Ahoy::Event names)
+  # @param visit [Ahoy::Visit, nil] the Ahoy visit associated with the event
+  # @param properties [Hash] additional properties to store with the event
+  def initialize(name:, visit: nil, properties: {})
     @name = name
     @visit = visit
     @properties = properties
   end
 
   def call
-    Ahoy::Event.create!(name:, visit:, properties:, time: Time.current)
+    Ahoy::Event.create!(name:, visit:, properties:, time: Time.current) if visit.present?
   end
 
   private

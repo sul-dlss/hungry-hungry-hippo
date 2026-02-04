@@ -7,12 +7,11 @@ module Admin
       new(...).call
     end
 
-    def initialize(work_form:, work:, collection:, version_status:, ahoy_visit:)
+    def initialize(work_form:, work:, collection:, version_status:)
       @work_form = work_form
       @work = work
       @collection = collection
       @version_status = version_status
-      @ahoy_visit = ahoy_visit
     end
 
     def call
@@ -24,12 +23,12 @@ module Admin
 
       # Deposit if not a draft
       DepositWorkJob.perform_later(work:, work_form:, deposit: deposit?,
-                                   request_review: false, current_user: Current.user, ahoy_visit:)
+                                   request_review: false, current_user: Current.user)
     end
 
     private
 
-    attr_reader :ahoy_visit, :work_form, :work, :collection, :version_status
+    attr_reader :work_form, :work, :collection, :version_status
 
     def deposit?
       !version_status.open?
