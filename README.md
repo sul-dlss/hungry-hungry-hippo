@@ -247,5 +247,5 @@ GitHub integration works via a GitHub OAuth App, which each user first authorize
 
 1. GitHub OAuth Apps - these are created in sul-dlss org, one per environment (including localhost for development): https://github.com/organizations/sul-dlss/settings/applications
 2. Properly configured client ids, secrets, webhook secrets, and webhook callback URLs - these are configured in vault/puppet/shared_configs
-3. The webhook callback URL must be visibile on the internet.  For localhost/qa/stage, you must use a tunneling solution to forward to the webhook callback from GitHub to that particular server.  For localhost, you can use [smee](https://smee.io/), for servers, we use [ngrok](https://ngrok.com/).  The callback URL needs to be configured in the OAuth apps in GitHub, as well as in shared_configs (or `settings.local.yml` for localhost).
+3. The webhook callback URL must be visible on the internet.  For localhost/qa/stage, you must use a tunneling solution such as [ngrok](https://ngrok.com/) to forward the webhook callback from GitHub to that particular server.  The callback URL needs to be configured in the OAuth apps in GitHub, as well as in shared_configs (or `settings.local.yml` for localhost).
 4. The OAuth app client id/secret/webhook secret values needed for `settings.local.yml` are in vault in the localhost section of h3.
