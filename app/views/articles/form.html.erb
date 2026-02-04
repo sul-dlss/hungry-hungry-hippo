@@ -1,0 +1,5 @@
+<%= form_with(model: @article_form) do |form| %>
+  <%= form.hidden_field(:collection_druid) %>
+  <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :doi, label: t('works.edit.fields.doi.label'), mark_required: true) %>
+  <%= render Elements::Forms::SubmitComponent.new(label: 'Lookup', classes: 'mt-3') %>
+<% end %>

@@ -8,21 +8,23 @@ module Form
       new(...).call
     end
 
-    def initialize(cocina_object:, doi_assigned:, agree_to_terms:, version_description:, collection:)
+    def initialize(cocina_object:, doi_assigned:, agree_to_terms:, version_description:, collection:,
+                   work_form_class: WorkForm)
       @cocina_object = cocina_object
       @doi_assigned = doi_assigned
       @agree_to_terms = agree_to_terms
       @version_description = version_description
       @collection = collection
+      @work_form_class = work_form_class
     end
 
     def call
-      WorkForm.new(**params)
+      work_form_class.new(**params)
     end
 
     private
 
-    attr_reader :cocina_object, :doi_assigned, :agree_to_terms, :version_description, :collection
+    attr_reader :cocina_object, :doi_assigned, :agree_to_terms, :version_description, :collection, :work_form_class
 
     def params # rubocop:disable Metrics/AbcSize
       {

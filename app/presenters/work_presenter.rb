@@ -130,7 +130,7 @@ class WorkPresenter < FormPresenter
 
   def discardable?
     # super makes sure the work is discardable
-    super && allowed_to?(:destroy?, work, context: { user: Current.user })
+    super && allowed_to?(:destroy?, work, context: { user: Current.user }, with: WorkPolicy)
   end
 
   def contact_emails
@@ -166,8 +166,11 @@ class WorkPresenter < FormPresenter
   end
 
   def edit_permissions?
-    return allowed_to?(:edit_pending_review?, work, context: { user: Current.user }) if pending_review?
+    if pending_review?
+      return allowed_to?(:edit_pending_review?, work, context: { user: Current.user },
+                                                      with: WorkPolicy)
+    end
 
-    allowed_to?(:edit?, work, context: { user: Current.user })
+    allowed_to?(:edit?, work, context: { user: Current.user }, with: WorkPolicy)
   end
 end
