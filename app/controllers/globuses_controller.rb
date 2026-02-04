@@ -16,7 +16,7 @@ class GlobusesController < ApplicationController
   def create
     authorize! with: GlobusPolicy
 
-    GlobusSetupJob.perform_later(user: current_user, content: @content)
+    GlobusSetupJob.perform_later(user: current_user, content: @content, ahoy_visit:)
 
     redirect_to uploading_content_globuses_path(@content)
   end

@@ -7,7 +7,8 @@ class DepositWorkJob < ApplicationJob
   # @param [Boolean] deposit if true and review is not requested, deposit the work; otherwise, leave as draft
   # @param [Boolean] request_review if true, request view of the work
   # @param [User] current_user
-  def perform(work_form:, work:, deposit:, request_review:, current_user:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # @param [Ahoy::Visit, nil] ahoy_visit for logging events related to this job
+  def perform(work_form:, work:, deposit:, request_review:, current_user:, ahoy_visit: nil) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/ParameterLists
     @work_form = work_form
     @work = work
     @deposit = deposit
@@ -15,6 +16,7 @@ class DepositWorkJob < ApplicationJob
     @status = Sdr::Repository.status(druid: work_form.druid) if work_form.persisted?
     # Setting current user so that it will be available for notifications.
     Current.user = current_user
+    @ahoy_visit = ahoy_visit
 
     remove_globus_permissions if globus?
 
@@ -43,7 +45,7 @@ class DepositWorkJob < ApplicationJob
 
   private
 
-  attr_reader :work_form, :work, :status
+  attr_reader :work_form, :work, :status, :ahoy_visit
 
   def user_name
     Current.user.sunetid
@@ -171,5 +173,18 @@ class DepositWorkJob < ApplicationJob
     return unless content.content_files.exists?(file_type: 'globus')
 
     Sdr::Event.create(druid:, type: 'h3_globus_staged', data: {})
+
+    AhoyEventService.call(name: Ahoy::Event::GLOBUS_STAGED, visit: ahoy_visit, properties: ahoy_event_properties)
+  end
+
+  def ahoy_event_properties
+    {
+      sunetid: Current.user.sunetid,
+      work_id: work.id,
+      version: work.version,
+      druid: work.druid,
+      file_count: content.content_files.count,
+      total_size: content.content_files.sum(:size)
+    }
   end
 end
