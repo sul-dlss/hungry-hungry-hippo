@@ -143,6 +143,8 @@ RSpec.describe DepositCollectionJob do
       expect(collection.custom_rights_statement_instructions).to eq('My custom rights statement instructions')
       expect(collection.doi_option).to eq('yes')
       expect(collection.review_enabled).to be false
+      expect(collection.article_deposit_enabled).to be false
+      expect(collection.github_deposit_enabled).to be false
       expect(collection.work_type).to eq(work_type_fixture)
       expect(collection.work_subtypes).to eq(work_subtypes_fixture)
       expect(collection.works_contact_email).to eq(works_contact_email_fixture)
@@ -318,6 +320,24 @@ RSpec.describe DepositCollectionJob do
       expect(organization_contributor.organization_name).to eq('Massachusetts Institute of Technology')
       expect(organization_contributor.role_type).to eq('organization')
       expect(organization_contributor.role).to eq('research_group')
+    end
+  end
+
+  context 'when an existing collection with changed workflow settings' do
+    let(:collection_form) do
+      CollectionForm.new(title: collection_title_fixture, druid:, lock: 'abc123', github_deposit_enabled: true)
+    end
+    let(:collection) { create(:collection, :registering_or_updating, druid:, article_deposit_enabled: true) }
+
+    before do
+      allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
+      allow(RoundtripSupport).to receive(:changed?).and_return(false)
+    end
+
+    it 'updates an existing collection' do
+      expect { described_class.perform_now(collection_form:, collection:, current_user:) }
+        .to change { collection.reload.github_deposit_enabled }.from(false).to(true)
+        .and change(collection, :article_deposit_enabled).from(true).to(false)
     end
   end
 

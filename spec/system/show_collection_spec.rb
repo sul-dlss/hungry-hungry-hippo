@@ -159,16 +159,20 @@ RSpec.describe 'Show a collection' do
         expect(page).to have_css('td ul li', text: "#{depositor.name} (#{depositor.sunetid})")
       end
 
-      # Review workflow table
-      within('table#review-workflow-table') do
-        expect(page).to have_css('caption', text: 'Review workflow')
+      # Workflows table
+      within('table#workflows-table') do
+        expect(page).to have_css('caption', text: 'Workflows')
         expect(page).to have_link('Edit', href: edit_collection_path(druid, tab: 'workflow'))
-        expect(page).to have_css('tr', text: 'Status')
-        expect(page).to have_css('td', text: 'On')
-        expect(page).to have_css('tr', text: 'Reviewers')
+        expect(page).to have_css('tr:nth-of-type(1) th', text: 'Review Workflow Status')
+        expect(page).to have_css('tr:nth-of-type(1) td', text: 'On')
+        expect(page).to have_css('tr:nth-of-type(2) th', text: 'Reviewers')
         collection.reviewers.each do |reviewer|
-          expect(page).to have_css('td ul li', text: "#{reviewer.name} (#{reviewer.sunetid})")
+          expect(page).to have_css('tr:nth-of-type(2) td ul li', text: "#{reviewer.name} (#{reviewer.sunetid})")
         end
+        expect(page).to have_css('tr:nth-of-type(3) th', text: 'Article Workflow Status')
+        expect(page).to have_css('tr:nth-of-type(3) td', text: 'Off')
+        expect(page).to have_css('tr:nth-of-type(4) th', text: 'Github Workflow Status')
+        expect(page).to have_css('tr:nth-of-type(4) td', text: 'Off')
       end
 
       # History table

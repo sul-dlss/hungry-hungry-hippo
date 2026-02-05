@@ -12,6 +12,8 @@ RSpec.describe Form::CollectionMapper, type: :mapping do
                         email_when_participants_changed:,
                         email_depositors_status_changed:,
                         review_enabled:,
+                        article_deposit_enabled:,
+                        github_deposit_enabled:,
                         work_type: work_type_fixture,
                         work_subtypes: work_subtypes_fixture,
                         works_contact_email: works_contact_email_fixture,
@@ -21,6 +23,8 @@ RSpec.describe Form::CollectionMapper, type: :mapping do
   let(:depositor) { create(:user, email_address: 'joehill@stanford.edu', name: 'Joseph Hill') }
   let(:reviewer) { create(:user, email_address: 'rbachman@stanford.edu', name: 'Richard Bachman') }
   let(:review_enabled) { false }
+  let(:article_deposit_enabled) { false }
+  let(:github_deposit_enabled) { false }
   let(:email_when_participants_changed) { true }
   let(:email_depositors_status_changed) { true }
   let(:contributors) do
@@ -39,11 +43,27 @@ RSpec.describe Form::CollectionMapper, type: :mapping do
     expect(collection_form).to equal_form(collection_form_fixture)
   end
 
-  context 'when review is not enabled' do
-    let(:review_enabled) { false }
+  context 'when review is enabled' do
+    let(:review_enabled) { true }
 
     it 'maps to collection form' do
-      expect(collection_form.review_enabled).to be false
+      expect(collection_form.review_enabled).to be true
+    end
+  end
+
+  context 'when article deposit is enabled' do
+    let(:article_deposit_enabled) { true }
+
+    it 'maps to collection form' do
+      expect(collection_form.article_deposit_enabled).to be true
+    end
+  end
+
+  context 'when github deposit is enabled' do
+    let(:github_deposit_enabled) { true }
+
+    it 'maps to collection form' do
+      expect(collection_form.github_deposit_enabled).to be true
     end
   end
 

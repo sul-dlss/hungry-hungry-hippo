@@ -72,7 +72,7 @@
         <%= render Edit::BulkParticipantsComponent.new(form:, field_name: :depositors, model_class: DepositorForm, form_component: Collections::Edit::ParticipantComponent) %>
       <% end %>
 
-      <% component.with_collection_pane(tab_name: :workflow, label: t('collections.edit.panes.workflow.label'), help_text: t('collections.edit.panes.workflow.help_text_html'), active_tab_name:, collection_presenter: @collection_presenter) do %>
+      <% component.with_collection_pane(tab_name: :workflow, label: t('collections.edit.panes.workflow.label'), active_tab_name:, collection_presenter: @collection_presenter) do %>
         <%= render Collections::Edit::WorkflowComponent.new(form:) %>
       <% end %>
 

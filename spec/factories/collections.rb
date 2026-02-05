@@ -14,6 +14,8 @@ FactoryBot.define do
     license_option { 'required' }
     license { 'https://creativecommons.org/licenses/by/4.0/legalcode' }
     review_enabled { false }
+    article_deposit_enabled { false }
+    github_deposit_enabled { false }
     email_when_participants_changed { false }
     email_depositors_status_changed { false }
 
