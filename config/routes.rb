@@ -59,6 +59,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
 
+  resources :articles, only: %i[new create] do
+    collection do
+      get 'wait/:id', to: 'articles#wait', as: 'wait'
+    end
+  end
+
   direct :work_or_wait do |model, options|
     if model.druid
       route_for(:work, model.druid, options)

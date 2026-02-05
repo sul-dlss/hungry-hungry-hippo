@@ -301,6 +301,8 @@ en:
           orcid_name:
             tooltip_html: >-
               This is the name we retrieved from ORCID and that will be included in the detailed information about this deposit. Editing this name will change it for this deposit only and will not alter your ORCID record.
+        doi:
+          label: 'DOI'
         works_contact_email:
           tooltip_html: >-
             The collection manager has provided an email address for all works deposited into this collection. Depositors cannot change or remove this email address. It will be publicly visible and is intended to be a place where people can ask questions about the work you have deposited.

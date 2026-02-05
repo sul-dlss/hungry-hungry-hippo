@@ -221,6 +221,63 @@ RSpec.describe Form::WorkContributorsMapper do
     end
   end
 
+  context 'when a person with an affiliation without a ROR' do
+    let(:cocina_contributor_params) do
+      {
+        name: [
+          {
+            structuredValue: [
+              { value: 'Jane', type: 'forename' },
+              { value: 'Stanford', type: 'surname' }
+            ]
+          }
+        ],
+        type: 'person',
+        status: 'primary',
+        identifier: [
+          {
+            type: 'ORCID',
+            value: '0000-0000-0000-0000',
+            source: {
+              uri: 'https://orcid.org'
+            }
+          }
+        ],
+        affiliation: [
+          {
+            structuredValue: [
+              {
+                value: 'Stanford University'
+              },
+              { value: 'Department of History' }
+            ]
+          }
+        ]
+      }
+    end
+
+    it 'maps to contributor params' do
+      expect(contributor_params).to eq([
+                                         'first_name' => 'Jane',
+                                         'last_name' => 'Stanford',
+                                         'role_type' => 'person',
+                                         'person_role' => nil,
+                                         'organization_role' => nil,
+                                         'organization_name' => nil,
+                                         'suborganization_name' => nil,
+                                         'stanford_degree_granting_institution' => false,
+                                         'orcid' => '0000-0000-0000-0000',
+                                         'with_orcid' => true,
+                                         'affiliations_attributes' => [
+                                           {
+                                             'institution' => 'Stanford University',
+                                             'department' => 'Department of History'
+                                           }
+                                         ]
+                                       ])
+    end
+  end
+
   context 'when role is absent' do
     let(:cocina_contributor_params) do
       {

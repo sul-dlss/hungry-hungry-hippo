@@ -5,6 +5,6 @@ class WorkFormSerializer < ApplicationSerializer
   private
 
   def klass
-    WorkForm
+    BaseWorkForm
   end
 end

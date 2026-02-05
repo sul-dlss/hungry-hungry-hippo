@@ -550,7 +550,8 @@ CREATE TABLE public.works (
     review_rejected_reason character varying,
     deposit_state character varying DEFAULT 'deposit_not_in_progress'::character varying NOT NULL,
     version integer DEFAULT 1 NOT NULL,
-    last_deposited_at timestamp(6) without time zone
+    last_deposited_at timestamp(6) without time zone,
+    type character varying DEFAULT 'Work'::character varying NOT NULL
 );
 
 
@@ -1125,8 +1126,12 @@ ALTER TABLE ONLY public.affiliations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+<<<<<<< HEAD
+('20260204142423'),
 ('20260205132650'),
 ('20260204215055'),
+=======
+>>>>>>> d55a1013 (Deposit articles by DOI.)
 ('20250723233849'),
 ('20250630163537'),
 ('20250619163206'),

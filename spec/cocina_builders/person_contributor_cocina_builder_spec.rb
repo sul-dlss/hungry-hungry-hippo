@@ -99,5 +99,29 @@ RSpec.describe PersonContributorCocinaBuilder do
         expect(contributor_params[:affiliation]).to eq(expected_affiliations)
       end
     end
+
+    context 'when ROR URI is not present' do
+      let(:affiliations) do
+        [
+          AffiliationForm.new(
+            institution: 'Stanford University'
+          )
+        ]
+      end
+
+      it 'includes affiliations' do
+        expected_affiliations = [
+          {
+            structuredValue: [
+              {
+                value: 'Stanford University'
+              }
+            ]
+          }
+        ]
+
+        expect(contributor_params[:affiliation]).to eq(expected_affiliations)
+      end
+    end
   end
 end
