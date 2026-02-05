@@ -461,6 +461,26 @@ en:
             depositor_selects: 'Depositor selects: all deposits will be assigned a DOI by default unless the depositor chooses not to have a DOI assigned.'
         license:
           help_text: 'Assigning a default license may improve discovery of your collection in web searches.'
+        review_workflow:
+          label: 'Review workflow'
+          help_text_html: >-
+            If the review workflow is enabled, each deposit will need to be reviewed and approved by one of the Managers or Reviewers listed on this collection before its public webpage is made available.
+
+            <ul class="mb-0">
+              <li>Reviewers will receive an email every time an item is submitted for review.</li>
+              <li>Everyone who should receive this email should be included in the list of Reviewers below.</li>
+              <li>Reviewers do not need to also be Managers.</li>
+              <li>Details about the review workflow are available in our <a href="https://sdr.library.stanford.edu/documentation/sdr-submission-workflows">documentation</a>.</li>
+            </ul>
+        article_workflow:
+          label: 'Article workflow'
+          help_text_html: >-
+            This allows the user to deposit a published article with an existing DOI.
+        github_workflow:
+          label: 'GitHub workflow'
+          help_text_html: >-
+            This allows the user to connect their GitHub account to the SDR for automated deposits of GitHub repositories to
+            this collection.
       messages:
         cannot_be_edited: 'This collection cannot be edited.'
       panes:
@@ -529,14 +549,5 @@ en:
           label: 'Collection participants'
           help_text: 'Add one or more managers or depositors to this collection.'
         workflow:
-          tab_label: 'Workflow'
-          label: 'Review workflow'
-          help_text_html: >-
-            If the review workflow is enabled, each deposit will need to be reviewed and approved by one of the Managers or Reviewers listed on this collection before its public webpage is made available.
-
-            <ul>
-              <li>Reviewers will receive an email every time an item is submitted for review.</li>
-              <li>Everyone who should receive this email should be included in the list of Reviewers below.</li>
-              <li>Reviewers do not need to also be Managers.</li>
-              <li>Details about the review workflow are available in our <a href="https://sdr.library.stanford.edu/documentation/sdr-submission-workflows">documentation</a>.</li>
-            </ul>
+          tab_label: 'Workflows'
+          label: 'Workflows'

@@ -44,11 +44,11 @@ RSpec.describe 'Edit a collection' do
     allow(Sdr::Repository).to receive(:accession)
     allow(Sdr::Event).to receive(:list).and_return([])
 
-    create(:collection, :with_required_types, :with_required_contact_email, druid:, managers: [manager])
+    create(:collection, :with_required_types, :with_required_contact_email, druid:, managers: [manager],
+                                                                            github_deposit_enabled: true)
 
     create(:user, name: 'Stephen King', email_address: 'stepking@stanford.edu')
     # Joe Hill is not created yet.
-    create(:user, name: 'Pennywise', email_address: 'pennywise@stanford.edu')
 
     allow(AccountService).to receive(:call)
       .with(sunetid: 'stepking')
@@ -56,9 +56,6 @@ RSpec.describe 'Edit a collection' do
     allow(AccountService).to receive(:call)
       .with(sunetid: 'joehill')
       .and_return(AccountService::Account.new(name: 'Joe Hill', sunetid: 'joehill'))
-    allow(AccountService).to receive(:call)
-      .with(sunetid: 'pennywise')
-      .and_return(AccountService::Account.new(name: 'Pennywise', sunetid: 'pennywise'))
 
     sign_in(create(:user), groups: ['dlss:hydrus-app-administrators'])
   end
@@ -163,14 +160,21 @@ RSpec.describe 'Edit a collection' do
 
     # Clicking on Next to go to Workflow
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Workflow')
-    expect(page).to have_text('Review workflow')
-    expect(page).to have_checked_field('No', with: false)
-    find('label', text: 'Yes').click
-
-    fill_in('reviewers-textarea', with: 'pennywise')
-    click_link_or_button('Add reviewers')
-    expect(page).to have_css('.participant-label', text: 'Pennywise (pennywise')
+    expect(page).to have_css('.nav-link.active', text: 'Workflows')
+    within('#review-workflow-section') do
+      expect(page).to have_text('Review workflow')
+      expect(page).to have_checked_field('No', with: false, disabled: true)
+    end
+    within('#article-workflow-section') do
+      expect(page).to have_text('Article workflow')
+      expect(page).to have_checked_field('No', with: false)
+      find('label', text: 'Yes').click
+    end
+    within('#github-workflow-section') do
+      expect(page).to have_text('GitHub workflow')
+      expect(page).to have_checked_field('Yes', with: true)
+      find('label', text: 'No').click
+    end
 
     # Clicking on Next to go to type of deposit tab
     click_link_or_button('Next')
@@ -216,12 +220,21 @@ RSpec.describe 'Edit a collection' do
     # Participants
     expect(page).to have_content('Stephen King (stepking)')
     expect(page).to have_content('Joe Hill (joehill)')
-    expect(page).to have_content('Pennywise (pennywise)')
 
     # License
     expect(page).to have_css('th', text: 'License')
     expect(page).to have_css('td', text: 'Depositor selects. Default license: CC-BY-4.0 Attribution International')
     expect(page).to have_no_content('aborland@stanford.edu')
+
+    # Workflows
+    within('table#workflows-table') do
+      expect(page).to have_css('tr:nth-of-type(1) th', text: 'Review Workflow Status')
+      expect(page).to have_css('tr:nth-of-type(1) td', text: 'Off')
+      expect(page).to have_css('tr:nth-of-type(3) th', text: 'Article Workflow Status')
+      expect(page).to have_css('tr:nth-of-type(3) td', text: 'On')
+      expect(page).to have_css('tr:nth-of-type(4) th', text: 'Github Workflow Status')
+      expect(page).to have_css('tr:nth-of-type(4) td', text: 'Off')
+    end
 
     # Joe Hill was created
     expect(User.find_by(email_address: 'joehill@stanford.edu', name: 'Joe Hill')).to be_present

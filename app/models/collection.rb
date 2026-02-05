@@ -31,6 +31,8 @@ class Collection < ApplicationRecord
   enum :custom_rights_statement_option, { no: 'no', provided: 'provided', depositor_selects: 'depositor_selects' },
        suffix: true
 
+  validate :validate_workflow_settings
+
   def max_release_date
     duration = case release_duration
                when 'six_months'
@@ -43,10 +45,6 @@ class Collection < ApplicationRecord
                  3.years
                end
     Time.zone.today + duration
-  end
-
-  def review_enabled?
-    review_enabled
   end
 
   def reviewers_and_managers
@@ -63,5 +61,16 @@ class Collection < ApplicationRecord
 
   def bare_druid
     druid&.delete_prefix('druid:')
+  end
+
+  private
+
+  def validate_workflow_settings
+    if review_enabled? && github_deposit_enabled?
+      errors.add(:base, 'GitHub deposit cannot be enabled when review workflow is enabled')
+    end
+    return unless review_enabled? && article_deposit_enabled?
+
+    errors.add(:base, 'Article deposit cannot be enabled when review workflow is enabled')
   end
 end

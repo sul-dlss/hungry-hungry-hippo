@@ -132,4 +132,24 @@ RSpec.describe Collection do
       expect(Notifier).to have_received(:publish).once.with(Notifier::ACCESSIONING_COMPLETE, object: collection)
     end
   end
+
+  describe 'workflow settings validation' do
+    context 'when review enabled and github deposit enabled' do
+      let(:collection) { FactoryBot.build(:collection, review_enabled: true, github_deposit_enabled: true) } # rubocop:disable FactoryBot/SyntaxMethods
+
+      it 'is not valid' do
+        expect(collection).not_to be_valid
+        expect(collection.errors[:base]).to include('GitHub deposit cannot be enabled when review workflow is enabled')
+      end
+    end
+
+    context 'when review enabled and article deposit enabled' do
+      let(:collection) { FactoryBot.build(:collection, review_enabled: true, article_deposit_enabled: true) } # rubocop:disable FactoryBot/SyntaxMethods
+
+      it 'is not valid' do
+        expect(collection).not_to be_valid
+        expect(collection.errors[:base]).to include('Article deposit cannot be enabled when review workflow is enabled')
+      end
+    end
+  end
 end

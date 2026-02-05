@@ -76,7 +76,15 @@ class CollectionPresenter < FormPresenter
   end
 
   def review_workflow_status
-    collection.review_enabled ? 'On' : 'Off'
+    workflow_status(collection.review_enabled)
+  end
+
+  def article_workflow_status
+    workflow_status(collection.article_deposit_enabled)
+  end
+
+  def github_workflow_status
+    workflow_status(collection.github_deposit_enabled)
   end
 
   def purl_link
@@ -110,5 +118,11 @@ class CollectionPresenter < FormPresenter
 
   def editable?
     super && allowed_to?(:edit?, collection, context: { user: Current.user })
+  end
+
+  private
+
+  def workflow_status(workflow_enabled)
+    workflow_enabled ? 'On' : 'Off'
   end
 end

@@ -38,6 +38,8 @@ module Form
         version: cocina_object.version,
         review_enabled: collection.review_enabled,
         reviewers_attributes: participant_attributes(:reviewers),
+        github_deposit_enabled: collection.github_deposit_enabled,
+        article_deposit_enabled: collection.article_deposit_enabled,
         email_when_participants_changed: collection.email_when_participants_changed,
         email_depositors_status_changed: collection.email_depositors_status_changed,
         custom_rights_statement_option: collection.custom_rights_statement_option,

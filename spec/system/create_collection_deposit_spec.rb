@@ -157,12 +157,68 @@ RSpec.describe 'Create a collection deposit' do
     # Clicking on Next to go to Workflow
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Workflow')
-    expect(page).to have_text('Review workflow')
-    expect(page).to have_checked_field('No', with: false)
-    find('label', text: 'Yes').click
-    fill_in('reviewers-textarea', with: 'pennywise')
-    click_link_or_button('Add reviewers')
-    expect(page).to have_css('.participant-label', text: 'Pennywise (pennywise)')
+
+    # Nothing is disabled.
+    within('#article-workflow-section') do
+      expect(page).to have_text('Article workflow')
+      expect(page).to have_checked_field('No', with: false, disabled: false)
+      expect(page).to have_unchecked_field('Yes', with: true, disabled: false)
+    end
+    within('#github-workflow-section') do
+      expect(page).to have_text('GitHub workflow')
+      expect(page).to have_checked_field('No', with: false, disabled: false)
+      expect(page).to have_unchecked_field('Yes', with: true, disabled: false)
+    end
+    within('#review-workflow-section') do
+      expect(page).to have_text('Review workflow')
+      expect(page).to have_checked_field('No', with: false, disabled: false)
+      expect(page).to have_unchecked_field('Yes', with: true, disabled: false)
+    end
+
+    # Enabling Github workflow disables review worklow
+    within('#github-workflow-section') do
+      find('label', text: 'Yes').click
+    end
+    within('#review-workflow-section') do
+      expect(page).to have_field('Yes', disabled: true)
+      expect(page).to have_field('No', disabled: true)
+    end
+    within('#github-workflow-section') do
+      find('label', text: 'No').click
+    end
+    within('#review-workflow-section') do
+      expect(page).to have_field('Yes', disabled: false)
+      expect(page).to have_field('No', disabled: false)
+    end
+
+    # Enabling Article workflow disables review worklow
+    within('#article-workflow-section') do
+      find('label', text: 'Yes').click
+    end
+    within('#review-workflow-section') do
+      expect(page).to have_field('Yes', disabled: true)
+      expect(page).to have_field('No', disabled: true)
+    end
+    within('#article-workflow-section') do
+      find('label', text: 'No').click
+    end
+
+    # Enabling review workflow disables article and github worklow
+    within('#review-workflow-section') do
+      expect(page).to have_checked_field('No', with: false)
+      find('label', text: 'Yes').click
+      fill_in('reviewers-textarea', with: 'pennywise')
+      click_link_or_button('Add reviewers')
+      expect(page).to have_css('.participant-label', text: 'Pennywise (pennywise)')
+    end
+    within('#article-workflow-section') do
+      expect(page).to have_field('Yes', disabled: true)
+      expect(page).to have_field('No', disabled: true)
+    end
+    within('#github-workflow-section') do
+      expect(page).to have_field('Yes', disabled: true)
+      expect(page).to have_field('No', disabled: true)
+    end
 
     # Clicking on Next to go to the type of deposit tab
     click_link_or_button('Next')
@@ -232,7 +288,7 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_css('td', text: 'License required: CC-BY-4.0 Attribution International')
 
     # Review workflow
-    within('#review-workflow-table') do
+    within('#workflows-table') do
       expect(page).to have_css('td', text: 'On')
       expect(page).to have_css('th', text: 'Reviewers')
       expect(page).to have_css('td ul li', text: 'Pennywise (pennywise)')

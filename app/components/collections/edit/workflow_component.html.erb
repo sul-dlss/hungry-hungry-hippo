@@ -1,19 +1,63 @@
-<%= tag.div data: { controller: 'workflow' }, class: 'pane-section' do %>
-  <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :review_enabled, label_classes: 'fw-bold',
-                                                  label: 'Enable Review Workflow', container_classes: 'mb-4') do |component| %>
-    <% component.with_left_toggle_option(form:,
-                                         field_name: :review_enabled,
-                                         label: 'Yes',
-                                         value: true,
-                                         data: { workflow_target: 'enabledOption', action: 'change->workflow#showReviewersSection' }) %>
-    <% component.with_right_toggle_option(form:,
-                                          field_name: :review_enabled,
-                                          label: 'No',
-                                          value: false,
-                                          data: { action: 'change->workflow#hideReviewersSection' }) %>
-  <% end %>
+<%= tag.div data: { controller: 'workflow' } do %>
+  <div class="pane-section" id="review-workflow-section">
+    <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.review_workflow.label')) %>
+    <p><%= t('collections.edit.fields.review_workflow.help_text_html') %></p>
 
-  <%= tag.div data: { workflow_target: 'reviewersSection' }, class: 'd-none' do %>
-    <%= render Edit::BulkParticipantsComponent.new(form:, field_name: :reviewers, model_class: ReviewerForm, form_component: Collections::Edit::ParticipantComponent) %>
-  <% end %>
+    <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :review_enabled, label_classes: 'fw-bold',
+                                                    label: 'Enable Review Workflow', container_classes: 'mb-4') do |component| %>
+      <% component.with_left_toggle_option(form:,
+                                           field_name: :review_enabled,
+                                           label: 'Yes',
+                                           value: true,
+                                           data: { workflow_target: 'reviewEnabledOption', action: 'change->workflow#toggleWorkflows' }) %>
+      <% component.with_right_toggle_option(form:,
+                                            field_name: :review_enabled,
+                                            label: 'No',
+                                            value: false,
+                                            data: { workflow_target: 'reviewDisabledOption', action: 'change->workflow#toggleWorkflows' }) %>
+    <% end %>
+
+    <%= tag.div data: { workflow_target: 'reviewersSection' }, class: 'd-none' do %>
+      <%= render Edit::BulkParticipantsComponent.new(form:, field_name: :reviewers, model_class: ReviewerForm, form_component: Collections::Edit::ParticipantComponent) %>
+    <% end %>
+  </div>
+  <%= render Elements::HorizontalRuleComponent.new(classes: 'mb-3') %>
+
+  <div class="pane-section" id="article-workflow-section">
+    <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.article_workflow.label')) %>
+    <p><%= t('collections.edit.fields.article_workflow.help_text_html') %></p>
+
+    <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable Article Workflow') do %>
+      <div class="row ms-0">
+        <div class="form-check col-md-2">
+          <%= form.radio_button :article_deposit_enabled, true, class: 'form-check-input', data: { workflow_target: 'articleEnabledOption', action: 'change->workflow#toggleWorkflows' } %>
+          <%= form.label :article_deposit_enabled, 'Yes', class: 'form-check-label', value: true %>
+        </div>
+        <div class="form-check col-md-2">
+          <%= form.radio_button :article_deposit_enabled, false, class: 'form-check-input', data: { workflow_target: 'articleDisabledOption', action: 'change->workflow#toggleWorkflows' } %>
+          <%= form.label :article_deposit_enabled, 'No', class: 'form-check-label', value: false %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%= render Elements::HorizontalRuleComponent.new(classes: 'mb-3') %>
+
+  <div class="pane-section" id="github-workflow-section">
+    <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.github_workflow.label')) %>
+    <p><%= t('collections.edit.fields.github_workflow.help_text_html') %></p>
+
+    <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable Github Integration Workflow') do %>
+      <div class="row ms-0">
+        <div class="form-check col-md-2">
+          <%= form.radio_button :github_deposit_enabled, true, class: 'form-check-input', data: { workflow_target: 'githubEnabledOption', action: 'change->workflow#toggleWorkflows' } %>
+          <%= form.label :github_deposit_enabled, 'Yes', class: 'form-check-label', value: true %>
+        </div>
+        <div class="form-check col-md-2">
+          <%= form.radio_button :github_deposit_enabled, false, class: 'form-check-input', data: { workflow_target: 'githubDisabledOption', action: 'change->workflow#toggleWorkflows' } %>
+          <%= form.label :github_deposit_enabled, 'No', class: 'form-check-label', value: false %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 <% end %>

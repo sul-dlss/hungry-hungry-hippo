@@ -85,12 +85,14 @@
       <% end %>
     <% end %>
 
-    <%= render Elements::Tables::TableComponent.new(id: 'review-workflow-table', classes: 'mb-5') do |component| %>
-      <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Review workflow', presenter: @collection_presenter, tab: :workflow) %><% end %>
-      <% component.with_row(label: 'Status', values: [@collection_presenter.review_workflow_status]) %>
+    <%= render Elements::Tables::TableComponent.new(id: 'workflows-table', classes: 'mb-5') do |component| %>
+      <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Workflows', presenter: @collection_presenter, tab: :workflow) %><% end %>
+      <% component.with_row(label: 'Review Workflow Status', values: [@collection_presenter.review_workflow_status]) %>
       <% component.with_row(label: 'Reviewers') do |row_component| %>
         <% row_component.with_cell do %><%= render Elements::Tables::ListCellComponent.new(item_values: @collection_presenter.participants(:reviewers)) %> <% end %>
       <% end %>
+      <% component.with_row(label: 'Article Workflow Status', values: [@collection_presenter.article_workflow_status]) %>
+      <% component.with_row(label: 'Github Workflow Status', values: [@collection_presenter.github_workflow_status]) %>
     <% end %>
 
     <%= turbo_frame_tag 'history', src: history_collection_path(druid: @collection_presenter.druid) do %>

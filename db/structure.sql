@@ -309,7 +309,9 @@ CREATE TABLE public.collections (
     version integer DEFAULT 1 NOT NULL,
     work_type character varying,
     work_subtypes character varying[] DEFAULT '{}'::character varying[],
-    works_contact_email character varying
+    works_contact_email character varying,
+    github_deposit_enabled boolean DEFAULT false NOT NULL,
+    article_deposit_enabled boolean DEFAULT false NOT NULL
 );
 
 
@@ -1123,6 +1125,7 @@ ALTER TABLE ONLY public.affiliations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260205132650'),
 ('20260204215055'),
 ('20250723233849'),
 ('20250630163537'),
