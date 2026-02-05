@@ -12,9 +12,9 @@ pipeline {
       }
 
       when {
-        // Uncomment this line and comment the following to turn continuous deployment on
-        // branch 'main'
-        expression { return null }
+        // Comment this line and uncomment the following to turn continuous deployment off
+        branch 'main'
+        // expression { return null }
       }
 
       steps {
