@@ -502,7 +502,12 @@ CREATE TABLE public.users (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     agreed_to_terms_at timestamp(6) without time zone,
-    terms_reminder_email_last_sent_at timestamp(6) without time zone
+    terms_reminder_email_last_sent_at timestamp(6) without time zone,
+    github_access_token character varying,
+    github_uid character varying,
+    github_nickname character varying,
+    github_connected_at timestamp(6) without time zone,
+    github_updated_at timestamp(6) without time zone
 );
 
 
@@ -967,6 +972,13 @@ CREATE UNIQUE INDEX index_users_on_email_address ON public.users USING btree (em
 
 
 --
+-- Name: index_users_on_github_uid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_github_uid ON public.users USING btree (github_uid);
+
+
+--
 -- Name: index_works_on_collection_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1111,6 +1123,7 @@ ALTER TABLE ONLY public.affiliations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260204215055'),
 ('20250723233849'),
 ('20250630163537'),
 ('20250619163206'),
