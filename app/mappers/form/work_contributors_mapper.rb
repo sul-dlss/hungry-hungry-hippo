@@ -46,9 +46,15 @@ module Form
         end
       end
 
-      def affiliation_from(affiliation)
+      def affiliation_from(affiliation) # rubocop:disable Metrics/AbcSize
         institution = affiliation.structuredValue.find { |descriptive_value| descriptive_value.identifier.present? }
-        department = affiliation.structuredValue.find { |descriptive_value| descriptive_value.identifier.blank? }
+        if institution.present?
+          department = affiliation.structuredValue.find { |descriptive_value| descriptive_value.identifier.blank? }
+        else
+          # If institution doesn't have a ROR identifier, assume that first is institution and second is department.
+          institution = affiliation.structuredValue.first
+          department = affiliation.structuredValue.second
+        end
 
         {
           'institution' => institution.value,

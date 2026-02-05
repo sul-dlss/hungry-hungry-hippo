@@ -25,14 +25,17 @@ class ContributorAffiliationCocinaBuilder
 
   def institution_params
     {
-      value: institution,
-      identifier: [
-        {
-          uri:,
-          type: 'ROR',
-          source: { code: 'ror' }
-        }
-      ]
-    }
+      value: institution
+    }.tap do |params|
+      if uri.present?
+        params[:identifier] = [
+          {
+            uri:,
+            type: 'ROR',
+            source: { code: 'ror' }
+          }
+        ]
+      end
+    end
   end
 end
