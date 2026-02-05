@@ -192,23 +192,23 @@ RSpec.describe 'Show a collection' do
       # Deposits table
       within('table#deposits-table') do
         expect(page).to have_css('th', text: 'Deposit')
+        expect(page).to have_css('th', text: 'Deposit Status')
         expect(page).to have_css('th', text: 'Owner')
-        expect(page).to have_css('th', text: 'Status')
-        expect(page).to have_css('th', text: 'Modified')
+        expect(page).to have_css('th', text: 'Last Modified')
         expect(page).to have_css('th', text: 'Link for sharing')
         all_trs = page.all('tbody tr')
         expect(all_trs.size).to eq(2) # Since paginated
         work = works[0]
         row = all_trs.find { |tr| tr.has_css?('td:nth-of-type(1)', text: work.title) }
         within(row) do
-          expect(page).to have_css('td:nth-of-type(2)', text: work.user.name)
-          expect(page).to have_css('td:nth-of-type(3)', text: 'Pending review')
+          expect(page).to have_css('td:nth-of-type(2)', text: 'Pending review')
+          expect(page).to have_css('td:nth-of-type(3)', text: work.user.name)
           expect(page).to have_css('td:nth-of-type(5)', text: "https://doi.org/10.80343/#{work.druid.delete_prefix('druid:')}")
         end
         work = works[1]
         row = all_trs.find { |tr| tr.has_css?('td:nth-of-type(1)', text: work.title) }
         within(row) do
-          expect(page).to have_css('td:nth-of-type(3)', text: 'Deposited')
+          expect(page).to have_css('td:nth-of-type(2)', text: 'Deposited')
         end
       end
 
@@ -246,7 +246,7 @@ RSpec.describe 'Show a collection' do
         expect(all_trs.size).to eq(1) # Since paginated
         within(all_trs.first) do
           expect(page).to have_css('td:nth-of-type(1)', text: works[2].title)
-          expect(page).to have_css('td:nth-of-type(3)', text: 'Saving')
+          expect(page).to have_css('td:nth-of-type(2)', text: 'Saving')
           expect(page).to have_css('td:nth-of-type(5)', exact_text: '')
         end
       end
