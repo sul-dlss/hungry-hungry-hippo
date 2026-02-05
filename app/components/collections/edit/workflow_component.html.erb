@@ -21,43 +21,48 @@
       <%= render Edit::BulkParticipantsComponent.new(form:, field_name: :reviewers, model_class: ReviewerForm, form_component: Collections::Edit::ParticipantComponent) %>
     <% end %>
   </div>
-  <%= render Elements::HorizontalRuleComponent.new(classes: 'mb-3') %>
 
-  <div class="pane-section" id="article-workflow-section">
-    <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.article_workflow.label')) %>
-    <p><%= t('collections.edit.fields.article_workflow.help_text_html') %></p>
+  <% if show_article_deposit? %>
+    <%= render Elements::HorizontalRuleComponent.new(classes: 'mb-3') %>
 
-    <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable Article Workflow') do %>
-      <div class="row ms-0">
-        <div class="form-check col-md-2">
-          <%= form.radio_button :article_deposit_enabled, true, class: 'form-check-input', data: { workflow_target: 'articleEnabledOption', action: 'change->workflow#toggleWorkflows' } %>
-          <%= form.label :article_deposit_enabled, 'Yes', class: 'form-check-label', value: true %>
+    <div class="pane-section" id="article-workflow-section">
+      <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.article_workflow.label')) %>
+      <p><%= t('collections.edit.fields.article_workflow.help_text_html') %></p>
+
+      <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable Article Workflow') do %>
+        <div class="row ms-0">
+          <div class="form-check col-md-2">
+            <%= form.radio_button :article_deposit_enabled, true, class: 'form-check-input', data: { workflow_target: 'articleEnabledOption', action: 'change->workflow#toggleWorkflows' } %>
+            <%= form.label :article_deposit_enabled, 'Yes', class: 'form-check-label', value: true %>
+          </div>
+          <div class="form-check col-md-2">
+            <%= form.radio_button :article_deposit_enabled, false, class: 'form-check-input', data: { workflow_target: 'articleDisabledOption', action: 'change->workflow#toggleWorkflows' } %>
+            <%= form.label :article_deposit_enabled, 'No', class: 'form-check-label', value: false %>
+          </div>
         </div>
-        <div class="form-check col-md-2">
-          <%= form.radio_button :article_deposit_enabled, false, class: 'form-check-input', data: { workflow_target: 'articleDisabledOption', action: 'change->workflow#toggleWorkflows' } %>
-          <%= form.label :article_deposit_enabled, 'No', class: 'form-check-label', value: false %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 
-  <%= render Elements::HorizontalRuleComponent.new(classes: 'mb-3') %>
+  <% if show_github_deposit? %>
+    <%= render Elements::HorizontalRuleComponent.new(classes: 'mb-3') %>
 
-  <div class="pane-section" id="github-workflow-section">
-    <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.github_workflow.label')) %>
-    <p><%= t('collections.edit.fields.github_workflow.help_text_html') %></p>
+    <div class="pane-section" id="github-workflow-section">
+      <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.github_workflow.label')) %>
+      <p><%= t('collections.edit.fields.github_workflow.help_text_html') %></p>
 
-    <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable Github Integration Workflow') do %>
-      <div class="row ms-0">
-        <div class="form-check col-md-2">
-          <%= form.radio_button :github_deposit_enabled, true, class: 'form-check-input', data: { workflow_target: 'githubEnabledOption', action: 'change->workflow#toggleWorkflows' } %>
-          <%= form.label :github_deposit_enabled, 'Yes', class: 'form-check-label', value: true %>
+      <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable Github Integration Workflow') do %>
+        <div class="row ms-0">
+          <div class="form-check col-md-2">
+            <%= form.radio_button :github_deposit_enabled, true, class: 'form-check-input', data: { workflow_target: 'githubEnabledOption', action: 'change->workflow#toggleWorkflows' } %>
+            <%= form.label :github_deposit_enabled, 'Yes', class: 'form-check-label', value: true %>
+          </div>
+          <div class="form-check col-md-2">
+            <%= form.radio_button :github_deposit_enabled, false, class: 'form-check-input', data: { workflow_target: 'githubDisabledOption', action: 'change->workflow#toggleWorkflows' } %>
+            <%= form.label :github_deposit_enabled, 'No', class: 'form-check-label', value: false %>
+          </div>
         </div>
-        <div class="form-check col-md-2">
-          <%= form.radio_button :github_deposit_enabled, false, class: 'form-check-input', data: { workflow_target: 'githubDisabledOption', action: 'change->workflow#toggleWorkflows' } %>
-          <%= form.label :github_deposit_enabled, 'No', class: 'form-check-label', value: false %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>

@@ -10,6 +10,14 @@ module Collections
       end
 
       attr_reader :form
+
+      def show_github_deposit?
+        Settings.github.enabled
+      end
+
+      def show_article_deposit?
+        Settings.article_deposit.enabled
+      end
     end
   end
 end
