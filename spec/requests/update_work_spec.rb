@@ -87,4 +87,40 @@ RSpec.describe 'Update work' do
       end
     end
   end
+
+  context 'when the work cannot be deposited' do
+    let(:user) { create(:user) }
+    let(:work) { create(:work, druid:, collection:, user:, deposit_state: :accessioning) }
+    let(:collection) { create(:collection, :with_druid) }
+    let(:content) { create(:content, :with_content_files, user:, work:) }
+    let(:update_work_params) do
+      {
+        work: {
+          content_id: content.id,
+          collection_druid: collection.druid,
+          title: 'Fake Title',
+          whats_changing: 'Initial version',
+          lock: "W/\"#{work.druid}=1=1\""
+        }
+      }
+    end
+
+    before do
+      allow(RoundtripSupport).to receive(:changed?).and_return(true)
+      allow(DepositWorkJob).to receive(:perform_later)
+      allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(dro_with_metadata_fixture)
+      allow(Sdr::Repository).to receive(:latest_user_version).and_return(work.version)
+      sign_in(user)
+    end
+
+    it 'redirects to work show page w/ warning text' do
+      put "/works/#{work.druid}", params: update_work_params
+
+      expect(response).to redirect_to(work_path(work))
+      follow_redirect!
+      expect(response.body).to include(
+        'We were not able to deposit your item. It may have already been successfully deposited.'
+      )
+    end
+  end
 end

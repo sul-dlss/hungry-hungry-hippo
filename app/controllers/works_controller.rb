@@ -74,7 +74,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     end
   end
 
-  def update # rubocop:disable Metrics/AbcSize
+  def update # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     authorize! @work
 
     @work_form = WorkForm.new(**update_work_params)
@@ -90,6 +90,9 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       set_presenter
       render :form, status: :unprocessable_content
     end
+  rescue StateMachines::InvalidTransition
+    flash[:warning] = helpers.t('works.edit.messages.cannot_be_deposited_html', support_email: Settings.support_email)
+    redirect_to work_path(@work)
   end
 
   def destroy
