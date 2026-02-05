@@ -39,8 +39,16 @@ class DepositWorkJob < ApplicationJob
 
     work.request_review! if request_review?
 
-    # Content isn't needed anymore
-    content.destroy
+    # There may be a race condition or other problem that sometimes causes the content to be destroyed
+    # before the associated content_files, which triggers a sql constraint error.  We will
+    # swallow and ignore, because there is already a scheduled cleanup task to delete old
+    # content regularly anyway. see https://github.com/sul-dlss/hungry-hungry-hippo/issues/1868
+    begin
+      # Content isn't needed anymore
+      content.destroy
+    rescue ActiveRecord::InvalidForeignKey
+      # carry on as if nothing happened
+    end
   end
 
   private
