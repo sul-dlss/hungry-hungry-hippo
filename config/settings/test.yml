@@ -5,3 +5,9 @@ notifications:
 
 affiliations:
   enabled: true
+
+github:
+  enabled: true
+
+article_deposit:
+  enabled: true
