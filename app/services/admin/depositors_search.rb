@@ -29,10 +29,11 @@ module Admin
     attr_reader :druid_list
 
     def selected_works
-      Work
-        .eager_load(:user)
-        .where(druid: druid_list)
-        .select('works.druid, works.user_id, users.email_address')
+      # iterate over the druids so we can preserve the order the user entered them in the results
+      # see https://github.com/sul-dlss/hungry-hungry-hippo/issues/1786
+      druid_list.map do |druid|
+        Work.joins(:user).select('works.druid, works.user_id, users.email_address').find_by(druid:)
+      end
     end
   end
 end
