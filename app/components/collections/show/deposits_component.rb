@@ -31,8 +31,8 @@ module Collections
         work = presenter.work
         [
           helpers.link_to(work.title, work_or_wait_path(work), data: { turbo_frame: '_top' }),
-          work.user.name,
           presenter.status_message,
+          work.user.name,
           work.object_updated_at ? helpers.l(work.object_updated_at, format: '%b %d, %Y') : nil,
           presenter.sharing_link
         ]
