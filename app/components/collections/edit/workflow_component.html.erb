@@ -1,4 +1,4 @@
-<%= tag.div data: { controller: 'workflow' }, class: 'pane-section' do %>
+<%= tag.div data: { controller: 'workflow', workflow_participants_outlet: '.reviewers-participants [data-controller="participants"]' }, class: 'pane-section' do %>
   <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :review_enabled, label_classes: 'fw-bold',
                                                   label: 'Enable Review Workflow', container_classes: 'mb-4') do |component| %>
     <% component.with_left_toggle_option(form:,
@@ -13,7 +13,7 @@
                                           data: { action: 'change->workflow#hideReviewersSection' }) %>
   <% end %>
 
-  <%= tag.div data: { workflow_target: 'reviewersSection' }, class: 'd-none' do %>
+  <%= tag.div data: { workflow_target: 'reviewersSection' }, class: 'd-none reviewers-participants' do %>
     <%= render Edit::BulkParticipantsComponent.new(form:, field_name: :reviewers, model_class: ReviewerForm, form_component: Collections::Edit::ParticipantComponent) %>
   <% end %>
 <% end %>

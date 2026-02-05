@@ -74,6 +74,23 @@ RSpec.describe CollectionForm do
       before do
         form_hash[:review_enabled] = true
         form_hash[:reviewers_attributes] = [{}]
+        form_hash[:managers_attributes] = [
+          { sunetid: 'user1', name: 'User One' },
+          { sunetid: 'user2', name: 'User Two' }
+        ]
+      end
+
+      it 'automatically adds managers to reviewers' do
+        expect(form).to be_valid
+        expect(form.reviewers.map(&:sunetid)).to contain_exactly('user1', 'user2')
+      end
+    end
+
+    context 'with review enabled and no reviewers and no managers' do
+      before do
+        form_hash[:review_enabled] = true
+        form_hash[:reviewers_attributes] = [{}]
+        form_hash[:managers_attributes] = [{}]
       end
 
       it 'validates presence of at least one reviewer' do

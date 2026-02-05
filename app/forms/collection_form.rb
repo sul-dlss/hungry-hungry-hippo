@@ -18,6 +18,13 @@ class CollectionForm < ApplicationForm
 
     self.reviewers = reviewers - blank_reviewers
   end
+
+  before_validation if: -> { review_enabled && reviewers.empty? } do
+    managers.each do |manager|
+      reviewers << ReviewerForm.new(sunetid: manager.sunetid, name: manager.name)
+    end
+  end
+
   validates :reviewers, length: { minimum: 1, message: 'must have at least one reviewer' }, # rubocop:disable Rails/I18nLocaleTexts
                         if: -> { review_enabled }
 

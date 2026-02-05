@@ -57,4 +57,8 @@ export default class extends Controller {
     formInstanceEl.querySelector('[data-delete-btn] .visually-hidden').innerHTML = `Clear ${accountData.name}`
     this.tabErrorOutlet.clearInvalidStatus('participants')
   }
+
+  isEmpty () {
+    return this.nestedFormOutlet.instanceTargets.length === 0
+  }
 }
