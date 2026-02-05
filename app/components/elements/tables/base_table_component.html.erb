@@ -11,6 +11,7 @@
       </tr>
     <% end %>
   <% end %>
+  <%= actions if render_actions? %>
   <%= tag.tbody class: body_classes do %>
     <% rows.each do |row| %>
       <%= row %>

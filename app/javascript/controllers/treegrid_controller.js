@@ -176,4 +176,26 @@ export default class extends Controller {
   removeElement (element) {
     return element.querySelector('a')
   }
+
+  expandAll () {
+    const branches = this.tableTarget.querySelectorAll('tr[data-tree-role="branch"]')
+    branches.forEach(branch => {
+      branch.setAttribute('aria-expanded', 'true')
+      this.childTrElements(branch).forEach(child => {
+        delete child.dataset.expandHidden
+        this.toggleHide(child)
+      })
+    })
+  }
+
+  collapseAll () {
+    const branches = this.tableTarget.querySelectorAll('tr[data-tree-role="branch"]')
+    branches.forEach(branch => {
+      branch.setAttribute('aria-expanded', 'false')
+      this.childTrElements(branch).forEach(child => {
+        child.dataset.expandHidden = true
+        this.toggleHide(child)
+      })
+    })
+  }
 }

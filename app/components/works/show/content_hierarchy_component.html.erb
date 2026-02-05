@@ -5,6 +5,14 @@
                               { label: 'Description' },
                               { label: 'Hide' }
                             ]) %>
+  <% component.with_actions do %>
+    <tr>
+      <td colspan="3">
+        <button type="button" data-action="treegrid#expandAll" class="btn btn-link fw-bold">Expand all</button> |
+        <button type="button" data-action="treegrid#collapseAll" class="btn btn-link fw-bold">Collapse all</button>
+      </td>
+    </tr>
+  <% end %>
   <% last_path_parts = [] %>
   <% content_files.each do |content_file| %>
     <%= render Works::Show::ContentFileHierarchyComponent.new(content_file:, last_path_parts:, component:) %>
