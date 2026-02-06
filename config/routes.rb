@@ -126,6 +126,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resource :work_report, only: %i[new create], controller: :work_report
   end
 
+  namespace :user do
+    resource :github, only: [:show], controller: 'github'
+  end
+
   root 'home#show'
 
   mount MissionControl::Jobs::Engine, at: '/jobs'
