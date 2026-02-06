@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-# Controller for a Work
+# Controller for a Work and subclasses of Work.
+# Note that new and create are only for Works (not subclasses).
+# Other methods are for Works and subclasses.
 class WorksController < ApplicationController # rubocop:disable Metrics/ClassLength
   before_action :set_work_and_collection, only: %i[show edit update destroy review history]
   before_action :check_deposit_registering_or_updating, only: %i[show edit]
@@ -11,7 +13,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   before_action :set_license_presenter, only: %i[edit]
 
   def show
-    authorize! @work
+    authorize! @work, with: WorkPolicy
 
     # This updates the Work with the latest metadata from the Cocina object.
     # Does not update the Work's collection if the collection cannot be found.
@@ -35,7 +37,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def edit # rubocop:disable Metrics/AbcSize
-    authorize! @work
+    authorize! @work, with: WorkPolicy
 
     unless editable?
       flash[:warning] = helpers.t('works.edit.messages.cannot_be_edited_html', support_email: Settings.support_email)
@@ -49,7 +51,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     add_max_release_date
     ahoy.track Ahoy::Event::WORK_FORM_STARTED, form_id: @work_form.form_id, work_id: @work.id
 
-    render :form
+    render edit_form_view
   end
 
   def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -75,9 +77,9 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def update # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    authorize! @work
+    authorize! @work, with: WorkPolicy
 
-    @work_form = WorkForm.new(**update_work_params)
+    @work_form = work_form_class.new(**update_work_params)
     @content = Content.find(@work_form.content_id)
 
     if (@valid = @work_form.valid?(validation_context)) && perform_deposit?
@@ -88,7 +90,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       handle_no_changes_or_invalid
       set_license_presenter
       set_presenter
-      render :form, status: :unprocessable_content
+      @work_form.prepopulate
+      render edit_form_view, status: :unprocessable_content
     end
   rescue StateMachines::InvalidTransition
     flash[:warning] = helpers.t('works.edit.messages.cannot_be_deposited_html', support_email: Settings.support_email)
@@ -96,7 +99,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def destroy
-    authorize! @work
+    authorize! @work, with: WorkPolicy
 
     Sdr::Repository.discard_draft(druid: @work.druid)
     flash[:success] = helpers.t('messages.draft_discarded')
@@ -112,7 +115,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   def wait
     @work = Work.find(params[:id])
-    authorize! @work
+    authorize! @work, with: WorkPolicy
 
     # Don't show flashes on wait and preserve them for the next page
     @no_flash = true
@@ -122,7 +125,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def review
-    authorize! @work
+    authorize! @work, with: WorkPolicy
 
     @review_form = ReviewForm.new(**review_form_params)
     if @review_form.valid?
@@ -134,7 +137,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def history
-    authorize! @work
+    authorize! @work, with: WorkPolicy
 
     @events = Sdr::Event.list(druid: @work.druid).map { |event| EventPresenter.new(event:) }
 
@@ -148,7 +151,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def work_params
-    params.expect(work: WorkForm.permitted_params)
+    params.expect(work: work_form_class.permitted_params)
   end
 
   def review_form_params
@@ -173,7 +176,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     version_description = @version_status.open? ? @version_status.version_description : nil
     @work_form = Form::WorkMapper.call(cocina_object: @cocina_object, doi_assigned: doi_assigned?,
                                        agree_to_terms: current_user.agree_to_terms?,
-                                       version_description:, collection: @collection).prepopulate
+                                       version_description:, collection: @collection,
+                                       work_form_class:).prepopulate
   end
 
   def doi_assigned?
@@ -299,7 +303,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       handle_invalid
     else
       if invalid_for_whats_changing_only?
-        @work_form = WorkForm.new(**update_work_params)
+        @work_form = work_form_class.new(**update_work_params)
         @valid = true
       end
       handle_no_changes
@@ -330,5 +334,17 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   def track_work_update
     ahoy.track Ahoy::Event::WORK_FORM_COMPLETED, form_id: @work_form.form_id, work_id: @work.id
     ahoy.track Ahoy::Event::WORK_UPDATED, work_id: @work.id, deposit: deposit?, review: request_review?
+  end
+
+  # @return [String] view to render for the form for editing
+  def edit_form_view
+    # This can be extended to handle different subclasses of Works.
+    'form'
+  end
+
+  # @return [Class] form class to use for the form for editing
+  def work_form_class
+    # This can be extended to handle different subclasses of Works.
+    WorkForm
   end
 end

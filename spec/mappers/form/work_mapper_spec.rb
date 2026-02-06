@@ -235,4 +235,14 @@ RSpec.describe Form::WorkMapper, type: :mapping do
       expect(work_form.works_contact_email).to be_nil
     end
   end
+
+  context 'when work_form_class is not a subclass of BaseWorkForm' do
+    it 'raises an error' do
+      expect do
+        described_class.new(cocina_object:, doi_assigned:, agree_to_terms: true,
+                            version_description: whats_changing_fixture, collection:,
+                            work_form_class: String)
+      end.to raise_error(ArgumentError, 'work_form_class must be a subclass of BaseWorkForm')
+    end
+  end
 end
