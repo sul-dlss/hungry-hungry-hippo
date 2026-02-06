@@ -15,11 +15,6 @@ module Elements
         args[:data] = { controller: 'treegrid', action: 'keydown->treegrid#navigate', treegrid_target: 'table' }
         super
       end
-
-      # only render the expand/collapse control if there is more than one row
-      def render_actions?
-        rows.size > 1
-      end
     end
   end
 end

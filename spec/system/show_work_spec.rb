@@ -316,7 +316,7 @@ RSpec.describe 'Show a work' do
       within('table#files-table') do
         expect(page).to have_css('caption', text: 'Files')
         expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'files'))
-        expect(page).to have_css('th', text: 'File Name')
+        expect(page).to have_css('th', text: 'File/folder name')
         expect(page).to have_css('th', text: 'Description')
         expect(page).to have_css('th', text: 'Hide')
         row1 = page.find('tr', text: 'my_file1.txt')

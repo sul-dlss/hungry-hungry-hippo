@@ -1,18 +1,20 @@
 <%= render Elements::Tables::TreegridTableComponent.new(id: 'content-table', label: 'File list', show_label: false) do |component| %>
   <%# These headers are duplicated in app/views/contents/_show.html.erb. %>
   <% component.with_headers([
-                              { label: 'File Name' },
+                              { label: 'File/folder name' },
                               { label: 'Description', tooltip: helpers.t('content_files.edit.fields.description.tooltip_html'), style: 'width: 180px;' },
                               { label: 'Hide', tooltip: helpers.t('content_files.edit.fields.hide.tooltip_html'), style: 'width: 85px;' },
                               { label: 'Action', style: 'width: 85px;' }
                             ]) %>
-  <% component.with_actions do %>
-    <tr>
-      <td colspan="4">
-        <button type="button" data-action="treegrid#expandAll" class="btn btn-link fw-bold">Expand all</button> |
-        <button type="button" data-action="treegrid#collapseAll" class="btn btn-link fw-bold">Collapse all</button>
-      </td>
-    </tr>
+  <% if show_expand_collapse? %>
+    <% component.with_actions do %>
+      <tr>
+        <td colspan="4">
+          <button type="button" data-action="treegrid#expandAll" class="btn btn-link fw-bold">Expand all</button> |
+          <button type="button" data-action="treegrid#collapseAll" class="btn btn-link fw-bold">Collapse all</button>
+        </td>
+      </tr>
+    <% end %>
   <% end %>
   <% last_path_parts = [] %>
   <% content_files.each do |content_file| %>
