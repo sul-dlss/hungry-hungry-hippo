@@ -28,6 +28,7 @@ pipeline {
           rvm use 3.4.1@hungry-hungry-hippo --create
           gem install bundler
 
+          bundle config set without 'production'
           bundle install
 
           # Deploy it
