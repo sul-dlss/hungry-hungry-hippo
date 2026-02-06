@@ -89,6 +89,18 @@ To view the site as a first-time user, use a bogus role:
 ROLES=foobar bin/setup
 ```
 
+#### Github integration for development
+Get the client id and generate a new client secret at https://github.com/organizations/sul-dlss/settings/applications/3375495
+
+In `config/settings/development.local.yml` provide the following configuration:
+```
+github:
+  client_id:
+  client_secret:
+```
+
+To delete the integration, revoke privileges for "Stanford Digital Repository - Localhost" at https://github.com/settings/applications
+
 ### Mission Control
 
 A dashboard for Solid Queue background jobs is available at `http://localhost:3000/jobs`.
