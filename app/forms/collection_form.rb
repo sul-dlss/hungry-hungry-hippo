@@ -18,6 +18,15 @@ class CollectionForm < ApplicationForm
 
     self.reviewers = reviewers - blank_reviewers
   end
+
+  before_validation if: :review_enabled do
+    next if reviewers.present?
+
+    # if the review workflow is on and there are not currently any reviewers added by the user,
+    # any managers will be added as reviewers, see https://github.com/sul-dlss/hungry-hungry-hippo/issues/1710
+    self.reviewers = managers.map { |manager| ReviewerForm.new(sunetid: manager.sunetid, name: manager.name) }
+  end
+
   validates :reviewers, length: { minimum: 1, message: 'must have at least one reviewer' }, # rubocop:disable Rails/I18nLocaleTexts
                         if: -> { review_enabled }
 
