@@ -9,6 +9,10 @@ export default class extends Controller {
 
   toggle (event) {
     const dirTrElement = event.target.closest('tr')
+    this.toggleBranch(dirTrElement)
+  }
+
+  toggleBranch (dirTrElement) {
     if (dirTrElement.getAttribute('aria-expanded') === 'true') {
       // Contract
       dirTrElement.setAttribute('aria-expanded', 'false')
@@ -177,25 +181,19 @@ export default class extends Controller {
     return element.querySelector('a')
   }
 
+  branches () {
+    return this.tableTarget.querySelectorAll('tr[data-tree-role="branch"]')
+  }
+
   expandAll () {
-    const branches = this.tableTarget.querySelectorAll('tr[data-tree-role="branch"]')
-    branches.forEach(branch => {
-      branch.setAttribute('aria-expanded', 'true')
-      this.childTrElements(branch).forEach(child => {
-        delete child.dataset.expandHidden
-        this.toggleHide(child)
-      })
+    this.branches().forEach(branch => {
+      if (this.isClosedBranch(branch)) { this.toggleBranch(branch) }
     })
   }
 
   collapseAll () {
-    const branches = this.tableTarget.querySelectorAll('tr[data-tree-role="branch"]')
-    branches.forEach(branch => {
-      branch.setAttribute('aria-expanded', 'false')
-      this.childTrElements(branch).forEach(child => {
-        child.dataset.expandHidden = true
-        this.toggleHide(child)
-      })
+    this.branches().forEach(branch => {
+      if (this.isOpenBranch(branch)) { this.toggleBranch(branch) }
     })
   }
 }
