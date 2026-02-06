@@ -8,6 +8,11 @@ seed_user:
   first_name: 'A.'
   name: 'A. User'
 
-
 affiliations:
+  enabled: true
+
+github:
+  enabled: true
+
+article_deposit:
   enabled: true

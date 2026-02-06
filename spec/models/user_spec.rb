@@ -59,4 +59,32 @@ RSpec.describe User do
       expect(user.your_pending_review_works).to contain_exactly(pending_review_work, pending_managed_review_work)
     end
   end
+
+  describe '.depositor_for_any_github_deposit_enabled_collections?' do
+    context 'when the user is not a depositor or manager for any collections with github_deposit_enabled' do
+      it 'returns false' do
+        expect(user.depositor_for_any_github_deposit_enabled_collections?).to be false
+      end
+    end
+
+    context 'when the user is a depositor for a collection with github_deposit_enabled' do
+      before do
+        create(:collection, github_deposit_enabled: true, depositors: [user])
+      end
+
+      it 'returns true' do
+        expect(user.depositor_for_any_github_deposit_enabled_collections?).to be true
+      end
+    end
+
+    context 'when the user is a manager for a collection with github_deposit_enabled' do
+      before do
+        create(:collection, github_deposit_enabled: true, managers: [user])
+      end
+
+      it 'returns true' do
+        expect(user.depositor_for_any_github_deposit_enabled_collections?).to be true
+      end
+    end
+  end
 end
