@@ -60,6 +60,8 @@ gem 'kicks' # Background processing of rabbitMQ messages. (Formerly sneakers.)
 gem 'local_time'
 gem 'marcel' # For MIME type detection
 gem 'okcomputer'
+gem 'omniauth', '~> 2.0' # For Github OAuth
+gem 'omniauth-github'
 gem 'parallel' # Used for importing. Can be removed when importing is done.
 gem 'preservation-client'
 gem 'rack-sanitizer'

@@ -127,7 +127,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   end
 
   namespace :user do
-    resource :github, only: [:show], controller: 'github'
+    resource :github, only: %i[show], controller: 'github' do
+      collection do
+        get 'create', to: 'github#create', as: 'create' # In OAuth flow, GitHub redirects the user back to this path.
+      end
+    end
   end
 
   root 'home#show'

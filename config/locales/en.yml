@@ -552,3 +552,5 @@ en:
         workflow:
           tab_label: 'Workflows'
           label: 'Workflows'
+  github:
+    connected_account: 'You Github account has been successfully connected to SDR.'
