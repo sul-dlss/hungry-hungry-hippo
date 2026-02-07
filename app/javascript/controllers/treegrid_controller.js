@@ -9,6 +9,10 @@ export default class extends Controller {
 
   toggle (event) {
     const dirTrElement = event.target.closest('tr')
+    this.toggleBranch(dirTrElement)
+  }
+
+  toggleBranch (dirTrElement) {
     if (dirTrElement.getAttribute('aria-expanded') === 'true') {
       // Contract
       dirTrElement.setAttribute('aria-expanded', 'false')
@@ -175,5 +179,21 @@ export default class extends Controller {
 
   removeElement (element) {
     return element.querySelector('a')
+  }
+
+  branches () {
+    return this.tableTarget.querySelectorAll('tr[data-tree-role="branch"]')
+  }
+
+  expandAll () {
+    this.branches().forEach(branch => {
+      if (this.isClosedBranch(branch)) { this.toggleBranch(branch) }
+    })
+  }
+
+  collapseAll () {
+    this.branches().forEach(branch => {
+      if (this.isOpenBranch(branch)) { this.toggleBranch(branch) }
+    })
   }
 }

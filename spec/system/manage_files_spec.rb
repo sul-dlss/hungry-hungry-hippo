@@ -38,7 +38,7 @@ RSpec.describe 'Manage files for a work', :dropzone do
       await_upload
 
       # Delete the first file
-      within('table#content-table tbody tr:nth-of-type(1)') do
+      within('table#content-table tbody tr', text: 'hippo.png') do
         expect(page).to have_css('td:nth-of-type(1)', text: 'hippo.png') # Filename
         find('a', text: 'Remove').click
       end
