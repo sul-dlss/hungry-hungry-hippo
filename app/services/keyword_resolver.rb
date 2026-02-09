@@ -53,7 +53,7 @@ class KeywordResolver
     JSON.parse(body).dig('response', 'docs').map do |result|
       {
         result['suggestall'].first => "#{Settings.autocomplete_lookup.identifier_prefix}" \
-                                      "#{result['idroot'].first.delete_prefix('fst').to_i}/::" \
+                                      "#{result['idroot'].first.delete_prefix('fst').to_i}::" \
                                       "#{TAG_TYPES.fetch(result['tag'], 'topic')}"
       }
     end
