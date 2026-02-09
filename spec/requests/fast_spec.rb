@@ -15,16 +15,16 @@ RSpec.describe 'Fast Controller' do
     # returns the first ten deduplicated _authorized_ forms of FAST terms that match the entered letters.
     let(:suggestions) do
       [
-        { 'Tea' => 'http://id.worldcat.org/fast/1144120/::topic' },
-        { 'Tea Party movement' => 'http://id.worldcat.org/fast/1762507/::topic' },
-        { 'Tea making paraphernalia' => 'http://id.worldcat.org/fast/1144165/::topic' },
-        { 'Tea tax (American colonies)' => 'http://id.worldcat.org/fast/1144178/::topic' },
-        { 'Tea trade' => 'http://id.worldcat.org/fast/1144179/::topic' },
-        { 'Tea--Health aspects' => 'http://id.worldcat.org/fast/1144131/::topic' },
-        { 'Tea--Social aspects' => 'http://id.worldcat.org/fast/1144144/::topic' },
-        { 'Tea--Therapeutic use' => 'http://id.worldcat.org/fast/1144148/::topic' },
-        { 'Tearooms' => 'http://id.worldcat.org/fast/1144712/::topic' },
-        { 'East India Company' => 'http://id.worldcat.org/fast/537796/::organization' }
+        { 'Tea' => 'http://id.worldcat.org/fast/1144120::topic' },
+        { 'Tea Party movement' => 'http://id.worldcat.org/fast/1762507::topic' },
+        { 'Tea making paraphernalia' => 'http://id.worldcat.org/fast/1144165::topic' },
+        { 'Tea tax (American colonies)' => 'http://id.worldcat.org/fast/1144178::topic' },
+        { 'Tea trade' => 'http://id.worldcat.org/fast/1144179::topic' },
+        { 'Tea--Health aspects' => 'http://id.worldcat.org/fast/1144131::topic' },
+        { 'Tea--Social aspects' => 'http://id.worldcat.org/fast/1144144::topic' },
+        { 'Tea--Therapeutic use' => 'http://id.worldcat.org/fast/1144148::topic' },
+        { 'Tearooms' => 'http://id.worldcat.org/fast/1144712::topic' },
+        { 'East India Company' => 'http://id.worldcat.org/fast/537796::organization' }
       ]
     end
 
