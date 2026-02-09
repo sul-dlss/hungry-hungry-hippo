@@ -12,6 +12,10 @@ module Admin
     def destroy
       authorize!
 
+      # ensure all associated content is deleted first (possible race condition
+      # causing issues with foreign key constraint errors)
+      work.content.destroy_all
+
       work.destroy!
       render_delete_success
     end
