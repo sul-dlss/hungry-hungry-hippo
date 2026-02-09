@@ -7,7 +7,7 @@ module Elements
       renders_many :rows, types: {
         branch: Elements::Tables::TreegridBranchRowComponent,
         leaf: Elements::Tables::TreegridLeafRowComponent,
-        actions: Elements::Tables::TreegridActionsRowComponent
+        row: { renders: Elements::Tables::RowComponent, as: :row }
       }
 
       def initialize(**args)

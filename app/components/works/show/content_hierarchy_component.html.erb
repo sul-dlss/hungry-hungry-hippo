@@ -6,7 +6,13 @@
                               { label: 'Hide' }
                             ]) %>
   <% if show_expand_collapse? %>
-    <% component.with_row_actions(colspan: 3) %>
+    <% component.with_row do |row_component| %>
+       <% row_component.with_cell do %>
+         <%= render Elements::Tables::ExpandCollapseControlComponent.new %>
+       <% end %>
+       <% row_component.with_cell %>
+       <% row_component.with_cell %>
+     <% end %>
   <% end %>
   <% last_path_parts = [] %>
   <% content_files.each do |content_file| %>

@@ -185,13 +185,15 @@ export default class extends Controller {
     return this.tableTarget.querySelectorAll('tr[data-tree-role="branch"]')
   }
 
-  expandAll () {
+  expandAll (event) {
+    event.preventDefault()
     this.branches().forEach(branch => {
       if (this.isClosedBranch(branch)) { this.toggleBranch(branch) }
     })
   }
 
-  collapseAll () {
+  collapseAll (event) {
+    event.preventDefault()
     this.branches().forEach(branch => {
       if (this.isOpenBranch(branch)) { this.toggleBranch(branch) }
     })
