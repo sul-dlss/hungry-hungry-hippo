@@ -176,12 +176,15 @@ RSpec.describe WorkForm do
         title: title_fixture,
         contact_emails_attributes: contact_emails_fixture,
         contributors_attributes: contributors_fixture,
-        create_date_type: 'range',
+        create_date_type:,
         create_date_range_from_attributes: creation_date_range_from,
         create_date_range_to_attributes: creation_date_range_to,
+        create_date_single_attributes: create_date_single,
         whats_changing: 'Initial version'
       )
     end
+
+    let(:create_date_type) { 'range' }
 
     let(:creation_date_range_to) do
       {
@@ -200,6 +203,8 @@ RSpec.describe WorkForm do
         approximate: false
       }
     end
+
+    let(:create_date_single) { {} }
 
     context 'when create date range is complete and in sequence' do
       it 'is valid' do
@@ -247,6 +252,47 @@ RSpec.describe WorkForm do
         expect(form).not_to be_valid
 
         expect(form.errors[:create_date_range_from]).to eq(['must have both a start and end date'])
+      end
+    end
+
+    context 'when invalid date range but single date range is selected' do
+      let(:create_date_type) { 'single' }
+
+      let(:creation_date_range_from) do
+        {}
+      end
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+    end
+
+    context 'when valid date range and single create date is invalid' do
+      let(:create_date_single) { { year: 19 } }
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+    end
+  end
+
+  describe 'single create date validation' do
+    context 'when valid single create date and invalid date range but single date type is selected' do
+      let(:form) do
+        described_class.new(
+          title: title_fixture,
+          contact_emails_attributes: contact_emails_fixture,
+          contributors_attributes: contributors_fixture,
+          create_date_type: 'single',
+          create_date_range_from_attributes: { year: 19 },
+          create_date_range_to_attributes: {},
+          create_date_single_attributes: { year: 2020 },
+          whats_changing: 'Initial version'
+        )
+      end
+
+      it 'is valid' do
+        expect(form).to be_valid
       end
     end
   end
