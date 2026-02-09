@@ -79,14 +79,14 @@ module ActiveModel
         define_method(:serializable_hash) do |**options|
           super(**options)
             .deep_transform_keys do |attr_name|
-            # When going from form to hash (serializing), represent nested
-            # attributes by making sure their keys end in '_attributes' per
-            # standard ActiveRecord practice
-            singleton_class.nested_attributes.key?(:"#{attr_name}_attributes") ? "#{attr_name}_attributes" : attr_name
+              # When going from form to hash (serializing), represent nested
+              # attributes by making sure their keys end in '_attributes' per
+              # standard ActiveRecord practice
+              singleton_class.nested_attributes.key?(:"#{attr_name}_attributes") ? "#{attr_name}_attributes" : attr_name
           end # rubocop:disable Style/MultilineBlockChain
             .deep_transform_values do |value|
-            # Leverage ActiveModel serialization to make sure nested models are serialized recursively
-            value.respond_to?(:serializable_hash) ? value.serializable_hash : value
+              # Leverage ActiveModel serialization to make sure nested models are serialized recursively
+              value.respond_to?(:serializable_hash) ? value.serializable_hash : value
           end
         end
       end
