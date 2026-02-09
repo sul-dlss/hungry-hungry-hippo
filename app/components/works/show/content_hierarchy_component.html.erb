@@ -6,14 +6,7 @@
                               { label: 'Hide' }
                             ]) %>
   <% if show_expand_collapse? %>
-    <% component.with_actions do %>
-      <tr>
-        <td colspan="4">
-          <button type="button" data-action="treegrid#expandAll" class="btn btn-link fw-bold">Expand all</button> |
-          <button type="button" data-action="treegrid#collapseAll" class="btn btn-link fw-bold">Collapse all</button>
-        </td>
-      </tr>
-    <% end %>
+    <% component.with_row_actions(colspan: 3) %>
   <% end %>
   <% last_path_parts = [] %>
   <% content_files.each do |content_file| %>

@@ -6,7 +6,6 @@ module Elements
     class BaseTableComponent < ApplicationComponent
       renders_many :headers, Elements::Tables::HeaderComponent
       renders_one :caption
-      renders_one :actions
       # Subclasses should provide rows, e.g., renders_many :rows
 
       def initialize(id:, label: nil, classes: [], head_classes: [], body_classes: [], show_label: true, role: nil, # rubocop:disable Metrics/ParameterLists
@@ -47,10 +46,6 @@ module Elements
 
       def show_label?
         @show_label
-      end
-
-      def render_actions?
-        actions?
       end
 
       def render?
