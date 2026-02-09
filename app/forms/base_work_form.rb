@@ -128,6 +128,15 @@ class BaseWorkForm < ApplicationForm
   attribute :create_date_type, :string, default: 'single'
   validates :create_date_type, inclusion: { in: %w[single range] }
 
+  before_validation do
+    if create_date_type == 'range'
+      self.create_date_single = nil
+    else
+      self.create_date_range_from = nil
+      self.create_date_range_to = nil
+    end
+  end
+
   attribute :whats_changing, :string
   validates :whats_changing, presence: true
 
