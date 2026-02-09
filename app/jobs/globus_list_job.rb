@@ -31,14 +31,14 @@ class GlobusListJob < RetriableJob
   def list_files # rubocop:disable Metrics/AbcSize
     GlobusClient.list_files(user_id: user.email_address, path: globus_path, notify_email: false)
                 .each_with_index do |file_info, index|
-      # Only check for cancel every 100 files
-      break if (index % @cancel_check_interval).zero? && canceled?
+                  # Only check for cancel every 100 files
+                  break if (index % @cancel_check_interval).zero? && canceled?
 
-      filepath = Pathname.new(file_info.name).relative_path_from(globus_absolute_path).to_s
-      next if IgnoreFileService.call(filepath:)
+                  filepath = Pathname.new(file_info.name).relative_path_from(globus_absolute_path).to_s
+                  next if IgnoreFileService.call(filepath:)
 
-      ContentFile.create!(file_type: :globus, size: file_info.size, label: '', content:,
-                          filepath:)
+                  ContentFile.create!(file_type: :globus, size: file_info.size, label: '', content:,
+                                      filepath:)
     end
   end
 

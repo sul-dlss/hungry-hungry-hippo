@@ -95,8 +95,8 @@ class DepositWorkJob < ApplicationJob
                                      version_description: work_form.whats_changing, status:,
                                      user_name:)
                      .then do |cocina_object|
-        Sdr::Repository.update(cocina_object:, user_name:,
-                               description: new_user_version? ? 'Files changed' : nil)
+                       Sdr::Repository.update(cocina_object:, user_name:,
+                                              description: new_user_version? ? 'Files changed' : nil)
       end
     elsif deposit?
       # If the work is not changed but is being deposited, still need to update the deposit publication date.
