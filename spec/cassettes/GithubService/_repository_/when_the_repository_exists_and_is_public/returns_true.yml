@@ -1,0 +1,83 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/repos/sul-dlss/hungry-hungry-hippo
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 10.0.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic aDNfY2xpZW50X2FwcF9pZDpoM19jbGllbnRfYXBwX3NlY3JldA==
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Feb 2026 14:40:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Vary:
+      - Accept,Accept-Encoding, Accept, X-Requested-With
+      Etag:
+      - W/"cab06c3d72c13755db8aad9f3830da4472e2d3ce6a5e055cce08614a3f8dc061"
+      Last-Modified:
+      - Tue, 10 Feb 2026 00:17:57 GMT
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Github-Api-Version-Selected:
+      - '2022-11-28'
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO,
+        X-GitHub-Request-Id, Deprecation, Sunset
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Frame-Options:
+      - deny
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - '0'
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Content-Security-Policy:
+      - default-src 'none'
+      Transfer-Encoding:
+      - chunked
+      X-Github-Request-Id:
+      - E827:11DD1A:3497C34:E3D37CD:698B437B
+      Server:
+      - github.com
+      X-Ratelimit-Limit:
+      - '60'
+      X-Ratelimit-Remaining:
+      - '58'
+      X-Ratelimit-Reset:
+      - '1770738058'
+      X-Ratelimit-Used:
+      - '2'
+      X-Ratelimit-Resource:
+      - core
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":881494248,"node_id":"R_kgDONIqI6A","name":"hungry-hungry-hippo","full_name":"sul-dlss/hungry-hungry-hippo","private":false,"owner":{"login":"sul-dlss","id":230583,"node_id":"MDEyOk9yZ2FuaXphdGlvbjIzMDU4Mw==","avatar_url":"https://avatars.githubusercontent.com/u/230583?v=4","gravatar_id":"","url":"https://api.github.com/users/sul-dlss","html_url":"https://github.com/sul-dlss","followers_url":"https://api.github.com/users/sul-dlss/followers","following_url":"https://api.github.com/users/sul-dlss/following{/other_user}","gists_url":"https://api.github.com/users/sul-dlss/gists{/gist_id}","starred_url":"https://api.github.com/users/sul-dlss/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/sul-dlss/subscriptions","organizations_url":"https://api.github.com/users/sul-dlss/orgs","repos_url":"https://api.github.com/users/sul-dlss/repos","events_url":"https://api.github.com/users/sul-dlss/events{/privacy}","received_events_url":"https://api.github.com/users/sul-dlss/received_events","type":"Organization","user_view_type":"public","site_admin":false},"html_url":"https://github.com/sul-dlss/hungry-hungry-hippo","description":"Self-Deposit
+        for the Stanford Digital Repository (SDR): H3 is a Rails web application enabling
+        users to deposit scholarly content into SDR","fork":false,"url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo","forks_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/forks","keys_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/keys{/key_id}","collaborators_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/collaborators{/collaborator}","teams_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/teams","hooks_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/hooks","issue_events_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/issues/events{/number}","events_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/events","assignees_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/assignees{/user}","branches_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/branches{/branch}","tags_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/tags","blobs_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/git/blobs{/sha}","git_tags_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/git/tags{/sha}","git_refs_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/git/refs{/sha}","trees_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/git/trees{/sha}","statuses_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/statuses/{sha}","languages_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/languages","stargazers_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/stargazers","contributors_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/contributors","subscribers_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/subscribers","subscription_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/subscription","commits_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/commits{/sha}","git_commits_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/git/commits{/sha}","comments_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/comments{/number}","issue_comment_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/issues/comments{/number}","contents_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/contents/{+path}","compare_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/compare/{base}...{head}","merges_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/merges","archive_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/{archive_format}{/ref}","downloads_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/downloads","issues_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/issues{/number}","pulls_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/pulls{/number}","milestones_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/milestones{/number}","notifications_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/notifications{?since,all,participating}","labels_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/labels{/name}","releases_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/releases{/id}","deployments_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/deployments","created_at":"2024-10-31T17:24:35Z","updated_at":"2026-02-10T00:17:57Z","pushed_at":"2026-02-10T01:45:02Z","git_url":"git://github.com/sul-dlss/hungry-hungry-hippo.git","ssh_url":"git@github.com:sul-dlss/hungry-hungry-hippo.git","clone_url":"https://github.com/sul-dlss/hungry-hungry-hippo.git","svn_url":"https://github.com/sul-dlss/hungry-hungry-hippo","homepage":"","size":11088,"stargazers_count":1,"watchers_count":1,"language":"Ruby","has_issues":true,"has_projects":true,"has_downloads":true,"has_wiki":true,"has_pages":false,"has_discussions":false,"forks_count":0,"mirror_url":null,"archived":false,"disabled":false,"open_issues_count":43,"license":{"key":"apache-2.0","name":"Apache
+        License 2.0","spdx_id":"Apache-2.0","url":"https://api.github.com/licenses/apache-2.0","node_id":"MDc6TGljZW5zZTI="},"allow_forking":true,"is_template":false,"web_commit_signoff_required":false,"topics":["application","infrastructure","rails-ui"],"visibility":"public","forks":0,"open_issues":43,"watchers":1,"default_branch":"main","temp_clone_token":null,"custom_properties":{},"organization":{"login":"sul-dlss","id":230583,"node_id":"MDEyOk9yZ2FuaXphdGlvbjIzMDU4Mw==","avatar_url":"https://avatars.githubusercontent.com/u/230583?v=4","gravatar_id":"","url":"https://api.github.com/users/sul-dlss","html_url":"https://github.com/sul-dlss","followers_url":"https://api.github.com/users/sul-dlss/followers","following_url":"https://api.github.com/users/sul-dlss/following{/other_user}","gists_url":"https://api.github.com/users/sul-dlss/gists{/gist_id}","starred_url":"https://api.github.com/users/sul-dlss/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/sul-dlss/subscriptions","organizations_url":"https://api.github.com/users/sul-dlss/orgs","repos_url":"https://api.github.com/users/sul-dlss/repos","events_url":"https://api.github.com/users/sul-dlss/events{/privacy}","received_events_url":"https://api.github.com/users/sul-dlss/received_events","type":"Organization","user_view_type":"public","site_admin":false},"network_count":0,"subscribers_count":10}'
+  recorded_at: Tue, 10 Feb 2026 14:40:59 GMT
+recorded_with: VCR 6.4.0

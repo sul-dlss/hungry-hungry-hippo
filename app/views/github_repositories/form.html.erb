@@ -1,0 +1,20 @@
+<% content_for :breadcrumbs do %>
+  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
+    <% component.with_collection_breadcrumb(text: @collection.title, link: collection_path(@collection.druid)) %>
+    <% component.with_breadcrumb(text: 'Select GitHub repository to deposit') %>
+  <% end %>
+<% end %>
+
+<%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: 'Select GitHub repository to deposit', classes: 'mb-3') %>
+
+<%= form_with(model: @github_repository_form) do |form| %>
+  <%= form.hidden_field(:collection_druid) %>
+
+  <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :repository, label: 'GitHub repository URL or owner/name', mark_required: true) %>
+
+  <div class="d-flex my-5">
+    <%= render Elements::CancelButtonComponent.new(link: request.referer || dashboard_path, classes: 'me-2') %>
+    <%= render Elements::Forms::SubmitComponent.new(label: 'Next') %>
+  </div>
+<% end %>

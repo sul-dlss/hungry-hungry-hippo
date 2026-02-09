@@ -43,7 +43,10 @@
     <%= render Collections::HeaderLinkComponent.new(collection:) %>
     <%= render Dashboard::Show::CollectionWorksListComponent.new(collection:, status_map: @status_map) %>
     <%= render Dashboard::Show::FirstUseAlertComponent.new(user: current_user) %>
-    <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary, classes: 'mt-4') %>
+    <div class="d-flex mt-4">
+      <%= render Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: collection.druid), label: 'Deposit to this collection', variant: :primary, classes: 'me-3') %>
+      <%= render Elements::ButtonLinkComponent.new(link: new_github_repository_path(collection_druid: collection.druid), label: 'Select a GitHub repository', variant: :primary) if Settings.github.enabled && collection.github_deposit_enabled %>
+    </div>
   </div>
 <% end %>
 
@@ -53,5 +56,4 @@
                   bs_toggle: 'modal',
                   bs_target: '#request-collection-form-modal'
                 }) %>
-</a>
 </div>
