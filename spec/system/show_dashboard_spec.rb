@@ -154,6 +154,37 @@ RSpec.describe 'Show dashboard', :rack_test do
   end
 
   context 'when new user' do
+    let!(:work) do
+      create(:work, :with_druid, user:).tap do |work|
+        create(:share, work:, user:)
+      end
+    end
+    let(:user) { create(:user) }
+
+    before do
+      allow(Sdr::Repository).to receive(:statuses).and_return({})
+
+      sign_in(user)
+    end
+
+    it 'when new user with shares but not collections' do
+      visit dashboard_path
+
+      expect(page).to have_css('h1', text: "#{user.name} - Dashboard")
+
+      expect(page).to have_no_css('h2', text: 'Drafts - please complete')
+      expect(page).to have_no_css('h2', text: 'Items waiting for collection manager or reviewer to approve')
+      expect(page).to have_no_css('h2', text: 'Your collections')
+
+      # Your collections section
+      expect(page).to have_css('h2', text: 'Items shared with you')
+      within('table#shares-table') do
+        expect(page).to have_css('td', text: work.title)
+      end
+    end
+  end
+
+  context 'when new user with shares but not collections' do
     let!(:collection) { create(:collection, :with_druid, depositors: [user]) }
     let(:user) { create(:user) }
 

@@ -33,10 +33,12 @@
   </div>
 <% end %>
 
-<div class="d-flex justify-content-between mb-4">
-  <%= render Elements::HeadingComponent.new(level: :h2, text: 'Your collections', classes: 'h3 mb-0') %>
-  <%= render Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary) if allowed_to?(:new?, Collection) %>
-</div>
+<% if @your_collections.present? || allowed_to?(:new?, Collection) %>
+  <div class="d-flex justify-content-between mb-4">
+    <%= render Elements::HeadingComponent.new(level: :h2, text: 'Your collections', classes: 'h3 mb-0') %>
+    <%= render Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary) if allowed_to?(:new?, Collection) %>
+  </div>
+<% end %>
 
 <% @your_collections.each do |collection| %>
   <div class="mb-5">
@@ -53,5 +55,4 @@
                   bs_toggle: 'modal',
                   bs_target: '#request-collection-form-modal'
                 }) %>
-</a>
 </div>
