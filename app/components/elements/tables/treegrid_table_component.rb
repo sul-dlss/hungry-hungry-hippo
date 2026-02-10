@@ -6,7 +6,8 @@ module Elements
     class TreegridTableComponent < BaseTableComponent
       renders_many :rows, types: {
         branch: Elements::Tables::TreegridBranchRowComponent,
-        leaf: Elements::Tables::TreegridLeafRowComponent
+        leaf: Elements::Tables::TreegridLeafRowComponent,
+        row: { renders: Elements::Tables::RowComponent, as: :row }
       }
 
       def initialize(**args)

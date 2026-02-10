@@ -97,6 +97,34 @@ RSpec.describe 'Show a work' do
                                             }
                                           ]
                                         }
+                                      },
+                                      {
+                                        type: 'https://cocina.sul.stanford.edu/models/resources/file',
+                                        externalIdentifier: 'https://cocina.sul.stanford.edu/fileSet/nb185hz2713-f6bafda8-5719-4f77-bd76-02aaa542de74',
+                                        label: 'My file4',
+                                        version: 2,
+                                        structural: {
+                                          contains: [
+                                            {
+                                              type: 'https://cocina.sul.stanford.edu/models/file',
+                                              externalIdentifier: 'https://cocina.sul.stanford.edu/file/nb185hz2713-f6bafda8-5719-4f77-bd76-02aaa542de74/my_file4.text',
+                                              label: 'My file4',
+                                              filename: 'dir1/my_file4.txt',
+                                              size: 204_615,
+                                              version: 2,
+                                              hasMimeType: 'text/plain',
+                                              sdrGeneratedText: false,
+                                              correctedForAccessibility: false,
+                                              hasMessageDigests: [
+                                                { type: 'md5', digest: '46b763ec34319caa5c1ed090aca46ef2' },
+                                                { type: 'sha1', digest: 'd4f94915b4c6a3f652ee7de8aae9bcf2c37d93ea' }
+                                              ],
+                                              access: { view: 'world', download: 'world',
+                                                        controlledDigitalLending: false },
+                                              administrative: { publish: true, sdrPreserve: true, shelve: true }
+                                            }
+                                          ]
+                                        }
                                       }
                                     ],
                                     isMemberOf: []
@@ -184,9 +212,9 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('tr', text: 'Version')
         expect(page).to have_css('td', text: '1')
         expect(page).to have_css('tr', text: 'Total number of files')
-        expect(page).to have_css('td', text: '3')
+        expect(page).to have_css('td', text: '4')
         expect(page).to have_css('tr', text: 'Size')
-        expect(page).to have_css('td', text: '599 KB')
+        expect(page).to have_css('td', text: '799 KB')
         expect(page).to have_css('tr', text: 'Deposit created')
         expect(page).to have_css("td time[datetime='#{work.created_at.iso8601}']")
       end
@@ -316,23 +344,19 @@ RSpec.describe 'Show a work' do
       within('table#files-table') do
         expect(page).to have_css('caption', text: 'Files')
         expect(page).to have_link('Edit', href: edit_work_path(druid, tab: 'files'))
-        expect(page).to have_css('th', text: 'File Name')
+        expect(page).to have_css('th', text: 'File/folder name')
         expect(page).to have_css('th', text: 'Description')
         expect(page).to have_css('th', text: 'Hide')
-        row1 = page.find('tbody tr:nth-child(1)')
+        row1 = page.find('tr', text: 'my_file1.txt')
         expect(row1).to have_css('td', text: 'my_file1.txt')
         content_file = ContentFile.find_by(filepath: 'my_file1.txt')
         expect(row1).to have_link('Download file', href: "/content_files/#{content_file.id}/download")
         expect(row1).to have_css('td', text: 'My file1')
         expect(row1).to have_css('td', text: 'Yes')
-        row2 = page.find('tr:nth-child(2)')
-        expect(row2).to have_css('td', text: 'dir1')
-        row3 = page.find('tr:nth-child(3)')
-        expect(row3).to have_css('td', text: 'my_file2.txt')
-        row4 = page.find('tr:nth-child(4)')
-        expect(row4).to have_css('td', text: 'dir2')
-        row5 = page.find('tr:nth-child(5)')
-        expect(row5).to have_css('td', text: 'my_file3.txt')
+        row2 = page.find('tr', text: 'dir1')
+        row3 = page.find('tr', text: 'my_file2.txt')
+        row4 = page.find('tr', text: 'dir2')
+        row5 = page.find('tr', text: 'my_file3.txt')
         row4.click
         expect(row5).not_to be_visible
         row4.click
@@ -341,6 +365,36 @@ RSpec.describe 'Show a work' do
         expect(row3).not_to be_visible
         expect(row4).not_to be_visible
         expect(row5).not_to be_visible
+      end
+    end
+
+    it 'expands and collapses all branches' do
+      visit work_path(druid)
+
+      within('table#files-table') do
+        row2 = page.find('tr', text: 'dir1')
+        row3 = page.find('tr', text: 'my_file2.txt')
+        row4 = page.find('tr', text: 'dir2')
+        row5 = page.find('tr', text: 'my_file3.txt')
+
+        # All branches start expanded
+        expect(row3).to be_visible
+        expect(row4).to be_visible
+        expect(row5).to be_visible
+
+        # Collapse all hides nested content
+        click_link_or_button('Collapse all')
+        expect(row2).to be_visible
+        expect(row3).not_to be_visible
+        expect(row4).not_to be_visible
+        expect(row5).not_to be_visible
+
+        # Expand all shows all content
+        click_link_or_button('Expand all')
+        expect(row2).to be_visible
+        expect(row3).to be_visible
+        expect(row4).to be_visible
+        expect(row5).to be_visible
       end
     end
   end
