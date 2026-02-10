@@ -59,6 +59,7 @@ gem 'kaminari' # For pagination
 gem 'kicks' # Background processing of rabbitMQ messages. (Formerly sneakers.)
 gem 'local_time'
 gem 'marcel' # For MIME type detection
+gem 'octokit' # GitHub API client
 gem 'okcomputer'
 gem 'omniauth', '~> 2.0' # For Github OAuth
 gem 'omniauth-github'
@@ -100,6 +101,7 @@ group :test do
   gem 'capybara-lockstep'
   gem 'cyperful', require: false
   gem 'selenium-webdriver'
+  gem 'vcr'
   gem 'webmock'
 end
 

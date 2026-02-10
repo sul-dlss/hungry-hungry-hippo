@@ -551,7 +551,10 @@ CREATE TABLE public.works (
     deposit_state character varying DEFAULT 'deposit_not_in_progress'::character varying NOT NULL,
     version integer DEFAULT 1 NOT NULL,
     last_deposited_at timestamp(6) without time zone,
-    type character varying DEFAULT 'Work'::character varying NOT NULL
+    type character varying DEFAULT 'Work'::character varying NOT NULL,
+    github_repository_id bigint,
+    github_repository_name character varying,
+    github_deposit_enabled boolean DEFAULT false NOT NULL
 );
 
 
@@ -1003,6 +1006,13 @@ CREATE UNIQUE INDEX index_works_on_druid ON public.works USING btree (druid);
 
 
 --
+-- Name: index_works_on_github_deposit_enabled; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_works_on_github_deposit_enabled ON public.works USING btree (github_deposit_enabled);
+
+
+--
 -- Name: index_works_on_object_updated_at; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1014,6 +1024,13 @@ CREATE INDEX index_works_on_object_updated_at ON public.works USING btree (objec
 --
 
 CREATE INDEX index_works_on_review_state ON public.works USING btree (review_state);
+
+
+--
+-- Name: index_works_on_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_works_on_type ON public.works USING btree (type);
 
 
 --
@@ -1126,6 +1143,7 @@ ALTER TABLE ONLY public.affiliations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260209140935'),
 ('20260205132650'),
 ('20260204215055'),
 ('20260204142423'),
