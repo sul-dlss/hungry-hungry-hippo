@@ -5,6 +5,7 @@ class GithubService
   class RepositoryNotFound < StandardError; end
 
   Repository = Struct.new('Repository', :id, :name, :url, :description, keyword_init: true)
+  Release = Struct.new('Release', :id, :name, :tag, :zip_url, :published_at)
 
   def self.repository?(...)
     new.repository?(...)
@@ -12,6 +13,10 @@ class GithubService
 
   def self.repository(...)
     new.repository(...)
+  end
+
+  def self.releases(...)
+    new.releases(...)
   end
 
   # @param repository [String] repository name (owner/repo), URL, or ID
@@ -25,12 +30,24 @@ class GithubService
   end
 
   # @param repository [String] repository name (owner/repo), URL, or ID
-  # @return [Repository] the repository object if it exists and public, otherwise nil
+  # @return [Repository] repository object if it exists and public
   # @raise [RepositoryNotFound] if the repository does not exist or is not public
   def repository(repository)
     client.repository(normalized_repository_for(repository)).then do |repository_response|
       Repository.new(id: repository_response.id, name: repository_response.full_name,
                      url: repository_response.html_url, description: repository_response.description)
+    end
+  rescue Octokit::NotFound, Octokit::InvalidRepository
+    raise RepositoryNotFound, "Repository '#{repository}' not found or is not public"
+  end
+
+  # @param repository [String] repository name (owner/repo), URL, or ID
+  # @return [Array<Release>] releases for the repository ordered by published date ascending
+  # @raise [RepositoryNotFound] if the repository does not exist or is not public
+  def releases(repository)
+    client.releases(normalized_repository_for(repository)).sort_by(&:published_at).map do |release|
+      Release.new(id: release.id, name: release.name, tag: release.tag_name, zip_url: release.zipball_url,
+                  published_at: release.published_at)
     end
   rescue Octokit::NotFound, Octokit::InvalidRepository
     raise RepositoryNotFound, "Repository '#{repository}' not found or is not public"
@@ -44,6 +61,8 @@ class GithubService
                 else
                   Octokit::Client.new(client_id: Settings.github.client_id,
                                       client_secret: Settings.github.client_secret)
+                end.tap do |client|
+                  client.auto_paginate = true
                 end
   end
 

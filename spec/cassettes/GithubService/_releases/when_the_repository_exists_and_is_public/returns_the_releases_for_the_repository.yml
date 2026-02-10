@@ -1,0 +1,145 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/releases?per_page=100
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Octokit Ruby Gem 10.0.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic aDNfY2xpZW50X2FwcF9pZDpoM19jbGllbnRfYXBwX3NlY3JldA==
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Feb 2026 21:18:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Vary:
+      - Accept,Accept-Encoding, Accept, X-Requested-With
+      Etag:
+      - W/"1e1fea36deea6043ef7c90e0f55ca46165ca512581a6826269f3af44b9f24702"
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Github-Api-Version-Selected:
+      - '2022-11-28'
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO,
+        X-GitHub-Request-Id, Deprecation, Sunset
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Frame-Options:
+      - deny
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - '0'
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Content-Security-Policy:
+      - default-src 'none'
+      Transfer-Encoding:
+      - chunked
+      X-Github-Request-Id:
+      - D2F1:3ACAC6:C6E33AE:359B5AFB:698BA094
+      Server:
+      - github.com
+      X-Ratelimit-Limit:
+      - '60'
+      X-Ratelimit-Remaining:
+      - '58'
+      X-Ratelimit-Reset:
+      - '1770761891'
+      X-Ratelimit-Used:
+      - '2'
+      X-Ratelimit-Resource:
+      - core
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/releases/186241744","assets_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/releases/186241744/assets","upload_url":"https://uploads.github.com/repos/sul-dlss/hungry-hungry-hippo/releases/186241744/assets{?name,label}","html_url":"https://github.com/sul-dlss/hungry-hungry-hippo/releases/tag/v0.1.0","id":186241744,"author":{"login":"aaron-collier","id":2294288,"node_id":"MDQ6VXNlcjIyOTQyODg=","avatar_url":"https://avatars.githubusercontent.com/u/2294288?v=4","gravatar_id":"","url":"https://api.github.com/users/aaron-collier","html_url":"https://github.com/aaron-collier","followers_url":"https://api.github.com/users/aaron-collier/followers","following_url":"https://api.github.com/users/aaron-collier/following{/other_user}","gists_url":"https://api.github.com/users/aaron-collier/gists{/gist_id}","starred_url":"https://api.github.com/users/aaron-collier/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/aaron-collier/subscriptions","organizations_url":"https://api.github.com/users/aaron-collier/orgs","repos_url":"https://api.github.com/users/aaron-collier/repos","events_url":"https://api.github.com/users/aaron-collier/events{/privacy}","received_events_url":"https://api.github.com/users/aaron-collier/received_events","type":"User","user_view_type":"public","site_admin":false},"node_id":"RE_kwDONIqI6M4LGdLQ","tag_name":"v0.1.0","target_commitish":"main","name":"v0.1.0","draft":false,"immutable":false,"prerelease":false,"created_at":"2024-11-19T12:32:31Z","updated_at":"2024-11-19T16:54:06Z","published_at":"2024-11-19T16:54:06Z","assets":[],"tarball_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/tarball/v0.1.0","zipball_url":"https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/zipball/v0.1.0","body":"##
+        What''s Changed in Sprint 1\r\n\r\n### Initial Rails 8 setup and deployment\r\n\r\n*
+        Rails new app by @lwrubel in https://github.com/sul-dlss/hungry-hungry-hippo/pull/21\r\n*
+        Adds overmind. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/25\r\n*
+        Adds rubocop. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/26\r\n*
+        Adds config. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/27\r\n*
+        Adds rspec, webmock, capybara, and additional rubos. by @justinlittman in
+        https://github.com/sul-dlss/hungry-hungry-hippo/pull/29\r\n* Setup CircleCI
+        and code coverage by @aaron-collier in https://github.com/sul-dlss/hungry-hungry-hippo/pull/31\r\n*
+        Automate installation of overmind and use `bin/dev` for continuity by @mjgiarlo
+        in https://github.com/sul-dlss/hungry-hungry-hippo/pull/30\r\n* Use postgres
+        for the application database in all envs by @mjgiarlo in https://github.com/sul-dlss/hungry-hungry-hippo/pull/39\r\n*
+        Adds HB gem. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/38\r\n*
+        Bump postgres version in containerland to match what we will use in deployed
+        envs by @mjgiarlo in https://github.com/sul-dlss/hungry-hungry-hippo/pull/40\r\n*
+        Remove app from compose.yaml to avoid development confusion by @aaron-collier
+        in https://github.com/sul-dlss/hungry-hungry-hippo/pull/44\r\n* Add CI and
+        CodeClimate badges to README by @mjgiarlo in https://github.com/sul-dlss/hungry-hungry-hippo/pull/46\r\n*
+        Implement capistrano deployment by @aaron-collier in https://github.com/sul-dlss/hungry-hungry-hippo/pull/45\r\n*
+        Fix assets precompile for deploy. by @aaron-collier in https://github.com/sul-dlss/hungry-hungry-hippo/pull/67\r\n*
+        Add okcomputer for initial status check by @aaron-collier in https://github.com/sul-dlss/hungry-hungry-hippo/pull/69\r\n\r\n###
+        Getting started with new Rails 8 features\r\n* Bump to Rails 8.0.0 from rc2
+        by @mjgiarlo in https://github.com/sul-dlss/hungry-hungry-hippo/pull/59\r\n*
+        Adding solid queue/cable/cache databases by @lwrubel in https://github.com/sul-dlss/hungry-hungry-hippo/pull/48\r\n*
+        Authentication by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/49\r\n*
+        Fixes to db configs. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/73\r\n\r\n###
+        Initial interface setup and establishing new patterns\r\n\r\n* Adds initial
+        work form. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/53\r\n*
+        Adds view components. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/55\r\n*
+        Streamline method of deriving model name from form class by @mjgiarlo in https://github.com/sul-dlss/hungry-hungry-hippo/pull/56\r\n*
+        Add view component patch. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/63\r\n*
+        Adds tabbed form. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/64\r\n*
+        Adds initial work show page. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/66\r\n*
+        Title field for work form  by @lwrubel in https://github.com/sul-dlss/hungry-hungry-hippo/pull/65\r\n*
+        Adds initial mapping to cocina. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/68\r\n*
+        Adds initial deposit job. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/72\r\n*
+        Deposit button by @lwrubel in https://github.com/sul-dlss/hungry-hungry-hippo/pull/74\r\n*
+        Test text field by rendering component by @lwrubel in https://github.com/sul-dlss/hungry-hungry-hippo/pull/81\r\n*
+        Adds hippo icons. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/87\r\n*
+        Perform deposit. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/80\r\n*
+        Adds mapping to work form and retrievel of cocina from SDR. by @justinlittman
+        in https://github.com/sul-dlss/hungry-hungry-hippo/pull/84\r\n* Adds saving
+        drafts. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/88\r\n*
+        Extract fixtures. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/90\r\n*
+        Adds alert component and flashes. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/97\r\n*
+        Set up collection model by @lwrubel in https://github.com/sul-dlss/hungry-hungry-hippo/pull/94\r\n*
+        Adds editing a work. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/96\r\n*
+        Initial Dashboard by @aaron-collier in https://github.com/sul-dlss/hungry-hungry-hippo/pull/95\r\n*
+        Adds rake task for completing accessionWF. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/102\r\n*
+        Delete hello controller. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/106\r\n*
+        Create collections uniquely by druid. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/107\r\n*
+        Adds validation that work is editable by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/98\r\n*
+        Adds updating SDR by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/101\r\n*
+        Add help text support to text field component. by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/105\r\n*
+        Extract locales by @justinlittman in https://github.com/sul-dlss/hungry-hungry-hippo/pull/108\r\n*
+        Add has_many collections relationship to user by @aaron-collier in https://github.com/sul-dlss/hungry-hungry-hippo/pull/120\r\n*
+        Adds abstract fields. Refactoring of form labels and help text. by @justinlittman
+        in https://github.com/sul-dlss/hungry-hungry-hippo/pull/109\r\n* Remove unused
+        code from WorksListComponent by @aaron-collier in https://github.com/sul-dlss/hungry-hungry-hippo/pull/121\r\n\r\n#
+        Dependency updates\r\n* Update dependencies by @sul-devops-team in https://github.com/sul-dlss/hungry-hungry-hippo/pull/70\r\n*
+        Update dependencies by @sul-devops-team in https://github.com/sul-dlss/hungry-hungry-hippo/pull/103\r\n*
+        Enable new cop by @aaron-collier in https://github.com/sul-dlss/hungry-hungry-hippo/pull/122\r\n\r\n##
+        New Contributors\r\n* @lwrubel made their first contribution in https://github.com/sul-dlss/hungry-hungry-hippo/pull/21\r\n*
+        @justinlittman made their first contribution in https://github.com/sul-dlss/hungry-hungry-hippo/pull/25\r\n*
+        @aaron-collier made their first contribution in https://github.com/sul-dlss/hungry-hungry-hippo/pull/31\r\n*
+        @mjgiarlo made their first contribution in https://github.com/sul-dlss/hungry-hungry-hippo/pull/30\r\n*
+        @sul-devops-team made their first contribution in https://github.com/sul-dlss/hungry-hungry-hippo/pull/70\r\n\r\n**Full
+        Changelog**: https://github.com/sul-dlss/hungry-hungry-hippo/commits/v0.1.0","mentions_count":5}]'
+  recorded_at: Tue, 10 Feb 2026 21:18:12 GMT
+recorded_with: VCR 6.4.0
