@@ -61,4 +61,35 @@ RSpec.describe GithubService, :vcr do
       end
     end
   end
+
+  describe '.releases' do
+    context 'when the repository exists and is public' do
+      it 'returns the releases for the repository' do
+        releases = described_class.releases('sul-dlss/hungry-hungry-hippo')
+        expect(releases.length).to eq(1)
+        expect(releases.first)
+          .to have_attributes(id: 186_241_744, name: 'v0.1.0', tag: 'v0.1.0',
+                              zip_url: 'https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/zipball/v0.1.0',
+                              published_at: Time.zone.parse('2024-11-19T16:54:06Z'))
+      end
+    end
+
+    context 'when the repository does not exist' do
+      it 'raises RepositoryNotFound' do
+        expect { described_class.releases('sul-dlss/non-existent-repo') }.to raise_error(GithubService::RepositoryNotFound)
+      end
+    end
+
+    context 'when the repository is private' do
+      it 'raises RepositoryNotFound' do
+        expect { described_class.releases('sul-dlss/google-books') }.to raise_error(GithubService::RepositoryNotFound)
+      end
+    end
+
+    context 'when the repository is malformed' do
+      it 'raises RepositoryNotFound' do
+        expect { described_class.releases('foo') }.to raise_error(GithubService::RepositoryNotFound)
+      end
+    end
+  end
 end

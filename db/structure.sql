@@ -451,6 +451,44 @@ ALTER SEQUENCE public.contributors_id_seq OWNED BY public.contributors.id;
 
 
 --
+-- Name: github_releases; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.github_releases (
+    id bigint NOT NULL,
+    github_repository_id bigint NOT NULL,
+    status character varying DEFAULT 'queued'::character varying NOT NULL,
+    status_details text,
+    release_tag character varying NOT NULL,
+    release_id bigint NOT NULL,
+    release_name character varying NOT NULL,
+    zip_url character varying NOT NULL,
+    published_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: github_releases_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.github_releases_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: github_releases_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.github_releases_id_seq OWNED BY public.github_releases.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -648,6 +686,13 @@ ALTER TABLE ONLY public.contributors ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: github_releases id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.github_releases ALTER COLUMN id SET DEFAULT nextval('public.github_releases_id_seq'::regclass);
+
+
+--
 -- Name: shares id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -754,6 +799,14 @@ ALTER TABLE ONLY public.contents
 
 ALTER TABLE ONLY public.contributors
     ADD CONSTRAINT contributors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: github_releases github_releases_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.github_releases
+    ADD CONSTRAINT github_releases_pkey PRIMARY KEY (id);
 
 
 --
@@ -957,6 +1010,20 @@ CREATE INDEX index_contributors_on_collection_id ON public.contributors USING bt
 
 
 --
+-- Name: index_github_releases_on_github_repository_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_github_releases_on_github_repository_id ON public.github_releases USING btree (github_repository_id);
+
+
+--
+-- Name: index_github_releases_on_release_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_github_releases_on_release_id ON public.github_releases USING btree (release_id);
+
+
+--
 -- Name: index_shares_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1121,6 +1188,14 @@ ALTER TABLE ONLY public.active_storage_attachments
 
 
 --
+-- Name: github_releases fk_rails_d2eafca062; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.github_releases
+    ADD CONSTRAINT fk_rails_d2eafca062 FOREIGN KEY (github_repository_id) REFERENCES public.works(id);
+
+
+--
 -- Name: shares fk_rails_d671d25093; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1143,6 +1218,7 @@ ALTER TABLE ONLY public.affiliations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260210195338'),
 ('20260209140935'),
 ('20260205132650'),
 ('20260204215055'),

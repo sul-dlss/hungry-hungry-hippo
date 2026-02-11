@@ -28,3 +28,7 @@ end
 every 1.day, at: '8:30 am' do
   runner 'TermsReminderEmailJob.perform_later'
 end
+
+every 1.day, at: '11:00 pm' do
+  runner 'GithubRepository.where(github_deposit_enabled: true).find_each {|repo| PollGithubReleasesJob.perform_later(github_repository: repo)}' # rubocop:disable Layout/LineLength
+end

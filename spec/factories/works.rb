@@ -20,5 +20,12 @@ FactoryBot.define do
     trait :with_druid do
       druid { generate(:unique_druid) }
     end
+
+    factory :github_repository, class: 'GithubRepository' do
+      type { 'GithubRepository' }
+      sequence(:github_repository_id)
+      github_repository_name { "sul-dlss/github_repo_#{github_repository_id}" }
+      github_deposit_enabled { true }
+    end
   end
 end
