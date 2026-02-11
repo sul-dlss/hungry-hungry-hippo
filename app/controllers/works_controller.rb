@@ -151,7 +151,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def work_params
-    params.expect(work_form_class.model_param => work_form_class.permitted_params)
+    params.expect(work: work_form_class.permitted_params)
   end
 
   def review_form_params

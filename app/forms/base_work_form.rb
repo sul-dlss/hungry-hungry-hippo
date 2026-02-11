@@ -185,13 +185,4 @@ class BaseWorkForm < ApplicationForm
 
     errors.add(:contributors, 'must have at least one contributor')
   end
-
-  # This is used to pass the proper model name to the controller for strong parameters.
-  # This is needed for WorkForm subclasses
-  # eg.:
-  #   WorkForm => work
-  #   GithubRepositoryWorkForm => github_repository_work
-  def self.model_param
-    name.sub(/Form$/, '').underscore.to_sym
-  end
 end
