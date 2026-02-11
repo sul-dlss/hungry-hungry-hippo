@@ -94,6 +94,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
 
+  resources :github_repository_works, only: %i[edit update], controller: 'works', param: :druid do
+    collection do
+      get 'wait/:id', to: 'github_repository_works#wait', as: 'wait'
+    end
+  end
+
   resource :terms, only: :show
 
   resource :contacts, only: %i[new create]

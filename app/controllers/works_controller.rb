@@ -151,7 +151,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def work_params
-    params.expect(work: work_form_class.permitted_params)
+    params.expect(work_form_class.model_param => work_form_class.permitted_params)
   end
 
   def review_form_params
@@ -339,12 +339,16 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   # @return [String] view to render for the form for editing
   def edit_form_view
     # This can be extended to handle different subclasses of Works.
+    return 'github_repositories/edit_form' if @work.github_repository?
+
     'form'
   end
 
   # @return [Class] form class to use for the form for editing
   def work_form_class
     # This can be extended to handle different subclasses of Works.
+    return GithubRepositoryWorkForm if @work.github_repository?
+
     WorkForm
   end
 end
