@@ -7,7 +7,7 @@ class PollGithubReleasesJob < ApplicationJob
   def perform(github_repository:)
     return unless github_repository.github_deposit_enabled
 
-    GithubService.releases(github_repository.github_repository_id).each do |release|
+    Github::AppService.releases(github_repository.github_repository_id).each do |release|
       next if github_repository.github_releases.exists?(release_id: release.id)
 
       next if release.published_at < github_repository.created_at # Do not get releases published before repo was added

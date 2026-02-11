@@ -18,7 +18,7 @@ class GithubRepositoriesController < ApplicationController
     authorize! @collection, with: WorkPolicy
 
     if @github_repository_form.valid?
-      github_repository_info = GithubService.repository(@github_repository_form.repository)
+      github_repository_info = Github::AppService.repository(@github_repository_form.repository)
       github_repository_work_form = GithubRepositoryWorkForm.new(**github_repository_attrs(github_repository_info:))
       github_repository = GithubRepository.create!(title: github_repository_info.name, user: current_user,
                                                    github_repository_id: github_repository_info.id,

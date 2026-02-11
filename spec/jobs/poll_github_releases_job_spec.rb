@@ -15,19 +15,19 @@ RSpec.describe PollGithubReleasesJob do
   let(:enabled) { true }
 
   before do
-    allow(GithubService).to receive(:releases)
+    allow(Github::AppService).to receive(:releases)
       .and_return([
                     # Before the created_at of the repository, so ignored
-                    GithubService::Release.new(id: 1, tag: 'v1.0', name: 'First release',
-                                               zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.0',
-                                               published_at: 4.days.ago),
+                    Github::AppService::Release.new(id: 1, tag: 'v1.0', name: 'First release',
+                                                    zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.0',
+                                                    published_at: 4.days.ago),
                     # Already exists in the database, so ignored
-                    GithubService::Release.new(id: 2, tag: 'v1.1', name: 'Second release',
-                                               zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.1',
-                                               published_at: 1.day.ago),
-                    GithubService::Release.new(id: 3, tag: 'v1.2', name: 'Third release',
-                                               zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.2',
-                                               published_at: Time.zone.now)
+                    Github::AppService::Release.new(id: 2, tag: 'v1.1', name: 'Second release',
+                                                    zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.1',
+                                                    published_at: 1.day.ago),
+                    Github::AppService::Release.new(id: 3, tag: 'v1.2', name: 'Third release',
+                                                    zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.2',
+                                                    published_at: Time.zone.now)
                   ])
   end
 
@@ -36,7 +36,7 @@ RSpec.describe PollGithubReleasesJob do
 
     it 'does not create any GithubRelease records' do
       expect { described_class.perform_now(github_repository:) }.not_to change(GithubRelease, :count)
-      expect(GithubService).not_to have_received(:releases)
+      expect(Github::AppService).not_to have_received(:releases)
     end
   end
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe GithubService, :vcr do
+RSpec.describe Github::AppService, :vcr do
   describe '.repository?' do
     context 'when the repository exists and is public' do
       it 'returns true' do
@@ -45,19 +45,19 @@ RSpec.describe GithubService, :vcr do
 
     context 'when the repository does not exist' do
       it 'raises RepositoryNotFound' do
-        expect { described_class.repository('sul-dlss/non-existent-repo') }.to raise_error(GithubService::RepositoryNotFound)
+        expect { described_class.repository('sul-dlss/non-existent-repo') }.to raise_error(Github::AppService::RepositoryNotFound)
       end
     end
 
     context 'when the repository is private' do
       it 'raises RepositoryNotFound' do
-        expect { described_class.repository('sul-dlss/google-books') }.to raise_error(GithubService::RepositoryNotFound)
+        expect { described_class.repository('sul-dlss/google-books') }.to raise_error(Github::AppService::RepositoryNotFound)
       end
     end
 
     context 'when the repository is malformed' do
       it 'raises RepositoryNotFound' do
-        expect { described_class.repository('foo') }.to raise_error(GithubService::RepositoryNotFound)
+        expect { described_class.repository('foo') }.to raise_error(Github::AppService::RepositoryNotFound)
       end
     end
   end
@@ -76,19 +76,19 @@ RSpec.describe GithubService, :vcr do
 
     context 'when the repository does not exist' do
       it 'raises RepositoryNotFound' do
-        expect { described_class.releases('sul-dlss/non-existent-repo') }.to raise_error(GithubService::RepositoryNotFound)
+        expect { described_class.releases('sul-dlss/non-existent-repo') }.to raise_error(Github::AppService::RepositoryNotFound)
       end
     end
 
     context 'when the repository is private' do
       it 'raises RepositoryNotFound' do
-        expect { described_class.releases('sul-dlss/google-books') }.to raise_error(GithubService::RepositoryNotFound)
+        expect { described_class.releases('sul-dlss/google-books') }.to raise_error(Github::AppService::RepositoryNotFound)
       end
     end
 
     context 'when the repository is malformed' do
       it 'raises RepositoryNotFound' do
-        expect { described_class.releases('foo') }.to raise_error(GithubService::RepositoryNotFound)
+        expect { described_class.releases('foo') }.to raise_error(Github::AppService::RepositoryNotFound)
       end
     end
   end

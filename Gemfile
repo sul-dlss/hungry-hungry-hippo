@@ -52,9 +52,12 @@ gem 'dor-services-client'
 gem 'druid-tools'
 gem 'dry-monads'
 gem 'edtf'
+gem 'faraday' # HTTP client
+gem 'faraday-follow_redirects'
 gem 'frozen_record' # For licenses
 gem 'globus_client'
 gem 'honeybadger'
+gem 'jwt' # For GitHub App authentication
 gem 'kaminari' # For pagination
 gem 'kicks' # Background processing of rabbitMQ messages. (Formerly sneakers.)
 gem 'local_time'

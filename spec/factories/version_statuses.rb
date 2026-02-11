@@ -7,13 +7,13 @@ FactoryBot.define do
     openable { false }
     # assembling { false }
     accessioning { false }
-    # closeable { false }
+    closeable { false }
     discardable { false }
     version_description { whats_changing_fixture }
 
     initialize_with do
       new(status: Dor::Services::Client::ObjectVersion::VersionStatus.new(open:, versionId: version, openable:,
-                                                                          accessioning:, discardable:,
+                                                                          accessioning:, discardable:, closeable:,
                                                                           versionDescription: version_description))
     end
 

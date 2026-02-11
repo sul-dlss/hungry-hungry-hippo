@@ -251,3 +251,11 @@ The strategy for analytics is to collect data to answer specific research questi
 Note that for privacy, Visits and Events are not connected with users.
 
 Current research questions are documented in the [Analytics research questions](https://github.com/sul-dlss/hungry-hungry-hippo/wiki/Analytics-research-questions) wiki page.
+
+## GitHub Integration
+
+All Github functionality uses public methods of the Github API.
+
+In development, no credentials are used for the API. In production, an access token is generated for the sul-dlss installation of the Stanford Digital Library Github App. (There are separare Github Apps and installations for each environment.) This approach provides greater API rate limits than using no credentials.
+
+Note that the private key PEM file for the Github App (`Settings.github.private_key`) must be base 64 encoded.
