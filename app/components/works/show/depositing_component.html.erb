@@ -1,13 +1,11 @@
 <% if alert? %>
   <%= render Elements::AlertComponent.new(variant: :success, dismissible: true,
-                                          title: 'Work successfully deposited',
+                                          title: 'Deposit successfully submitted',
                                           data: { turbo_permanent: true }, id: 'depositing-alert') do %>
-    <p class="mt-2 mb-1">Here's what to expect next:</p>
     <ul>
-      <li>Your deposit is currently making its way through our systems.</li>
-      <li>You will receive an e-mail notification when your deposit is complete.</li>
-      <li>You will be able to edit this work when the deposit is complete.</li>
-      <li>You may continue to use this application and create or edit other works while this deposit is in progress.</li>
+      <li>Your deposit is currently making its way through our system.</li>
+      <li>You will receive an email when your deposit is complete.</li>
+      <li>You can create or edit other items while this deposit is in progress.</li>
     </ul>
   <% end %>
 <% else %>

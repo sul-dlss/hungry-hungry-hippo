@@ -10,7 +10,7 @@ module Works
       end
 
       def alert?
-        @work_presenter.first_version? && @work_presenter.accessioning?
+        @work_presenter.accessioning?
       end
     end
   end
