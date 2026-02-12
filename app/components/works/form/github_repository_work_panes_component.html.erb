@@ -36,7 +36,7 @@
 <% end %>
 
 <% component.with_work_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-  <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
+  <%= render Works::Edit::LicenseComponent.new(form:, license_presenter:) %>
   <% unless @collection.no_custom_rights_statement_option? %>
     <%= render Works::Edit::TermsOfUseComponent.new(form:, collection: @collection) %>
   <% end %>

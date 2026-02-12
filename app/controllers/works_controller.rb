@@ -10,7 +10,6 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   before_action :set_work_form_from_cocina, only: %i[show edit review]
   before_action :set_content, only: %i[show edit review]
   before_action :set_presenter, only: %i[show edit review]
-  before_action :set_license_presenter, only: %i[edit]
 
   def show
     authorize! @work, with: WorkPolicy
@@ -29,7 +28,6 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
     @content = Content.create!(user: current_user)
     @work_form = new_work_form
-    set_license_presenter # Note this requires @collection and @work_form set above.
     mark_collection_required_contributors # Note this requires @collection and @work_form set above.
     ahoy.track Ahoy::Event::WORK_FORM_STARTED, form_id: @work_form.form_id
 
@@ -71,7 +69,6 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       redirect_to wait_works_path(work.id)
     else
       handle_invalid
-      set_license_presenter
       render :form, status: :unprocessable_content
     end
   end
@@ -88,7 +85,6 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       redirect_to wait_works_path(@work.id)
     else
       handle_no_changes_or_invalid
-      set_license_presenter
       set_presenter
       @work_form.prepopulate
       render edit_form_view, status: :unprocessable_content
@@ -207,10 +203,6 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   def set_presenter
     @work_presenter = WorkPresenter.new(work: @work, work_form: @work_form, version_status: @version_status,
                                         user_version: Sdr::Repository.latest_user_version(druid:))
-  end
-
-  def set_license_presenter
-    @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @collection)
   end
 
   def new_work_form # rubocop:disable Metrics/AbcSize
