@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Create a Github repository' do
+RSpec.describe 'Create a Github repository and work deposit' do
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
 
@@ -69,17 +69,40 @@ RSpec.describe 'Create a Github repository' do
 
     expect(page).to have_css('h1', text: 'sul-dlss/hungry-hungry-hippo')
 
+    # Manage files tab is not displayed
+    expect(page).not_to have_link('Manage files')
+
     # Title is pre-populated
     find('.nav-link', text: 'Title and contact').click
     expect(page).to have_field('Title of deposit', with: 'sul-dlss/hungry-hungry-hippo')
+    fill_in('Contact email', with: contact_emails_fixture.first['email'])
+
+    # Add a contributor
+    find('.nav-link', text: 'Authors / Contributors').click
+    select('Creator', from: 'Role')
+    within('.orcid-section') do
+      find('label', text: 'Enter name manually').click
+    end
+    fill_in('First name', with: 'Jane')
+    fill_in('Last name', with: 'Stanford')
 
     # Abstract is pre-populated
     find('.nav-link', text: 'Abstract and keywords').click
     expect(page).to have_field('Abstract', with: 'Self-Deposit for the Stanford Digital Repository (SDR)')
+    fill_in('Keywords (one per box)', with: keywords_fixture.first['text'])
 
     # Work type is pre-populated
     find('.nav-link', text: 'Type of deposit').click
     expect(page).to have_checked_field('Software/Code')
+
+    # DOI tab is not displayed
+    expect(page).not_to have_link('DOI')
+
+    # Access settings tab is not displayed
+    expect(page).not_to have_link('Access settings')
+
+    # Dates tab is not displayed
+    expect(page).not_to have_link('Dates (optional)')
 
     # Related work is pre-populated
     find('.nav-link', text: 'Related content (optional)').click
@@ -90,6 +113,22 @@ RSpec.describe 'Create a Github repository' do
       expect(page).to have_field('How is your deposit related to this work?',
                                  with: 'is derived from')
     end
+
+    # Clicking on Next to go to the citation tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Citation for this deposit (optional)')
+
+    # Clicking on Next to go to Deposit
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Deposit')
+    click_link_or_button('Deposit', class: 'btn-primary')
+
+    # Waiting page may be too fast to catch so not testing.
+    # On show page
+    expect(page).to have_css('h1', text: 'sul-dlss/hungry-hungry-hippo')
+    expect(page).to have_css('.status', text: 'Depositing')
+    expect(page).to have_css('.alert-success', text: 'Work successfully deposited')
+    expect(page).to have_no_link('Edit or deposit')
 
     # Ahoy events are created
     work = Work.find_by(druid:)
