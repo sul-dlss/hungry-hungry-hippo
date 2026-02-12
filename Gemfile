@@ -58,6 +58,7 @@ gem 'honeybadger'
 gem 'kaminari' # For pagination
 gem 'kicks' # Background processing of rabbitMQ messages. (Formerly sneakers.)
 gem 'local_time'
+gem 'mais_person_client'
 gem 'marcel' # For MIME type detection
 gem 'octokit' # GitHub API client
 gem 'okcomputer'
