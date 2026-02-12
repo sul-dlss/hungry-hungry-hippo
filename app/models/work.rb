@@ -67,8 +67,4 @@ class Work < ApplicationRecord
   def to_param
     druid
   end
-
-  def github_repository?
-    is_a?(GithubRepository)
-  end
 end

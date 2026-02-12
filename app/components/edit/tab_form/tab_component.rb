@@ -4,11 +4,10 @@ module Edit
   module TabForm
     # Component for a tab in a tabbed pane.
     class TabComponent < ApplicationComponent
-      def initialize(label:, tab_name:, active_tab_name:, render: true)
+      def initialize(label:, tab_name:, active_tab_name:)
         @label = label
         @tab_name = tab_name
         @selected = tab_name == active_tab_name
-        @render = render
         super()
       end
 
@@ -50,10 +49,6 @@ module Edit
 
       def pane_id
         "#{tab_name}-pane"
-      end
-
-      def render?
-        @render
       end
     end
   end

@@ -6,12 +6,4 @@ class GithubRepositoryWorkForm < BaseWorkForm
   def self.model_name
     ActiveModel::Name.new(self, nil, 'Work')
   end
-
-  def default_tab
-    :title
-  end
-
-  def render_tabs
-    %i[title contributors abstract types license related_content citation]
-  end
 end

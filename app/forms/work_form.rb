@@ -22,12 +22,4 @@ class WorkForm < BaseWorkForm
     errors.add(:content,
                "too many files (maximum is #{Settings.file_upload.max_files})")
   end
-
-  def default_tab
-    :files
-  end
-
-  def render_tabs
-    %i[files title contributors abstract types doi access license dates related_content citation]
-  end
 end

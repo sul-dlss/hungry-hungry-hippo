@@ -339,6 +339,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   # @return [String] view to render for the form for editing
   def edit_form_view
     # This can be extended to handle different subclasses of Works.
+    return 'github_repository_work_form' if @work.is_a?(GithubRepository)
 
     'form'
   end
@@ -346,7 +347,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   # @return [Class] form class to use for the form for editing
   def work_form_class
     # This can be extended to handle different subclasses of Works.
-    return GithubRepositoryWorkForm if @work.github_repository?
+    return GithubRepositoryWorkForm if @work.is_a?(GithubRepository)
 
     WorkForm
   end
