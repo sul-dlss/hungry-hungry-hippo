@@ -55,15 +55,15 @@ RSpec.describe 'Create a collection deposit' do
     create(:user, name: 'Pennywise', email_address: 'pennywise@stanford.edu')
 
     allow(AccountService).to receive(:call)
-      .with(sunetid: 'stepking')
+      .with(id: 'stepking')
       .and_return(AccountService::Account.new(name: 'Stephen King', sunetid: 'stepking'))
     allow(AccountService).to receive(:call)
-      .with(sunetid: 'joehill')
+      .with(id: 'joehill')
       .and_return(AccountService::Account.new(name: 'Joe Hill', sunetid: 'joehill'))
     allow(AccountService).to receive(:call)
-      .with(sunetid: 'pennywise')
+      .with(id: 'pennywise')
       .and_return(AccountService::Account.new(name: 'Pennywise', sunetid: 'pennywise'))
-    allow(AccountService).to receive(:call).with(sunetid: 'notjoehill').and_return(nil)
+    allow(AccountService).to receive(:call).with(id: 'notjoehill').and_return(nil)
 
     sign_in(user, groups:)
   end

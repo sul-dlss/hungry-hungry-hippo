@@ -8,7 +8,7 @@ RSpec.describe 'Accounts search' do
 
     before do
       allow(AccountService).to receive(:call)
-        .with(sunetid: 'jc')
+        .with(id: 'jc')
         .and_return(AccountService::Account.new(
                       name: 'Justin Coyne', sunetid: 'jc',
                       description: 'Digital Library Systems and Services'
@@ -54,7 +54,7 @@ RSpec.describe 'Accounts search' do
 
     context 'when no match' do
       before do
-        allow(AccountService).to receive(:call).with(sunetid: 'not_user').and_return(nil)
+        allow(AccountService).to receive(:call).with(id: 'not_user').and_return(nil)
 
         sign_in user, groups: ['dlss:hydrus-app-collection-creators']
       end

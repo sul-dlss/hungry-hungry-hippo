@@ -25,7 +25,7 @@ RSpec.describe 'Change work ownership' do
     allow(Sdr::Repository).to receive(:accession)
     allow(Sdr::Event).to receive(:list).and_return([])
     allow(AccountService).to receive(:call)
-      .with(sunetid: new_owner.sunetid)
+      .with(id: new_owner.sunetid)
       .and_return(AccountService::Account.new(
                     name: new_owner.name,
                     sunetid: new_owner.sunetid,

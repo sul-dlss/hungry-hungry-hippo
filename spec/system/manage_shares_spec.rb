@@ -22,7 +22,7 @@ RSpec.describe 'Manage shares' do
     allow(Sdr::Event).to receive(:list).with(druid:).and_return([])
 
     allow(AccountService).to receive(:call)
-      .with(sunetid: 'dsj')
+      .with(id: 'dsj')
       .and_return(AccountService::Account.new(name: 'David Starr Jordan', sunetid: 'dsj'))
 
     sign_in(user)

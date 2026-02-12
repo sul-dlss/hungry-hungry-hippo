@@ -24,16 +24,16 @@ class AccountsController < ApplicationController
 
   private
 
-  # Returns the sunetid from the params, either from :id (search) or :sunetid (search_user).
-  def sunetid
-    @sunetid ||= (params[:id] || params[:sunetid])&.downcase
+  # Returns the id from the params, either from :id (search) or :sunetid (search_user).
+  def id
+    @id ||= params[:id] || params[:sunetid]
   end
 
   # Does a lookup from the account service in production mode, otherwise examines local database for users
   def lookup_account
-    return AccountService.call(sunetid:) unless Rails.env.development?
+    return AccountService.call(id:) unless Rails.env.development?
 
-    user = User.find_by_sunetid(sunetid:)
+    user = User.find_by_sunetid(sunetid: id) || User.find_by(email_address: id)
     return nil unless user
 
     AccountService::Account.new(name: user.name || user.sunetid, sunetid: user.sunetid,
