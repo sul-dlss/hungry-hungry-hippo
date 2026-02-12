@@ -343,6 +343,13 @@ GEM
       net-imap
       net-pop
       net-smtp
+    mais_person_client (0.0.8)
+      activesupport (>= 4.2)
+      faraday
+      faraday-retry
+      nokogiri
+      ostruct
+      zeitwerk
     marc (1.4.0)
       nokogiri (~> 1.0)
       rexml
@@ -726,6 +733,7 @@ DEPENDENCIES
   kaminari
   kicks
   local_time
+  mais_person_client
   marcel
   mission_control-jobs
   octokit
