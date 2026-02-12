@@ -1,0 +1,128 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.crossref.org/works/doi/10.1128/mbio.01735-25
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 11 Feb 2026 21:37:47 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '15822'
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - Link
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Accept, Accept-Encoding, Accept-Charset, Accept-Language,
+        Accept-Ranges, Cache-Control
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding
+      Server:
+      - Jetty(9.4.40.v20210413)
+      X-Rate-Limit-Limit:
+      - '5'
+      X-Rate-Limit-Interval:
+      - 1s
+      X-Concurrency-Limit:
+      - '1'
+      X-Api-Pool:
+      - public
+      Permissions-Policy:
+      - interest-cohort=()
+    body:
+      encoding: ASCII-8BIT
+      string: '{"status":"ok","message-type":"work","message-version":"1.0.0","message":{"indexed":{"date-parts":[[2025,11,20]],"date-time":"2025-11-20T21:56:00Z","timestamp":1763675760595,"version":"3.45.0"},"reference-count":51,"publisher":"American
+        Society for Microbiology","issue":"8","license":[{"start":{"date-parts":[[2025,8,13]],"date-time":"2025-08-13T00:00:00Z","timestamp":1755043200000},"content-version":"vor","delay-in-days":0,"URL":"https:\/\/creativecommons.org\/licenses\/by\/4.0\/"},{"start":{"date-parts":[[2025,8,13]],"date-time":"2025-08-13T00:00:00Z","timestamp":1755043200000},"content-version":"tdm","delay-in-days":0,"URL":"https:\/\/journals.asm.org\/non-commercial-tdm-license"}],"funder":[{"name":"Manning
+        Fund for COVID-19 Research at UVVA"},{"DOI":"10.13039\/100008222","name":"Ivy
+        Foundation","doi-asserted-by":"publisher","id":[{"id":"10.13039\/100008222","id-type":"DOI","asserted-by":"publisher"}]},{"name":"The
+        Pendleton Laboratory Fund for Pediatric Infectious Diseases"},{"DOI":"10.13039\/100000060","name":"National
+        Institute of Allergy and Infectious Diseases","doi-asserted-by":"publisher","award":["AI176515"],"award-info":[{"award-number":["AI176515"]}],"id":[{"id":"10.13039\/100000060","id-type":"DOI","asserted-by":"publisher"}]},{"DOI":"10.13039\/100000060","name":"National
+        Institute of Allergy and Infectious Diseases","doi-asserted-by":"publisher","award":["AI160334"],"award-info":[{"award-number":["AI160334"]}],"id":[{"id":"10.13039\/100000060","id-type":"DOI","asserted-by":"publisher"}]},{"DOI":"10.13039\/100001448","name":"Alpha-1
+        Foundation","doi-asserted-by":"publisher","award":["AI178669"],"award-info":[{"award-number":["AI178669"]}],"id":[{"id":"10.13039\/100001448","id-type":"DOI","asserted-by":"publisher"}]}],"content-domain":{"domain":["journals.asm.org"],"crossmark-restriction":true},"short-container-title":["mBio"],"published-print":{"date-parts":[[2025,8,13]]},"abstract":"<jats:title>ABSTRACT<\/jats:title>\n                  <jats:sec>\n                    <jats:title\/>\n                    <jats:p>Many
+        difficult-to-understand clinical features characterize COVID-19 and post-acute
+        sequelae of COVID-19 (PASC or long COVID [LC]). These can include blood pressure
+        instability, hyperinflammation, coagulopathies, and neuropsychiatric complaints.
+        The pathogenesis of these features remains unclear. The SARS-CoV-2 Spike protein
+        receptor-binding domain (RBD) binds angiotensin converting enzyme 2 (ACE2)
+        on the surface of host cells to initiate infection. We hypothesized that some
+        people convalescing from COVID-19 may produce anti-RBD antibodies that resemble
+        ACE2 sufficiently to have ACE2-like catalytic activity, that is, they are
+        ACE2-like proteolytic abzymes that may help mediate the pathogenesis of COVID-19
+        and LC. In previous work, we showed that some people with acute COVID-19 had
+        immunoglobulin-associated ACE2-like proteolytic activity, suggesting that
+        some people with COVID-19 indeed produced ACE2-like abzymes. However, it remained
+        unknown whether ACE2-like abzymes were seen only in acute COVID-19 or whether
+        ACE2-like abzymes could also be identified in people convalescing from COVID-19.
+        Here, we show that some people convalescing from COVID-19 attending a clinic
+        for people with persistent pulmonary symptoms also have ACE2-like abzymes
+        and that the presence of ACE2-like catalytic activity correlates with alterations
+        in blood pressure in an exercise test.<\/jats:p>\n                  <\/jats:sec>\n                  <jats:sec>\n                    <jats:title>IMPORTANCE<\/jats:title>\n                    <jats:p>Patients
+        who have had COVID-19 can sometimes have troublesome symptoms, termed post-acute
+        sequelae of COVID-19 (PASC) or long COVID (LC), which can include problems
+        with blood pressure regulation, gastrointestinal problems, inflammation, blood
+        clotting, and symptoms like \u201cbrain fog.\u201d The proximate causes for
+        these problems are not known, which makes these problems difficult to treat
+        definitively. We previously found that some acute COVID-19 patients make antibodies
+        against SARS-CoV-2, the virus that causes COVID-19, that act like an enzyme,
+        angiotensin converting enzyme 2 (ACE2). ACE2 normally helps regulate blood
+        pressure and serves as the receptor for SARS-CoV-2 in the body. We show that
+        patients convalescing from COVID-19 also make antibodies that act like ACE2
+        and that the presence of those antibodies correlates with problems in blood
+        pressure regulation. The findings provide a new opening to potentially understanding
+        the causes of LC, and so provide direction for the development of new treatments.<\/jats:p>\n                  <\/jats:sec>","DOI":"10.1128\/mbio.01735-25","type":"journal-article","created":{"date-parts":[[2025,7,22]],"date-time":"2025-07-22T13:00:09Z","timestamp":1753189209000},"update-policy":"https:\/\/doi.org\/10.1128\/asmj-crossmark-policy-page","source":"Crossref","is-referenced-by-count":0,"title":["ACE-2-like
+        enzymatic activity in COVID-19 convalescents with persistent pulmonary symptoms
+        associated with immunoglobulin"],"prefix":"10.1128","volume":"16","author":[{"ORCID":"https:\/\/orcid.org\/0009-0001-6788-1717","authenticated-orcid":false,"given":"Yufeng","family":"Song","sequence":"first","affiliation":[{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Department
+        of Pediatrics, University of Virginia","place":["Charlottesville, USA"]}]},{"ORCID":"https:\/\/orcid.org\/0009-0005-9929-3185","authenticated-orcid":false,"given":"Frances","family":"Mehl","sequence":"additional","affiliation":[{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Department
+        of Pediatrics, University of Virginia","place":["Charlottesville, USA"]}]},{"given":"Lyndsey
+        M.","family":"Muehling","sequence":"additional","affiliation":[{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Department
+        of Medicine, University of Virginia","place":["Charlottesville, USA"]}]},{"given":"Glenda","family":"Canderan","sequence":"additional","affiliation":[{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Department
+        of Medicine, University of Virginia","place":["Charlottesville, USA"]}]},{"given":"Kyle","family":"Enfield","sequence":"additional","affiliation":[{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Department
+        of Medicine, University of Virginia","place":["Charlottesville, USA"]}]},{"given":"Jie","family":"Sun","sequence":"additional","affiliation":[{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Beirne
+        B. Carter Center for Immunology Research, University of Virginia","place":["Charlottesville,
+        USA"]},{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Division
+        of Infectious Disease and International Health, Department of Medicine, University
+        of Virginia","place":["Charlottesville, USA"]}]},{"given":"Michael T.","family":"Yin","sequence":"additional","affiliation":[{"id":[{"id":"https:\/\/ror.org\/0530xmm89","id-type":"ROR","asserted-by":"publisher"}],"name":"Columbia
+        University Vagelos College of Physicians and Surgeons","place":["New York,
+        USA"]}]},{"given":"Sarah J.","family":"Ratcliffe","sequence":"additional","affiliation":[{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Division
+        of Biostatistics, Department of Public Health Sciences, University of Virginia","place":["Charlottesville,
+        USA"]}]},{"given":"Jeffrey M.","family":"Wilson","sequence":"additional","affiliation":[{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Division
+        of Allergy and Clinical Immunology, Department of Medicine, University of
+        Virginia","place":["Charlottesville, USA"]}]},{"given":"Alexandra","family":"Kadl","sequence":"additional","affiliation":[{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Department
+        of Medicine, University of Virginia","place":["Charlottesville, USA"]},{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Department
+        of Pharmacology, University of Virginia","place":["Charlottesville, USA"]}]},{"given":"Judith
+        A.","family":"Woodfolk","sequence":"additional","affiliation":[{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Division
+        of Allergy and Clinical Immunology, Department of Medicine, University of
+        Virginia","place":["Charlottesville, USA"]},{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Department
+        of Pharmacology, University of Virginia","place":["Charlottesville, USA"]}]},{"ORCID":"https:\/\/orcid.org\/0000-0002-8922-9260","authenticated-orcid":true,"given":"Steven
+        L.","family":"Zeichner","sequence":"additional","affiliation":[{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Department
+        of Pediatrics, University of Virginia","place":["Charlottesville, USA"]},{"id":[{"id":"https:\/\/ror.org\/0153tk833","id-type":"ROR","asserted-by":"publisher"}],"name":"Department
+        of Microbiology, Immunology, and Cancer Biology, University of Virginia","place":["Charlottesville,
+        USA"]}]}],"member":"235","reference":[{"unstructured":"World Health Organization.
+        2024. WHO COVID-19 dashboard. World Health Organization. Available from: https:\/\/data.who.int\/dashboards\/covid19\/deaths","key":"e_1_3_4_2_2"},{"doi-asserted-by":"publisher","key":"e_1_3_4_3_2","DOI":"10.1038\/s41577-023-00904-7"},{"doi-asserted-by":"publisher","key":"e_1_3_4_4_2","DOI":"10.3389\/fimmu.2023.1117464"},{"doi-asserted-by":"publisher","key":"e_1_3_4_5_2","DOI":"10.1038\/s41579-022-00846-2"},{"issue":"480","key":"e_1_3_4_6_2","first-page":"1","article-title":"Long
+        COVID in adults: United States, 2022","author":"Adjaye-Gbewonyo D","year":"2023","unstructured":"Adjaye-Gbewonyo
+        D, Vahratian A, Perrine CG, Bertolli J. 2023. Long COVID in adults: United
+        States, 2022. NCHS Data Brief, no. 480:1\u20138.","journal-title":"NCHS Data
+        Brief"},{"doi-asserted-by":"publisher","key":"e_1_3_4_7_2","DOI":"10.1080\/07853890.2022.2076901"},{"doi-asserted-by":"publisher","key":"e_1_3_4_8_2","DOI":"10.3389\/fpsyt.2023.1138389"},{"doi-asserted-by":"publisher","key":"e_1_3_4_9_2","DOI":"10.1001\/jama.2023.8823"},{"doi-asserted-by":"publisher","key":"e_1_3_4_10_2","DOI":"10.1016\/S1473-3099(21)00703-9"},{"doi-asserted-by":"publisher","key":"e_1_3_4_11_2","DOI":"10.1038\/s41586-023-06651-y"},{"doi-asserted-by":"publisher","key":"e_1_3_4_12_2","DOI":"10.1126\/science.adg7942"},{"doi-asserted-by":"publisher","key":"e_1_3_4_13_2","DOI":"10.1016\/S0140-6736(20)30183-5"},{"doi-asserted-by":"publisher","key":"e_1_3_4_14_2","DOI":"10.1016\/S2352-3026(20)30217-9"},{"doi-asserted-by":"publisher","key":"e_1_3_4_15_2","DOI":"10.1038\/s41591-020-1051-9"},{"doi-asserted-by":"publisher","key":"e_1_3_4_16_2","DOI":"10.1016\/S2352-4642(22)00028-1"},{"doi-asserted-by":"publisher","key":"e_1_3_4_17_2","DOI":"10.3390\/v14040750"},{"doi-asserted-by":"publisher","key":"e_1_3_4_18_2","DOI":"10.1016\/j.cell.2023.01.039"},{"doi-asserted-by":"publisher","key":"e_1_3_4_19_2","DOI":"10.1126\/science.abb2762"},{"doi-asserted-by":"publisher","key":"e_1_3_4_20_2","DOI":"10.1007\/s11033-022-08193-4"},{"doi-asserted-by":"publisher","key":"e_1_3_4_21_2","DOI":"10.1016\/j.sbi.2023.102619"},{"doi-asserted-by":"publisher","key":"e_1_3_4_22_2","DOI":"10.1038\/s41586-020-2180-5"},{"doi-asserted-by":"publisher","key":"e_1_3_4_23_2","DOI":"10.1016\/j.cell.2020.03.045"},{"doi-asserted-by":"publisher","key":"e_1_3_4_24_2","DOI":"10.1016\/j.cca.2021.10.029"},{"doi-asserted-by":"publisher","key":"e_1_3_4_25_2","DOI":"10.1016\/j.peptides.2022.170766"},{"doi-asserted-by":"publisher","key":"e_1_3_4_26_2","DOI":"10.1126\/science.3787261"},{"doi-asserted-by":"publisher","key":"e_1_3_4_27_2","DOI":"10.1126\/science.3787262"},{"doi-asserted-by":"publisher","key":"e_1_3_4_28_2","DOI":"10.1111\/j.1749-6632.1996.tb33195.x"},{"doi-asserted-by":"publisher","key":"e_1_3_4_29_2","DOI":"10.1007\/BF02787937"},{"doi-asserted-by":"publisher","key":"e_1_3_4_30_2","DOI":"10.1073\/pnas.90.19.8876"},{"doi-asserted-by":"publisher","key":"e_1_3_4_31_2","DOI":"10.1111\/j.1749-6632.1995.tb19963.x"},{"doi-asserted-by":"publisher","key":"e_1_3_4_32_2","DOI":"10.1021\/bi7013954"},{"doi-asserted-by":"publisher","key":"e_1_3_4_33_2","DOI":"10.1146\/annurev.biochem.69.1.751"},{"doi-asserted-by":"publisher","key":"e_1_3_4_34_2","DOI":"10.1021\/bi2002289"},{"doi-asserted-by":"publisher","key":"e_1_3_4_35_2","DOI":"10.1161\/01.res.87.5.e1"},{"doi-asserted-by":"publisher","key":"e_1_3_4_36_2","DOI":"10.1126\/science.1585181"},{"doi-asserted-by":"publisher","key":"e_1_3_4_37_2","DOI":"10.1074\/jbc.270.25.15257"},{"doi-asserted-by":"publisher","key":"e_1_3_4_38_2","DOI":"10.1126\/science.2727702"},{"doi-asserted-by":"publisher","key":"e_1_3_4_39_2","DOI":"10.1073\/pnas.0509849103"},{"doi-asserted-by":"publisher","key":"e_1_3_4_40_2","DOI":"10.1021\/bi992588w"},{"doi-asserted-by":"publisher","key":"e_1_3_4_41_2","DOI":"10.4049\/jimmunol.180.11.7714"},{"doi-asserted-by":"publisher","key":"e_1_3_4_42_2","DOI":"10.1038\/12483"},{"doi-asserted-by":"publisher","key":"e_1_3_4_43_2","DOI":"10.1021\/bi050675k"},{"doi-asserted-by":"publisher","key":"e_1_3_4_44_2","DOI":"10.1128\/mbio.00541-24"},{"doi-asserted-by":"publisher","key":"e_1_3_4_45_2","DOI":"10.1038\/s41590-025-02110-0"},{"doi-asserted-by":"publisher","key":"e_1_3_4_46_2","DOI":"10.1159\/000514203"},{"doi-asserted-by":"publisher","key":"e_1_3_4_47_2","DOI":"10.1038\/s43856-024-00477-z"},{"doi-asserted-by":"publisher","key":"e_1_3_4_48_2","DOI":"10.1152\/physrev.00036.2005"},{"doi-asserted-by":"publisher","key":"e_1_3_4_49_2","DOI":"10.1038\/nrcardio.2014.59"},{"doi-asserted-by":"publisher","key":"e_1_3_4_50_2","DOI":"10.1161\/HYPERTENSIONAHA.117.10406"},{"doi-asserted-by":"publisher","key":"e_1_3_4_51_2","DOI":"10.1042\/CS20130436"},{"doi-asserted-by":"publisher","key":"e_1_3_4_52_2","DOI":"10.3390\/ph15091157"}],"container-title":["mBio"],"original-title":[],"language":"en","link":[{"URL":"https:\/\/journals.asm.org\/doi\/pdf\/10.1128\/mbio.01735-25","content-type":"application\/pdf","content-version":"vor","intended-application":"text-mining"},{"URL":"https:\/\/journals.asm.org\/doi\/pdf\/10.1128\/mbio.01735-25","content-type":"unspecified","content-version":"vor","intended-application":"similarity-checking"}],"deposited":{"date-parts":[[2025,8,13]],"date-time":"2025-08-13T13:05:00Z","timestamp":1755090300000},"score":1,"resource":{"primary":{"URL":"https:\/\/journals.asm.org\/doi\/10.1128\/mbio.01735-25"}},"subtitle":[],"editor":[{"given":"Satya","family":"Dandekar","sequence":"additional","affiliation":[]}],"short-title":[],"issued":{"date-parts":[[2025,8,13]]},"references-count":51,"journal-issue":{"issue":"8","published-print":{"date-parts":[[2025,8,13]]}},"alternative-id":["10.1128\/mbio.01735-25"],"URL":"https:\/\/doi.org\/10.1128\/mbio.01735-25","relation":{},"ISSN":["2150-7511"],"issn-type":[{"type":"electronic","value":"2150-7511"}],"subject":[],"published":{"date-parts":[[2025,8,13]]},"assertion":[{"value":"2025-06-05","order":0,"name":"received","label":"Received","group":{"name":"publication_history","label":"Publication
+        History"}},{"value":"2025-06-16","order":2,"name":"accepted","label":"Accepted","group":{"name":"publication_history","label":"Publication
+        History"}},{"value":"2025-07-22","order":3,"name":"published","label":"Published","group":{"name":"publication_history","label":"Publication
+        History"}}],"article-number":"e01735-25"}}'
+  recorded_at: Wed, 11 Feb 2026 21:37:47 GMT
+recorded_with: VCR 6.4.0
