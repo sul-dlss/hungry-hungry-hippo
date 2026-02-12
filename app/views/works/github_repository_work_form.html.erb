@@ -8,10 +8,7 @@
     <% component.with_tab(label: t('works.edit.panes.contributors.tab_label'), tab_name: :contributors, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.abstract.tab_label'), tab_name: :abstract, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.types.tab_label'), tab_name: :types, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.doi.tab_label'), tab_name: :doi, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.access.tab_label'), tab_name: :access, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.license.tab_label'), tab_name: :license, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.dates.tab_label'), tab_name: :dates, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.related_content.tab_label'), tab_name: :related_content, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.citation.tab_label'), tab_name: :citation, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.deposit.tab_label'), tab_name: :deposit, active_tab_name:) %>
@@ -55,27 +52,11 @@
         <%= render Works::Edit::WorkTypeComponent.new(form:, collection: @collection) %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :doi, label: t('works.edit.panes.doi.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do |pane_component| %>
-        <%= render Works::Edit::DoiComponent.new(form:, collection: @collection) %>
-
-        <% pane_component.with_help do %>
-          <%= link_to_new_tab('What is a DOI?', 'https://sdr.library.stanford.edu/documentation/purls-dois-and-orcid-ids', class: 'ms-3') %>
-        <% end %>
-      <% end %>
-
-      <% component.with_work_pane(tab_name: :access, label: t('works.edit.panes.access.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-        <%= render Works::Edit::AccessSettingsComponent.new(form:, collection: @collection) %>
-      <% end %>
-
       <% component.with_work_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
         <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
         <% unless @collection.no_custom_rights_statement_option? %>
           <%= render Works::Edit::TermsOfUseComponent.new(form:, collection: @collection) %>
         <% end %>
-      <% end %>
-
-      <% component.with_work_pane(tab_name: :dates, label: t('works.edit.panes.dates.label'), tooltip: t('works.edit.panes.dates.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-        <%= render Works::Edit::DatesComponent.new(form:) %>
       <% end %>
 
       <% component.with_work_pane(tab_name: :related_content, label: t('works.edit.panes.related_content.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
@@ -120,4 +101,4 @@
     <% end %>
   <% end %>
 <% end %>
-<%= render template: "works/form_layout" %>
+<%= render template: 'works/form_layout' %>

@@ -3,10 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Create a Github repository and work deposit' do
+  include WorkMappingFixtures
+
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
 
   let(:version_status) { build(:first_draft_version_status) }
+  let(:work_version_status) { build(:draft_version_status) }
 
   before do
     allow(GithubService).to receive(:repository?).with('sul-dlss/happy-happy-hippo').and_return(false)
@@ -30,8 +33,9 @@ RSpec.describe 'Create a Github repository and work deposit' do
 
     # Stubbing out for edit form
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
-    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status, work_version_status)
     allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
+    allow(Sdr::Event).to receive(:list).and_return([])
 
     create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture, depositors: [user],
                         github_deposit_enabled: true)
@@ -39,7 +43,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
     sign_in(user)
   end
 
-  it 'creates a Github repository work' do
+  it 'creates a Github repository' do
     visit dashboard_path
     click_link_or_button('Select a GitHub repository')
 
@@ -70,7 +74,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
     expect(page).to have_css('h1', text: 'sul-dlss/hungry-hungry-hippo')
 
     # Manage files tab is not displayed
-    expect(page).not_to have_link('Manage files')
+    expect(page).to have_no_link('Manage files')
 
     # Title is pre-populated
     find('.nav-link', text: 'Title and contact').click
@@ -96,13 +100,13 @@ RSpec.describe 'Create a Github repository and work deposit' do
     expect(page).to have_checked_field('Software/Code')
 
     # DOI tab is not displayed
-    expect(page).not_to have_link('DOI')
+    expect(page).to have_no_link('DOI')
 
     # Access settings tab is not displayed
-    expect(page).not_to have_link('Access settings')
+    expect(page).to have_no_link('Access settings')
 
     # Dates tab is not displayed
-    expect(page).not_to have_link('Dates (optional)')
+    expect(page).to have_no_link('Dates (optional)')
 
     # Related work is pre-populated
     find('.nav-link', text: 'Related content (optional)').click
