@@ -11,9 +11,6 @@
         <li><%= link_to 'Admin dashboard', admin_dashboard_path, class: 'dropdown-item' %></li>
       <% end %>
       <li><%= link_to 'Dashboard', dashboard_path, class: 'dropdown-item' %></li>
-      <% if github_connection? %>
-        <li><%= link_to 'GitHub integration', user_github_path, class: 'dropdown-item' %></li>
-      <% end %>
       <li><%= link_to 'Logout', logout_path, class: 'dropdown-item' %></li>
     </ul>
   <% else %>

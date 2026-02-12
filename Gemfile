@@ -62,8 +62,6 @@ gem 'mais_person_client'
 gem 'marcel' # For MIME type detection
 gem 'octokit' # GitHub API client
 gem 'okcomputer'
-gem 'omniauth', '~> 2.0' # For Github OAuth
-gem 'omniauth-github'
 gem 'parallel' # Used for importing. Can be removed when importing is done.
 gem 'preservation-client'
 gem 'rack-sanitizer'

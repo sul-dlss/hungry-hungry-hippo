@@ -55,14 +55,6 @@ class User < ApplicationRecord
       collection_managers.joins(:collection).exists?('collection.github_deposit_enabled': true)
   end
 
-  def connected_to_github?
-    github_access_token.present?
-  end
-
-  def previously_connected_to_github?
-    github_connected_at.present? && !connected_to_github?
-  end
-
   def self.find_by_sunetid(sunetid:)
     find_by(email_address: "#{sunetid}#{EMAIL_SUFFIX}")
   end
