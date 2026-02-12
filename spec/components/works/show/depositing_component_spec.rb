@@ -13,7 +13,7 @@ RSpec.describe Works::Show::DepositingComponent, type: :component do
     it 'renders the alert' do
       render_inline(described_class.new(work_presenter:))
 
-      expect(page).to have_css('.alert', text: 'Work successfully deposited')
+      expect(page).to have_css('.alert', text: 'Deposit successfully submitted')
       expect(page).to have_css('#depositing-alert[data-turbo-permanent]')
     end
   end
@@ -21,10 +21,10 @@ RSpec.describe Works::Show::DepositingComponent, type: :component do
   context 'when other version and accessioning' do
     let(:version_status) { build(:accessioning_version_status) }
 
-    it 'does not render the alert' do
+    it 'renders the alert' do
       render_inline(described_class.new(work_presenter:))
 
-      expect(page).to have_no_css('.alert')
+      expect(page).to have_css('.alert', text: 'Deposit successfully submitted')
       expect(page).to have_css('#depositing-alert[data-turbo-permanent]')
     end
   end
