@@ -18,7 +18,7 @@
   <% end %>
   <%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: work_form.title || t('works.edit.no_title'), classes: 'mb-3') %>
   <%= render Works::Show::ReviewRejectedComponent.new(work:) if work %>
-  <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if defined?(@valid) && !@valid %>
+  <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if defined?(valid) && !valid %>
   <% form_id = dom_id(@work_form, 'tabbed_form') %>
   <% discard_draft_form_id = dom_id(@work_form, 'discard_form') %>
   <%= render Edit::DiscardDraftFormComponent.new(presenter: @work_presenter, id: discard_draft_form_id) if @work_presenter %>
@@ -28,7 +28,7 @@
     <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
     <%# TabListComponent will render the actual form. %>
     <% form_with(model: work_form) do |form| %>
-      <%= render panes_component(component:, form:, form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) %>
+      <%= render panes_component(component:, form:, form_id:, discard_draft_form_id:, active_tab_name:) %>
       <% component.with_work_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, next_tab_btn: false) do |pane_component| %>
         <% pane_component.with_help do %>
           <p class="mb-0">
