@@ -41,36 +41,15 @@
       <% end %>
 
       <% component.with_work_pane(tab_name: :title, label: t('works.edit.panes.title.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :title, label: t('works.edit.fields.title.label'), tooltip: t('works.edit.fields.title.tooltip_html'),
-                                                               help_text: t('works.edit.fields.title.help_text'), width: 500, rows: 1, container_classes: 'pane-section', mark_required: true) %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: Works::Edit::ContactEmailsComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
-
-        <% if @work_form.works_contact_email.present? %>
-          <%= form.hidden_field :works_contact_email %>
-
-          <div class="pane-section">
-            <p>
-              Contact email provided by collection manager <%= render Elements::TooltipComponent.new(target_label: 'Provided contact email', tooltip: t('works.edit.fields.works_contact_email.tooltip_html')) %>
-            </p>
-            <p>
-              <%= @work_form.works_contact_email %>
-            </p>
-          </div>
-        <% end %>
+        <%= render Works::Edit::TitleComponent.new(form:, work_form: @work_form) %>
       <% end %>
 
       <% component.with_work_pane(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text'), tooltip: t('works.edit.panes.contributors.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-        <%# The invalid-feedback controller is used to hide the invalid feedback message (contributor required)
-        when citation radio is changed or a new contributor is added. %>
-        <div data-controller="invalid-feedback" data-invalid-feedback-tab-error-outlet=".tab-error" data-invalid-feedback-tab-value="contributors">
-          <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :contributors, data: { invalid_feedback_target: 'feedback' }) %>
-          <%= render NestedComponentPresenter.for(form:, field_name: :contributors, model_class: ContributorForm, form_component: Edit::ContributorComponent, hidden_label: true, reorderable: true, fieldset_classes: 'pane-section', add_button_data: { action: 'invalid-feedback#hide' }) %>
-        </div>
+        <%= render Works::Edit::ContributorsComponent.new(form:) %>
       <% end %>
 
       <% component.with_work_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), help_text: t('works.edit.panes.abstract.help_text'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-        <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :abstract, label: t('works.edit.fields.abstract.label'), tooltip: t('works.edit.fields.abstract.tooltip_html'), container_classes: 'pane-section', mark_required: true) %>
-        <%= render NestedComponentPresenter.for(form:, field_name: :keywords, model_class: KeywordForm, form_component: Works::Edit::KeywordComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
+        <%= render Works::Edit::AbstractComponent.new(form:) %>
       <% end %>
 
       <% component.with_work_pane(tab_name: :types, label: t('works.edit.panes.types.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
