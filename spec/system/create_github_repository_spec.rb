@@ -139,7 +139,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
     # On show page
     expect(page).to have_css('h1', text: 'sul-dlss/hungry-hungry-hippo')
     expect(page).to have_css('.status', text: 'Depositing')
-    expect(page).to have_css('.alert-success', text: 'Work successfully deposited')
+    expect(page).to have_css('.alert-success', text: 'Deposit successfully submitted')
     expect(page).to have_no_link('Edit or deposit')
 
     # Ahoy events are created
