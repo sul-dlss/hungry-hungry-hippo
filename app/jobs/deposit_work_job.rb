@@ -22,7 +22,6 @@ class DepositWorkJob < ApplicationJob
 
     # Add missing digests and mime types
     Contents::Analyzer.call(content:)
-
     # If new_cocina_object is null then persist not performed since not changed.
     new_cocina_object = perform_persist
     druid = work_form.druid || new_cocina_object.externalIdentifier

@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Create a Github repository' do
+RSpec.describe 'Create a Github repository and work deposit' do
+  include WorkMappingFixtures
+
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
-
-  let(:version_status) { build(:first_draft_version_status) }
 
   before do
     allow(GithubService).to receive(:repository?).with('sul-dlss/happy-happy-hippo').and_return(false)
@@ -16,7 +16,7 @@ RSpec.describe 'Create a Github repository' do
                                     url: 'https://github.com/sul-dlss/hungry-hungry-hippo',
                                     description: 'Self-Deposit for the Stanford Digital Repository (SDR)')
     )
-    # Stubbing out for Deposit Job
+    # Stubbing out for first Deposit Job
     allow(Sdr::Repository).to receive(:register) do |args|
       cocina_params = args[:cocina_object].to_h
       cocina_params[:externalIdentifier] = druid
@@ -27,11 +27,23 @@ RSpec.describe 'Create a Github repository' do
       @registered_cocina_object = Cocina::Models.with_metadata(cocina_object, 'abc123')
     end
     allow(Sdr::Repository).to receive(:accession)
+    allow(Sdr::Repository).to receive(:find_latest_user_version).with(druid:).and_return(nil)
 
     # Stubbing out for edit form
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
-    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
+    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:first_draft_version_status),
+                                                                       build(:draft_version_status),
+                                                                       build(:first_accessioning_version_status))
     allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
+    allow(Sdr::Event).to receive(:list).and_return([])
+
+    # Stubbing out second Deposit Job.
+    # It is already open.
+    allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
+    allow(Sdr::Repository).to receive(:update) do |args|
+      @updated_cocina_object = args[:cocina_object]
+    end
+    allow(Sdr::Repository).to receive(:accession)
 
     create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture, depositors: [user],
                         github_deposit_enabled: true)
@@ -39,7 +51,7 @@ RSpec.describe 'Create a Github repository' do
     sign_in(user)
   end
 
-  it 'creates a Github repository work' do
+  it 'creates a Github repository' do
     visit dashboard_path
     click_link_or_button('Select a GitHub repository')
 
@@ -69,17 +81,40 @@ RSpec.describe 'Create a Github repository' do
 
     expect(page).to have_css('h1', text: 'sul-dlss/hungry-hungry-hippo')
 
+    # Manage files tab is not displayed
+    expect(page).to have_no_link('Manage files')
+
     # Title is pre-populated
     find('.nav-link', text: 'Title and contact').click
     expect(page).to have_field('Title of deposit', with: 'sul-dlss/hungry-hungry-hippo')
+    fill_in('Contact email', with: contact_emails_fixture.first['email'])
+
+    # Add a contributor
+    find('.nav-link', text: 'Authors / Contributors').click
+    select('Creator', from: 'Role')
+    within('.orcid-section') do
+      find('label', text: 'Enter name manually').click
+    end
+    fill_in('First name', with: 'Jane')
+    fill_in('Last name', with: 'Stanford')
 
     # Abstract is pre-populated
     find('.nav-link', text: 'Abstract and keywords').click
     expect(page).to have_field('Abstract', with: 'Self-Deposit for the Stanford Digital Repository (SDR)')
+    fill_in('Keywords (one per box)', with: keywords_fixture.first['text'])
 
     # Work type is pre-populated
     find('.nav-link', text: 'Type of deposit').click
     expect(page).to have_checked_field('Software/Code')
+
+    # DOI tab is not displayed
+    expect(page).to have_no_link('DOI')
+
+    # Access settings tab is not displayed
+    expect(page).to have_no_link('Access settings')
+
+    # Dates tab is not displayed
+    expect(page).to have_no_link('Dates (optional)')
 
     # Related work is pre-populated
     find('.nav-link', text: 'Related content (optional)').click
@@ -90,6 +125,22 @@ RSpec.describe 'Create a Github repository' do
       expect(page).to have_field('How is your deposit related to this work?',
                                  with: 'is derived from')
     end
+
+    # Clicking on Next to go to the citation tab
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Citation for this deposit (optional)')
+
+    # Clicking on Next to go to Deposit
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: 'Deposit')
+    click_link_or_button('Deposit', class: 'btn-primary')
+
+    # Waiting page may be too fast to catch so not testing.
+    # On show page
+    expect(page).to have_css('h1', text: 'sul-dlss/hungry-hungry-hippo')
+    expect(page).to have_css('.status', text: 'Depositing')
+    expect(page).to have_css('.alert-success', text: 'Work successfully deposited')
+    expect(page).to have_no_link('Edit or deposit')
 
     # Ahoy events are created
     work = Work.find_by(druid:)

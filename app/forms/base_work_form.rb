@@ -33,9 +33,6 @@ class BaseWorkForm < ApplicationForm
     self.contact_emails = (contact_emails - blank_contact_emails)
   end
 
-  validate :min_content_file_count, on: :deposit
-  validate :max_content_file_count
-
   with_options if: -> { create_date_type == 'range' } do
     validate :create_date_range_complete
     validate :create_date_range_sequence
@@ -152,23 +149,6 @@ class BaseWorkForm < ApplicationForm
 
   # This is used for tracking with Ahoy. It allows eventing before the form is saved.
   attribute :form_id, :string, default: -> { SecureRandom.uuid }
-
-  def min_content_file_count
-    return if content_id.nil? # This makes test configuration easier.
-
-    file_count = Content.find(content_id).content_files.count
-    errors.add(:content, 'must have at least one file') if file_count.zero?
-  end
-
-  def max_content_file_count
-    return if content_id.nil? # This makes test configuration easier.
-
-    file_count = Content.find(content_id).content_files.count
-    return unless file_count > Settings.file_upload.max_files
-
-    errors.add(:content,
-               "too many files (maximum is #{Settings.file_upload.max_files})")
-  end
 
   def create_date_range_complete
     return if create_date_range_from.year.present? && create_date_range_to.year.present?

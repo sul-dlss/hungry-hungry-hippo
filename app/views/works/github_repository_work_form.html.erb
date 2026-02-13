@@ -2,44 +2,19 @@
   <% form_id = dom_id(@work_form, 'tabbed_form') %>
   <% discard_draft_form_id = dom_id(@work_form, 'discard_form') %>
   <%= render Edit::DiscardDraftFormComponent.new(presenter: @work_presenter, id: discard_draft_form_id) if @work_presenter %>
-  <% active_tab_name = params[:tab]&.to_sym || @active_tab_name || :files %>
+  <% active_tab_name = params[:tab]&.to_sym || @active_tab_name || :title %>
   <%= render Edit::TabForm::TabListComponent.new(model: @work_form, form_id:, hidden_fields: %i[lock version collection_druid content_id creation_date deposit_publication_date apo copyright form_id]) do |component| %>
-    <% component.with_tab(label: t('works.edit.panes.files.tab_label'), tab_name: :files, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.title.tab_label'), tab_name: :title, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.contributors.tab_label'), tab_name: :contributors, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.abstract.tab_label'), tab_name: :abstract, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.types.tab_label'), tab_name: :types, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.doi.tab_label'), tab_name: :doi, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.access.tab_label'), tab_name: :access, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.license.tab_label'), tab_name: :license, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.dates.tab_label'), tab_name: :dates, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.related_content.tab_label'), tab_name: :related_content, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.citation.tab_label'), tab_name: :citation, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.deposit.tab_label'), tab_name: :deposit, active_tab_name:) %>
     <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
     <%# TabListComponent will render the actual form. %>
     <% form_with(model: @work_form) do |form| %>
-      <%# This pane is outside the work form because it contains its own forms for files. %>
-      <% component.with_before_form_pane(tab_name: :files, label: t('works.edit.panes.files.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, previous_tab_btn: false) do %>
-        <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
-
-        <%= render 'contents/edit', content: @content, form_id: @work_form.form_id %>
-
-        <% if Settings.globus.enabled %>
-          <%= turbo_frame_tag 'globus', src: new_content_globus_path(@content), data: { controller: 'dropzone-files', dropzone_files_dropzone_outlet: '.dropzone' }, class: 'dropzone-files' do %>
-            <%= render Elements::SpinnerComponent.new %>
-          <% end %>
-
-          <%= render Elements::HorizontalRuleComponent.new(classes: 'my-3') %>
-        <% end %>
-
-        <div id="content-files" class="pane-section">
-          <%= turbo_frame_tag @content, 'show', src: content_path(@content), data: { controller: 'dropzone-files' }, class: 'dropzone-files' do %>
-            <%= render Elements::SpinnerComponent.new %>
-          <% end %>
-        </div>
-      <% end %>
-
       <% component.with_work_pane(tab_name: :title, label: t('works.edit.panes.title.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
         <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :title, label: t('works.edit.fields.title.label'), tooltip: t('works.edit.fields.title.tooltip_html'),
                                                                help_text: t('works.edit.fields.title.help_text'), width: 500, rows: 1, container_classes: 'pane-section', mark_required: true) %>
@@ -77,27 +52,11 @@
         <%= render Works::Edit::WorkTypeComponent.new(form:, collection: @collection) %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :doi, label: t('works.edit.panes.doi.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do |pane_component| %>
-        <%= render Works::Edit::DoiComponent.new(form:, collection: @collection) %>
-
-        <% pane_component.with_help do %>
-          <%= link_to_new_tab('What is a DOI?', 'https://sdr.library.stanford.edu/documentation/purls-dois-and-orcid-ids', class: 'ms-3') %>
-        <% end %>
-      <% end %>
-
-      <% component.with_work_pane(tab_name: :access, label: t('works.edit.panes.access.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-        <%= render Works::Edit::AccessSettingsComponent.new(form:, collection: @collection) %>
-      <% end %>
-
       <% component.with_work_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
         <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
         <% unless @collection.no_custom_rights_statement_option? %>
           <%= render Works::Edit::TermsOfUseComponent.new(form:, collection: @collection) %>
         <% end %>
-      <% end %>
-
-      <% component.with_work_pane(tab_name: :dates, label: t('works.edit.panes.dates.label'), tooltip: t('works.edit.panes.dates.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-        <%= render Works::Edit::DatesComponent.new(form:) %>
       <% end %>
 
       <% component.with_work_pane(tab_name: :related_content, label: t('works.edit.panes.related_content.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
