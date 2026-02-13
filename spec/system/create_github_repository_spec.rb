@@ -8,9 +8,6 @@ RSpec.describe 'Create a Github repository and work deposit' do
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
 
-  let(:version_status) { build(:first_draft_version_status) }
-  let(:work_version_status) { build(:draft_version_status) }
-
   before do
     allow(GithubService).to receive(:repository?).with('sul-dlss/happy-happy-hippo').and_return(false)
     allow(GithubService).to receive(:repository?).with('sul-dlss/hungry-hungry-hippo').and_return(true)
@@ -19,7 +16,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
                                     url: 'https://github.com/sul-dlss/hungry-hungry-hippo',
                                     description: 'Self-Deposit for the Stanford Digital Repository (SDR)')
     )
-    # Stubbing out for Deposit Job
+    # Stubbing out for first Deposit Job
     allow(Sdr::Repository).to receive(:register) do |args|
       cocina_params = args[:cocina_object].to_h
       cocina_params[:externalIdentifier] = druid
@@ -30,12 +27,23 @@ RSpec.describe 'Create a Github repository and work deposit' do
       @registered_cocina_object = Cocina::Models.with_metadata(cocina_object, 'abc123')
     end
     allow(Sdr::Repository).to receive(:accession)
+    allow(Sdr::Repository).to receive(:find_latest_user_version).with(druid:).and_return(nil)
 
     # Stubbing out for edit form
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
-    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status, work_version_status)
+    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:first_draft_version_status),
+                                                                       build(:draft_version_status),
+                                                                       build(:first_accessioning_version_status))
     allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
     allow(Sdr::Event).to receive(:list).and_return([])
+
+    # Stubbing out second Deposit Job.
+    # It is already open.
+    allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
+    allow(Sdr::Repository).to receive(:update) do |args|
+      @updated_cocina_object = args[:cocina_object]
+    end
+    allow(Sdr::Repository).to receive(:accession)
 
     create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture, depositors: [user],
                         github_deposit_enabled: true)
