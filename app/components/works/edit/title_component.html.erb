@@ -1,0 +1,16 @@
+<%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :title, label: t('works.edit.fields.title.label'), tooltip: t('works.edit.fields.title.tooltip_html'),
+                                                       help_text: t('works.edit.fields.title.help_text'), width: 500, rows: 1, container_classes: 'pane-section', mark_required: true) %>
+        <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: Works::Edit::ContactEmailsComponent, hidden_label: true, bordered: false, single_field: true, fieldset_classes: 'pane-section') %>
+
+        <% if works_contact_email.present? %>
+          <%= form.hidden_field :works_contact_email %>
+
+          <div class="pane-section">
+            <p>
+              Contact email provided by collection manager <%= render Elements::TooltipComponent.new(target_label: 'Provided contact email', tooltip: t('works.edit.fields.works_contact_email.tooltip_html')) %>
+            </p>
+            <p>
+              <%= works_contact_email %>
+            </p>
+          </div>
+        <% end %>
