@@ -133,7 +133,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: 'Deposit')
-    click_link_or_button('Deposit', class: 'btn-primary')
+    click_link_or_button('Save and begin depositing future releases', class: 'btn-primary')
 
     # Waiting page may be too fast to catch so not testing.
     # On show page
@@ -143,9 +143,10 @@ RSpec.describe 'Create a Github repository and work deposit' do
     expect(page).to have_no_link('Edit or deposit')
 
     # Ahoy events are created
-    work = Work.find_by(druid:)
+    work = GithubRepository.find_by(druid:)
     expect(work).to be_present
     expect(Ahoy::Event.where_event(Ahoy::Event::WORK_CREATED, work_id: work.id, deposit: false,
                                                               review: false).count).to eq(1)
+    expect(work.github_deposit_enabled).to be(true)
   end
 end

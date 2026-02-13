@@ -27,6 +27,6 @@ class ApplicationController < ActionController::Base
   end
 
   def request_review?
-    params[:commit] == 'Submit for review'
+    params[:commit] == 'review'
   end
 end
