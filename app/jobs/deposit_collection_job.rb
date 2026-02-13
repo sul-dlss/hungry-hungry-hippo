@@ -86,6 +86,10 @@ class DepositCollectionJob < ApplicationJob
 
       user = User.create_with(name: participant.name)
                  .find_or_create_by!(email_address: sunetid_to_email_address(participant.sunetid))
+      # if this user was first added when the name lookup failed, we should now backfill their name if we have it
+      if (user.name.blank? || user.name == user.sunetid) && participant.name.present?
+        user.update(name: participant.name)
+      end
 
       collection.public_send(role).append(user) unless collection.public_send(role).include?(user)
       updated_users_for_role.append(user)
