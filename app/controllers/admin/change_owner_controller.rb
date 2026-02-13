@@ -34,7 +34,7 @@ module Admin
     end
 
     def account
-      return AccountService.call(sunetid: @change_owner_form.sunetid) unless Rails.env.development?
+      return AccountService.call(id: @change_owner_form.sunetid) unless Rails.env.development?
 
       AccountService::Account.new(name: @change_owner_form.sunetid,
                                   sunetid: @change_owner_form.sunetid,

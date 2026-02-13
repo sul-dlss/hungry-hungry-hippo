@@ -51,10 +51,10 @@ RSpec.describe 'Edit a collection' do
     # Joe Hill is not created yet.
 
     allow(AccountService).to receive(:call)
-      .with(sunetid: 'stepking')
+      .with(id: 'stepking')
       .and_return(AccountService::Account.new(name: 'Stephen King', sunetid: 'stepking'))
     allow(AccountService).to receive(:call)
-      .with(sunetid: 'joehill')
+      .with(id: 'joehill')
       .and_return(AccountService::Account.new(name: 'Joe Hill', sunetid: 'joehill'))
 
     sign_in(create(:user), groups: ['dlss:hydrus-app-administrators'])

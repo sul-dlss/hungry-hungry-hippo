@@ -343,7 +343,7 @@ GEM
       net-imap
       net-pop
       net-smtp
-    mais_person_client (0.0.8)
+    mais_person_client (1.0.0)
       activesupport (>= 4.2)
       faraday
       faraday-retry
