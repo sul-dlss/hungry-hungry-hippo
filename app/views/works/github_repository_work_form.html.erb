@@ -95,7 +95,7 @@
         <% end %>
         <%= render Works::Edit::TermsOfDepositComponent.new(form:) %>
         <% pane_component.with_deposit_button do %>
-          <%= render Works::Edit::SubmitComponent.new(work: @work, collection: @collection, data: { action: 'unsaved-changes#allowFormSubmission' }) %>
+          <%= render Works::Edit::SubmitComponent.new(deposit_label: 'Save and begin depositing future releases', work: @work, collection: @collection, data: { action: 'unsaved-changes#allowFormSubmission' }) %>
         <% end %>
       <% end %>
     <% end %>

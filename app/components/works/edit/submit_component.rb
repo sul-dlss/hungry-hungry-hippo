@@ -4,19 +4,20 @@ module Works
   module Edit
     # Component for rendering a submit button
     class SubmitComponent < ApplicationComponent
-      def initialize(work:, collection:, form_id: nil, classes: [], data: {})
+      def initialize(work:, collection:, form_id: nil, classes: [], data: {}, deposit_label: 'Deposit') # rubocop:disable Metrics/ParameterLists
         @form_id = form_id
         @work = work
         @collection = collection
         @classes = classes
         @data = data
+        @deposit_label = deposit_label
         super()
       end
 
-      attr_reader :form_id, :work, :collection, :classes, :data
+      attr_reader :form_id, :work, :collection, :classes, :data, :deposit_label
 
       def call
-        render Elements::Forms::SubmitComponent.new(form_id:, label:, classes:, data:)
+        render Elements::Forms::SubmitComponent.new(form_id:, label:, classes:, data:, value:)
       end
 
       def render?
@@ -24,11 +25,19 @@ module Works
       end
 
       def label
-        if collection.review_enabled? && !review_permissions?
+        if review?
           'Submit for review'
         else
-          'Deposit'
+          deposit_label
         end
+      end
+
+      def value
+        review? ? 'review' : 'deposit'
+      end
+
+      def review?
+        collection.review_enabled? && !review_permissions?
       end
 
       def review_permissions?

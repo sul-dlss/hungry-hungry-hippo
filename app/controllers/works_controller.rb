@@ -237,8 +237,15 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   def perform_deposit(work:)
     work.deposit_persist! # Sets the deposit state
-    DepositWorkJob.perform_later(work:, work_form: @work_form, deposit: deposit?, request_review: request_review?,
-                                 current_user:, ahoy_visit:)
+    deposit_job_class(work:).perform_later(work:, work_form: @work_form, deposit: deposit?,
+                                           request_review: request_review?,
+                                           current_user:, ahoy_visit:)
+  end
+
+  def deposit_job_class(work:)
+    return DepositGithubRepositoryJob if work.is_a?(GithubRepository)
+
+    DepositWorkJob
   end
 
   # @return [String] path to redirect to after review
@@ -257,7 +264,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def deposit?
-    params[:commit] == 'Deposit'
+    params[:commit] == 'deposit'
   end
 
   # NOTE: a `nil` validation context runs all validations without an explicit context
