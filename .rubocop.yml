@@ -585,7 +585,7 @@ Lint/UselessDefaultValueArgument: # new in 1.76
 Lint/UselessOr: # new in 1.76
   Enabled: true
 Naming/PredicateMethod: # new in 1.76
-  Enabled: true
+  Enabled: false
 Style/EmptyStringInsideInterpolation: # new in 1.76
   Enabled: true
 Style/RedundantArrayFlatten: # new in 1.76

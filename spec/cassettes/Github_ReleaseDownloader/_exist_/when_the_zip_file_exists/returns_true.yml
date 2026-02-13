@@ -1,0 +1,122 @@
+---
+http_interactions:
+- request:
+    method: head
+    uri: https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/zipball/v0.1.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 302
+      message: Found
+    headers:
+      Date:
+      - Wed, 11 Feb 2026 01:49:58 GMT
+      Content-Type:
+      - text/html;charset=utf-8
+      Content-Length:
+      - '0'
+      Cache-Control:
+      - public, must-revalidate, max-age=0
+      Expires:
+      - Wed, 11 Feb 2026 01:49:58 GMT
+      Location:
+      - https://codeload.github.com/sul-dlss/hungry-hungry-hippo/legacy.zip/refs/tags/v0.1.0
+      X-Github-Api-Version-Selected:
+      - '2022-11-28'
+      X-Ratelimit-Limit:
+      - '60'
+      X-Ratelimit-Remaining:
+      - '59'
+      X-Ratelimit-Reset:
+      - '1770777735'
+      X-Ratelimit-Used:
+      - '1'
+      X-Ratelimit-Resource:
+      - core
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes,
+        X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO,
+        X-GitHub-Request-Id, Deprecation, Sunset
+      Access-Control-Allow-Origin:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Frame-Options:
+      - deny
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - '0'
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Content-Security-Policy:
+      - default-src 'none'
+      Vary:
+      - Accept-Encoding, Accept, X-Requested-With
+      Server:
+      - github.com
+      X-Github-Request-Id:
+      - E3EF:1F9AFC:1B3510:757B30:698BE046
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Wed, 11 Feb 2026 01:49:58 GMT
+- request:
+    method: head
+    uri: https://codeload.github.com/sul-dlss/hungry-hungry-hippo/legacy.zip/refs/tags/v0.1.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - https://render.githubusercontent.com
+      Content-Disposition:
+      - attachment; filename=sul-dlss-hungry-hungry-hippo-v0.1.0-0-g003c2b3.zip
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Content-Type:
+      - application/zip
+      Cross-Origin-Resource-Policy:
+      - cross-origin
+      Etag:
+      - W/"158d054ad9a9d29f2baafa6a69dcfa9d0bac17fbb85d2193c794ed9bdb36b52f"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization,Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      Date:
+      - Wed, 11 Feb 2026 01:49:58 GMT
+      X-Github-Request-Id:
+      - E3F1:1B318:6D962C:87498F:698BE046
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Wed, 11 Feb 2026 01:49:58 GMT
+recorded_with: VCR 6.4.0

@@ -9,12 +9,12 @@ RSpec.describe 'Create a Github repository and work deposit' do
   let(:user) { create(:user) }
 
   before do
-    allow(GithubService).to receive(:repository?).with('sul-dlss/happy-happy-hippo').and_return(false)
-    allow(GithubService).to receive(:repository?).with('sul-dlss/hungry-hungry-hippo').and_return(true)
-    allow(GithubService).to receive(:repository).with('sul-dlss/hungry-hungry-hippo').and_return(
-      GithubService::Repository.new(id: 881_494_248, name: 'sul-dlss/hungry-hungry-hippo',
-                                    url: 'https://github.com/sul-dlss/hungry-hungry-hippo',
-                                    description: 'Self-Deposit for the Stanford Digital Repository (SDR)')
+    allow(Github::AppService).to receive(:repository?).with('sul-dlss/happy-happy-hippo').and_return(false)
+    allow(Github::AppService).to receive(:repository?).with('sul-dlss/hungry-hungry-hippo').and_return(true)
+    allow(Github::AppService).to receive(:repository).with('sul-dlss/hungry-hungry-hippo').and_return(
+      Github::AppService::Repository.new(id: 881_494_248, name: 'sul-dlss/hungry-hungry-hippo',
+                                         url: 'https://github.com/sul-dlss/hungry-hungry-hippo',
+                                         description: 'Self-Deposit for the Stanford Digital Repository (SDR)')
     )
     # Stubbing out for first Deposit Job
     allow(Sdr::Repository).to receive(:register) do |args|

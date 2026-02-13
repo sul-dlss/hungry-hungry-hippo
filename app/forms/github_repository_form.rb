@@ -12,6 +12,6 @@ class GithubRepositoryForm < ApplicationForm
   def valid_repository
     return if repository.blank?
 
-    errors.add(:repository, 'is not a valid GitHub repository') unless GithubService.repository?(repository)
+    errors.add(:repository, 'is not a valid GitHub repository') unless Github::AppService.repository?(repository)
   end
 end

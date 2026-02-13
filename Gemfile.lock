@@ -254,6 +254,8 @@ GEM
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
+    faraday-follow_redirects (0.5.0)
+      faraday (>= 1, < 3)
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
     faraday-retry (2.4.0)
@@ -304,6 +306,8 @@ GEM
       simpleidn (~> 0.2)
     jsonpath (1.1.5)
       multi_json
+    jwt (3.1.2)
+      base64
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.2)
@@ -660,9 +664,7 @@ GEM
     zeitwerk (2.7.4)
 
 PLATFORMS
-  arm64-darwin-23
   arm64-darwin-24
-  arm64-darwin-25
   x86_64-linux
 
 DEPENDENCIES
@@ -691,12 +693,15 @@ DEPENDENCIES
   edtf
   erb_lint
   factory_bot_rails
+  faraday
+  faraday-follow_redirects
   frozen_record
   globus_client
   honeybadger
   hotwire-spark
   importmap-rails
   jbuilder
+  jwt
   kaminari
   kicks
   local_time

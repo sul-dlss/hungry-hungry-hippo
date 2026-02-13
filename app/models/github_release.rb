@@ -4,5 +4,5 @@
 class GithubRelease < ApplicationRecord
   belongs_to :github_repository, class_name: 'GithubRepository'
 
-  enum :status, { queued: 'queued', started: 'started', completed: 'completed' }
+  enum :status, { queued: 'queued', started: 'started', completed: 'completed', failed: 'failed' }, default: 'queued'
 end

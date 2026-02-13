@@ -101,6 +101,14 @@ ror:
 # GitHub Integration
 github:
   enabled: false
+  # base64 encoded PEM file provided by GitHub when setting up a GitHub App, actual values from vault/puppet
+  # This is base64 encoded to allow for newlines in the PEM file to be preserved in systemd configuration for passenger.
+  private_key: ~
+  app_id: ~
+  installation_id: ~ # installation of Stanford Digital Repository GitHub App in sul-dlss organization
+  publish_wait: 3600 # 1 hours in seconds to wait after a release is published before attempting to deposit
+  poll_interval: 86400 # 24 hours in seconds between checks for new releases to deposit
+  deposit_queue_interval: 1800 # 30 minutes in seconds between checks for releases that are ready to deposit
 
 article_deposit:
   enabled: false
