@@ -48,6 +48,16 @@ class GithubRepositoriesController < ApplicationController
     render 'works/wait'
   end
 
+  def poll
+    @work = GithubRepository.find_by(druid: params[:druid])
+    authorize! @work, with: WorkPolicy
+
+    PollGithubReleasesJob.perform_later(github_repository: @work, immediate_deposit: true)
+
+    flash[:success] = 'Checking for new releases. Depositing any new releases may take several hours.' # rubocop:disable Rails/I18nLocaleTexts
+    redirect_to work_path(@work)
+  end
+
   private
 
   def github_repository_form_params

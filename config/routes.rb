@@ -88,9 +88,13 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  resources :github_repositories, only: %i[new create] do
+  resources :github_repositories, only: %i[new create], param: :druid do
     collection do
-      get 'wait/:id', to: 'github_repositories#wait', as: 'wait'
+      get 'wait/:id', to: 'github_repositories#wait', as: 'wait', param: :id
+    end
+
+    member do
+      post 'poll'
     end
   end
 

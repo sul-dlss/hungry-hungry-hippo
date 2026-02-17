@@ -29,6 +29,7 @@ RSpec.describe PollGithubReleasesJob do
                                                     zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.2',
                                                     published_at: Time.zone.now)
                   ])
+    allow(DepositGithubReleaseJob).to receive(:perform_later)
   end
 
   context 'when depositing is not enabled for the repository' do
@@ -51,6 +52,18 @@ RSpec.describe PollGithubReleasesJob do
         release_name: 'Third release',
         zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.2'
       )
+      expect(DepositGithubReleaseJob).not_to have_received(:perform_later)
+    end
+  end
+
+  context 'when immediate_deposit is true' do
+    let(:enabled) { true }
+
+    it 'enqueues a DepositGithubReleaseJob for the new release' do
+      described_class.perform_now(github_repository:, immediate_deposit: true)
+      new_release = GithubRelease.find_by(release_id: 3)
+      expect(DepositGithubReleaseJob).to have_received(:perform_later).with(github_release: new_release,
+                                                                            skip_publish_wait: true)
     end
   end
 end

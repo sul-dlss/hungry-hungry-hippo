@@ -8,13 +8,13 @@ class DepositGithubReleaseJob < ApplicationJob
 
   queue_as :github
 
-  def perform(github_release:) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+  def perform(github_release:, skip_publish_wait: false) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
     @github_release = github_release
     set_hb_context
     if github_release.completed? ||
        github_release.started? ||
        older_incomplete_release_exists? ||
-       check_publish_wait! ||
+       check_publish_wait!(skip_publish_wait) ||
        check_version_status!
       return
     end
@@ -51,7 +51,8 @@ class DepositGithubReleaseJob < ApplicationJob
   end
 
   # @return [Boolean] true if the release is still within the wait period after publishing
-  def check_publish_wait!
+  def check_publish_wait!(skip_publish_wait)
+    return false if skip_publish_wait
     return false unless github_release.published_at > publish_wait
 
     github_release.update!(status_details: "waiting #{time_ago_in_words(publish_wait)} after publishing")
