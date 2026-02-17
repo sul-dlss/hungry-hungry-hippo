@@ -95,6 +95,54 @@ RSpec.describe DepositCollectionJob do
         expect(Sdr::Event).not_to have_received(:create)
       end
     end
+
+    context 'when a participant name is blank and a name is provided' do
+      let(:existing_user) { create(:user, email_address: 'jdoe@stanford.edu', name: '') }
+      let(:collection_form) do
+        CollectionForm.new(title: collection.title, managers_attributes:, depositors_attributes:)
+      end
+      let(:managers_attributes) { [{ sunetid: existing_user.sunetid, name: 'Jane Doe' }] }
+      let(:depositors_attributes) { [] }
+
+      it 'updates the user name' do
+        expect(existing_user.name).to eq ''
+        described_class.perform_now(collection_form:, collection:, current_user:)
+        expect(existing_user.reload.name).to eq('Jane Doe')
+        expect(collection.managers).to include(existing_user)
+      end
+    end
+
+    context 'when a participant name matches their sunetid and a different name is provided' do
+      let(:existing_user) { create(:user, email_address: 'jdoe@stanford.edu', name: 'jdoe') }
+      let(:collection_form) do
+        CollectionForm.new(title: collection.title, managers_attributes:, depositors_attributes:)
+      end
+      let(:managers_attributes) { [{ sunetid: existing_user.sunetid, name: 'Jane Doe' }] }
+      let(:depositors_attributes) { [] }
+
+      it 'updates the user name from sunetid to the provided name' do
+        expect(existing_user.name).to eq('jdoe')
+        described_class.perform_now(collection_form:, collection:, current_user:)
+        expect(existing_user.reload.name).to eq('Jane Doe')
+        expect(collection.managers).to include(existing_user)
+      end
+    end
+
+    context 'when a participant already has a proper name' do
+      let(:existing_user) { create(:user, email_address: 'jdoe@stanford.edu', name: 'Jane Doe') }
+      let(:collection_form) do
+        CollectionForm.new(title: collection.title, managers_attributes:, depositors_attributes:)
+      end
+      let(:managers_attributes) { [{ sunetid: existing_user.sunetid, name: 'Jane Smith' }] }
+      let(:depositors_attributes) { [] }
+
+      it 'does not overwrite an existing proper user name' do
+        expect(existing_user.name).to eq('Jane Doe')
+        described_class.perform_now(collection_form:, collection:, current_user:)
+        expect(existing_user.reload.name).to eq('Jane Doe')
+        expect(collection.managers).to include(existing_user)
+      end
+    end
   end
 
   context 'when an existing collection with changed cocina object' do
