@@ -129,3 +129,6 @@ gemini_api:
 
 extract_abstracts:
   enabled: false
+
+validate_datacite:
+  enabled: false

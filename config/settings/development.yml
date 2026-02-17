@@ -19,3 +19,6 @@ article_deposit:
 
 extract_abstracts:
   enabled: true
+
+validate_datacite:
+  enabled: true
