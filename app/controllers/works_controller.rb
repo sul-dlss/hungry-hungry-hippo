@@ -177,7 +177,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     @work_form = Form::WorkMapper.call(cocina_object: @cocina_object, doi_assigned: doi_assigned?,
                                        agree_to_terms: current_user.agree_to_terms?,
                                        version_description:, collection: @collection,
-                                       work_form_class:).prepopulate
+                                       work_form_class:,
+                                       github_deposit_enabled: @work.github_deposit_enabled).prepopulate
   end
 
   def doi_assigned?

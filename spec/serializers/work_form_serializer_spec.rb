@@ -41,7 +41,8 @@ RSpec.describe WorkFormSerializer do
       'deposit_publication_date' => deposit_publication_date_fixture,
       'apo' => 'druid:hv992ry2431',
       'copyright' => copyright_fixture,
-      'form_id' => form_id_fixture
+      'form_id' => form_id_fixture,
+      'github_deposit_enabled' => nil
     }
   end
   let(:work_form) do

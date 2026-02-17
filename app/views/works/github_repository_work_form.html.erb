@@ -1,7 +1,8 @@
 <% content_for :content do %>
   <% form_id = dom_id(@work_form, 'tabbed_form') %>
-  <% discard_draft_form_id = dom_id(@work_form, 'discard_form') %>
-  <%= render Edit::DiscardDraftFormComponent.new(presenter: @work_presenter, id: discard_draft_form_id) if @work_presenter %>
+  <%# Setting discard_draft_form_id to nil causes saves as draft to not be provided. %>
+  <% discard_draft_form_id = @work_presenter.github_deposit_never_enabled? ? dom_id(@work_form, 'discard_form') : nil %>
+  <%= render Edit::DiscardDraftFormComponent.new(presenter: @work_presenter, id: discard_draft_form_id) if discard_draft_form_id %>
   <% active_tab_name = params[:tab]&.to_sym || @active_tab_name || :title %>
   <%= render Edit::TabForm::TabListComponent.new(model: @work_form, form_id:, hidden_fields: %i[lock version collection_druid content_id creation_date deposit_publication_date apo copyright form_id]) do |component| %>
     <% component.with_tab(label: t('works.edit.panes.title.tab_label'), tab_name: :title, active_tab_name:) %>
@@ -52,29 +53,30 @@
             <ul>
               <li>Be sure you have completed all the required sections.</li>
               <% if @work_form.agree_to_terms %><li>You have accepted the <a href="#" data-bs-toggle="modal" data-bs-target="#tod-modal">Terms of Deposit</a>.</li><% end %>
-              <li>Your deposit may take several hours to complete if the total file size is larger than 10GB.</li>
             </ul>
           </p>
         <% end %>
 
-        <% if @work_presenter && !@work_presenter.first_draft? %>
-          <%= render Elements::AlertComponent.new(variant: :info, value: t('works.edit.panes.deposit.version_text')) %>
-          <div class="pane-section">
-            <%#
-              When what's changing textarea is invalid and the user provides a value and then clicks Deposit / Save as draft,
-              the change event is triggered first. The changes made to the DOM cause the form submit to be blocked.
-              By calling tab-error#changed on the input event, the DOM is updated sooner than the change event,
-              allowing the form to be submitted without blocking.
-            %>
-            <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: t('works.edit.fields.whats_changing.label'), tooltip: t('works.edit.fields.whats_changing.tooltip_html'), maxlength: 100, data: { action: 'input->tab-error#changed' }) %>
-          </div>
-        <% else %>
-          <%# This is a dummy value that is needed for validation, but won't be used for the version description. %>
-          <%= form.hidden_field :whats_changing, value: 'Initial version' %>
+        <%# This is a dummy value that is needed for validation, but won't be used for the version description. %>
+        <%= form.hidden_field :whats_changing, value: 'Metadata update' %>
+
+        <%# For subsequent deposits, user can choose whether GitHub deposit is enabled. For initial, it will be enabled by default. %>
+        <% if !@work_presenter.github_deposit_never_enabled? %>
+          <%= render Elements::Forms::FieldsetComponent.new(label: 'Deposit future GitHub releases?', classes: 'row', legend_classes: 'col-md-5') do %>
+            <div class="form-check col-md-2">
+              <%= form.radio_button :github_deposit_enabled, true, class: 'form-check-input' %>
+              <%= form.label :github_deposit_enabled_true, 'Yes', class: 'form-check-label' %>
+            </div>
+            <div class="form-check col-md-2">
+              <%= form.radio_button :github_deposit_enabled, false, class: 'form-check-input' %>
+              <%= form.label :github_deposit_enabled_false, 'No', class: 'form-check-label' %>
+            </div>
+          <% end %>
         <% end %>
         <%= render Works::Edit::TermsOfDepositComponent.new(form:) %>
         <% pane_component.with_deposit_button do %>
-          <%= render Works::Edit::SubmitComponent.new(deposit_label: 'Save and begin depositing future releases', work: @work, collection: @collection, data: { action: 'unsaved-changes#allowFormSubmission' }) %>
+          <% deposit_label = @work_presenter.github_deposit_never_enabled? ? 'Save and begin depositing future releases' : 'Save' %>
+          <%= render Works::Edit::SubmitComponent.new(deposit_label:, work: @work, collection: @collection, data: { action: 'unsaved-changes#allowFormSubmission' }) %>
         <% end %>
       <% end %>
     <% end %>

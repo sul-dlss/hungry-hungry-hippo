@@ -84,6 +84,10 @@ RSpec.describe 'Create a Github repository and work deposit' do
     # Manage files tab is not displayed
     expect(page).to have_no_link('Manage files')
 
+    # Has draft buttons
+    expect(page).to have_button('Save as draft')
+    expect(page).to have_button('Discard draft')
+
     # Title is pre-populated
     find('.nav-link', text: 'Title and contact').click
     expect(page).to have_field('Title of deposit', with: 'sul-dlss/hungry-hungry-hippo')

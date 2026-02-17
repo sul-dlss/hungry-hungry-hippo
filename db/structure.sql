@@ -587,7 +587,7 @@ CREATE TABLE public.works (
     type character varying DEFAULT 'Work'::character varying NOT NULL,
     github_repository_id bigint,
     github_repository_name character varying,
-    github_deposit_enabled boolean DEFAULT false NOT NULL
+    github_deposit_enabled boolean
 );
 
 
@@ -1206,6 +1206,7 @@ ALTER TABLE ONLY public.affiliations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260217184300'),
 ('20260212190714'),
 ('20260210195338'),
 ('20260209140935'),

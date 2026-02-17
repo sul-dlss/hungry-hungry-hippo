@@ -147,6 +147,9 @@ class BaseWorkForm < ApplicationForm
   attribute :apo, :string, default: Settings.apo
   attribute :copyright, :string
 
+  # Used for GithubRepositoryWorkForm
+  attribute :github_deposit_enabled, :boolean
+
   # This is used for tracking with Ahoy. It allows eventing before the form is saved.
   attribute :form_id, :string, default: -> { SecureRandom.uuid }
 
