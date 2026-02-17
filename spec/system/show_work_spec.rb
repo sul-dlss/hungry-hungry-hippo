@@ -293,7 +293,7 @@ RSpec.describe 'Show a work' do
         expect(page).to have_css('tr', text: 'Related published work')
         expect(page).to have_css('td p', text: 'Here is a valid citation.')
         expect(page).to have_css('td p', text: 'Relationship: My deposit is one part of this related work')
-        expect(page).to have_css('td p', text: 'doi:10.7710/2162-3309.1059')
+        expect(page).to have_css('td p', text: 'https://doi.org/10.7710/2162-3309.1059')
       end
 
       # Access settings table

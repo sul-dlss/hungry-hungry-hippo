@@ -38,7 +38,7 @@ def related_works_fixture
     },
     {
       'relationship' => 'has part',
-      'identifier' => 'doi:10.7710/2162-3309.1059',
+      'identifier' => 'https://doi.org/10.7710/2162-3309.1059',
       'citation' => nil,
       'use_citation' => false
     }
