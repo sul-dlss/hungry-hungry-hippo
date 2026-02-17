@@ -36,17 +36,17 @@ RSpec.describe Form::WorkContributorsMapper do
 
     it 'maps to contributor params' do
       expect(contributor_params).to eq([
-                                         'first_name' => 'Jane',
-                                         'last_name' => nil,
-                                         'role_type' => 'person',
-                                         'person_role' => nil,
-                                         'organization_role' => nil,
-                                         'organization_name' => nil,
-                                         'suborganization_name' => nil,
-                                         'stanford_degree_granting_institution' => false,
-                                         'orcid' => '0000-0000-0000-0000',
-                                         'with_orcid' => true,
-                                         'affiliations_attributes' => []
+                                         { 'first_name' => 'Jane',
+                                           'last_name' => nil,
+                                           'role_type' => 'person',
+                                           'person_role' => nil,
+                                           'organization_role' => nil,
+                                           'organization_name' => nil,
+                                           'suborganization_name' => nil,
+                                           'stanford_degree_granting_institution' => false,
+                                           'orcid' => '0000-0000-0000-0000',
+                                           'with_orcid' => true,
+                                           'affiliations_attributes' => [] }
                                        ])
     end
   end
@@ -78,17 +78,17 @@ RSpec.describe Form::WorkContributorsMapper do
 
     it 'maps to contributor params' do
       expect(contributor_params).to eq([
-                                         'first_name' => 'Jane',
-                                         'last_name' => 'Stanford',
-                                         'role_type' => 'person',
-                                         'person_role' => nil,
-                                         'organization_role' => nil,
-                                         'organization_name' => nil,
-                                         'suborganization_name' => nil,
-                                         'stanford_degree_granting_institution' => false,
-                                         'orcid' => '0000-0000-0000-0000',
-                                         'with_orcid' => true,
-                                         'affiliations_attributes' => []
+                                         { 'first_name' => 'Jane',
+                                           'last_name' => 'Stanford',
+                                           'role_type' => 'person',
+                                           'person_role' => nil,
+                                           'organization_role' => nil,
+                                           'organization_name' => nil,
+                                           'suborganization_name' => nil,
+                                           'stanford_degree_granting_institution' => false,
+                                           'orcid' => '0000-0000-0000-0000',
+                                           'with_orcid' => true,
+                                           'affiliations_attributes' => [] }
                                        ])
     end
   end
@@ -137,23 +137,23 @@ RSpec.describe Form::WorkContributorsMapper do
 
     it 'maps to contributor params' do
       expect(contributor_params).to eq([
-                                         'first_name' => 'Jane',
-                                         'last_name' => 'Stanford',
-                                         'role_type' => 'person',
-                                         'person_role' => nil,
-                                         'organization_role' => nil,
-                                         'organization_name' => nil,
-                                         'suborganization_name' => nil,
-                                         'stanford_degree_granting_institution' => false,
-                                         'orcid' => '0000-0000-0000-0000',
-                                         'with_orcid' => true,
-                                         'affiliations_attributes' => [
-                                           {
-                                             'institution' => 'Stanford University',
-                                             'uri' => 'https://ror.org/01abcd',
-                                             'department' => 'Department of History'
-                                           }
-                                         ]
+                                         { 'first_name' => 'Jane',
+                                           'last_name' => 'Stanford',
+                                           'role_type' => 'person',
+                                           'person_role' => nil,
+                                           'organization_role' => nil,
+                                           'organization_name' => nil,
+                                           'suborganization_name' => nil,
+                                           'stanford_degree_granting_institution' => false,
+                                           'orcid' => '0000-0000-0000-0000',
+                                           'with_orcid' => true,
+                                           'affiliations_attributes' => [
+                                             {
+                                               'institution' => 'Stanford University',
+                                               'uri' => 'https://ror.org/01abcd',
+                                               'department' => 'Department of History'
+                                             }
+                                           ] }
                                        ])
     end
   end
@@ -201,22 +201,22 @@ RSpec.describe Form::WorkContributorsMapper do
 
     it 'maps to contributor params' do
       expect(contributor_params).to eq([
-                                         'first_name' => 'Jane',
-                                         'last_name' => 'Stanford',
-                                         'role_type' => 'person',
-                                         'person_role' => nil,
-                                         'organization_role' => nil,
-                                         'organization_name' => nil,
-                                         'suborganization_name' => nil,
-                                         'stanford_degree_granting_institution' => false,
-                                         'orcid' => '0000-0000-0000-0000',
-                                         'with_orcid' => true,
-                                         'affiliations_attributes' => [
-                                           {
-                                             'institution' => 'Stanford University',
-                                             'uri' => 'https://ror.org/01abcd'
-                                           }
-                                         ]
+                                         { 'first_name' => 'Jane',
+                                           'last_name' => 'Stanford',
+                                           'role_type' => 'person',
+                                           'person_role' => nil,
+                                           'organization_role' => nil,
+                                           'organization_name' => nil,
+                                           'suborganization_name' => nil,
+                                           'stanford_degree_granting_institution' => false,
+                                           'orcid' => '0000-0000-0000-0000',
+                                           'with_orcid' => true,
+                                           'affiliations_attributes' => [
+                                             {
+                                               'institution' => 'Stanford University',
+                                               'uri' => 'https://ror.org/01abcd'
+                                             }
+                                           ] }
                                        ])
     end
   end
@@ -258,22 +258,22 @@ RSpec.describe Form::WorkContributorsMapper do
 
     it 'maps to contributor params' do
       expect(contributor_params).to eq([
-                                         'first_name' => 'Jane',
-                                         'last_name' => 'Stanford',
-                                         'role_type' => 'person',
-                                         'person_role' => nil,
-                                         'organization_role' => nil,
-                                         'organization_name' => nil,
-                                         'suborganization_name' => nil,
-                                         'stanford_degree_granting_institution' => false,
-                                         'orcid' => '0000-0000-0000-0000',
-                                         'with_orcid' => true,
-                                         'affiliations_attributes' => [
-                                           {
-                                             'institution' => 'Stanford University',
-                                             'department' => 'Department of History'
-                                           }
-                                         ]
+                                         { 'first_name' => 'Jane',
+                                           'last_name' => 'Stanford',
+                                           'role_type' => 'person',
+                                           'person_role' => nil,
+                                           'organization_role' => nil,
+                                           'organization_name' => nil,
+                                           'suborganization_name' => nil,
+                                           'stanford_degree_granting_institution' => false,
+                                           'orcid' => '0000-0000-0000-0000',
+                                           'with_orcid' => true,
+                                           'affiliations_attributes' => [
+                                             {
+                                               'institution' => 'Stanford University',
+                                               'department' => 'Department of History'
+                                             }
+                                           ] }
                                        ])
     end
   end
@@ -289,17 +289,17 @@ RSpec.describe Form::WorkContributorsMapper do
 
     it 'maps to contributor params' do
       expect(contributor_params).to eq([
-                                         'first_name' => nil,
-                                         'last_name' => nil,
-                                         'role_type' => 'organization',
-                                         'person_role' => nil,
-                                         'organization_role' => nil,
-                                         'organization_name' => 'NASA',
-                                         'suborganization_name' => nil,
-                                         'stanford_degree_granting_institution' => false,
-                                         'orcid' => nil,
-                                         'with_orcid' => false,
-                                         'affiliations_attributes' => []
+                                         { 'first_name' => nil,
+                                           'last_name' => nil,
+                                           'role_type' => 'organization',
+                                           'person_role' => nil,
+                                           'organization_role' => nil,
+                                           'organization_name' => 'NASA',
+                                           'suborganization_name' => nil,
+                                           'stanford_degree_granting_institution' => false,
+                                           'orcid' => nil,
+                                           'with_orcid' => false,
+                                           'affiliations_attributes' => [] }
                                        ])
     end
   end
@@ -316,17 +316,17 @@ RSpec.describe Form::WorkContributorsMapper do
 
     it 'maps to contributor params' do
       expect(contributor_params).to eq([
-                                         'first_name' => nil,
-                                         'last_name' => nil,
-                                         'role_type' => 'organization',
-                                         'person_role' => nil,
-                                         'organization_role' => 'conference',
-                                         'organization_name' => 'NASA conference',
-                                         'suborganization_name' => nil,
-                                         'stanford_degree_granting_institution' => false,
-                                         'orcid' => nil,
-                                         'with_orcid' => false,
-                                         'affiliations_attributes' => []
+                                         { 'first_name' => nil,
+                                           'last_name' => nil,
+                                           'role_type' => 'organization',
+                                           'person_role' => nil,
+                                           'organization_role' => 'conference',
+                                           'organization_name' => 'NASA conference',
+                                           'suborganization_name' => nil,
+                                           'stanford_degree_granting_institution' => false,
+                                           'orcid' => nil,
+                                           'with_orcid' => false,
+                                           'affiliations_attributes' => [] }
                                        ])
     end
   end
@@ -343,17 +343,17 @@ RSpec.describe Form::WorkContributorsMapper do
 
     it 'maps to contributor params' do
       expect(contributor_params).to eq([
-                                         'first_name' => nil,
-                                         'last_name' => nil,
-                                         'role_type' => 'organization',
-                                         'person_role' => nil,
-                                         'organization_role' => 'event',
-                                         'organization_name' => 'NASA event',
-                                         'suborganization_name' => nil,
-                                         'stanford_degree_granting_institution' => false,
-                                         'orcid' => nil,
-                                         'with_orcid' => false,
-                                         'affiliations_attributes' => []
+                                         { 'first_name' => nil,
+                                           'last_name' => nil,
+                                           'role_type' => 'organization',
+                                           'person_role' => nil,
+                                           'organization_role' => 'event',
+                                           'organization_name' => 'NASA event',
+                                           'suborganization_name' => nil,
+                                           'stanford_degree_granting_institution' => false,
+                                           'orcid' => nil,
+                                           'with_orcid' => false,
+                                           'affiliations_attributes' => [] }
                                        ])
     end
   end
