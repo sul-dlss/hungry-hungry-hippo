@@ -64,6 +64,16 @@ RSpec.describe DepositGithubReleaseJob do
     end
   end
 
+  context 'when published less than an hour ago but skipping' do
+    let(:published_at) { 30.minutes.ago }
+
+    it 'processes the release' do
+      expect { described_class.perform_now(github_release:, skip_publish_wait: true) }
+        .to change { github_release.reload.status }.to('completed')
+        .and change { github_repository.reload.deposit_state }.to('deposit_registering_or_updating')
+    end
+  end
+
   context 'when version is open but not closeable' do
     let(:version_status) { build(:version_status, open: true, closeable: false) }
 

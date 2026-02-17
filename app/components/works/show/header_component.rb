@@ -11,7 +11,7 @@ module Works
 
       attr_reader :presenter
 
-      delegate :title, :status_message, :content_id, :editable?, :druid, to: :presenter
+      delegate :title, :status_message, :content_id, :editable?, :work, :druid, to: :presenter
     end
   end
 end
