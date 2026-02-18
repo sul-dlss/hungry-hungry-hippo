@@ -79,6 +79,8 @@ class GithubRepositoriesController < ApplicationController
       title: github_repository_info.name,
       abstract: github_repository_info.description,
       collection_druid: @github_repository_form.collection_druid,
+      license: @collection.license,
+      contact_emails_attributes: [{ email: current_user.email_address }],
       whats_changing: 'Initial version',
       doi_option: 'yes',
       work_type: 'Software/Code',
