@@ -9,13 +9,14 @@ module Form
     end
 
     def initialize(cocina_object:, doi_assigned:, agree_to_terms:, version_description:, collection:, # rubocop:disable Metrics/ParameterLists
-                   work_form_class: WorkForm)
+                   work_form_class: WorkForm, github_deposit_enabled: nil)
       @cocina_object = cocina_object
       @doi_assigned = doi_assigned
       @agree_to_terms = agree_to_terms
       @version_description = version_description
       @collection = collection
       @work_form_class = work_form_class
+      @github_deposit_enabled = github_deposit_enabled
       raise ArgumentError, 'work_form_class must be a subclass of BaseWorkForm' unless work_form_class <= BaseWorkForm
     end
 
@@ -25,7 +26,8 @@ module Form
 
     private
 
-    attr_reader :cocina_object, :doi_assigned, :agree_to_terms, :version_description, :collection, :work_form_class
+    attr_reader :cocina_object, :doi_assigned, :agree_to_terms, :version_description, :collection, :work_form_class,
+                :github_deposit_enabled
 
     def params # rubocop:disable Metrics/AbcSize
       {
@@ -51,7 +53,8 @@ module Form
         creation_date:,
         deposit_publication_date: DepositPublicationDateMapper.call(cocina_object:),
         apo: Cocina::Parser.apo_for(cocina_object:),
-        copyright: Cocina::Parser.copyright_for(cocina_object:)
+        copyright: Cocina::Parser.copyright_for(cocina_object:),
+        github_deposit_enabled:
       }.merge(WorkTypeMapper.call(cocina_object:))
         .merge(WorkReleaseDateMapper.call(cocina_object:))
         .merge(WorkCreationDateMapper.call(cocina_object:))

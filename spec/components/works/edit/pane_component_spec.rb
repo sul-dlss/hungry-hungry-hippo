@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Works::Edit::PaneComponent, type: :component do
   let(:component) do
     described_class.new(tab_name: :test_pane, label: 'Test Pane', form_id: 'new_work',
-                        discard_draft_form_id: 'discard_draft_form', work_presenter:, active_tab_name:,
+                        discard_draft_form_id:, work_presenter:, active_tab_name:,
                         previous_tab_btn:, next_tab_btn:)
   end
   let(:work_presenter) { nil }
@@ -13,6 +13,7 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
   let(:previous_tab_btn) { true }
   let(:next_tab_btn) { true }
   let(:user) { create(:user) }
+  let(:discard_draft_form_id) { 'discard_draft_form' }
 
   before do
     Current.user = user
@@ -62,6 +63,25 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
       render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
       tab_pane = page.find('div.tab-pane')
       expect(tab_pane).to have_button('Save as draft') { |btn| expect(btn[:form]).to eq('new_work') }
+      expect(tab_pane).to have_button('Next')
+      expect(tab_pane).to have_button('Previous')
+      expect(tab_pane).to have_no_button('Discard draft')
+      expect(tab_pane).to have_link('Cancel', href: "/works/#{work.druid}")
+    end
+  end
+
+  context 'when work presenter but no form_id' do
+    let(:version_status) { build(:first_draft_version_status) }
+    let(:work) { create(:work, :with_druid, user:) }
+    let(:work_presenter) do
+      WorkPresenter.new(work:, work_form: WorkForm.new(druid: work.druid), version_status:)
+    end
+    let(:discard_draft_form_id) { nil }
+
+    it 'renders the pane without draft buttons' do
+      render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
+      tab_pane = page.find('div.tab-pane')
+      expect(tab_pane).to have_no_button('Save as draft')
       expect(tab_pane).to have_button('Next')
       expect(tab_pane).to have_button('Previous')
       expect(tab_pane).to have_no_button('Discard draft')

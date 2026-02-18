@@ -141,6 +141,12 @@ class WorkPresenter < FormPresenter
     share_users.order(:name).map { |user| user_display(user) }.join(', ')
   end
 
+  # @return [Boolean] true if the user has never made a choice about whether to enable GitHub deposit (which is the
+  #   case prior to the first deposit)
+  def github_deposit_never_enabled?
+    github_deposit_enabled.nil?
+  end
+
   private
 
   delegate :collection, :created_at, :user, :review_state, :pending_review?, :share_users, to: :work

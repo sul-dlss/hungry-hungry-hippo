@@ -5,12 +5,13 @@ require 'rails_helper'
 RSpec.describe Form::WorkMapper, type: :mapping do
   subject(:work_form) do
     described_class.call(cocina_object:, doi_assigned:, agree_to_terms: true,
-                         version_description: whats_changing_fixture, collection:)
+                         version_description: whats_changing_fixture, collection:, github_deposit_enabled:)
   end
 
   let(:cocina_object) { dro_with_metadata_fixture }
   let(:collection) { create(:collection, :with_required_contact_email, druid: collection_druid_fixture) }
   let(:doi_assigned) { true }
+  let(:github_deposit_enabled) { nil }
 
   before do
     allow(SecureRandom).to receive(:uuid).and_return(form_id_fixture)
@@ -243,6 +244,14 @@ RSpec.describe Form::WorkMapper, type: :mapping do
                             version_description: whats_changing_fixture, collection:,
                             work_form_class: String)
       end.to raise_error(ArgumentError, 'work_form_class must be a subclass of BaseWorkForm')
+    end
+  end
+
+  context 'when github_deposit_enabled is true' do
+    let(:github_deposit_enabled) { true }
+
+    it 'maps to work form' do
+      expect(work_form.github_deposit_enabled).to be true
     end
   end
 end
