@@ -21,7 +21,7 @@ RSpec.describe Admin::DepositorsSearchForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:druids]).to eq(["work not found: #{missing_druid}"])
+        expect(form.errors[:druids]).to eq(["#{missing_druid} not found in Works or Collections"])
       end
     end
 

@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Search for depositor IDs' do
-  let!(:druids) { works.pluck(:druid).join(' ') }
+  let!(:druids) { (works + collections).pluck(:druid).join(' ') }
   let(:works) { create_list(:work, 2, :with_druid) }
+  let(:collections) { create_list(:collection, 2, :with_druid) }
 
   describe 'GET /admin/depositors_search/new' do
     context 'when the user is not authorized' do
@@ -62,6 +63,10 @@ RSpec.describe 'Search for depositor IDs' do
             expect(response.body).to include(work.druid)
             expect(response.body).to include(work.user.sunetid)
           end
+          collections.each do |collection|
+            expect(response.body).to include(collection.druid)
+            expect(response.body).to include(collection.user.sunetid)
+          end
         end
       end
 
@@ -71,7 +76,7 @@ RSpec.describe 'Search for depositor IDs' do
         it 're-renders the form with errors' do
           get "/admin/depositors_search/search?admin_depositors_search[druids]=#{URI.encode_uri_component(druids)}"
           expect(response).to have_http_status(:unprocessable_content)
-          expect(response.body).to match(/work not found: druid:foobar/)
+          expect(response.body).to match(/druid:foobar not found in Works or Collections/)
         end
       end
     end
