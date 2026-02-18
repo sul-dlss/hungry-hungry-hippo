@@ -144,6 +144,14 @@ RSpec.describe 'Create a Github repository and work deposit' do
     expect(page).to have_css('h1', text: 'sul-dlss/hungry-hungry-hippo')
     expect(page).to have_css('.status', text: 'Depositing')
     expect(page).to have_css('.alert-success', text: 'Deposit successfully submitted')
+    within('table#license-table') do
+      expect(page).to have_css('tr', text: 'License')
+      expect(page).to have_css('td', text: 'CC-BY-4.0 Attribution International')
+    end
+    within('table#title-table') do
+      expect(page).to have_css('tr', text: 'Contact emails')
+      expect(page).to have_css('td', text: user.email_address)
+    end
     expect(page).to have_no_link('Edit or deposit')
 
     # Ahoy events are created
