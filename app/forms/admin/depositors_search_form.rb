@@ -5,7 +5,7 @@ module Admin
   class DepositorsSearchForm < ApplicationForm
     before_validation :normalize_druids
     attribute :druids, :string
-    validate :works_present
+    validate :works_or_collections_present
 
     def druid_list
       druids.split(/\s+/)
@@ -19,11 +19,11 @@ module Admin
       end.join(' ')
     end
 
-    def works_present
+    def works_or_collections_present
       druid_list.each do |druid|
-        next if Work.exists?(druid:)
+        next if Work.exists?(druid:) || Collection.exists?(druid:)
 
-        errors.add(:druids, "work not found: #{druid}")
+        errors.add(:druids, "#{druid} not found in Works or Collections")
       end
     end
   end
