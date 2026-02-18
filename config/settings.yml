@@ -68,10 +68,6 @@ notifications:
   enabled: true
   admin_email: h2-administrators@lists.stanford.edu
 
-accountws:
-  pem_file: /etc/ssl/certs/sul-h3-qa.stanford.edu.pem
-  host: accountws-uat.stanford.edu
-
 file_uploads_root: <%= Rails.root.join("storage") %>
 
 globus:
