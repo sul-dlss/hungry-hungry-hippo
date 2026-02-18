@@ -249,6 +249,9 @@ en:
             documents: 'My deposit documents this related work'
             is variant form of: 'My deposit is a variant form of this related work'
             is original form of: 'My deposit is the original form of this related work'
+    validation:
+      identifier:
+        invalid: 'must be a valid URL'
   reviewers:
     edit:
       legend: 'Reviewers'
