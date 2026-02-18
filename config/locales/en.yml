@@ -33,9 +33,9 @@ en:
     # To hide dashboard banner, set to ''.
     # Banners can include links, e.g., "Email <a href="mailto:sdr-contact@lists.stanford.edu" >sdr-contact@lists.stanford.edu</a> to volunteer!"
     home_html: >-
-      The SDR supports upload and management of complex file structures for your deposits. Explore all the features of our file upload interface in this <a href="https://youtu.be/70OaryKxurc" target="_blank" data-ahoy-track="true">tutorial video</a>.
+      Need to share a work or add managers, depositors, or reviewers to a collection? You can now use <strong>Stanford aliases</strong> to do this, in addition to the SUNet IDs and email addresses we already support!
     dashboard_html: >-
-      Explore all the features of our file upload interface in this <a href="https://youtu.be/70OaryKxurc" target="_blank" data-ahoy-track="true">tutorial video</a>.
+      Need to share a work or add managers, depositors, or reviewers to a collection? You can now use <strong>Stanford aliases</strong> to do this, in addition to the SUNet IDs and email addresses we already support!
   app_name: 'Stanford Digital Repository Self-deposit'
   time:
     formats:
