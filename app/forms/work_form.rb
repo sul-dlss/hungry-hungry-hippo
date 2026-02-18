@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Form for a Work
-class WorkForm < BaseWorkForm
+class WorkForm < CompleteBaseWorkForm
   # As new subclasses of BaseWorkForm are created, WorkForm specific validations and callbacks will be moved here.
   validate :min_content_file_count, on: :deposit
   validate :max_content_file_count

@@ -264,10 +264,6 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     end
   end
 
-  def deposit?
-    params[:commit] == 'deposit'
-  end
-
   # NOTE: a `nil` validation context runs all validations without an explicit context
   def validation_context
     return :deposit if deposit? || request_review?
@@ -346,17 +342,25 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   # @return [String] view to render for the form for editing
   def edit_form_view
-    # This can be extended to handle different subclasses of Works.
-    return 'github_repository_work_form' if @work.is_a?(GithubRepository)
-
-    'form'
+    case @work
+    when Article
+      'article_form'
+    when GithubRepository
+      'github_repository_work_form'
+    else
+      'form'
+    end
   end
 
   # @return [Class] form class to use for the form for editing
   def work_form_class
-    # This can be extended to handle different subclasses of Works.
-    return GithubRepositoryWorkForm if @work.is_a?(GithubRepository)
-
-    WorkForm
+    case @work
+    when Article
+      ArticleWorkForm
+    when GithubRepository
+      GithubRepositoryWorkForm
+    else
+      WorkForm
+    end
   end
 end

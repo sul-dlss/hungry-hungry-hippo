@@ -17,16 +17,18 @@ class CrossrefService
   # @raise [NotFound] if the DOI is not found in Crossref
   # @raise [Error] if the Crossref API request fails
   def call
-    {
-      title: message['title']&.first,
-      abstract: normalize_abstract(message['abstract']),
-      related_works_attributes: [{
-        relationship: 'is version of record',
-        identifier: "https://doi.org/#{message['DOI']}"
-      }],
-      contributors_attributes: contributors_attrs,
-      publication_date_attributes: publication_date_attrs
-    }.compact_blank
+    Rails.cache.fetch(doi, namespace: 'crossref', expires_in: 1.month) do
+      {
+        title: message['title']&.first,
+        abstract: normalize_abstract(message['abstract']),
+        related_works_attributes: [{
+          relationship: 'is version of record',
+          identifier: "https://doi.org/#{message['DOI']}"
+        }],
+        contributors_attributes: contributors_attrs,
+        publication_date_attributes: publication_date_attrs
+      }.compact_blank
+    end
   end
 
   private

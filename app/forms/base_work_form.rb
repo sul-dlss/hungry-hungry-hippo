@@ -9,30 +9,6 @@ class BaseWorkForm < ApplicationForm
   accepts_nested_attributes_for :related_works, :publication_date, :contact_emails, :contributors,
                                 :keywords, :create_date_single, :create_date_range_from, :create_date_range_to
 
-  validate :contributor_presence, on: :deposit
-
-  before_validation do
-    blank_keywords = keywords.select(&:empty?)
-    next if blank_keywords.empty? || blank_keywords.length == keywords.length
-
-    self.keywords = keywords - blank_keywords
-  end
-
-  before_validation do
-    blank_contributors = contributors.select(&:empty?)
-    next if blank_contributors.empty? || blank_contributors.length == contributors.length
-
-    self.contributors = contributors - blank_contributors
-  end
-
-  before_validation do
-    blank_contact_emails = contact_emails.select(&:empty?)
-    next if blank_contact_emails.empty?
-    next if blank_contact_emails.length == contact_emails.length && works_contact_email.blank?
-
-    self.contact_emails = (contact_emails - blank_contact_emails)
-  end
-
   with_options if: -> { create_date_type == 'range' } do
     validate :create_date_range_complete
     validate :create_date_range_sequence
@@ -63,7 +39,6 @@ class BaseWorkForm < ApplicationForm
   validates :title, presence: true
 
   attribute :abstract, :string
-  validates :abstract, presence: true, on: :deposit
   validates :abstract, length: { maximum: Settings.abstract_maximum_length }
   before_validation do
     self.abstract = LinebreakSupport.normalize(abstract)
@@ -72,13 +47,11 @@ class BaseWorkForm < ApplicationForm
   attribute :citation, :string
 
   attribute :license, :string
-  validates :license, presence: true, on: :deposit
 
   attribute :work_type, :string
   before_validation do
     self.work_type = work_type.presence
   end
-  validates :work_type, presence: true, on: :deposit
 
   attribute :work_subtypes, array: true, default: -> { [] }
   before_validation { work_subtypes.compact_blank! }
