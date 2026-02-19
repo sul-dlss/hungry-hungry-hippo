@@ -236,9 +236,6 @@ textarea {
 }
 
 body {
-  // Stop the page from jumping when switching, e.g., to a tab containing a scrollbar
-  margin-left: calc(100vw - 100%);
-
   // Ensure the footer is at the bottom of the page
   display: flex;
   flex-direction: column;
