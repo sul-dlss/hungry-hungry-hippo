@@ -2,6 +2,8 @@
 
 # Form for deposit of an article by DOI
 class ArticleForm < ApplicationForm
+  include FilesRequired
+
   attribute :doi, :string
   validates :doi, presence: true
   validate :doi_exists, if: -> { doi.present? }
@@ -18,6 +20,9 @@ class ArticleForm < ApplicationForm
 
   attribute :collection_druid, :string
   attribute :content_id, :integer
+
+  # This is used for tracking with Ahoy. It allows eventing before the form is saved.
+  attribute :form_id, :string, default: -> { SecureRandom.uuid }
 
   def doi_exists
     errors.add(:doi, 'not found') unless doi_exists?
