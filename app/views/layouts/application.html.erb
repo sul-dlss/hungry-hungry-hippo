@@ -11,9 +11,9 @@
       <!-- End Google Tag Manager -->
     <% end %>
     <title><%= content_for(:title) || 'SDR | Stanford Digital Repository' %></title>
-    <meta name='viewport' content='width=device-width,initial-scale=1'>
-    <meta name='apple-mobile-web-app-capable' content='yes'>
-    <meta name='mobile-web-app-capable' content='yes'>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <% if Rails.env.test? %>
       <%# Breadcrumbs were being unexpectedly prefetched in system specs. %>
       <meta name="turbo-prefetch" content="false">
@@ -32,7 +32,7 @@
 
     <%= tag.link rel: 'icon', type: 'image/png', href: Rails.env.development? ? '/hippo.png' : '/icon.png' %>
     <%= tag.link rel: 'icon', type: 'image/svg+xml', href: Rails.env.development? ? '/hippo.svg' : '/icon.svg' %>
-    <link rel='apple-touch-icon' href='/icon.png'>
+    <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, 'data-turbo-track': 'reload' %>
@@ -56,7 +56,7 @@
     </div>
     <%= tag.main id: 'main-container', data: { controller: 'tooltips', tooltips_ahoy_value: Settings.ahoy.tooltip } do %>
       <% if content_for?(:fluid_body) %>
-        <div class="fluid-container">
+        <div class="container-fluid px-0">
           <%= yield :fluid_body %>
         </div>
       <% end %>
