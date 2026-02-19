@@ -98,6 +98,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
 
+  resources :articles, only: %i[new create], param: :druid do
+    collection do
+      get 'wait/:id', to: 'articles#wait', as: 'wait', param: :id
+    end
+  end
+
   resource :terms, only: :show
 
   resource :contacts, only: %i[new create]

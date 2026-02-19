@@ -29,4 +29,8 @@ class ApplicationController < ActionController::Base
   def request_review?
     params[:commit] == 'review'
   end
+
+  def deposit?
+    params[:commit] == 'deposit'
+  end
 end

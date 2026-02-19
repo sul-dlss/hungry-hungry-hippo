@@ -11,9 +11,9 @@
       <!-- End Google Tag Manager -->
     <% end %>
     <title><%= content_for(:title) || 'SDR | Stanford Digital Repository' %></title>
-    <meta name='viewport' content='width=device-width,initial-scale=1'>
-    <meta name='apple-mobile-web-app-capable' content='yes'>
-    <meta name='mobile-web-app-capable' content='yes'>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <% if Rails.env.test? %>
       <%# Breadcrumbs were being unexpectedly prefetched in system specs. %>
       <meta name="turbo-prefetch" content="false">
@@ -29,10 +29,12 @@
 
     <%# To morph a page: content_for(:turbo_refresh_method, 'refresh') %>
     <%= tag.meta name: 'turbo-refresh-method', content: content_for(:turbo_refresh_method) || 'replace' %>
+    <%# To preserve scroll position on a page: content_for(:turbo_refresh_scroll, 'preserve') %>
+    <%= tag.meta name: 'turbo-refresh-scroll', content: content_for(:turbo_refresh_scroll) || 'reset' %>
 
     <%= tag.link rel: 'icon', type: 'image/png', href: Rails.env.development? ? '/hippo.png' : '/icon.png' %>
     <%= tag.link rel: 'icon', type: 'image/svg+xml', href: Rails.env.development? ? '/hippo.svg' : '/icon.svg' %>
-    <link rel='apple-touch-icon' href='/icon.png'>
+    <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, 'data-turbo-track': 'reload' %>

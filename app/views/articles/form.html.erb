@@ -1,0 +1,42 @@
+<% content_for(:turbo_refresh_method, 'morph') %>
+<% content_for(:turbo_refresh_scroll, 'preserve') %>
+
+<%= tag.div data: {
+      controller: 'unsaved-changes',
+      action: 'change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage'
+    } do %>
+  <% content_for :breadcrumbs do %>
+    <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+      <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
+      <% component.with_collection_breadcrumb(text: @collection.title, link: collection_path(@collection.druid)) %>
+      <% component.with_breadcrumb(text: 'Article deposit') %>
+    <% end %>
+  <% end %>
+  <%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: 'Article deposit', classes: 'mb-3') %>
+
+  <%= form_with(model: @article_form, data: { action: 'change->unsaved-changes#changed' }) do |form| %>
+    <%= form.hidden_field :collection_druid %>
+    <%= form.hidden_field :content_id %>
+    <%= form.hidden_field :form_id %>
+    <%= form.hidden_field :last_doi_lookup %>
+    <%# These are stubbed out until form completed. %>
+    <%= form.hidden_field :agree_to_terms %>
+    <%= form.hidden_field :license %>
+
+    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :doi, label: 'DOI for published version of this work', mark_required: true) %>
+
+    <%= render Elements::Forms::SubmitComponent.new(label: 'Lookup', classes: 'mt-2', variant: :'outline-primary', data: { action: 'unsaved-changes#allowFormSubmission' }, value: 'lookup') %>
+
+    <% if @article_work_form %>
+      <%= @article_work_form.title %>
+    <% end %>
+
+    <div class="d-flex justify-content-between mt-5 mb-4">
+      <div>
+        <%= render Elements::CancelButtonComponent.new(link: request.referer || dashboard_path) %>
+        <%= render Elements::Forms::SubmitComponent.new(label: 'Edit before deposit', variant: :'outline-primary', classes: 'me-2', data: { action: 'unsaved-changes#allowFormSubmission' }) %>
+        <%= render Works::Edit::SubmitComponent.new(work: @work, collection: @collection, data: { action: 'unsaved-changes#allowFormSubmission' }) %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
