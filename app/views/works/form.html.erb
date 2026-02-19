@@ -92,7 +92,7 @@
           <p class="mb-0">
             <ul>
               <li>Be sure you have completed all the required sections.</li>
-              <% if @work_form.agree_to_terms %><li>You have accepted the <a href="#" data-bs-toggle="modal" data-bs-target="#tod-modal">Terms of Deposit</a>.</li><% end %>
+              <% if @work_form.agree_to_terms %><li>You have accepted the <%= terms_of_deposit_modal_link %>.</li><% end %>
               <li>Your deposit may take several hours to complete if the total file size is larger than 10GB.</li>
             </ul>
           </p>

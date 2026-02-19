@@ -40,6 +40,14 @@
     <%= form.hidden_field :agree_to_terms %>
     <%= form.hidden_field :license %>
 
+    <%= render Articles::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
+
+    <div class="mt-3">
+      <%= render Articles::Edit::TermsOfDepositComponent.new(form:) %>
+    </div>
+
+    <%= render Elements::HorizontalRuleComponent.new(classes: 'my-5') %>
+
     <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :doi, label: 'DOI for published version of this work', mark_required: true) %>
 
     <%= render Elements::Forms::SubmitComponent.new(label: 'Lookup', classes: 'mt-2', variant: :'outline-primary', data: { action: 'unsaved-changes#allowFormSubmission' }, value: 'lookup') %>

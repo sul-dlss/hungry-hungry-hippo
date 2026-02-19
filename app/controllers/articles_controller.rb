@@ -16,6 +16,8 @@ class ArticlesController < ApplicationController
       license: @collection.license
     )
 
+    set_license_presenter
+
     render :form
   end
 
@@ -26,6 +28,7 @@ class ArticlesController < ApplicationController
     authorize! @collection, with: WorkPolicy
 
     @content = Content.find(@article_form.content_id)
+    set_license_presenter
 
     if doi_lookup?
       # Perform DOI lookup and re-render the form showing the article metadata (@article_work_form) if the DOI is valid.
@@ -88,7 +91,8 @@ class ArticlesController < ApplicationController
       creation_date: work.created_at.to_date,
       content_id: content.id,
       access: @collection.stanford_access? ? 'stanford' : 'world',
-      collection_druid: @collection.druid
+      collection_druid: @collection.druid,
+      license: @article_form.license
     )
     ArticleWorkForm.new(attrs)
   end
@@ -102,5 +106,9 @@ class ArticlesController < ApplicationController
     Article.create!(title:, user: current_user, collection: @collection).tap do |work|
       @content.update!(work:)
     end
+  end
+
+  def set_license_presenter
+    @license_presenter = LicensePresenter.new(work_form: @article_form, collection: @collection)
   end
 end
