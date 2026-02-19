@@ -49,6 +49,10 @@ RSpec.describe 'Create an article then edit before deposit' do
     visit dashboard_path
     click_link_or_button('Deposit article by DOI')
 
+    # Adding a file
+    find('.dropzone').drop('spec/fixtures/files/hippo.png')
+    expect(page).to have_css('table#content-table td', text: 'hippo.png')
+
     fill_in 'DOI', with: doi
     click_link_or_button('Lookup')
 

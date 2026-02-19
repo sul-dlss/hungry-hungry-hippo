@@ -14,6 +14,23 @@
   <% end %>
   <%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: 'Article deposit', classes: 'mb-3') %>
 
+  <%= render Edit::SectionHeaderComponent.new(title: 'Upload your article') %>
+
+  <%# This is a "fake" form to allow rendering the file validation errors. %>
+  <%= form_with(model: @article_form) do |form| %>
+    <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
+  <% end %>
+
+  <%= render 'contents/edit', content: @content, form_id: @article_form.form_id %>
+
+  <div id="content-files" class="pane-section">
+    <%= turbo_frame_tag @content, 'show', src: content_path(@content), data: { controller: 'dropzone-files' }, class: 'dropzone-files' do %>
+      <%= render Elements::SpinnerComponent.new %>
+    <% end %>
+  </div>
+
+  <%= render Elements::HorizontalRuleComponent.new(classes: 'my-5') %>
+
   <%= form_with(model: @article_form, data: { action: 'change->unsaved-changes#changed' }) do |form| %>
     <%= form.hidden_field :collection_druid %>
     <%= form.hidden_field :content_id %>

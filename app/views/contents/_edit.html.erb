@@ -7,7 +7,7 @@
         dropzone_dropzone_files_outlet: '.dropzone-files',
         dropzone_tab_error_outlet: '.tab-error',
         action: 'change->unsaved-changes#changed'
-      }, id: 'file-dropzone', class: 'dropzone' do |form| %>
+      }, id: 'file-dropzone', class: 'dropzone mb-3' do |form| %>
     <%= render Elements::AlertComponent.new(classes: 'd-none', data: { dropzone_target: 'folderAlert' }) do %>
       <span data-dropzone-target="folderAlertText"></span>
       <%= render Elements::ButtonComponent.new(label: 'Reset', variant: 'outline-primary', classes: 'ms-3', data: { action: 'dropzone#clearBasePath' }) %>
