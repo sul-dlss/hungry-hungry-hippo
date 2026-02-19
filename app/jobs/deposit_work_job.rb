@@ -145,6 +145,8 @@ class DepositWorkJob < ApplicationJob
       # If a collection manager or reviewer has rejected a previous review, we need to approve the work again
       work.approve! if work.rejected_review?
       update_last_deposited_at!
+      # Refresh the show page to update the status and hide the edit link
+      Turbo::StreamsChannel.broadcast_refresh_to work
     else
       work.deposit_persist_complete!
     end
