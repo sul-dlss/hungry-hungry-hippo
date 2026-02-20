@@ -17,4 +17,10 @@ class ApplicationComponent < ViewComponent::Base
   def merge_actions(*)
     ComponentSupport::CssClasses.merge(*)
   end
+
+  def mark_label_required(label:, mark_required: false)
+    label.dup.tap do |label_text|
+      label_text << ' (optional)' unless mark_required
+    end
+  end
 end

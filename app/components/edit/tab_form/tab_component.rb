@@ -4,10 +4,11 @@ module Edit
   module TabForm
     # Component for a tab in a tabbed pane.
     class TabComponent < ApplicationComponent
-      def initialize(label:, tab_name:, active_tab_name:)
+      def initialize(label:, tab_name:, active_tab_name:, mark_required: false)
         @label = label
         @tab_name = tab_name
         @selected = tab_name == active_tab_name
+        @mark_required = mark_required
         super()
       end
 
@@ -33,7 +34,7 @@ module Edit
         end
       end
 
-      attr_reader :label, :tab_name
+      attr_reader :tab_name
 
       def selected?
         @selected
@@ -49,6 +50,16 @@ module Edit
 
       def pane_id
         "#{tab_name}-pane"
+      end
+
+      def mark_required?
+        @mark_required
+      end
+
+      def label
+        @label.dup.tap do |label_text|
+          label_text << ' (optional)' unless mark_required?
+        end
       end
     end
   end

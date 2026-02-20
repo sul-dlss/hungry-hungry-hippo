@@ -362,8 +362,8 @@ en:
           tab_label: 'Access settings'
           label: 'Access settings'
         citation:
-          tab_label: 'Citation for this deposit (optional)'
-          label: 'Citation for this deposit (optional)'
+          tab_label: 'Citation for this deposit'
+          label: 'Citation for this deposit'
           help_text: >-
             You may explicitly state how you would like your work to be cited.
             Be sure to include the DOI if you're getting one or the link to the public webpage for your work that begins "https://purl.stanford.edu/..."
@@ -378,8 +378,8 @@ en:
           tooltip_html: >-
             List all individuals or organizations who played a role in this work. List each individual or organization only once.
         dates:
-          tab_label: 'Dates (optional)'
-          label: 'Enter dates related to your deposit (optional)'
+          tab_label: 'Dates'
+          label: 'Enter dates related to your deposit'
           tooltip_html: >-
             This application will automatically record the date that your content is made available on the public webpage for your work. The date fields below are optional.
         doi:
@@ -400,8 +400,8 @@ en:
           tab_label: 'License and additional terms of use'
           label: 'License and additional terms of use'
         related_content:
-          tab_label: 'Related content (optional)'
-          label: 'Related content (optional)'
+          tab_label: 'Related content'
+          label: 'Related content'
         title:
           tab_label: 'Title and contact'
           label: 'Title of deposit and contact information'
@@ -506,13 +506,13 @@ en:
                   <li>Contributors</li>
                 </ul></p>
         contributors:
-          tab_label: 'Contributors (optional)'
-          label: 'Add contributors for all deposits (optional)'
+          tab_label: 'Contributors'
+          label: 'Add contributors for all deposits'
           help_text: >-
             You can add one or more contributors that will be included with every new deposit to this collection. The depositor will be able to reorder this with other contributor entries, but will not be able to delete it.
         works_contact_email:
-          tab_label: 'Contact email for deposits (optional)'
-          label: 'Add contact email for all deposits (optional)'
+          tab_label: 'Contact email for deposits'
+          label: 'Add contact email for all deposits'
           help_text: >-
             You can add a contact email for all deposits in this collection that cannot be deleted or changed by the depositor.
         license:
@@ -534,14 +534,14 @@ en:
             provided: 'Yes, include the following custom use statement for every deposit in this collection.'
             depositor_selects: 'Yes, allow depositors to enter their own custom use statement. The depositor will see the instructions provided below.'
         related_links:
-          tab_label: 'Related links (optional)'
-          label: 'Links to related content (optional)'
+          tab_label: 'Related links'
+          label: 'Links to related content'
           help_text: 'Links entered here will appear on the page for your collection. They will not appear on individual deposit items.'
           tooltip_html: >-
             This section is for links to other web pages that are related to your collection. Enter the text to be displayed on the page in the "Link text" box. This entire text will be hyperlinked to the URL you enter in the "URL" box. Examples of content you might consider linking to are key funder websites,  lab or institute websites, or project pages.
         types:
-          tab_label: 'Type of deposit (optional)'
-          label: 'Type of deposit (optional)'
+          tab_label: 'Type of deposit'
+          label: 'Type of deposit'
         access:
           tab_label: 'Access settings'
           label: 'Manage release of deposits for discovery and download'
