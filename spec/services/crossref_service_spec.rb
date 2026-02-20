@@ -187,6 +187,17 @@ RSpec.describe CrossrefService, :vcr do
     end
   end
 
+  context 'when the DOI exists but is not a journal article' do
+    let(:doi) { '10.1093/gmo/9781561592630.article.a2289571' }
+
+    it 'raises NotJournalArticle' do
+      expect do
+        attrs
+      end.to raise_error(CrossrefService::NotJournalArticle,
+                         "DOI '10.1093/gmo/9781561592630.article.a2289571' is not a journal article")
+    end
+  end
+
   context 'when the Crossref API request fails' do
     let(:doi) { '10.1128/mbio.01735-25' }
 

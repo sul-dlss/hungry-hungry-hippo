@@ -4,6 +4,7 @@
 class CrossrefService
   class Error < StandardError; end
   class NotFound < Error; end
+  class NotJournalArticle < Error; end
 
   def self.call(...)
     new(...).call
@@ -15,7 +16,7 @@ class CrossrefService
 
   # @return [Hash] attributes for a work form based on the Crossref metadata for the DOI
   # @raise [NotFound] if the DOI is not found in Crossref
-  # @raise [Error] if the Crossref API request fails
+  # @raise [NotJournalArticle] if the DOI is not a journal article
   def call
     Rails.cache.fetch(doi, namespace: 'crossref', expires_in: 1.month) do
       {
@@ -35,13 +36,15 @@ class CrossrefService
 
   attr_reader :doi
 
-  def message
+  def message # rubocop:disable Metrics/AbcSize
     @message ||= begin
       response = Faraday.get("https://api.crossref.org/works/doi/#{doi}")
       raise NotFound, "DOI '#{doi}' not found in Crossref" if response.status == 404
       raise Error, "DOI lookup failed: #{response.status} #{response.body}" unless response.success?
 
-      JSON.parse(response.body)['message']
+      JSON.parse(response.body)['message'].tap do |message|
+        raise NotJournalArticle, "DOI '#{doi}' is not a journal article" unless message['type'] == 'journal-article'
+      end
     end
   end
 
