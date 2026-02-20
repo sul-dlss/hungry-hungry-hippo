@@ -36,9 +36,6 @@
     <%= form.hidden_field :content_id %>
     <%= form.hidden_field :form_id %>
     <%= form.hidden_field :last_doi_lookup %>
-    <%# These are stubbed out until form completed. %>
-    <%= form.hidden_field :agree_to_terms %>
-    <%= form.hidden_field :license %>
 
     <%= render Articles::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
 
