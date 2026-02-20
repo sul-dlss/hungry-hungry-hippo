@@ -54,7 +54,7 @@ RSpec.describe 'Create an article then edit before deposit' do
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
 
     fill_in 'DOI', with: doi
-    click_link_or_button('Lookup')
+    click_link_or_button('Look up')
 
     # Deposit
     click_link_or_button('Edit before deposit')

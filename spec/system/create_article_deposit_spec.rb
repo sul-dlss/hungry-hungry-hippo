@@ -49,13 +49,13 @@ RSpec.describe 'Create an article deposit' do
     expect(page).to have_css('h1', text: 'Article deposit')
 
     # Validate blank DOI submission
-    click_link_or_button('Lookup')
+    click_link_or_button('Look up')
 
     expect(page).to have_css('.invalid-feedback', text: "can't be blank")
 
     # Validate missing DOI submission
     fill_in 'DOI', with: not_found_doi
-    click_link_or_button('Lookup')
+    click_link_or_button('Look up')
     expect(page).to have_css('.invalid-feedback', text: 'not found')
 
     # Deposit without required fields
@@ -66,9 +66,13 @@ RSpec.describe 'Create an article deposit' do
     expect(page).to have_css('.invalid-feedback', text: 'lookup before saving or depositing')
 
     # Lookup
-    click_link_or_button('Lookup')
+    click_link_or_button('Look up')
     expect(page).to have_no_css('.invalid-feedback')
-    expect(page).to have_content(title_fixture)
+
+    within('#article-table') do
+      expect(page).to have_css('th', text: 'Title')
+      expect(page).to have_css('td', text: title_fixture)
+    end
 
     # Adding a file
     find('.dropzone').drop('spec/fixtures/files/hippo.png')

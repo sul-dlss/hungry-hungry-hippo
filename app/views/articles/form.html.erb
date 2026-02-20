@@ -48,13 +48,32 @@
 
     <%= render Elements::HorizontalRuleComponent.new(classes: 'my-5') %>
 
-    <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :doi, label: 'DOI for published version of this work', mark_required: true) %>
-
-    <%= render Elements::Forms::SubmitComponent.new(label: 'Lookup', classes: 'mt-2', variant: :'outline-primary', data: { action: 'unsaved-changes#allowFormSubmission' }, value: 'lookup') %>
-
-    <% if @article_work_form %>
-      <%= @article_work_form.title %>
+    <%= render Elements::AlertComponent.new(classes: 'mb-4') do %>
+      If you don't have a DOI, please use the <%= link_to 'full deposit form', new_work_path(collection_druid: @collection.druid) %> to deposit your item.
     <% end %>
+
+    <div class="row align-items-top">
+      <div class="col-4 pt-2">
+        <%= render Elements::Forms::LabelComponent.new(form:, field_name: :doi, label_text: 'DOI for published version of this article') %>
+      </div>
+      <div class="col-8">
+        <div class="d-flex align-items-center">
+          <div class="input-group">
+            <span class="input-group-text">
+              https://doi.org/
+            </span>
+            <%= form.text_field :doi, class: 'form-control' %>
+          </div>
+          <div class="ms-1 text-nowrap">
+            <%= render Elements::Forms::SubmitComponent.new(label: 'Look up', data: { action: 'unsaved-changes#allowFormSubmission' }, value: 'lookup') %>
+          </div>
+        </div>
+
+        <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :doi) %>
+      </div>
+    </div>
+
+    <%= render Articles::Edit::LookupTableComponent.new(article_work_form: @article_work_form, classes: 'mt-3') %>
 
     <div class="d-flex justify-content-between mt-5 mb-4">
       <div>
