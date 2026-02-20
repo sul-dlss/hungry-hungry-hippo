@@ -1,0 +1,13 @@
+<div class="row align-items-center">
+  <div class="col-4">
+    <%= render Edit::LabelComponent.new(label_text: 'License') %>
+  </div>
+  <div class="col-8">
+    <% if required_license_option? %>
+      <p class="mb-0">The license for this deposit is <%= license_label %></p>
+      <%= form.hidden_field :license %>
+    <% else %>
+      <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name:, options: license_options, label:, width: 500, hidden_label: true) %>
+    <% end %>
+  </div>
+</div>

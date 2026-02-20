@@ -4,14 +4,14 @@ require 'rails_helper'
 
 RSpec.describe 'Create an article deposit' do
   let(:druid) { druid_fixture }
-  let(:user) { create(:user) }
+  let(:user) { create(:user, agreed_to_terms_at: nil) }
 
   let(:doi) { '10.1128/mbio.01735-25' }
   let(:not_found_doi) { '10.1234/doesnotexistoncrossref' }
 
   before do
     create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture, depositors: [user],
-                        article_deposit_enabled: true)
+                        article_deposit_enabled: true, license_option: 'depositor_selects')
 
     allow(CrossrefService).to receive(:call).with(doi: not_found_doi).and_raise(CrossrefService::NotFound)
     allow(CrossrefService).to receive(:call).with(doi:).and_return({ title: title_fixture })
@@ -62,6 +62,7 @@ RSpec.describe 'Create an article deposit' do
     fill_in 'DOI', with: doi
     click_link_or_button('Deposit')
     expect(page).to have_css('.invalid-feedback', text: 'must have at least one file')
+    expect(page).to have_css('.invalid-feedback', text: 'must be accepted')
     expect(page).to have_css('.invalid-feedback', text: 'lookup before saving or depositing')
 
     # Lookup
@@ -71,8 +72,14 @@ RSpec.describe 'Create an article deposit' do
 
     # Adding a file
     find('.dropzone').drop('spec/fixtures/files/hippo.png')
-
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
+
+    # Setting license
+    expect(page).to have_select('License', selected: 'CC-BY-4.0 Attribution International')
+    select('CC-BY-NC-4.0 Attribution-NonCommercial International', from: 'License')
+
+    # Agreeing to terms
+    check('I agree to the Terms of Deposit')
 
     # Deposit
     click_link_or_button('Deposit')
@@ -104,6 +111,11 @@ RSpec.describe 'Create an article deposit' do
     within('#access-table') do
       expect(page).to have_css('td', text: 'Immediately')
       expect(page).to have_css('td', text: 'Everyone')
+    end
+
+    # License
+    within('#license-table') do
+      expect(page).to have_css('td', text: 'CC-BY-NC-4.0 Attribution-NonCommercial International')
     end
 
     expect(Sdr::Repository).to have_received(:accession)
