@@ -6,7 +6,7 @@ class ArticleForm < ApplicationForm
 
   attribute :doi, :string
   validates :doi, presence: true
-  validate :doi_exists_and_article, if: -> { doi.present? }
+  validate :doi_article, if: -> { doi.present? }
   validate :doi_lookup_performed, if: -> { doi_ok? }, on: :deposit
 
   # Tracks whether user has performed a DOI lookup
@@ -26,7 +26,8 @@ class ArticleForm < ApplicationForm
 
   before_validation do
     if doi.present?
-      CrossrefService.call(doi:)
+      results = CrossrefService.call(doi:)
+      @doi_has_title = results[:title].present?
       @doi_found = true
       @doi_journal_article = true
     end
@@ -45,22 +46,28 @@ class ArticleForm < ApplicationForm
     @doi_journal_article
   end
 
+  def doi_has_title?
+    @doi_has_title
+  end
+
   def lookup_performed?
     last_doi_lookup.presence == doi.presence
   end
 
   private
 
-  def doi_exists_and_article
+  def doi_article
     return errors.add(:doi, 'not found') unless doi_found?
 
-    errors.add(:doi, 'is not a journal article') unless doi_journal_article?
+    return errors.add(:doi, 'is not a journal article') unless doi_journal_article?
+
+    errors.add(:doi, 'does not have a title') unless doi_has_title?
   end
 
   def doi_ok?
     return false if doi.blank?
 
-    doi_found? && doi_journal_article?
+    doi_found? && doi_journal_article? && doi_has_title?
   end
 
   def doi_lookup_performed
