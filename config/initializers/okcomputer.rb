@@ -18,3 +18,17 @@ if Settings.rabbitmq.enabled
                                                               username: Settings.rabbitmq.username,
                                                               password: Settings.rabbitmq.password)
 end
+
+# A custom OkComputer status check for Globus.
+# It uses the Globus user_valid? check to determine if the Globus service is healthy.
+# NOTE: This does not FAIL if the status user is invalid because that still indicates that the Globus service is up
+class GlobusStatusCheck < OkComputer::Check
+  def check
+    GlobusClient.user_valid?('dummy@stanford.edu')
+  rescue StandardError => e
+    mark_failure
+    mark_message "Globus status check failed: #{e.message}"
+  end
+end
+
+OkComputer::Registry.register 'globus', GlobusStatusCheck.new if Settings.globus.enabled
