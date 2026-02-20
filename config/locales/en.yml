@@ -33,9 +33,9 @@ en:
     # To hide dashboard banner, set to ''.
     # Banners can include links, e.g., "Email <a href="mailto:sdr-contact@lists.stanford.edu" >sdr-contact@lists.stanford.edu</a> to volunteer!"
     home_html: >-
-      Depositing large files via Globus is currently unavailable. Please contact us at <a href="mailto:sdr-contact@lists.stanford.edu" >sdr-contact@lists.stanford.edu</a> if you have an urgent need to deposit content greater than 10 GB.
+      Need to share a work or add managers, depositors, or reviewers to a collection? You can now use <strong>Stanford aliases</strong> to do this, in addition to the SUNet IDs and email addresses we already support!
     dashboard_html: >-
-      Depositing large files via Globus is currently unavailable. Please contact us at <a href="mailto:sdr-contact@lists.stanford.edu" >sdr-contact@lists.stanford.edu</a> if you have an urgent need to deposit content greater than 10 GB.
+      Need to share a work or add managers, depositors, or reviewers to a collection? You can now use <strong>Stanford aliases</strong> to do this, in addition to the SUNet IDs and email addresses we already support!
   app_name: 'Stanford Digital Repository Self-deposit'
   time:
     formats:
