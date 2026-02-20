@@ -210,4 +210,63 @@ RSpec.describe CrossrefService, :vcr do
       expect { attrs }.to raise_error(CrossrefService::Error, 'DOI lookup failed: 500 Internal Server Error')
     end
   end
+
+  context 'when tags and comments are present in fields' do
+    let(:doi) { '10.1234/test' }
+    let(:abstract) { '<jats:title>ABSTRACT</jats:title><jats:p>Study of <b>bacteria</b> <!-- Remove this --></jats:p>' }
+    let(:response_body) do
+      {
+        status: 'ok',
+        message: {
+          'type' => 'journal-article',
+          'DOI' => doi,
+          'title' => ['The Role of <i>E. coli</i> in <!-- comment --> Disease <sup>2</sup>'],
+          'abstract' => abstract,
+          'author' => [
+            {
+              'given' => 'John <i>A.</i>',
+              'family' => 'Doe<!-- comment -->',
+              'affiliation' => [
+                { 'name' => 'Department of <sup>Advanced</sup> Biology<!-- test -->' }
+              ]
+            }
+          ],
+          'published' => { 'date-parts' => [[2025, 1, 15]] }
+        }
+      }.to_json
+    end
+
+    before do
+      stub_request(:get, "https://api.crossref.org/works/doi/#{doi}")
+        .to_return(status: 200, body: response_body, headers: { 'Content-Type' => 'application/json' })
+    end
+
+    it 'strips tags and comments from all fields' do
+      expect(attrs).to match(
+        {
+          title: 'The Role of E. coli in Disease 2',
+          abstract: "ABSTRACT\n\nStudy of bacteria",
+          related_works_attributes: [
+            {
+              relationship: 'is version of record',
+              identifier: "https://doi.org/#{doi}"
+            }
+          ],
+          publication_date_attributes: { year: 2025, month: 1, day: 15 },
+          contributors_attributes: [
+            {
+              first_name: 'John A.',
+              last_name: 'Doe',
+              person_role: 'author',
+              affiliations_attributes: [
+                {
+                  institution: 'Department of Advanced Biology'
+                }
+              ]
+            }
+          ]
+        }
+      )
+    end
+  end
 end

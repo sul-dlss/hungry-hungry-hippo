@@ -20,8 +20,8 @@ class CrossrefService
   def call
     Rails.cache.fetch(doi, namespace: 'crossref', expires_in: 1.month) do
       {
-        title: message['title']&.first,
-        abstract: normalize_abstract(message['abstract']),
+        title:,
+        abstract:,
         related_works_attributes: [{
           relationship: 'is version of record',
           identifier: "https://doi.org/#{message['DOI']}"
@@ -48,11 +48,29 @@ class CrossrefService
     end
   end
 
+  def title
+    strip_tags_and_comments(message['title']&.first)
+  end
+
+  def abstract
+    abstract = message['abstract']
+
+    return nil if abstract.blank?
+
+    # Replace closing paragraph and title tags with double newlines for formatting
+    normalized_abstract = abstract.gsub(%r{</jats:(title|p)>\n?\s*}, "\n\n")
+                                  .gsub(%r{</?jats:.+?>\n?\s*}, '')
+                                  .strip
+
+    # Strip all remaining tags and comments
+    strip_tags_and_comments(normalized_abstract)
+  end
+
   def contributors_attrs
     Array(message['author']).map do |author|
       {
-        first_name: author['given'],
-        last_name: author['family'],
+        first_name: strip_tags_and_comments(author['given']),
+        last_name: strip_tags_and_comments(author['family']),
         person_role: 'author',
         orcid: author.key?('ORCID') ? author['ORCID'].split('/').last : nil,
         affiliations_attributes: affiliation_attrs_for(author)
@@ -63,7 +81,7 @@ class CrossrefService
   def affiliation_attrs_for(author)
     Array(author['affiliation']).map do |affiliation|
       {
-        institution: affiliation['name'],
+        institution: strip_tags_and_comments(affiliation['name']),
         uri: Array(affiliation['id']).select { |id| id['id-type'] == 'ROR' }.map { |id| id['id'] }.first
       }.compact
     end
@@ -76,9 +94,14 @@ class CrossrefService
     { year: publication_date[0][0], month: publication_date[0][1], day: publication_date[0][2] }
   end
 
-  def normalize_abstract(abstract)
-    abstract.gsub(%r{</jats:(title|p)>\n?\s*}, "\n\n")
-            .gsub(%r{</?jats:.+?>\n?\s*}, '')
-            .strip
+  # Strips all HTML/XML tags and comments from text
+  # @param text [String, nil] the text to sanitize
+  # @return [String, nil] the sanitized text, or nil if input is nil
+  def strip_tags_and_comments(text)
+    return nil if text.nil?
+
+    text.gsub(/<!--.*?-->/m, '') # Remove XML/HTML comments
+        .gsub(/<[^>]+>/, '').squeeze(' ') # Collapse multiple spaces (but not newlines) into one
+        .strip
   end
 end
