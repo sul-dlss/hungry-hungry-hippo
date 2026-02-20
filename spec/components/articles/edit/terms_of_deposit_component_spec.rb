@@ -23,6 +23,7 @@ RSpec.describe Articles::Edit::TermsOfDepositComponent, type: :component do
       render_inline(described_class.new(form:))
 
       expect(page).to have_text('You have accepted the Terms of Deposit')
+      expect(page).to have_field('agree_to_terms', type: 'hidden', with: 'true')
     end
   end
 end
