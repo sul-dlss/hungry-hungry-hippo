@@ -45,7 +45,7 @@ RSpec.describe 'Create an article then edit before deposit' do
     sign_in(user)
   end
 
-  it 'creates and an article and opens for edit', :dropzone do
+  it 'creates an article and opens for edit', :dropzone do
     visit dashboard_path
     click_link_or_button('Deposit article by DOI')
 
@@ -89,5 +89,15 @@ RSpec.describe 'Create an article then edit before deposit' do
 
     # DOI tab should not be present since DOI will not be assigned
     expect(page).to have_no_css('.nav-link', text: 'DOI')
+
+    # Ahoy events created
+    work = Work.find_by(druid:)
+    expect(work).to be_present
+    completed_events = Ahoy::Event.where_event(Ahoy::Event::ARTICLE_FORM_COMPLETED, work_id: work.id)
+    expect(completed_events.count).to eq(1)
+    visit_id = completed_events.first.visit_id
+    expect(Ahoy::Event.where_event(Ahoy::Event::ARTICLE_FORM_STARTED).where(visit_id:).count).to eq(1)
+    # article NOT created
+    expect(Ahoy::Event.where_event(Ahoy::Event::ARTICLE_CREATED, work_id: work.id, deposit: true).count).to eq(0)
   end
 end

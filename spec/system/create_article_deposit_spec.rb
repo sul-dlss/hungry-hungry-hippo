@@ -123,5 +123,14 @@ RSpec.describe 'Create an article deposit' do
     end
 
     expect(Sdr::Repository).to have_received(:accession)
+
+    # Ahoy events created
+    work = Work.find_by(druid:)
+    expect(work).to be_present
+    completed_events = Ahoy::Event.where_event(Ahoy::Event::ARTICLE_FORM_COMPLETED, work_id: work.id)
+    expect(completed_events.count).to eq(1)
+    visit_id = completed_events.first.visit_id
+    expect(Ahoy::Event.where_event(Ahoy::Event::ARTICLE_FORM_STARTED).where(visit_id:).count).to eq(1)
+    expect(Ahoy::Event.where_event(Ahoy::Event::ARTICLE_CREATED, work_id: work.id, deposit: true).count).to eq(1)
   end
 end
