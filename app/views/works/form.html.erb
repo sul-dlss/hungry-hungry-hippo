@@ -4,23 +4,23 @@
   <%= render Edit::DiscardDraftFormComponent.new(presenter: @work_presenter, id: discard_draft_form_id) if @work_presenter %>
   <% active_tab_name = params[:tab]&.to_sym || @active_tab_name || :files %>
   <%= render Edit::TabForm::TabListComponent.new(model: @work_form, form_id:, hidden_fields: %i[lock version collection_druid content_id creation_date deposit_publication_date apo copyright form_id]) do |component| %>
-    <% component.with_tab(label: t('works.edit.panes.files.tab_label'), tab_name: :files, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.title.tab_label'), tab_name: :title, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.contributors.tab_label'), tab_name: :contributors, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.abstract.tab_label'), tab_name: :abstract, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.types.tab_label'), tab_name: :types, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.doi.tab_label'), tab_name: :doi, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.access.tab_label'), tab_name: :access, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.license.tab_label'), tab_name: :license, active_tab_name:) %>
+    <% component.with_tab(label: t('works.edit.panes.files.tab_label'), tab_name: :files, active_tab_name:, mark_required: true) %>
+    <% component.with_tab(label: t('works.edit.panes.title.tab_label'), tab_name: :title, active_tab_name:, mark_required: true) %>
+    <% component.with_tab(label: t('works.edit.panes.contributors.tab_label'), tab_name: :contributors, active_tab_name:, mark_required: true) %>
+    <% component.with_tab(label: t('works.edit.panes.abstract.tab_label'), tab_name: :abstract, active_tab_name:, mark_required: true) %>
+    <% component.with_tab(label: t('works.edit.panes.types.tab_label'), tab_name: :types, active_tab_name:, mark_required: true) %>
+    <% component.with_tab(label: t('works.edit.panes.doi.tab_label'), tab_name: :doi, active_tab_name:, mark_required: true) %>
+    <% component.with_tab(label: t('works.edit.panes.access.tab_label'), tab_name: :access, active_tab_name:, mark_required: true) %>
+    <% component.with_tab(label: t('works.edit.panes.license.tab_label'), tab_name: :license, active_tab_name:, mark_required: true) %>
     <% component.with_tab(label: t('works.edit.panes.dates.tab_label'), tab_name: :dates, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.related_content.tab_label'), tab_name: :related_content, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.citation.tab_label'), tab_name: :citation, active_tab_name:) %>
-    <% component.with_tab(label: t('works.edit.panes.deposit.tab_label'), tab_name: :deposit, active_tab_name:) %>
+    <% component.with_tab(label: t('works.edit.panes.deposit.tab_label'), tab_name: :deposit, active_tab_name:, mark_required: true) %>
     <%# The panes below need a form in order to render their contents. This provides a "fake" form to use for that purpose. %>
     <%# TabListComponent will render the actual form. %>
     <% form_with(model: @work_form) do |form| %>
       <%# This pane is outside the work form because it contains its own forms for files. %>
-      <% component.with_before_form_pane(tab_name: :files, label: t('works.edit.panes.files.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, previous_tab_btn: false) do %>
+      <% component.with_before_form_pane(tab_name: :files, label: t('works.edit.panes.files.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, previous_tab_btn: false, mark_required: true) do %>
         <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
 
         <%= render 'contents/edit', content: @content, form_id: @work_form.form_id %>
@@ -40,23 +40,23 @@
         </div>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :title, label: t('works.edit.panes.title.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+      <% component.with_work_pane(tab_name: :title, label: t('works.edit.panes.title.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>
         <%= render Works::Edit::TitleComponent.new(form:, work_form: @work_form) %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text'), tooltip: t('works.edit.panes.contributors.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+      <% component.with_work_pane(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text'), tooltip: t('works.edit.panes.contributors.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>
         <%= render Works::Edit::ContributorsComponent.new(form:) %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), help_text: t('works.edit.panes.abstract.help_text'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+      <% component.with_work_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), help_text: t('works.edit.panes.abstract.help_text'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>
         <%= render Works::Edit::AbstractComponent.new(form:) %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :types, label: t('works.edit.panes.types.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+      <% component.with_work_pane(tab_name: :types, label: t('works.edit.panes.types.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>
         <%= render Works::Edit::WorkTypeComponent.new(form:, collection: @collection) %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :doi, label: t('works.edit.panes.doi.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do |pane_component| %>
+      <% component.with_work_pane(tab_name: :doi, label: t('works.edit.panes.doi.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do |pane_component| %>
         <%= render Works::Edit::DoiComponent.new(form:, collection: @collection) %>
 
         <% pane_component.with_help do %>
@@ -64,11 +64,11 @@
         <% end %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :access, label: t('works.edit.panes.access.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+      <% component.with_work_pane(tab_name: :access, label: t('works.edit.panes.access.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>
         <%= render Works::Edit::AccessSettingsComponent.new(form:, collection: @collection) %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+      <% component.with_work_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>
         <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
         <% unless @collection.no_custom_rights_statement_option? %>
           <%= render Works::Edit::TermsOfUseComponent.new(form:, collection: @collection) %>
@@ -87,7 +87,7 @@
         <%= render Works::Edit::CitationComponent.new(form:) %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, next_tab_btn: false) do |pane_component| %>
+      <% component.with_work_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, next_tab_btn: false, mark_required: true) do |pane_component| %>
         <% pane_component.with_help do %>
           <p class="mb-0">
             <ul>

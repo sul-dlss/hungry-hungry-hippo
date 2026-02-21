@@ -1,4 +1,4 @@
-<%= render Edit::TabForm::PaneComponent.new(**pane_args) do |component| %>
+<%= render Edit::TabForm::PaneComponent.new(label:, **pane_args) do |component| %>
   <%= content %>
   <% component.with_help do %>
     <%= help if help? %>

@@ -6,7 +6,7 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
   let(:component) do
     described_class.new(tab_name: :test_pane, label: 'Test Pane', form_id: 'new_work',
                         discard_draft_form_id:, work_presenter:, active_tab_name:,
-                        previous_tab_btn:, next_tab_btn:)
+                        previous_tab_btn:, next_tab_btn:, mark_required:)
   end
   let(:work_presenter) { nil }
   let(:active_tab_name) { :test_pane }
@@ -14,6 +14,7 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
   let(:next_tab_btn) { true }
   let(:user) { create(:user) }
   let(:discard_draft_form_id) { 'discard_draft_form' }
+  let(:mark_required) { false }
 
   before do
     Current.user = user
@@ -24,7 +25,7 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
     it 'renders the pane' do
       render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
       tab_pane = page.find('div.tab-pane')
-      expect(tab_pane).to have_css('.h4', text: 'Test Pane')
+      expect(tab_pane).to have_css('.h4', text: 'Test Pane (optional)')
       expect(tab_pane).to have_css('div', text: 'Test Pane Content')
       expect(tab_pane).to have_button('Save as draft') { |btn| expect(btn[:form]).to eq('new_work') }
       expect(tab_pane).to have_button('Next')
@@ -138,6 +139,16 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
       tab_pane = page.find('div.tab-pane')
       expect(tab_pane).to have_no_button('Next')
       expect(tab_pane).to have_button('Previous')
+    end
+  end
+
+  context 'when marking required' do
+    let(:mark_required) { true }
+
+    it 'renders the pane with required label' do
+      render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
+      tab_pane = page.find('div.tab-pane')
+      expect(tab_pane).to have_css('.h4', text: 'Test Pane', exact_text: true)
     end
   end
 end
