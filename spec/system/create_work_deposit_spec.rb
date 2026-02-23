@@ -30,6 +30,8 @@ RSpec.describe 'Create a work deposit' do
 
   before do
     allow(Sdr::Repository).to receive(:accession)
+    allow(Sdr::Repository).to receive(:check_lock)
+
     allow(RorService).to receive(:call).with(affiliation_query).and_return(affiliation_ror)
 
     create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture, managers: [user],

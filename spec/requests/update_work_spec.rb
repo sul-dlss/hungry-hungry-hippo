@@ -88,7 +88,7 @@ RSpec.describe 'Update work' do
     end
   end
 
-  context 'when the work cannot be deposited' do
+  context 'when the work cannot be deposited due to accessioning' do
     let(:user) { create(:user) }
     let(:work) { create(:work, druid:, collection:, user:, deposit_state: :accessioning) }
     let(:collection) { create(:collection, :with_druid) }
@@ -110,17 +110,62 @@ RSpec.describe 'Update work' do
       allow(DepositWorkJob).to receive(:perform_later)
       allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(dro_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:latest_user_version).and_return(work.version)
+      allow(Sdr::Repository).to receive(:check_lock)
       sign_in(user)
     end
 
-    it 'redirects to work show page w/ warning text' do
+    it 'redirects to work show page with warning text' do
       put "/works/#{work.druid}", params: update_work_params
 
       expect(response).to redirect_to(work_path(work))
       follow_redirect!
       expect(response.body).to include(
-        'We were not able to deposit your item. It may have already been successfully deposited.'
+        'We were not able to save your item. Please refresh the page and try again.'
       )
+      expect(DepositWorkJob).not_to have_received(:perform_later)
+    end
+  end
+
+  context 'when the work cannot be deposited due to stale lock' do
+    let(:user) { create(:user) }
+    let(:work) { create(:work, druid:, collection:, user:) }
+    let(:collection) { create(:collection, :with_druid) }
+    let(:content) { create(:content, :with_content_files, user:, work:) }
+    let(:lock) { "W/\"#{work.druid}=10=1\"" }
+    let(:update_work_params) do
+      {
+        work: {
+          content_id: content.id,
+          collection_druid: collection.druid,
+          title: 'Fake Title',
+          whats_changing: 'Initial version',
+          lock:
+        }
+      }
+    end
+
+    before do
+      allow(RoundtripSupport).to receive(:changed?).and_return(true)
+      allow(DepositWorkJob).to receive(:perform_later)
+      allow(Sdr::Repository).to receive(:check_lock).and_raise(Sdr::Repository::StaleLock)
+      allow(Sdr::Repository).to receive(:latest_user_version).and_return(work.version)
+      allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(dro_with_metadata_fixture)
+      allow(work).to receive(:deposit_persist!)
+
+      sign_in(user)
+    end
+
+    it 'redirects to work show page with warning text' do
+      put "/works/#{work.druid}", params: update_work_params
+
+      expect(response).to redirect_to(work_path(work))
+      follow_redirect!
+      expect(response.body).to include(
+        'We were not able to save your item. Please refresh the page and try again.'
+      )
+      expect(Sdr::Repository).to have_received(:check_lock).with(druid: work.druid, lock:)
+      expect(DepositWorkJob).not_to have_received(:perform_later)
+      expect(work).not_to have_received(:deposit_persist!)
     end
   end
 end

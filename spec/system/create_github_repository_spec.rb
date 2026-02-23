@@ -28,6 +28,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
     end
     allow(Sdr::Repository).to receive(:accession)
     allow(Sdr::Repository).to receive(:find_latest_user_version).with(druid:).and_return(nil)
+    allow(Sdr::Repository).to receive(:check_lock)
 
     # Stubbing out for edit form
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })

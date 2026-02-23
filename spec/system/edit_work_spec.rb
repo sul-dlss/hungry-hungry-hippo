@@ -57,6 +57,7 @@ RSpec.describe 'Edit a work' do
     allow(Sdr::Repository).to receive(:find_latest_user_version).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(version_status)
     allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
+    allow(Sdr::Repository).to receive(:check_lock)
     # It is already open.
     allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
     allow(Sdr::Repository).to receive(:update) do |args|

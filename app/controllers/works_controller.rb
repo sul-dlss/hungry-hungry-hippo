@@ -83,6 +83,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     @content = Content.find(@work_form.content_id)
 
     if (@valid = @work_form.valid?(validation_context)) && perform_deposit?
+      Sdr::Repository.check_lock(druid:, lock: @work_form.lock)
       track_work_update
       perform_deposit(work: @work)
       redirect_to wait_works_path(@work.id)
@@ -93,7 +94,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       @work_form.prepopulate
       render edit_form_view, status: :unprocessable_content
     end
-  rescue StateMachines::InvalidTransition
+  rescue StateMachines::InvalidTransition, Sdr::Repository::StaleLock
     flash[:warning] = helpers.t('works.edit.messages.cannot_be_deposited_html', support_email: Settings.support_email)
     redirect_to work_path(@work)
   end

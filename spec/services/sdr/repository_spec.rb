@@ -412,4 +412,26 @@ RSpec.describe Sdr::Repository do
       end
     end
   end
+
+  describe '#check_lock' do
+    let(:object_client) { instance_double(Dor::Services::Client::Object, lock:) }
+    let(:lock) { 'valid_lock' }
+
+    before do
+      allow(Dor::Services::Client).to receive(:object).and_return(object_client)
+    end
+
+    context 'when the locks match' do
+      it 'returns the object' do
+        expect(described_class.check_lock(druid:, lock:)).to be_nil
+        expect(Dor::Services::Client).to have_received(:object).with(druid)
+      end
+    end
+
+    context 'when the locks do not match' do
+      it 'raises' do
+        expect { described_class.check_lock(druid:, lock: 'invalid_lock') }.to raise_error(Sdr::Repository::StaleLock)
+      end
+    end
+  end
 end

@@ -31,6 +31,7 @@ RSpec.describe DepositWorkJob do
     allow(Contents::Stager).to receive(:call)
     allow(Sdr::Repository).to receive(:accession)
     allow(Sdr::Repository).to receive(:register).and_return(cocina_object)
+    allow(Sdr::Repository).to receive(:check_lock)
     allow(Turbo::StreamsChannel).to receive(:broadcast_refresh_to)
   end
 
@@ -386,7 +387,7 @@ RSpec.describe DepositWorkJob do
   context 'when review rejected but a manager or reviewer deposits' do
     let(:druid) { druid_fixture }
     let(:cocina_object) { dro_with_metadata_fixture }
-    let(:work_form) { WorkForm.new(druid:, content_id: content.id) }
+    let(:work_form) { WorkForm.new(druid:, content_id: content.id, lock: lock_fixture) }
     let(:work) { create(:work, :rejected_review, druid:, collection:) }
     let(:version_status) { build(:draft_version_status) }
     let(:collection) { create(:collection, druid: collection_druid_fixture, reviewers: [current_user]) }
@@ -407,6 +408,29 @@ RSpec.describe DepositWorkJob do
       expect(work.review_not_in_progress?).to be true
       expect(Sdr::Repository).to have_received(:accession)
       expect(Sdr::Repository).to have_received(:update)
+    end
+  end
+
+  context 'when a stale lock' do
+    let(:work) { create(:work, :registering_or_updating, druid:) }
+    let(:work_form) do
+      work_form_fixture.tap do |form|
+        form.content_id = content.id
+        form.collection_druid = collection.druid
+      end
+    end
+
+    before do
+      allow(Sdr::Repository).to receive(:check_lock).with(druid:, lock: lock_fixture).and_raise(Sdr::Repository::StaleLock)
+      allow(Sdr::Repository).to receive(:status)
+    end
+
+    it 'raises' do
+      expect do
+        described_class.perform_now(work_form:, work:, deposit: false, request_review: false,
+                                    current_user:, ahoy_visit:)
+      end.to raise_error(Sdr::Repository::StaleLock)
+      expect(Sdr::Repository).not_to have_received(:status)
     end
   end
 end
