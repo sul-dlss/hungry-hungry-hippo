@@ -1,7 +1,7 @@
 <% if alert? %>
-  <%= render Elements::AlertComponent.new(variant: :success, dismissible: true,
-                                          title: 'Deposit successfully submitted',
-                                          data: { turbo_permanent: true }, id: 'depositing-alert') do %>
+  <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :success, dismissible: true,
+                                                             title: 'Deposit successfully submitted',
+                                                             data: { turbo_permanent: true }, id: 'depositing-alert') do %>
     <ul>
       <li>Your deposit is currently making its way through our system.</li>
       <li>You will receive an email when your deposit is complete.</li>

@@ -9,6 +9,8 @@
       <% end %>
     <% end %>
   <% else %>
-    <%= render Elements::AlertComponent.new(variant: :warning, value: t('messages.collection_not_empty')) %>
+    <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :warning) do %>
+      <%= t('messages.collection_not_empty') %>
+    <% end %>
   <% end %>
 <% end %>

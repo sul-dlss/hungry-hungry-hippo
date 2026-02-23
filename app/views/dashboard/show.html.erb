@@ -10,7 +10,9 @@
     <%= render Elements::ButtonLinkComponent.new(link: admin_dashboard_path, label: 'Admin') if allowed_to?(:show?, with: AdminPolicy) %>
   </div>
 </div>
-<%= render Elements::AlertComponent.new(value: t('banner.dashboard_html'), dismissible: false) %>
+<%= render SdrViewComponents::Elements::AlertComponent.new(dismissible: false) do %>
+  <%= t('banner.dashboard_html') %>
+<% end %>
 
 <% if @draft_works.present? %>
   <div class="mb-5">
