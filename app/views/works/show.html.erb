@@ -52,10 +52,12 @@
 
 <%= render Show::ContributorsShowComponent.new(contributors: @work_presenter.contributors, presenter: @work_presenter, label: 'Authors / Contributors') %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'mb-5') do |component| %>
-  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Dates', presenter: @work_presenter, tab: :dates) %><% end %>
-  <% component.with_row(label: 'Publication date', values: [@work_presenter.publication_date]) %>
-  <% component.with_row(label: 'Creation date', values: [@work_presenter.creation_date]) %>
+<% unless @work_presenter.github_repository? %>
+  <%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'mb-5') do |component| %>
+    <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Dates', presenter: @work_presenter, tab: :dates) %><% end %>
+    <% component.with_row(label: 'Publication date', values: [@work_presenter.publication_date]) %>
+    <% component.with_row(label: 'Creation date', values: [@work_presenter.creation_date]) %>
+  <% end %>
 <% end %>
 
 <%= render Elements::Tables::TableComponent.new(id: 'citation-table', classes: 'mb-5') do |component| %>

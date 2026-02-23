@@ -147,6 +147,10 @@ class WorkPresenter < FormPresenter
     github_deposit_enabled.nil?
   end
 
+  def github_repository?
+    work.is_a?(GithubRepository)
+  end
+
   private
 
   delegate :collection, :created_at, :user, :review_state, :pending_review?, :share_users, to: :work
