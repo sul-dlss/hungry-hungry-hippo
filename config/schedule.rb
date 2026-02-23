@@ -32,9 +32,9 @@ every 1.day, at: '8:30 am' do
 end
 
 every Settings.github.poll_interval.seconds do
-  runner 'GithubRepository.where(github_deposit_enabled: true).find_each {|repo| PollGithubReleasesJob.perform_later(github_repository: repo)}' # rubocop:disable Layout/LineLength
+  runner 'GithubRepository.where(github_deposit_enabled: true).find_each.with_index {|repo, index| PollGithubReleasesJob.set(wait: 10.seconds * index).perform_later(github_repository: repo)}' # rubocop:disable Layout/LineLength
 end
 
 every Settings.github.deposit_queue_interval.seconds do
-  runner 'GithubRelease.where(status: ["queued", "failed"]).find_each {|release| DepositGithubReleaseJob.perform_later(github_release: release)}' # rubocop:disable Layout/LineLength
+  runner 'GithubRelease.where(status: ["queued", "failed"]).find_each.with_index {|release, index| DepositGithubReleaseJob.set(wait: 10.seconds * index).perform_later(github_release: release)}' # rubocop:disable Layout/LineLength
 end
