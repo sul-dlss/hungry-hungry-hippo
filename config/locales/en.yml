@@ -412,6 +412,10 @@ en:
           tab_label: 'Type of deposit'
           label: 'Type of deposit'
   collections:
+    buttons:
+      deposit_work: 'Deposit to this collection'
+      deposit_article: 'Deposit article with DOI'
+      deposit_github: 'Deposit a GitHub repository'
     edit:
       breadcrumb: 'Edit'
       no_title: 'Untitled collection'

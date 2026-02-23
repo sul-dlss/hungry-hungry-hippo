@@ -6,9 +6,19 @@
     <%= render Edit::EditDraftButtonComponent.new(presenter:, label: 'Edit', classes: 'text-nowrap') if edit? %>
     <% if !presenter.first_draft? && allowed_to_create_work? %>
       <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: presenter.druid),
-                                                                      label: 'Deposit to this collection',
-                                                                      variant: :primary,
-                                                                      classes: 'ms-2 text-nowrap') %>
+                                                   label: I18n.t('collections.buttons.deposit_work'),
+                                                   variant: :primary,
+                                                   classes: 'ms-2 me-2 text-nowrap') %>
+      <% if Settings.article_deposit.enabled && collection.article_deposit_enabled %>
+        <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: new_article_path(collection_druid: presenter.druid),
+                                                     label: I18n.t('collections.buttons.deposit_article'),
+                                                     variant: 'outline-primary', classes: 'me-2 text-nowrap') %>
+      <% end %>
+      <% if Settings.github.enabled && collection.github_deposit_enabled %>
+        <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: new_github_repository_path(collection_druid: presenter.druid),
+                                                     label: I18n.t('collections.buttons.deposit_github'),
+                                                     variant: 'outline-primary', classes: 'text-nowrap') %>
+      <% end %>
     <% end %>
     <%= render Admin::FunctionDropdownComponent.new(classes: 'ms-2') do |component| %>
       <% component.with_function(label: 'Delete', link: new_collection_admin_delete_path(presenter.druid), data: { turbo_frame: 'admin-card' }) %>

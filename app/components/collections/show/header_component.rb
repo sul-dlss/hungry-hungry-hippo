@@ -10,14 +10,14 @@ module Collections
       end
       attr_reader :presenter
 
-      delegate :title, to: :presenter
+      delegate :title, :collection, to: :presenter
 
       def allowed_to_create_work?
-        helpers.allowed_to?(:create?, presenter.collection, with: WorkPolicy)
+        helpers.allowed_to?(:create?, collection, with: WorkPolicy)
       end
 
       def edit?
-        helpers.allowed_to?(:edit?, presenter.collection)
+        helpers.allowed_to?(:edit?, collection)
       end
     end
   end
