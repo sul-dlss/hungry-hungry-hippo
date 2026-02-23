@@ -48,5 +48,16 @@ RSpec.describe ArticleForm, type: :form do
         expect(form.errors[:doi]).to include('is not a journal article')
       end
     end
+
+    context 'when DOI is present but does not have a title' do
+      before do
+        allow(CrossrefService).to receive(:call).with(doi:).and_return({ title: nil })
+      end
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+        expect(form.errors[:doi]).to include('does not have a title')
+      end
+    end
   end
 end
