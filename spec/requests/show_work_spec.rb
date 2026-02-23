@@ -154,10 +154,10 @@ RSpec.describe 'Show work' do
   end
 
   context 'when rendering the page' do
+    let(:user) { create(:user) }
+    let(:collection) { create(:collection, :with_druid, depositors: [user], title: 'My collection') }
+
     before do
-      user = create(:user)
-      collection = create(:collection, :with_druid, depositors: [user], title: 'My collection')
-      create(:work, druid:, user:, collection:, title: 'My work')
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
       allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:openable_version_status))
       allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
@@ -165,11 +165,32 @@ RSpec.describe 'Show work' do
       sign_in(user)
     end
 
-    it 'sets the title' do
-      get "/works/#{druid}"
+    context 'with a normal work type' do
+      before do
+        create(:work, druid:, user:, collection:, title: 'My work')
+      end
 
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to include('<title>SDR | Dashboard | My collection | My title</title>')
+      it 'sets the title' do
+        get "/works/#{druid}"
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('<title>SDR | Dashboard | My collection | My title</title>')
+        expect(response.body).to include('Dates')
+      end
+    end
+
+    context 'with a GithubRepository work type' do
+      before do
+        create(:github_repository, druid:, user:, collection:, title: 'My repository')
+      end
+
+      it 'sets the title and does not include Dates' do
+        get "/works/#{druid}"
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('<title>SDR | Dashboard | My collection | My title</title>')
+        expect(response.body).not_to include('Dates')
+      end
     end
   end
 end
