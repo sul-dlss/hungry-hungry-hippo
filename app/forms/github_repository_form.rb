@@ -12,6 +12,10 @@ class GithubRepositoryForm < ApplicationForm
   def valid_repository
     return if repository.blank?
 
-    errors.add(:repository, 'is not a valid GitHub repository') unless Github::AppService.repository?(repository)
+    return if Github::AppService.repository?(repository)
+
+    errors.add(:repository,
+               'Not a valid GitHub repository or this repository is private. ' \
+               'Only public repositories can be deposited in SDR.')
   end
 end

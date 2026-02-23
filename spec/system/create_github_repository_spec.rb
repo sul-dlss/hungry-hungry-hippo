@@ -69,7 +69,9 @@ RSpec.describe 'Create a Github repository and work deposit' do
     click_link_or_button('Next')
 
     expect(page).to have_field('GitHub repository URL or owner/name', class: 'is-invalid')
-    expect(page).to have_css('.invalid-feedback', text: 'is not a valid GitHub repository')
+    error_msg = 'Not a valid GitHub repository or this repository is private. ' \
+                'Only public repositories can be deposited in SDR.'
+    expect(page).to have_css('.invalid-feedback', text: error_msg)
 
     # Enter a valid repository name
     fill_in('GitHub repository URL or owner/name', with: 'sul-dlss/hungry-hungry-hippo')
