@@ -111,14 +111,17 @@ RSpec.describe 'Create a Github repository and work deposit' do
     find('.nav-link', text: 'Type of deposit').click
     expect(page).to have_checked_field('Software/Code')
 
-    # DOI tab is not displayed
-    expect(page).to have_no_link('DOI')
+    # DOI tab is displayed
+    find('.nav-link', text: 'DOI').click
+    expect(page).to have_content('A DOI will be assigned.')
 
-    # Access settings tab is not displayed
-    expect(page).to have_no_link('Access settings')
+    # Access settings tab is displayed
+    find('.nav-link', text: 'Access settings').click
+    expect(page).to have_checked_field('Immediately')
+    expect(page).to have_select('Who can download the files?', selected: 'Everyone')
 
     # Dates tab is not displayed
-    expect(page).to have_no_link('Dates (optional)')
+    expect(page).to have_no_css('.nav-link', text: 'Dates (optional)')
 
     # Related work is pre-populated
     find('.nav-link', text: 'Related content (optional)').click
