@@ -9,14 +9,10 @@ class ArticlesController < ApplicationController
 
     @content = Content.create!(user: current_user)
 
-    @article_form = ArticleForm.new(
-      collection_druid: @collection.druid,
-      content_id: @content.id,
-      agree_to_terms: current_user.agree_to_terms?,
-      license: @collection.license
-    )
+    @article_form = article_form
 
     set_license_presenter
+    ahoy.track Ahoy::Event::ARTICLE_FORM_STARTED, form_id: @article_form.form_id
 
     render :form
   end
@@ -40,6 +36,7 @@ class ArticlesController < ApplicationController
       # @article_form.valid?(:deposit) checks all of the fields.
       work = create_work
       work_form = create_article_work_form(article_form: @article_form, content: @content, work:)
+      track_article_create(work:, work_form:)
       perform_deposit(work:, work_form:)
       redirect_to wait_articles_path(work.id)
     else
@@ -65,6 +62,20 @@ class ArticlesController < ApplicationController
   end
 
   private
+
+  def article_form
+    ArticleForm.new(
+      collection_druid: @collection.druid,
+      content_id: @content.id,
+      agree_to_terms: current_user.agree_to_terms?,
+      license: @collection.license
+    )
+  end
+
+  def track_article_create(work:, work_form:)
+    ahoy.track Ahoy::Event::ARTICLE_FORM_COMPLETED, form_id: work_form.form_id, work_id: work.id
+    ahoy.track Ahoy::Event::ARTICLE_CREATED, work_id: work.id, deposit: deposit?, review: request_review?
+  end
 
   def article_form_params
     params.expect(article: ArticleForm.permitted_params)
