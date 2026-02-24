@@ -1,6 +1,6 @@
 <div data-controller="unsaved-changes" data-action="change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage">
   <% content_for :breadcrumbs do %>
-    <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <%= render SdrViewComponents::Elements::BreadcrumbNavComponent.new do |component| %>
       <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
       <% component.with_collection_breadcrumb(text: @work.collection.title, link: collection_path(@work.collection)) %>
       <% component.with_title_breadcrumb(text: @work.title, link: work_path(@work)) %>
