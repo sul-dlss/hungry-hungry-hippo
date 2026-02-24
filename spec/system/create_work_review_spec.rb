@@ -51,7 +51,7 @@ RSpec.describe 'Create a work that requires review' do
     # Filling in title
     find('.nav-link', text: 'Title and contact').click
     fill_in('work_title', with: title_fixture)
-    fill_in('Contact email', with: contact_emails_fixture.first['email'])
+    fill_in('Enter contact email', with: contact_emails_fixture.first['email'])
 
     # Click Next to go to contributors tab
     click_link_or_button('Next')

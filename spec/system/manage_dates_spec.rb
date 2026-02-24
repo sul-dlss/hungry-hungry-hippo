@@ -43,7 +43,7 @@ RSpec.describe 'Manage dates for a work deposit' do
     expect(page).to have_css('h2', text: 'Title of deposit and contact information')
 
     fill_in('work_title', with: title_fixture)
-    fill_in('Contact email', with: contact_emails_fixture.first['email'])
+    fill_in('Enter contact email', with: contact_emails_fixture.first['email'])
 
     # Go to dates tab
     find('.nav-link', text: 'Dates (optional)').click

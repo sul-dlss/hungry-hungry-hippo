@@ -93,7 +93,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
     # Title is pre-populated
     find('.nav-link', text: 'Title and contact').click
     expect(page).to have_field('Title of deposit', with: 'sul-dlss/hungry-hungry-hippo')
-    fill_in('Contact email', with: contact_emails_fixture.first['email'])
+    fill_in('Enter contact email', with: contact_emails_fixture.first['email'])
 
     # Add a contributor
     find('.nav-link', text: 'Authors / Contributors').click

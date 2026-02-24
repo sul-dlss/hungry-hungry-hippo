@@ -150,17 +150,20 @@ en:
         label: I am a library employee, and I need a MARC record.
       other_collection:
         label: I do not see an appropriate collection.
+  contact_emails:
+    edit:
+      legend: 'Contact emails'
+      collections:
+        tooltip_html: >-
+          Enter one or more valid email addresses (one per box) where people can write to ask questions about this collection. Consider using a group address that will be active and monitored for a long time to ensure that questions are received. Email addresses will appear on the public webpage for the collection.
+      works:
+        tooltip_html: >-
+          Enter one or more valid email addresses (one per box) where people can write to ask questions about this deposit. Email addresses will be publicly visible. Use an email address that you expect to be functional for many years, if possible.
   contact_email:
     edit:
       fields:
         email:
-          label: 'Contact email (one per box)'
-          collections:
-            tooltip_html: >-
-              Enter one or more valid email addresses (one per box) where people can write to ask questions about this collection. Consider using a group address that will be active and monitored for a long time to ensure that questions are received. Email addresses will appear on the public webpage for the collection.
-          works:
-            tooltip_html: >-
-              Enter one or more valid email addresses (one per box) where people can write to ask questions about this deposit. Email addresses will be publicly visible. Use an email address that you expect to be functional for many years, if possible.
+          label: 'Enter contact email'
     validation:
       email:
         invalid: 'must provide a valid email address'
