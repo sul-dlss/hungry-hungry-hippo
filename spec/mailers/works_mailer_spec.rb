@@ -93,6 +93,8 @@ RSpec.describe WorksMailer do
   end
 
   describe '.share_added_email' do
+    # This is testing creating with a work subclass (GithubRepository)
+    let(:work) { create(:github_repository, druid:, collection:, user:, title: 'S1.E2: Rakers', doi_assigned: true) }
     let(:mail) { described_class.with(share:, work:).share_added_email }
     let(:share_user) { create(:user, first_name: 'SharedWith') }
     let(:permission) { Share::VIEW_PERMISSION }
