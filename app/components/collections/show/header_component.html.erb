@@ -1,14 +1,15 @@
+<<<<<<< HEAD
 <div class="d-flex justify-content-between">
   <div class="mb-4">
     <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h1, text: title) %>
   </div>
   <div class="d-flex align-items-start ms-5">
-    <%= render Edit::EditDraftButtonComponent.new(presenter:, label: 'Edit', classes: 'text-nowrap') if edit? %>
+    <%= render Edit::EditDraftButtonComponent.new(presenter:, label: 'Edit', classes: 'ms-2 me-2 text-nowrap') %>
     <% if !presenter.first_draft? && allowed_to_create_work? %>
       <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: presenter.druid),
                                                    label: I18n.t('collections.buttons.deposit_work'),
                                                    variant: :primary,
-                                                   classes: 'ms-2 me-2 text-nowrap') %>
+                                                   classes: 'me-2 text-nowrap') %>
       <% if Settings.article_deposit.enabled && collection.article_deposit_enabled %>
         <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: new_article_path(collection_druid: presenter.druid),
                                                      label: I18n.t('collections.buttons.deposit_article'),
@@ -24,5 +25,8 @@
       <% component.with_function(label: 'Delete', link: new_collection_admin_delete_path(presenter.druid), data: { turbo_frame: 'admin-card' }) %>
     <% end %>
   </div>
+</div>
+<div class="mb-4">
+  <%= render Elements::HeadingComponent.new(level: :h1, text: title) %>
 </div>
 <%= tag.turbo_frame id: 'admin-card' %>

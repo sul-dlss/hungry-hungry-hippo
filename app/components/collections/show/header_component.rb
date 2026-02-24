@@ -15,10 +15,6 @@ module Collections
       def allowed_to_create_work?
         helpers.allowed_to?(:create?, collection, with: WorkPolicy)
       end
-
-      def edit?
-        helpers.allowed_to?(:edit?, collection)
-      end
     end
   end
 end
