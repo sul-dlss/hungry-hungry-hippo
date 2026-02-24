@@ -200,12 +200,12 @@ en:
       Use this DOI link for sharing the public webpage for your deposit. If there is no DOI link, use public webpage link above. The link will be active when the deposit is completed.
   publication_date:
     edit:
-      legend: 'Publication date (optional)'
+      legend: 'Publication date'
       tooltip_html: >-
         Use this field to enter the publication date for the content you are uploading, if present. For example, the date indicated on the title page of the work.
   related_links:
     edit:
-      legend: 'Related links (optional)'
+      legend: 'Related links'
       tooltip_html: >-
         This section is for links to other web pages that are related to your deposit and that are not included in the related works section above. Enter the text to be displayed on the page in the "Link text" box. This entire text will be hyperlinked to the URL you enter in the "URL" box. Examples of content you might consider linking to are lab, institute, or project pages; GitHub repositories for the current version of software code; or funder websites.
       fields:
@@ -215,7 +215,7 @@ en:
           label: 'URL'
   related_works:
     edit:
-      legend: 'Related works (optional)'
+      legend: 'Related works'
       tooltip_html: >-
         Enter links (preferably persistent identifiers) or the full citations for other published works or online content related to your work. You must select an option from the list provided to describe how this work is related to your deposit.
       fields:

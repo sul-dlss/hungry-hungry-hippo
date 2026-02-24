@@ -8,7 +8,7 @@ module Elements
       renders_one :help_link # Optional
 
       def initialize(label: nil, hidden_label: false, classes: [], label_classes: [], legend_classes: [], # rubocop:disable Metrics/ParameterLists
-                     data: {}, id: nil, tooltip: nil, aria: {}, required: false)
+                     data: {}, id: nil, tooltip: nil, aria: {}, mark_required: false)
         @label = label
         @hidden_label = hidden_label
         @classes = classes
@@ -18,14 +18,18 @@ module Elements
         @legend_classes = legend_classes
         @tooltip = tooltip
         @aria = aria
-        @required = required
+        @mark_required = mark_required
         super()
       end
 
-      attr_reader :label, :data, :id, :tooltip, :aria, :required
+      attr_reader :data, :id, :tooltip, :aria, :mark_required
 
       def label_classes
         merge_classes(@label_classes, @hidden_label ? 'visually-hidden' : 'form-label fw-bold')
+      end
+
+      def label
+        mark_label_required(label: @label, mark_required:) if @label.present?
       end
 
       def classes

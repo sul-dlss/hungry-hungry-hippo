@@ -1,6 +1,6 @@
 <div class="row align-items-center">
   <div class="col-4">
-    <%= render Edit::LabelComponent.new(label_text: 'License') %>
+    <%= render Edit::LabelComponent.new(label_text: 'License', mark_required: true) %>
   </div>
   <div class="col-8">
     <% if required_license_option? %>

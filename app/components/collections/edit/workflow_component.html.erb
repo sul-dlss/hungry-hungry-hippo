@@ -4,7 +4,7 @@
     <p><%= t('collections.edit.fields.review_workflow.help_text_html') %></p>
 
     <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :review_enabled, label_classes: 'fw-bold',
-                                                    label: 'Enable Review Workflow', container_classes: 'mb-4') do |component| %>
+                                                    label: 'Enable Review Workflow', container_classes: 'mb-4', mark_required: true) do |component| %>
       <% component.with_left_toggle_option(form:,
                                            field_name: :review_enabled,
                                            label: 'Yes',
@@ -29,7 +29,7 @@
       <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.article_workflow.label')) %>
       <p><%= t('collections.edit.fields.article_workflow.help_text_html') %></p>
 
-      <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable Article Workflow') do %>
+      <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable Article Workflow', mark_required: true) do %>
         <div class="row ms-0">
           <div class="form-check col-md-2">
             <%= form.radio_button :article_deposit_enabled, true, class: 'form-check-input', data: { workflow_target: 'articleEnabledOption', action: 'change->workflow#toggleWorkflows' } %>
@@ -51,7 +51,7 @@
       <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.github_workflow.label')) %>
       <p><%= t('collections.edit.fields.github_workflow.help_text_html') %></p>
 
-      <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable Github Integration Workflow') do %>
+      <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable Github Integration Workflow', mark_required: true) do %>
         <div class="row ms-0">
           <div class="form-check col-md-2">
             <%= form.radio_button :github_deposit_enabled, true, class: 'form-check-input', data: { workflow_target: 'githubEnabledOption', action: 'change->workflow#toggleWorkflows' } %>
