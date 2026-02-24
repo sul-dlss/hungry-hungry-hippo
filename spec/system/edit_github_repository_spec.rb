@@ -20,57 +20,92 @@ RSpec.describe 'Edit a Github repository' do
   let!(:work) { create(:github_repository, druid:, user:, collection:) }
 
   before do
-    # On the second call, this will return the cocina object submitted to update.
-    # This will allow us to test the updated values.
-    allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(
-      ->(_arg) { cocina_object }, # edit
-      ->(_arg) { cocina_object }, # DepositWorkJob
-      ->(_arg) { @updated_cocina_object } # show after update
-    )
-    allow(Sdr::Repository).to receive(:find_latest_user_version).and_return(cocina_object)
-    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(
-      build(:openable_version_status, version: cocina_object.version),
-      build(:draft_version_status, version: cocina_object.version)
-    )
-    allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
-    # It is already open.
-    allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
-    allow(Sdr::Repository).to receive(:update) do |args|
-      @updated_cocina_object = args[:cocina_object]
-    end
     allow(Sdr::Event).to receive(:list).and_return([])
+    allow(Sdr::Repository).to receive(:find_latest_user_version).and_return(cocina_object)
+    allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
 
     sign_in(user)
   end
 
-  it 'edits a Github repository' do
-    visit edit_work_path(druid, tab: 'title')
+  context 'when editing metadata and changing setting' do
+    before do
+      # On the second call, this will return the cocina object submitted to update.
+      # This will allow us to test the updated values.
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(
+        ->(_arg) { cocina_object }, # edit
+        ->(_arg) { cocina_object }, # DepositWorkJob
+        ->(_arg) { @updated_cocina_object } # show after update
+      )
+      allow(Sdr::Repository).to receive(:status).with(druid:).and_return(
+        build(:openable_version_status, version: cocina_object.version),
+        build(:draft_version_status, version: cocina_object.version)
+      )
+      # It is already open.
+      allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
+      allow(Sdr::Repository).to receive(:update) do |args|
+        @updated_cocina_object = args[:cocina_object]
+      end
+    end
 
-    expect(page).to have_css('h1', text: title_fixture)
+    it 'edits a Github repository' do
+      visit edit_work_path(druid, tab: 'title')
 
-    expect(page).to have_button('Next')
-    expect(page).to have_no_button('Save as draft')
-    expect(page).to have_no_button('Discard draft')
+      expect(page).to have_css('h1', text: title_fixture)
 
-    fill_in('Title of deposit', with: updated_title)
+      expect(page).to have_button('Next')
+      expect(page).to have_no_button('Save as draft')
+      expect(page).to have_no_button('Discard draft')
 
-    find('.nav-link', text: 'Deposit', exact_text: true).click
-    expect(page).to have_field('work[whats_changing]', with: 'Metadata update', type: 'hidden')
-    expect(page).to have_checked_field('work[github_deposit_enabled]', with: true)
-    choose('No')
+      fill_in('Title of deposit', with: updated_title)
 
-    click_link_or_button('Save')
+      find('.nav-link', text: 'Deposit', exact_text: true).click
+      expect(page).to have_field('work[whats_changing]', with: 'Metadata update', type: 'hidden')
+      expect(page).to have_checked_field('work[github_deposit_enabled]', with: true)
+      choose('No')
 
-    # Waiting page may be too fast to catch so not testing.
-    # On show page
-    expect(page).to have_css('h1', text: updated_title)
-    expect(page).to have_css('.status', text: 'New version in draft')
-    expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
+      click_link_or_button('Save')
 
-    expect(work.reload.github_deposit_enabled).to be(false)
+      # Waiting page may be too fast to catch so not testing.
+      # On show page
+      expect(page).to have_css('h1', text: updated_title)
+      expect(page).to have_css('.status', text: 'New version in draft')
+      expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
 
-    # Ahoy event is created
-    expect(Ahoy::Event.where_event(Ahoy::Event::WORK_UPDATED, work_id: work.id, deposit: true,
-                                                              review: false).count).to eq(1)
+      expect(work.reload.github_deposit_enabled).to be(false)
+
+      # Ahoy event is created
+      expect(Ahoy::Event.where_event(Ahoy::Event::WORK_UPDATED, work_id: work.id, deposit: true,
+                                                                review: false).count).to eq(1)
+    end
+  end
+
+  context 'when changing setting only' do
+    before do
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:status)
+        .with(druid:)
+        .and_return(build(:openable_version_status, version: cocina_object.version))
+      allow(RoundtripSupport).to receive(:changed?).and_return(false)
+    end
+
+    it 'edits a Github repository' do
+      visit edit_work_path(druid, tab: 'title')
+
+      expect(page).to have_css('h1', text: title_fixture)
+
+      find('.nav-link', text: 'Deposit', exact_text: true).click
+      expect(page).to have_checked_field('work[github_deposit_enabled]', with: true)
+      choose('No')
+
+      click_link_or_button('Save')
+
+      # Waiting page may be too fast to catch so not testing.
+      # On show page
+      expect(page).to have_css('h1', text: title_fixture)
+      expect(page).to have_css('.status', text: 'Deposited')
+      expect(page).to have_link('Edit or deposit', href: edit_work_path(druid))
+
+      expect(work.reload.github_deposit_enabled).to be(false)
+    end
   end
 end

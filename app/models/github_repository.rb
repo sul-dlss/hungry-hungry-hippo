@@ -10,4 +10,8 @@ class GithubRepository < Work
   # Note that github_deposit_enabled is a nillable boolean.
   # Nil indicates that the user has not made a choice about whether to enable GitHub deposit.
   # Only a value of true indicates that GitHub deposit is enabled.
+
+  def update_settings_from_form(work_form:)
+    self.github_deposit_enabled = github_deposit_enabled.nil? || work_form.github_deposit_enabled
+  end
 end

@@ -47,4 +47,15 @@ RSpec.describe Work do
       expect(Notifier).to have_received(:publish).with(Notifier::ACCESSIONING_COMPLETE, object: work)
     end
   end
+
+  describe '.update_settings_from_form' do
+    let(:work) { create(:work) }
+    let(:work_form) { instance_double(WorkForm) }
+
+    it 'does not change settings' do
+      # A Work does not have any settings, so this should not change anything.
+      work.update_settings_from_form(work_form:)
+      expect(work.changed?).to be(false)
+    end
+  end
 end

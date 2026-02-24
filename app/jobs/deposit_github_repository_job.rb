@@ -12,8 +12,7 @@ class DepositGithubRepositoryJob < ApplicationJob
     # work.github_deposit_enabled.nil? indicates the user has never made a choice to enable GitHub deposit.
     # For the initial deposit (not draft), GitHub deposit is enabled by default.
     # For subsequent edits, the user has a choice which is recorded in the work form.
-    github_deposit_enabled = work.github_deposit_enabled.nil? || work_form.github_deposit_enabled
-
-    work.update!(github_deposit_enabled:)
+    work.update_settings_from_form(work_form:)
+    work.save!
   end
 end
