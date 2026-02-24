@@ -10,8 +10,8 @@
   <%= render Admin::FunctionDropdownComponent.new %>
 </div>
 
-<%= render Elements::HeadingComponent.new(level: :h2, text: 'Generate collection report', classes: 'h2 mb-4') %>
-<%= render Elements::HeadingComponent.new(level: :h3, text: 'Limit your search with one or more of the options below', classes: 'h3 mb-4') %>
+<%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h2, text: 'Generate collection report', classes: 'h2 mb-4') %>
+<%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h3, text: 'Limit your search with one or more of the options below', classes: 'h3 mb-4') %>
 
 <%= form_with model: @collection_report_form, url: admin_collection_report_path, class: 'mb-5' do |form| %>
   <%= render Elements::Forms::LabelComponent.new(form:, field_name: :date_created_start, label_text: 'Date created range', classes: 'mb-2') %>

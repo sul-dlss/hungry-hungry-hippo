@@ -2,7 +2,7 @@
   <%= tag.div class: 'hero', style: "background-image: url(#{image_path(@hero_image)});" do %>
     <div class="row align-items-center justify-content-center h-100 gy-2" role="list">
       <div class="col-md-3 col-sm-12" role="listitem">
-        <%= render Elements::CardComponent.new(classes: 'text-center mx-4 mx-md-2 opacity-85') do |component| %>
+        <%= render SdrViewComponents::Elements::CardComponent.new(classes: 'text-center mx-4 mx-md-2 opacity-85') do |component| %>
           <% component.with_body do %>
             <div class="mb-3">
               <%= info_icon(fill: false, classes: 'icon-lg') %>
@@ -14,7 +14,7 @@
         <% end %>
       </div>
       <div class="col-md-3 col-sm-12" role="listitem">
-        <%= render Elements::CardComponent.new(classes: 'text-center mx-4 mx-md-2') do |component| %>
+        <%= render SdrViewComponents::Elements::CardComponent.new(classes: 'text-center mx-4 mx-md-2') do |component| %>
           <% component.with_body do %>
             <div class="mb-2">
               <%= upload_icon(fill: false, classes: 'icon-xl') %>
@@ -25,7 +25,7 @@
         <% end %>
       </div>
       <div class="col-md-3 col-sm-12" role="listitem">
-        <%= render Elements::CardComponent.new(classes: 'text-center mx-4 mx-md-2 opacity-85') do |component| %>
+        <%= render SdrViewComponents::Elements::CardComponent.new(classes: 'text-center mx-4 mx-md-2 opacity-85') do |component| %>
           <% component.with_body do %>
             <div class="mb-3">
               <%= search_icon(fill: false, classes: 'icon-lg') %>
@@ -46,7 +46,7 @@
 
   <div class="row mt-5 justify-content-center gy-2">
     <div class="col-md-4 col-sm-12">
-      <%= render Elements::CardComponent.new(classes: 'text-center align-items-center mx-4 mx-md-2 secondary-card', style: 'border: 1px solid #D1660F;') do |component| %>
+      <%= render SdrViewComponents::Elements::CardComponent.new(classes: 'text-center align-items-center mx-4 mx-md-2 secondary-card', style: 'border: 1px solid #D1660F;') do |component| %>
         <% component.with_body do %>
           <div class="mb-2">
             <%= bulb_icon(classes: 'icon-lg') %>
@@ -59,7 +59,7 @@
     </div>
 
     <div class="col-md-4 col-sm-12">
-      <%= render Elements::CardComponent.new(classes: 'align-items-center mx-4 mx-md-2 border-0 secondary-card') do |component| %>
+      <%= render SdrViewComponents::Elements::CardComponent.new(classes: 'align-items-center mx-4 mx-md-2 border-0 secondary-card') do |component| %>
         <% component.with_body(classes: 'd-flex flex-column justify-content-center') do %>
           <div class="d-flex">
             <div>

@@ -106,7 +106,7 @@
         </div>
       </div>
 
-      <%= render Elements::HorizontalRuleComponent.new %>
+      <%= render SdrViewComponents::Elements::HorizontalRuleComponent.new %>
       <div class="mb-3 p-3">
         <%= render NestedComponentPresenter.for(form:, field_name: :affiliations, model_class: AffiliationForm, form_component: Edit::AffiliationComponent, bordered: false, fieldset_classes: 'pane-section', nested_buttons_classes: 'pt-4') %>
       </div>

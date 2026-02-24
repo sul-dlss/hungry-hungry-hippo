@@ -23,7 +23,7 @@
   </div>
 
   <% if show_article_deposit? %>
-    <%= render Elements::HorizontalRuleComponent.new(classes: 'mb-3') %>
+    <%= render SdrViewComponents::Elements::HorizontalRuleComponent.new(classes: 'mb-3') %>
 
     <div class="pane-section" id="article-workflow-section">
       <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.article_workflow.label')) %>
@@ -45,7 +45,7 @@
   <% end %>
 
   <% if show_github_deposit? %>
-    <%= render Elements::HorizontalRuleComponent.new(classes: 'mb-3') %>
+    <%= render SdrViewComponents::Elements::HorizontalRuleComponent.new(classes: 'mb-3') %>
 
     <div class="pane-section" id="github-workflow-section">
       <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.github_workflow.label')) %>

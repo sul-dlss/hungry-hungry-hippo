@@ -8,10 +8,10 @@
     <% end %>
   <% end %>
 
-  <%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: @work.title, classes: 'mb-4') %>
+  <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h1, variant: :h2, text: @work.title, classes: 'mb-4') %>
 
   <%= form_with model: @form, url: work_shares_path(@work), data: { action: 'change->unsaved-changes#changed' } do |form| %>
-    <%= render Elements::HeadingComponent.new(level: :h2, variant: :h4, text: 'Manage shares', classes: 'mb-3') %>
+    <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h2, variant: :h4, text: 'Manage shares', classes: 'mb-3') %>
 
     <%= render Edit::BulkParticipantsComponent.new(form:, field_name: :shares, model_class: ShareForm, form_component: Works::Edit::ShareComponent, add_button_label: 'Add') %>
 
