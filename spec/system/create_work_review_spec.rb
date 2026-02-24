@@ -74,7 +74,7 @@ RSpec.describe 'Create a work that requires review' do
 
     # Filling in Abstract and keywords
     fill_in('work_abstract', with: abstract_fixture)
-    fill_in('Keywords (one per box)', with: keywords_fixture.first['text'])
+    fill_in('Start typing a keyword', with: keywords_fixture.first['text'])
 
     # Go to work type tab
     # In test, Next button isn't working perhaps due to keywords autocomplete causing problem.
