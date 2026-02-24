@@ -9,7 +9,7 @@
 <% end %>
 
 <% if Rails.env.development? && @work_presenter.work.accessioning? %>
-    <%= render Elements::AlertComponent.new(variant: :info, dismissible: true) do %>
+    <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :info, dismissible: true) do %>
       Note: run "bin/rake development:accession[<%= @work_presenter.druid %>]" to complete deposit for this work.
     <% end %>
 <% end %>

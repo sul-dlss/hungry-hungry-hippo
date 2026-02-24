@@ -45,7 +45,7 @@
 
     <%= render Elements::HorizontalRuleComponent.new(classes: 'my-5') %>
 
-    <%= render Elements::AlertComponent.new(classes: 'mb-4') do %>
+    <%= render SdrViewComponents::Elements::AlertComponent.new(classes: 'mb-4') do %>
       If you don't have a DOI, please use the <%= link_to 'full deposit form', new_work_path(collection_druid: @collection.druid) %> to deposit your item.
     <% end %>
 

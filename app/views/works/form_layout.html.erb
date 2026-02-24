@@ -18,6 +18,6 @@
   <% end %>
   <%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: @work_form.title || t('works.edit.no_title'), classes: 'mb-3') %>
   <%= render Works::Show::ReviewRejectedComponent.new(work: @work) if @work %>
-  <%= render Elements::AlertComponent.new(variant: :danger, value: t('messages.validation')) if defined?(@valid) && !@valid %>
+  <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :danger, text: t('messages.validation')) if defined?(@valid) && !@valid %>
   <%= yield(:content) %>
 <% end %>
