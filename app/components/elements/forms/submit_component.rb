@@ -18,7 +18,7 @@ module Elements
       attr_reader :form, :label, :options, :form_id, :value
 
       def classes
-        ButtonSupport.classes(variant: @variant, classes: @classes)
+        ComponentSupport::ButtonSupport.classes(variant: @variant, classes: @classes)
       end
     end
   end

@@ -11,7 +11,10 @@ module Edit
       end
 
       def call
-        render Elements::ButtonComponent.new(label: 'Previous', variant: :'outline-primary', data:, classes: @classes)
+        render SdrViewComponents::Elements::ButtonComponent.new(label: 'Previous',
+                                                                variant: :'outline-primary',
+                                                                data:,
+                                                                classes: @classes)
       end
 
       def data
