@@ -4,13 +4,14 @@ module Articles
   module Edit
     # Component for rendering the article details from a CrossRef lookup
     class LookupTableComponent < ApplicationComponent
-      def initialize(article_work_form:, classes: [])
+      def initialize(article_work_form:, doi:, classes: [])
         @article_work_form = article_work_form
         @classes = classes
+        @doi = doi
         super()
       end
 
-      attr_reader :article_work_form, :classes
+      attr_reader :article_work_form, :classes, :doi
 
       delegate :title, to: :article_work_form
 

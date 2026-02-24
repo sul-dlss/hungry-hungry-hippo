@@ -26,9 +26,10 @@ class ArticlesController < ApplicationController
     @content = Content.find(@article_form.content_id)
     set_license_presenter
 
-    if doi_lookup?
-      # Perform DOI lookup and re-render the form showing the article metadata (@article_work_form) if the DOI is valid.
-      # @article_form.valid? checks if the DOI is present and exists in Crossref.
+    if identifier_lookup?
+      # Perform an identifier (DOI/PMID/PMCID) lookup and re-render the form showing the article metadata
+      # (@article_work_form) if we are able to identify a valid DOI (either directly entered by the user
+      # or via a lookup to Pubmed).  @article_form.valid? checks if the DOI is present and exists in Crossref.
       set_article_work_form if @article_form.valid?
       @article_form.last_doi_lookup = @article_form.doi # Keeps track if the user performed a DOI lookup.
       render :form, status: :unprocessable_content
@@ -87,7 +88,7 @@ class ArticlesController < ApplicationController
                                  current_user:, ahoy_visit:)
   end
 
-  def doi_lookup?
+  def identifier_lookup?
     params[:commit] == 'lookup'
   end
 

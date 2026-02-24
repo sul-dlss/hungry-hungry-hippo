@@ -46,20 +46,19 @@
     <%= render SdrViewComponents::Elements::HorizontalRuleComponent.new(classes: 'my-5') %>
 
     <%= render SdrViewComponents::Elements::AlertComponent.new(classes: 'mb-4') do %>
-      If you don't have a DOI, please use the <%= link_to 'full deposit form', new_work_path(collection_druid: @collection.druid) %> to deposit your item.
+      If you don't have a DOI, PMCID or PMID please use the <%= link_to 'full deposit form', new_work_path(collection_druid: @collection.druid) %> to deposit your item.
     <% end %>
 
     <div class="row align-items-top">
-      <div class="col-4 pt-2">
-        <%= render Elements::Forms::LabelComponent.new(form:, field_name: :doi, label_text: 'DOI for published version of this article', mark_required: true) %>
+      <div class="col-8 mb-3">
+        <%= render Elements::Forms::LabelComponent.new(form:, field_name: :doi, label_text: 'Enter ID for published version of this work (accepted identifiers are DOI, PMCID, PMID)', mark_required: true) %>
       </div>
+    </div>
+    <div class="row align-items-top">
       <div class="col-8">
         <div class="d-flex align-items-center">
-          <div class="input-group">
-            <span class="input-group-text">
-              https://doi.org/
-            </span>
-            <%= form.text_field :doi, class: 'form-control' %>
+          <div class="input-group flex-grow-1 position-relative">
+            <%= form.text_field :doi, id: 'doi_field', class: 'form-control', data: { action: 'change->unsaved-changes#changed' } %>
           </div>
           <div class="ms-1 text-nowrap">
             <%= render Elements::Forms::SubmitComponent.new(label: 'Look up', data: { action: 'unsaved-changes#allowFormSubmission' }, value: 'lookup') %>
@@ -70,7 +69,7 @@
       </div>
     </div>
 
-    <%= render Articles::Edit::LookupTableComponent.new(article_work_form: @article_work_form, classes: 'mt-3') %>
+    <%= render Articles::Edit::LookupTableComponent.new(article_work_form: @article_work_form, doi: @article_form.doi, classes: 'mt-3') %>
 
     <div class="d-flex justify-content-between mt-5 mb-4">
       <div>

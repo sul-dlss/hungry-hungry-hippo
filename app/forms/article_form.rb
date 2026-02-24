@@ -30,12 +30,15 @@ class ArticleForm < ApplicationForm
 
   before_validation do
     if doi.present?
+      # If it doesn't look like a DOI, try to look it via Pubmed API first
+      # DOI identification could be more robust if needed using regex, e.g. https://www.crossref.org/blog/dois-and-matching-regular-expressions/
+      self.doi = PubmedService.call(search: doi) unless doi.include?('/')
       results = CrossrefService.call(doi:)
       @doi_has_title = results[:title].present?
       @doi_found = true
       @doi_journal_article = true
     end
-  rescue CrossrefService::NotFound
+  rescue PubmedService::NotFound, PubmedService::Error, CrossrefService::NotFound
     @doi_found = false
   rescue CrossrefService::NotJournalArticle
     @doi_found = true
@@ -61,11 +64,11 @@ class ArticleForm < ApplicationForm
   private
 
   def doi_article
-    return errors.add(:doi, 'not found') unless doi_found?
+    return errors.add(:doi, 'identifier was not found') unless doi_found?
 
-    return errors.add(:doi, 'is not a journal article') unless doi_journal_article?
+    return errors.add(:doi, 'identifier is not a journal article') unless doi_journal_article?
 
-    errors.add(:doi, 'does not have a title') unless doi_has_title?
+    errors.add(:doi, 'identifier does not have a title') unless doi_has_title?
   end
 
   def doi_ok?

@@ -8,6 +8,9 @@ RSpec.describe 'Create an article deposit' do
 
   let(:doi) { '10.1128/mbio.01735-25' }
   let(:not_found_doi) { '10.1234/doesnotexistoncrossref' }
+  let(:pmid) { '40833413' }
+  let(:looked_up_doi) { '10.1073/pnas.2513219122' }
+  let(:pubmed_article_title) { 'Pubmed Article' }
 
   before do
     create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture, depositors: [user],
@@ -15,6 +18,8 @@ RSpec.describe 'Create an article deposit' do
 
     allow(CrossrefService).to receive(:call).with(doi: not_found_doi).and_raise(CrossrefService::NotFound)
     allow(CrossrefService).to receive(:call).with(doi:).and_return({ title: title_fixture })
+    allow(PubmedService).to receive(:call).with(search: pmid).and_return(looked_up_doi)
+    allow(CrossrefService).to receive(:call).with(doi: looked_up_doi).and_return({ title: pubmed_article_title })
 
     # Stubbing out for Deposit Job
     allow(Sdr::Repository).to receive(:register) do |args|
@@ -54,12 +59,12 @@ RSpec.describe 'Create an article deposit' do
     expect(page).to have_css('.invalid-feedback', text: "can't be blank")
 
     # Validate missing DOI submission
-    fill_in 'DOI', with: not_found_doi
+    fill_in 'doi_field', with: not_found_doi
     click_link_or_button('Look up')
-    expect(page).to have_css('.invalid-feedback', text: 'not found')
+    expect(page).to have_css('.invalid-feedback', text: 'identifier was not found')
 
     # Deposit without required fields
-    fill_in 'DOI', with: doi
+    fill_in 'doi_field', with: doi
     click_link_or_button('Deposit')
     expect(page).to have_css('.invalid-feedback', text: 'must have at least one file')
     expect(page).to have_css('.invalid-feedback', text: 'must be accepted')
@@ -132,5 +137,29 @@ RSpec.describe 'Create an article deposit' do
     visit_id = completed_events.first.visit_id
     expect(Ahoy::Event.where_event(Ahoy::Event::ARTICLE_FORM_STARTED).where(visit_id:).count).to eq(1)
     expect(Ahoy::Event.where_event(Ahoy::Event::ARTICLE_CREATED, work_id: work.id, deposit: true).count).to eq(1)
+  end
+
+  it 'looks up a DOI with a PMID', :dropzone do
+    visit dashboard_path
+    click_link_or_button('Deposit article by DOI')
+
+    # Breadcrumb
+    expect(page).to have_link('Dashboard', href: dashboard_path)
+    expect(page).to have_link(collection_title_fixture, href: collection_path(collection_druid_fixture))
+    expect(page).to have_css('.breadcrumb-item', text: 'Article deposit')
+
+    expect(page).to have_css('h1', text: 'Article deposit')
+
+    # Look up DOI via PMID
+    fill_in 'doi_field', with: pmid
+    click_link_or_button('Look up')
+    expect(page).to have_no_css('.invalid-feedback')
+
+    within('#article-table') do
+      expect(page).to have_css('th', text: 'DOI')
+      expect(page).to have_css('td', text: looked_up_doi)
+      expect(page).to have_css('th', text: 'Title')
+      expect(page).to have_css('td', text: pubmed_article_title)
+    end
   end
 end

@@ -46,7 +46,7 @@ RSpec.describe ArticleForm, type: :form do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:doi]).to include('not found')
+        expect(form.errors[:doi]).to include('identifier was not found')
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe ArticleForm, type: :form do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:doi]).to include('is not a journal article')
+        expect(form.errors[:doi]).to include('identifier is not a journal article')
       end
     end
 
@@ -68,7 +68,7 @@ RSpec.describe ArticleForm, type: :form do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:doi]).to include('does not have a title')
+        expect(form.errors[:doi]).to include('identifier does not have a title')
       end
     end
   end

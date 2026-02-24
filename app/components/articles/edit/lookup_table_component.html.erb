@@ -1,4 +1,5 @@
 <%= render Elements::Tables::TableComponent.new(id: 'article-table', label: 'Details for the article', show_label: false, classes:) do |component| %>
+  <% component.with_row(label: 'DOI', values: [doi]) %>
   <% component.with_row(label: 'Title', values: [title]) %>
   <% component.with_row(label: 'Authors', values: [authors]) %>
   <% component.with_row(label: 'Publication date', values: [publication_date]) %>
