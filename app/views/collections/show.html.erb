@@ -1,7 +1,7 @@
 <%= turbo_stream_from @collection %>
 
 <% content_for :breadcrumbs do %>
-  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+  <%= render SdrViewComponents::Elements::BreadcrumbNavComponent.new do |component| %>
     <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
     <% if current_page?(action: :new) %>
       <% component.with_breadcrumb(text: I18n.t('collections.edit.no_title')) %>

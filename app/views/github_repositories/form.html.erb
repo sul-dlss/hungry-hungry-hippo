@@ -1,5 +1,5 @@
 <% content_for :breadcrumbs do %>
-  <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+  <%= render SdrViewComponents::Elements::BreadcrumbNavComponent.new do |component| %>
     <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
     <% component.with_collection_breadcrumb(text: @collection.title, link: collection_path(@collection.druid)) %>
     <% component.with_breadcrumb(text: 'Select GitHub repository to deposit') %>

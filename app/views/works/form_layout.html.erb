@@ -5,7 +5,7 @@
       ahoy_form_changes_form_id_value: @work_form.form_id
     } do %>
   <% content_for :breadcrumbs do %>
-    <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <%= render SdrViewComponents::Elements::BreadcrumbNavComponent.new do |component| %>
       <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
       <% component.with_collection_breadcrumb(text: @collection.title, link: collection_path(@work_form.collection_druid)) %>
       <% if (current_page?(action: :new) || (controller.action_name == 'create')) %>

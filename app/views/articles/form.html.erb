@@ -6,7 +6,7 @@
       action: 'change->unsaved-changes#changed beforeunload@window->unsaved-changes#leavingPage turbo:before-visit@window->unsaved-changes#leavingPage'
     } do %>
   <% content_for :breadcrumbs do %>
-    <%= render Elements::BreadcrumbNavComponent.new do |component| %>
+    <%= render SdrViewComponents::Elements::BreadcrumbNavComponent.new do |component| %>
       <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
       <% component.with_collection_breadcrumb(text: @collection.title, link: collection_path(@collection.druid)) %>
       <% component.with_breadcrumb(text: 'Article deposit') %>
