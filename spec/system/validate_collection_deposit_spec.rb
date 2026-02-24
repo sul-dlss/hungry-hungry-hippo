@@ -25,7 +25,7 @@ RSpec.describe 'Validate a collection deposit' do
       # Filling in title
       find('.nav-link', text: 'Details').click
       fill_in('collection_title', with: collection_title_fixture)
-      fill_in('Contact email', with: contact_emails_fixture.first['email'])
+      fill_in('Enter contact email', with: contact_emails_fixture.first['email'])
 
       # Description is required for deposit, but skipping.
 

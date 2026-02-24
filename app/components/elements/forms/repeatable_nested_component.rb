@@ -10,7 +10,7 @@ module Elements
       def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength, Metrics/AbcSize
                      reorderable: false, single_field: false, fieldset_classes: [], skip_tooltip: false,
                      fieldset_id: nil, hide_add_button: false, add_button_data: {}, column_classes: ['col'],
-                     separated: false, nested_buttons_classes: [], render_empty: true)
+                     separated: false, nested_buttons_classes: [], render_empty: true, label_text: nil, tooltip: nil)
         @form = form
         @model_class = model_class
         @field_name = field_name
@@ -34,6 +34,8 @@ module Elements
         @separated = separated
         @nested_buttons_classes = nested_buttons_classes
         @render_empty = render_empty
+        @label_text = label_text
+        @tooltip = tooltip
         super()
       end
 
@@ -41,13 +43,13 @@ module Elements
                   :add_button_data, :column_classes
 
       def label_text
-        helpers.t("#{field_name}.edit.legend", default: nil)
+        @label_text || helpers.t("#{field_name}.edit.legend", default: nil)
       end
 
       def tooltip
         return if skip_tooltip?
 
-        helpers.t("#{field_name}.edit.tooltip_html", default: nil)
+        @tooltip || helpers.t("#{field_name}.edit.tooltip_html", default: nil)
       end
 
       def render_empty?

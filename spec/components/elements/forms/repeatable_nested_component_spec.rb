@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
   subject(:component) do
     described_class.new(form: ActionView::Helpers::FormBuilder.new(nil, form, vc_test_view_context, {}),
-                        field_name:, model_class:, form_component:, hidden_label:, bordered:, single_field:)
+                        field_name:, model_class:, form_component:, hidden_label:, bordered:, single_field:,
+                        label_text:, tooltip:)
   end
 
   let(:field_name) { :related_works }
@@ -15,6 +16,8 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
   let(:hidden_label) { false }
   let(:bordered) { true }
   let(:single_field) { false }
+  let(:label_text) { nil }
+  let(:tooltip) { nil }
 
   context 'when rendering the default component' do
     let(:field_name) { :related_links }
@@ -112,6 +115,24 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
 
       expect(page).to have_css('label', text: 'Depositors')
       expect(page).to have_button('Clear Jane Stanford')
+    end
+  end
+
+  context 'when a label is provided for the component' do
+    let(:label_text) { 'Custom Label' }
+
+    it 'renders the provided label' do
+      render_inline(component)
+      expect(page).to have_css('legend label', text: 'Custom Label')
+    end
+  end
+
+  context 'when a tooltip is provided for the component' do
+    let(:tooltip) { 'Custom tooltip' }
+
+    it 'renders the provided tooltip' do
+      render_inline(component)
+      expect(page).to have_css('a[data-bs-title="Custom tooltip"]')
     end
   end
 end

@@ -87,7 +87,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
       # Filling in title
       find('.nav-link', text: 'Title and contact').click
       fill_in('work_title', with: title_fixture)
-      fill_in('Contact email', with: contact_emails_fixture.first['email'])
+      fill_in('Enter contact email', with: contact_emails_fixture.first['email'])
 
       # Go to contributors tab
       find('.nav-link', text: 'Authors / Contributors').click
@@ -362,7 +362,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
       # Filling in title
       find('.nav-link', text: 'Title and contact').click
       fill_in('work_title', with: title_fixture)
-      fill_in('Contact email', with: contact_emails_fixture.first['email'])
+      fill_in('Enter contact email', with: contact_emails_fixture.first['email'])
 
       click_link_or_button('Save as draft')
 

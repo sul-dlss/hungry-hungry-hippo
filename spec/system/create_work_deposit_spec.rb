@@ -103,11 +103,12 @@ RSpec.describe 'Create a work deposit' do
       find('.nav-link', text: 'Title and contact').click
       fill_in('work_title', with: title_fixture)
 
+      expect(page).to have_css('.form-label', text: 'Contact emails (at least one is required)')
       expect(page).to have_no_text('Contact email provided by collection manager')
-      expect(page).to have_field('Contact email', with: user.email_address)
+      expect(page).to have_field('Enter contact email', with: user.email_address)
       click_link_or_button('Clear')
-      expect(page).to have_field('Contact email', with: '')
-      fill_in('Contact email', with: contact_emails_fixture.first['email'])
+      expect(page).to have_field('Enter contact email', with: '')
+      fill_in('Enter contact email', with: contact_emails_fixture.first['email'])
 
       # Click Next to go to contributors tab
       click_link_or_button('Next')

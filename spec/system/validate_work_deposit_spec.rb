@@ -92,10 +92,10 @@ RSpec.describe 'Validate a work deposit' do
 
     # Contact email is marked invalid
     find('.nav-link.is-invalid', text: 'Title and contact').click
-    expect(page).to have_field('Contact email', class: 'is-invalid')
+    expect(page).to have_field('Enter contact email', class: 'is-invalid')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
-    fill_in('Contact email', with: contact_emails_fixture.first['email'])
-    find_field('Contact email').send_keys(:tab)
+    fill_in('Enter contact email', with: contact_emails_fixture.first['email'])
+    find_field('Enter contact email').send_keys(:tab)
     expect(page).to have_no_css('.invalid-feedback.is-invalid', text: "can't be blank")
 
     # Add a blank contact email. It will be ignored.
