@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'hashdiff'
+
 # Support methods for roundtrip validation.
 class RoundtripSupport
   def self.normalize_cocina_object(cocina_object:)
@@ -38,15 +40,21 @@ class RoundtripSupport
   def self.notify_error(original_cocina_object:, roundtripped_cocina_object:) # rubocop:disable Metrics/AbcSize
     original_prettier ||= Cocina::Prettier.new(cocina_object: original_cocina_object)
     roundtripped_prettier ||= Cocina::Prettier.new(cocina_object: roundtripped_cocina_object)
+    hash_diff = Hashdiff.diff(original_prettier.clean, roundtripped_prettier.clean)
     Honeybadger.notify('Roundtrip failed',
-                       context: { original: original_prettier.json, roundtripped: roundtripped_prettier.json })
+                       context: {
+                         original: original_prettier.json,
+                         roundtripped: roundtripped_prettier.json,
+                         hash_diff:
+                       })
     # Pretty for dev and test makes reading the logs easier.
-    unless Rails.env.production?
+    if Rails.env.local?
       Rails.logger.info("Roundtrip failed. Pretty original: #{original_prettier.pretty}")
       Rails.logger.info("Pretty roundtripped: #{roundtripped_prettier.pretty}")
     end
     Rails.logger.info("Roundtrip failed. Original: #{original_prettier.json}")
     Rails.logger.info("Roundtripped: #{roundtripped_prettier.json}")
+    Rails.logger.info("Hashdiff between original and roundtripped: #{hash_diff}")
   end
 
   def self.notify_validation_error(error:)
