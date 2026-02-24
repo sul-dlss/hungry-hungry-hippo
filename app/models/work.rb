@@ -67,4 +67,8 @@ class Work < ApplicationRecord
   def to_param
     druid
   end
+
+  # Updates any settings given a WorkForm (without persisting).
+  # This methods is overridden in subclasses with settings, e.g., GithubRepositoryWork.
+  def update_settings_from_form(work_form:); end
 end

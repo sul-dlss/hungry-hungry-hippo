@@ -277,7 +277,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     return true if @version_status.open? && (deposit? || request_review?)
 
     # If no previous change, then check for a current change.
-    cocina_object_changed?
+    settings_changed? || cocina_object_changed?
   end
 
   def cocina_object_changed?
@@ -362,5 +362,11 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     else
       WorkForm
     end
+  end
+
+  def settings_changed?
+    work = Work.find_by!(druid:)
+    work.update_settings_from_form(work_form: @work_form)
+    work.changed?
   end
 end
