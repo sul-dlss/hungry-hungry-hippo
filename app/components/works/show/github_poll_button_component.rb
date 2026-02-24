@@ -13,11 +13,11 @@ module Works
       attr_reader :work, :args
 
       def call
-        render Elements::ButtonFormComponent.new(link: poll_github_repository_path(work),
-                                                 label: 'Check for new GitHub releases',
-                                                 variant: 'outline-primary', method: :post,
-                                                 top: true,
-                                                 **args)
+        render SdrViewComponents::Elements::ButtonFormComponent.new(link: poll_github_repository_path(work),
+                                                                    label: 'Check for new GitHub releases',
+                                                                    variant: 'outline-primary', method: :post,
+                                                                    top: true,
+                                                                    **args)
       end
 
       def render?

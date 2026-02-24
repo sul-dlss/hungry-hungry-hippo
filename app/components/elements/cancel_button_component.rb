@@ -2,7 +2,7 @@
 
 module Elements
   # Component for a cancel button
-  class CancelButtonComponent < ButtonLinkComponent
+  class CancelButtonComponent < SdrViewComponents::Elements::ButtonLinkComponent
     def initialize(**args)
       args[:variant] = :link
       args[:label] = 'Cancel'
