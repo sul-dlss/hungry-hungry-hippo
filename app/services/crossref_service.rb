@@ -66,15 +66,17 @@ class CrossrefService
     strip_tags_and_comments(normalized_abstract)
   end
 
-  def contributors_attrs
-    Array(message['author']).map do |author|
-      {
+  def contributors_attrs # rubocop:disable Metrics/AbcSize
+    Array(message['author']).filter_map do |author|
+      contributor_hash = {
         first_name: strip_tags_and_comments(author['given']),
         last_name: strip_tags_and_comments(author['family']),
-        person_role: 'author',
         orcid: author.key?('ORCID') ? author['ORCID'].split('/').last : nil,
         affiliations_attributes: affiliation_attrs_for(author)
       }.compact_blank
+      next if contributor_hash.slice(:first_name, :last_name).blank?
+
+      contributor_hash.merge(person_role: 'author')
     end
   end
 

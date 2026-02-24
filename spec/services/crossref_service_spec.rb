@@ -211,6 +211,51 @@ RSpec.describe CrossrefService, :vcr do
     end
   end
 
+  context 'when there are malformed contributor affiliations' do
+    let(:doi) { '10.7191/jeslib.2017.1114' }
+    let(:response) do
+      {
+        message: {
+          'DOI' => '10.7191/jeslib.2017.1114',
+          'type' => 'journal-article',
+          'title' => ['Using Peer Review to Support Development of Community Resources for Research Data Management'],
+          'author' => [
+            { 'name' => 'Stanford University', 'sequence' => 'additional', 'affiliation' => [] },
+            { 'given' => 'Amy', 'family' => 'Hodge', 'sequence' => 'additional', 'affiliation' => [] }
+          ],
+          'published' => { 'date-parts' => [[2017, 9, 8]] }
+        }
+      }
+    end
+
+    before do
+      stub_request(:get, "https://api.crossref.org/works/doi/#{doi}")
+        .to_return(status: 200, body: response.to_json, headers: { 'Content-Type' => 'application/json' })
+    end
+
+    it 'does not map bogus contributors' do
+      expect(attrs).to match(
+        {
+          title: 'Using Peer Review to Support Development of Community Resources for Research Data Management',
+          related_works_attributes: [
+            {
+              relationship: 'is version of record',
+              identifier: 'https://doi.org/10.7191/jeslib.2017.1114'
+            }
+          ],
+          publication_date_attributes: { year: 2017, month: 9, day: 8 },
+          contributors_attributes: [
+            {
+              first_name: 'Amy',
+              last_name: 'Hodge',
+              person_role: 'author'
+            }
+          ]
+        }
+      )
+    end
+  end
+
   context 'when tags and comments are present in fields' do
     let(:doi) { '10.1234/test' }
     let(:abstract) { '<jats:title>ABSTRACT</jats:title><jats:p>Study of <b>bacteria</b> <!-- Remove this --></jats:p>' }
