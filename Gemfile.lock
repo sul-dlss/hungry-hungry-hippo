@@ -694,6 +694,7 @@ DEPENDENCIES
   faraday-follow_redirects
   frozen_record
   globus_client
+  hashdiff
   honeybadger
   hotwire-spark
   importmap-rails

@@ -12,12 +12,12 @@ module Cocina
       @clean ||= perform_clean(@cocina_object.to_h)
     end
 
-    # @return [String] the clean cocina object as a pretty JSON string
+    # @return [String] the cleaned-up cocina object as a simple JSON string
     def json
       clean.to_json
     end
 
-    # @return [String] the clean cocina object as a pretty JSON string
+    # @return [String] the cleaned-up cocina object as a pretty JSON string
     def pretty
       JSON.pretty_generate(clean)
     end

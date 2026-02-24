@@ -56,6 +56,7 @@ gem 'faraday' # HTTP client
 gem 'faraday-follow_redirects'
 gem 'frozen_record' # For licenses
 gem 'globus_client'
+gem 'hashdiff'
 gem 'honeybadger'
 gem 'jwt' # For GitHub App authentication
 gem 'kaminari' # For pagination
