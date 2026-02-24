@@ -20,6 +20,25 @@ RSpec.describe 'Edit a Github repository' do
   let!(:work) { create(:github_repository, druid:, user:, collection:) }
 
   before do
+    # On the second call, this will return the cocina object submitted to update.
+    # This will allow us to test the updated values.
+    allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(
+      ->(_arg) { cocina_object }, # edit
+      ->(_arg) { cocina_object }, # DepositWorkJob
+      ->(_arg) { @updated_cocina_object } # show after update
+    )
+    allow(Sdr::Repository).to receive(:find_latest_user_version).and_return(cocina_object)
+    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(
+      build(:openable_version_status, version: cocina_object.version),
+      build(:draft_version_status, version: cocina_object.version)
+    )
+    allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
+    # It is already open.
+    allow(Sdr::Repository).to receive(:open_if_needed) { |args| args[:cocina_object] }
+    allow(Sdr::Repository).to receive(:update) do |args|
+      @updated_cocina_object = args[:cocina_object]
+    end
+    allow(Sdr::Repository).to receive(:check_lock)
     allow(Sdr::Event).to receive(:list).and_return([])
     allow(Sdr::Repository).to receive(:find_latest_user_version).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)

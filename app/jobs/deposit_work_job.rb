@@ -13,10 +13,14 @@ class DepositWorkJob < ApplicationJob
     @work = work
     @deposit = deposit
     @request_review = request_review
-    @status = Sdr::Repository.status(druid: work_form.druid) if work_form.persisted?
     # Setting current user so that it will be available for notifications.
     Current.user = current_user
     @ahoy_visit = ahoy_visit
+
+    if work_form.persisted?
+      Sdr::Repository.check_lock(druid: work_form.druid, lock: work_form.lock)
+      @status = Sdr::Repository.status(druid: work_form.druid) if work_form.persisted?
+    end
 
     remove_globus_permissions if globus?
 

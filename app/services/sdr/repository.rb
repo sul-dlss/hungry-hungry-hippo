@@ -5,6 +5,7 @@ module Sdr
   class Repository
     class Error < StandardError; end
     class NotFoundResponse < Error; end
+    class StaleLock < Error; end
 
     # @param [String] druid the druid of the object
     # @return [Cocina::Models::DROWithMetadata] the returned model
@@ -130,6 +131,16 @@ module Sdr
       return unless head_user_version
 
       version_client.find(head_user_version.userVersion)
+    end
+
+    # @param [String] druid
+    # @param [String] lock
+    # @raise [StaleLock] if the lock is stale
+    # @raise [Error] if there is an error retrieving the object
+    # @raise [NotFoundResponse] if the object is not found
+    def self.check_lock(druid:, lock:)
+      current_lock = Dor::Services::Client.object(druid).lock
+      raise StaleLock unless current_lock == lock
     end
   end
 end
