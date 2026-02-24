@@ -140,8 +140,8 @@ RSpec.describe 'Create a work deposit' do
 
       # Filling in Abstract and keywords
       fill_in('work_abstract', with: abstract_fixture)
-      expect(page).to have_text('Keywords')
-      fill_in('Keywords (one per box)', with: keywords_fixture.first['text'])
+      expect(page).to have_css('.form-label', text: 'Keywords (at least one is required)')
+      fill_in('Start typing a keyword', with: keywords_fixture.first['text'])
       # Wait for autocomplete to load. FAST is stubbed out.
       expect(page).to have_css('li.list-group-item', text: 'Tearooms')
 

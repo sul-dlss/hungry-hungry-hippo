@@ -127,8 +127,8 @@ RSpec.describe 'Validate a work deposit' do
     fill_in('Abstract', with: abstract_fixture)
 
     # Keywords are marked invalid
-    expect(page).to have_field('Keywords (one per box)', class: 'is-invalid')
-    fill_in('Keywords (one per box)', with: keywords_fixture.first['text'])
+    expect(page).to have_field('Start typing a keyword', class: 'is-invalid')
+    fill_in('Start typing a keyword', with: keywords_fixture.first['text'])
     # Wait for autocomplete to load. FAST is stubbed out.
     expect(page).to have_css('li.list-group-item', text: 'Tearooms')
 

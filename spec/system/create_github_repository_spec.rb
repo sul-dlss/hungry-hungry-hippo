@@ -107,7 +107,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
     # Abstract is pre-populated
     find('.nav-link', text: 'Abstract and keywords').click
     expect(page).to have_field('Abstract', with: 'Self-Deposit for the Stanford Digital Repository (SDR)')
-    fill_in('Keywords (one per box)', with: keywords_fixture.first['text'])
+    fill_in('Start typing a keyword', with: keywords_fixture.first['text'])
 
     # Work type is pre-populated
     find('.nav-link', text: 'Type of deposit').click
