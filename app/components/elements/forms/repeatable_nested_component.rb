@@ -10,7 +10,8 @@ module Elements
       def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength, Metrics/AbcSize
                      reorderable: false, single_field: false, fieldset_classes: [], skip_tooltip: false,
                      fieldset_id: nil, hide_add_button: false, add_button_data: {}, column_classes: ['col'],
-                     separated: false, nested_buttons_classes: [], render_empty: true, label_text: nil, tooltip: nil)
+                     separated: false, nested_buttons_classes: [], render_empty: true, label_text: nil, tooltip: nil,
+                     mark_required: false)
         @form = form
         @model_class = model_class
         @field_name = field_name
@@ -36,11 +37,12 @@ module Elements
         @render_empty = render_empty
         @label_text = label_text
         @tooltip = tooltip
+        @mark_required = mark_required
         super()
       end
 
       attr_reader :form, :model_class, :field_name, :form_component, :hidden_label, :fieldset_classes, :fieldset_id,
-                  :add_button_data, :column_classes
+                  :add_button_data, :column_classes, :mark_required
 
       def label_text
         @label_text || helpers.t("#{field_name}.edit.legend", default: nil)

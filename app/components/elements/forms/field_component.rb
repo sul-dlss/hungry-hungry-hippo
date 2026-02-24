@@ -32,7 +32,7 @@ module Elements
       end
 
       attr_reader :form, :field_name, :required, :help_text, :hidden_label, :label, :hidden, :disabled, :data,
-                  :placeholder, :width, :label_classes, :input_data, :tooltip, :caption, :readonly
+                  :placeholder, :width, :label_classes, :input_data, :tooltip, :caption, :readonly, :mark_required
 
       def help_text_id
         @help_text_id ||= form.field_id(field_name, 'help')
@@ -45,7 +45,7 @@ module Elements
           #
           # This is used for collection/work forms where we do server-side
           # validation and don't want to block form submission on empty fields
-          arias[:required] = true if @mark_required
+          arias[:required] = true if mark_required
         end
       end
 

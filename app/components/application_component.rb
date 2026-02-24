@@ -19,7 +19,7 @@ class ApplicationComponent < ViewComponent::Base
   end
 
   def mark_label_required(label:, mark_required: false)
-    label.dup.tap do |label_text|
+    label.to_s.dup.tap do |label_text|
       label_text << ' (optional)' unless mark_required
     end
   end

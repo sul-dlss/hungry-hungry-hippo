@@ -10,8 +10,16 @@ RSpec.describe Elements::Forms::FieldsetComponent, type: :component do
                   )) { '<p>Fieldset content</p>'.html_safe }
 
     expect(page).to have_css('fieldset.form-fieldset.class1[data-my-data="true"] legend.class2 label.form-label.fw-bold.class3', # rubocop:disable Layout/LineLength
-                             text: 'My Fieldset')
+                             exact_text: 'My Fieldset (optional)')
     expect(page).to have_css('fieldset p', text: 'Fieldset content')
+  end
+
+  context 'when marked required' do
+    it 'renders the fieldset with a label' do
+      render_inline(described_class.new(label: 'My Fieldset', mark_required: true))
+
+      expect(page).to have_css('fieldset.form-fieldset legend label.form-label.fw-bold', exact_text: 'My Fieldset')
+    end
   end
 
   context 'when the label is hidden' do

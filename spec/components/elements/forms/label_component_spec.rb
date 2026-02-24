@@ -17,7 +17,15 @@ RSpec.describe Elements::Forms::LabelComponent, type: :component do
   context 'when label text is provided' do
     it 'creates label using label_text' do
       render_inline(described_class.new(form:, field_name:, label_text: 'my label'))
+      expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'my label (optional)')
+    end
+  end
+
+  context 'when label text is marked required' do
+    it 'creates label using label_text' do
+      render_inline(described_class.new(form:, field_name:, label_text: 'my label', mark_required: true))
       expect(page).to have_css('label.form-label:not(.visually-hidden)', text: 'my label')
+      expect(page).to have_no_text('my label (optional)')
     end
   end
 

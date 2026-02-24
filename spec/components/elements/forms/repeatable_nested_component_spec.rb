@@ -6,7 +6,7 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
   subject(:component) do
     described_class.new(form: ActionView::Helpers::FormBuilder.new(nil, form, vc_test_view_context, {}),
                         field_name:, model_class:, form_component:, hidden_label:, bordered:, single_field:,
-                        label_text:, tooltip:)
+                        label_text:, tooltip:, mark_required:)
   end
 
   let(:field_name) { :related_works }
@@ -18,6 +18,7 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
   let(:single_field) { false }
   let(:label_text) { nil }
   let(:tooltip) { nil }
+  let(:mark_required) { false }
 
   context 'when rendering the default component' do
     let(:field_name) { :related_links }
@@ -27,7 +28,7 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
 
     it 'renders the nested component' do
       render_inline(component)
-      expect(page).to have_text('Related links')
+      expect(page).to have_css('label', exact_text: 'Related links (optional)')
       expect(page).to have_field('Link text')
       expect(page).to have_field('URL')
       expect(page).to have_no_css('label.visually-hidden')
@@ -115,6 +116,15 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
 
       expect(page).to have_css('label', text: 'Depositors')
       expect(page).to have_button('Clear Jane Stanford')
+    end
+  end
+
+  context 'when marking required' do
+    let(:mark_required) { true }
+
+    it 'does not render the label' do
+      render_inline(component)
+      expect(page).to have_css('label', exact_text: 'Related works')
     end
   end
 

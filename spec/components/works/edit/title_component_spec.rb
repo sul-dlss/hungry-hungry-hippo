@@ -13,7 +13,7 @@ RSpec.describe Works::Edit::TitleComponent, type: :component do
       render_inline(described_class.new(form:, work_form:))
 
       expect(page).to have_field('title', with: title_fixture)
-      expect(page).to have_css('legend label', exact_text: 'Contact emails')
+      expect(page).to have_css('legend label', exact_text: 'Contact emails (optional)')
       expect(page).to have_field('Enter contact email', with: 'aperson@example.com')
       expect(page).to have_field('works_contact_email', type: 'hidden', with: works_contact_email_fixture)
     end
