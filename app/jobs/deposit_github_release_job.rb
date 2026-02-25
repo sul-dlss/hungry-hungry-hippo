@@ -15,7 +15,8 @@ class DepositGithubReleaseJob < ApplicationJob
        github_release.started? ||
        older_incomplete_release_exists? ||
        check_publish_wait!(skip_publish_wait) ||
-       check_version_status!
+       check_version_status! ||
+       check_github_repository_deposit_state!
       return
     end
 
@@ -144,5 +145,13 @@ class DepositGithubReleaseJob < ApplicationJob
     # Running synchronously instead of as a job.
     DepositWorkJob.perform_now(work: github_repository, work_form:, deposit: true, request_review: false,
                                current_user: user)
+  end
+
+  def check_github_repository_deposit_state!
+    return false if github_repository.deposit_not_in_progress?
+
+    github_release.update!(status: 'failed',
+                           status_details: "github repository state is #{github_repository.deposit_state}")
+    true
   end
 end

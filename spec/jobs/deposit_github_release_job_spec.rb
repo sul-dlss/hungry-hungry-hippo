@@ -96,6 +96,19 @@ RSpec.describe DepositGithubReleaseJob do
     end
   end
 
+  context 'when github repository deposit state is not deposit_not_in_progress' do
+    before do
+      github_repository.deposit_persist!
+    end
+
+    it 'does not process the release' do
+      expect { described_class.perform_now(github_release:) }
+        .to change { github_release.reload.status }
+        .to('failed').and change(github_release,
+                                 :status_details).to('github repository state is deposit_registering_or_updating')
+    end
+  end
+
   context 'when zip file does not exist' do
     before do
       allow(downloader).to receive(:exist?).and_return(false)
