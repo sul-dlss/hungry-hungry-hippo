@@ -83,4 +83,17 @@ RSpec.describe Elements::Tables::TableComponent, type: :component do
       expect(table).to have_css('caption h1', text: 'Test Table')
     end
   end
+
+  context 'when responsive' do
+    it 'renders the responsivetable' do
+      render_inline(
+        described_class.new(id: 'test-table', label: 'Test Table',
+                            responsive: true).tap do |component|
+                              component.with_row(values: ['Row 1', 'Row 2'])
+                            end
+      )
+
+      expect(page).to have_css('div.table-responsive table#test-table')
+    end
+  end
 end
