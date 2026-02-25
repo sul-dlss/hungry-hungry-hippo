@@ -39,7 +39,7 @@ RSpec.describe 'Create an article deposit' do
 
   it 'creates and deposits an article', :dropzone do
     visit dashboard_path
-    click_link_or_button('Deposit article by DOI')
+    click_link_or_button(I18n.t('collections.buttons.deposit_article'))
 
     # Breadcrumb
     expect(page).to have_link('Dashboard', href: dashboard_path)

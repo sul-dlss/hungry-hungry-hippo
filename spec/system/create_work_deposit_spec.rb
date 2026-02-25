@@ -64,7 +64,7 @@ RSpec.describe 'Create a work deposit' do
 
     it 'creates and deposits a work', :dropzone do
       visit dashboard_path
-      click_link_or_button('Deposit to this collection')
+      click_link_or_button(I18n.t('collections.buttons.deposit_work'))
 
       # Breadcrumb
       expect(page).to have_link('Dashboard', href: dashboard_path)
