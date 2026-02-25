@@ -415,7 +415,7 @@ RSpec.describe Sdr::Repository do
 
   describe '#check_lock' do
     let(:object_client) { instance_double(Dor::Services::Client::Object, lock:) }
-    let(:lock) { 'valid_lock' }
+    let(:lock) { 'W/"druid:gg682qj4260=1=1"' }
 
     before do
       allow(Dor::Services::Client).to receive(:object).and_return(object_client)
@@ -423,14 +423,14 @@ RSpec.describe Sdr::Repository do
 
     context 'when the locks match' do
       it 'returns the object' do
-        expect(described_class.check_lock(druid:, lock: "#{lock}-gzip")).to be_nil
+        expect(described_class.check_lock(druid:, lock: 'W/"druid:gg682qj4260=1=1-gzip"')).to be_nil
         expect(Dor::Services::Client).to have_received(:object).with(druid)
       end
     end
 
     context 'when the locks do not match' do
       it 'raises' do
-        expect { described_class.check_lock(druid:, lock: 'invalid_lock') }.to raise_error(Sdr::Repository::StaleLock)
+        expect { described_class.check_lock(druid:, lock: 'W/"druid:gg682qj4260=2=2') }.to raise_error(Sdr::Repository::StaleLock)
       end
     end
   end
