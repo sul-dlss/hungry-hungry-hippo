@@ -26,7 +26,7 @@
 
         <div id="content-files" class="pane-section">
           <%= turbo_frame_tag @content, 'show', src: content_path(@content), data: { controller: 'dropzone-files' }, class: 'dropzone-files' do %>
-            <%= render Elements::SpinnerComponent.new %>
+            <%= render SdrViewComponents::Elements::SpinnerComponent.new %>
           <% end %>
         </div>
       <% end %>

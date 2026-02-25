@@ -6,7 +6,7 @@
   <% end %>
 <% end %>
 
-<%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: 'Select GitHub repository to deposit', classes: 'mb-3') %>
+<%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h1, variant: :h2, text: 'Select GitHub repository to deposit', classes: 'mb-3') %>
 
 <%= form_with(model: @github_repository_form) do |form| %>
   <%= form.hidden_field(:collection_druid) %>

@@ -1,10 +1,10 @@
-<%= render Elements::ModalComponent.new(id: form_id) do |component| %>
+<%= render SdrViewComponents::Elements::ModalComponent.new(id: form_id) do |component| %>
   <% component.with_header do %>
     <h1><%= contact_sdr %></h1>
   <% end %>
   <% component.with_body do %>
     <%= tag.turbo_frame id: 'contact-form', src: path, loading: do %>
-      <%= render Elements::SpinnerComponent.new %>
+      <%= render SdrViewComponents::Elements::SpinnerComponent.new %>
     <% end %>
   <% end %>
 <% end %>

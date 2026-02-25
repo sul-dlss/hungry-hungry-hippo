@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between">
   <div class="mb-4">
-    <%= render Elements::HeadingComponent.new(level: :h1, text: title, classes: 'd-inline') %>
+    <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h1, text: title, classes: 'd-inline') %>
     <span class="fst-italic status ms-4"><%= status_message %></span>
   </div>
   <div class="d-flex align-items-start ms-5">

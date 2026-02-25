@@ -13,7 +13,7 @@
       <% end %>
     <% end %>
   <% end %>
-  <%= render Elements::HeadingComponent.new(level: :h1, variant: :h2, text: @collection_form.title || 'Untitled collection', classes: 'mb-3') %>
+  <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h1, variant: :h2, text: @collection_form.title || 'Untitled collection', classes: 'mb-3') %>
   <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :danger, text: t('messages.validation')) if defined?(@valid) && !@valid %>
   <% discard_draft_form_id = dom_id(@collection_form, 'discard_form') %>
   <%= render Edit::DiscardDraftFormComponent.new(presenter: @collection_presenter, id: discard_draft_form_id) if @collection_presenter %>

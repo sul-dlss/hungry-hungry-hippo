@@ -1,4 +1,4 @@
-<%= render Elements::ModalComponent.new(id: 'tod-modal') do |component| %>
+<%= render SdrViewComponents::Elements::ModalComponent.new(id: 'tod-modal') do |component| %>
   <% component.with_header do %>
     <div class="container-fluid">
       <div class="row">
@@ -13,7 +13,7 @@
   <% end %>
   <% component.with_body do %>
     <%= tag.turbo_frame id: 'terms-of-deposit', src: terms_path, loading: do %>
-      <%= render Elements::SpinnerComponent.new %>
+      <%= render SdrViewComponents::Elements::SpinnerComponent.new %>
     <% end %>
   <% end %>
 <% end %>
