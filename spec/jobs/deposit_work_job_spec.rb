@@ -433,4 +433,21 @@ RSpec.describe DepositWorkJob do
       expect(Sdr::Repository).not_to have_received(:status)
     end
   end
+
+  context 'when incorrect deposit state' do
+    let(:work) { create(:work, druid:) }
+    let(:work_form) do
+      work_form_fixture.tap do |form|
+        form.content_id = content.id
+        form.collection_druid = collection.druid
+      end
+    end
+
+    it 'raises' do
+      expect do
+        described_class.perform_now(work_form:, work:, deposit: false, request_review: false,
+                                    current_user:, ahoy_visit:)
+      end.to raise_error('Work is not in deposit_registering_or_updating state')
+    end
+  end
 end

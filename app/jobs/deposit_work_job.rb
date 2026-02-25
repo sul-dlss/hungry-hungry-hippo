@@ -17,6 +17,9 @@ class DepositWorkJob < ApplicationJob
     Current.user = current_user
     @ahoy_visit = ahoy_visit
 
+    set_hb_context
+    check_work_deposit_state!
+
     if work_form.persisted?
       Sdr::Repository.check_lock(druid: work_form.druid, lock: work_form.lock)
       @status = Sdr::Repository.status(druid: work_form.druid) if work_form.persisted?
@@ -199,5 +202,21 @@ class DepositWorkJob < ApplicationJob
       file_count: content.content_files.count,
       total_size: content.content_files.sum(:size)
     }
+  end
+
+  def check_work_deposit_state!
+    return if work.deposit_registering_or_updating?
+
+    raise 'Work is not in deposit_registering_or_updating state'
+  end
+
+  def set_hb_context
+    Honeybadger.context(
+      work_id: work.id,
+      druid: work.druid,
+      deposit_state: work.deposit_state,
+      current_user: Current.user.sunetid,
+      lock: work_form.lock
+    )
   end
 end
