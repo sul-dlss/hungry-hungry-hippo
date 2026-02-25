@@ -30,4 +30,16 @@ RSpec.describe Works::Edit::TitleComponent, type: :component do
       expect(page).to have_css('legend label', exact_text: 'Contact emails (at least one is required)')
     end
   end
+
+  context 'when contact email is not required' do
+    before do
+      work_form.works_contact_email = nil
+    end
+
+    it 'does not mark the contact email field as required' do
+      render_inline(described_class.new(form:, work_form:, mark_contact_emails_required: false))
+
+      expect(page).to have_css('legend label', exact_text: 'Contact emails (optional)')
+    end
+  end
 end

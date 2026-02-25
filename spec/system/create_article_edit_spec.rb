@@ -69,6 +69,11 @@ RSpec.describe 'Create an article then edit before deposit' do
 
     find('.nav-link', text: 'Title and contact').click
     expect(page).to have_field('Title of deposit', with: title_fixture)
+    expect(page).to have_css('legend label', text: 'Contact emails (optional)')
+
+    find('.nav-link', text: 'Abstract and keywords (optional)').click
+    expect(page).to have_css('label', text: 'Abstract (optional)')
+    expect(page).to have_css('legend label', text: 'Keywords (optional)')
 
     find('.nav-link', text: 'Type of deposit').click
     expect(page).to have_field('Text', checked: true)

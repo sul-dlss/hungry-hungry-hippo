@@ -174,7 +174,7 @@ en:
           label: 'Start typing a keyword'
   keywords:
     edit:
-      legend: 'Keywords (at least one is required)'
+      legend: 'Keywords'
       tooltip_html: >-
         Enter one keyword or phrase per box. Keywords should reflect significant concepts related to the deposit. As you type, terms will be suggested to you, but free-text entries are also permitted.
   license:
