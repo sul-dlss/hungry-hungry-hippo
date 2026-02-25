@@ -14,7 +14,7 @@
   <% end %>
   <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h1, variant: :h2, text: 'Article deposit', classes: 'mb-3') %>
 
-  <%= render Edit::SectionHeaderComponent.new(title: 'Upload your article') %>
+  <%= render Edit::LabelComponent.new(label_text: 'Upload your article', mark_required: true) %>
 
   <%# This is a "fake" form to allow rendering the file validation errors. %>
   <%= form_with(model: @article_form) do |form| %>

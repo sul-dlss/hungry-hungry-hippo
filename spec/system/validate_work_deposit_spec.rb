@@ -25,7 +25,7 @@ RSpec.describe 'Validate a work deposit' do
     # File is required for deposit, but skipping.
 
     # Filling in title
-    find('.nav-link', text: 'Title and contact').click
+    find('.nav-link', text: with_required_tab_mark('Title and contact')).click
     fill_in('work_title', with: title_fixture)
     # Contact email is required, but removing.
     click_link_or_button('Clear')
@@ -33,8 +33,8 @@ RSpec.describe 'Validate a work deposit' do
     # Abstract is required for deposit, but skipping.
 
     # Bad publication date
-    find('.nav-link', text: 'Dates (optional)').click
-    expect(page).to have_css('.nav-link.active', text: 'Dates (optional)')
+    find('.nav-link', exact_text: 'Dates').click
+    expect(page).to have_css('.nav-link.active', exact_text: 'Dates')
     within('fieldset#publication_date') do
       fill_in('Year', with: 'abc')
     end
@@ -49,14 +49,14 @@ RSpec.describe 'Validate a work deposit' do
     end
 
     # Providing an invalid release date
-    find('.nav-link', text: 'Access settings').click
-    expect(page).to have_css('.nav-link.active', text: 'Access settings')
+    find('.nav-link', text: with_required_tab_mark('Access settings')).click
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Access settings'))
     choose('On this date')
     fill_in('Release date', with: (Time.zone.today - 1.day).strftime('%m/%d/%Y'))
 
     # Terms of deposit is required, but skipping.
-    find('.nav-link', text: 'Deposit', exact_text: true).click
-    expect(page).to have_css('.nav-link.active', text: 'Deposit')
+    find('.nav-link', text: with_required_tab_mark('Deposit')).click
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Deposit'))
     expect(page).to have_no_text('You have accepted the Terms of Deposit')
     expect(page).to have_field('I agree to the SDR Terms of Deposit', checked: false)
     expect(page).to have_text('In depositing content to the Stanford Digital Repository')
@@ -91,7 +91,7 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
 
     # Contact email is marked invalid
-    find('.nav-link.is-invalid', text: 'Title and contact').click
+    find('.nav-link.is-invalid', text: with_required_tab_mark('Title and contact')).click
     expect(page).to have_field('Enter contact email', class: 'is-invalid')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
     fill_in('Enter contact email', with: contact_emails_fixture.first['email'])
@@ -103,7 +103,7 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('.form-instance', count: 2)
 
     # Authors is marked invalid
-    find('.nav-link.is-invalid', text: 'Contributors').click
+    find('.nav-link.is-invalid', text: with_required_tab_mark('Contributors')).click
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank", visible: :all)
 
     # Fill in the author name
@@ -118,8 +118,8 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('.form-instance', count: 3)
 
     # Abstract is marked invalid
-    find('.nav-link.is-invalid', text: 'Abstract').click
-    expect(page).to have_css('.nav-link', text: 'Abstract')
+    find('.nav-link.is-invalid', text: with_required_tab_mark('Abstract and keywords')).click
+    expect(page).to have_css('.nav-link', text: with_required_tab_mark('Abstract and keywords'))
     expect(page).to have_css('textarea.is-invalid#work_abstract')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
 
@@ -133,8 +133,8 @@ RSpec.describe 'Validate a work deposit' do
     expect(page).to have_css('li.list-group-item', text: 'Tearooms')
 
     # Work type is marked invalid
-    find('.nav-link', text: 'Type of deposit').click
-    expect(page).to have_css('.nav-link.active', text: 'Type of deposit')
+    find('.nav-link', text: with_required_tab_mark('Type of deposit')).click
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Type of deposit'))
     expect(page).to have_field('work_work_type_text', class: 'is-invalid', type: :radio)
     expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
 
@@ -142,7 +142,7 @@ RSpec.describe 'Validate a work deposit' do
     choose('Text')
 
     # Publication date is marked invalid
-    find('.nav-link.is-invalid', text: 'Dates (optional)').click
+    find('.nav-link.is-invalid', exact_text: 'Dates').click
     within('fieldset#publication_date') do
       expect(page).to have_field('work_publication_date_attributes_year', class: 'is-invalid')
       expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be greater than or equal to 1000')
@@ -158,13 +158,13 @@ RSpec.describe 'Validate a work deposit' do
     end
 
     # Access settings is marked invalid
-    find('.nav-link.is-invalid', text: 'Access settings').click
+    find('.nav-link.is-invalid', text: with_required_tab_mark('Access settings')).click
     expect(page).to have_field('Release date', class: 'is-invalid')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be today or later')
     choose('Immediately')
 
     # Deposit is marked invalid
-    find('.nav-link.is-invalid', text: 'Deposit').click
+    find('.nav-link.is-invalid', text: with_required_tab_mark('Deposit')).click
     expect(page).to have_field('I agree to the SDR Terms of Deposit', class: 'is-invalid')
     expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be accepted')
     check('I agree')
@@ -183,10 +183,10 @@ RSpec.describe 'Validate a work deposit' do
       expect(page).to have_css('h1', text: 'Untitled deposit')
 
       # Filling in title
-      find('.nav-link', text: 'Title and contact').click
+      find('.nav-link', text: with_required_tab_mark('Title and contact')).click
       fill_in('work_title', with: title_fixture)
 
-      find('.nav-link', text: 'Contributors').click
+      find('.nav-link', text: with_required_tab_mark('Contributors')).click
 
       # Fill in the author name only
       within('.orcid-section') do
@@ -206,19 +206,19 @@ RSpec.describe 'Validate a work deposit' do
 
       expect(page).to have_css('h1', text: 'Untitled deposit')
 
-      find('.nav-link', text: 'Contributors').click
+      find('.nav-link', text: with_required_tab_mark('Contributors')).click
 
       # Fill in the author name only
       within('.orcid-section') do
         find('label', text: 'Enter name manually').click
       end
 
-      find('.nav-link', text: 'Deposit', exact_text: true).click
+      find('.nav-link', text: with_required_tab_mark('Deposit')).click
       click_link_or_button('Deposit', class: 'btn-primary')
 
       expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
-      find('.nav-link.is-invalid', text: 'Contributors').click
+      find('.nav-link.is-invalid', text: with_required_tab_mark('Contributors')).click
       expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must have at least one contributor')
       expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must provide a last name')
 
@@ -228,12 +228,12 @@ RSpec.describe 'Validate a work deposit' do
       find_field('First name').send_keys(:tab)
       expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must have at least one contributor')
       expect(page).to have_no_css('.invalid-feedback.is-invalid', text: 'must provide a last name')
-      expect(page).to have_css('.nav-link.is-invalid', text: 'Contributors')
+      expect(page).to have_css('.nav-link.is-invalid', text: with_required_tab_mark('Contributors'))
 
       # Add another contributor to clear the error
       click_link_or_button('Add another contributor')
       expect(page).to have_no_css('.invalid-feedback.is-invalid', text: 'must have at least one contributor')
-      expect(page).to have_css('.nav-link:not(.is-invalid)', text: 'Contributors')
+      expect(page).to have_css('.nav-link:not(.is-invalid)', text: with_required_tab_mark('Contributors'))
     end
   end
 end

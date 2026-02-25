@@ -13,7 +13,7 @@ RSpec.describe Works::Edit::TitleComponent, type: :component do
       render_inline(described_class.new(form:, work_form:))
 
       expect(page).to have_field('title', with: title_fixture)
-      expect(page).to have_css('legend label', exact_text: 'Contact emails (optional)')
+      expect(page).to have_css('legend label', exact_text: 'Contact emails')
       expect(page).to have_field('Enter contact email', with: 'aperson@example.com')
       expect(page).to have_field('works_contact_email', type: 'hidden', with: works_contact_email_fixture)
     end
@@ -27,7 +27,8 @@ RSpec.describe Works::Edit::TitleComponent, type: :component do
     it 'renders the pane' do
       render_inline(described_class.new(form:, work_form:))
 
-      expect(page).to have_css('legend label', exact_text: 'Contact emails (at least one is required)')
+      expect(page).to have_css('legend label',
+                               text: with_required_field_mark('Contact emails (at least one is required)'))
     end
   end
 
@@ -39,7 +40,7 @@ RSpec.describe Works::Edit::TitleComponent, type: :component do
     it 'does not mark the contact email field as required' do
       render_inline(described_class.new(form:, work_form:, mark_contact_emails_required: false))
 
-      expect(page).to have_css('legend label', exact_text: 'Contact emails (optional)')
+      expect(page).to have_css('legend label', exact_text: 'Contact emails')
     end
   end
 end

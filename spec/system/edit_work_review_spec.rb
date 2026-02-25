@@ -34,12 +34,12 @@ RSpec.describe 'Submit a work for review without changes' do
   it 'edits a work' do
     visit edit_work_path(druid, tab: 'title')
 
-    expect(page).to have_css('.nav-link.active', text: 'Title')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Title and contact'))
     expect(page).to have_field('Title of deposit', with: title_fixture)
 
     # Going to deposit tab
-    find('.nav-link', text: 'Deposit', exact_text: true).click
-    expect(page).to have_css('.nav-link.active', text: 'Deposit')
+    find('.nav-link', text: with_required_tab_mark('Deposit')).click
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Deposit'))
     click_link_or_button('Submit for review')
 
     # Waiting page may be too fast to catch so not testing.

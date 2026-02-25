@@ -10,7 +10,7 @@
         <p><%= required_subtype_text %></p>
       <% end %>
 
-      <% if minimum_terms.positive? %>
+      <% if subtypes_required? %>
         <p>Select at least <%= term_phrase %> below:</p>
       <% else %>
         <p>Choosing additional terms is optional.</p>

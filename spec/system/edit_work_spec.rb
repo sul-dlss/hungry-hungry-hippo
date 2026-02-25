@@ -80,7 +80,7 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_button('Next')
     expect(page).to have_button('Discard draft')
 
-    expect(page).to have_css('.nav-link.active', text: 'Title')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Title and contact'))
     expect(page).to have_field('Title of deposit', with: title_fixture)
 
     fill_in('Title of deposit', with: updated_title)
@@ -90,9 +90,9 @@ RSpec.describe 'Edit a work' do
     expect(page).to have_text(works_contact_email_fixture)
 
     # Testing validation
-    find('.nav-link', text: 'Abstract and keywords').click
+    find('.nav-link', text: with_required_tab_mark('Abstract and keywords')).click
     fill_in('work_abstract', with: '')
-    find('.nav-link', text: 'Deposit', exact_text: true).click
+    find('.nav-link', text: with_required_tab_mark('Deposit')).click
     click_link_or_button('Deposit', class: 'btn-primary')
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
@@ -101,7 +101,7 @@ RSpec.describe 'Edit a work' do
                                    review: false, deposit: true, work_id: work.id).count).to eq(1)
 
     # Fill in in authors
-    find('.nav-link', text: 'Contributors').click
+    find('.nav-link', text: with_required_tab_mark('Contributors')).click
     form_instances = all('.form-instance')
     expect(form_instances.count).to eq(4)
     within(form_instances[0]) do
@@ -134,17 +134,17 @@ RSpec.describe 'Edit a work' do
     fill_in('work_contributors_attributes_1_organization_name', with: updated_contributors.last['organization_name'])
 
     # Filling in abstract
-    find('.nav-link', text: 'Abstract').click
+    find('.nav-link', text: with_required_tab_mark('Abstract and keywords')).click
     fill_in('work_abstract', with: updated_abstract)
     fill_in('work_keywords_attributes_1_text', with: updated_keywords.first)
 
     # Filling in citation
-    find('.nav-link', text: 'Citation for this deposit (optional)').click
-    expect(page).to have_text('Citation for this deposit (optional)')
+    find('.nav-link', exact_text: 'Citation for this deposit').click
+    expect(page).to have_text('Citation for this deposit')
     expect(page).to have_field('Enter preferred citation', with: citation_fixture)
 
     # Then add a related work
-    find('.nav-link', text: 'Related content (optional)').click
+    find('.nav-link', exact_text: 'Related content').click
     click_link_or_button('+ Add another related work')
     within_fieldset('Related works') do
       within('div[data-index="2"]') do
@@ -155,11 +155,11 @@ RSpec.describe 'Edit a work' do
     end
 
     # Filling in access settings
-    find('.nav-link', text: 'Access settings').click
+    find('.nav-link', text: with_required_tab_mark('Access settings')).click
     choose('Immediately')
 
     # Check What's changing
-    find('.nav-link', text: 'Deposit', exact_text: true).click
+    find('.nav-link', text: with_required_tab_mark('Deposit')).click
     expect(page).to have_field('What\'s changing?', with: whats_changing_fixture)
     expect(page).to have_css('.alert', text: 'If you have modified the files, a new public version')
     click_link_or_button('Save as draft')
@@ -209,7 +209,7 @@ RSpec.describe 'Edit a work' do
       expect(page).to have_css('h1', text: title_fixture)
 
       # Check What's changing
-      find('.nav-link', text: 'Deposit', exact_text: true).click
+      find('.nav-link', text: with_required_tab_mark('Deposit')).click
       expect(page).to have_field('What\'s changing?', with: '')
     end
   end
@@ -223,7 +223,7 @@ RSpec.describe 'Edit a work' do
       expect(page).to have_css('h1', text: title_fixture)
 
       # Check What's changing
-      find('.nav-link', text: 'Deposit', exact_text: true).click
+      find('.nav-link', text: with_required_tab_mark('Deposit')).click
       expect(page).to have_field('What\'s changing?', with: '')
     end
   end
@@ -237,7 +237,7 @@ RSpec.describe 'Edit a work' do
       expect(page).to have_css('h1', text: title_fixture)
 
       # Check What's changing
-      find('.nav-link', text: 'Deposit', exact_text: true).click
+      find('.nav-link', text: with_required_tab_mark('Deposit')).click
       expect(page).to have_no_field('What\'s changing?')
     end
   end
@@ -274,8 +274,8 @@ RSpec.describe 'Edit a work' do
 
       expect(page).to have_css('h1', text: title_fixture)
 
-      find('.nav-link', text: 'Title').click
-      expect(page).to have_css('.nav-link.active', text: 'Title')
+      find('.nav-link', text: with_required_tab_mark('Title and contact')).click
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Title and contact'))
       expect(page).to have_field('Title of deposit', with: title_fixture)
 
       fill_in('Title of deposit', with: updated_title)
@@ -298,13 +298,13 @@ RSpec.describe 'Edit a work' do
 
       expect(page).to have_css('h1', text: title_fixture)
 
-      find('.nav-link', text: 'Deposit', exact_text: true).click
+      find('.nav-link', text: with_required_tab_mark('Deposit')).click
       find('.btn-primary', text: 'Deposit', exact_text: true).click
 
       expect(page).to have_current_path(edit_work_path(druid))
       expect(page).to have_css('.alert-warning', text: 'You have not made any changes to the form.')
       expect(page).to have_no_text('Required fields have not been filled out.')
-      expect(page).to have_css('.nav-link.active', text: 'Deposit', exact_text: true)
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Deposit'))
 
       # Ahoy event is created
       expect(Ahoy::Event.where_event(Ahoy::Event::UNCHANGED_WORK_SUBMITTED, work_id: work.id, deposit: true,
@@ -340,7 +340,7 @@ RSpec.describe 'Edit a work' do
 
       expect(page).to have_css('h1', text: title_fixture)
 
-      find('.nav-link', text: 'Deposit', exact_text: true).click
+      find('.nav-link', text: with_required_tab_mark('Deposit')).click
       fill_in('What\'s changing?', with: 'Nothing')
       click_link_or_button('Deposit', class: 'btn-primary')
 
@@ -362,7 +362,7 @@ RSpec.describe 'Edit a work' do
 
       expect(page).to have_css('h1', text: title_fixture)
 
-      find('.nav-link', text: 'Deposit', exact_text: true).click
+      find('.nav-link', text: with_required_tab_mark('Deposit')).click
       fill_in('What\'s changing?', with: 'Nothing')
       click_link_or_button('Deposit', class: 'btn-primary')
 
@@ -379,7 +379,7 @@ RSpec.describe 'Edit a work' do
 
       expect(page).to have_css('h1', text: title_fixture)
 
-      find('.nav-link', text: 'Manage files').click
+      find('.nav-link', text: with_required_tab_mark('Manage files')).click
       expect(content.content_files.size).to eq 1
       expect(page).to have_text('my_file.txt') # filename in object
 
@@ -404,7 +404,7 @@ RSpec.describe 'Edit a work' do
 
         expect(page).to have_css('h1', text: title_fixture)
 
-        find('.nav-link', text: 'Manage files').click
+        find('.nav-link', text: with_required_tab_mark('Manage files')).click
         expect(content.content_files.size).to eq 1
         expect(page).to have_text('my_file.txt') # filename in object
         expect(page).to have_no_css('#content-files-search') # no search box for files with only single file
@@ -421,7 +421,7 @@ RSpec.describe 'Edit a work' do
 
         expect(page).to have_css('h1', text: title_fixture)
 
-        find('.nav-link', text: 'Manage files').click
+        find('.nav-link', text: with_required_tab_mark('Manage files')).click
         expect(page).to have_css('#content-files-search') # show search box for files because we changed setting
         expect(page).to have_text('my_file.txt') # filename in object
         expect(content.content_files.size).to eq 1

@@ -92,12 +92,12 @@ RSpec.describe 'Create a Github repository and work deposit' do
     expect(page).to have_button('Discard draft')
 
     # Title is pre-populated
-    find('.nav-link', text: 'Title and contact').click
+    find('.nav-link', text: with_required_tab_mark('Title and contact')).click
     expect(page).to have_field('Title of deposit', with: 'sul-dlss/hungry-hungry-hippo')
     fill_in('Enter contact email', with: contact_emails_fixture.first['email'])
 
     # Add a contributor
-    find('.nav-link', text: 'Authors / Contributors').click
+    find('.nav-link', text: with_required_tab_mark('Authors / Contributors')).click
     select('Creator', from: 'Role')
     within('.orcid-section') do
       find('label', text: 'Enter name manually').click
@@ -106,28 +106,28 @@ RSpec.describe 'Create a Github repository and work deposit' do
     fill_in('Last name', with: 'Stanford')
 
     # Abstract is pre-populated
-    find('.nav-link', text: 'Abstract and keywords').click
+    find('.nav-link', text: with_required_tab_mark('Abstract and keywords')).click
     expect(page).to have_field('Abstract', with: 'Self-Deposit for the Stanford Digital Repository (SDR)')
     fill_in('Start typing a keyword', with: keywords_fixture.first['text'])
 
     # Work type is pre-populated
-    find('.nav-link', text: 'Type of deposit').click
+    find('.nav-link', text: with_required_tab_mark('Type of deposit')).click
     expect(page).to have_checked_field('Software/Code')
 
     # DOI tab is displayed
-    find('.nav-link', text: 'DOI').click
+    find('.nav-link', text: with_required_tab_mark('DOI')).click
     expect(page).to have_content('A DOI will be assigned.')
 
     # Access settings tab is displayed
-    find('.nav-link', text: 'Access settings').click
+    find('.nav-link', text: with_required_tab_mark('Access settings')).click
     expect(page).to have_checked_field('Immediately')
     expect(page).to have_select('Who can download the files?', selected: 'Everyone')
 
     # Dates tab is not displayed
-    expect(page).to have_no_css('.nav-link', text: 'Dates (optional)')
+    expect(page).to have_no_css('.nav-link', exact_text: 'Dates')
 
     # Related work is pre-populated
-    find('.nav-link', text: 'Related content (optional)').click
+    find('.nav-link', exact_text: 'Related content').click
     within('#related_content-pane .form-instance:first-of-type') do
       expect(page).to have_checked_field('Full link for a related work')
       expect(page).to have_field('Full link for a related work',
@@ -138,11 +138,11 @@ RSpec.describe 'Create a Github repository and work deposit' do
 
     # Clicking on Next to go to the citation tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Citation for this deposit (optional)')
+    expect(page).to have_css('.nav-link.active', exact_text: 'Citation for this deposit')
 
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Deposit')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Deposit'))
     click_link_or_button('Save and begin depositing future releases', class: 'btn-primary')
 
     # Waiting page may be too fast to catch so not testing.

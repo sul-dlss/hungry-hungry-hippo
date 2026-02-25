@@ -30,7 +30,7 @@ module Edit
           tabindex: '0',
           role: 'tab'
         ) do
-          label
+          tag.span(label)
         end
       end
 
@@ -57,9 +57,7 @@ module Edit
       end
 
       def label
-        @label.dup.tap do |label_text|
-          label_text << ' (optional)' unless mark_required?
-        end
+        mark_label_required(label: @label, mark_required: mark_required?, hidden_label: 'contains required fields')
       end
     end
   end

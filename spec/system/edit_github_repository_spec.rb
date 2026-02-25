@@ -77,7 +77,7 @@ RSpec.describe 'Edit a Github repository' do
 
       fill_in('Title of deposit', with: updated_title)
 
-      find('.nav-link', text: 'Deposit', exact_text: true).click
+      find('.nav-link', text: with_required_tab_mark('Deposit')).click
       expect(page).to have_field('work[whats_changing]', with: 'Metadata update', type: 'hidden')
       expect(page).to have_checked_field('work[github_deposit_enabled]', with: true)
       choose('No')
@@ -112,7 +112,7 @@ RSpec.describe 'Edit a Github repository' do
 
       expect(page).to have_css('h1', text: title_fixture)
 
-      find('.nav-link', text: 'Deposit', exact_text: true).click
+      find('.nav-link', text: with_required_tab_mark('Deposit')).click
       expect(page).to have_checked_field('work[github_deposit_enabled]', with: true)
       choose('No')
 

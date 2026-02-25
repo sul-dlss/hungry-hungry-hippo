@@ -75,8 +75,8 @@ RSpec.describe 'Create a work deposit' do
 
       # Testing tabs
       # Manage files tab is active, abstract is not
-      expect(page).to have_css('.nav-link.active', text: 'Manage files')
-      expect(page).to have_css('.nav-link:not(.active)', text: 'Abstract')
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Manage files'))
+      expect(page).to have_css('.nav-link:not(.active)', text: with_required_tab_mark('Abstract and keywords'))
       # Manage files pane with form field is visible, abstract is not
       expect(page).to have_css('h2', text: 'Manage files')
       expect(page).to have_css('.dropzone', text: 'Select files to upload')
@@ -90,11 +90,11 @@ RSpec.describe 'Create a work deposit' do
 
       # Testing previous / next
       click_link_or_button('Next')
-      expect(page).to have_css('.nav-link.active', text: 'Title and contact')
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Title and contact'))
       expect(page).to have_button('Next')
       expect(page).to have_button('Previous')
       click_link_or_button('Previous')
-      expect(page).to have_css('.nav-link.active', text: 'Manage files')
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Manage files'))
 
       # Adding a file
       find('.dropzone').drop('spec/fixtures/files/hippo.png')
@@ -102,7 +102,7 @@ RSpec.describe 'Create a work deposit' do
       expect(page).to have_css('table#content-table td', text: 'hippo.png')
 
       # Filling in title
-      find('.nav-link', text: 'Title and contact').click
+      find('.nav-link', text: with_required_tab_mark('Title and contact')).click
       fill_in('work_title', with: title_fixture)
 
       expect(page).to have_css('.form-label', text: 'Contact emails (at least one is required)')
@@ -114,7 +114,7 @@ RSpec.describe 'Create a work deposit' do
 
       # Click Next to go to contributors tab
       click_link_or_button('Next')
-      expect(page).to have_css('.nav-link.active', text: 'Contributors')
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Contributors'))
       expect(page).to have_css('.h4', text: 'Contributors')
 
       # Enter two contributors
@@ -138,7 +138,7 @@ RSpec.describe 'Create a work deposit' do
 
       # Click Next to go to abstract tab
       click_link_or_button('Next')
-      expect(page).to have_css('.nav-link.active', text: 'Abstract')
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Abstract and keywords'))
       expect(page).to have_text('Abstract')
 
       # Filling in Abstract and keywords
@@ -150,8 +150,8 @@ RSpec.describe 'Create a work deposit' do
 
       # Go to work type tab
       # In test, Next button isn't working perhaps due to keywords autocomplete causing problem.
-      find('.nav-link', text: 'Type of deposit').click
-      expect(page).to have_css('.nav-link.active', text: 'Type of deposit')
+      find('.nav-link', text: with_required_tab_mark('Type of deposit')).click
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Type of deposit'))
       expect(page).to have_text('What type of content are you depositing?')
 
       choose('Text')
@@ -164,14 +164,14 @@ RSpec.describe 'Create a work deposit' do
 
       # Click Next to go to DOI tab
       click_link_or_button('Next')
-      expect(page).to have_css('.nav-link.active', text: 'DOI')
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('DOI'))
       expect(page).to have_link('What is a DOI?')
       expect(page).to have_text('Do you want a DOI assigned to this work?')
       choose('No')
 
       # Clicking on Next to go to access settings tab
       click_link_or_button('Next')
-      expect(page).to have_css('.nav-link.active', text: 'Access settings')
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Access settings'))
       expect(page).to have_css('label', text: 'Release date')
       choose('On this date')
       fill_in 'Release date', with: (Time.zone.today + 1.day).strftime('%m/%d/%Y')
@@ -180,19 +180,19 @@ RSpec.describe 'Create a work deposit' do
 
       # Clicking on Next to go to license tab
       click_link_or_button('Next')
-      expect(page).to have_css('.nav-link.active', text: 'License and additional terms of use')
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('License and additional terms of use'))
 
       # Selecting license
       expect(page).to have_select('License', selected: 'Apache-2.0')
       select('CC-BY-4.0 Attribution International', from: 'work_license')
 
       # Entering additional terms of use
-      fill_in('Additional terms of use (optional)', with: custom_rights_statement_fixture)
+      fill_in('Additional terms of use', with: custom_rights_statement_fixture)
 
       # Clicking on Next to go to dates tab
       click_link_or_button('Next')
-      expect(page).to have_css('.nav-link.active', text: 'Dates (optional)')
-      expect(page).to have_text('Enter dates related to your deposit (optional)')
+      expect(page).to have_css('.nav-link.active', exact_text: 'Dates')
+      expect(page).to have_text('Enter dates related to your deposit')
 
       # Filling in dates
       within_fieldset('publication_date') do
@@ -208,8 +208,8 @@ RSpec.describe 'Create a work deposit' do
 
       # Clicking on Next to go to related content tab
       click_link_or_button('Next')
-      expect(page).to have_css('.nav-link.active', text: 'Related content (optional)')
-      expect(page).to have_css('.h4', text: 'Related content (optional)')
+      expect(page).to have_css('.nav-link.active', exact_text: 'Related content')
+      expect(page).to have_css('.h4', exact_text: 'Related content')
 
       # Filling in related works
       expect(page).to have_text('Related works')
@@ -228,22 +228,22 @@ RSpec.describe 'Create a work deposit' do
 
       # Clicking on Next to go to the citation tab
       click_link_or_button('Next')
-      expect(page).to have_css('.nav-link.active', text: 'Citation for this deposit (optional)')
+      expect(page).to have_css('.nav-link.active', exact_text: 'Citation for this deposit')
 
       # Switched to manage files tab
-      find('.nav-link', text: 'Manage files').click
-      expect(page).to have_css('.nav-link.active', text: 'Manage files')
+      find('.nav-link', text: with_required_tab_mark('Manage files')).click
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Manage files'))
 
       # Return
-      find('.nav-link', text: 'Access settings').click
-      expect(page).to have_css('.nav-link.active', text: 'Access settings')
+      find('.nav-link', text: with_required_tab_mark('Access settings')).click
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Access settings'))
 
       expect(page).to have_css('label', text: 'Download access')
       select('Everyone', from: 'work_access')
 
       # Clicking on Next to go to Deposit
       5.times { click_link_or_button('Next') }
-      expect(page).to have_css('.nav-link.active', text: 'Deposit')
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Deposit'))
 
       expect(page).to have_no_text('If you have modified the files, a new public version')
       expect(page).to have_no_text('What\'s changing?')
@@ -321,12 +321,12 @@ RSpec.describe 'Create a work deposit' do
       expect(page).to have_css('h1', text: title_fixture)
       click_link_or_button('Edit or deposit')
 
-      expect(page).to have_css('.nav-link.active', text: 'Manage files')
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Manage files'))
 
-      find('.nav-link', text: 'Title and contact').click
+      find('.nav-link', text: with_required_tab_mark('Title and contact')).click
       fill_in('work_title', with: 'My new title')
 
-      find('.nav-link', text: 'Deposit', exact_text: true).click
+      find('.nav-link', text: with_required_tab_mark('Deposit')).click
 
       fill_in('What\'s changing?', with: 'I am updating the title.')
 
@@ -378,11 +378,11 @@ RSpec.describe 'Create a work deposit' do
       expect(page).to have_css('h1', text: title_fixture)
       click_link_or_button('Edit or deposit')
 
-      expect(page).to have_css('.nav-link.active', text: 'Manage files')
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Manage files'))
 
       check('Hide this file')
 
-      find('.nav-link', text: 'Deposit', exact_text: true).click
+      find('.nav-link', text: with_required_tab_mark('Deposit')).click
 
       fill_in('What\'s changing?', with: '')
 

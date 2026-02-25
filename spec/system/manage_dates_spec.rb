@@ -39,15 +39,15 @@ RSpec.describe 'Manage dates for a work deposit' do
     expect(page).to have_css('h2', text: 'Manage files')
 
     # Filling in title
-    find('.nav-link', text: 'Title and contact').click
+    find('.nav-link', text: with_required_tab_mark('Title and contact')).click
     expect(page).to have_css('h2', text: 'Title of deposit and contact information')
 
     fill_in('work_title', with: title_fixture)
     fill_in('Enter contact email', with: contact_emails_fixture.first['email'])
 
     # Go to dates tab
-    find('.nav-link', text: 'Dates (optional)').click
-    expect(page).to have_text('Enter dates related to your deposit (optional)')
+    find('.nav-link', exact_text: 'Dates').click
+    expect(page).to have_text('Enter dates related to your deposit')
 
     within_fieldset('publication_date') do
       # Month and day are disabled initially.
