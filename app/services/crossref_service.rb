@@ -38,7 +38,7 @@ class CrossrefService
 
   def message # rubocop:disable Metrics/AbcSize
     @message ||= begin
-      response = Faraday.get("https://api.crossref.org/works/doi/#{doi}")
+      response = Faraday.get(url)
       raise NotFound, "DOI '#{doi}' not found in Crossref" if response.status == 404
       raise Error, "DOI lookup failed: #{response.status} #{response.body}" unless response.success?
 
@@ -46,6 +46,10 @@ class CrossrefService
         raise NotJournalArticle, "DOI '#{doi}' is not a journal article" unless message['type'] == 'journal-article'
       end
     end
+  end
+
+  def url
+    "https://api.crossref.org/works/doi/#{ERB::Util.url_encode(doi).gsub('%2F', '/')}"
   end
 
   def title

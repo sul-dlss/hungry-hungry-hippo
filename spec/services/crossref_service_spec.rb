@@ -187,6 +187,17 @@ RSpec.describe CrossrefService, :vcr do
     end
   end
 
+  context 'when the DOI does not exist with spaces' do
+    let(:doi) { '10.1234/nonexistent with spaces' }
+
+    it 'raises NotFound' do
+      # This is making sure that the spaces are encoded properly and not causing an error other than NotFound.
+      expect do
+        attrs
+      end.to raise_error(CrossrefService::NotFound, "DOI '10.1234/nonexistent with spaces' not found in Crossref")
+    end
+  end
+
   context 'when the DOI exists but is not a journal article' do
     let(:doi) { '10.1093/gmo/9781561592630.article.a2289571' }
 

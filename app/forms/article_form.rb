@@ -9,6 +9,10 @@ class ArticleForm < ApplicationForm
   validate :doi_article, if: -> { doi.present? }
   validate :doi_lookup_performed, if: -> { doi_ok? }, on: :deposit
 
+  before_validation do
+    self.doi = doi.strip if doi.present?
+  end
+
   # Tracks whether user has performed a DOI lookup
   attribute :last_doi_lookup, :string
 
