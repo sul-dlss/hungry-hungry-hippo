@@ -27,6 +27,18 @@ RSpec.describe ArticleForm, type: :form do
       end
     end
 
+    context 'when DOI has whitespace' do
+      let(:form) { described_class.new(doi: "  #{doi}  ") }
+
+      before do
+        allow(CrossrefService).to receive(:call).with(doi:).and_return({ title: 'Sample Title' })
+      end
+
+      it 'trims the whitespace and is valid' do
+        expect(form).to be_valid
+      end
+    end
+
     context 'when DOI is present but not found in Crossref' do
       before do
         allow(CrossrefService).to receive(:call).with(doi:).and_raise(CrossrefService::NotFound)
