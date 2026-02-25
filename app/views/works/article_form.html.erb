@@ -32,7 +32,7 @@
       <% end %>
 
       <% component.with_work_pane(tab_name: :title, label: t('works.edit.panes.title.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>
-        <%= render Works::Edit::TitleComponent.new(form:, work_form: @work_form) %>
+        <%= render Works::Edit::TitleComponent.new(form:, work_form: @work_form, mark_contact_emails_required: false) %>
       <% end %>
 
       <% component.with_work_pane(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text'), tooltip: t('works.edit.panes.contributors.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
@@ -40,7 +40,7 @@
       <% end %>
 
       <% component.with_work_pane(tab_name: :abstract, label: t('works.edit.panes.abstract.label'), help_text: t('works.edit.panes.abstract.help_text'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
-        <%= render Works::Edit::AbstractComponent.new(form:) %>
+        <%= render Works::Edit::AbstractComponent.new(form:, mark_abstract_required: false, mark_keywords_required: false) %>
       <% end %>
 
       <% component.with_work_pane(tab_name: :types, label: t('works.edit.panes.types.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>
