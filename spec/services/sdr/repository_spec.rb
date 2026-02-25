@@ -423,7 +423,7 @@ RSpec.describe Sdr::Repository do
 
     context 'when the locks match' do
       it 'returns the object' do
-        expect(described_class.check_lock(druid:, lock:)).to be_nil
+        expect(described_class.check_lock(druid:, lock: "#{lock}-gzip")).to be_nil
         expect(Dor::Services::Client).to have_received(:object).with(druid)
       end
     end

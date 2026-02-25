@@ -140,7 +140,8 @@ module Sdr
     # @raise [NotFoundResponse] if the object is not found
     def self.check_lock(druid:, lock:)
       current_lock = Dor::Services::Client.object(druid).lock
-      raise StaleLock unless current_lock == lock
+      clean_lock = lock.delete_suffix('-gzip')
+      raise StaleLock, "Lock #{clean_lock} is stale. Current lock: #{current_lock}" unless current_lock == clean_lock
     end
   end
 end

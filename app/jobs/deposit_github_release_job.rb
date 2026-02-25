@@ -8,7 +8,7 @@ class DepositGithubReleaseJob < ApplicationJob
 
   queue_as :github
 
-  def perform(github_release:, skip_publish_wait: false) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+  def perform(github_release:, skip_publish_wait: false) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     @github_release = github_release
     set_hb_context
     if github_release.completed? ||
