@@ -31,7 +31,7 @@
 
   <%= render SdrViewComponents::Elements::HorizontalRuleComponent.new(classes: 'my-5') %>
 
-  <%= form_with(model: @article_form, data: { action: 'change->unsaved-changes#changed' }) do |form| %>
+  <%= form_with(model: @article_form, data: { controller: 'form-invalid-focus', action: 'change->unsaved-changes#changed' }) do |form| %>
     <%= form.hidden_field :collection_druid %>
     <%= form.hidden_field :content_id %>
     <%= form.hidden_field :form_id %>
