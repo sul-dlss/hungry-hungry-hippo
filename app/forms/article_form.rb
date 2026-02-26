@@ -14,10 +14,6 @@ class ArticleForm < ApplicationForm
   validate :doi_article, if: -> { identifier.present? }
   validate :doi_lookup_performed, if: -> { doi_ok? }, on: :deposit
 
-  before_validation do
-    self.doi = doi.strip if doi.present?
-  end
-
   # Tracks whether user has performed a DOI lookup
   attribute :last_doi_lookup, :string
 
@@ -35,6 +31,8 @@ class ArticleForm < ApplicationForm
 
   before_validation do
     if identifier.present?
+      identifier.strip!
+
       # already looks like a DOI? no need to do an extra lookup; else lookup in Pubmed
       # DOI identification could be more robust if needed using regex, e.g. https://www.crossref.org/blog/dois-and-matching-regular-expressions/
       self.doi = if identifier.include?('/')
