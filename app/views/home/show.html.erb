@@ -1,5 +1,5 @@
 <% content_for :fluid_body do %>
-  <%= tag.div class: 'hero', style: "background-image: url(#{image_path(@hero_image)});" do %>
+  <%= tag.div class: 'hero position-relative', style: "background-image: url(#{image_path(@hero_image_presenter.image)});" do %>
     <div class="row align-items-center justify-content-center h-100 gy-2" role="list">
       <div class="col-md-3 col-sm-12" role="listitem">
         <%= render SdrViewComponents::Elements::CardComponent.new(classes: 'text-center mx-4 mx-md-2 opacity-85') do |component| %>
@@ -42,6 +42,7 @@
         <% end %>
       </div>
     </div>
+    <div class="position-absolute bottom-0 start-0 text-white bg-black p-3 mb-3 opacity-75"><%= @hero_image_presenter.credit %></div>
   <% end %>
 
   <div class="row mt-5 justify-content-center gy-2">
