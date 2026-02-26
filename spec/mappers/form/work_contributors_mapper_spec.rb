@@ -25,10 +25,7 @@ RSpec.describe Form::WorkContributorsMapper do
         identifier: [
           {
             type: 'ORCID',
-            value: '0000-0000-0000-0000',
-            source: {
-              uri: 'https://orcid.org'
-            }
+            uri: 'https://orcid.org/0000-0000-0000-0000'
           }
         ]
       }
@@ -67,10 +64,7 @@ RSpec.describe Form::WorkContributorsMapper do
         identifier: [
           {
             type: 'ORCID',
-            value: '0000-0000-0000-0000',
-            source: {
-              uri: 'https://orcid.org'
-            }
+            uri: 'https://orcid.org/0000-0000-0000-0000'
           }
         ]
       }
@@ -109,10 +103,7 @@ RSpec.describe Form::WorkContributorsMapper do
         identifier: [
           {
             type: 'ORCID',
-            value: '0000-0000-0000-0000',
-            source: {
-              uri: 'https://orcid.org'
-            }
+            uri: 'https://orcid.org/0000-0000-0000-0000'
           }
         ],
         affiliation: [
@@ -174,10 +165,7 @@ RSpec.describe Form::WorkContributorsMapper do
         identifier: [
           {
             type: 'ORCID',
-            value: '0000-0000-0000-0000',
-            source: {
-              uri: 'https://orcid.org'
-            }
+            uri: 'https://orcid.org/0000-0000-0000-0000'
           }
         ],
         affiliation: [
@@ -237,10 +225,7 @@ RSpec.describe Form::WorkContributorsMapper do
         identifier: [
           {
             type: 'ORCID',
-            value: '0000-0000-0000-0000',
-            source: {
-              uri: 'https://orcid.org'
-            }
+            uri: 'https://orcid.org/0000-0000-0000-0000'
           }
         ],
         affiliation: [

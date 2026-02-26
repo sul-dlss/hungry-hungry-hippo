@@ -70,9 +70,8 @@ class PersonContributorCocinaBuilder
 
     [
       {
-        value: orcid,
-        type: 'ORCID',
-        source: { uri: Settings.orcid.url }
+        uri: OrcidSupport.orcid_url(orcid),
+        type: 'ORCID'
       }
     ]
   end
