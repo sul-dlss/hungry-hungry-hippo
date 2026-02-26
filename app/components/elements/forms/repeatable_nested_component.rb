@@ -54,6 +54,10 @@ module Elements
         @tooltip || helpers.t("#{field_name}.edit.tooltip_html", default: nil)
       end
 
+      def help_text
+        helpers.t("#{field_name}.edit.help_html", default: nil)
+      end
+
       def render_empty?
         @render_empty
       end

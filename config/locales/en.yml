@@ -175,6 +175,8 @@ en:
   keywords:
     edit:
       legend: 'Keywords'
+      help_html: >-
+        Start typing to search for a keyword. Enter only one keyword per box.
       tooltip_html: >-
         Enter one keyword or phrase per box. Keywords should reflect significant concepts related to the deposit. As you type, terms will be suggested to you, but free-text entries are also permitted.
   license:
