@@ -1,8 +1,13 @@
-<div class="row align-items-center">
-  <div class="col-4">
+<div class="row align-items-center mb-3">
+  <div class="col-2">
     <%= render Edit::LabelComponent.new(label_text: 'License', mark_required: true) %>
   </div>
-  <div class="col-8">
+  <div class="col-10 text-start text-md-start">
+    <%= helpers.link_to_new_tab('Get help selecting an article license', Settings.article_license_url) unless required_license_option? %>
+  </div>
+</div>
+<div class="row align-items-center mb-3">
+  <div class="col-12">
     <% if required_license_option? %>
       <p class="mb-0">The license for this deposit is <%= license_label %></p>
       <%= form.hidden_field :license %>
