@@ -9,7 +9,11 @@
         <%= render Elements::CancelButtonComponent.new(link: cancel_path) %>
         <%= render Edit::TabForm::PreviousButtonComponent.new(tab_id:, classes: 'ms-2') if previous_tab_btn? %>
         <%= render Edit::TabForm::NextButtonComponent.new(tab_id:, classes: 'ms-2') if next_tab_btn? %>
-        <%= deposit_button %>
+        <% if deposit_button? %>
+          <span class="ms-2">
+            <%= deposit_button %>
+          </span>
+        <% end %>
       </div>
       <% if draft_btns? %>
         <div>
