@@ -18,6 +18,8 @@ RSpec.describe 'Show home' do
     expect(page).to have_content('Sign up for our newsletter')
     expect(page).to have_css('.quote-card', text: 'I am definitely hearing more')
     expect(page).to have_css('.quote-card', count: 5)
+    credit = page.find('.hero .position-absolute.bottom-0.start-0').text
+    expect(HeroImagePresenter::IMAGES.map(&:last)).to include(credit)
 
     # Dropdown menu
     expect(page).to have_link('Dashboard', href: dashboard_path, visible: :hidden)
