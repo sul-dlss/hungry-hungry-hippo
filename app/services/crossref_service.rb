@@ -49,7 +49,7 @@ class CrossrefService
   end
 
   def url
-    "https://api.crossref.org/works/doi/#{ERB::Util.url_encode(doi).gsub('%2F', '/')}"
+    "#{Settings.crossref.url}/#{ERB::Util.url_encode(doi).gsub('%2F', '/')}"
   end
 
   def title

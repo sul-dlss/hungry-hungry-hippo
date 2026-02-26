@@ -19,7 +19,7 @@ class PubmedService
     response = conn.get('/tools/idconv/api/v1/articles/', params, headers)
     validate_response!(response)
     extract_doi(response)
-  rescue Faraday::ClientError, Faraday::ServerError => e
+  rescue Faraday::Error => e
     raise Error, "Pubmed API error: #{e.message}"
   end
 

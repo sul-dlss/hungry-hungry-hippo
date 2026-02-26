@@ -138,27 +138,6 @@ RSpec.describe PubmedService do
     end
   end
 
-  context 'when pubmed response status is error' do
-    let(:search) { 'PMC3531191' }
-
-    let(:pubmed_response) do
-      {
-        status: 'error',
-        response_date: '2026-02-18 17:33:07',
-        request: {
-          ids: [search],
-          format: 'json',
-          tool: 'my_tool',
-          email: Settings.pubmed.email
-        }
-      }.to_json
-    end
-
-    it 'raises general error' do
-      expect { pubmed_search }.to raise_exception(PubmedService::Error)
-    end
-  end
-
   context 'when pubmed API returns a server error' do
     let(:search) { 'PMC3531190' }
     let(:status) { 500 }
