@@ -15,7 +15,7 @@ RSpec.describe PubmedService do
       'User-Agent' => 'Stanford Self-Deposit (Hungry Hungry Hippo)'
     }
   end
-  let(:base_url) { "#{Settings.pubmed.url}tools/idconv/api/v1/articles/" }
+  let(:base_url) { "#{Settings.pubmed.url}/tools/idconv/api/v1/articles/" }
   let(:query) do
     {
       email: Settings.pubmed.email,

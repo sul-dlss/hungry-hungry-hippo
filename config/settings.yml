@@ -92,7 +92,7 @@ google_analytics:
 
 # API to lookup DOI by PMID/PMCID
 pubmed:
-  url: https://pmc.ncbi.nlm.nih.gov/
+  url: https://pmc.ncbi.nlm.nih.gov
   email: dlss-infrastructure-team@lists.stanford.edu # passed in the pubmed request, no API key needed
 
 ror:

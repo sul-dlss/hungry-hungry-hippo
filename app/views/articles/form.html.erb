@@ -51,21 +51,21 @@
 
     <div class="row align-items-top">
       <div class="col-8 mb-3">
-        <%= render Elements::Forms::LabelComponent.new(form:, field_name: :doi, label_text: 'Enter ID for published version of this work (accepted identifiers are DOI, PMCID, PMID)', mark_required: true) %>
+        <%= render Elements::Forms::LabelComponent.new(form:, field_name: :identifier, label_text: 'Enter ID for published version of this work (accepted identifiers are DOI, PMCID, PMID)', mark_required: true) %>
       </div>
     </div>
     <div class="row align-items-top">
       <div class="col-8">
         <div class="d-flex align-items-center">
           <div class="input-group flex-grow-1 position-relative">
-            <%= form.text_field :doi, id: 'doi_field', class: 'form-control', data: { action: 'change->unsaved-changes#changed' } %>
+            <%= form.text_field :identifier, id: 'identifier_field', class: 'form-control', data: { action: 'change->unsaved-changes#changed' } %>
           </div>
           <div class="ms-1 text-nowrap">
             <%= render Elements::Forms::SubmitComponent.new(label: 'Look up', data: { action: 'unsaved-changes#allowFormSubmission' }, value: 'lookup') %>
           </div>
         </div>
 
-        <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :doi) %>
+        <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :identifier) %>
       </div>
     </div>
 

@@ -4,9 +4,14 @@
 class ArticleForm < ApplicationForm
   include FilesRequired
 
+  # if the user enters a DOI as the identifier, both attributes will be the same,
+  # else the identifier attribute will be what they entered, and DOI will be what was looked up
   attribute :doi, :string
   validates :doi, presence: true
-  validate :doi_article, if: -> { doi.present? }
+  attribute :identifier, :string
+  validates :identifier, presence: true
+
+  validate :doi_article, if: -> { identifier.present? }
   validate :doi_lookup_performed, if: -> { doi_ok? }, on: :deposit
 
   before_validation do
@@ -29,10 +34,14 @@ class ArticleForm < ApplicationForm
   attribute :form_id, :string, default: -> { SecureRandom.uuid }
 
   before_validation do
-    if doi.present?
-      # If it doesn't look like a DOI, try to look it via Pubmed API first
+    if identifier.present?
+      # already looks like a DOI? no need to do an extra lookup; else lookup in Pubmed
       # DOI identification could be more robust if needed using regex, e.g. https://www.crossref.org/blog/dois-and-matching-regular-expressions/
-      self.doi = PubmedService.call(search: doi) unless doi.include?('/')
+      self.doi = if identifier.include?('/')
+                   identifier
+                 else
+                   PubmedService.call(search: identifier)
+                 end
       results = CrossrefService.call(doi:)
       @doi_has_title = results[:title].present?
       @doi_found = true
@@ -64,11 +73,11 @@ class ArticleForm < ApplicationForm
   private
 
   def doi_article
-    return errors.add(:doi, 'identifier was not found') unless doi_found?
+    return errors.add(:identifier, 'identifier was not found') unless doi_found?
 
-    return errors.add(:doi, 'identifier is not a journal article') unless doi_journal_article?
+    return errors.add(:identifier, 'identifier is not a journal article') unless doi_journal_article?
 
-    errors.add(:doi, 'identifier does not have a title') unless doi_has_title?
+    errors.add(:identifier, 'identifier does not have a title') unless doi_has_title?
   end
 
   def doi_ok?
@@ -78,6 +87,6 @@ class ArticleForm < ApplicationForm
   end
 
   def doi_lookup_performed
-    errors.add(:doi, 'lookup before saving or depositing') unless lookup_performed?
+    errors.add(:identifier, 'lookup before saving or depositing') unless lookup_performed?
   end
 end

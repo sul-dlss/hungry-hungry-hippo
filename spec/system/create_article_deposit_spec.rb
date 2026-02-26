@@ -59,12 +59,12 @@ RSpec.describe 'Create an article deposit' do
     expect(page).to have_css('.invalid-feedback', text: "can't be blank")
 
     # Validate missing DOI submission
-    fill_in 'doi_field', with: not_found_doi
+    fill_in 'identifier_field', with: not_found_doi
     click_link_or_button('Look up')
     expect(page).to have_css('.invalid-feedback', text: 'identifier was not found')
 
     # Deposit without required fields
-    fill_in 'doi_field', with: doi
+    fill_in 'identifier_field', with: doi
     click_link_or_button('Deposit')
     expect(page).to have_css('.invalid-feedback', text: 'must have at least one file')
     expect(page).to have_css('.invalid-feedback', text: 'must be accepted')
@@ -151,7 +151,7 @@ RSpec.describe 'Create an article deposit' do
     expect(page).to have_css('h1', text: 'Article deposit')
 
     # Look up DOI via PMID
-    fill_in 'doi_field', with: pmid
+    fill_in 'identifier_field', with: pmid
     click_link_or_button('Look up')
     expect(page).to have_no_css('.invalid-feedback')
 
