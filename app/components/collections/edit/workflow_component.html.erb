@@ -51,7 +51,7 @@
       <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.github_workflow.label')) %>
       <p><%= t('collections.edit.fields.github_workflow.help_text_html') %></p>
 
-      <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable Github Integration Workflow', mark_required: true) do %>
+      <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable GitHub Integration Workflow', mark_required: true) do %>
         <div class="row ms-0">
           <div class="form-check col-md-2">
             <%= form.radio_button :github_deposit_enabled, true, class: 'form-check-input', data: { workflow_target: 'githubEnabledOption', action: 'change->workflow#toggleWorkflows' } %>
@@ -62,6 +62,13 @@
             <%= form.label :github_deposit_enabled, 'No', class: 'form-check-label', value: false %>
           </div>
         </div>
+      <% end %>
+
+      <% if form.object.github_deposit_enabled %>
+        <p>
+          If GitHub Integration Workflow is set to "No", new releases for existing GitHub repositories will continue to be deposited.
+          You can turn off the deposit of new releases for individual GitHub repositories in the edit form for that repository.
+        </p>
       <% end %>
     </div>
   <% end %>
