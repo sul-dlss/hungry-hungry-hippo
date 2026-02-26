@@ -83,13 +83,13 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_link('Cancel')
 
     # Testing tabs
-    expect(page).to have_css('.nav-link.active', text: 'Details')
-    expect(page).to have_css('.nav-link:not(.active)', text: 'Related links (optional)')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Details'))
+    expect(page).to have_css('.nav-link:not(.active)', exact_text: 'Related links')
     # Manage files pane with form field is visible, abstract is not
     expect(page).to have_css('h2', text: 'Collection details')
 
     # Filling in title, description, and contact email
-    find('.nav-link', text: 'Details').click
+    find('.nav-link', text: with_required_tab_mark('Details')).click
     fill_in('collection_title', with: collection_title_fixture)
     fill_in('collection_description', with: collection_description_fixture)
     expect(page).to have_css('legend label', text: 'Contact emails')
@@ -97,8 +97,8 @@ RSpec.describe 'Create a collection deposit' do
 
     # Clicking on Next to go to related content tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Related links (optional)')
-    expect(page).to have_text('Links to related content (optional)')
+    expect(page).to have_css('.nav-link.active', exact_text: 'Related links')
+    expect(page).to have_text('Links to related content')
 
     # Filling in related links
     fill_in('Link text', with: related_links_fixture.first['text'])
@@ -106,14 +106,14 @@ RSpec.describe 'Create a collection deposit' do
 
     # Clicking on Next to go to access settings tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Access settings')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Access settings'))
     expect(page).to have_text('Manage release of deposits for discovery and download')
     expect(page).to have_checked_field('Immediately')
     expect(page).to have_select('Release duration', selected: 'Select an option')
 
     # Clicking on Next to go to License tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'License')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('License'))
     expect(page).to have_text('License')
     expect(page).to have_checked_field('Require license for all deposits')
     expect(page).to have_select('Required license', selected: 'Select required license...')
@@ -121,7 +121,7 @@ RSpec.describe 'Create a collection deposit' do
 
     # Clicking on Next to go to Terms of Use tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Terms of use')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Terms of use'))
     expect(page).to have_checked_field('No, do not include a custom use statement.')
     expect(page).to have_field(id: 'collection_provided_custom_rights_statement', disabled: true)
 
@@ -132,7 +132,7 @@ RSpec.describe 'Create a collection deposit' do
 
     # Clicking on Next to go to Participants tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Participants')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Participants'))
     expect(page).to have_text('Managers')
     form_instances = page.all('.form-instance')
     within(form_instances[0]) do
@@ -157,7 +157,7 @@ RSpec.describe 'Create a collection deposit' do
 
     # Clicking on Next to go to Workflow
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Workflow')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Workflows'))
 
     # Nothing is disabled.
     within('#article-workflow-section') do
@@ -223,7 +223,7 @@ RSpec.describe 'Create a collection deposit' do
 
     # Clicking on Next to go to the type of deposit tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Type of deposit (optional)')
+    expect(page).to have_css('.nav-link.active', exact_text: 'Type of deposit')
     expect(page).to have_no_field('Other', type: 'radio')
     choose('Text')
     check('Capstone')
@@ -231,8 +231,8 @@ RSpec.describe 'Create a collection deposit' do
 
     # Clicking on Next to go to works contact email tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Contact email for deposits (optional)')
-    expect(page).to have_text('Add contact email for all deposits (optional)')
+    expect(page).to have_css('.nav-link.active', exact_text: 'Contact email for deposits')
+    expect(page).to have_text('Add contact email for all deposits')
     fill_in('collection_works_contact_email', with: works_contact_email_fixture)
 
     # Clicking on Next to go to the contributors tab
@@ -258,7 +258,7 @@ RSpec.describe 'Create a collection deposit' do
 
     # Clicking on Next to go to Deposit
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Save your collection')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Save your collection'))
 
     # Footer buttons
     expect(page).to have_no_button('Next')

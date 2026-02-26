@@ -65,17 +65,17 @@ RSpec.describe 'Edit a collection' do
 
     expect(page).to have_css('h1', text: collection_title_fixture)
 
-    expect(page).to have_css('.nav-link.active', text: 'Related links (optional)')
+    expect(page).to have_css('.nav-link.active', exact_text: 'Related links')
 
-    find('.nav-link', text: 'Details').click
+    find('.nav-link', text: with_required_tab_mark('Details')).click
     expect(page).to have_field('Collection name', with: collection_title_fixture)
 
     fill_in('Collection name', with: updated_title)
 
     # Testing validation
-    find('.nav-link', text: 'Details').click
+    find('.nav-link', text: with_required_tab_mark('Details')).click
     fill_in('collection_description', with: '')
-    find('.nav-link', text: 'Save your collection', exact_text: true).click
+    find('.nav-link', text: with_required_tab_mark('Save your collection')).click
     click_link_or_button('Save', class: 'btn-primary')
     expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
@@ -83,7 +83,7 @@ RSpec.describe 'Edit a collection' do
     fill_in('collection_description', with: updated_description)
 
     # Filling in related content
-    find('.nav-link', text: 'Related links (optional)').click
+    find('.nav-link', exact_text: 'Related links').click
     form_instances = all('.form-instance')
     within form_instances[0] do
       fill_in('Link text', with: 'delete')
@@ -103,7 +103,7 @@ RSpec.describe 'Edit a collection' do
 
     # Clicking on Next to go to access settings tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Access settings')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Access settings'))
     expect(page).to have_content('Manage release of deposits for discovery and download')
     expect(page).to have_checked_field('Depositor selects a date up to')
     expect(page).to have_select('Release duration', selected: '1 year in the future')
@@ -118,7 +118,7 @@ RSpec.describe 'Edit a collection' do
 
     # Clicking on Next to go to License tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'License')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('License'))
     expect(page).to have_checked_field('Require license for all deposits')
     expect(page).to have_select('Required license', selected: 'CC-BY-4.0 Attribution International')
     choose('Depositor selects license')
@@ -126,13 +126,13 @@ RSpec.describe 'Edit a collection' do
 
     # Clicking on Next to go to Terms of Use tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Terms of use')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Terms of use'))
     expect(page).to have_checked_field('Yes, include the following custom use statement')
     expect(page).to have_field('collection[provided_custom_rights_statement]', with: 'My custom rights statement')
 
     # Clicking on Next to go to Participants tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Participants')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Participants'))
 
     # There is a manager form instance only
     form_instances = all('.form-instance')
@@ -160,7 +160,7 @@ RSpec.describe 'Edit a collection' do
 
     # Clicking on Next to go to Workflow
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Workflows')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Workflows'))
     within('#review-workflow-section') do
       expect(page).to have_text('Review workflow')
       expect(page).to have_checked_field('No', with: false, disabled: true)
@@ -178,7 +178,7 @@ RSpec.describe 'Edit a collection' do
 
     # Clicking on Next to go to type of deposit tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Type of deposit (optional)')
+    expect(page).to have_css('.nav-link.active', exact_text: 'Type of deposit')
     expect(page).to have_field('Image', checked: true)
     expect(page).to have_field('Data', checked: true)
     expect(page).to have_field('Photograph', checked: true)
@@ -187,7 +187,7 @@ RSpec.describe 'Edit a collection' do
 
     # Clicking on Next to go to works contact email tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Contact email for deposits (optional)')
+    expect(page).to have_css('.nav-link.active', exact_text: 'Contact email for deposits')
     expect(page).to have_field('Contact email to be included in all deposits in this collection',
                                with: works_contact_email_fixture)
     fill_in('collection_works_contact_email', with: '')
@@ -198,7 +198,7 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_css('.form-instance')
 
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Save your collection')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Save your collection'))
     click_link_or_button('Save', class: 'btn-primary')
 
     # Waiting page may be too fast to catch so not testing.

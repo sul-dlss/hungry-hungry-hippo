@@ -17,7 +17,7 @@ RSpec.describe Collections::Edit::PaneComponent, type: :component do
     it 'renders the pane' do
       render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
       tab_pane = page.find('div.tab-pane')
-      expect(tab_pane).to have_css('.h4', text: 'Test Pane (optional)')
+      expect(tab_pane).to have_css('.h4', exact_text: 'Test Pane')
       expect(tab_pane).to have_css('div', text: 'Test Pane Content')
       expect(tab_pane).to have_button('Next')
       expect(tab_pane).to have_link('Cancel')
@@ -101,7 +101,7 @@ RSpec.describe Collections::Edit::PaneComponent, type: :component do
     it 'renders the pane with required label' do
       render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
       tab_pane = page.find('div.tab-pane')
-      expect(tab_pane).to have_css('.h4', text: 'Test Pane', exact_text: true)
+      expect(tab_pane).to have_css('.h4', text: with_required_field_mark('Test Pane'))
     end
   end
 end

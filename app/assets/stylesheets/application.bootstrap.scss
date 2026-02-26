@@ -384,3 +384,9 @@ fieldset.form-fieldset legend {
   background-color: #E4F5F1;
   color: #006F54
 }
+
+.required {
+  @extend .fw-bold;
+
+  color: var(--stanford-poppy-dark);
+}

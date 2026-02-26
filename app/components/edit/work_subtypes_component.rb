@@ -17,7 +17,7 @@ module Edit
       super()
     end
 
-    attr_reader :form, :work_type, :minimum_terms, :error_field_name, :label, :tooltip, :required_subtypes, :help_text
+    attr_reader :form, :work_type, :minimum_terms, :error_field_name, :tooltip, :required_subtypes, :help_text
 
     def more_options?
       @more_options
@@ -73,6 +73,14 @@ module Edit
       "The collection manager has selected #{required_subtype_labels.to_sentence} as the " \
         "#{'subtype'.pluralize(required_subtypes.count)} for all deposits in this collection. You may select " \
         'additional subtypes below.'
+    end
+
+    def subtypes_required?
+      minimum_terms.positive?
+    end
+
+    def label
+      mark_label_required(label: @label, mark_required: subtypes_required?)
     end
   end
 end

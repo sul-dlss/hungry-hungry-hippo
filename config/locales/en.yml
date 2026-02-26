@@ -216,8 +216,6 @@ en:
   related_works:
     edit:
       legend: 'Related works'
-      tooltip_html: >-
-        Enter links (preferably persistent identifiers) or the full citations for other published works or online content related to your work. You must select an option from the list provided to describe how this work is related to your deposit.
       fields:
         citation:
           label: 'Enter full citation for related work'
@@ -346,7 +344,7 @@ en:
         cannot_be_edited_html: "If you need to make a change to this work, contact <a href=\"mailto:%{support_email}\">%{support_email}</a>."
         cannot_be_deposited_html: "We were not able to save your item. Please refresh the page and try again. If you have questions, contact <a href=\"mailto:%{support_email}\">%{support_email}</a>."
         no_changes: "You have not made any changes to the form. Please click 'Cancel' to exit this page."
-        globus_notice_html: "* If you have more than 10GB but less than 4TB and fewer than 25,000 files, you can use Globus to upload your files."
+        globus_notice_html: "† If you have more than 10GB but less than 4TB and fewer than 25,000 files, you can use Globus to upload your files."
         globus_replace_files_confirm: >-
           Once your Globus file transfer is complete, the files on Globus will replace the files currently in the deposit.
 
@@ -405,6 +403,8 @@ en:
         related_content:
           tab_label: 'Related content'
           label: 'Related content'
+          tooltip_html: >-
+            Enter links (preferably persistent identifiers) or the full citations for other published works or online content related to your work. You must select an option from the list provided to describe how this work is related to your deposit.
         title:
           tab_label: 'Title and contact'
           label: 'Title of deposit and contact information'

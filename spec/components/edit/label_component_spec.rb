@@ -6,7 +6,7 @@ RSpec.describe Edit::LabelComponent, type: :component do
   it 'renders the label' do
     render_inline(described_class.new(label_text: 'Label'))
 
-    expect(page).to have_css('label.form-label.fw-bold', exact_text: 'Label (optional)')
+    expect(page).to have_css('label.form-label.fw-bold', exact_text: 'Label')
   end
 
   context 'with hidden label' do
@@ -21,7 +21,7 @@ RSpec.describe Edit::LabelComponent, type: :component do
     it 'renders the label with required text' do
       render_inline(described_class.new(label_text: 'Label', mark_required: true))
 
-      expect(page).to have_css('label.form-label.fw-bold', exact_text: 'Label')
+      expect(page).to have_css('label.form-label.fw-bold', text: with_required_field_mark('Label'))
     end
   end
 end

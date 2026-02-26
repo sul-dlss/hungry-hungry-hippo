@@ -28,7 +28,7 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
 
     it 'renders the nested component' do
       render_inline(component)
-      expect(page).to have_css('label', exact_text: 'Related links (optional)')
+      expect(page).to have_css('label', exact_text: 'Related links')
       expect(page).to have_field('Link text')
       expect(page).to have_field('URL')
       expect(page).to have_no_css('label.visually-hidden')
@@ -124,7 +124,7 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
 
     it 'does not render the label' do
       render_inline(component)
-      expect(page).to have_css('label', exact_text: 'Related works')
+      expect(page).to have_css('label', text: with_required_field_mark('Related works'))
     end
   end
 

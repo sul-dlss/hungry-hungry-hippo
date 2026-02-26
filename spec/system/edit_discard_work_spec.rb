@@ -28,7 +28,7 @@ RSpec.describe 'Discard a work' do
   it 'discards a draft' do
     visit edit_work_path(druid)
 
-    find('.nav-link', text: 'Deposit', exact_text: true).click
+    find('.nav-link', text: with_required_tab_mark('Deposit')).click
     accept_confirm(/Are you sure/) do
       click_on('Discard draft')
     end

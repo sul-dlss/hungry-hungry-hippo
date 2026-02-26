@@ -49,13 +49,13 @@ RSpec.describe 'Create a work that requires review' do
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
 
     # Filling in title
-    find('.nav-link', text: 'Title and contact').click
+    find('.nav-link', text: with_required_tab_mark('Title and contact')).click
     fill_in('work_title', with: title_fixture)
     fill_in('Enter contact email', with: contact_emails_fixture.first['email'])
 
     # Click Next to go to contributors tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Contributors')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Contributors'))
 
     # Enter a contributor
     form_instances = all('.form-instance')
@@ -70,7 +70,7 @@ RSpec.describe 'Create a work that requires review' do
 
     # Click Next to go to abstract tab
     click_link_or_button('Next')
-    expect(page).to have_css('.nav-link.active', text: 'Abstract')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Abstract and keywords'))
 
     # Filling in Abstract and keywords
     fill_in('work_abstract', with: abstract_fixture)
@@ -78,16 +78,16 @@ RSpec.describe 'Create a work that requires review' do
 
     # Go to work type tab
     # In test, Next button isn't working perhaps due to keywords autocomplete causing problem.
-    find('.nav-link', text: 'Type of deposit').click
-    expect(page).to have_css('.nav-link.active', text: 'Type of deposit')
+    find('.nav-link', text: with_required_tab_mark('Type of deposit')).click
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Type of deposit'))
 
     # Selecting work type
     choose('Text')
     check('Thesis')
 
     # Clicking on Next to go to Deposit
-    find('.nav-link', text: 'Deposit', exact_text: true).click
-    expect(page).to have_css('.nav-link.active', text: 'Deposit')
+    find('.nav-link', text: with_required_tab_mark('Deposit')).click
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Deposit'))
     click_link_or_button('Submit for review')
 
     # Waiting page may be too fast to catch so not testing.

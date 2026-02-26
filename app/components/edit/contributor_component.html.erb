@@ -89,7 +89,7 @@
           </div>
           <div class="col">
             <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :last_name, label: 'Last name', container_classes: 'mb-4',
-                                                               input_data: { contributors_target: 'orcidLastNameInput', disabled: orcid_name_input_disabled? }, disabled: orcid_name_input_disabled?, mark_required: true) %>
+                                                               input_data: { contributors_target: 'orcidLastNameInput', disabled: orcid_name_input_disabled? }, disabled: orcid_name_input_disabled?) %>
           </div>
         </div>
       </div>
@@ -137,7 +137,7 @@
         <%# Stanford degree granting institution fields %>
         <div data-contributors-target="degreeGrantingSuborganizationSection">
           <%= form.hidden_field :organization_name, value: WorkForm::STANFORD_UNIVERSITY %>
-          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :suborganization_name, label: 'Department / Institute / Center', label_classes: 'fw-bold', container_classes: 'mb-4', mark_required: true) %>
+          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :suborganization_name, label: 'Department / Institute / Center', label_classes: 'fw-bold', container_classes: 'mb-4') %>
         </div>
         <%# Not Stanford degree granting institution fields %>
         <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :organization_name, label: organization_label, label_classes: 'fw-bold', container_classes: 'mb-4', data: { contributors_target: 'degreeGrantingOrganizationSection' }, mark_required: true) %>

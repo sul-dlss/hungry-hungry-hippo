@@ -23,6 +23,6 @@
         Save a draft to enable Globus file deposit. <%= link_to_new_tab t('works.edit.messages.globus_instructions'), Settings.globus.instructions_url %>
       </div>
     <% end %>
-  <div>
+  </div>
   <%= render Structure::ContactFormModalComponent.new(form_id: 'contact-form-modal', path: new_contacts_path(modal: true)) %>
 <% end %>

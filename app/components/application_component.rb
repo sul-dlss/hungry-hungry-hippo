@@ -18,9 +18,11 @@ class ApplicationComponent < ViewComponent::Base
     ComponentSupport::CssClasses.merge(*)
   end
 
-  def mark_label_required(label:, mark_required: false)
+  def mark_label_required(label:, mark_required: false, hidden_label: 'required')
     label.to_s.dup.tap do |label_text|
-      label_text << ' (optional)' unless mark_required
-    end
+      if mark_required
+        label_text << "&nbsp;<span class=\"required\">*</span><span class=\"visually-hidden\"> (#{hidden_label})</span>".html_safe # rubocop:disable Rails/OutputSafety, Layout/LineLength
+      end
+    end.html_safe # rubocop:disable Rails/OutputSafety
   end
 end

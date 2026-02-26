@@ -67,23 +67,23 @@ RSpec.describe 'Create an article then edit before deposit' do
     expect(page).to have_button('Next')
     expect(page).to have_button('Discard draft')
 
-    find('.nav-link', text: 'Title and contact').click
+    find('.nav-link', text: with_required_tab_mark('Title and contact')).click
     expect(page).to have_field('Title of deposit', with: title_fixture)
-    expect(page).to have_css('legend label', text: 'Contact emails (optional)')
+    expect(page).to have_css('legend label', exact_text: 'Contact emails')
 
-    find('.nav-link', text: 'Abstract and keywords (optional)').click
-    expect(page).to have_css('label', text: 'Abstract (optional)')
-    expect(page).to have_css('legend label', text: 'Keywords (optional)')
+    find('.nav-link', exact_text: 'Abstract and keywords').click
+    expect(page).to have_css('label', exact_text: 'Abstract')
+    expect(page).to have_css('legend label', exact_text: 'Keywords')
 
-    find('.nav-link', text: 'Type of deposit').click
+    find('.nav-link', text: with_required_tab_mark('Type of deposit')).click
     expect(page).to have_field('Text', checked: true)
     expect(page).to have_field('Article', checked: true)
 
-    find('.nav-link', text: 'Access settings').click
+    find('.nav-link', text: with_required_tab_mark('Access settings')).click
     expect(page).to have_field('Immediately', checked: true)
     expect(page).to have_select('work_access', selected: 'Everyone')
 
-    find('.nav-link', text: 'Related content').click
+    find('.nav-link', exact_text: 'Related content').click
     within('.form-instance:first-of-type') do
       expect(page).to have_field('Full link for a related work', checked: true)
       expect(page).to have_field('Full link for a related work', type: 'text', with: "https://doi.org/#{doi}")
