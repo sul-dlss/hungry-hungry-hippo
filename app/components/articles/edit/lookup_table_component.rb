@@ -41,7 +41,7 @@ module Articles
 
       def formatted_contributor(contributor)
         "#{contributor.first_name} #{contributor.last_name}".tap do |name|
-          name << " #{Settings.orcid.url}/#{contributor.orcid}" if contributor.orcid.present?
+          name << " #{OrcidSupport.orcid_url(contributor.orcid)}" if contributor.orcid.present?
           name << " (#{contributor.affiliations.map(&:institution).join('; ')})" if contributor.affiliations.any?
         end
       end

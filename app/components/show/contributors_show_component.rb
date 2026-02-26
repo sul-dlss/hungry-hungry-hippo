@@ -36,7 +36,7 @@ module Show
     def orcid_link(contributor)
       return unless contributor.orcid
 
-      fully_qualified_orcid_url = URI.join(Settings.orcid.url, contributor.orcid).to_s
+      fully_qualified_orcid_url = OrcidSupport.orcid_url(contributor.orcid)
 
       helpers.link_to_new_tab(fully_qualified_orcid_url) do
         concat tag.img(alt: 'ORCiD icon',
@@ -44,7 +44,7 @@ module Show
                        width: 16,
                        height: 16,
                        class: 'me-2')
-        concat fully_qualified_orcid_url
+        concat OrcidSupport.orcid_url(contributor.orcid)
       end
     end
 
