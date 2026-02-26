@@ -9,7 +9,7 @@ module Elements
       # Subclasses should provide rows, e.g., renders_many :rows
 
       def initialize(id:, label: nil, classes: [], head_classes: [], body_classes: [], show_label: true, role: nil, # rubocop:disable Metrics/ParameterLists
-                     data: {}, empty_message: nil)
+                     data: {}, empty_message: nil, responsive: false)
         @id = id
         @classes = classes
         @body_classes = body_classes
@@ -19,6 +19,7 @@ module Elements
         @data = data
         @empty_message = empty_message
         @head_classes = head_classes
+        @responsive = responsive
         raise ArgumentError, 'Subclasses must provide rows' unless respond_to?(:rows)
 
         super()
@@ -50,6 +51,10 @@ module Elements
 
       def render?
         rows? || empty_message.present?
+      end
+
+      def responsive?
+        @responsive
       end
     end
   end

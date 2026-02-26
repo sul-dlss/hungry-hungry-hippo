@@ -1,22 +1,32 @@
-<%= tag.table class: classes, id:, 'aria-label': label, role:, data: do %>
-  <% if show_label? %>
-    <caption><%= label || caption %></caption>
-  <% end %>
-  <% if headers? %>
-    <%= tag.thead class: head_classes do %>
-      <tr>
-        <% headers.each do |header| %>
-          <%= header %>
-        <% end %>
-      </tr>
+<% @table_content = capture do %>
+  <%= tag.table class: classes, id:, 'aria-label': label, role:, data: do %>
+    <% if show_label? %>
+      <caption><%= label || caption %></caption>
+    <% end %>
+    <% if headers? %>
+      <%= tag.thead class: head_classes do %>
+        <tr>
+          <% headers.each do |header| %>
+            <%= header %>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+    <%= tag.tbody class: body_classes do %>
+      <% rows.each do |row| %>
+        <%= row %>
+      <% end %>
     <% end %>
   <% end %>
-  <%= tag.tbody class: body_classes do %>
-    <% rows.each do |row| %>
-      <%= row %>
-    <% end %>
+  <% if empty_message && !rows? %>
+    <p class="fst-italic"><%= empty_message %></p>
   <% end %>
 <% end %>
-<% if empty_message && !rows? %>
-  <p class="fst-italic"><%= empty_message %></p>
+
+<% if responsive? %>
+  <%= tag.div class: 'table-responsive' do %>
+    <%= @table_content %>
+  <% end %>
+<% else %>
+  <%= @table_content %>
 <% end %>

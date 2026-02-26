@@ -1,5 +1,6 @@
 <%= render Elements::Tables::TableComponent.new(
       id:, label: 'Drafts', show_label: false,
+      responsive: true,
       empty_message: 'You do not have any deposits in progress.'
     ) do |component| %>
     <% component.with_headers([
