@@ -91,7 +91,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
 
       # Go to contributors tab
       find('.nav-link', text: 'Authors / Contributors').click
-      expect(page).to have_css('.h4', text: 'Authors / Contributors')
+      expect(page).to have_css('h2', text: 'Authors / Contributors')
 
       # There is a single contributor form that has a nested affiliation form
       form_instances = all('.form-instance')
@@ -285,7 +285,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
 
       # Go to contributors tab
       find('.nav-link', text: 'Authors / Contributors').click
-      expect(page).to have_css('.h4', text: 'Authors / Contributors')
+      expect(page).to have_css('h2', text: 'Authors / Contributors')
 
       # There are three forms now for the uneditable collection authors/contributors
       form_instances = all('.form-instance')
@@ -332,7 +332,7 @@ RSpec.describe 'Manage contributors for a work deposit' do
 
       # Go to contributors tab
       find('.nav-link', text: 'Authors / Contributors').click
-      expect(page).to have_css('.h4', text: 'Authors / Contributors')
+      expect(page).to have_css('h2', text: 'Authors / Contributors')
 
       # There is a single contributor form
       form_instances = all('.form-instance')
