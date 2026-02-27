@@ -84,5 +84,34 @@ RSpec.describe ArticleForm, type: :form do
         expect(form.errors[:identifier]).to include('identifier was not found')
       end
     end
+
+    context 'when identifier is a PMID that is found and the DOI is then found in CrossRef' do
+      let(:identifier) { '56789' }
+      let(:doi) { '10.10/some-doi' }
+
+      before do
+        allow(PubmedService).to receive(:call).with(search: identifier).and_return(doi)
+        allow(CrossrefService).to receive(:call).with(doi:).and_return({ title: 'Sample Title' })
+      end
+
+      it 'is valid' do
+        expect(form).to be_valid
+      end
+    end
+
+    context 'when identifier is a PMID that is found but the DOI is not found in CrossRef' do
+      let(:identifier) { '56789' }
+      let(:doi) { '10.10/some-doi' }
+
+      before do
+        allow(PubmedService).to receive(:call).with(search: identifier).and_return(doi)
+        allow(CrossrefService).to receive(:call).with(doi:).and_raise(CrossrefService::NotFound)
+      end
+
+      it 'is valid' do
+        expect(form).not_to be_valid
+        expect(form.errors[:identifier]).to include('identifier was not found')
+      end
+    end
   end
 end
