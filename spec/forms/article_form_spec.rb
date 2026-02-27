@@ -6,6 +6,10 @@ RSpec.describe ArticleForm, type: :form do
   let(:form) { described_class.new(identifier:) }
 
   let(:identifier) { '10.1234/nonexistent' }
+  let(:base_error) { 'You will need to use the "Deposit to this collection" button to deposit this work.' }
+  let(:not_found_error) { "Unable to retrieve metadata for this DOI/PMID/PMCID. #{base_error}" }
+  let(:not_article_error) { "The metadata for this identifier indicates it is not a journal article. #{base_error}" }
+  let(:no_title_error) { "The metadata for this identifier does not include a title. #{base_error}" }
 
   describe 'identifier validations' do
     context 'when identifier is not present' do
@@ -46,7 +50,7 @@ RSpec.describe ArticleForm, type: :form do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:identifier]).to include('identifier was not found')
+        expect(form.errors[:identifier]).to include(not_found_error)
       end
     end
 
@@ -57,7 +61,7 @@ RSpec.describe ArticleForm, type: :form do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:identifier]).to include('identifier is not a journal article')
+        expect(form.errors[:identifier]).to include(not_article_error)
       end
     end
 
@@ -68,7 +72,7 @@ RSpec.describe ArticleForm, type: :form do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:identifier]).to include('identifier does not have a title')
+        expect(form.errors[:identifier]).to include(no_title_error)
       end
     end
 
@@ -81,7 +85,7 @@ RSpec.describe ArticleForm, type: :form do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:identifier]).to include('identifier was not found')
+        expect(form.errors[:identifier]).to include(not_found_error)
       end
     end
 
@@ -110,7 +114,7 @@ RSpec.describe ArticleForm, type: :form do
 
       it 'is valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:identifier]).to include('identifier was not found')
+        expect(form.errors[:identifier]).to include(not_found_error)
       end
     end
   end

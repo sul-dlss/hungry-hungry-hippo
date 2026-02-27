@@ -71,11 +71,22 @@ class ArticleForm < ApplicationForm
   private
 
   def doi_article
-    return errors.add(:identifier, 'identifier was not found') unless doi_found?
+    use_full_form_message = 'You will need to use the "Deposit to this collection" button to deposit this work.'
 
-    return errors.add(:identifier, 'identifier is not a journal article') unless doi_journal_article?
+    unless doi_found?
+      return errors.add(:identifier,
+                        "Unable to retrieve metadata for this DOI/PMID/PMCID. #{use_full_form_message}")
+    end
 
-    errors.add(:identifier, 'identifier does not have a title') unless doi_has_title?
+    unless doi_journal_article?
+      return errors.add(:identifier,
+                        "The metadata for this identifier indicates it is not a journal article. #{use_full_form_message}") # rubocop:disable Layout/LineLength
+    end
+
+    return if doi_has_title?
+
+    errors.add(:identifier,
+               "The metadata for this identifier does not include a title. #{use_full_form_message}")
   end
 
   def doi_ok?
