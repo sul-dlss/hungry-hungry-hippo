@@ -419,7 +419,7 @@ en:
     buttons:
       labels:
         deposit_work: 'Deposit to this collection'
-        deposit_article: 'Deposit article by DOI, PMID or PMCID'
+        deposit_article: 'Deposit article by DOI, PMCID'
         deposit_github: 'Deposit a GitHub repository'
       aria_labels:
         deposit_work: 'Deposit to %{collection_title}'
