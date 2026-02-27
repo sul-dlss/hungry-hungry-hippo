@@ -27,7 +27,7 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
     expect(page).to have_no_link('Edit')
     expect(page).to have_no_button('Discard draft')
     expect(page).to have_no_button('Admin functions')
-    expect(page).to have_no_button(I18n.t('collections.buttons.deposit_work'))
+    expect(page).to have_no_button(I18n.t('collections.buttons.labels.deposit_work'))
   end
 
   context 'when editable' do
@@ -50,7 +50,7 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
 
     it 'does not show the Deposit to collection button' do
       render_inline(described_class.new(presenter:))
-      expect(page).to have_no_button(I18n.t('collections.buttons.deposit_work'))
+      expect(page).to have_no_button(I18n.t('collections.buttons.labels.deposit_work'))
     end
   end
 
@@ -69,7 +69,7 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
       expect(page).to have_css('h1', text: title)
       expect(page).to have_no_link('Edit')
       expect(page).to have_no_button('Discard draft')
-      expect(page).to have_no_button(I18n.t('collections.buttons.deposit_work'))
+      expect(page).to have_no_button(I18n.t('collections.buttons.labels.deposit_work'))
     end
   end
 

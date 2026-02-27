@@ -47,7 +47,7 @@ RSpec.describe 'Create an article then edit before deposit' do
 
   it 'creates an article and opens for edit', :dropzone do
     visit dashboard_path
-    click_link_or_button(I18n.t('collections.buttons.deposit_article'))
+    click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
 
     # Adding a file
     find('.dropzone').drop('spec/fixtures/files/hippo.png')
