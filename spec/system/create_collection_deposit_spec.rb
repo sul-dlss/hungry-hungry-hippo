@@ -107,9 +107,19 @@ RSpec.describe 'Create a collection deposit' do
     # Clicking on Next to go to access settings tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Access settings'))
-    expect(page).to have_text('Manage release of deposits for discovery and download')
+    expect(page)
+      .to have_css('h2', text: with_required_heading_mark('Manage release of deposits for discovery and download'))
+    expect(page)
+      .to have_css('label',
+                   text: with_required_heading_mark('When will files on deposits to this collection be downloadable?'))
     expect(page).to have_checked_field('Immediately')
     expect(page).to have_select('Release duration', selected: 'Select an option')
+    expect(page)
+      .to have_css('label',
+                   text: with_required_heading_mark('Who will have permission to download files for deposits to this collection?')) # rubocop:disable Layout/LineLength
+    expect(page)
+      .to have_css('label',
+                   text: with_required_heading_mark('Will a DOI be assigned to the deposits in this collection?'))
 
     # Clicking on Next to go to License tab
     click_link_or_button('Next')
