@@ -149,7 +149,7 @@ RSpec.describe 'Create an article deposit' do
 
   it 'looks up a DOI with a PMID', :dropzone do
     visit dashboard_path
-    click_link_or_button(I18n.t('collections.buttons.deposit_article'))
+    click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
 
     # Breadcrumb
     expect(page).to have_link('Dashboard', href: dashboard_path)
