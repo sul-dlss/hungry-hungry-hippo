@@ -7,6 +7,8 @@ class PollGithubReleasesJob < ApplicationJob
   def perform(github_repository:, immediate_deposit: false)
     return unless github_repository.github_deposit_enabled
 
+    set_hb_context(github_repository:)
+
     new_github_release = nil
     Github::AppService.releases(github_repository.github_repository_id).each do |release|
       next if github_repository.github_releases.exists?(release_id: release.id)
@@ -35,5 +37,14 @@ class PollGithubReleasesJob < ApplicationJob
     return unless github_release
 
     DepositGithubReleaseJob.perform_later(github_release:, skip_publish_wait: true)
+  end
+
+  def set_hb_context(github_repository:)
+    Honeybadger.context(
+      work_id: github_repository.id,
+      github_repository_id: github_repository.github_repository_id,
+      github_repository_name: github_repository.github_repository_name,
+      druid: github_repository.druid
+    )
   end
 end
