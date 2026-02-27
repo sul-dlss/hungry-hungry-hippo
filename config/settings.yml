@@ -90,6 +90,15 @@ ahoy:
 google_analytics:
   enabled: false
 
+# API to lookup DOI by PMID/PMCID (used for article deposit)
+pubmed:
+  url: https://pmc.ncbi.nlm.nih.gov
+  email: dlss-infrastructure-team@lists.stanford.edu # passed in the pubmed API request, no API key needed
+
+# API to lookup metadata for a given DOI (used for article deposit)
+crossref:
+  url: https://api.crossref.org/works/doi
+
 ror:
   url: https://api.ror.org
   client_id: hungry-hungry-hippo-stanford-university # actual client ID in deployed envs coming from vault/puppet

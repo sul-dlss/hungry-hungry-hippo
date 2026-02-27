@@ -53,7 +53,7 @@ RSpec.describe 'Create an article then edit before deposit' do
     find('.dropzone').drop('spec/fixtures/files/hippo.png')
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
 
-    fill_in 'DOI', with: doi
+    fill_in 'identifier_field', with: doi
     click_link_or_button('Look up')
 
     # Deposit

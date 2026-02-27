@@ -4,14 +4,15 @@
 class ArticleForm < ApplicationForm
   include FilesRequired
 
+  # if the user enters a DOI as the identifier, both attributes will be the same,
+  # else the identifier attribute will be what they entered, and DOI will be what was looked up
   attribute :doi, :string
   validates :doi, presence: true
-  validate :doi_article, if: -> { doi.present? }
-  validate :doi_lookup_performed, if: -> { doi_ok? }, on: :deposit
+  attribute :identifier, :string
+  validates :identifier, presence: true
 
-  before_validation do
-    self.doi = doi.strip if doi.present?
-  end
+  validate :doi_article, if: -> { identifier.present? }
+  validate :doi_lookup_performed, if: -> { doi_ok? }, on: :deposit
 
   # Tracks whether user has performed a DOI lookup
   attribute :last_doi_lookup, :string
@@ -29,13 +30,22 @@ class ArticleForm < ApplicationForm
   attribute :form_id, :string, default: -> { SecureRandom.uuid }
 
   before_validation do
-    if doi.present?
+    if identifier.present?
+      identifier.strip!
+
+      # already looks like a DOI? no need to do an extra lookup; else lookup in Pubmed
+      # DOI identification could be more robust if needed using regex, e.g. https://www.crossref.org/blog/dois-and-matching-regular-expressions/
+      self.doi = if identifier.include?('/')
+                   identifier
+                 else
+                   PubmedService.call(search: identifier)
+                 end
       results = CrossrefService.call(doi:)
       @doi_has_title = results[:title].present?
       @doi_found = true
       @doi_journal_article = true
     end
-  rescue CrossrefService::NotFound
+  rescue PubmedService::NotFound, PubmedService::Error, CrossrefService::NotFound
     @doi_found = false
   rescue CrossrefService::NotJournalArticle
     @doi_found = true
@@ -61,11 +71,22 @@ class ArticleForm < ApplicationForm
   private
 
   def doi_article
-    return errors.add(:doi, 'not found') unless doi_found?
+    use_full_form_message = 'You will need to use the "Deposit to this collection" button to deposit this work.'
 
-    return errors.add(:doi, 'is not a journal article') unless doi_journal_article?
+    unless doi_found?
+      return errors.add(:identifier,
+                        "Unable to retrieve metadata for this DOI/PMID/PMCID. #{use_full_form_message}")
+    end
 
-    errors.add(:doi, 'does not have a title') unless doi_has_title?
+    unless doi_journal_article?
+      return errors.add(:identifier,
+                        "The metadata for this identifier indicates it is not a journal article. #{use_full_form_message}") # rubocop:disable Layout/LineLength
+    end
+
+    return if doi_has_title?
+
+    errors.add(:identifier,
+               "The metadata for this identifier does not include a title. #{use_full_form_message}")
   end
 
   def doi_ok?
@@ -75,6 +96,6 @@ class ArticleForm < ApplicationForm
   end
 
   def doi_lookup_performed
-    errors.add(:doi, 'lookup before saving or depositing') unless lookup_performed?
+    errors.add(:identifier, 'lookup before saving or depositing') unless lookup_performed?
   end
 end

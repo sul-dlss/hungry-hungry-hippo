@@ -33,6 +33,10 @@ module Articles
         article_work_form.abstract.present? ? helpers.simple_format(article_work_form.abstract).html_safe : '' # rubocop:disable Rails/OutputSafety
       end
 
+      def doi
+        article_work_form.related_works.first.identifier
+      end
+
       def render?
         article_work_form.present?
       end
