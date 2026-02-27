@@ -3,14 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe Articles::Edit::LookupTableComponent, type: :component do
-  let(:component) { described_class.new(article_work_form: article_form, doi:) }
-  let(:doi) { '10.10/doi' }
+  let(:component) { described_class.new(article_work_form: article_form) }
 
   let(:article_form) do
     ArticleWorkForm.new(
       title: title_fixture,
       abstract: abstract_fixture,
       publication_date_attributes: { year: 2025, month: 8, day: 13 },
+      related_works: [RelatedWorkForm.new(identifier: '10.10/doi')],
       contributors_attributes: [
         {
           first_name: 'Yufeng',
@@ -57,7 +57,7 @@ RSpec.describe Articles::Edit::LookupTableComponent, type: :component do
     rows = table.all('tr')
     expect(rows.length).to eq(5)
     expect(rows[0]).to have_css('th', text: 'DOI')
-    expect(rows[0]).to have_css('td', text: doi)
+    expect(rows[0]).to have_css('td', text: '10.10/doi')
     expect(rows[1]).to have_css('th', text: 'Title')
     expect(rows[1]).to have_css('td', text: title_fixture)
     expect(rows[2]).to have_css('th', text: 'Authors')

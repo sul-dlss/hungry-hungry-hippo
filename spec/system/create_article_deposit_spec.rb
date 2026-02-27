@@ -11,15 +11,20 @@ RSpec.describe 'Create an article deposit' do
   let(:pmid) { '40833413' }
   let(:looked_up_doi) { '10.1073/pnas.2513219122' }
   let(:pubmed_article_title) { 'Pubmed Article' }
+  let(:identifier) { "https://doi.org/#{looked_up_doi}" }
 
   before do
     create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture, depositors: [user],
                         article_deposit_enabled: true, license_option: 'depositor_selects')
 
     allow(CrossrefService).to receive(:call).with(doi: not_found_doi).and_raise(CrossrefService::NotFound)
-    allow(CrossrefService).to receive(:call).with(doi:).and_return({ title: title_fixture })
+    allow(CrossrefService).to receive(:call).with(doi:).and_return({ title: title_fixture,
+                                                                     related_works_attributes:
+                                                                     [{ identifier: }] })
     allow(PubmedService).to receive(:call).with(search: pmid).and_return(looked_up_doi)
-    allow(CrossrefService).to receive(:call).with(doi: looked_up_doi).and_return({ title: pubmed_article_title })
+    allow(CrossrefService).to receive(:call).with(doi: looked_up_doi).and_return({ title: pubmed_article_title,
+                                                                                   related_works_attributes:
+                                                                                   [{ identifier: }] })
 
     # Stubbing out for Deposit Job
     allow(Sdr::Repository).to receive(:register) do |args|
