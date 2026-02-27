@@ -418,7 +418,7 @@ en:
   collections:
     buttons:
       deposit_work: 'Deposit to this collection'
-      deposit_article: 'Deposit article with DOI'
+      deposit_article: 'Deposit article by DOI, PMCID'
       deposit_github: 'Deposit a GitHub repository'
     edit:
       breadcrumb: 'Edit'
