@@ -54,7 +54,10 @@ RSpec.describe 'Create a Github repository and work deposit' do
 
   it 'creates a Github repository' do
     visit dashboard_path
-    click_link_or_button(I18n.t('collections.buttons.deposit_github'))
+    expect(page).to have_css("a[aria-label='" \
+                             "#{I18n.t('collections.buttons.aria_labels.deposit_github',
+                                       collection_title: collection_title_fixture)}']")
+    click_link_or_button(I18n.t('collections.buttons.labels.deposit_github'))
 
     # Breadcrumbs
     expect(page).to have_link('Dashboard', href: dashboard_path)
