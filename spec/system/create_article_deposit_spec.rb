@@ -39,6 +39,7 @@ RSpec.describe 'Create an article deposit' do
 
   it 'creates and deposits an article', :dropzone do
     visit dashboard_path
+    expect(page).to have_css("a[aria-label='Deposit article by DOI, PMID or PMCID to #{collection_title_fixture}']")
     click_link_or_button(I18n.t('collections.buttons.deposit_article'))
 
     # Breadcrumb
