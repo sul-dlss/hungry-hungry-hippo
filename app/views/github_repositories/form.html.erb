@@ -14,7 +14,7 @@
   <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :repository, label: 'GitHub repository URL or owner/name', mark_required: true) %>
 
   <div class="d-flex my-5">
-    <%= render Elements::CancelButtonComponent.new(link: request.referer || dashboard_path, classes: 'me-2') %>
+    <%= render Elements::CancelButtonComponent.new(link: collection_path(@collection.druid), classes: 'me-2') %>
     <%= render Elements::Forms::SubmitComponent.new(label: 'Next') %>
   </div>
 <% end %>
