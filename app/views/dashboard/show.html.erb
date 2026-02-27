@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col-11">
-    <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h1, text: "#{current_user.name} - Dashboard", classes: 'h2 mb-4') %>
+    <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h1, text: "#{current_user.name} - Dashboard", classes: 'mb-4') %>
   </div>
   <div class="col-1">
     <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: admin_dashboard_path, label: 'Admin') if allowed_to?(:show?, with: AdminPolicy) %>
@@ -14,28 +14,28 @@
 
 <% if @draft_works.present? %>
   <div class="mb-5">
-    <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h2, text: 'Drafts - please complete', classes: 'h3 mb-4 w-100') %>
+    <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h2, text: 'Drafts - please complete', classes: 'mb-4 w-100') %>
     <%= render Dashboard::Show::DraftsListComponent.new(works: @draft_works) %>
   </div>
 <% end %>
 
 <% if current_user.your_pending_review_works.exists? %>
   <div class="mb-5">
-    <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h2, text: 'Items waiting for collection manager or reviewer to approve', classes: 'h3 mb-4 w-100 text-nowrap') %>
+    <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h2, text: 'Items waiting for collection manager or reviewer to approve', classes: 'mb-4 w-100 text-nowrap') %>
     <%= render Dashboard::Show::WorksListComponent.new(works: current_user.your_pending_review_works, id: 'pending-review-table') %>
   </div>
 <% end %>
 
 <% if @shared_works.exists? %>
   <div class="mb-5">
-    <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h2, text: 'Items shared with you', classes: 'h3 mb-4 w-100 text-nowrap') %>
+    <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h2, text: 'Items shared with you', classes: 'mb-4 w-100 text-nowrap') %>
     <%= render Dashboard::Show::WorksListComponent.new(works: @shared_works, id: 'shares-table') %>
   </div>
 <% end %>
 
 <% if @your_collections.present? || allowed_to?(:new?, Collection) %>
   <div class="d-flex justify-content-between mb-4">
-    <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h2, text: 'Your collections', classes: 'h3 mb-0') %>
+    <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h2, text: 'Your collections', classes: 'mb-0') %>
     <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: new_collection_path, label: 'Create a new collection', variant: :primary) if allowed_to?(:new?, Collection) %>
   </div>
 <% end %>

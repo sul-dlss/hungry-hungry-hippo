@@ -115,7 +115,7 @@ RSpec.describe 'Create a work deposit' do
       # Click Next to go to contributors tab
       click_link_or_button('Next')
       expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Contributors'))
-      expect(page).to have_css('.h4', text: 'Contributors')
+      expect(page).to have_css('h2', text: 'Contributors')
 
       # Enter two contributors
       select('Creator', from: 'Role')
@@ -209,7 +209,7 @@ RSpec.describe 'Create a work deposit' do
       # Clicking on Next to go to related content tab
       click_link_or_button('Next')
       expect(page).to have_css('.nav-link.active', exact_text: 'Related content')
-      expect(page).to have_css('.h4', exact_text: 'Related content')
+      expect(page).to have_css('h2', exact_text: 'Related content')
 
       # Filling in related works
       expect(page).to have_text('Related works')

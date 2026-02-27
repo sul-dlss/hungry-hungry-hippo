@@ -25,7 +25,7 @@ RSpec.describe Works::Edit::PaneComponent, type: :component do
     it 'renders the pane' do
       render_inline(component) { '<div>Test Pane Content</div>'.html_safe }
       tab_pane = page.find('div.tab-pane')
-      expect(tab_pane).to have_css('.h4', exact_text: 'Test Pane')
+      expect(tab_pane).to have_css('h2', exact_text: 'Test Pane')
       expect(tab_pane).to have_css('div', text: 'Test Pane Content')
       expect(tab_pane).to have_button('Save as draft') { |btn| expect(btn[:form]).to eq('new_work') }
       expect(tab_pane).to have_button('Next')

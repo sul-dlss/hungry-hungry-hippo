@@ -10,7 +10,7 @@
   <%= render Admin::FunctionDropdownComponent.new %>
 </div>
 
-<%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h1, text: 'Collections recent activity', classes: 'h2 mb-4') %>
+<%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h1, text: 'Collections recent activity', classes: 'mb-4') %>
 
 <%= render Admin::RecentActivityFormComponent.new(form: @form, url: admin_recent_activity_collections_path) %>
 
