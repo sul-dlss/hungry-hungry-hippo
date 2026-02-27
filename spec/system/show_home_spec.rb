@@ -17,7 +17,7 @@ RSpec.describe 'Show home' do
     expect(page).to have_content(strip_tags(I18n.t('banner.home_html')))
     expect(page).to have_content('Sign up for our newsletter')
     expect(page).to have_css('.quote-card', text: 'I am definitely hearing more')
-    expect(page).to have_css('.quote-card', count: 5)
+    expect(page).to have_css('.quote-card', count: 7)
     credit = page.find('.hero .position-absolute.bottom-0.start-0').text
     expect(HeroImagePresenter::IMAGES.map(&:last)).to include(credit)
 
