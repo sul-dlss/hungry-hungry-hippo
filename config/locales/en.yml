@@ -417,9 +417,14 @@ en:
           label: 'Type of deposit'
   collections:
     buttons:
-      deposit_work: 'Deposit to this collection'
-      deposit_article: 'Deposit article with DOI'
-      deposit_github: 'Deposit a GitHub repository'
+      labels:
+        deposit_work: 'Deposit to this collection'
+        deposit_article: 'Deposit article by DOI, PMCID'
+        deposit_github: 'Deposit a GitHub repository'
+      aria_labels:
+        deposit_work: 'Deposit to %{collection_title}'
+        deposit_article: 'Deposit article by DOI, PMCID to %{collection_title}'
+        deposit_github: 'Deposit a GitHub repository to %{collection_title}'
     edit:
       breadcrumb: 'Edit'
       no_title: 'Untitled collection'
