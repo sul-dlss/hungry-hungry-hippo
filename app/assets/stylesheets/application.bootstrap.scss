@@ -14,6 +14,8 @@ $enable-smooth-scroll: false;
 @import "bootstrap-icons/font/bootstrap-icons";
 @import "dropzone";
 
+
+
 // This is used on the collection show page
 .nav-underline {
   border-bottom: 1px solid black;
@@ -31,6 +33,12 @@ $enable-smooth-scroll: false;
     border-bottom: 3px solid black;
     font-weight: bold;
   }
+}
+
+.required {
+  @extend .fw-bold;
+
+  color: var(--stanford-poppy-dark);
 }
 
 .tabbable-panes {
@@ -71,6 +79,10 @@ $enable-smooth-scroll: false;
         background-color: var(--stanford-black);
         color: var(--bs-white);
         font-weight: 700;
+
+        .required {
+          color: var(--bs-white);
+        }
 
         &::before {
           display: inline-block;
@@ -385,8 +397,3 @@ fieldset.form-fieldset legend {
   color: #006F54
 }
 
-.required {
-  @extend .fw-bold;
-
-  color: var(--stanford-poppy-dark);
-}
