@@ -12,10 +12,13 @@ class PubmedService
 
   def initialize(search:)
     @search = search
-    @conn = new_conn
   end
 
   def call
+    conn = Faraday.new({ url: Settings.pubmed.url }) do |f|
+      f.response :json
+      f.response :raise_error
+    end
     response = conn.get('/tools/idconv/api/v1/articles/', params, headers)
     validate_response!(response)
     extract_doi(response)
@@ -33,7 +36,7 @@ class PubmedService
   end
 
   def response_ok?(response)
-    response.success? || response.body['status'] == 'ok'
+    response.body['status'] == 'ok'
   end
 
   def extract_doi(response)
@@ -44,14 +47,6 @@ class PubmedService
     response.body['records'].blank? || extract_doi(response).blank?
   end
 
-  def new_conn
-    Faraday.new({ url: Settings.pubmed.url }) do |f|
-      f.request :json
-      f.response :json
-      f.response :raise_error
-    end
-  end
-
   def headers
     {
       'Accept' => 'application/json',
@@ -60,6 +55,6 @@ class PubmedService
   end
 
   def params
-    { ids: search, format: 'json', tool: 'my_tool', email: Settings.pubmed.email }
+    { ids: search, format: 'json', tool: 'stanford_sdr_h3', email: Settings.pubmed.email }
   end
 end

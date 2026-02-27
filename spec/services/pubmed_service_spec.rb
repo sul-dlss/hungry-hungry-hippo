@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'cgi'
-require 'uri'
 require 'rails_helper'
 
 RSpec.describe PubmedService do
@@ -15,13 +13,14 @@ RSpec.describe PubmedService do
       'User-Agent' => 'Stanford Self-Deposit (Hungry Hungry Hippo)'
     }
   end
+  let(:tool) { 'stanford_sdr_h3' }
   let(:base_url) { "#{Settings.pubmed.url}/tools/idconv/api/v1/articles/" }
   let(:query) do
     {
       email: Settings.pubmed.email,
       format: 'json',
       ids: search,
-      tool: 'my_tool'
+      tool:
     }
   end
 
@@ -44,8 +43,8 @@ RSpec.describe PubmedService do
           format: 'json',
           ids: [search],
           email: Settings.pubmed.email,
-          tool: 'my_tool',
-          echo: "ids=#{search}&format=json&tool=my_tool&email=#{Settings.pubmed.email}",
+          tool:,
+          echo: "ids=#{search}&format=json&tool=#{tool}&email=#{Settings.pubmed.email}",
           versions: 'no',
           showaiid: 'no',
           idtype: 'pmcid'
@@ -76,7 +75,7 @@ RSpec.describe PubmedService do
         request: {
           ids: [search],
           format: 'json',
-          tool: 'my_tool',
+          tool:,
           email: Settings.pubmed.email
         },
         error: 'Invalid request'
@@ -84,7 +83,7 @@ RSpec.describe PubmedService do
     end
 
     it 'raises not found error' do
-      expect { pubmed_search }.to raise_exception(PubmedService::NotFound)
+      expect { pubmed_search }.to raise_exception(PubmedService::Error)
     end
   end
 
@@ -98,7 +97,7 @@ RSpec.describe PubmedService do
         request: {
           ids: [search],
           format: 'json',
-          tool: 'my_tool',
+          tool:,
           email: Settings.pubmed.email
         },
         records: []
@@ -120,7 +119,7 @@ RSpec.describe PubmedService do
         request: {
           ids: [search],
           format: 'json',
-          tool: 'my_tool',
+          tool:,
           email: Settings.pubmed.email
         },
         records: [
