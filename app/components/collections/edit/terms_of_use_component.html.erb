@@ -1,5 +1,5 @@
 <div class="pane-section">
-  <%= render Elements::Forms::FieldsetComponent.new(label: helpers.t('collections.edit.panes.terms_of_use.use_statement_label'), data: { controller: 'radio' }) do %>
+  <%= render Elements::Forms::FieldsetComponent.new(label: helpers.t('collections.edit.panes.terms_of_use.use_statement_label'), data: { controller: 'radio' }, mark_required: true) do %>
     <div class="form-check">
       <%= form.radio_button :custom_rights_statement_option, 'no', class: 'form-check-input', data: { radio_target: 'radio', action: 'radio#toggle' } %>
       <%= form.label :custom_rights_statement_option_no, helpers.t('collections.edit.panes.terms_of_use.use_statement_options.nope'), class: 'form-check-label' %>

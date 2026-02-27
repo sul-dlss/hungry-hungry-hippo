@@ -132,6 +132,7 @@ RSpec.describe 'Create a collection deposit' do
     # Clicking on Next to go to Terms of Use tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Terms of use'))
+    expect(page).to have_css('label', text: with_required_heading_mark('Include a custom use statement?'))
     expect(page).to have_checked_field('No, do not include a custom use statement.')
     expect(page).to have_field(id: 'collection_provided_custom_rights_statement', disabled: true)
 
