@@ -49,27 +49,16 @@
       If you don't have a DOI, PMCID or PMID please use the <%= link_to 'full deposit form', new_work_path(collection_druid: @collection.druid) %> to deposit your item.
     <% end %>
 
-    <div class="row align-items-top">
-      <div class="col-8 mb-3">
-        <%= render Elements::Forms::LabelComponent.new(form:, field_name: :identifier, label_text: 'Enter ID for published version of this work (accepted identifiers are DOI, PMCID, PMID)', mark_required: true) %>
+    <%= render Elements::Forms::LabelComponent.new(form:, field_name: :identifier, label_text: 'Enter ID for published version of this work (accepted identifiers are DOI, PMCID, PMID)', mark_required: true, classes: 'fw-bold') %>
+    <div class="d-flex align-items-center">
+      <div class="flex-grow-1">
+      <%= form.text_field :identifier, id: 'identifier_field', class: 'form-control flex-grow-1', data: { action: 'change->unsaved-changes#changed' } %>
       </div>
+      <%= render Elements::Forms::SubmitComponent.new(label: 'Look up', data: { action: 'unsaved-changes#allowFormSubmission' }, value: 'lookup', classes: 'ms-2') %>
     </div>
-    <div class="row align-items-top">
-      <div class="col-8">
-        <div class="d-flex align-items-center">
-          <div class="input-group flex-grow-1 position-relative">
-            <%= form.text_field :identifier, id: 'identifier_field', class: 'form-control', data: { action: 'change->unsaved-changes#changed' } %>
-          </div>
-          <div class="ms-1 text-nowrap">
-            <%= render Elements::Forms::SubmitComponent.new(label: 'Look up', data: { action: 'unsaved-changes#allowFormSubmission' }, value: 'lookup') %>
-          </div>
-        </div>
+    <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :identifier) %>
 
-        <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :identifier) %>
-      </div>
-    </div>
-
-    <%= render Articles::Edit::LookupTableComponent.new(article_work_form: @article_work_form, doi: @article_form.doi, classes: 'mt-3') %>
+    <%= render Articles::Edit::LookupTableComponent.new(article_work_form: @article_work_form, classes: 'mt-3') %>
 
     <div class="d-flex justify-content-between mt-5 mb-4">
       <div>

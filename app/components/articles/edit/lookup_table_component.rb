@@ -4,14 +4,13 @@ module Articles
   module Edit
     # Component for rendering the article details from a CrossRef lookup
     class LookupTableComponent < ApplicationComponent
-      def initialize(article_work_form:, doi:, classes: [])
+      def initialize(article_work_form:, classes: [])
         @article_work_form = article_work_form
         @classes = classes
-        @doi = doi
         super()
       end
 
-      attr_reader :article_work_form, :classes, :doi
+      attr_reader :article_work_form, :classes
 
       delegate :title, to: :article_work_form
 
@@ -32,6 +31,10 @@ module Articles
 
       def abstract
         article_work_form.abstract.present? ? helpers.simple_format(article_work_form.abstract).html_safe : '' # rubocop:disable Rails/OutputSafety
+      end
+
+      def doi
+        article_work_form.related_works.first.identifier
       end
 
       def render?
