@@ -4,13 +4,15 @@ module Works
   module Edit
     # Select field for license
     class LicenseComponent < ApplicationComponent
-      def initialize(form:, license_presenter:)
+      def initialize(form:, license_presenter:, license_help_url: Settings.license_url, show_terms_of_use: true)
         @form = form
         @license_presenter = license_presenter
+        @license_help_url = license_help_url
+        @show_terms_of_use = show_terms_of_use
         super()
       end
 
-      attr_reader :form
+      attr_reader :form, :show_terms_of_use, :license_help_url
 
       delegate :required_license_option?, to: :@license_presenter
 

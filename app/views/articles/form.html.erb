@@ -37,7 +37,7 @@
     <%= form.hidden_field :form_id %>
     <%= form.hidden_field :last_doi_lookup %>
 
-    <%= render Articles::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
+    <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter, license_help_url: Settings.article_license_url, show_terms_of_use: false) %>
 
     <div class="mt-3">
       <%= render Articles::Edit::TermsOfDepositComponent.new(form:) %>
