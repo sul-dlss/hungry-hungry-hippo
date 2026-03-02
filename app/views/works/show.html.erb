@@ -75,6 +75,7 @@
   <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Type of deposit', presenter: @work_presenter, tab: :types) %><% end %>
   <% component.with_row(label: 'Deposit type', values: [@work_presenter.work_type]) %>
   <% component.with_row(label: 'Deposit subtypes', values: [@work_presenter.all_work_subtypes]) %>
+  <% component.with_row(label: 'Version identification', values: [@work_presenter.article_version_identification]) if @work_presenter.article? %>
 <% end %>
 
 <%= render Works::Show::RelatedContentShowComponent.new(work_presenter: @work_presenter) %>

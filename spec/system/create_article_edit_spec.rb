@@ -53,6 +53,9 @@ RSpec.describe 'Create an article then edit before deposit' do
     find('.dropzone').drop('spec/fixtures/files/hippo.png')
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
 
+    # Setting version description
+    select('Author accepted version', from: 'Which version are you depositing?')
+
     fill_in 'identifier_field', with: doi
     click_link_or_button('Look up')
 
@@ -78,6 +81,7 @@ RSpec.describe 'Create an article then edit before deposit' do
     find('.nav-link', text: with_required_tab_mark('Type of deposit')).click
     expect(page).to have_field('Text', checked: true)
     expect(page).to have_field('Article', checked: true)
+    expect(page).to have_field('Which version are you depositing?', with: 'Author accepted version')
 
     find('.nav-link', text: with_required_tab_mark('Access settings')).click
     expect(page).to have_field('Immediately', checked: true)

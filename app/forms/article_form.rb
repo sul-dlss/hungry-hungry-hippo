@@ -23,6 +23,9 @@ class ArticleForm < ApplicationForm
   attribute :license, :string
   validates :license, presence: true, on: :deposit
 
+  attribute :article_version_identification, :string
+  validates :article_version_identification, presence: true, on: :deposit
+
   attribute :collection_druid, :string
   attribute :content_id, :integer
 

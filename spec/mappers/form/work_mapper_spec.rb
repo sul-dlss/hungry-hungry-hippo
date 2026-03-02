@@ -254,4 +254,25 @@ RSpec.describe Form::WorkMapper, type: :mapping do
       expect(work_form.github_deposit_enabled).to be true
     end
   end
+
+  context 'when version identification note is present in cocina' do
+    let(:cocina_object) do
+      dro_with_metadata_fixture.then do |object|
+        object.new(
+          object
+            .to_h
+            .tap do |obj|
+              obj[:description][:note] << {
+                type: 'version identification',
+                value: 'Author accepted version'
+              }
+            end
+        )
+      end
+    end
+
+    it 'maps to work form' do
+      expect(work_form.article_version_identification).to eq 'Author accepted version'
+    end
+  end
 end

@@ -43,14 +43,18 @@ module Cocina
       }.compact
     end
 
-    def note_params
+    def note_params # rubocop:disable Metrics/AbcSize
       [].tap do |params|
         if work_form.abstract.present?
-          params << DescriptionCocinaBuilder.note(type: 'abstract',
+          params << DescriptionCocinaBuilder.note(type: Form::NoteMapper::ABSTRACT_TYPE,
                                                   value: work_form.abstract)
         end
         if work_form.citation.present?
-          params << DescriptionCocinaBuilder.note(type: 'preferred citation', value: work_form.citation)
+          params << DescriptionCocinaBuilder.note(type: Form::NoteMapper::CITATION_TYPE, value: work_form.citation)
+        end
+        if work_form.article_version_identification.present?
+          params << DescriptionCocinaBuilder.note(type: Form::NoteMapper::VERSION_IDENTIFICATION_TYPE,
+                                                  value: work_form.article_version_identification)
         end
       end.presence
     end

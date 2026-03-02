@@ -20,6 +20,8 @@ class ArticleWorkForm < BaseWorkForm
     self.contact_emails = contact_emails.reject(&:empty?)
   end
 
+  validates :article_version_identification, presence: true, on: :deposit
+
   # This is necessary for proper routing based on Work subclasses.
   def self.model_name
     ActiveModel::Name.new(self, nil, 'Work')

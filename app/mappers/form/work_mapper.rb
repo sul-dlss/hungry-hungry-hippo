@@ -54,7 +54,8 @@ module Form
         deposit_publication_date: DepositPublicationDateMapper.call(cocina_object:),
         apo: Cocina::Parser.apo_for(cocina_object:),
         copyright: Cocina::Parser.copyright_for(cocina_object:),
-        github_deposit_enabled:
+        github_deposit_enabled:,
+        article_version_identification: NoteMapper.version_identification(cocina_object:)
       }.merge(WorkTypeMapper.call(cocina_object:))
         .merge(WorkReleaseDateMapper.call(cocina_object:))
         .merge(WorkCreationDateMapper.call(cocina_object:))
