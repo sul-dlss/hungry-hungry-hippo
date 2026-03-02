@@ -76,7 +76,7 @@ RSpec.describe 'Create an article deposit' do
     click_link_or_button('Deposit')
     expect(page).to have_css('.invalid-feedback', text: 'must have at least one file')
     expect(page).to have_css('.invalid-feedback', text: 'must be accepted')
-    expect(page).to have_css('.invalid-feedback', text: 'lookup before saving or depositing')
+    expect(page).to have_css('.invalid-feedback', text: 'Look up before editing or depositing')
 
     # Lookup
     click_link_or_button('Look up')

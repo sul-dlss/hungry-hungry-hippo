@@ -96,6 +96,6 @@ class ArticleForm < ApplicationForm
   end
 
   def doi_lookup_performed
-    errors.add(:identifier, 'lookup before saving or depositing') unless lookup_performed?
+    errors.add(:identifier, 'Look up before editing or depositing') unless lookup_performed?
   end
 end
