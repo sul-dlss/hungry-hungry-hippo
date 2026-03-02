@@ -13,6 +13,7 @@ RSpec.describe 'Create an article then edit before deposit' do
   let(:crossref_result) do
     {
       title: title_fixture,
+      contributors_attributes: [{ first_name: 'A.', last_name: 'User' }],
       related_works_attributes: [{
         relationship: 'is version of record',
         identifier: "https://doi.org/#{doi}"

@@ -13,13 +13,6 @@ class CompleteBaseWorkForm < BaseWorkForm
   end
 
   before_validation do
-    blank_contributors = contributors.select(&:empty?)
-    next if blank_contributors.empty? || blank_contributors.length == contributors.length
-
-    self.contributors = contributors - blank_contributors
-  end
-
-  before_validation do
     blank_contact_emails = contact_emails.select(&:empty?)
     next if blank_contact_emails.empty?
     next if blank_contact_emails.length == contact_emails.length && works_contact_email.blank?

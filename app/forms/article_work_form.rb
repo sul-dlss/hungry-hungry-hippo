@@ -9,12 +9,6 @@ class ArticleWorkForm < BaseWorkForm
   end
 
   before_validation do
-    # Removes blank contributors.
-    # This has the effect of not requiring any contributors.
-    self.contributors = contributors.reject(&:empty?)
-  end
-
-  before_validation do
     # Removes blank contact emails.
     # This has the effect of not requiring any contact emails.
     self.contact_emails = contact_emails.reject(&:empty?)
