@@ -6,9 +6,14 @@ RSpec.describe ArticleForm, type: :form do
   let(:form) { described_class.new(identifier:) }
 
   let(:identifier) { '10.1234/nonexistent' }
-  let(:not_found_error) { %r{Unable to retrieve metadata for this DOI/PMCID\.} }
-  let(:not_article_error) { /The metadata for this identifier indicates it is not a journal article\./ }
-  let(:no_title_error) { /The metadata for this identifier does not include a title\./ }
+
+  let(:not_found_error) { %r{Unable to retrieve metadata for this DOI/PMCID.} }
+  let(:not_article_error) { /The metadata for this identifier indicates it is not a journal article./ }
+  let(:incomplete_metadata_error) { /The metadata for this identifier is incomplete./ }
+
+  let(:work_attrs) do
+    { title: 'Sample Title', contributors_attributes: [{ first_name: 'A.', last_name: 'User' }] }
+  end
 
   describe 'identifier validations' do
     context 'when identifier is not present' do
@@ -22,7 +27,7 @@ RSpec.describe ArticleForm, type: :form do
 
     context 'when identifier is present and found in Crossref' do
       before do
-        allow(CrossrefService).to receive(:call).with(doi: identifier).and_return({ title: 'Sample Title' })
+        allow(CrossrefService).to receive(:call).with(doi: identifier).and_return(work_attrs)
       end
 
       it 'is valid' do
@@ -34,7 +39,7 @@ RSpec.describe ArticleForm, type: :form do
       let(:form) { described_class.new(identifier: "  #{identifier}  ") }
 
       before do
-        allow(CrossrefService).to receive(:call).with(doi: identifier).and_return({ title: 'Sample Title' })
+        allow(CrossrefService).to receive(:call).with(doi: identifier).and_return(work_attrs)
       end
 
       it 'trims the whitespace and is valid' do
@@ -66,12 +71,27 @@ RSpec.describe ArticleForm, type: :form do
 
     context 'when identifier is present but does not have a title' do
       before do
-        allow(CrossrefService).to receive(:call).with(doi: identifier).and_return({ title: nil })
+        allow(CrossrefService).to receive(:call)
+          .with(doi: identifier)
+          .and_return({ title: nil, contributors_attributes: [{ first_name: 'A.', last_name: 'User' }] })
       end
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:identifier]).to include(no_title_error)
+        expect(form.errors[:identifier]).to include(incomplete_metadata_error)
+      end
+    end
+
+    context 'when identifier is present but does not have contributors' do
+      before do
+        allow(CrossrefService).to receive(:call)
+          .with(doi: identifier)
+          .and_return({ title: 'Sample Title', contributors_attributes: [] })
+      end
+
+      it 'is not valid' do
+        expect(form).not_to be_valid
+        expect(form.errors[:identifier]).to include(incomplete_metadata_error)
       end
     end
 
@@ -94,7 +114,7 @@ RSpec.describe ArticleForm, type: :form do
 
       before do
         allow(PubmedService).to receive(:call).with(search: identifier).and_return(doi)
-        allow(CrossrefService).to receive(:call).with(doi:).and_return({ title: 'Sample Title' })
+        allow(CrossrefService).to receive(:call).with(doi:).and_return(work_attrs)
       end
 
       it 'is valid' do

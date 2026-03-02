@@ -44,7 +44,7 @@ class ArticleForm < ApplicationForm
                    PubmedService.call(search: identifier)
                  end
       results = CrossrefService.call(doi:)
-      @doi_has_title = results[:title].present?
+      @doi_has_complete_metadata = results[:title].present? && results[:contributors_attributes].present?
       @doi_found = true
       @doi_journal_article = true
     end
@@ -63,8 +63,8 @@ class ArticleForm < ApplicationForm
     @doi_journal_article
   end
 
-  def doi_has_title?
-    @doi_has_title
+  def doi_has_complete_metadata?
+    @doi_has_complete_metadata
   end
 
   def lookup_performed?
@@ -87,16 +87,16 @@ class ArticleForm < ApplicationForm
                         "The metadata for this identifier indicates it is not a journal article. #{use_full_form_message}") # rubocop:disable Layout/LineLength
     end
 
-    return if doi_has_title?
+    return if doi_has_complete_metadata?
 
     errors.add(:identifier,
-               "The metadata for this identifier does not include a title. #{use_full_form_message}")
+               "The metadata for this identifier is incomplete. #{use_full_form_message}")
   end
 
   def doi_ok?
     return false if doi.blank?
 
-    doi_found? && doi_journal_article? && doi_has_title?
+    doi_found? && doi_journal_article? && doi_has_complete_metadata?
   end
 
   def doi_lookup_performed

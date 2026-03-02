@@ -14,6 +14,14 @@ class BaseWorkForm < ApplicationForm
   accepts_nested_attributes_for :related_works, :publication_date, :contact_emails, :contributors,
                                 :keywords, :create_date_single, :create_date_range_from, :create_date_range_to
 
+  # At least one contributor is required.
+  before_validation do
+    blank_contributors = contributors.select(&:empty?)
+    next if blank_contributors.empty? || blank_contributors.length == contributors.length
+
+    self.contributors = contributors - blank_contributors
+  end
+
   with_options if: -> { create_date_type == 'range' } do
     validate :create_date_range_complete
     validate :create_date_range_sequence

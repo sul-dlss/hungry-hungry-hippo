@@ -8,23 +8,18 @@ RSpec.describe 'Create an article deposit' do
 
   let(:doi) { '10.1128/mbio.01735-25' }
   let(:not_found_doi) { '10.1234/doesnotexistoncrossref' }
-  let(:pmid) { '40833413' }
-  let(:looked_up_doi) { '10.1073/pnas.2513219122' }
-  let(:pubmed_article_title) { 'Pubmed Article' }
-  let(:identifier) { "https://doi.org/#{looked_up_doi}" }
 
   before do
     create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture, depositors: [user],
                         article_deposit_enabled: true, license_option: 'depositor_selects')
 
     allow(CrossrefService).to receive(:call).with(doi: not_found_doi).and_raise(CrossrefService::NotFound)
-    allow(CrossrefService).to receive(:call).with(doi:).and_return({ title: title_fixture,
-                                                                     related_works_attributes:
-                                                                     [{ identifier: }] })
-    allow(PubmedService).to receive(:call).with(search: pmid).and_return(looked_up_doi)
-    allow(CrossrefService).to receive(:call).with(doi: looked_up_doi).and_return({ title: pubmed_article_title,
-                                                                                   related_works_attributes:
-                                                                                   [{ identifier: }] })
+    allow(CrossrefService).to receive(:call).with(doi:)
+                                            .and_return({ title: title_fixture,
+                                                          contributors_attributes: [{ first_name: 'A.',
+                                                                                      last_name: 'User' }],
+                                                          related_works_attributes:
+                                                                     [{ identifier: "https://doi.org/#{doi}" }] })
 
     # Stubbing out for Deposit Job
     allow(Sdr::Repository).to receive(:register) do |args|
@@ -153,28 +148,43 @@ RSpec.describe 'Create an article deposit' do
     expect(Ahoy::Event.where_event(Ahoy::Event::ARTICLE_CREATED, work_id: work.id, deposit: true).count).to eq(1)
   end
 
-  it 'looks up a DOI with a PMCID', :dropzone do
-    visit dashboard_path
+  context 'with a PMID' do
+    let(:pmid) { '40833413' }
+    let(:doi) { '10.1073/pnas.2513219122' }
+    let(:pubmed_article_title) { 'Pubmed Article' }
 
-    click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
+    before do
+      allow(PubmedService).to receive(:call).with(search: pmid).and_return(doi)
+      allow(CrossrefService).to receive(:call).with(doi:)
+                                              .and_return({ title: pubmed_article_title,
+                                                            contributors_attributes: [{ first_name: 'A.',
+                                                                                        last_name: 'User' }],
+                                                            related_works_attributes:
+                                                                           [{ identifier: "https://doi.org/#{doi}" }] })
+    end
 
-    # Breadcrumb
-    expect(page).to have_link('Dashboard', href: dashboard_path)
-    expect(page).to have_link(collection_title_fixture, href: collection_path(collection_druid_fixture))
-    expect(page).to have_css('.breadcrumb-item', text: 'Article deposit')
+    it 'creates and deposits an article', :dropzone do
+      visit dashboard_path
+      click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
 
-    expect(page).to have_css('h1', text: 'Article deposit')
+      # Breadcrumb
+      expect(page).to have_link('Dashboard', href: dashboard_path)
+      expect(page).to have_link(collection_title_fixture, href: collection_path(collection_druid_fixture))
+      expect(page).to have_css('.breadcrumb-item', text: 'Article deposit')
 
-    # Look up DOI via PMCID
-    fill_in 'identifier_field', with: pmid
-    click_link_or_button('Look up')
-    expect(page).to have_no_css('.invalid-feedback')
+      expect(page).to have_css('h1', text: 'Article deposit')
 
-    within('#article-table') do
-      expect(page).to have_css('th', text: 'DOI')
-      expect(page).to have_css('td', text: looked_up_doi)
-      expect(page).to have_css('th', text: 'Title')
-      expect(page).to have_css('td', text: pubmed_article_title)
+      # Look up DOI via PMID
+      fill_in 'identifier_field', with: pmid
+      click_link_or_button('Look up')
+      expect(page).to have_no_css('.invalid-feedback')
+
+      within('#article-table') do
+        expect(page).to have_css('th', text: 'DOI')
+        expect(page).to have_css('td', text: "https://doi.org/#{doi}")
+        expect(page).to have_css('th', text: 'Title')
+        expect(page).to have_css('td', text: pubmed_article_title)
+      end
     end
   end
 end
