@@ -28,7 +28,7 @@ class PollGithubReleasesJob < ApplicationJob
       release_tag: release.tag,
       release_id: release.id,
       release_name: release.name,
-      zip_url: release.zip_url,
+      message: release.message,
       published_at: release.published_at
     )
   end

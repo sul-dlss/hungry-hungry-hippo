@@ -24,10 +24,8 @@ class DepositGithubReleaseJob < ApplicationJob
 
     return if check_release_zip_exists!
 
-    Tempfile.create(['github-release', '.zip'], binmode: true) do |tempfile|
-      downloader.download_to(tempfile)
-      create_content_file(tempfile)
-    end
+    download_zipball
+    download_assets
 
     github_repository.deposit_persist! # Sets the deposit state
     perform_deposit
@@ -92,10 +90,6 @@ class DepositGithubReleaseJob < ApplicationJob
                         release_name: github_release.release_name)
   end
 
-  def downloader
-    @downloader ||= Github::ReleaseDownloader.new(zip_url: github_release.zip_url)
-  end
-
   def cocina_object
     @cocina_object ||= Sdr::Repository.find(druid:)
   end
@@ -115,27 +109,23 @@ class DepositGithubReleaseJob < ApplicationJob
     DoiAssignedService.call(cocina_object:, work: github_repository)
   end
 
-  def filename
-    "#{github_release.release_tag}.zip"
-  end
-
   def content
     @content ||= Content.create!(user:, work: github_repository)
   end
 
-  def create_content_file(tempfile)
+  def create_content_file(tempfile:, filename:, mime_type:)
     content_file = ContentFile.create(file_type: :attached,
                                       size: tempfile.size,
                                       label: '',
                                       content:,
-                                      mime_type: 'application/zip',
+                                      mime_type:,
                                       filepath: filename)
 
-    content_file.file.attach(io: File.open(tempfile.path), filename:, content_type: 'application/zip')
+    content_file.file.attach(io: File.open(tempfile.path), filename:, content_type: mime_type)
   end
 
   def check_release_zip_exists!
-    return false if downloader.exist?
+    return false if Github::Downloader.new(url: github_release.zip_url).exist?
 
     github_release.update!(status: 'completed', status_details: 'version zip missing')
     true
@@ -153,5 +143,21 @@ class DepositGithubReleaseJob < ApplicationJob
     github_release.update!(status: 'failed',
                            status_details: "github repository state is #{github_repository.deposit_state}")
     true
+  end
+
+  def download_zipball
+    Tempfile.create(binmode: true) do |tempfile|
+      Github::Downloader.new(url: github_release.zip_url).download_to(tempfile)
+      create_content_file(tempfile:, filename: "#{github_release.release_tag}.zip", mime_type: 'application/zip')
+    end
+  end
+
+  def download_assets
+    github_release.message['assets'].each do |asset|
+      Tempfile.create(binmode: true) do |tempfile|
+        Github::Downloader.new(url: asset['browser_download_url']).download_to(tempfile)
+        create_content_file(tempfile:, filename: asset['name'], mime_type: asset['content_type'])
+      end
+    end
   end
 end

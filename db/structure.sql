@@ -462,10 +462,10 @@ CREATE TABLE public.github_releases (
     release_tag character varying NOT NULL,
     release_id bigint NOT NULL,
     release_name character varying NOT NULL,
-    zip_url character varying NOT NULL,
     published_at timestamp(6) without time zone NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    message jsonb DEFAULT '{}'::jsonb NOT NULL
 );
 
 
@@ -1206,6 +1206,7 @@ ALTER TABLE ONLY public.affiliations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260302141243'),
 ('20260217184300'),
 ('20260212190714'),
 ('20260210195338'),

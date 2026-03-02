@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Github::ReleaseDownloader, :vcr do
-  subject(:downloader) { described_class.new(zip_url:) }
+RSpec.describe Github::Downloader, :vcr do
+  subject(:downloader) { described_class.new(url: zip_url) }
 
   let(:zip_url) { 'https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/zipball/v0.1.0' }
 
@@ -32,7 +32,7 @@ RSpec.describe Github::ReleaseDownloader, :vcr do
       it 'raises a ReleaseDownloaderError' do
         expect do
           downloader.exist?
-        end.to raise_error(Github::ReleaseDownloader::ReleaseDownloaderError, /Failed to access release zip/)
+        end.to raise_error(Github::Downloader::DownloaderError, /Failed to access/)
       end
     end
   end
@@ -63,7 +63,7 @@ RSpec.describe Github::ReleaseDownloader, :vcr do
       it 'raises a ReleaseDownloaderError' do
         expect do
           downloader.download_to(tempfile)
-        end.to raise_error(Github::ReleaseDownloader::ReleaseDownloaderError, /Failed to download release zip/)
+        end.to raise_error(Github::Downloader::DownloaderError, /Failed to download/)
       end
     end
   end
