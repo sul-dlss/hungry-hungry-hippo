@@ -12,7 +12,7 @@
       <% component.with_breadcrumb(text: 'Article deposit') %>
     <% end %>
   <% end %>
-  <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h1, variant: :h2, text: 'Article deposit', classes: 'mb-3') %>
+  <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h1, text: 'Article deposit', classes: 'mb-3') %>
 
   <%= render Edit::LabelComponent.new(label_text: 'Upload your article', mark_required: true) %>
 
