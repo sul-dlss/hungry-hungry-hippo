@@ -135,7 +135,7 @@ class DepositCollectionJob < ApplicationJob
     contributor_form.affiliations.each do |affiliation_form|
       contributor.affiliations.create!(institution: affiliation_form.institution,
                                        uri: affiliation_form.uri,
-                                       department: affiliation_form.department)
+                                       department: affiliation_form.department.presence)
     end
   end
 
@@ -147,7 +147,7 @@ class DepositCollectionJob < ApplicationJob
   end
 
   def suborganization_name_for(contributor_form:)
-    contributor_form.stanford_degree_granting_institution ? contributor_form.suborganization_name : nil
+    contributor_form.stanford_degree_granting_institution ? contributor_form.suborganization_name.presence : nil
   end
 
   def submit_sdr_event
