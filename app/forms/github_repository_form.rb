@@ -15,7 +15,6 @@ class GithubRepositoryForm < ApplicationForm
     return if Github::AppService.repository?(repository)
 
     errors.add(:repository,
-               'Not a valid GitHub repository or this repository is private. ' \
-               'Only public repositories can be deposited in SDR.')
+               'Enter a valid link or owner/name of a public GitHub repository.')
   end
 end

@@ -64,21 +64,25 @@ RSpec.describe 'Create a Github repository and work deposit' do
     expect(page).to have_link(collection_title_fixture, href: collection_path(collection_druid_fixture))
     expect(page).to have_css('.breadcrumb-item', text: 'Select GitHub repository to deposit')
 
-    expect(page).to have_css('h1', text: 'Select GitHub repository to deposit')
+    expect(page).to have_css('h1', text: 'Deposit your GitHub repository')
 
     expect(page).to have_link('Cancel')
 
     # Enter an invalid repository name
-    fill_in('GitHub repository URL or owner/name', with: 'sul-dlss/happy-happy-hippo')
+    fill_in(with_required_field_mark('Enter the link or owner/name of the GitHub repository you want to deposit'),
+            with: 'sul-dlss/happy-happy-hippo')
     click_link_or_button('Next')
 
-    expect(page).to have_field('GitHub repository URL or owner/name', class: 'is-invalid')
-    error_msg = 'Not a valid GitHub repository or this repository is private. ' \
-                'Only public repositories can be deposited in SDR.'
-    expect(page).to have_css('.invalid-feedback', text: error_msg)
+    expect(page).to have_field(
+      with_required_field_mark('Enter the link or owner/name of the GitHub repository you want to deposit'),
+      class: 'is-invalid'
+    )
+    expect(page).to have_css('.invalid-feedback',
+                             text: 'Enter a valid link or owner/name of a public GitHub repository.')
 
     # Enter a valid repository name
-    fill_in('GitHub repository URL or owner/name', with: 'sul-dlss/hungry-hungry-hippo')
+    fill_in(with_required_field_mark('Enter the link or owner/name of the GitHub repository you want to deposit'),
+            with: 'sul-dlss/hungry-hungry-hippo')
     click_link_or_button('Next')
 
     # Waiting page may be too fast to catch so not testing.
