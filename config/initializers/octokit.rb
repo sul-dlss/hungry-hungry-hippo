@@ -6,4 +6,4 @@ raise 'Octokit retry middleware not found' unless retry_index
 
 retry_exceptions = Faraday::Retry::Middleware::DEFAULT_EXCEPTIONS + [Octokit::ServerError, Faraday::ConnectionFailed]
 Octokit.middleware.swap retry_index, Faraday::Retry::Middleware, exceptions: retry_exceptions, max: 6, interval: 0.5,
-                                                                 backoff_factor: 2
+                                                                 backoff_factor: 2, retry_statuses: [502]
