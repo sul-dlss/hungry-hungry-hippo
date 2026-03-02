@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Class for Pubmed API support, used to lookup a single DOI by PMID/PMCID
+# Class for Pubmed API support, used to lookup a single DOI by PMCID
 # https://pmc.ncbi.nlm.nih.gov/tools/idconv/
 class PubmedService
   class Error < StandardError; end
@@ -55,6 +55,16 @@ class PubmedService
   end
 
   def params
-    { ids: search, format: 'json', tool: 'stanford_sdr_h3', email: Settings.pubmed.email }
+    {
+      ids:,
+      idtype: 'pmcid',
+      format: 'json',
+      tool: 'stanford_sdr_h3',
+      email: Settings.pubmed.email
+    }
+  end
+
+  def ids
+    search.upcase.delete_suffix('PMC')
   end
 end

@@ -71,11 +71,12 @@ class ArticleForm < ApplicationForm
   private
 
   def doi_article
-    use_full_form_message = 'You will need to use the "Deposit to this collection" button to deposit this work.'
+    use_full_form_message = 'You will need to use the "Deposit to this collection" button on the dashboard or ' \
+                            'collection page to deposit this work.'
 
     unless doi_found?
       return errors.add(:identifier,
-                        "Unable to retrieve metadata for this DOI/PMID/PMCID. #{use_full_form_message}")
+                        "Unable to retrieve metadata for this DOI/PMCID. #{use_full_form_message}")
     end
 
     unless doi_journal_article?
