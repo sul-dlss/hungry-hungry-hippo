@@ -178,7 +178,7 @@ module Admin
                              })
           nil
         end.compact
-           .group_by(&:itself).transform_values(&:count)
+           .tally
       end
     end
   end

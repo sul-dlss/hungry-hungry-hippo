@@ -2,7 +2,7 @@
 
 # Retrieve names from the account API run by UIT
 class AccountService
-  Account = Struct.new(:sunetid, :name, :description, keyword_init: true)
+  Account = Struct.new(:sunetid, :name, :description)
 
   def self.call(...)
     new(...).call

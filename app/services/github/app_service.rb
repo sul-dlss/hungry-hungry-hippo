@@ -5,7 +5,7 @@ module Github
   class AppService
     class RepositoryNotFound < StandardError; end
 
-    Repository = Struct.new('Repository', :id, :name, :url, :description, keyword_init: true)
+    Repository = Struct.new('Repository', :id, :name, :url, :description)
     Release = Struct.new('Release', :id, :name, :tag, :message, :published_at)
 
     def self.repository?(...)

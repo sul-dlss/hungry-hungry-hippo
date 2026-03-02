@@ -35,16 +35,16 @@ module Contents
     end
 
     def digest_updates_for(content_file)
-      stream = File.open(content_file.filepath_on_disk)
+      File.open(content_file.filepath_on_disk) do |stream|
+        md5 = Digest::MD5.new
+        sha1 = Digest::SHA1.new
+        while (buffer = stream.read(4096))
+          md5.update(buffer)
+          sha1.update(buffer)
+        end
 
-      md5 = Digest::MD5.new
-      sha1 = Digest::SHA1.new
-      while (buffer = stream.read(4096))
-        md5.update(buffer)
-        sha1.update(buffer)
+        { md5_digest: md5.hexdigest, sha1_digest: sha1.hexdigest }
       end
-
-      { md5_digest: md5.hexdigest, sha1_digest: sha1.hexdigest }
     end
 
     def mime_type_for(content_file)
