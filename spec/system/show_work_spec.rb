@@ -131,7 +131,7 @@ RSpec.describe 'Show a work' do
                                   })
   end
   let(:version_status) { build(:openable_version_status) }
-  let(:contact_emails) { (contact_emails_fixture.pluck('email') + [works_contact_email_fixture]) }
+  let(:contact_emails) { contact_emails_fixture.pluck('email') + [works_contact_email_fixture] }
 
   let(:events) do
     [Dor::Services::Client::Events::Event.new(event_type: 'version_close', timestamp: '2020-01-27T19:10:27.291Z',
