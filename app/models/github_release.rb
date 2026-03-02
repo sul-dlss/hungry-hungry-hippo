@@ -5,4 +5,8 @@ class GithubRelease < ApplicationRecord
   belongs_to :github_repository, class_name: 'GithubRepository'
 
   enum :status, { queued: 'queued', started: 'started', completed: 'completed', failed: 'failed' }, default: 'queued'
+
+  def zip_url
+    message['zipball_url']
+  end
 end

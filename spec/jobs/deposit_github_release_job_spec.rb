@@ -11,16 +11,22 @@ RSpec.describe DepositGithubReleaseJob do
 
   let(:status) { :queued }
   let(:version_status) { build(:openable_version_status) }
-  let(:downloader) { instance_double(Github::ReleaseDownloader, exist?: true) }
+  let(:downloader) { instance_double(Github::Downloader, exist?: true) }
+  let(:asset_downloader) { instance_double(Github::Downloader) }
 
   let(:cocina_object) { dro_with_metadata_fixture }
 
   before do
     allow(Sdr::Repository).to receive(:status).and_return(version_status)
     allow(Honeybadger).to receive(:notify)
-    allow(Github::ReleaseDownloader).to receive(:new).with(zip_url: github_release.zip_url).and_return(downloader)
+    allow(Github::Downloader).to receive(:new).with(url: github_release.zip_url).and_return(downloader)
     allow(downloader).to receive(:download_to) do |tempfile|
       tempfile.write('fake zip content')
+    end
+    allow(Github::Downloader).to receive(:new).with(url: github_release.message['assets'].first['browser_download_url'])
+                                              .and_return(asset_downloader)
+    allow(asset_downloader).to receive(:download_to) do |tempfile|
+      tempfile.write('fake asset content')
     end
     allow(DepositWorkJob).to receive(:perform_now)
     allow(Sdr::Repository).to receive(:find).with(druid: druid_fixture).and_return(dro_with_metadata_fixture)
@@ -134,10 +140,15 @@ RSpec.describe DepositGithubReleaseJob do
           expect(request_review).to be false
           expect(current_user).to eq(github_repository.user)
           content = Content.find(work_form.content_id)
-          expect(content.content_files.count).to eq(1)
+          expect(content.content_files.count).to eq(2)
           content_file = content.content_files.first
-          expect(content_file.filepath).to eq('v1.0.zip')
+          expect(content_file.filepath).to eq('test4.zip')
           expect(content_file.file.attachment.blob.byte_size).to eq('fake zip content'.bytesize)
+          expect(content_file.mime_type).to eq('application/zip')
+          asset_content_file = content.content_files.second
+          expect(asset_content_file.filepath).to eq('Feb18_2026_collection_report.csv')
+          expect(asset_content_file.file.attachment.blob.byte_size).to eq('fake asset content'.bytesize)
+          expect(asset_content_file.mime_type).to eq('text/csv')
         end
     end
   end

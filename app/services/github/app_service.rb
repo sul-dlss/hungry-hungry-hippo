@@ -6,7 +6,7 @@ module Github
     class RepositoryNotFound < StandardError; end
 
     Repository = Struct.new('Repository', :id, :name, :url, :description, keyword_init: true)
-    Release = Struct.new('Release', :id, :name, :tag, :zip_url, :published_at)
+    Release = Struct.new('Release', :id, :name, :tag, :message, :published_at)
 
     def self.repository?(...)
       new.repository?(...)
@@ -47,7 +47,7 @@ module Github
     # @raise [RepositoryNotFound] if the repository does not exist or is not public
     def releases(repository)
       client.releases(normalized_repository_for(repository)).sort_by(&:published_at).map do |release|
-        Release.new(id: release.id, name: release.name, tag: release.tag_name, zip_url: release.zipball_url,
+        Release.new(id: release.id, name: release.name, tag: release.tag_name, message: release.to_h,
                     published_at: release.published_at)
       end
     rescue Octokit::NotFound, Octokit::InvalidRepository

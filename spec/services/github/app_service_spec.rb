@@ -69,7 +69,7 @@ RSpec.describe Github::AppService, :vcr do
         expect(releases.length).to eq(1)
         expect(releases.first)
           .to have_attributes(id: 186_241_744, name: 'v0.1.0', tag: 'v0.1.0',
-                              zip_url: 'https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/zipball/v0.1.0',
+                              message: hash_including(zipball_url: 'https://api.github.com/repos/sul-dlss/hungry-hungry-hippo/zipball/v0.1.0'),
                               published_at: Time.zone.parse('2024-11-19T16:54:06Z'))
       end
     end

@@ -8,7 +8,7 @@ RSpec.describe PollGithubReleasesJob do
       create(:github_release, release_tag: 'v1.1',
                               release_name: 'Second release', release_id: 2,
                               github_repository: repo,
-                              zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.1',
+                              message: { zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.1' },
                               published_at: 1.day.ago)
     end
   end
@@ -16,19 +16,23 @@ RSpec.describe PollGithubReleasesJob do
 
   before do
     allow(Github::AppService).to receive(:releases)
-      .and_return([
-                    # Before the created_at of the repository, so ignored
-                    Github::AppService::Release.new(id: 1, tag: 'v1.0', name: 'First release',
-                                                    zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.0',
-                                                    published_at: 4.days.ago),
-                    # Already exists in the database, so ignored
-                    Github::AppService::Release.new(id: 2, tag: 'v1.1', name: 'Second release',
-                                                    zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.1',
-                                                    published_at: 1.day.ago),
-                    Github::AppService::Release.new(id: 3, tag: 'v1.2', name: 'Third release',
-                                                    zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.2',
-                                                    published_at: Time.zone.now)
-                  ])
+      .and_return(
+        # rubocop:disable Layout/LineLength
+        [
+          # Before the created_at of the repository, so ignored
+          Github::AppService::Release.new(id: 1, tag: 'v1.0', name: 'First release',
+                                          message: { zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.0' },
+                                          published_at: 4.days.ago),
+          # Already exists in the database, so ignored
+          Github::AppService::Release.new(id: 2, tag: 'v1.1', name: 'Second release',
+                                          message: { zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.1' },
+                                          published_at: 1.day.ago),
+          Github::AppService::Release.new(id: 3, tag: 'v1.2', name: 'Third release',
+                                          message: { zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.2' },
+                                          published_at: Time.zone.now)
+        ]
+        # rubocop:enable Layout/LineLength
+      )
     allow(DepositGithubReleaseJob).to receive(:perform_later)
   end
 
@@ -50,7 +54,7 @@ RSpec.describe PollGithubReleasesJob do
       expect(new_release.attributes.with_indifferent_access).to include(
         release_tag: 'v1.2',
         release_name: 'Third release',
-        zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.2'
+        message: { zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.2' }
       )
       expect(DepositGithubReleaseJob).not_to have_received(:perform_later)
     end
