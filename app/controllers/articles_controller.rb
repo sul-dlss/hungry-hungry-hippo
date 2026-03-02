@@ -27,7 +27,7 @@ class ArticlesController < ApplicationController
     set_license_presenter
 
     if identifier_lookup?
-      # Perform an identifier (DOI/PMID/PMCID) lookup and re-render the form showing the article metadata
+      # Perform an identifier (DOI/PMCID) lookup and re-render the form showing the article metadata
       # (@article_work_form) if we are able to identify a valid DOI (either directly entered by the user
       # or via a lookup to Pubmed).  @article_form.valid? checks if the DOI is present and exists in Crossref.
       set_article_work_form if @article_form.valid?

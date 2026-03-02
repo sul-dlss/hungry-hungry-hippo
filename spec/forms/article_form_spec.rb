@@ -6,10 +6,9 @@ RSpec.describe ArticleForm, type: :form do
   let(:form) { described_class.new(identifier:) }
 
   let(:identifier) { '10.1234/nonexistent' }
-  let(:base_error) { 'You will need to use the "Deposit to this collection" button to deposit this work.' }
-  let(:not_found_error) { "Unable to retrieve metadata for this DOI/PMID/PMCID. #{base_error}" }
-  let(:not_article_error) { "The metadata for this identifier indicates it is not a journal article. #{base_error}" }
-  let(:no_title_error) { "The metadata for this identifier does not include a title. #{base_error}" }
+  let(:not_found_error) { %r{Unable to retrieve metadata for this DOI/PMCID\.} }
+  let(:not_article_error) { /The metadata for this identifier indicates it is not a journal article\./ }
+  let(:no_title_error) { /The metadata for this identifier does not include a title\./ }
 
   describe 'identifier validations' do
     context 'when identifier is not present' do
@@ -76,7 +75,7 @@ RSpec.describe ArticleForm, type: :form do
       end
     end
 
-    context 'when identifier is a PMID that is not found' do
+    context 'when identifier is a PMCID that is not found' do
       let(:identifier) { '12345' }
 
       before do
@@ -89,7 +88,7 @@ RSpec.describe ArticleForm, type: :form do
       end
     end
 
-    context 'when identifier is a PMID that is found and the DOI is then found in CrossRef' do
+    context 'when identifier is a PMCID that is found and the DOI is then found in CrossRef' do
       let(:identifier) { '56789' }
       let(:doi) { '10.10/some-doi' }
 
@@ -103,7 +102,7 @@ RSpec.describe ArticleForm, type: :form do
       end
     end
 
-    context 'when identifier is a PMID that is found but the DOI is not found in CrossRef' do
+    context 'when identifier is a PMCID that is found but the DOI is not found in CrossRef' do
       let(:identifier) { '56789' }
       let(:doi) { '10.10/some-doi' }
 

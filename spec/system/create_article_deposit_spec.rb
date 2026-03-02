@@ -69,7 +69,7 @@ RSpec.describe 'Create an article deposit' do
     # Validate missing DOI submission
     fill_in 'identifier_field', with: not_found_doi
     click_link_or_button('Look up')
-    expect(page).to have_css('.invalid-feedback', text: 'Unable to retrieve metadata for this DOI/PMID/PMCID')
+    expect(page).to have_css('.invalid-feedback', text: 'Unable to retrieve metadata for this DOI/PMCID')
 
     # Deposit without required fields
     fill_in 'identifier_field', with: doi
@@ -147,7 +147,7 @@ RSpec.describe 'Create an article deposit' do
     expect(Ahoy::Event.where_event(Ahoy::Event::ARTICLE_CREATED, work_id: work.id, deposit: true).count).to eq(1)
   end
 
-  it 'looks up a DOI with a PMID', :dropzone do
+  it 'looks up a DOI with a PMCID', :dropzone do
     visit dashboard_path
     click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
 
@@ -158,7 +158,7 @@ RSpec.describe 'Create an article deposit' do
 
     expect(page).to have_css('h1', text: 'Article deposit')
 
-    # Look up DOI via PMID
+    # Look up DOI via PMCID
     fill_in 'identifier_field', with: pmid
     click_link_or_button('Look up')
     expect(page).to have_no_css('.invalid-feedback')

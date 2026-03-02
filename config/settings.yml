@@ -91,7 +91,7 @@ ahoy:
 google_analytics:
   enabled: false
 
-# API to lookup DOI by PMID/PMCID (used for article deposit)
+# API to lookup DOI by PMCID (used for article deposit)
 pubmed:
   url: https://pmc.ncbi.nlm.nih.gov
   email: dlss-infrastructure-team@lists.stanford.edu # passed in the pubmed API request, no API key needed

@@ -19,10 +19,12 @@ RSpec.describe PubmedService do
     {
       email: Settings.pubmed.email,
       format: 'json',
-      ids: search,
+      ids: id,
+      idtype: 'pmcid',
       tool:
     }
   end
+  let(:id) { search }
 
   before do
     stub_request(:get, base_url)
@@ -32,6 +34,7 @@ RSpec.describe PubmedService do
 
   context 'when the search is successful and returns a DOI' do
     let(:search) { 'PMC3531190' }
+    let(:id) { '3531190' }
     let(:doi) { '10.1093/nar/gks1195' }
 
     let(:pubmed_response) do
@@ -88,7 +91,8 @@ RSpec.describe PubmedService do
   end
 
   context 'when the records array is empty' do
-    let(:search) { 'PMC9999999' }
+    let(:search) { 'pmc9999999' }
+    let(:id) { '9999999' }
 
     let(:pubmed_response) do
       {
@@ -110,7 +114,7 @@ RSpec.describe PubmedService do
   end
 
   context 'when the first record does not have a DOI' do
-    let(:search) { 'PMC3531191' }
+    let(:search) { '3531191' }
 
     let(:pubmed_response) do
       {
