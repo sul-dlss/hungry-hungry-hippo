@@ -12,18 +12,18 @@ RSpec.describe Form::RelatedLinksMapper do
           object
             .to_h
             .tap do |obj|
-              obj[:description][:relatedResource] = [
-                {
-                  access: {
-                    url: [{ value: related_links_fixture.first['url'] }]
-                  },
-                  title: [{ value: related_links_fixture.first['text'] }]
+            obj[:description][:relatedResource] = [
+              {
+                access: {
+                  url: [{ value: related_links_fixture.first['url'] }]
                 },
-                {
-                  purl: related_links_fixture.second['url'],
-                  title: [{ value: related_links_fixture.second['text'] }]
-                }
-              ]
+                title: [{ value: related_links_fixture.first['text'] }]
+              },
+              {
+                purl: related_links_fixture.second['url'],
+                title: [{ value: related_links_fixture.second['text'] }]
+              }
+            ]
           end
         )
       end
@@ -43,12 +43,12 @@ RSpec.describe Form::RelatedLinksMapper do
           object
             .to_h
             .tap do |obj|
-              obj[:description][:relatedResource] = [
-                {
-                  identifier: [{ uri: 'https://doi.org/10.1234/5678', type: 'doi' }],
-                  title: [{ value: 'DOI Example' }]
-                }
-              ]
+            obj[:description][:relatedResource] = [
+              {
+                identifier: [{ uri: 'https://doi.org/10.1234/5678', type: 'doi' }],
+                title: [{ value: 'DOI Example' }]
+              }
+            ]
           end
         )
       end
