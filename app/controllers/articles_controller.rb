@@ -104,7 +104,8 @@ class ArticlesController < ApplicationController
       content_id: content.id,
       access: @collection.stanford_access? ? 'stanford' : 'world',
       collection_druid: @collection.druid,
-      license: @article_form.license
+      license: @article_form.license,
+      article_version_identification: @article_form.article_version_identification
     )
     ArticleWorkForm.new(attrs)
   end

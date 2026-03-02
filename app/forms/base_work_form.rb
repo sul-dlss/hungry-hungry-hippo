@@ -5,6 +5,11 @@
 # don't need to know about subclasses.
 class BaseWorkForm < ApplicationForm
   STANFORD_UNIVERSITY = 'Stanford University'
+  ARTICLE_VERSION_IDENTIFICATION_OPTIONS = [
+    'Author submitted version',
+    'Author accepted version',
+    'Final published version of the work'
+  ].freeze
 
   accepts_nested_attributes_for :related_works, :publication_date, :contact_emails, :contributors,
                                 :keywords, :create_date_single, :create_date_range_from, :create_date_range_to
@@ -61,6 +66,10 @@ class BaseWorkForm < ApplicationForm
   attribute :other_work_subtype, :string
   # Other requires a work subtype string
   validates :other_work_subtype, presence: true, if: -> { work_type == WorkType::OTHER }
+
+  # For Articles
+  attribute :article_version_identification, :string
+  validates :article_version_identification, inclusion: { in: ARTICLE_VERSION_IDENTIFICATION_OPTIONS }, allow_nil: true
 
   attribute :access, :string, default: 'world'
   validates :access, inclusion: { in: %w[world stanford] }

@@ -69,4 +69,18 @@ RSpec.describe Cocina::WorkDescriptionMapper, type: :mapping do
       expect(description.contributor.size).to eq(4)
     end
   end
+
+  context 'with a article version identification' do
+    let(:work_form) do
+      work_form_fixture.tap do |form|
+        form.article_version_identification = 'Author accepted version'
+      end
+    end
+
+    it 'maps to cocina' do
+      expect(description.note.find do |note|
+        note.type == 'version identification'
+      end.value).to eq('Author accepted version')
+    end
+  end
 end

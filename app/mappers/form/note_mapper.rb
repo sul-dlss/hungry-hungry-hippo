@@ -5,6 +5,7 @@ module Form
   class NoteMapper
     ABSTRACT_TYPE = 'abstract'
     CITATION_TYPE = 'preferred citation'
+    VERSION_IDENTIFICATION_TYPE = 'version identification'
 
     def self.abstract(cocina_object:)
       new(cocina_object:, type: ABSTRACT_TYPE).call
@@ -12,6 +13,10 @@ module Form
 
     def self.citation(cocina_object:)
       new(cocina_object:, type: CITATION_TYPE).call
+    end
+
+    def self.version_identification(cocina_object:)
+      new(cocina_object:, type: VERSION_IDENTIFICATION_TYPE).call
     end
 
     def initialize(cocina_object:, type:)

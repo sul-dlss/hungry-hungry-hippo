@@ -151,6 +151,10 @@ class WorkPresenter < FormPresenter
     work.is_a?(GithubRepository)
   end
 
+  def article?
+    work.is_a?(Article)
+  end
+
   private
 
   delegate :collection, :created_at, :user, :review_state, :pending_review?, :share_users, to: :work

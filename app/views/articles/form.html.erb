@@ -21,12 +21,14 @@
     <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
   <% end %>
 
-  <%= render 'contents/edit', content: @content, form_id: @article_form.form_id %>
+  <div id="permanent-content" data-turbo-permanent="true">
+    <%= render 'contents/edit', content: @content, form_id: @article_form.form_id %>
 
-  <div id="content-files" class="pane-section">
-    <%= turbo_frame_tag @content, 'show', src: content_path(@content), data: { controller: 'dropzone-files' }, class: 'dropzone-files' do %>
-      <%= render SdrViewComponents::Elements::SpinnerComponent.new %>
-    <% end %>
+    <div id="content-files" class="pane-section">
+      <%= turbo_frame_tag @content, 'show', src: content_path(@content), data: { controller: 'dropzone-files' }, class: 'dropzone-files' do %>
+        <%= render SdrViewComponents::Elements::SpinnerComponent.new %>
+      <% end %>
+    </div>
   </div>
 
   <%= render SdrViewComponents::Elements::HorizontalRuleComponent.new(classes: 'my-5') %>
@@ -36,6 +38,8 @@
     <%= form.hidden_field :content_id %>
     <%= form.hidden_field :form_id %>
     <%= form.hidden_field :last_doi_lookup %>
+
+    <%= render Works::Edit::VersionIdentificationComponent.new(form:) %>
 
     <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter, license_help_url: Settings.article_license_url, show_terms_of_use: false) %>
 

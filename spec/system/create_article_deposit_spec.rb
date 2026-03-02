@@ -31,6 +31,7 @@ RSpec.describe 'Create an article deposit' do
       cocina_params = args[:cocina_object].to_h
       cocina_params[:externalIdentifier] = druid
       cocina_params[:description][:purl] = Sdr::Purl.from_druid(druid:)
+      cocina_params[:description][:note] << { type: 'version identification', value: 'Author accepted version' }
       cocina_params[:structural] = { isMemberOf: [collection_druid_fixture] }
       cocina_params[:administrative] = { hasAdminPolicy: Settings.apo }
       cocina_object = Cocina::Models.build(cocina_params)
@@ -75,6 +76,7 @@ RSpec.describe 'Create an article deposit' do
     fill_in 'identifier_field', with: doi
     click_link_or_button('Deposit')
     expect(page).to have_css('.invalid-feedback', text: 'must have at least one file')
+    expect(page).to have_css('.invalid-feedback', text: "can't be blank")
     expect(page).to have_css('.invalid-feedback', text: 'must be accepted')
     expect(page).to have_css('.invalid-feedback', text: 'Look up before editing or depositing')
 
@@ -90,6 +92,9 @@ RSpec.describe 'Create an article deposit' do
     # Adding a file
     find('.dropzone').drop('spec/fixtures/files/hippo.png')
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
+
+    # Setting version description
+    select('Author accepted version', from: 'Which version are you depositing?')
 
     # Setting license
     expect(page).to have_select('License', selected: 'CC-BY-4.0 Attribution International')
@@ -122,6 +127,7 @@ RSpec.describe 'Create an article deposit' do
     within('#work-type-table') do
       expect(page).to have_css('td', text: 'Text')
       expect(page).to have_css('td', text: 'Article')
+      expect(page).to have_css('td', text: 'Author accepted version')
     end
 
     # Access settings
@@ -149,6 +155,7 @@ RSpec.describe 'Create an article deposit' do
 
   it 'looks up a DOI with a PMCID', :dropzone do
     visit dashboard_path
+
     click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
 
     # Breadcrumb
