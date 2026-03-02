@@ -259,3 +259,11 @@ All Github functionality uses public methods of the Github API.
 In development, no credentials are used for the API. In production, an access token is generated for the sul-dlss installation of the Stanford Digital Library Github App. (There are separare Github Apps and installations for each environment.) This approach provides greater API rate limits than using no credentials.
 
 Note that the private key PEM file for the Github App (`Settings.github.private_key`) must be base 64 encoded.
+
+### Workflow
+1. User creates a GithubRepository Work. This results in an SDR object in the draft (open) state. The GithubRepository records information about the Github repository and the `github_deposit_enabled` flag is set to `true`.
+2. The user creates a release for the repository on Github.
+3. The `PollGithubReleaseJob` queries the Github API to get the releases for the repository. This can be triggered manually by a user or according to a schedule. When found, a new GithubRelease is created for the GithubRepository.
+4. On a schedule, the `DepositGithubReleaseJob` is invoked for each incomplete GithubRelease. If the GithubRelease is available for deposit (see the code for checks), the release zipball and assets are downloaded, and `DepositWorkJob` is invoked to perform the deposit.
+
+Note that the state of a GithubRelease is tracked by the `status` and `status_details` fields.
