@@ -14,3 +14,6 @@ article_deposit:
 
 gemini_api:
   key: 'fake-gemini-api-key'
+
+extract_abstracts:
+  enabled: true

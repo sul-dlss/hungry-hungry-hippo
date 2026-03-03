@@ -3,5 +3,19 @@
   <% component.with_row(label: 'Title', values: [title]) %>
   <% component.with_row(label: 'Authors', values: [authors]) %>
   <% component.with_row(label: 'Publication date', values: [publication_date]) %>
-  <% component.with_row(label: 'Abstract', values: [abstract]) %>
+  <% if show_crossref_abstract? %>
+    <% component.with_row(label: 'Abstract', values: [abstract]) %>
+  <% else %>
+    <% component.with_row(label: 'Abstract') do |row_component| %>
+      <%= row_component.with_cell do %>
+        <% if extracted_abstract.present? %>
+          <%= helpers.turbo_frame_tag 'extract-abstract' do %>
+             <%= render Articles::Edit::ExtractedAbstractComponent.new(form:, abstract: extracted_abstract) %>
+          <% end %>
+        <% else %>
+          <%= helpers.turbo_frame_tag 'extract-abstract', src: new_abstracts_path(content_id:) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>

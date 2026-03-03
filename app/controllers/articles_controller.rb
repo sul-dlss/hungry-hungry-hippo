@@ -123,11 +123,13 @@ class ArticlesController < ApplicationController
       license: @article_form.license,
       article_version_identification: @article_form.article_version_identification
     )
+    attrs[:abstract] ||= @article_form.extracted_abstract
     ArticleWorkForm.new(attrs)
   end
 
   def set_article_work_form
-    @article_work_form = ArticleWorkForm.new(CrossrefService.call(doi: @article_form.doi))
+    attrs = CrossrefService.call(doi: @article_form.doi).merge(content_id: @content.id)
+    @article_work_form = ArticleWorkForm.new(attrs)
   end
 
   def create_work

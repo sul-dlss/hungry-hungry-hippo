@@ -108,6 +108,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   resource :contacts, only: %i[new create]
 
+  resource :abstracts, only: %i[new create] do
+    collection do
+      get 'clear'
+    end
+  end
+
   get 'accounts/search', to: 'accounts#search'
   get 'accounts/search_user', to: 'accounts#search_user'
   get 'affiliations/search', to: 'affiliations#search'
