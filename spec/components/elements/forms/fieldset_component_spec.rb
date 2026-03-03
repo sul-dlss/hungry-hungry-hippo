@@ -42,4 +42,12 @@ RSpec.describe Elements::Forms::FieldsetComponent, type: :component do
       expect(page).to have_css('a', text: 'Help')
     end
   end
+
+  context 'when the fieldset has help_text' do
+    it 'renders the fieldset with help_text' do
+      render_inline(described_class.new(label: 'My Fieldset', help_text: 'This is some help text.'))
+
+      expect(page).to have_css('p', text: 'This is some help text.')
+    end
+  end
 end

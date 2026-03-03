@@ -65,7 +65,7 @@
         <% pane_component.with_help do %>
           <p class="mb-0">
             <ul>
-              <li>Be sure you have completed all the required sections.</li>
+              <li>Information you provided in this form will be included when releases are archived from GitHub.</li>
               <% if @work_form.agree_to_terms %><li>You have accepted the <a href="#" data-bs-toggle="modal" data-bs-target="#tod-modal">Terms of Deposit</a>.</li><% end %>
             </ul>
           </p>
@@ -76,7 +76,11 @@
 
         <%# For subsequent deposits, user can choose whether GitHub deposit is enabled. For initial, it will be enabled by default. %>
         <% if !@work_presenter.github_deposit_never_enabled? %>
-          <%= render Elements::Forms::FieldsetComponent.new(label: 'Deposit future GitHub releases?', classes: 'row', legend_classes: 'col-md-5') do %>
+          <%= render Elements::Forms::FieldsetComponent.new(
+                label: 'Do you want to automatically deposit a new version with each GitHub release?',
+                help_text: 'You can always return to this form and change this selection if needed.'
+              ) do %>
+            <div class="row ms-0">
             <div class="form-check col-md-2">
               <%= form.radio_button :github_deposit_enabled, true, class: 'form-check-input' %>
               <%= form.label :github_deposit_enabled_true, 'Yes', class: 'form-check-label' %>
@@ -84,6 +88,7 @@
             <div class="form-check col-md-2">
               <%= form.radio_button :github_deposit_enabled, false, class: 'form-check-input' %>
               <%= form.label :github_deposit_enabled_false, 'No', class: 'form-check-label' %>
+            </div>
             </div>
           <% end %>
         <% end %>
