@@ -6,7 +6,7 @@
   <%= render Edit::TabForm::TabListComponent.new(model: @work_form, form_id:, hidden_fields: %i[lock version collection_druid content_id creation_date deposit_publication_date apo copyright form_id]) do |component| %>
     <% component.with_tab(label: t('works.edit.panes.files.tab_label'), tab_name: :files, active_tab_name:, mark_required: true) %>
     <% component.with_tab(label: t('works.edit.panes.title.tab_label'), tab_name: :title, active_tab_name:, mark_required: true) %>
-    <% component.with_tab(label: t('works.edit.panes.contributors.tab_label'), tab_name: :contributors, active_tab_name:) %>
+    <% component.with_tab(label: t('works.edit.panes.contributors.tab_label'), tab_name: :contributors, active_tab_name:, mark_required: true) %>
     <% component.with_tab(label: t('works.edit.panes.abstract.tab_label'), tab_name: :abstract, active_tab_name:) %>
     <% component.with_tab(label: t('works.edit.panes.types.tab_label'), tab_name: :types, active_tab_name:, mark_required: true) %>
     <% component.with_tab(label: t('works.edit.panes.access.tab_label'), tab_name: :access, active_tab_name:, mark_required: true) %>
@@ -35,7 +35,8 @@
         <%= render Works::Edit::TitleComponent.new(form:, work_form: @work_form, mark_contact_emails_required: false) %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text'), tooltip: t('works.edit.panes.contributors.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+      <% component.with_work_pane(tab_name: :contributors, label: t('works.edit.panes.contributors.label'), help_text: t('works.edit.panes.contributors.help_text'), tooltip: t('works.edit.panes.contributors.tooltip_html'),
+                                  form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>
         <%= render Works::Edit::ContributorsComponent.new(form:) %>
       <% end %>
 
