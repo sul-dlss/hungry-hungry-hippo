@@ -31,6 +31,10 @@ module Works
       def required_subtypes
         @collection.work_subtypes
       end
+
+      def legend_classes
+        'mb-0'
+      end
     end
   end
 end
