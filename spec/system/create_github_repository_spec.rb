@@ -26,15 +26,12 @@ RSpec.describe 'Create a Github repository and work deposit' do
       cocina_object = Cocina::Models.build(cocina_params)
       @registered_cocina_object = Cocina::Models.with_metadata(cocina_object, 'abc123')
     end
-    allow(Sdr::Repository).to receive(:accession)
     allow(Sdr::Repository).to receive(:find_latest_user_version).with(druid:).and_return(nil)
     allow(Sdr::Repository).to receive(:check_lock)
 
     # Stubbing out for edit form
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
-    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:first_draft_version_status),
-                                                                       build(:draft_version_status),
-                                                                       build(:first_accessioning_version_status))
+    allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:first_draft_version_status))
     allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
     allow(Sdr::Event).to receive(:list).and_return([])
 
@@ -44,7 +41,6 @@ RSpec.describe 'Create a Github repository and work deposit' do
     allow(Sdr::Repository).to receive(:update) do |args|
       @updated_cocina_object = args[:cocina_object]
     end
-    allow(Sdr::Repository).to receive(:accession)
 
     create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture, depositors: [user],
                         github_deposit_enabled: true)
@@ -155,8 +151,8 @@ RSpec.describe 'Create a Github repository and work deposit' do
     # Waiting page may be too fast to catch so not testing.
     # On show page
     expect(page).to have_css('h1', text: 'sul-dlss/hungry-hungry-hippo')
-    expect(page).to have_css('.status', text: 'Depositing')
-    expect(page).to have_css('.alert-success', text: 'Deposit successfully submitted')
+    expect(page).to have_css('.alert-note', text: 'One more step to complete deposit - Go to GitHub ' \
+                                                  'to create a release for this GitHub repository.')
     within('table#license-table') do
       expect(page).to have_css('tr', text: 'License')
       expect(page).to have_css('td', text: 'CC-BY-4.0 Attribution International')
@@ -165,7 +161,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
       expect(page).to have_css('tr', text: 'Contact emails')
       expect(page).to have_css('td', text: user.email_address)
     end
-    expect(page).to have_no_link('Edit or deposit')
+    expect(page).to have_link('Edit or deposit')
 
     # Ahoy events are created
     work = GithubRepository.find_by(druid:)

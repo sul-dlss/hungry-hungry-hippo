@@ -1,0 +1,9 @@
+<% if alert? %>
+  <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :note,
+                                                             data: { turbo_permanent: true }, id: 'depositing-github-note') do %>
+    One more step to complete deposit - <%= link_to 'Go to GitHub', github_releases_path %> to create a release for this GitHub repository.
+  <% end %>
+<% else %>
+  <%# This is so that when the page morphs, the alert is permanent. %>
+  <div id="depositing-github-note" data-turbo-permanent="true"></div>
+<% end %>

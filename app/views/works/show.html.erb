@@ -18,6 +18,7 @@
 <%= render Works::Show::ReviewRejectedComponent.new(work: @work) %>
 <%= render Works::Show::PendingReviewComponent.new(work_presenter: @work_presenter) %>
 <%= render Works::Show::DepositingComponent.new(work_presenter: @work_presenter) %>
+<%= render Works::Show::DepositingGithubComponent.new(work_presenter: @work_presenter) %>
 <%= render Works::Show::HeaderComponent.new(presenter: @work_presenter) %>
 
 <%= render Works::Show::GithubPollButtonComponent.new(work: @work, classes: 'mb-3') %>
