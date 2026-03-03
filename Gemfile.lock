@@ -243,6 +243,7 @@ GEM
     erubi (1.13.1)
     et-orbi (1.4.0)
       tzinfo
+    event_stream_parser (1.0.0)
     factory_bot (6.5.6)
       activesupport (>= 6.1.0)
     factory_bot_rails (6.5.1)
@@ -254,6 +255,8 @@ GEM
       logger
     faraday-follow_redirects (0.5.0)
       faraday (>= 1, < 3)
+    faraday-multipart (1.2.0)
+      multipart-post (~> 2.0)
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
     faraday-retry (2.4.0)
@@ -377,6 +380,7 @@ GEM
       nokogiri-happymapper
     msgpack (1.8.0)
     multi_json (1.19.1)
+    multipart-post (2.4.1)
     net-http (0.9.1)
       uri (>= 0.11.1)
     net-imap (0.6.3)
@@ -551,6 +555,17 @@ GEM
       rubocop-rspec (~> 3.5)
     ruby-next-core (1.2.0)
     ruby-progressbar (1.13.0)
+    ruby_llm (1.12.1)
+      base64
+      event_stream_parser (~> 1)
+      faraday (>= 2.0)
+      faraday-multipart (>= 1)
+      faraday-net_http (>= 1)
+      faraday-retry (>= 2.0)
+      marcel (~> 1)
+      ruby_llm-schema (~> 0)
+      zeitwerk (~> 2)
+    ruby_llm-schema (0.3.0)
     rubyzip (3.2.2)
     safely_block (0.5.0)
     sawyer (0.9.3)
@@ -730,6 +745,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-rspec_rails
+  ruby_llm
   sdr_view_components
   selenium-webdriver
   simplecov

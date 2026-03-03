@@ -69,6 +69,7 @@ gem 'okcomputer'
 gem 'parallel' # Used for importing. Can be removed when importing is done.
 gem 'preservation-client'
 gem 'rack-sanitizer'
+gem 'ruby_llm' # For extracting abstracts
 gem 'sdr_view_components'
 gem 'state_machines-activerecord'
 gem 'validate_url'
