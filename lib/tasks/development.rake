@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'benchmark'
+
 namespace :development do
   desc 'Complete accession workflow for a work or collection'
   task :accession, [:druid] => :environment do |_t, args|
@@ -53,6 +55,16 @@ namespace :development do
         next
       end
       puts "Work #{work.id} with druid #{work.druid} will roundtrip"
+    end
+  end
+
+  task extract_abstracts: :environment do
+    Parallel.each(Dir.glob('articles/*.pdf'), in_processes: 4) do |filepath|
+      abstract = nil
+      realtime = Benchmark.realtime do
+        abstract = ExtractAbstractService.call(filepath:)
+      end
+      puts "Abstract for #{filepath} (#{realtime.round(1)} seconds):\n#{abstract}\n\n"
     end
   end
   # rubocop:enable Metrics/BlockLength

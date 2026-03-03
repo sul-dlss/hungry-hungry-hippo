@@ -66,7 +66,7 @@ gem 'mais_person_client'
 gem 'marcel' # For MIME type detection
 gem 'octokit' # GitHub API client
 gem 'okcomputer'
-gem 'parallel' # Used for importing. Can be removed when importing is done.
+gem 'parallel' # Used for abstract extraction testing.
 gem 'preservation-client'
 gem 'rack-sanitizer'
 gem 'ruby_llm' # For extracting abstracts
