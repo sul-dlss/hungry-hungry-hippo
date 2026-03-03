@@ -267,3 +267,8 @@ Note that the private key PEM file for the Github App (`Settings.github.private_
 4. On a schedule, the `DepositGithubReleaseJob` is invoked for each incomplete GithubRelease. If the GithubRelease is available for deposit (see the code for checks), the release zipball and assets are downloaded, and `DepositWorkJob` is invoked to perform the deposit.
 
 Note that the state of a GithubRelease is tracked by the `status` and `status_details` fields.
+
+## Extracting Abstracts with LLM
+When an abstract cannot be retrieved from CrossRef for an article, the user has the option of attempting to extract the abstract using an LLM.
+
+To support development, abstracts can be extracted from a set of PDFs placed in `articles/` with: `bin/rake development:extract_abstracts`.
