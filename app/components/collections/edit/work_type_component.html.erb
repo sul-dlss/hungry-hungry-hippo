@@ -1,8 +1,6 @@
 <div data-controller="work-type" data-work-type-tab-error-outlet=".tab-error">
   <div class="pane-section">
-    <%= render Elements::Forms::FieldsetComponent.new(label: t('collections.edit.fields.work_type.label'), tooltip: t('collections.edit.fields.work_type.tooltip_html')) do %>
-    <p class="mb-3"><%= type_help_text %></p>
-
+    <%= render Elements::Forms::FieldsetComponent.new(label: t('collections.edit.fields.work_type.label'), tooltip: t('collections.edit.fields.work_type.tooltip_html'), help_text: type_help_text) do %>
       <div class="types-container">
         <%= render Elements::Forms::InputCollectionRadioButtonsComponent.new(form:, field_name: :work_type, input_collection:, value_method: :value, input_data: { work_type_target: 'workTypeRadio', action: 'work-type#showSubtypes click->tooltips#hideAll' }) %>
       </div>
