@@ -16,7 +16,6 @@ RSpec.describe Works::Show::DepositingGithubComponent, type: :component do
 
       expect(page).to have_css('.alert', text: 'One more step to complete deposit - ' \
                                                'Go to GitHub to create a release for this GitHub repository.')
-      expect(page).to have_css('#depositing-github-note[data-turbo-permanent]')
     end
   end
 
@@ -28,7 +27,6 @@ RSpec.describe Works::Show::DepositingGithubComponent, type: :component do
 
       expect(page).to have_no_css('.alert', text: 'One more step to complete deposit - ' \
                                                   'Go to GitHub to create a release for this GitHub repository.')
-      expect(page).to have_css('#depositing-github-note[data-turbo-permanent]')
     end
   end
 end

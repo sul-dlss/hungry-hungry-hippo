@@ -9,7 +9,7 @@ module Works
         super()
       end
 
-      def alert?
+      def render?
         @work_presenter.github_repository? && @work_presenter.version_status.first_draft?
       end
 
