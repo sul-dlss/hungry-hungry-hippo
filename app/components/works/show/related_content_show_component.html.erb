@@ -4,7 +4,7 @@
     <% component.with_row(label: 'Related published work') do |row_component| %>
       <% row_component.with_cell do %>
         <p class="my-0">
-          <%= related_work %>
+          <%= label_for(related_work) %>
         </p>
         <% if related_work.relationship %>
           <p class="my-0">
