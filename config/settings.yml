@@ -123,3 +123,6 @@ person_api:
   url: 'https://registry.stanford.edu'
   key: 'fake-key'  # Base64 encoded; actual values from vault/puppet
   cert: 'fake-cert'  # Base64 encoded; actual values from vault/puppet
+
+gemini_api:
+  key: ~
