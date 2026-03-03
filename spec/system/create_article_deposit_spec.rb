@@ -66,6 +66,9 @@ RSpec.describe 'Create an article deposit' do
     fill_in 'identifier_field', with: not_found_doi
     click_link_or_button('Look up')
     expect(page).to have_css('.invalid-feedback', text: 'Unable to retrieve metadata for this DOI/PMCID')
+    expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_NOT_FOUND,
+                                   identifier: not_found_doi,
+                                   identifier_type: 'DOI').count).to eq(1)
 
     # Deposit without required fields
     fill_in 'identifier_field', with: doi
@@ -78,6 +81,9 @@ RSpec.describe 'Create an article deposit' do
     # Lookup
     click_link_or_button('Look up')
     expect(page).to have_no_css('.invalid-feedback')
+    expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_SUCCESS,
+                                   identifier: doi,
+                                   identifier_type: 'DOI').count).to eq(1)
 
     within('#article-table') do
       expect(page).to have_css('th', text: 'Title')
@@ -178,12 +184,72 @@ RSpec.describe 'Create an article deposit' do
       fill_in 'identifier_field', with: pmid
       click_link_or_button('Look up')
       expect(page).to have_no_css('.invalid-feedback')
+      expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_SUCCESS,
+                                     identifier: pmid,
+                                     identifier_type: 'PMCID').count).to eq(1)
 
       within('#article-table') do
         expect(page).to have_css('th', text: 'DOI')
         expect(page).to have_css('td', text: "https://doi.org/#{doi}")
         expect(page).to have_css('th', text: 'Title')
         expect(page).to have_css('td', text: pubmed_article_title)
+      end
+    end
+  end
+
+  context 'with a DOI' do
+    let(:doi) { '10.1073/pnas.2513219122' }
+
+    context 'with metadata that indicates it is not a journal article' do
+      before do
+        allow(CrossrefService).to receive(:call).with(doi:).and_raise(CrossrefService::NotJournalArticle)
+      end
+
+      it 'alerts that the DOI is not a journal article', :dropzone do
+        visit dashboard_path
+        click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
+
+        # Breadcrumb
+        expect(page).to have_link('Dashboard', href: dashboard_path)
+        expect(page).to have_link(collection_title_fixture, href: collection_path(collection_druid_fixture))
+        expect(page).to have_css('.breadcrumb-item', text: 'Article deposit')
+
+        expect(page).to have_css('h1', text: 'Article deposit')
+
+        # Look up DOI via PMID
+        fill_in 'identifier_field', with: doi
+        click_link_or_button('Look up')
+        expect(page).to have_css('.invalid-feedback',
+                                 text: 'The metadata for this identifier indicates it is not a journal article.')
+        expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_NOT_ARTICLE,
+                                       identifier: doi,
+                                       identifier_type: 'DOI').count).to eq(1)
+      end
+    end
+
+    context 'with metadata that is incomplete' do
+      before do
+        allow(CrossrefService).to receive(:call).with(doi:).and_return({ title: title_fixture })
+      end
+
+      it 'alerts that the DOI is not a journal article', :dropzone do
+        visit dashboard_path
+        click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
+
+        # Breadcrumb
+        expect(page).to have_link('Dashboard', href: dashboard_path)
+        expect(page).to have_link(collection_title_fixture, href: collection_path(collection_druid_fixture))
+        expect(page).to have_css('.breadcrumb-item', text: 'Article deposit')
+
+        expect(page).to have_css('h1', text: 'Article deposit')
+
+        # Look up DOI via PMID
+        fill_in 'identifier_field', with: doi
+        click_link_or_button('Look up')
+        expect(page).to have_css('.invalid-feedback', text: 'The metadata for this identifier is incomplete.')
+        expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_WITH_INCOMPLETE_METADATA,
+                                       identifier: doi,
+                                       identifier_type: 'DOI').count).to eq(1)
       end
     end
   end

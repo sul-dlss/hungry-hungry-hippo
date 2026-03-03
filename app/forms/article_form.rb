@@ -35,14 +35,7 @@ class ArticleForm < ApplicationForm
   before_validation do
     if identifier.present?
       identifier.strip!
-
-      # already looks like a DOI? no need to do an extra lookup; else lookup in Pubmed
-      # DOI identification could be more robust if needed using regex, e.g. https://www.crossref.org/blog/dois-and-matching-regular-expressions/
-      self.doi = if identifier.include?('/')
-                   identifier
-                 else
-                   PubmedService.call(search: identifier)
-                 end
+      set_doi
       results = CrossrefService.call(doi:)
       @doi_has_complete_metadata = results[:title].present? && results[:contributors_attributes].present?
       @doi_found = true
@@ -53,6 +46,16 @@ class ArticleForm < ApplicationForm
   rescue CrossrefService::NotJournalArticle
     @doi_found = true
     @doi_journal_article = false
+  end
+
+  # already looks like a DOI? no need to do an extra lookup; else lookup in Pubmed
+  # DOI identification could be more robust if needed using regex, e.g. https://www.crossref.org/blog/dois-and-matching-regular-expressions/
+  def set_doi
+    self.doi = doi_identifier? ? identifier : PubmedService.call(search: identifier)
+  end
+
+  def doi_identifier?
+    identifier.include?('/')
   end
 
   def doi_found?
