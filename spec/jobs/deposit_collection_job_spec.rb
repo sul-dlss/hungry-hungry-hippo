@@ -326,6 +326,13 @@ RSpec.describe DepositCollectionJob do
           'role_type' => 'organization',
           'organization_role' => 'research_group',
           'stanford_degree_granting_institution' => false
+        },
+        {
+          'organization_name' => 'Stanford University',
+          'role_type' => 'organization',
+          'organization_role' => 'degree_granting_institution',
+          'stanford_degree_granting_institution' => true,
+          'suborganization_name' => ''
         }
       ]
     end
@@ -343,7 +350,7 @@ RSpec.describe DepositCollectionJob do
 
       expect(Contributor.exists?(existing_contributor.id)).to be false
 
-      expect(collection.reload.contributors.count).to eq(3)
+      expect(collection.reload.contributors.count).to eq(4)
 
       person_contributor = collection.contributors[0]
       expect(person_contributor.first_name).to eq('Jonathan')
@@ -368,6 +375,12 @@ RSpec.describe DepositCollectionJob do
       expect(organization_contributor.organization_name).to eq('Massachusetts Institute of Technology')
       expect(organization_contributor.role_type).to eq('organization')
       expect(organization_contributor.role).to eq('research_group')
+
+      stanford_contributor_without_suborg = collection.contributors[3]
+      expect(stanford_contributor_without_suborg.organization_name).to eq('Stanford University')
+      expect(stanford_contributor_without_suborg.role_type).to eq('organization')
+      expect(stanford_contributor_without_suborg.role).to eq('degree_granting_institution')
+      expect(stanford_contributor_without_suborg.suborganization_name).to be_nil
     end
   end
 
