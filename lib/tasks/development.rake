@@ -62,9 +62,11 @@ namespace :development do
     Parallel.each(Dir.glob('articles/*.pdf'), in_processes: 4) do |filepath|
       abstract = nil
       realtime = Benchmark.realtime do
-        abstract = ExtractAbstractService.call(filepath:)
+        abstract = ExtractAbstractService.call(filepath:, raise_on_error: true)
+      rescue StandardError => e
+        abstract = "Error extracting abstract: #{e.message}"
       end
-      puts "Abstract for #{filepath} (#{realtime.round(1)} seconds):\n#{abstract}\n\n"
+      puts "Abstract for #{filepath} (#{realtime.round(1)} seconds):\n#{abstract || 'Not extracted.'}\n\n"
     end
   end
   # rubocop:enable Metrics/BlockLength
