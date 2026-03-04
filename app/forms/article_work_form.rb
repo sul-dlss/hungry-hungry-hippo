@@ -2,6 +2,8 @@
 
 # Form for an Article work
 class ArticleWorkForm < BaseWorkForm
+  include FilesRequired
+
   before_validation do
     # Removes blank keywords.
     # This has the effect of not requiring any keywords.
