@@ -363,7 +363,7 @@ en:
           tab_label: 'Abstract and keywords'
           label: 'Describe your deposit'
           help_text: >-
-            Enter a summary statement (up to 5,000 characters) describing the work that you are depositing
+            Enter a summary statement (up to 5,000 characters) describing the work that you are depositing.
             A detailed statement may improve the discovery of your work in web searches.
             You must also enter at least one keyword.
         access:
