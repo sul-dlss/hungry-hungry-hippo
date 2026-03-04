@@ -12,9 +12,5 @@ module Collections
     def level
       :h3
     end
-
-    def classes
-      'h4'
-    end
   end
 end

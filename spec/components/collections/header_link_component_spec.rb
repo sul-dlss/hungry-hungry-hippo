@@ -11,7 +11,7 @@ RSpec.describe Collections::HeaderLinkComponent, type: :component do
     it 'renders the collections header without a link' do
       render_inline(described_class.new(collection:))
 
-      expect(page).to have_css('h3.h4', text: collection.title)
+      expect(page).to have_css('h3', text: collection.title)
       expect(page).to have_no_css('a')
     end
   end
@@ -22,7 +22,7 @@ RSpec.describe Collections::HeaderLinkComponent, type: :component do
     it 'renders the collections header with a link' do
       render_inline(described_class.new(collection:))
 
-      expect(page).to have_css('h3.h4', text: collection.title)
+      expect(page).to have_css('h3', text: collection.title)
       expect(page).to have_css('a')
     end
   end
