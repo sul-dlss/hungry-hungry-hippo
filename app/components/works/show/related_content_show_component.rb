@@ -33,6 +33,10 @@ module Works
       rescue URI::InvalidURIError, URI::BadURIError
         related_work
       end
+
+      def label
+        'Related published work'
+      end
     end
   end
 end
