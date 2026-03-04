@@ -344,6 +344,7 @@ en:
             Choose terms from this list to further describe the type of work you are depositing. Click "See more subtype options" for additional terms. An entry here is only required if you have selected "Mixed Materials," "Music," or  "Other" above.
         version_identification:
           label: 'Which version are you depositing?'
+          validation: 'selection required'
       buttons:
         globus_deposit_files: 'Use Globus to transfer files'
       messages:

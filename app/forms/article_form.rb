@@ -24,7 +24,9 @@ class ArticleForm < ApplicationForm
   validates :license, presence: true, on: :deposit
 
   attribute :article_version_identification, :string
-  validates :article_version_identification, presence: true, on: :deposit
+  validates :article_version_identification,
+            presence: { message: I18n.t('works.edit.fields.version_identification.validation') },
+            on: :deposit
 
   attribute :collection_druid, :string
   attribute :content_id, :integer
