@@ -3,7 +3,7 @@
 # Controller for handling abstract extraction from article files.
 class AbstractsController < ApplicationController
   skip_verify_authorized only: %i[new clear]
-  before_action :set_content_id
+  before_action :set_content_id, :set_doi
   layout false
 
   def new; end
@@ -20,9 +20,12 @@ class AbstractsController < ApplicationController
     end
 
     @abstract = ExtractAbstractService.call(filepath:)
+    track_abstract_extraction
   end
 
-  def clear; end
+  def clear
+    ahoy.track Ahoy::Event::EXTRACTED_ABSTRACT_CLEARED, doi: @doi
+  end
 
   private
 
@@ -35,5 +38,17 @@ class AbstractsController < ApplicationController
 
   def set_content_id
     @content_id = params[:content_id]
+  end
+
+  def set_doi
+    @doi = params[:doi]
+  end
+
+  def track_abstract_extraction
+    if @abstract.present?
+      ahoy.track Ahoy::Event::ABSTRACT_EXTRACTED_SUCCESS, doi: @doi, abstract: @abstract
+    else
+      ahoy.track Ahoy::Event::ABSTRACT_EXTRACTED_FAILED, doi: @doi
+    end
   end
 end

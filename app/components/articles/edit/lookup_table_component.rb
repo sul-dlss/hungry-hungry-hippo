@@ -47,6 +47,10 @@ module Articles
         abstract.present? || !Settings.extract_abstracts.enabled
       end
 
+      def doi_identifier
+        DoiSupport.identifier(doi)
+      end
+
       private
 
       def formatted_contributor(contributor)

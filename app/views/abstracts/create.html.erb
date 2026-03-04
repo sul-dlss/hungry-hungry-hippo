@@ -1,7 +1,7 @@
 <%= form_with(model: ArticleForm.new) do |form| %>
   <%= turbo_frame_tag 'extract-abstract' do %>
     <% if @abstract.present? %>
-      <%= render Articles::Edit::ExtractedAbstractComponent.new(form:, abstract: @abstract) %>
+      <%= render Articles::Edit::ExtractedAbstractComponent.new(form:, abstract: @abstract, doi: @doi) %>
     <% else %>
       <div class="invalid-feedback is-invalid d-block">
           We were not able to extract your abstract. If you would like to enter an abstract, click "Edit before depositing" below.

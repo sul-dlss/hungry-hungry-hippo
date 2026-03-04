@@ -106,7 +106,7 @@ RSpec.describe Articles::Edit::LookupTableComponent, type: :component do
       rows = table.all('tr')
 
       expect(rows[4]).to have_css('th', text: 'Abstract')
-      expect(rows[4]).to have_css('turbo-frame#extract-abstract[src="/abstracts/new"]')
+      expect(rows[4]).to have_css('turbo-frame#extract-abstract[src="/abstracts/new?doi=10.10%2Fdoi"]')
     end
   end
 end

@@ -47,7 +47,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
     it 'creates and deposits an article', :dropzone do
       visit dashboard_path
 
-      click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
+      click_link_or_button('Deposit article by DOI, PMCID')
 
       expect(page).to have_css('h1', text: 'Article deposit')
 
@@ -90,6 +90,13 @@ RSpec.describe 'Create an article deposit using abstract extract' do
       within('#description-table') do
         expect(page).to have_css('td', text: abstract)
       end
+
+      expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_SUCCESS,
+                                     identifier: doi,
+                                     identifier_type: 'DOI').count).to eq(1)
+      expect(Ahoy::Event.where_event(Ahoy::Event::ABSTRACT_EXTRACTED_SUCCESS,
+                                     doi:,
+                                     abstract:).count).to eq(1)
     end
   end
 
@@ -101,7 +108,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
     it 'shows an error message' do
       visit dashboard_path
 
-      click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
+      click_link_or_button('Deposit article by DOI, PMCID')
 
       expect(page).to have_css('h1', text: 'Article deposit')
 
@@ -114,6 +121,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
       click_link_or_button('Get abstract from file using AI')
       expect(page).to have_css('.invalid-feedback', text: 'We were not able to extract your abstract.')
       expect(page).to have_no_button('Get abstract from file using AI')
+      expect(Ahoy::Event.where_event(Ahoy::Event::ABSTRACT_EXTRACTED_FAILED, doi:).count).to eq(1)
     end
   end
 
@@ -121,7 +129,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
     it 'creates and deposits an article without the abstract', :dropzone do
       visit dashboard_path
 
-      click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
+      click_link_or_button('Deposit article by DOI, PMCID')
 
       expect(page).to have_css('h1', text: 'Article deposit')
 
@@ -157,6 +165,8 @@ RSpec.describe 'Create an article deposit using abstract extract' do
       within('#description-table') do
         expect(page).to have_no_css('td', text: abstract)
       end
+
+      expect(Ahoy::Event.where_event(Ahoy::Event::EXTRACTED_ABSTRACT_CLEARED, doi:).count).to eq(1)
     end
   end
 end

@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Articles::Edit::ExtractedAbstractComponent, type: :component do
-  let(:component) { described_class.new(abstract:, form:) }
+  let(:component) { described_class.new(abstract:, form:, doi:) }
+  let(:doi) { '10.1234/example.doi' }
 
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, ArticleForm.new, vc_test_view_context, {}) }
 
@@ -16,7 +17,7 @@ RSpec.describe Articles::Edit::ExtractedAbstractComponent, type: :component do
       expect(page).to have_field('extracted_abstract', with: abstract_fixture, type: 'hidden')
       expect(page).to have_css('p', text: abstract_fixture)
       expect(page).to have_css('p', text: 'We used AI to retrieve this abstract.')
-      expect(page).to have_link('Clear abstract', href: '/abstracts/clear')
+      expect(page).to have_link('Clear abstract', href: '/abstracts/clear?doi=10.1234%2Fexample.doi')
     end
   end
 

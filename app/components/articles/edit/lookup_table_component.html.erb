@@ -10,10 +10,10 @@
       <%= row_component.with_cell do %>
         <% if extracted_abstract.present? %>
           <%= helpers.turbo_frame_tag 'extract-abstract' do %>
-             <%= render Articles::Edit::ExtractedAbstractComponent.new(form:, abstract: extracted_abstract) %>
+             <%= render Articles::Edit::ExtractedAbstractComponent.new(form:, abstract: extracted_abstract, doi: doi_identifier) %>
           <% end %>
         <% else %>
-          <%= helpers.turbo_frame_tag 'extract-abstract', src: new_abstracts_path(content_id:) %>
+          <%= helpers.turbo_frame_tag 'extract-abstract', src: new_abstracts_path(content_id:, doi: doi_identifier) %>
         <% end %>
       <% end %>
     <% end %>
