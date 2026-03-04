@@ -1,5 +1,5 @@
 <div class="mb-5">
-  <%= render Edit::LabelComponent.new(label_text: 'Communication preferences for Managers and Depositors', mark_required: true) %>
+  <%= render Edit::LabelComponent.new(label_text: 'Communication preferences for Managers and Depositors') %>
   <%= render Elements::Forms::CheckboxComponent.new(form:,
                                                     field_name: :email_when_participants_changed,
                                                     label: 'Send email to Collection Managers and Reviewers ' \
