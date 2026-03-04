@@ -55,6 +55,7 @@
 
     <%= render Elements::Forms::LabelComponent.new(form:, field_name: :identifier,
                                                    label_text: 'Enter DOI or PMCID for published version of this work. If PMCID does not work, try the DOI.',
+                                                   tooltip: I18n.t('works.edit.fields.identifier.tooltip_html'),
                                                    mark_required: true, classes: 'fw-bold') %>
     <div class="d-flex align-items-center">
       <div class="flex-grow-1">

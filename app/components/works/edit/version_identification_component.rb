@@ -21,7 +21,8 @@ module Works
                label_classes: 'fw-bold',
                mark_required: true,
                prompt: 'Select...',
-               container_classes: 'mb-4')
+               container_classes: 'mb-4',
+               tooltip: I18n.t('works.edit.fields.version_identification.tooltip_html'))
       end
     end
   end

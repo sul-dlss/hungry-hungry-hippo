@@ -75,6 +75,12 @@ en:
   affiliations:
     edit:
       legend: 'Affiliation for this individual'
+  article:
+    edit:
+      fields:
+        license:
+          tooltip_html: >-
+            We strongly recommend that you assign a license to your work, as it will help others understand what you are allowing them to do with your work and under what conditions.  Click on "Get help selecting a license" for specific guidance for licenses for articles.
   contact_sdr: 'Contact SDR staff'
   content_files:
     edit:
@@ -341,6 +347,9 @@ en:
           help_text: 'Assigning a license may improve discovery of your work in web searches.'
           tooltip_html: >-
             We strongly recommend that you assign a license to your work, as it will help others understand what you are allowing them to do with your work and under what conditions.  Click on "Get help selecting a license" for assistance with the license options presented here.
+        identifier:
+          tooltip_html: >-
+            Enter a DOI (with or without "https://doi.org/ or a PMCID (with or without "PMC") to retrieve metadata about your article from the DOI metadata.
         custom_rights_statement:
           label: 'Additional terms of use'
           tooltip_html: >-
@@ -360,6 +369,8 @@ en:
         version_identification:
           label: 'Which version are you depositing?'
           validation: 'selection required'
+          tooltip_html: >-
+            Indicate which version of the article you are depositing. The "author submitted version" is the version before peer review or editing as submitted by an author to a journal. The "author accepted version" is the version accepted for publication and typically includes all changes made as a result of peer review. The "final published version of the work" is the peer reviewed, edited, formatted, and typeset version of the article.
       buttons:
         globus_deposit_files: 'Use Globus to transfer files'
       messages:
