@@ -66,7 +66,11 @@
 
     <%= render Articles::Edit::LookupTableComponent.new(article_work_form: @article_work_form, classes: 'mt-3') %>
 
-    <div class="d-flex justify-content-between mt-5 mb-4">
+    <div class="d-flex justify-content-start mt-5">
+      <p>Your work will be released immediately to everyone in the world once deposited. It will not receive a DOI.</p>
+    </div>
+
+    <div class="d-flex justify-content-between mb-4">
       <div>
         <%= render Elements::CancelButtonComponent.new(link: request.referer || dashboard_path) %>
         <%= render Elements::Forms::SubmitComponent.new(label: 'Edit before deposit', variant: :'outline-primary', classes: 'me-2', data: { action: 'unsaved-changes#allowFormSubmission' }) %>

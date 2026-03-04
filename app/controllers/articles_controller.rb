@@ -118,7 +118,7 @@ class ArticlesController < ApplicationController
       work_subtypes: ['Article'],
       creation_date: work.created_at.to_date,
       content_id: content.id,
-      access: @collection.stanford_access? ? 'stanford' : 'world',
+      access: 'world', # Articles are always world access on creation
       collection_druid: @collection.druid,
       license: @article_form.license,
       article_version_identification: @article_form.article_version_identification
