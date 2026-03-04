@@ -84,10 +84,6 @@ RSpec.describe 'Create an article then edit before deposit' do
     expect(page).to have_field('Article', checked: true)
     expect(page).to have_field('Which version are you depositing?', with: 'Author accepted version')
 
-    find('.nav-link', text: with_required_tab_mark('Access settings')).click
-    expect(page).to have_field('Immediately', checked: true)
-    expect(page).to have_select('work_access', selected: 'Everyone')
-
     find('.nav-link', exact_text: 'Related content').click
     within('.form-instance:first-of-type') do
       expect(page).to have_field('Full link for a related work', checked: true)

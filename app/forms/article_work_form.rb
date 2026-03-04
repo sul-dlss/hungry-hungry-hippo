@@ -16,6 +16,12 @@ class ArticleWorkForm < BaseWorkForm
     self.contact_emails = contact_emails.reject(&:empty?)
   end
 
+  before_validation do
+    # Force doi_option to be 'no' for all ArticleWorkForm instances
+    # since we do not assign DOIs for Article works.
+    self.doi_option = 'no'
+  end
+
   validates :article_version_identification,
             presence: { message: I18n.t('works.edit.fields.version_identification.validation') },
             on: :deposit
