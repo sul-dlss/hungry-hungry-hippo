@@ -26,6 +26,18 @@ RSpec.describe ExtractAbstractService, :vcr do
     end
   end
 
+  context 'when the abstract has multiple sections' do
+    let(:filepath) do
+      'spec/fixtures/files/Main_Text.pdf'
+    end
+
+    it 'returns the extracted abstract text with sections' do
+      abstract = described_class.call(filepath:)
+
+      expect(abstract).to match(/Background: Acute lymphoblastic leukemia.+\n\nObjective: This study aims.+\n\nMethods: A systematic search.+\n\nResults: Fifteen studies were included.+\n\nConclusion: Combining targeted therapies.+/) # rubocop:disable Layout/LineLength
+    end
+  end
+
   context 'when there is an error during extraction' do
     before do
       allow_any_instance_of(RubyLLM::Chat).to receive(:ask).and_raise(RubyLLM::Error) # rubocop:disable RSpec/AnyInstance
