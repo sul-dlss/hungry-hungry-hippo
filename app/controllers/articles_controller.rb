@@ -32,6 +32,7 @@ class ArticlesController < ApplicationController
       # or via a lookup to Pubmed).  @article_form.valid? checks if the DOI is present and exists in Crossref.
       set_article_work_form if @article_form.valid?
       @article_form.last_doi_lookup = @article_form.doi # Keeps track if the user performed a DOI lookup.
+      track_doi_lookup
       render :form, status: :unprocessable_content
     elsif @article_form.valid?(:deposit)
       # @article_form.valid?(:deposit) checks all of the fields.
@@ -76,6 +77,21 @@ class ArticlesController < ApplicationController
   def track_article_create(work:, work_form:)
     ahoy.track Ahoy::Event::ARTICLE_FORM_COMPLETED, form_id: work_form.form_id, work_id: work.id
     ahoy.track Ahoy::Event::ARTICLE_CREATED, work_id: work.id, deposit: deposit?, review: request_review?
+  end
+
+  def track_doi_lookup
+    identifier_type = @article_form.doi_identifier? ? 'DOI' : 'PMCID'
+    event_type = if @article_form.doi_found? == false
+                   Ahoy::Event::IDENTIFIER_LOOKUP_NOT_FOUND
+                 elsif @article_form.doi_journal_article? == false
+                   Ahoy::Event::IDENTIFIER_LOOKUP_NOT_ARTICLE
+                 elsif @article_form.doi_has_complete_metadata? == false
+                   Ahoy::Event::IDENTIFIER_LOOKUP_WITH_INCOMPLETE_METADATA
+                 else
+                   Ahoy::Event::IDENTIFIER_LOOKUP_SUCCESS
+                 end
+
+    ahoy.track event_type, identifier: @article_form.identifier, identifier_type:
   end
 
   def article_form_params

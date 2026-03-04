@@ -11,6 +11,10 @@ module Ahoy
     WORK_FORM_COMPLETED = 'work form completed' # User has submitted a valid work form
     ARTICLE_FORM_STARTED = 'article form started' # User is presented with an article form
     ARTICLE_FORM_COMPLETED = 'article form completed' # User has submitted a valid article form
+    IDENTIFIER_LOOKUP_SUCCESS = 'identifier lookup success' # DOI/PMCID found with complete metadata
+    IDENTIFIER_LOOKUP_WITH_INCOMPLETE_METADATA = 'identifier lookup with incomplete metadata' # incomplete metadata
+    IDENTIFIER_LOOKUP_NOT_ARTICLE = 'identifier lookup not article' # DOI/PMCID found but it is not a journal article
+    IDENTIFIER_LOOKUP_NOT_FOUND = 'identifier lookup not found' # DOI/PMCID not found
     FORM_CHANGED = 'form changed' # User has changed a form
     FILES_UPLOADED = 'files uploaded' # User has uploaded files
     WORK_CREATED = 'work created'
