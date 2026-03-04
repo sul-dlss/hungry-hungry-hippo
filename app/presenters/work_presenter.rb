@@ -151,6 +151,10 @@ class WorkPresenter < FormPresenter
     work.is_a?(GithubRepository)
   end
 
+  def github_deposit_future_releases
+    github_deposit_enabled ? 'Yes' : 'No'
+  end
+
   def article?
     work.is_a?(Article)
   end
