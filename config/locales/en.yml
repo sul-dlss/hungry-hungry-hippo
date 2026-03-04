@@ -194,7 +194,7 @@ en:
     edit:
       legend: 'Managers'
       tooltip_html: >-
-        Managers have the ability to edit the collection description; add and remove other Managers, Reviewers (see Workflow section of form), and Depositors; adjust discovery, access, and license settings for the collection; and edit any content deposited to the collection, including content deposited by others.
+        Managers have the ability to edit the collection description; add and remove other Managers, Reviewers (see Workflows section of form), and Depositors; adjust collection settings and workflows; add default metadata for deposits; and edit any content deposited to the collection, including content deposited by others.
   sharing_link:
     label: 'Link for sharing'
     tooltip_html: >-
@@ -442,7 +442,7 @@ en:
         works_contact_email:
           label: 'Contact email to be included in all deposits in this collection'
           tooltip_html: >-
-            Enter a valid email address that will be included for each deposit to this collection. Depositors will not be able to change or remove this email address. It will be publicly visible and is intended to be a place where people can ask questions about the content deposited.
+            Enter a valid email address that will be included for each deposit to this collection. Depositors will not be able to change or remove this email address, but they can add other emails. These emails will be publicly visible and are intended to allow others to ask questions about the content deposited.
         title:
           label: 'Collection name'
           help_text: >-
@@ -468,7 +468,7 @@ en:
           label: 'Select a work type for deposits in this collection'
           help_text: 'You can designate a required type of work that will be associated with every deposit to this collection. Depositors will not be able to change this or add other types.'
           tooltip_html: >-
-            Choose the one content type that best describes the overall or primary nature of each of the works to be deposited in this collection. Click on each content type to view additional terms you may also select that will also be applied to each of the works in this collection. Depositors will not be able to change this term.
+            Choose the one content type that best describes the overall or primary nature of each of the works to be deposited in this collection. Click on each content type to view additional terms you may also select that will also be applied to each of the works in this collection. Depositors will not be able to change your selections.
         work_subtypes:
           label: 'Select which subtypes will be applied to each deposit'
           help_text: 'You can also designate required subtypes that will be associated with every deposit to this collection. Depositors will not be able to remove this subtype, but will be able to add more subtypes.'
@@ -541,7 +541,7 @@ en:
             We highly recommend every deposit be assigned a license when possible. A license helps others who access the
             content to understand what the Depositor is allowing them to do with the work and under what conditions.
           tooltip_html: >-
-            As the collection manager, you can decide whether 1) a specific license  you choose from the list will be mandatory for every deposit to the collection ("Require license for all deposits") or 2) if the Depositors will be able to choose the license they wish to use ("Depositor selects license").  For this second option, you must choose a license from the list to be displayed as the default option for Depositors, which they will be able to change.
+            As the collection manager, you can decide whether 1) a specific license  you choose from the list will be mandatory for every deposit to the collection ("Require license for all deposits") or 2) if the Depositors will be able to choose the license they wish to use ("Depositor selects license").  For this second option, you must choose a license from the list to be displayed to Depositors as the default option, which they will be able to change.
         terms_of_use:
           tab_label: 'Terms of use'
           label: 'Terms of use'
