@@ -28,8 +28,7 @@ RSpec.describe PersonContributorCocinaBuilder do
     let(:orcid) { '0000-0000-0000-0000' }
 
     it 'does not include identifier' do
-      expect(contributor_params[:identifier]).to eq [{ value: '0000-0000-0000-0000', type: 'ORCID',
-                                                       source: { uri: 'https://orcid.org' } }]
+      expect(contributor_params[:identifier]).to eq [{ uri: 'https://orcid.org/0000-0000-0000-0000', type: 'ORCID' }]
     end
   end
 
