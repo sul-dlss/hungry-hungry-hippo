@@ -15,27 +15,43 @@ class ExtractAbstractService
 
   # @return [String, nil] extracted abstract text, or nil if it could not be extracted
   def call
-    chat = RubyLLM.chat(model: 'gemini-flash-latest').with_temperature(0.0)
-    chat.with_instructions <<~INSTRUCTIONS
-      Extract only the abstract that appears in the provided PDF. If the abstract cannot be found, return an empty string."
-    INSTRUCTIONS
-    response = chat.ask 'What is the abstract for the article in the attached PDF?', with: filepath
-    normalize_response_content(response.content)
-  rescue RubyLLM::Error => e
-    Rails.logger.error "Failed to extract abstract from PDF at #{filepath}: #{e.message}"
-    Honeybadger.notify(e, context: { filepath: })
-    raise e if raise_on_error
+    Tempfile.create(['subset-', '.pdf']) do |tempfile|
+      subset_pdf(filepath:, new_file: tempfile.path)
+      response = chat.ask 'What is the abstract for the article in the attached PDF?', with: tempfile.path
+      response.content['abstract_sections'].join("\n\n").presence
+    rescue RubyLLM::Error => e
+      Honeybadger.notify(e, context: { filepath: })
+      raise e if raise_on_error
 
-    nil
+      nil
+    end
   end
 
   private
 
   attr_reader :filepath, :raise_on_error
 
-  def normalize_response_content(content)
-    return if content == '""'
+  # Schema for the LLM response
+  class AbstractSchema < RubyLLM::Schema
+    array :abstract_sections, description: 'sections of the abstract of the article', of: :string
+  end
 
-    content.presence
+  def chat
+    @chat ||= RubyLLM.chat(model: 'gemini-3-flash-preview').with_temperature(0.0).tap do |chat|
+      chat.with_instructions <<~INSTRUCTIONS
+        Extract only the abstract that appears in the provided PDF. If the abstract has multiple sections, return each section separately. If the abstract cannot be found, return an empty string."
+      INSTRUCTIONS
+      chat.with_schema(AbstractSchema)
+    end
+  end
+
+  def subset_pdf(filepath:, new_file:)
+    doc = HexaPDF::Document.open(filepath)
+    page_indexes = (0..(doc.pages.count - 1)).to_a
+    page_indexes.shift(3)
+    page_indexes.reverse_each do |index|
+      doc.pages.delete_at(index)
+    end
+    doc.write(new_file)
   end
 end

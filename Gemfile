@@ -57,6 +57,7 @@ gem 'faraday-follow_redirects'
 gem 'frozen_record' # For licenses
 gem 'globus_client'
 gem 'hashdiff'
+gem 'hexapdf' # For PDF subsetting
 gem 'honeybadger'
 gem 'jwt' # For GitHub App authentication
 gem 'kaminari' # For pagination
@@ -70,6 +71,7 @@ gem 'parallel' # Used for abstract extraction testing.
 gem 'preservation-client'
 gem 'rack-sanitizer'
 gem 'ruby_llm' # For extracting abstracts
+gem 'ruby_llm-schema'
 gem 'sdr_view_components'
 gem 'state_machines-activerecord'
 gem 'validate_url'
