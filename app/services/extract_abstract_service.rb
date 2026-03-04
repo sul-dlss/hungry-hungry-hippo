@@ -7,8 +7,10 @@ class ExtractAbstractService
   end
 
   # @param filepath [String] path to the PDF
-  def initialize(filepath:)
+  # @param raise_on_error [Boolean] whether to raise an error if extraction fails
+  def initialize(filepath:, raise_on_error: false)
     @filepath = filepath
+    @raise_on_error = raise_on_error
   end
 
   # @return [String, nil] extracted abstract text, or nil if it could not be extracted
@@ -18,14 +20,22 @@ class ExtractAbstractService
       Extract only the abstract that appears in the provided PDF. If the abstract cannot be found, return an empty string."
     INSTRUCTIONS
     response = chat.ask 'What is the abstract for the article in the attached PDF?', with: filepath
-    response.content.presence
+    normalize_response_content(response.content)
   rescue RubyLLM::Error => e
     Rails.logger.error "Failed to extract abstract from PDF at #{filepath}: #{e.message}"
     Honeybadger.notify(e, context: { filepath: })
+    raise e if raise_on_error
+
     nil
   end
 
   private
 
-  attr_reader :filepath
+  attr_reader :filepath, :raise_on_error
+
+  def normalize_response_content(content)
+    return if content == '""'
+
+    content.presence
+  end
 end
