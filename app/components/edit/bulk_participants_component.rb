@@ -39,7 +39,7 @@ module Edit
     end
 
     def validation_field_name
-      :"#{field_name}_attributes"
+      field_name.to_sym
     end
   end
 end
