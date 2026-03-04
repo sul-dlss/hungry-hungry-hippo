@@ -37,7 +37,8 @@
         <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :title, label: t('collections.edit.fields.title.label'), tooltip: t('collections.edit.fields.title.tooltip_html'), container_classes: 'pane-section', mark_required: true, label_classes: 'fw-bold') %>
         <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :description, label: t('collections.edit.fields.description.label'), tooltip: t('collections.edit.fields.description.tooltip_html'), container_classes: 'pane-section', mark_required: true, label_classes: 'fw-bold') %>
         <%= render NestedComponentPresenter.for(form:, field_name: :contact_emails, model_class: ContactEmailForm, form_component: Collections::Edit::ContactEmailsComponent, bordered: false, single_field: true, fieldset_classes: 'pane-section',
-                                                tooltip: I18n.t('contact_emails.edit.collections.tooltip_html'), mark_required: true) %>
+                                                tooltip: I18n.t('contact_emails.edit.collections.tooltip_html'),
+                                                label_text: "#{I18n.t('contact_emails.edit.legend')} (at least one is required)", mark_required: true) %>
       <% end %>
 
       <% component.with_collection_pane(tab_name: :related_links, label: t('collections.edit.panes.related_links.label'), tooltip: t('collections.edit.panes.related_links.tooltip_html'), help_text: t('collections.edit.panes.related_links.help_text'), active_tab_name:, collection_presenter: @collection_presenter) do %>
@@ -59,9 +60,8 @@
           <p class="fw-bold">The option below will allow you either to:</p>
           <ol class="my-4">
             <li>Provide a custom use statement that will appear on every deposit in this collection or</li>
-            <li>Allow depositors to enter a custom use statement, typically one required by a publisher in order to deposit an Open Access version of an article.</li>
+            <li>Allow depositors to enter a custom use statement, typically one required by a publisher in order to deposit an Open Access version of an article. You will also be able to provide custom instructions for this field if you wish.</li>
           </ol>
-          <p class="mb-0">You will also be able to provide custom instructions for this field if you wish.</p>
         <% end %>
         <%= render Collections::Edit::TermsOfUseComponent.new(form:) %>
       <% end %>
