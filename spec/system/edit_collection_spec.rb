@@ -146,12 +146,12 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_no_text('Al Borland (alborland)')
 
     fill_in('managers-textarea', with: 'stepking@stanford.edu')
-    click_link_or_button('Add managers')
+    click_link_or_button('Add Managers')
     expect(page).to have_css('.participant-label', text: 'Stephen King (stepking)')
 
     # Fill in the depositor form
     fill_in('depositors-textarea', with: 'joehill')
-    click_link_or_button('Add depositors')
+    click_link_or_button('Add Depositors')
     expect(page).to have_css('.participant-label', text: 'Joe Hill (joehill)')
 
     find('label', text: 'Send email to Collection Managers and Reviewers ' \
