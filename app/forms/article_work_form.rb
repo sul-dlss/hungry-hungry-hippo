@@ -16,7 +16,9 @@ class ArticleWorkForm < BaseWorkForm
     self.contact_emails = contact_emails.reject(&:empty?)
   end
 
-  validates :article_version_identification, presence: true, on: :deposit
+  validates :article_version_identification,
+            presence: { message: I18n.t('works.edit.fields.version_identification.validation') },
+            on: :deposit
 
   # This is necessary for proper routing based on Work subclasses.
   def self.model_name
