@@ -4,15 +4,16 @@ module Elements
   module Forms
     # Component for rendering invalid feedback for a form field.
     class InvalidFeedbackComponent < ApplicationComponent
-      def initialize(field_name:, form:, classes: [], data: {})
+      def initialize(field_name:, form:, classes: [], data: {}, except: [])
         @field_name = field_name
         @form = form
         @classes = classes
         @data = data
+        @except = except
         super()
       end
 
-      attr_reader :field_name, :form, :data
+      attr_reader :field_name, :form, :data, :except
 
       def call
         tag.div(class: classes, id:, data:) do
@@ -31,7 +32,9 @@ module Elements
       end
 
       def errors
-        @errors ||= form.object&.errors&.[](field_name)
+        @errors ||= Array(form.object&.errors&.where(field_name)).reject do |error|
+          except.include?(error.type)
+        end.map(&:message)
       end
 
       def classes
