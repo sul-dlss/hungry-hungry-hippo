@@ -92,7 +92,8 @@ RSpec.describe 'Create a collection deposit' do
     find('.nav-link', text: with_required_tab_mark('Details')).click
     fill_in('collection_title', with: collection_title_fixture)
     fill_in('collection_description', with: collection_description_fixture)
-    expect(page).to have_css('legend label', text: 'Contact emails')
+    expect(page).to have_css('legend label',
+                             text: with_required_heading_mark('Contact emails (at least one is required)'))
     expect(page).to have_field('Enter contact email', with: user.email_address)
 
     # Clicking on Next to go to related content tab
