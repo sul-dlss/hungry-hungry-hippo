@@ -115,7 +115,7 @@ class CollectionForm < ApplicationForm
 
   attribute :works_contact_email, :string
   validates :works_contact_email, format: {
-    with: URI::MailTo::EMAIL_REGEXP, allow_blank: true, message: I18n.t('contact_email.validation.email.invalid')
+    with: URI::MailTo::EMAIL_REGEXP, allow_blank: true, message: I18n.t('validations.contact_email.email.invalid')
   }
 
   attribute :apo, :string, default: Settings.apo

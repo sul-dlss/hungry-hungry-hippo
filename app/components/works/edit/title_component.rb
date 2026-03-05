@@ -16,7 +16,7 @@ module Works
       delegate :works_contact_email, to: :work_form
 
       def contact_emails_label_text
-        I18n.t('contact_emails.edit.legend').dup.tap do |text|
+        I18n.t('work_form.nested_forms.contact_emails.legend').dup.tap do |text|
           text << ' (at least one is required)' if mark_contact_emails_required?
         end
       end

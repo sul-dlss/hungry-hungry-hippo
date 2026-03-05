@@ -14,8 +14,8 @@
 <%= form_with(model: @github_repository_form, data: { controller: 'form-invalid-focus' }) do |form| %>
   <%= form.hidden_field(:collection_druid) %>
 
-  <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :repository, label: I18n.t('github_repository.edit.label'),
-                                                     tooltip: I18n.t('github_repository.edit.tooltip_html'),
+  <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :repository, label: I18n.t('github_repository_form.fields.github_repository.label'),
+                                                     tooltip: I18n.t('github_repository_form.fields.github_repository.tooltip_html'),
                                                      mark_required: true, label_classes: 'fw-bold') %>
 
   <div class="d-flex my-5">

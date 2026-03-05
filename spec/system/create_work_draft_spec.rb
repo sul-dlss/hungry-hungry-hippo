@@ -34,7 +34,7 @@ RSpec.describe 'Create a work draft' do
 
   it 'creates a work' do
     visit dashboard_path
-    click_link_or_button(I18n.t('collections.buttons.labels.deposit_work'))
+    click_link_or_button(I18n.t('collections.buttons.deposit_work.label'))
 
     # Breadcrumbs
     expect(page).to have_link('Dashboard', href: dashboard_path)

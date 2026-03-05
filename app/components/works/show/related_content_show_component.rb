@@ -18,7 +18,7 @@ module Works
       end
 
       def relationship_label_for(related_work)
-        t("related_works.edit.fields.relationship.options.#{related_work.relationship}")
+        t("work_form.fields.related_works.relationship.options.#{related_work.relationship}")
       end
 
       # Returns a link if the related work is a URL, otherwise returns the related work

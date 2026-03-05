@@ -3,7 +3,7 @@
   <% if total_files > Settings.search.file_search_box_min # there is at least this many files in the object, so show search bar with section header %>
       <div class="row">
         <div class="col-3">
-          <%= render Edit::SectionHeaderComponent.new(title: t('works.edit.panes.files.list')) %>
+          <%= render Edit::SectionHeaderComponent.new(title: t('work_form.panes.files.list')) %>
         </div>
         <div class="col-5 ms-auto">
           <%# Not using TextFieldComponent because field-container conflicts with input-group. %>
@@ -24,7 +24,7 @@
         <p>There are no results matching "<%= search_term %>".</p>
       <% end %>
     <% else # just show section header %>
-      <%= render Edit::SectionHeaderComponent.new(title: t('works.edit.panes.files.list')) %>
+      <%= render Edit::SectionHeaderComponent.new(title: t('work_form.panes.files.list')) %>
     <% end %>
 
   <% if total_files.zero? # there are no files at all in the object, show the appropriate message to the user %>

@@ -1,7 +1,7 @@
 <%= tag.div data: { controller: 'workflow' } do %>
   <div class="pane-section" id="review-workflow-section">
-    <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.review_workflow.label')) %>
-    <p><%= t('collections.edit.fields.review_workflow.help_text_html') %></p>
+    <%= render Edit::SectionHeaderComponent.new(title: t('collection_form.fields.review_workflow.label')) %>
+    <p><%= t('collection_form.fields.review_workflow.help_text_html') %></p>
 
     <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :review_enabled, label_classes: 'fw-bold',
                                                     label: 'Enable Review Workflow', container_classes: 'mb-4', mark_required: true) do |component| %>
@@ -26,8 +26,8 @@
     <%= render SdrViewComponents::Elements::HorizontalRuleComponent.new(classes: 'mb-3') %>
 
     <div class="pane-section" id="article-workflow-section">
-      <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.article_workflow.label')) %>
-      <p><%= t('collections.edit.fields.article_workflow.help_text_html') %></p>
+      <%= render Edit::SectionHeaderComponent.new(title: t('collection_form.fields.article_workflow.label')) %>
+      <p><%= t('collection_form.fields.article_workflow.help_text_html') %></p>
 
       <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable Article Workflow', mark_required: true) do %>
         <div class="row ms-0">
@@ -48,8 +48,8 @@
     <%= render SdrViewComponents::Elements::HorizontalRuleComponent.new(classes: 'mb-3') %>
 
     <div class="pane-section" id="github-workflow-section">
-      <%= render Edit::SectionHeaderComponent.new(title: t('collections.edit.fields.github_workflow.label')) %>
-      <p><%= t('collections.edit.fields.github_workflow.help_text_html') %></p>
+      <%= render Edit::SectionHeaderComponent.new(title: t('collection_form.fields.github_workflow.label')) %>
+      <p><%= t('collection_form.fields.github_workflow.help_text_html') %></p>
 
       <%= render Elements::Forms::FieldsetComponent.new(label: 'Enable GitHub Integration Workflow', mark_required: true) do %>
         <div class="row ms-0">

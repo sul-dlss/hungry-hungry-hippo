@@ -106,7 +106,7 @@ RSpec.describe Cocina::WorkAccessMapper do
       expect(access).to match(
         view: 'world',
         download: 'world',
-        useAndReproductionStatement: I18n.t('license.terms_of_use')
+        useAndReproductionStatement: I18n.t('terms_of_use')
       )
     end
   end

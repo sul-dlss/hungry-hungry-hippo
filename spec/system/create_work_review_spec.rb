@@ -39,7 +39,7 @@ RSpec.describe 'Create a work that requires review' do
 
   it 'creates and deposits a work', :dropzone do
     visit dashboard_path
-    click_link_or_button(I18n.t('collections.buttons.labels.deposit_work'))
+    click_link_or_button(I18n.t('collections.buttons.deposit_work.label'))
 
     expect(page).to have_css('h1', text: 'Untitled deposit')
 

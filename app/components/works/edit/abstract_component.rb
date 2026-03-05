@@ -14,7 +14,7 @@ module Works
       attr_reader :form, :mark_abstract_required, :mark_keywords_required
 
       def keywords_label
-        I18n.t('keywords.edit.legend').dup.tap do |text|
+        I18n.t('work_form.nested_forms.keywords.legend').dup.tap do |text|
           text << ' (at least one is required)' if mark_keywords_required
         end
       end

@@ -18,6 +18,6 @@ class TermsOfUseSupport
   end
 
   def self.default_terms_of_use
-    I18n.t('license.terms_of_use')
+    I18n.t('terms_of_use')
   end
 end

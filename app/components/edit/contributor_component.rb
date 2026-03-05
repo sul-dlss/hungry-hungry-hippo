@@ -36,11 +36,11 @@ module Edit
     end
 
     def role_label
-      t('works.edit.fields.contributors.role.label')
+      t('form.fields.contributors.role.label')
     end
 
     def organization_label
-      t('works.edit.fields.contributors.organization_name.label')
+      t('form.fields.contributors.organization_name.label')
     end
 
     def orcid_name_input_disabled?

@@ -4,7 +4,7 @@
   <%= render SdrViewComponents::Elements::BreadcrumbNavComponent.new do |component| %>
     <% component.with_breadcrumb(text: 'Dashboard', link: dashboard_path) %>
     <% if current_page?(action: :new) %>
-      <% component.with_breadcrumb(text: I18n.t('collections.edit.no_title')) %>
+      <% component.with_breadcrumb(text: I18n.t('collection_form.no_title')) %>
     <% else %>
       <% component.with_collection_breadcrumb(text: @collection_form.title, active: true) %>
     <% end %>
@@ -70,7 +70,7 @@
 
     <%= render Elements::Tables::TableComponent.new(id: 'terms-licenses-table', classes: 'mb-5') do |component| %>
       <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Terms of use and licenses', presenter: @collection_presenter, tab: :license) %><% end %>
-      <% component.with_row(label: 'Terms of use', values: [t('license.terms_of_use')]) %>
+      <% component.with_row(label: 'Terms of use', values: [t('terms_of_use')]) %>
       <% component.with_row(label: 'Additional terms of use', values: [simple_format(@collection_presenter.additional_terms_of_use).html_safe]) %> <%# erb_lint:disable ErbSafety %>
       <% component.with_row(label: 'License', values: [@collection_presenter.license_option_label]) %>
     <% end %>

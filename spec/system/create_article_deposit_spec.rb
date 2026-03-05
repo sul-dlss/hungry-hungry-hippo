@@ -46,9 +46,9 @@ RSpec.describe 'Create an article deposit' do
   it 'creates and deposits an article', :dropzone do
     visit dashboard_path
     expect(page).to have_css("a[aria-label='" \
-                             "#{I18n.t('collections.buttons.aria_labels.deposit_article',
+                             "#{I18n.t('collections.buttons.deposit_article.aria_label',
                                        collection_title: collection_title_fixture)}']")
-    click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
+    click_link_or_button(I18n.t('collections.buttons.deposit_article.label'))
 
     # Breadcrumb
     expect(page).to have_link('Dashboard', href: dashboard_path)
@@ -171,7 +171,7 @@ RSpec.describe 'Create an article deposit' do
 
     it 'creates and deposits an article', :dropzone do
       visit dashboard_path
-      click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
+      click_link_or_button(I18n.t('collections.buttons.deposit_article.label'))
 
       # Breadcrumb
       expect(page).to have_link('Dashboard', href: dashboard_path)
@@ -207,7 +207,7 @@ RSpec.describe 'Create an article deposit' do
 
       it 'alerts that the DOI is not a journal article', :dropzone do
         visit dashboard_path
-        click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
+        click_link_or_button(I18n.t('collections.buttons.deposit_article.label'))
 
         # Breadcrumb
         expect(page).to have_link('Dashboard', href: dashboard_path)
@@ -234,7 +234,7 @@ RSpec.describe 'Create an article deposit' do
 
       it 'alerts that the DOI is not a journal article', :dropzone do
         visit dashboard_path
-        click_link_or_button(I18n.t('collections.buttons.labels.deposit_article'))
+        click_link_or_button(I18n.t('collections.buttons.deposit_article.label'))
 
         # Breadcrumb
         expect(page).to have_link('Dashboard', href: dashboard_path)

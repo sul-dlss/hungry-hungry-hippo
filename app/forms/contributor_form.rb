@@ -40,7 +40,7 @@ class ContributorForm < ApplicationForm
   attribute :with_orcid, :boolean, default: true
   attribute :orcid, :string, default: nil
   validates :orcid, format: { with: /\A\d{4}-\d{4}-\d{4}-\d{3}[0-9X]\z/,
-                              message: I18n.t('contributors.validation.orcid.invalid') },
+                              message: I18n.t('validations.contributors.orcid.invalid') },
                     allow_blank: true,
                     if: -> { person? && with_orcid }
   validates :orcid, presence: true, on: :deposit, if: -> { person? && with_orcid? }
@@ -80,8 +80,8 @@ class ContributorForm < ApplicationForm
     # orcid validation will report an error, so we don't need to report an error here.
     return if with_orcid? && orcid.blank?
 
-    errors.add(:first_name, I18n.t('contributors.validation.first_name.blank'))
-    errors.add(:last_name, I18n.t('contributors.validation.last_name.blank'))
+    errors.add(:first_name, I18n.t('validations.contributors.first_name.blank'))
+    errors.add(:last_name, I18n.t('validations.contributors.last_name.blank'))
   end
 
   def name_must_be_complete # rubocop:disable Metrics/AbcSize
@@ -90,10 +90,10 @@ class ContributorForm < ApplicationForm
     return if first_name.present? && last_name.present?
 
     if first_name.blank?
-      errors.add(:first_name, I18n.t('contributors.validation.first_name.blank'))
+      errors.add(:first_name, I18n.t('validations.contributors.first_name.blank'))
     elsif !with_orcid?
       # Orcids can provide only a single name so we don't require last name if with_orcid is true
-      errors.add(:last_name, I18n.t('contributors.validation.last_name.blank'))
+      errors.add(:last_name, I18n.t('validations.contributors.last_name.blank'))
     end
   end
 end

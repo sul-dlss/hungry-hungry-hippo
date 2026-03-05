@@ -40,7 +40,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     authorize! @work, with: WorkPolicy
 
     unless editable?
-      flash[:warning] = helpers.t('works.edit.messages.cannot_be_edited_html', support_email: Settings.support_email)
+      flash[:warning] = helpers.t('work_form.messages.cannot_be_edited_html', support_email: Settings.support_email)
       return redirect_to work_path(druid), status: :see_other
     end
 
@@ -95,7 +95,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       render edit_form_view, status: :unprocessable_content
     end
   rescue StateMachines::InvalidTransition, Sdr::Repository::StaleLock
-    flash[:warning] = helpers.t('works.edit.messages.cannot_be_deposited_html', support_email: Settings.support_email)
+    flash[:warning] = helpers.t('work_form.messages.cannot_be_deposited_html', support_email: Settings.support_email)
     redirect_to work_path(@work)
   end
 
@@ -320,7 +320,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def handle_no_changes
-    flash.now[:warning] = helpers.t('works.edit.messages.no_changes')
+    flash.now[:warning] = helpers.t('work_form.messages.no_changes')
     @active_tab_name = :deposit if deposit?
     ahoy.track Ahoy::Event::UNCHANGED_WORK_SUBMITTED, work_id: @work.id, deposit: deposit?, review: request_review?
   end

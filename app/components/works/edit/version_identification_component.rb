@@ -16,7 +16,7 @@ module Works
           .new(form:,
                field_name: :article_version_identification,
                options: BaseWorkForm::ARTICLE_VERSION_IDENTIFICATION_OPTIONS,
-               label: I18n.t('works.edit.fields.version_identification.label'),
+               label: I18n.t('work_form.fields.version_identification.label'),
                width: 500,
                label_classes: 'fw-bold',
                mark_required: true,

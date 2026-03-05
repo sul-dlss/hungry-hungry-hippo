@@ -8,7 +8,7 @@
                                 { label: 'Deposit status' },
                                 { label: 'Owner' },
                                 { label: 'Last modified' },
-                                { label: t('sharing_link.label'), tooltip: t('sharing_link.tooltip_html') }
+                                { label: t('collections.fields.sharing_link.label'), tooltip: t('collections.fields.sharing_link.tooltip_html') }
                               ]) %>
   <% works.take(WORK_LIMIT).each do |work| %>
     <% component.with_row(values: values_for(work), id: id_for(work)) %>

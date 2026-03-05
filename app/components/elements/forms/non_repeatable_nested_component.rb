@@ -21,15 +21,22 @@ module Elements
       attr_reader :form, :model_class, :field_name, :form_component, :form_component_args, :hidden_label
 
       def label_text
-        helpers.t("#{field_name}.edit.legend", default: nil)
+        nested_form_translation(:legend)
       end
 
       def tooltip
-        helpers.t("#{field_name}.edit.tooltip_html", default: nil)
+        nested_form_translation(:tooltip_html)
       end
 
       def id
         field_name
+      end
+
+      private
+
+      def nested_form_translation(key)
+        helpers.t("#{form.object.locales_key}.nested_forms.#{field_name}.#{key}", default: nil) ||
+          helpers.t("form.nested_forms.#{field_name}.#{key}", default: nil)
       end
     end
   end
