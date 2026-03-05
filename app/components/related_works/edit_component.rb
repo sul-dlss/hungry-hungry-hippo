@@ -12,7 +12,7 @@ module RelatedWorks
 
     def options
       RelatedWorkForm::RELATIONSHIP_TYPES.map do |relationship|
-        [helpers.t("related_works.edit.fields.relationship.options.#{relationship}"), relationship]
+        [helpers.t("work_form.fields.related_works.relationship.options.#{relationship}"), relationship]
       end
     end
 

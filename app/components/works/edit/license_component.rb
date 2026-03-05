@@ -21,15 +21,15 @@ module Works
       end
 
       def label
-        helpers.t('license.edit.fields.label')
+        helpers.t('work_form.fields.license.label')
       end
 
       def help_text
-        helpers.t('works.edit.fields.license.help_text')
+        helpers.t('work_form.fields.license.help_text')
       end
 
       def tooltip
-        helpers.t('works.edit.fields.license.tooltip_html')
+        helpers.t('work_form.fields.license.tooltip_html')
       end
 
       def license_options

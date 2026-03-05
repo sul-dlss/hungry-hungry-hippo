@@ -178,4 +178,8 @@ class BaseWorkForm < ApplicationForm
 
     errors.add(:contributors, 'must have at least one contributor')
   end
+
+  def locales_key
+    'work_form'
+  end
 end

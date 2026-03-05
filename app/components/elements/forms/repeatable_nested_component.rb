@@ -45,17 +45,17 @@ module Elements
                   :add_button_data, :column_classes, :mark_required
 
       def label_text
-        @label_text || helpers.t("#{field_name}.edit.legend", default: nil)
+        @label_text || nested_form_translation(:legend)
       end
 
       def tooltip
         return if skip_tooltip?
 
-        @tooltip || helpers.t("#{field_name}.edit.tooltip_html", default: nil)
+        @tooltip || nested_form_translation(:tooltip_html)
       end
 
       def help_text
-        helpers.t("#{field_name}.edit.help_html", default: nil)
+        nested_form_translation(:help_html)
       end
 
       def render_empty?
@@ -136,6 +136,11 @@ module Elements
         model_class
           .new
           .then { |form_instance| form_instance.try(:prepopulate) || form_instance }
+      end
+
+      def nested_form_translation(key)
+        helpers.t("#{form.object.locales_key}.nested_forms.#{field_name}.#{key}", default: nil) ||
+          helpers.t("form.nested_forms.#{field_name}.#{key}", default: nil)
       end
     end
   end

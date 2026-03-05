@@ -12,19 +12,19 @@ module Collections
       attr_reader :form
 
       def label
-        t('collections.edit.fields.work_subtypes.label')
+        t('collection_form.fields.work_subtypes.label')
       end
 
       def tooltip
-        t('collections.edit.fields.work_subtypes.tooltip_html')
+        t('collection_form.fields.work_subtypes.tooltip_html')
       end
 
       def type_help_text
-        t('collections.edit.fields.work_type.help_text')
+        t('collection_form.fields.work_type.help_text')
       end
 
       def subtype_help_text
-        t('collections.edit.fields.work_subtypes.help_text')
+        t('collection_form.fields.work_subtypes.help_text')
       end
 
       def input_collection

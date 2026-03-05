@@ -48,4 +48,9 @@ class ApplicationForm
   def loggable_errors
     errors.map { |error| "#{model_name} #{error.attribute}: #{error.type}" }
   end
+
+  # Used for looking up locales.
+  def locales_key
+    self.class.to_s.underscore
+  end
 end

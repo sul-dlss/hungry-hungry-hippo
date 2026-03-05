@@ -25,7 +25,7 @@ class ArticleForm < ApplicationForm
 
   attribute :article_version_identification, :string
   validates :article_version_identification,
-            presence: { message: I18n.t('works.edit.fields.version_identification.validation') },
+            presence: { message: I18n.t('validations.select.required') },
             on: :deposit
 
   attribute :collection_druid, :string

@@ -18,11 +18,11 @@ module Works
       private
 
       def label
-        helpers.t('works.edit.fields.custom_rights_statement.label')
+        helpers.t('work_form.fields.custom_rights_statement.label')
       end
 
       def tooltip
-        helpers.t('works.edit.fields.custom_rights_statement.tooltip_html')
+        helpers.t('work_form.fields.custom_rights_statement.tooltip_html')
       end
     end
   end

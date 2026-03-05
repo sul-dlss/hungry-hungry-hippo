@@ -13,11 +13,11 @@ module Works
       attr_reader :form
 
       def label
-        t('works.edit.fields.work_subtypes.label')
+        t('work_form.fields.work_subtypes.label')
       end
 
       def tooltip
-        t('works.edit.fields.work_subtypes.tooltip_html')
+        t('work_form.fields.work_subtypes.tooltip_html')
       end
 
       def work_type

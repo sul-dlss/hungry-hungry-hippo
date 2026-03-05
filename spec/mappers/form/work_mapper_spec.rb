@@ -169,7 +169,7 @@ RSpec.describe Form::WorkMapper, type: :mapping do
 
   context 'when default terms of use' do
     let(:cocina_object) do
-      dro_with_metadata_fixture.new(access: { useAndReproductionStatement: I18n.t('license.terms_of_use') })
+      dro_with_metadata_fixture.new(access: { useAndReproductionStatement: I18n.t('terms_of_use') })
     end
 
     it 'maps to work form without custom rights statement' do

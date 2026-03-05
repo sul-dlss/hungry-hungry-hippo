@@ -1,6 +1,6 @@
 <div data-controller="work-type" data-work-type-tab-error-outlet=".tab-error">
   <div class="pane-section">
-    <%= render Elements::Forms::FieldsetComponent.new(label: t('works.edit.fields.work_type.label'), tooltip: t('works.edit.fields.work_type.tooltip_html'), mark_required: !readonly?) do %>
+    <%= render Elements::Forms::FieldsetComponent.new(label: t('work_form.fields.work_type.label'), tooltip: t('work_form.fields.work_type.tooltip_html'), mark_required: !readonly?) do %>
       <% if readonly? %>
         <p>The collection manager has selected "<%= work_type %>" as the type for all deposits.</p>
         <%= form.hidden_field :work_type, data: { work_type_target: 'workTypeHidden' } %>

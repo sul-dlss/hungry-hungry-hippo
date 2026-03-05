@@ -7,7 +7,7 @@ class RelatedWorkForm < ApplicationForm
 
   attribute :citation, :string
   attribute :identifier, :string
-  validates :identifier, format: { with: GOOD_URI, message: I18n.t('related_works.validation.identifier.invalid') },
+  validates :identifier, format: { with: GOOD_URI, message: I18n.t('validations.url.invalid') },
                          allow_blank: true
   attribute :relationship, :string
   validates :relationship, inclusion: { in: RELATIONSHIP_TYPES }, if: (lambda do |related_work|

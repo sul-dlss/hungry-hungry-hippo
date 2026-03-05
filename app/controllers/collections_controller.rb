@@ -32,7 +32,7 @@ class CollectionsController < ApplicationController
     authorize! @collection
 
     unless editable?
-      flash[:danger] = I18n.t('collections.edit.messages.cannot_be_edited')
+      flash[:danger] = I18n.t('collection_form.messages.cannot_be_edited')
       return redirect_to collection_path(params[:druid])
     end
 
