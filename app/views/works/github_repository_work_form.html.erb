@@ -63,12 +63,10 @@
 
       <% component.with_work_pane(tab_name: :deposit, label: t('works.edit.panes.deposit.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, next_tab_btn: false, mark_required: true) do |pane_component| %>
         <% pane_component.with_help do %>
-          <p class="mb-0">
-            <ul>
-              <li>Information you provided in this form will be included when releases are archived from GitHub.</li>
-              <% if @work_form.agree_to_terms %><li>You have accepted the <a href="#" data-bs-toggle="modal" data-bs-target="#tod-modal">Terms of Deposit</a>.</li><% end %>
-            </ul>
-          </p>
+          <ul class="mb-0">
+            <li>Information you provided in this form will be included when releases are archived from GitHub.</li>
+            <% if @work_form.agree_to_terms %><li>You have accepted the <a href="#" data-bs-toggle="modal" data-bs-target="#tod-modal">Terms of Deposit</a>.</li><% end %>
+          </ul>
         <% end %>
 
         <%# This is a dummy value that is needed for validation, but won't be used for the version description. %>

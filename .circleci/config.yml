@@ -12,9 +12,20 @@ jobs:
       - run:
           name: Lint styles
           command: yarn run stylelint
+  herblint:
+    executor: ruby-rails/ruby
+    steps:
+      - checkout
+      - run:
+          name: Install Ruby dependencies
+          command: bundle install
+      - run:
+          name: Lint ERBs
+          command: bin/rake herb
 workflows:
   build:
     jobs:
+      - herblint
       - stylelint
       - ruby-rails/lint-js
       - ruby-rails/lint:

@@ -279,6 +279,8 @@ GEM
       zeitwerk
     hana (1.3.7)
     hashdiff (1.2.1)
+    herb (0.8.10-arm64-darwin)
+    herb (0.8.10-x86_64-linux-gnu)
     hexapdf (1.6.0)
       cmdparse (~> 3.0, >= 3.0.3)
       geom2d (~> 0.4, >= 0.4.1)
@@ -724,6 +726,7 @@ DEPENDENCIES
   frozen_record
   globus_client
   hashdiff
+  herb
   hexapdf
   honeybadger
   hotwire-spark

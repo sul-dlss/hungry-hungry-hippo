@@ -45,14 +45,14 @@
   <body>
     <% if Settings.google_analytics.enabled %>
       <!-- Google Tag Manager (noscript) -->
-      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P6SX5MBG"
+      <noscript><iframe title="Google Tag Manager" src="https://www.googletagmanager.com/ns.html?id=GTM-P6SX5MBG"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- End Google Tag Manager (noscript) -->
     <% end %>
     <%= render SdrViewComponents::Elements::SkipLinksComponent.new %>
     <%= render Structure::HeaderComponent.new %>
     <div class="breadcrumbs">
-      <nav id="breadcrumbs" aria-label="breadcrumb" class="container">
+      <nav id="breadcrumbs" aria-label="Breadcrumbs for navigation" class="container">
         <%= yield :breadcrumbs %>
       </nav>
     </div>
