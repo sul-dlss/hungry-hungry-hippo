@@ -39,11 +39,7 @@ module Show
       fully_qualified_orcid_url = URI.join(Settings.orcid.url, contributor.orcid).to_s
 
       helpers.link_to_new_tab(fully_qualified_orcid_url) do
-        concat tag.img(alt: 'ORCiD icon',
-                       src: 'https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png',
-                       width: 16,
-                       height: 16,
-                       class: 'me-2')
+        concat helpers.orcid_icon(class: 'me-2')
         concat fully_qualified_orcid_url
       end
     end
