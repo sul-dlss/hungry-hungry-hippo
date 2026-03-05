@@ -115,12 +115,14 @@ class BaseWorkForm < ApplicationForm
   attribute :create_date_type, :string, default: 'single'
   validates :create_date_type, inclusion: { in: %w[single range] }
 
+  # Reset the opposite create date type when switching between single and range
+  # to prevent validation errors from the hidden form fields.
   before_validation do
     if create_date_type == 'range'
-      self.create_date_single = nil
+      self.create_date_single = DateForm.new
     else
-      self.create_date_range_from = nil
-      self.create_date_range_to = nil
+      self.create_date_range_from = DateForm.new
+      self.create_date_range_to = DateForm.new
     end
   end
 
