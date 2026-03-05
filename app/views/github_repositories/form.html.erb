@@ -14,7 +14,9 @@
 <%= form_with(model: @github_repository_form, data: { controller: 'form-invalid-focus' }) do |form| %>
   <%= form.hidden_field(:collection_druid) %>
 
-  <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :repository, label: 'Enter the link or owner/name of the GitHub repository you want to deposit', mark_required: true, label_classes: 'fw-bold') %>
+  <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :repository, label: I18n.t('github_repository.edit.label'),
+                                                     tooltip: I18n.t('github_repository.edit.tooltip_html'),
+                                                     mark_required: true, label_classes: 'fw-bold') %>
 
   <div class="d-flex my-5">
     <%= render Elements::CancelButtonComponent.new(link: collection_path(@collection.druid), classes: 'me-2') %>

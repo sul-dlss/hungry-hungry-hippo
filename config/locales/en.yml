@@ -169,6 +169,18 @@ en:
     validation:
       email:
         invalid: 'must provide a valid email address'
+  github_deposit_enabled:
+    edit:
+      label: 'Do you want to automatically deposit a new version with each GitHub release?'
+      help_html: >-
+        You can always return to this form and change this selection if needed.
+      tooltip_html: >-
+        If you select "Yes," all future GitHub releases will automatically deposited in the SDR. If you select "No," no future GitHub releases will be archived unless you return here <b>before creating the release you want to archive</b> to change this back to "Yes." Any changes you have made to the metadata will be saved as a draft and published with the next GitHub release; current published work will not be updated.
+  github_repository:
+    edit:
+      label: 'Enter the link or owner/name of the GitHub repository you want to deposit'
+      tooltip_html: >-
+        GitHub repositories must be public. Format is either "https://github.com/[owner]/[repository_name]" or "[owner]/[repository_name]". Only releases created after you have finished filling the form will be archived in the SDR.
   keyword:
     edit:
       fields:

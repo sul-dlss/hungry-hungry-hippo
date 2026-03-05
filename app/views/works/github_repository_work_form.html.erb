@@ -77,8 +77,9 @@
         <%# For subsequent deposits, user can choose whether GitHub deposit is enabled. For initial, it will be enabled by default. %>
         <% if !@work_presenter.github_deposit_never_enabled? %>
           <%= render Elements::Forms::FieldsetComponent.new(
-                label: 'Do you want to automatically deposit a new version with each GitHub release?',
-                help_text: 'You can always return to this form and change this selection if needed.'
+                label: I18n.t('github_deposit_enabled.edit.label'),
+                help_text: I18n.t('github_deposit_enabled.edit.help_html'),
+                tooltip: I18n.t('github_deposit_enabled.edit.tooltip_html')
               ) do %>
             <div class="row ms-0">
             <div class="form-check col-md-2">
