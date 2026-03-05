@@ -154,6 +154,12 @@ RSpec.describe 'Create a Github repository and work deposit' do
     expect(page).to have_css('h1', text: 'sul-dlss/hungry-hungry-hippo')
     expect(page).to have_css('.alert-note', text: 'One more step to complete deposit - Go to GitHub ' \
                                                   'to create a release for this GitHub repository.')
+
+    within('table#details-table') do
+      expect(page).to have_css('tr', text: 'Automatically deposit future GitHub releases?')
+      expect(page).to have_css('td', text: 'Yes')
+    end
+
     within('table#license-table') do
       expect(page).to have_css('tr', text: 'License')
       expect(page).to have_css('td', text: 'CC-BY-4.0 Attribution International')

@@ -269,6 +269,11 @@ RSpec.describe 'Create a work deposit' do
       expect(page).to have_css('.alert-success', text: 'Deposit successfully submitted')
       expect(page).to have_no_link('Edit or deposit')
 
+      # Details section
+      within('table#details-table') do
+        expect(page).to have_no_css('tr', text: 'Automatically deposit future GitHub releases?')
+      end
+
       # Contributors
       within('#contributors-table') do
         expect(page).to have_css('td', text: 'Jane Stanford')
