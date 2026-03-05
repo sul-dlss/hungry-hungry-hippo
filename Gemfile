@@ -83,6 +83,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows], require: 'debug/prelude'
   gem 'erb_lint', require: false
   gem 'factory_bot_rails'
+  gem 'herb'
   gem 'rspec_junit_formatter' # used by CircleCI
   gem 'rspec-rails'
   gem 'rubocop', require: false
