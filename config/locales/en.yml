@@ -213,6 +213,19 @@ en:
     panes:
       access:
         tab_label: 'Access settings'
+  article_form:
+    fields:
+      identifier:
+        label: 'Enter DOI or PMCID for published version of this work. If PMCID does not work, try the DOI.'
+        tooltip_html: >-
+          Enter a DOI (with or without "https://doi.org/ or a PMCID (with or without "PMC") to retrieve metadata about your article from the DOI metadata.
+      license:
+        tooltip_html: >-
+          We strongly recommend that you assign a license to your work, as it will help others understand what you are allowing them to do with your work and under what conditions.  Click on "Get help selecting a license" for specific guidance for licenses for articles.
+      version_identification:
+        label: 'Which version are you depositing?'
+        tooltip_html: >-
+          Indicate which version of the article you are depositing. The "author submitted version" is the version before peer review or editing as submitted by an author to a journal. The "author accepted version" is the version accepted for publication and typically includes all changes made as a result of peer review. The "final published version of the work" is the peer reviewed, edited, formatted, and typeset version of the article.
   collection_form:
     default_use_statement_instructions: 'Enter additional terms of use not covered by your chosen license or the default terms shown above, which also display on the public webpage.'
     fields:
@@ -482,8 +495,6 @@ en:
           A unique, descriptive title may improve discovery of your work in web searches.
         tooltip_html: >-
           Serves as the title of the public webpage for your work and the title of web search results. Detailed titles similar to those used for scholarly publications will make it easier for users to find your work online. Avoid generic titles such as "Dataset for publication" or "My honors thesis."
-      version_identification:
-        label: 'Which version are you depositing?'
       whats_changing:
         label: "What's changing?"
         tooltip_html: >-

@@ -49,7 +49,7 @@
       <% end %>
 
       <% component.with_work_pane(tab_name: :license, label: t('work_form.panes.license.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>
-        <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
+        <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter, license_help_url: Settings.article_license_url, tooltip: I18n.t('article_form.fields.license.tooltip_html')) %>
         <% unless @collection.no_custom_rights_statement_option? %>
           <%= render Works::Edit::TermsOfUseComponent.new(form:, collection: @collection) %>
         <% end %>
