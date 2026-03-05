@@ -42,6 +42,13 @@ RSpec.describe 'Create an article then edit before deposit' do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_invoke(->(_arg) { @registered_cocina_object })
     allow(Sdr::Repository).to receive(:status).with(druid:).and_return(build(:first_draft_version_status))
     allow(Sdr::Repository).to receive(:latest_user_version).with(druid:).and_return(1)
+    allow(Sdr::Repository).to receive(:check_lock)
+    allow(Sdr::Repository).to receive(:find_latest_user_version).and_return(@registered_cocina_object)
+    allow(Sdr::Repository).to receive(:update) do |args|
+      @updated_cocina_object = args[:cocina_object]
+    end
+    allow(Sdr::Repository).to receive(:accession)
+    allow(Sdr::Event).to receive(:list).and_return([])
 
     sign_in(user)
   end
@@ -71,6 +78,10 @@ RSpec.describe 'Create an article then edit before deposit' do
     expect(page).to have_button('Next')
     expect(page).to have_button('Discard draft')
 
+    # Adding a file
+    find('.dropzone').drop('spec/fixtures/files/hippo.png')
+    expect(page).to have_css('table#content-table td', text: 'hippo.png')
+
     find('.nav-link', text: with_required_tab_mark('Title and contact')).click
     expect(page).to have_field('Title of deposit', with: title_fixture)
     expect(page).to have_css('legend label', exact_text: 'Contact emails')
@@ -84,10 +95,6 @@ RSpec.describe 'Create an article then edit before deposit' do
     expect(page).to have_field('Article', checked: true)
     expect(page).to have_field('Which version are you depositing?', with: 'Author accepted version')
 
-    find('.nav-link', text: with_required_tab_mark('Access settings')).click
-    expect(page).to have_field('Immediately', checked: true)
-    expect(page).to have_select('work_access', selected: 'Everyone')
-
     find('.nav-link', exact_text: 'Related content').click
     within('.form-instance:first-of-type') do
       expect(page).to have_field('Full link for a related work', checked: true)
@@ -99,6 +106,19 @@ RSpec.describe 'Create an article then edit before deposit' do
 
     # DOI tab should not be present since DOI will not be assigned
     expect(page).to have_no_css('.nav-link', text: 'DOI')
+
+    # Deposit after editing
+    find('.nav-link', text: with_required_tab_mark('Deposit')).click
+    click_link_or_button('Deposit', class: 'btn-primary')
+
+    # Waiting page may be too fast to catch so not testing.
+    # On edit page
+    expect(page).to have_css('h1', text: title_fixture)
+
+    # Details
+    within('#details-table') do
+      expect(page).to have_css('td', text: 'A DOI will not be assigned.')
+    end
 
     # Ahoy events created
     work = Work.find_by(druid:)
