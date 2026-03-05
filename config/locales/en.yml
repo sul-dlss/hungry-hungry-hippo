@@ -72,6 +72,9 @@ en:
     stanford: 'Stanford Community'
     world: 'Everyone'
     depositor_selects: 'Depositor selects'
+  affiliations:
+    edit:
+      legend: 'Affiliation for this individual'
   contact_sdr: 'Contact SDR staff'
   content_files:
     edit:

@@ -22,9 +22,9 @@
     <% end %>
   </p>
 <% else %>
-  <%= tag.div data: contributors_data do %>
+  <%= tag.div data: contributors_data, class: 'mt-3' do %>
     <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :role_type, label_classes: 'fw-bold',
-                                                    label: 'Author / Contributor type', container_classes: 'mb-4', mark_required: true) do |component| %>
+                                                    label: 'Author / Contributor type', container_classes: 'mb-5', mark_required: true) do |component| %>
       <% component.with_left_toggle_option(form:,
                                            field_name: :role_type,
                                            label: 'Individual',
@@ -38,9 +38,9 @@
     <% end %>
 
     <%# Contributor person name/orcid fields %>
-    <%= render Elements::Forms::FieldsetComponent.new(label: 'Person', hidden_label: true, data: { contributors_target: 'personSection' }) do %>
+    <%= render Elements::Forms::FieldsetComponent.new(label: 'Person', hidden_label: true, data: { contributors_target: 'personSection' }, legend_classes: 'mb-0') do %>
       <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :person_role, label_classes: 'fw-bold', tooltip: helpers.t('works.edit.fields.contributors.role.tooltip_html'),
-                                                           options: PERSON_ROLES, label: role_label, container_classes: 'mb-4', mark_required: true,
+                                                           options: PERSON_ROLES, label: role_label, container_classes: 'mb-5', mark_required: true,
                                                            caption: helpers.t('works.edit.fields.contributors.role.definitions_link_label_html')) %>
 
       <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :with_orcid, label_classes: 'fw-bold', tooltip: helpers.t('works.edit.fields.contributors.with_orcid.tooltip_html'),
@@ -108,22 +108,21 @@
         </div>
       </div>
 
-      <%= render SdrViewComponents::Elements::HorizontalRuleComponent.new %>
-      <div class="mb-3 p-3">
+      <div class="mt-4">
         <%= render NestedComponentPresenter.for(form:, field_name: :affiliations, model_class: AffiliationForm, form_component: Edit::AffiliationComponent, bordered: false, fieldset_classes: 'pane-section', nested_buttons_classes: 'pt-4') %>
       </div>
     <% end %>
 
     <%# Contributor organization name field %>
-    <%= render Elements::Forms::FieldsetComponent.new(label: 'Organization', hidden_label: true, data: { contributors_target: 'organizationSection' }) do %>
+    <%= render Elements::Forms::FieldsetComponent.new(label: 'Organization', hidden_label: true, data: { contributors_target: 'organizationSection' }, legend_classes: 'mb-0') do %>
       <%= render Elements::Forms::SelectFieldComponent.new(form:, field_name: :organization_role, label_classes: 'fw-bold', tooltip: helpers.t('works.edit.fields.contributors.role.tooltip_html'),
-                                                           options: ORGANIZATION_ROLES, label: role_label, container_classes: 'mb-4', mark_required: true,
+                                                           options: ORGANIZATION_ROLES, label: role_label, container_classes: 'mb-5', mark_required: true,
                                                            input_data: { contributors_target: 'organizationRoleSelect', action: 'change->contributors#showDegreeGrantingSection' }) %>
 
       <%# Degree granting institution fields %>
       <div data-contributors-target="degreeGrantingSection">
         <%= render Elements::Forms::ToggleComponent.new(form:, field_name: :stanford_degree_granting_institution, label_classes: 'fw-bold', mark_required: true,
-                                                        label: 'Is Stanford the institution?', container_classes: 'stanford-degree-granting-institution-section mb-4') do |component| %>
+                                                        label: 'Is Stanford the institution?', container_classes: 'stanford-degree-granting-institution-section mb-5') do |component| %>
           <% component.with_left_toggle_option(form:,
                                                field_name: :stanford_degree_granting_institution,
                                                label: 'Yes',
@@ -139,15 +138,15 @@
         <%# Stanford degree granting institution fields %>
         <div data-contributors-target="degreeGrantingSuborganizationSection">
           <%= form.hidden_field :organization_name, value: WorkForm::STANFORD_UNIVERSITY %>
-          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :suborganization_name, label: 'Department / Institute / Center', label_classes: 'fw-bold', container_classes: 'mb-4') %>
+          <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :suborganization_name, label: 'Department / Institute / Center', label_classes: 'fw-bold', container_classes: 'mb-5') %>
         </div>
         <%# Not Stanford degree granting institution fields %>
-        <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :organization_name, label: organization_label, label_classes: 'fw-bold', container_classes: 'mb-4', data: { contributors_target: 'degreeGrantingOrganizationSection' }, mark_required: true) %>
+        <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :organization_name, label: organization_label, label_classes: 'fw-bold', container_classes: 'mb-5', data: { contributors_target: 'degreeGrantingOrganizationSection' }, mark_required: true) %>
       </div>
 
       <%# Not degree granting institution fields %>
       <div data-contributors-target="notDegreeGrantingSection">
-        <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :organization_name, label: organization_label, label_classes: 'fw-bold', tooltip: helpers.t('works.edit.fields.contributors.organization_name.tooltip_html'), container_classes: 'mb-4', mark_required: true) %>
+        <%= render Elements::Forms::TextFieldComponent.new(form:, field_name: :organization_name, label: organization_label, label_classes: 'fw-bold', tooltip: helpers.t('works.edit.fields.contributors.organization_name.tooltip_html'), container_classes: 'mb-5', mark_required: true) %>
       </div>
 
     <% end %>
