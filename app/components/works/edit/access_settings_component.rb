@@ -4,9 +4,10 @@ module Works
   module Edit
     # Component for rendering the access settings pane.
     class AccessSettingsComponent < ApplicationComponent
-      def initialize(form:, collection:)
+      def initialize(form:, collection:, individual_file_visibility_option: true)
         @form = form
         @collection = collection
+        @individual_file_visibility_option = individual_file_visibility_option
         super()
       end
 
@@ -21,6 +22,10 @@ module Works
         return false if form.object.release_option == 'delay'
 
         @collection.immediate_release_option?
+      end
+
+      def individual_file_visibility_option?
+        @individual_file_visibility_option
       end
 
       def access_options

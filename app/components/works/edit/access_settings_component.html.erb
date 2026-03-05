@@ -33,6 +33,7 @@
   <% end %>
 </div>
 
+<% if individual_file_visibility_option? %>
 <div class="pane-section">
   <%= render Edit::LabelComponent.new(label_text: 'Individual file visibility') %>
   <p>
@@ -46,6 +47,7 @@
     To prevent displaying a specific file, return to <a href="#files-tab" data-controller="tab-link" data-action="tab-link#show">Manage files</a> and select "Hide" to the right of the file name.
   </p>
 </div>
+<% end %>
 
 <div class="pane-section">
   <%= render Edit::LabelComponent.new(label_text: 'Download access', mark_required: true) %>

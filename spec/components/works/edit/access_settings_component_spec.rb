@@ -96,4 +96,20 @@ RSpec.describe Works::Edit::AccessSettingsComponent, type: :component do
       expect(page).to have_field('max_release_date', type: 'hidden', with: work_max_release_date.iso8601)
     end
   end
+
+  context 'when showing individual file visibility option' do
+    it 'shows the individual file visibility option' do
+      render_inline(described_class.new(form:, collection:))
+
+      expect(page).to have_text('You can prevent individual files from being displayed on the public webpage')
+    end
+  end
+
+  context 'when not showing individual file visibility option' do
+    it 'does not show the individual file visibility option' do
+      render_inline(described_class.new(form:, collection:, individual_file_visibility_option: false))
+
+      expect(page).to have_no_text('You can prevent individual files from being displayed on the public webpage')
+    end
+  end
 end

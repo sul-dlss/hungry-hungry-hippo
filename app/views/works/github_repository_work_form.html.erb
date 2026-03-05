@@ -43,7 +43,7 @@
       <% end %>
 
       <% component.with_work_pane(tab_name: :access, label: t('works.edit.panes.access.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>
-        <%= render Works::Edit::AccessSettingsComponent.new(form:, collection: @collection) %>
+        <%= render Works::Edit::AccessSettingsComponent.new(form:, collection: @collection, individual_file_visibility_option: false) %>
       <% end %>
 
       <% component.with_work_pane(tab_name: :license, label: t('works.edit.panes.license.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>

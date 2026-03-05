@@ -125,6 +125,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
     find('.nav-link', text: with_required_tab_mark('Access settings')).click
     expect(page).to have_checked_field('Immediately')
     expect(page).to have_select('Who can download the files?', selected: 'Everyone')
+    expect(page).to have_no_text('You can prevent individual files from being displayed on the public webpage')
 
     # Dates tab is not displayed
     expect(page).to have_no_css('.nav-link', exact_text: 'Dates')
