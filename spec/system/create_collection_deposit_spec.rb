@@ -153,12 +153,12 @@ RSpec.describe 'Create a collection deposit' do
     end
 
     fill_in('managers-textarea', with: 'stepking@stanford.edu')
-    click_link_or_button('Add managers')
+    click_link_or_button('Add Managers')
     expect(page).to have_css('.participant-label', text: 'Stephen King (stepking)')
     expect(page).to have_button('Clear Stephen King')
 
     fill_in('depositors-textarea', with: 'notjoehill, joehill')
-    click_link_or_button('Add depositors')
+    click_link_or_button('Add Depositors')
     expect(page).to have_css('.participant-label', text: 'Joe Hill (joehill)')
     expect(page).to have_field('depositors-textarea', with: 'notjoehill')
 
@@ -221,7 +221,7 @@ RSpec.describe 'Create a collection deposit' do
       expect(page).to have_checked_field('No', with: false)
       find('label', text: 'Yes').click
       fill_in('reviewers-textarea', with: 'pennywise')
-      click_link_or_button('Add reviewers')
+      click_link_or_button('Add Reviewers')
       expect(page).to have_css('.participant-label', text: 'Pennywise (pennywise)')
     end
     within('#article-workflow-section') do

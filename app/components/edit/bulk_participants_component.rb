@@ -31,7 +31,7 @@ module Edit
     end
 
     def add_button_label
-      @add_button_label || "Add #{model_class.model_name.plural.humanize(capitalize: false)}"
+      @add_button_label || "Add #{model_class.model_name.plural.humanize}"
     end
 
     def textarea_id
