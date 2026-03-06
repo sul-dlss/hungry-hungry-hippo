@@ -42,7 +42,7 @@
     <%= render Works::Edit::VersionIdentificationComponent.new(form:) %>
 
     <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter, license_help_url: Settings.article_license_url,
-                                                 show_terms_of_use: false, tooltip: I18n.t('article_form.fields.license.tooltip_html')) %>
+                                                 show_terms_of_use: false) %>
 
     <div class="mt-3">
       <%= render Articles::Edit::TermsOfDepositComponent.new(form:) %>
