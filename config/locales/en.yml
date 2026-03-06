@@ -169,7 +169,10 @@ en:
       doi_link:
         tooltip_html: >-
           Use this DOI link for sharing the public webpage for your deposit. If there is no DOI link, use public webpage link above. The link will be active when the deposit is completed.
- 
+      github_deposit_enabled:
+        tooltip_html: >-
+          If "Yes," all future GitHub releases will be automatically deposited in the SDR. If "No," no future GitHub releases will be archived. Click "Manage automatic deposits" to change this setting <b>before creating a new release</b>.
+
   ## EDIT PAGES    
   # Shared by multiple forms
   form:
@@ -408,7 +411,7 @@ en:
         help_html: >-
           You can always return to this form and change this selection if needed.
         tooltip_html: >-
-          If you select "Yes," all future GitHub releases will automatically deposited in the SDR. If you select "No," no future GitHub releases will be archived unless you return here <b>before creating the release you want to archive</b> to change this back to "Yes." Any changes you have made to the metadata will be saved as a draft and published with the next GitHub release; current published work will not be updated.
+          If you select "Yes," all future GitHub releases will be automatically deposited in the SDR. If you select "No," no future GitHub releases will be archived unless you return here <b>before creating the release you want to archive</b> to change this back to "Yes." Any changes you have made to the metadata will be saved as a draft and published with the next GitHub release; current published work will not be updated.
   work_form:
     buttons:
         globus_deposit_files: 'Use Globus to transfer files'
