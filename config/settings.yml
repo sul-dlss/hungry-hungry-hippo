@@ -126,3 +126,6 @@ person_api:
 
 gemini_api:
   key: ~
+
+extract_abstracts:
+  enabled: false

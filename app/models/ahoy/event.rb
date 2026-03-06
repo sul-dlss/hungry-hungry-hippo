@@ -24,6 +24,9 @@ module Ahoy
     INVALID_WORK_SUBMITTED = 'invalid work submitted'
     GLOBUS_CREATED = 'globus created' # User has initiated Globus upload
     GLOBUS_STAGED = 'globus staged' # User has confirmed Globus upload is complete
+    ABSTRACT_EXTRACTED_SUCCESS = 'abstract extracted success' # User has submitted an article for abstract extraction
+    ABSTRACT_EXTRACTED_FAILED = 'abstract extracted failed' # Abstract extraction has failed
+    EXTRACTED_ABSTRACT_CLEARED = 'extracted abstract cleared' # User has cleared the extracted abstract
 
     self.table_name = 'ahoy_events'
 

@@ -4,15 +4,17 @@ module Articles
   module Edit
     # Component for rendering the article details from a CrossRef lookup
     class LookupTableComponent < ApplicationComponent
-      def initialize(article_work_form:, classes: [])
+      def initialize(article_work_form:, form:, extracted_abstract:, classes: [])
         @article_work_form = article_work_form
+        @form = form
+        @extracted_abstract = extracted_abstract
         @classes = classes
         super()
       end
 
-      attr_reader :article_work_form, :classes
+      attr_reader :article_work_form, :classes, :extracted_abstract, :form
 
-      delegate :title, to: :article_work_form
+      delegate :title, :content_id, to: :article_work_form
 
       def publication_date
         if article_work_form.publication_date.present?
@@ -39,6 +41,14 @@ module Articles
 
       def render?
         article_work_form.present?
+      end
+
+      def show_crossref_abstract?
+        abstract.present? || !Settings.extract_abstracts.enabled
+      end
+
+      def doi_identifier
+        DoiSupport.identifier(doi)
       end
 
       private

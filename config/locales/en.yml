@@ -214,6 +214,11 @@ en:
       access:
         tab_label: 'Access settings'
   article_form:
+    buttons:
+      extract_abstracts:
+        label: 'Get abstract from file using AI'
+        tooltip_html: >-
+          We will use AI to extract an abstract from your file. You can always use the full form to make changes if you need to. You must first upload a PDF to use this feature.
     fields:
       identifier:
         label: 'Enter DOI or PMCID for published version of this work. If PMCID does not work, try the DOI.'

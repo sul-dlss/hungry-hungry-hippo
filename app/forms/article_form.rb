@@ -31,6 +31,8 @@ class ArticleForm < ApplicationForm
   attribute :collection_druid, :string
   attribute :content_id, :integer
 
+  attribute :extracted_abstract, :string
+
   # This is used for tracking with Ahoy. It allows eventing before the form is saved.
   attribute :form_id, :string, default: -> { SecureRandom.uuid }
 

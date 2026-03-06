@@ -89,6 +89,10 @@ module IconHelper
     icon(icon_classes: 'bi bi-download', **)
   end
 
+  def magic_icon(**)
+    icon(icon_classes: 'bi bi-stars', **)
+  end
+
   def orcid_icon(classes: [], **)
     content_tag(:img, nil, alt: 'ORCiD icon',
                            src: 'https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png',
