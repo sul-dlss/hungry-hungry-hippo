@@ -126,7 +126,7 @@ en:
   validations:
     contact_email:
       email:
-        invalid: 'must provide a valid email address'  
+        invalid: 'must provide a valid email address'
     contributors:
       first_name:
         blank: 'must provide a first name'
@@ -173,7 +173,7 @@ en:
         tooltip_html: >-
           If "Yes," all future GitHub releases will be automatically deposited in the SDR. If "No," no future GitHub releases will be archived. Click "Manage automatic deposits" to change this setting <b>before creating a new release</b>.
 
-  ## EDIT PAGES    
+  ## EDIT PAGES
   # Shared by multiple forms
   form:
     fields:
@@ -297,7 +297,7 @@ en:
             <li>Everyone who should receive this email should be included in the list of Reviewers below.</li>
             <li>Reviewers do not need to also be Managers.</li>
             <li>Details about the review workflow are available in our <a href="https://sdr.library.stanford.edu/documentation/sdr-submission-workflows">documentation</a>.</li>
-          </ul>      
+          </ul>
       works_contact_email:
         label: 'Contact email to be included in all deposits in this collection'
         tooltip_html: >-
@@ -313,7 +313,7 @@ en:
         tooltip_html: >-
           You have the option, but are not required, to choose terms from this list to further describe the works that are deposited in this collection. Click "See more subtype options" for additional terms. Depositors will be able to add more of these terms, but will not be able to remove the terms you select.
     messages:
-      cannot_be_edited: 'This collection cannot be edited.'    
+      cannot_be_edited: 'This collection cannot be edited.'
     nested_forms:
       contact_emails:
         legend: 'Contact emails (at least one is required)'
@@ -346,7 +346,7 @@ en:
           You can add one or more contributors that will be included with every new deposit to this collection. The Depositor will be able to reorder this with other contributor entries, but will not be able to delete it.
       details:
         tab_label: 'Details'
-        label: 'Collection details'      
+        label: 'Collection details'
       description:
         tab_label: 'Description'
         label: 'Describe your collection'
@@ -375,7 +375,7 @@ en:
       participants:
         tab_label: 'Participants'
         label: 'Collection participants'
-        help_text: 'Add one or more Managers or Depositors to this collection.'      
+        help_text: 'Add one or more Managers or Depositors to this collection.'
       related_links:
         tab_label: 'Related links'
         label: 'Links to related content'
@@ -397,7 +397,7 @@ en:
         label: 'Type of deposit'
       workflow:
         tab_label: 'Workflows'
-        label: 'Workflows'  
+        label: 'Workflows'
       works_contact_email:
         tab_label: 'Contact email for deposits'
         label: 'Add contact email for all deposits'
@@ -528,14 +528,14 @@ en:
 
 
         Are you sure you want to proceed?
-      globus_instructions: Instructions for using Globus with SDR    
+      globus_instructions: Instructions for using Globus with SDR
     nested_forms:
       contact_emails:
         legend: 'Contact emails'
         tooltip_html: >-
           Enter one or more valid email addresses (one per box) where people can write to ask questions about this deposit. Email addresses will be publicly visible. Use an email address that you expect to be functional for many years, if possible.
       create_date_single:
-        legend: 'Creation date' 
+        legend: 'Creation date'
       keywords:
         legend: 'Keywords'
         help_html: >-
