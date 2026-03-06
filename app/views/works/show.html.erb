@@ -21,8 +21,6 @@
 <%= render Works::Show::DepositingGithubComponent.new(work_presenter: @work_presenter) %>
 <%= render Works::Show::HeaderComponent.new(presenter: @work_presenter) %>
 
-<%= render Works::Show::GithubPollButtonComponent.new(work: @work, classes: 'mb-3') %>
-
 <%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'mb-5') do |component| %>
   <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Details') %><% end %>
   <% component.with_row(label: 'Public webpage', tooltip: t('collections.fields.sharing_link.tooltip_html'), values: [@work_presenter.purl_link]) %>
@@ -37,7 +35,16 @@
   <% component.with_row(label: 'Depositor', values: [@work_presenter.depositor]) %>
   <% component.with_row(label: 'Version', values: [@work_presenter.user_version]) %>
   <% if @work_presenter.github_repository? %>
-    <% component.with_row(label: 'Automatically deposit future GitHub releases?', values: [@work_presenter.github_deposit_future_releases]) %>
+    <% component.with_row(label: 'Automatically deposit future GitHub releases?',
+                          tooltip: I18n.t('works.fields.github_deposit_enabled.tooltip_html')) do |row_component| %>
+      <%= row_component.with_cell do %>
+        <div><%= @work_presenter.github_deposit_future_releases %></div>
+        <div class="d-flex">
+          <%= render Works::Show::GithubEditButtonComponent.new(presenter: @work_presenter) %>
+          <%= render Works::Show::GithubPollButtonComponent.new(work: @work, classes: 'ms-2') %>
+        </div>
+      <% end %>
+    <% end %>
   <% end %>
   <% component.with_row(label: 'Total number of files', values: [@work_presenter.number_of_files_in_deposit]) %>
   <% component.with_row(label: 'Size', values: [number_to_human_size(@work_presenter.size_of_deposit)]) %>

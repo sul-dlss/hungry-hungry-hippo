@@ -158,6 +158,8 @@ RSpec.describe 'Create a Github repository and work deposit' do
     within('table#details-table') do
       expect(page).to have_css('tr', text: 'Automatically deposit future GitHub releases?')
       expect(page).to have_css('td', text: 'Yes')
+      expect(page).to have_link('Manage automatic deposits', href: edit_work_path(druid, tab: :deposit))
+      expect(page).to have_button('Check for new GitHub releases')
     end
 
     within('table#license-table') do
