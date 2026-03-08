@@ -59,10 +59,9 @@ RSpec.describe 'Show a collection' do
       # Header
       expect(page).to have_css('h1', text: collection.title)
       expect(page).to have_link('Edit', href: edit_collection_path(druid))
-      expect(page).to have_link(I18n.t('collections.buttons.deposit_work.label'),
-                                href: new_work_path(collection_druid: druid))
-      expect(page).to have_no_link(I18n.t('collections.buttons.deposit_article.label'))
-      expect(page).to have_no_link(I18n.t('collections.buttons.deposit_github_repository.label'))
+      expect(page).to have_link('Deposit to this collection', href: new_work_path(collection_druid: druid))
+      expect(page).to have_no_link('Deposit article by DOI, PMCID')
+      expect(page).to have_no_link('Deposit a GitHub repository')
 
       # Collection information
       within('table#info-table') do
@@ -281,7 +280,7 @@ RSpec.describe 'Show a collection' do
       # Header
       expect(page).to have_css('h1', text: collection.title)
       expect(page).to have_no_link('Edit')
-      expect(page).to have_link(I18n.t('collections.buttons.deposit_work.label'),
+      expect(page).to have_link('Deposit to this collection',
                                 href: new_work_path(collection_druid: druid))
 
       # Only owned works are shown
