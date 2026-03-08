@@ -10,11 +10,11 @@ module Works
       end
 
       def render?
-        @work_presenter.github_repository? && @work_presenter.version_status.first_draft?
+        @work_presenter.github_deposit_enabled && @work_presenter.version_status.first_draft?
       end
 
       def github_releases_path
-        "http://github.com/#{@work_presenter.github_repository_name}/releases"
+        "https://github.com/#{@work_presenter.github_repository_name}/releases"
       end
     end
   end
