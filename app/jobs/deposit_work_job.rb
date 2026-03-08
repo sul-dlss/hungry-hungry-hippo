@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Performs a deposit or a work (without SDR API).
-class DepositWorkJob < ApplicationJob
+class DepositWorkJob < ApplicationJob # rubocop:disable Metrics/ClassLength
   # @param [WorkForm] work_form
   # @param [Work] work
   # @param [Boolean] deposit if true and review is not requested, deposit the work; otherwise, leave as draft
@@ -38,6 +38,7 @@ class DepositWorkJob < ApplicationJob
     perform_stage(druid:)
 
     WorkModelSynchronizer.call(work:, cocina_object: mapped_cocina_object)
+    validate_datacite
 
     update_terms_of_deposit!
 
@@ -218,5 +219,17 @@ class DepositWorkJob < ApplicationJob
       current_user: Current.user.sunetid,
       lock: work_form.lock
     )
+  end
+
+  def validate_datacite
+    return unless assign_doi
+    return unless [Cocina::Models::DRO, Cocina::Models::DROWithMetadata].include?(mapped_cocina_object.class)
+
+    datacite_validation = Datacite::Validators::CocinaValidator.new(cocina_object: mapped_cocina_object)
+    return unless datacite_validation.errors.any?
+
+    errors = datacite_validation.errors.join("\n")
+    Honeybadger.notify("Datacite validation failed for #{work.druid}: #{errors}")
+    raise Cocina::Models::ValidationError, "Datacite validation failed: #{errors}"
   end
 end
