@@ -11,7 +11,8 @@ class ContactEmailsCocinaBuilder
   end
 
   def call
-    contact_emails.map do |contact_email|
+    # The reverse is necessary to ensure that the work contact email is last, even if it is duped.
+    contact_emails.reverse.map do |contact_email|
       # Since contact_email is either a Hash or an instance of ContactEmailForm,
       # we need to make it a hash of the attributes if it's a ContactEmailForm
       contact_email = contact_email.attributes if contact_email.respond_to?(:attributes)
@@ -22,7 +23,7 @@ class ContactEmailsCocinaBuilder
         type: 'email',
         displayLabel: 'Contact'
       }
-    end.compact_blank.uniq
+    end.compact_blank.uniq.reverse
   end
 
   private
