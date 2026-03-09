@@ -155,7 +155,7 @@ en:
       deposit_article:
         label: 'Deposit article by DOI, PMCID'
         aria_label: 'Deposit article by DOI, PMCID to %{collection_title}'
-      deposit_github:
+      deposit_github_repository:
         label: 'Deposit a GitHub repository'
         aria_label: 'Deposit a GitHub repository to %{collection_title}'
     fields:
