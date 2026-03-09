@@ -226,7 +226,7 @@ en:
       identifier:
         label: 'Enter DOI or PMCID for published version of this work. If PMCID does not work, try the DOI.'
         tooltip_html: >-
-          Enter a DOI (with or without "https://doi.org/ or a PMCID (with or without "PMC") to retrieve metadata about your article from the DOI metadata.
+          Enter a DOI (with or without "https://doi.org/") or a PMCID (with or without "PMC") to retrieve metadata about your article from the DOI metadata.
       license:
         tooltip_html: >-
           We strongly recommend that you assign a license to your work, as it will help others understand what you are allowing them to do with your work and under what conditions.  Click on "Get help selecting a license" for specific guidance for licenses for articles.
