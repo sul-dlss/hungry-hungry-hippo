@@ -121,7 +121,7 @@ class DepositGithubReleaseJob < ApplicationJob
                                       mime_type:,
                                       filepath: filename)
 
-    content_file.file.attach(io: File.open(tempfile.path), filename:, content_type: mime_type) # rubocop:disable Style/FileOpen
+    content_file.file.attach(io: File.open(tempfile.path), filename:, content_type: mime_type)
   end
 
   def check_release_zip_exists!
