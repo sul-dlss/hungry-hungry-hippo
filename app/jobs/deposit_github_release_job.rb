@@ -113,10 +113,10 @@ class DepositGithubReleaseJob < ApplicationJob
     @content ||= Content.create!(user:, work: github_repository)
   end
 
-  def create_content_file(tempfile:, filename:, mime_type:)
+  def create_content_file(tempfile:, filename:, mime_type:, label: '')
     content_file = ContentFile.create(file_type: :attached,
                                       size: tempfile.size,
-                                      label: '',
+                                      label:,
                                       content:,
                                       mime_type:,
                                       filepath: filename)
@@ -148,7 +148,10 @@ class DepositGithubReleaseJob < ApplicationJob
   def download_zipball
     Tempfile.create(binmode: true) do |tempfile|
       Github::Downloader.new(url: github_release.zip_url).download_to(tempfile)
-      create_content_file(tempfile:, filename: "#{github_release.release_tag}.zip", mime_type: 'application/zip')
+      create_content_file(tempfile:,
+                          filename: "#{github_release.release_tag}.zip",
+                          label: github_release.release_name,
+                          mime_type: 'application/zip')
     end
   end
 
