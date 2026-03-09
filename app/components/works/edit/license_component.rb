@@ -14,7 +14,7 @@ module Works
         super()
       end
 
-      attr_reader :form, :show_terms_of_use, :license_help_url
+      attr_reader :form, :show_terms_of_use, :license_help_url, :tooltip
 
       delegate :required_license_option?, to: :@license_presenter
 
@@ -28,10 +28,6 @@ module Works
 
       def help_text
         helpers.t('work_form.fields.license.help_text')
-      end
-
-      def tooltip
-        @tooltip || helpers.t('work_form.fields.license.tooltip_html')
       end
 
       def license_options
