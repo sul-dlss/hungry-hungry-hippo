@@ -145,6 +145,7 @@ RSpec.describe DepositGithubReleaseJob do
           expect(content_file.filepath).to eq('test4.zip')
           expect(content_file.file.attachment.blob.byte_size).to eq('fake zip content'.bytesize)
           expect(content_file.mime_type).to eq('application/zip')
+          expect(content_file.label).to eq('Release 4')
           asset_content_file = content.content_files.second
           expect(asset_content_file.filepath).to eq('Feb18_2026_collection_report.csv')
           expect(asset_content_file.file.attachment.blob.byte_size).to eq('fake asset content'.bytesize)
