@@ -283,7 +283,12 @@ RSpec.describe CrossrefService, :vcr do
               'given' => 'John <i>A.</i>',
               'family' => 'Doe<!-- comment -->',
               'affiliation' => [
-                { 'name' => 'Department of <sup>Advanced</sup> Biology<!-- test -->' }
+                {
+                  'name' => 'Department of <sup>Advanced</sup> Biology<!-- test -->',
+                  'id' => [
+                    { 'id-type' => 'ROR', 'id' => 'https://ror.org/0153tk833' }
+                  ]
+                }
               ]
             }
           ],
@@ -316,9 +321,66 @@ RSpec.describe CrossrefService, :vcr do
               person_role: 'author',
               affiliations_attributes: [
                 {
-                  institution: 'Department of Advanced Biology'
+                  institution: 'Department of Advanced Biology',
+                  uri: 'https://ror.org/0153tk833'
                 }
               ]
+            }
+          ]
+        }
+      )
+    end
+  end
+
+  context 'when affiliation does not have an ROR id' do
+    let(:doi) { '10.1234/test' }
+    let(:abstract) { 'Study of bacteria' }
+    let(:response_body) do
+      {
+        status: 'ok',
+        message: {
+          'type' => 'journal-article',
+          'DOI' => doi,
+          'title' => ['The Role of E. coli in Disease 2'],
+          'abstract' => abstract,
+          'author' => [
+            {
+              'given' => 'John A.',
+              'family' => 'Doe',
+              'affiliation' => [
+                {
+                  'name' => 'Department of Advanced Biology'
+                }
+              ]
+            }
+          ],
+          'published' => { 'date-parts' => [[2025, 1, 15]] }
+        }
+      }.to_json
+    end
+
+    before do
+      stub_request(:get, "https://api.crossref.org/works/doi/#{doi}")
+        .to_return(status: 200, body: response_body, headers: { 'Content-Type' => 'application/json' })
+    end
+
+    it 'strips tags and comments from all fields' do
+      expect(attrs).to match(
+        {
+          title: 'The Role of E. coli in Disease 2',
+          abstract: 'Study of bacteria',
+          related_works_attributes: [
+            {
+              relationship: 'is version of record',
+              identifier: "https://doi.org/#{doi}"
+            }
+          ],
+          publication_date_attributes: { year: 2025, month: 1, day: 15 },
+          contributors_attributes: [
+            {
+              first_name: 'John A.',
+              last_name: 'Doe',
+              person_role: 'author'
             }
           ]
         }
