@@ -137,4 +137,10 @@ RSpec.describe ArticleForm, type: :form do
       end
     end
   end
+
+  describe 'default license' do
+    it 'has the correct default license' do
+      expect(form.license).to eq(described_class::DEFAULT_LICENSE)
+    end
+  end
 end

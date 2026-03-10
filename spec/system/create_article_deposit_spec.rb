@@ -11,7 +11,8 @@ RSpec.describe 'Create an article deposit' do
 
   before do
     create(:collection, user:, title: collection_title_fixture, druid: collection_druid_fixture, depositors: [user],
-                        article_deposit_enabled: true, license_option: 'depositor_selects')
+                        article_deposit_enabled: true, license: 'https://opensource.org/licenses/BSD-3-Clause',
+                        license_option: 'required')
 
     allow(CrossrefService).to receive(:call).with(doi: not_found_doi).and_raise(CrossrefService::NotFound)
     allow(CrossrefService).to receive(:call).with(doi:)
@@ -97,7 +98,7 @@ RSpec.describe 'Create an article deposit' do
     # Setting version description
     select('Author accepted version', from: 'Which version are you depositing?')
 
-    # Setting license
+    # License is selectable and pre-set to the default even though collection setting had a different required license
     expect(page).to have_select('License', selected: 'CC-BY-4.0 Attribution International')
     select('CC-BY-NC-4.0 Attribution-NonCommercial International', from: 'License')
 
