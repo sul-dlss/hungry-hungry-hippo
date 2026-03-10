@@ -69,8 +69,7 @@ class ArticlesController < ApplicationController
     ArticleForm.new(
       collection_druid: @collection.druid,
       content_id: @content.id,
-      agree_to_terms: current_user.agree_to_terms?,
-      license: @collection.license
+      agree_to_terms: current_user.agree_to_terms?
     )
   end
 
