@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 namespace :reports do
   # This Rake task generates reports on Globus deposit events,
   # including counts of created and staged events, file counts, deposit sizes, and unique users.
@@ -7,58 +9,44 @@ namespace :reports do
   task globus: :environment do
     puts '** No Globus events found **' if globus_created.none?
 
-    staged_count = 0
-    file_counts = []
-    deposit_sizes = []
-    users = []
+    headers = %w[druid version sunetid deposit_started deposit_completed size file_count]
 
-    visits.each do |visit_id|
-      globus_staged_event = globus_staged(visit_id:)
-      next if globus_staged_event.nil?
-
-      staged_count += 1
-      file_counts << globus_staged_event.properties['file_count'].to_i
-      deposit_sizes << globus_staged_event.properties['total_size'].to_i
-      users << globus_staged_event.properties['sunetid']
+    CSV.open(report_path, 'w', write_headers: true, headers:) do |csv|
+      globus_created.each do |created_event|
+        csv << data_for_event(created_event).values
+      end
     end
 
-    puts "Globus created events: #{globus_created.count}"
-    puts "\tFirst event: #{first_event.time}" if first_event
-    puts "Globus staged events: #{staged_count}"
-    puts "\tLast event: #{last_event.time}" if last_event
-
-    file_report(file_counts)
-    deposit_report(deposit_sizes)
-    puts "Unique users: #{users.uniq.count}" if users.any?
+    puts "Report generated at #{report_path}"
   end
 end
 
-# Prints a report of deposit sizes, including average, min, and max size
-# param deposit_sizes [Array<Integer>] an array of deposit sizes in bytes
-def deposit_report(deposit_sizes)
-  return unless deposit_sizes.any?
-
-  puts "Average deposit size: #{deposit_sizes.sum / deposit_sizes.size.to_f} bytes"
-  puts "Min deposit size: #{deposit_sizes.min} bytes"
-  puts "Max deposit size: #{deposit_sizes.max} bytes"
+def data_for_event(created_event)
+  {
+    druid: created_event.properties['druid'],
+    version: created_event.properties['version'],
+    sunetid: created_event.properties['sunetid'],
+    deposit_started: created_event.time
+  }.merge(staged_event_data(visit_id: created_event.visit_id))
 end
 
-# Prints a report of file counts, including average, min, and max count
-# param file_counts [Array<Integer>] an array of file counts
-def file_report(file_counts)
-  return unless file_counts.any?
+def staged_event_data(visit_id:)
+  staged_event = globus_staged(visit_id:)
+  return {} unless staged_event
 
-  puts "Average file count: #{file_counts.sum / file_counts.size.to_f}"
-  puts "Min file count: #{file_counts.min}"
-  puts "Max file count: #{file_counts.max}"
+  {
+    deposit_completed: staged_event.time,
+    size: staged_event.properties['total_size'],
+    file_count: staged_event.properties['file_count']
+  }
 end
 
-def first_event
-  @first_event ||= globus_created.first
+def report_path
+  Rails.root.join('tmp', report_filename)
 end
 
-def last_event
-  @last_event ||= globus_created.last
+def report_filename
+  "globus_deposit_report_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv"
 end
 
 # Returns an ActiveRecord::Relation of all "globus created" events, ordered by time
@@ -72,10 +60,4 @@ end
 # return [Ahoy::Event, nil] the first "globus staged" event for the visit, or nil if none exists
 def globus_staged(visit_id:)
   Ahoy::Event.where_event('globus staged').where(visit_id:).order(:time).first
-end
-
-# Returns an array of unique visit IDs that have "globus created" events
-# return [Array<Integer>] an array of unique visit IDs
-def visits
-  globus_created.pluck(:visit_id).uniq
 end
