@@ -85,10 +85,13 @@ class CrossrefService
   end
 
   def affiliation_attrs_for(author)
-    Array(author['affiliation']).map do |affiliation|
+    Array(author['affiliation']).filter_map do |affiliation|
+      ror_id = Array(affiliation['id']).find { |id| id['id-type'] == 'ROR' }&.dig('id')
+      next unless ror_id
+
       {
         institution: strip_tags_and_comments(affiliation['name']),
-        uri: Array(affiliation['id']).select { |id| id['id-type'] == 'ROR' }.map { |id| id['id'] }.first
+        uri: ror_id
       }.compact
     end
   end
