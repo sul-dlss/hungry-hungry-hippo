@@ -20,7 +20,9 @@ class ArticleForm < ApplicationForm
   attribute :agree_to_terms, :boolean
   validates :agree_to_terms, acceptance: true, on: :deposit
 
-  attribute :license, :string
+  DEFAULT_LICENSE = 'https://creativecommons.org/licenses/by/4.0/legalcode'
+
+  attribute :license, :string, default: DEFAULT_LICENSE
   validates :license, presence: true, on: :deposit
 
   attribute :article_version_identification, :string

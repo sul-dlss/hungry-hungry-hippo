@@ -24,9 +24,9 @@ class LicensePresenter
 
   def required_license_option?
     # article deposits always require the user to select a license, regardless of collection setting,
-    # i.e. by setting required_licesne_option? to false, this means the user has to select a license
+    # i.e. by setting required_license_option? to false, this means the user has to select a license
     # other deposits will respect the collection setting
-    return false if work_form.class == ArticleForm
+    return false if work_form.instance_of?(ArticleForm)
 
     collection.required_license_option?
   end
