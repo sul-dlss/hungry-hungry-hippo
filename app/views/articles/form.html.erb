@@ -74,7 +74,7 @@
 
     <div class="d-flex justify-content-between mb-4">
       <div>
-        <%= render Elements::CancelButtonComponent.new(link: request.referer || dashboard_path) %>
+        <%= render Elements::CancelButtonComponent.new(link: collection_path(@collection)) %>
         <%= render Elements::Forms::SubmitComponent.new(label: 'Edit before deposit', variant: :'outline-primary', classes: 'me-2', data: { action: 'unsaved-changes#allowFormSubmission' }) %>
         <%= render Works::Edit::SubmitComponent.new(work: @work, collection: @collection, data: { action: 'unsaved-changes#allowFormSubmission' }) %>
       </div>
