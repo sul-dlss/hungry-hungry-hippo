@@ -9,7 +9,7 @@ class ArticleForm < ApplicationForm
   attribute :doi, :string
   validates :doi, presence: true
   attribute :identifier, :string
-  validates :identifier, presence: true
+  validates :identifier, presence: { message: I18n.t('validations.presence.blank') }
 
   validate :doi_article, if: -> { identifier.present? }
   validate :doi_lookup_performed, if: -> { doi_ok? }, on: :deposit
