@@ -47,13 +47,13 @@
       <% end %>
 
       <% component.with_work_pane(tab_name: :license, label: t('work_form.panes.license.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>
-        <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter) %>
+        <%= render Works::Edit::LicenseComponent.new(form:, license_presenter: @license_presenter, tooltip: I18n.t('work_form.fields.license.tooltip_html')) %>
         <% unless @collection.no_custom_rights_statement_option? %>
           <%= render Works::Edit::TermsOfUseComponent.new(form:, collection: @collection) %>
         <% end %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :related_content, label: t('work_form.panes.related_content.label'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+      <% component.with_work_pane(tab_name: :related_content, label: t('work_form.panes.related_content.label'), tooltip: t('work_form.panes.related_content.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
         <%= render NestedComponentPresenter.for(form:, field_name: :related_works, model_class: RelatedWorkForm, form_component: RelatedWorks::EditComponent, fieldset_classes: 'pane-section') %>
       <% end %>
 
