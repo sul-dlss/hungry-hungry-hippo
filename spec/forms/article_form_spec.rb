@@ -21,7 +21,7 @@ RSpec.describe ArticleForm, type: :form do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:identifier]).to include("can't be blank")
+        expect(form.errors[:identifier]).to include('This field cannot be blank.')
       end
     end
 

@@ -140,6 +140,8 @@ en:
     date:
       year:
         less_than_or_equal_to: 'must be in the past'
+    presence:
+      blank: 'This field cannot be blank.'
     select:
       required: 'selection required'
     url:
