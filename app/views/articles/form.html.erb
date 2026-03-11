@@ -24,7 +24,7 @@
   <div id="permanent-content" data-turbo-permanent="true">
     <%= render 'contents/edit', content: @content, form_id: @article_form.form_id %>
 
-    <div id="content-files" class="pane-section">
+    <div id="content-files" class="pane-section mt-5">
       <%= turbo_frame_tag @content, 'show', src: content_path(@content), data: { controller: 'dropzone-files' }, class: 'dropzone-files' do %>
         <%= render SdrViewComponents::Elements::SpinnerComponent.new %>
       <% end %>
