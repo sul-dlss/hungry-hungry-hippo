@@ -14,7 +14,7 @@
       will enable <%= helpers.link_to_new_tab('Altmetric', altmetric_link) %> reporting.
     </p>
 
-    <%= render Elements::Forms::FieldsetComponent.new(label: 'Do you want a DOI assigned to this work?', classes: 'row', legend_classes: 'col-md-5') do %>
+    <%= render Elements::Forms::FieldsetComponent.new(label: 'Do you want a DOI assigned to this work?', mark_required: true, classes: 'row', legend_classes: 'col-md-5') do %>
       <div class="form-check col-md-2">
         <%= form.radio_button :doi_option, 'yes', class: 'form-check-input' %>
         <%= form.label :doi_option_yes, 'Yes', class: 'form-check-label' %>

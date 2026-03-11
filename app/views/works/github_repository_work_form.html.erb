@@ -77,7 +77,8 @@
           <%= render Elements::Forms::FieldsetComponent.new(
                 label: I18n.t('github_repository_work_form.fields.github_deposit_enabled.label'),
                 help_text: I18n.t('github_repository_work_form.fields.github_deposit_enabled.help_html'),
-                tooltip: I18n.t('github_repository_work_form.fields.github_deposit_enabled.tooltip_html')
+                tooltip: I18n.t('github_repository_work_form.fields.github_deposit_enabled.tooltip_html'),
+                mark_required: true
               ) do %>
             <div class="row ms-0">
             <div class="form-check col-md-2">
