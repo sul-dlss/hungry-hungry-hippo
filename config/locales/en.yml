@@ -281,6 +281,15 @@ en:
             <li>Default email, authors, and work types assigned at the collection level will not be included in these deposits.</li>
             <li>Once a Github repository is set up for automatic depositing, new releases will continue to be deposited unless turned off in the edit form for the individual item even if this workflow is set to "No".</li>
           </ul>
+      license:
+        label: 'Select how this collection manages licenses'
+        required: 'Require license for all deposits'
+        required_label: 'Required license'
+        required_prompt: 'Select required license...'
+        depositor_selects: 'Depositor selects license'
+        default_label: 'Default license'
+        default_prompt: 'Select license to display by default..'
+        help_link: 'Get help selecting a license'
       related_links:
         text:
           label: 'Link text'
