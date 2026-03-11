@@ -140,6 +140,8 @@ en:
     date:
       year:
         less_than_or_equal_to: 'must be in the past'
+    presence:
+      blank: 'This field cannot be blank.'
     select:
       required: 'selection required'
     url:
@@ -162,7 +164,7 @@ en:
       sharing_link:
         label: 'Link for sharing'
         tooltip_html: >-
-          If you did not get a DOI for this work, then use this link for sharing the public webpage for your deposit. The link will be active when the deposit is completed.
+          Use this link to share the public webpage for your deposit. The link will be active when the deposit is completed.
   # For work display / show pages. For editing, see work_form.
   works:
     fields:
@@ -227,9 +229,6 @@ en:
         label: 'Enter DOI or PMCID for published version of this work. If PMCID does not work, try the DOI.'
         tooltip_html: >-
           Enter a DOI (with or without "https://doi.org/") or a PMCID (with or without "PMC") to retrieve metadata about your article from the DOI metadata.
-      license:
-        tooltip_html: >-
-          We strongly recommend that you assign a license to your work, as it will help others understand what you are allowing them to do with your work and under what conditions.  Click on "Get help selecting a license" for specific guidance for licenses for articles.
       version_identification:
         label: 'Which version are you depositing?'
         tooltip_html: >-
@@ -276,12 +275,11 @@ en:
       github_workflow:
         label: 'GitHub workflow'
         help_text_html: >-
-          This allows the user to connect their GitHub account to the SDR for automated deposits of GitHub repositories to
-          this collection.
+          This allows the user to set up a work in this collection for automatic deposit of GitHub releases.
         following_text_html: >-
           <ul class="mb-0">
             <li>Default email, authors, and work types assigned at the collection level will not be included in these deposits.</li>
-            <li>Once a Github repository is set up for automatic depositing, new releases will continue to be deposited unless turned off in the edit form for the individual item.</li>
+            <li>Once a Github repository is set up for automatic depositing, new releases will continue to be deposited unless turned off in the edit form for the individual item even if this workflow is set to "No".</li>
           </ul>
       related_links:
         text:

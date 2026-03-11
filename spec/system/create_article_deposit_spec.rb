@@ -61,7 +61,7 @@ RSpec.describe 'Create an article deposit' do
     # Validate blank DOI submission
     click_link_or_button('Look up')
 
-    expect(page).to have_css('.invalid-feedback', text: "can't be blank")
+    expect(page).to have_css('.invalid-feedback', text: 'This field cannot be blank.')
 
     # Validate missing DOI submission
     fill_in 'identifier_field', with: not_found_doi
