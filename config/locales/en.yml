@@ -275,12 +275,11 @@ en:
       github_workflow:
         label: 'GitHub workflow'
         help_text_html: >-
-          This allows the user to connect their GitHub account to the SDR for automated deposits of GitHub repositories to
-          this collection.
+          This allows the user to set up a work in this collection for automatic deposit of GitHub releases.
         following_text_html: >-
           <ul class="mb-0">
             <li>Default email, authors, and work types assigned at the collection level will not be included in these deposits.</li>
-            <li>Once a Github repository is set up for automatic depositing, new releases will continue to be deposited unless turned off in the edit form for the individual item.</li>
+            <li>Once a Github repository is set up for automatic depositing, new releases will continue to be deposited unless turned off in the edit form for the individual item even if this workflow is set to "No".</li>
           </ul>
       related_links:
         text:
