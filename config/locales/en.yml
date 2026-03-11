@@ -249,6 +249,15 @@ en:
         label: 'Article workflow'
         help_text_html: >-
           This allows the user to deposit a published article with an existing DOI.
+        following_text_html: >-
+          Regardless of the collection settings, these articles will:
+
+          <ul class="mb-0">
+            <li>be available immediately to anyone in the world</li>
+            <li>not receive a DOI</li>
+            <li>not be assigned default email, authors, or work types for the collection</li>
+            <li>Depositors will be allowed to choose any license.</li>
+          </ul>
       description:
         label: 'Description'
         help_text: >-
@@ -269,6 +278,11 @@ en:
         help_text_html: >-
           This allows the user to connect their GitHub account to the SDR for automated deposits of GitHub repositories to
           this collection.
+        following_text_html: >-
+          <ul class="mb-0">
+            <li>Default email, authors, and work types assigned at the collection level will not be included in these deposits.</li>
+            <li>Once a Github repository is set up for automatic depositing, new releases will continue to be deposited unless turned off in the edit form for the individual item.</li>
+          </ul>
       related_links:
         text:
           label: 'Link text'
