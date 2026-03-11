@@ -280,7 +280,7 @@ en:
         following_text_html: >-
           <ul class="mb-0">
             <li>Default email, authors, and work types assigned at the collection level will not be included in these deposits.</li>
-            <li>Once a Github repository is set up for automatic depositing, new releases will continue to be deposited unless turned off in the edit form for the individual item.</li>
+            <li>Once a Github repository is set up for automatic depositing, new releases will continue to be deposited unless turned off in the edit form for the individual item even if this workflow is set to "No".</li>
           </ul>
       related_links:
         text:
