@@ -183,7 +183,7 @@ RSpec.describe CrossrefService, :vcr do
     let(:doi) { '10.1234/nonexistent' }
 
     it 'raises NotFound' do
-      expect { attrs }.to raise_error(CrossrefService::NotFound, "DOI '10.1234/nonexistent' not found in Crossref")
+      expect { attrs }.to raise_error(CrossrefService::NotFound, "DOI '#{doi}' not found in Crossref")
     end
   end
 
@@ -194,7 +194,7 @@ RSpec.describe CrossrefService, :vcr do
       # This is making sure that the spaces are encoded properly and not causing an error other than NotFound.
       expect do
         attrs
-      end.to raise_error(CrossrefService::NotFound, "DOI '10.1234/nonexistent with spaces' not found in Crossref")
+      end.to raise_error(CrossrefService::NotFound, "DOI '#{doi}' not found in Crossref")
     end
   end
 
@@ -206,6 +206,75 @@ RSpec.describe CrossrefService, :vcr do
         attrs
       end.to raise_error(CrossrefService::NotJournalArticle,
                          "DOI '10.1093/gmo/9781561592630.article.a2289571' is not a journal article")
+    end
+  end
+
+  context 'when the DOI does not match the expected format' do
+    let(:doi) { '410.1234/test' }
+
+    # simulate crossref API actually returning something, but test that we won't even call it, since the DOI is invalid
+    before do
+      stub_request(:get, "https://api.crossref.org/works/doi/#{doi}")
+        .to_return(status: 200, body: {}.to_json, headers: { 'Content-Type' => 'application/json' })
+    end
+
+    it 'raises NotFound and does not call the API' do
+      expect(WebMock)
+        .not_to have_requested(:get, "https://api.crossref.org/works/doi/#{doi}")
+
+      expect do
+        attrs
+      end.to raise_error(CrossrefService::NotFound, "DOI '#{doi}' not found in Crossref")
+    end
+  end
+
+  context 'when the DOI includes a resolver URL' do
+    let(:stripped_doi) { '10.1234/test' }
+    let(:response_body) do
+      {
+        status: 'ok',
+        message: {
+          'type' => 'journal-article',
+          'DOI' => stripped_doi,
+          'title' => ['A title'],
+          'author' => [{ 'given' => 'A.', 'family' => 'User', 'affiliation' => [] }],
+          'published' => { 'date-parts' => [[2025, 1, 15]] }
+        }
+      }.to_json
+    end
+
+    before do
+      stub_request(:get, "https://api.crossref.org/works/doi/#{stripped_doi}")
+        .to_return(status: 200, body: response_body, headers: { 'Content-Type' => 'application/json' })
+    end
+
+    context 'when user puts a https://doi.org/ in front of doi' do
+      let(:doi) { "https://doi.org/#{stripped_doi}" }
+
+      it 'strips the resolver and looks up the DOI' do
+        expect(attrs).to match(
+          {
+            title: 'A title',
+            related_works_attributes: [
+              {
+                relationship: 'is version of record',
+                identifier: "https://doi.org/#{stripped_doi}"
+              }
+            ],
+            publication_date_attributes: { year: 2025, month: 1, day: 15 },
+            contributors_attributes: [
+              {
+                first_name: 'A.',
+                last_name: 'User',
+                person_role: 'author'
+              }
+            ]
+          }
+        )
+
+        expect(WebMock)
+          .to have_requested(:get, "https://api.crossref.org/works/doi/#{stripped_doi}")
+      end
     end
   end
 
@@ -385,6 +454,24 @@ RSpec.describe CrossrefService, :vcr do
           ]
         }
       )
+    end
+  end
+
+  describe '#valid?' do
+    context 'with valid looking DOIs' do
+      it 'returns true' do
+        ['10.1128/mbio.1123', '10.456789/12345', '10.1133/something'].each do |doi|
+          expect(described_class.new(doi:).send(:valid?)).to be true
+        end
+      end
+    end
+
+    context 'with invalid looking DOIs' do
+      it 'returns false' do
+        ['110.1128/mbio.1123', '10.stuff/12345', '10. 1133/something'].each do |doi|
+          expect(described_class.new(doi:).send(:valid?)).to be false
+        end
+      end
     end
   end
 end
