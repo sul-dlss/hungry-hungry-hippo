@@ -22,7 +22,7 @@
         <%= render Works::Edit::TitleComponent.new(form:, work_form: @work_form) %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :contributors, label: t('work_form.panes.contributors.label'), help_text: t('work_form.panes.contributors.help_text'), tooltip: t('work_form.panes.contributors.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true) do %>
+      <% component.with_work_pane(tab_name: :contributors, label: t('work_form.panes.contributors.label'), help_text: t('work_form.panes.contributors.help_text'), tooltip: t('work_form.panes.contributors.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, mark_required: true, pane_header_class: nil) do %>
         <%= render Works::Edit::ContributorsComponent.new(form:) %>
       <% end %>
 
@@ -53,7 +53,7 @@
         <% end %>
       <% end %>
 
-      <% component.with_work_pane(tab_name: :related_content, label: t('work_form.panes.related_content.label'), tooltip: t('work_form.panes.related_content.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:) do %>
+      <% component.with_work_pane(tab_name: :related_content, label: t('work_form.panes.related_content.label'), tooltip: t('work_form.panes.related_content.tooltip_html'), form_id:, discard_draft_form_id:, work_presenter: @work_presenter, active_tab_name:, pane_header_class: nil) do %>
         <%= render NestedComponentPresenter.for(form:, field_name: :related_works, model_class: RelatedWorkForm, form_component: RelatedWorks::EditComponent, fieldset_classes: 'pane-section') %>
       <% end %>
 
