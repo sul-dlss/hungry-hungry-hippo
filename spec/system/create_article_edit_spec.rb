@@ -64,7 +64,7 @@ RSpec.describe 'Create an article then edit before deposit' do
     # Setting version description
     select('Author accepted version', from: 'Which version are you depositing?')
 
-    fill_in 'identifier_field', with: doi
+    fill_in 'article_identifier', with: doi
     click_link_or_button('Look up')
 
     # Deposit

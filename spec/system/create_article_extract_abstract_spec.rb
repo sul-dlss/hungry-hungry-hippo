@@ -51,7 +51,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
 
       expect(page).to have_css('h1', text: 'Article deposit')
 
-      fill_in 'identifier_field', with: doi
+      fill_in 'article_identifier', with: doi
       click_link_or_button('Look up')
 
       click_link_or_button('Get abstract from file using AI')
@@ -112,7 +112,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
 
       expect(page).to have_css('h1', text: 'Article deposit')
 
-      fill_in 'identifier_field', with: doi
+      fill_in 'article_identifier', with: doi
       click_link_or_button('Look up')
 
       find('.dropzone').drop('spec/fixtures/files/Strategies_for_Digital_Library_Migration.pdf')
@@ -133,7 +133,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
 
       expect(page).to have_css('h1', text: 'Article deposit')
 
-      fill_in 'identifier_field', with: doi
+      fill_in 'article_identifier', with: doi
       click_link_or_button('Look up')
 
       find('.dropzone').drop('spec/fixtures/files/Strategies_for_Digital_Library_Migration.pdf')
