@@ -1,0 +1,11 @@
+
+  <%= before_form_section %>
+
+  <%= form_with(model:, id: form_id, data: { controller: 'form-invalid-focus', action: 'change->unsaved-changes#changed' }) do |form| %>
+    <%= form.hidden_field :collection_druid %>
+    <%= form.hidden_field :content_id %>
+    <%= form.hidden_field :form_id %>
+    <%= form.hidden_field :last_doi_lookup %>
+
+    <%= form_section %>
+  <% end %>
