@@ -60,9 +60,9 @@
                                                    mark_required: true, classes: 'fw-bold') %>
     <div class="d-flex align-items-center">
       <div class="flex-grow-1">
-      <%= form.text_field :identifier, id: 'identifier_field', class: 'form-control flex-grow-1', data: { action: 'change->unsaved-changes#changed' } %>
+      <%= form.text_field :identifier, class: 'form-control flex-grow-1', data: { action: 'change->unsaved-changes#changed' } %>
       </div>
-      <%= render Elements::Forms::SubmitComponent.new(label: 'Look up', data: { action: 'unsaved-changes#allowFormSubmission' }, value: 'lookup', classes: 'ms-2') %>
+      <%= render Elements::Forms::SubmitComponent.new(label: 'Look up', value: 'lookup', classes: 'ms-2') %>
     </div>
     <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :identifier) %>
 

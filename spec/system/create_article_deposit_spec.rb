@@ -64,7 +64,7 @@ RSpec.describe 'Create an article deposit' do
     expect(page).to have_css('.invalid-feedback', text: 'This field cannot be blank.')
 
     # Validate missing DOI submission
-    fill_in 'identifier_field', with: not_found_doi
+    fill_in 'article_identifier', with: not_found_doi
     click_link_or_button('Look up')
     expect(page).to have_css('.invalid-feedback', text: 'Unable to retrieve metadata for this DOI/PMCID')
     expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_NOT_FOUND,
@@ -72,7 +72,7 @@ RSpec.describe 'Create an article deposit' do
                                    identifier_type: 'DOI').count).to eq(1)
 
     # Deposit without required fields
-    fill_in 'identifier_field', with: doi
+    fill_in 'article_identifier', with: doi
     click_link_or_button('Deposit')
     expect(page).to have_css('.invalid-feedback', text: 'must have at least one file')
     expect(page).to have_css('.invalid-feedback', text: 'selection required')
@@ -182,7 +182,7 @@ RSpec.describe 'Create an article deposit' do
       expect(page).to have_css('h1', text: 'Article deposit')
 
       # Look up DOI via PMID
-      fill_in 'identifier_field', with: pmid
+      fill_in 'article_identifier', with: pmid
       click_link_or_button('Look up')
       expect(page).to have_no_css('.invalid-feedback')
       expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_SUCCESS,
@@ -218,7 +218,7 @@ RSpec.describe 'Create an article deposit' do
         expect(page).to have_css('h1', text: 'Article deposit')
 
         # Look up DOI via PMID
-        fill_in 'identifier_field', with: doi
+        fill_in 'article_identifier', with: doi
         click_link_or_button('Look up')
         expect(page).to have_css('.invalid-feedback',
                                  text: 'The metadata for this identifier indicates it is not a journal article.')
@@ -245,7 +245,7 @@ RSpec.describe 'Create an article deposit' do
         expect(page).to have_css('h1', text: 'Article deposit')
 
         # Look up DOI via PMID
-        fill_in 'identifier_field', with: doi
+        fill_in 'article_identifier', with: doi
         click_link_or_button('Look up')
         expect(page).to have_css('.invalid-feedback', text: 'The metadata for this identifier is incomplete.')
         expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_WITH_INCOMPLETE_METADATA,
