@@ -233,6 +233,9 @@ en:
         label: 'Which version are you depositing?'
         tooltip_html: >-
           Indicate which version of the article you are depositing. The "author submitted version" is the version before peer review or editing as submitted by an author to a journal. The "author accepted version" is the version accepted for publication and typically includes all changes made as a result of peer review. The "final published version of the work" is the peer reviewed, edited, formatted, and typeset version of the article.
+    extract_abstract:
+      complete: We used AI to try to retrieve the exact abstract from the file you uploaded above, not to create an abstract from scratch. If you need to make changes, click the 'Edit before depositing' button below.
+      error: We were not able to extract your abstract. If you would like to enter an abstract, click "Edit before depositing" below.
   collection_form:
     default_use_statement_instructions: 'Enter additional terms of use not covered by your chosen license or the default terms shown above, which also display on the public webpage.'
     fields:
