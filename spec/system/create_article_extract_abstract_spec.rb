@@ -52,7 +52,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
       expect(page).to have_css('h1', text: 'Article deposit')
 
       fill_in 'article_identifier', with: doi
-      click_link_or_button('Look up')
+      click_link_or_button(I18n.t('article_form.buttons.lookup_identifier'))
 
       click_link_or_button('Get abstract from file using AI')
       expect(page).to have_css('.invalid-feedback', text: 'Upload your article as a PDF to use this feature.')
@@ -113,7 +113,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
       expect(page).to have_css('h1', text: 'Article deposit')
 
       fill_in 'article_identifier', with: doi
-      click_link_or_button('Look up')
+      click_link_or_button(I18n.t('article_form.buttons.lookup_identifier'))
 
       find('.dropzone').drop('spec/fixtures/files/Strategies_for_Digital_Library_Migration.pdf')
       expect(page).to have_css('table#content-table td', text: 'Strategies_for_Digital_Library_Migration.pdf')
@@ -134,7 +134,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
       expect(page).to have_css('h1', text: 'Article deposit')
 
       fill_in 'article_identifier', with: doi
-      click_link_or_button('Look up')
+      click_link_or_button(I18n.t('article_form.buttons.lookup_identifier'))
 
       find('.dropzone').drop('spec/fixtures/files/Strategies_for_Digital_Library_Migration.pdf')
       expect(page).to have_css('table#content-table td', text: 'Strategies_for_Digital_Library_Migration.pdf')

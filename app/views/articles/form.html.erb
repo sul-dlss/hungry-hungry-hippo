@@ -59,10 +59,8 @@
                                                    tooltip: I18n.t('article_form.fields.identifier.tooltip_html'),
                                                    mark_required: true, classes: 'fw-bold') %>
     <div class="d-flex align-items-center">
-      <div class="flex-grow-1">
-      <%= form.text_field :identifier, class: 'form-control flex-grow-1', data: { action: 'change->unsaved-changes#changed' } %>
-      </div>
-      <%= render Elements::Forms::SubmitComponent.new(label: 'Look up', value: 'lookup', classes: 'ms-2') %>
+      <%= form.text_field :identifier, class: 'form-control w-50', data: { action: 'change->unsaved-changes#changed' } %>
+      <%= render Elements::Forms::SubmitComponent.new(label: t('article_form.buttons.lookup_identifier'), value: 'lookup', classes: 'ms-2 text-nowrap') %>
     </div>
     <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :identifier) %>
 

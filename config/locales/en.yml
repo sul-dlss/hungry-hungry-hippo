@@ -226,6 +226,7 @@ en:
         tab_label: 'Access settings'
   article_form:
     buttons:
+      lookup_identifier: 'Get publication info from DOI/PMCID'
       extract_abstracts:
         label: 'Get abstract from file using AI'
         tooltip_html: >-

@@ -65,7 +65,7 @@ RSpec.describe 'Create an article then edit before deposit' do
     select('Author accepted version', from: 'Which version are you depositing?')
 
     fill_in 'article_identifier', with: doi
-    click_link_or_button('Look up')
+    click_link_or_button(I18n.t('article_form.buttons.lookup_identifier'))
 
     # Deposit
     click_link_or_button('Edit before deposit')
