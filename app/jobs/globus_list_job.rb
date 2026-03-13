@@ -8,6 +8,8 @@ class GlobusListJob < RetriableJob
     @content = content
     @cancel_check_interval = cancel_check_interval
 
+    set_hb_context
+
     GlobusClient.disallow_writes(user_id: user.email_address, path: globus_path, notify_email: false)
 
     content.globus_list!
@@ -67,5 +69,15 @@ class GlobusListJob < RetriableJob
 
   def canceled?
     content.reload.globus_not_in_progress?
+  end
+
+  def set_hb_context
+    Honeybadger.context(
+      content_id: content.id,
+      work_id: work.id,
+      druid: work.druid,
+      deposit_state: work.deposit_state,
+      current_user: user.sunetid
+    )
   end
 end
