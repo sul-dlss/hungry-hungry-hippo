@@ -6,18 +6,24 @@ class CrossrefService
   class NotFound < Error; end
   class NotJournalArticle < Error; end
 
+  DOI_REGEX = %r{^10.\d{4,}/[-._;()/:a-zA-Z0-9]+$}
+  DOI_RESOLVERS = ['https://doi.org/', 'https://dx.doi.org/', 'http://dx.doi.org/'].freeze
+
   def self.call(...)
     new(...).call
   end
 
   def initialize(doi:)
-    @doi = doi
+    # strip any standard resolve part of the URL
+    @doi = doi.sub(/^#{Regexp.union(DOI_RESOLVERS)}/, '')
   end
 
   # @return [Hash] attributes for a work form based on the Crossref metadata for the DOI
   # @raise [NotFound] if the DOI is not found in Crossref
   # @raise [NotJournalArticle] if the DOI is not a journal article
   def call
+    raise NotFound, "DOI '#{doi}' not found in Crossref" unless valid?
+
     Rails.cache.fetch(doi, namespace: 'crossref', expires_in: 1.month) do
       {
         title:,
@@ -35,6 +41,13 @@ class CrossrefService
   private
 
   attr_reader :doi
+
+  # check for a valid looking DOI format before sending to crossref API,
+  # this is because crossref seems to return metadata even when the DOI does not match exactly
+  # see https://github.com/sul-dlss/hungry-hungry-hippo/issues/2224
+  def valid?
+    DOI_REGEX.match?(doi)
+  end
 
   def message # rubocop:disable Metrics/AbcSize
     @message ||= begin
