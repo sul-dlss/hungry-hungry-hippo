@@ -4,7 +4,7 @@ module Edit
   # Component for adding multiple participants to a collection
   class BulkParticipantsComponent < ApplicationComponent
     def initialize(form:, field_name:, model_class:, form_component:, add_button_label: nil, help_text: nil, # rubocop:disable Metrics/ParameterLists
-                   mark_required: false)
+                   mark_required: false, fieldset_classes: 'pane-section')
       @form = form
       @field_name = field_name
       @model_class = model_class
@@ -12,10 +12,11 @@ module Edit
       @add_button_label = add_button_label
       @help_text = help_text
       @mark_required = mark_required
+      @fieldset_classes = fieldset_classes
       super()
     end
 
-    attr_reader :form, :field_name, :model_class, :form_component, :help_text, :mark_required
+    attr_reader :form, :field_name, :model_class, :form_component, :help_text, :mark_required, :fieldset_classes
 
     def data
       {
