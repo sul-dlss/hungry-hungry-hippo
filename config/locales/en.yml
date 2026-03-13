@@ -166,6 +166,7 @@ en:
       deposit_github_repository:
         label: 'Deposit a GitHub repository'
         aria_label: 'Deposit a GitHub repository to %{collection_title}'
+      clear_search: 'Clear search'
     fields:
       sharing_link:
         label: 'Link for sharing'

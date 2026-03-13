@@ -1,6 +1,6 @@
 <%= turbo_frame_tag 'collection-works' do %>
   <div class="d-flex justify-content-between mb-3">
-    <div>
+    <div class="d-flex align-items-center">
       <%= form_with url: works_collection_path, method: :get do |form| %>
         <div class="input-group">
           <%# Not using TextFieldComponent because field-container conflicts with input-group. %>
@@ -12,6 +12,14 @@
             <%= render Elements::Forms::SubmitComponent.new(label: 'Search', classes: 'btn-sm py-1') %>
           </div>
         </div>
+      <% end %>
+      <% if @search_term.present? %>
+        <span class="search-term-pill d-inline-flex align-items-center ms-2">
+          <span class="search-term-pill-text"><%= @search_term %></span>
+          <%= link_to works_collection_path(@collection), aria: { label: t('collections.buttons.clear_search') } do %>
+            <span aria-hidden="true">&times;</span>
+          <% end %>
+        </span>
       <% end %>
     </div>
     <div>

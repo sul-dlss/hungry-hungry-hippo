@@ -408,3 +408,25 @@ fieldset.form-fieldset legend {
   margin: 2rem 0;
   opacity: 1;
 }
+
+.search-term-pill {
+  background-color: var(--stanford-stone-light);
+  color: var(--stanford-black);
+  border-radius: 1rem;
+  border: 1px solid var(--stanford-90-black);
+  padding: 0;
+
+  .search-term-pill-text {
+    padding: 0.25rem 0.5rem 0.25rem 0.75rem;
+  }
+
+  a {
+    color: var(--stanford-black);
+    text-decoration: none;
+    border-left: 1px solid var(--stanford-90-black);
+    padding: 0.25rem 0.75rem;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+  }
+}
