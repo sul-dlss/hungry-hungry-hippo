@@ -3,7 +3,7 @@
   <div class="d-flex">
     <div>
       <p><%= @abstract %></p>
-      <p><%= helpers.magic_icon(classes: 'me-2', style: 'color: #4298B5;') %>We used AI to retrieve this abstract. If you need to make changes, click the 'Edit before depositing' button below.</p>
+      <p><%= helpers.magic_icon(classes: 'me-2', style: 'color: #4298B5;') %><%= t('article_form.extract_abstract.complete') %></p>
     </div>
     <div>
       <%= render Elements::IconButtonLinkComponent.new(link: clear_abstracts_path(doi:), icon: 'delete', label: 'Clear abstract', data: { abstract_target: 'submit' }) %>
@@ -11,6 +11,6 @@
   </div>
 <% else %>
   <div class="invalid-feedback is-invalid d-block">
-    We were not able to extract your abstract. If you would like to enter an abstract, click "Edit before depositing" below.
+    <%= t('article_form.extract_abstract.error') %>
   </div>
 <% end %>
