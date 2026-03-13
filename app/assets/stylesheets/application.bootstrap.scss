@@ -30,7 +30,8 @@ $enable-smooth-scroll: false;
   }
 
   .nav-link.active {
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid #B1040E;
+    color: #B1040E;
     font-weight: bold;
   }
 }
