@@ -103,6 +103,12 @@ en:
     collection_deleted: 'Collection successfully deleted.'
     collection_not_empty: 'Collection must be empty to delete.'
     collection_report_generated: 'Collection report requested and will be emailed when completed.'
+    deposit_submitted: 'Deposit successfully submitted'
+    deposit_submitted_note_html: >-
+      <ul>
+        <li>You will receive an email when your deposit is complete.</li>
+        <li>You can create or edit other items even if your deposit is still in progress.</li>
+      </ul>
     draft_discarded: 'Draft discarded.'
     validation: >-
       Required fields have not been filled out. Click on the sections highlighted on
