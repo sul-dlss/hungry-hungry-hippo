@@ -24,7 +24,7 @@ class CompleteBaseWorkForm < BaseWorkForm
 
   validates :license, presence: true, on: :deposit
 
-  validates :work_type, presence: true, on: :deposit
+  validates :work_type, presence: { message: I18n.t('validations.work_type.required') }, on: :deposit
 
   def contributor_presence
     return if contributors.any? { |contributor| !contributor.empty? }
