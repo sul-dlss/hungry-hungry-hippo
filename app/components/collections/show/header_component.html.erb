@@ -1,16 +1,16 @@
 <div class="d-flex justify-content-end">
-  <div class="d-flex align-items-start ms-5">
-    <%= render Edit::EditDraftButtonComponent.new(presenter:, label: 'Edit', classes: 'ms-2 me-2 text-nowrap') %>
+  <div class="d-flex flex-wrap align-items-start ms-5 justify-content-end gap-2">
+    <%= render Edit::EditDraftButtonComponent.new(presenter:, label: 'Edit', classes: 'text-nowrap') %>
     <% if !presenter.first_draft? && allowed_to_create_work? %>
       <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: new_work_path(collection_druid: presenter.druid),
                                                                       label: I18n.t('collections.buttons.deposit_work.label'),
                                                                       variant: :primary,
-                                                                      classes: 'me-2 text-nowrap',
+                                                                      classes: 'text-nowrap',
                                                                       aria: { label: I18n.t('collections.buttons.deposit_work.aria_label', collection_title: collection.title) }) %>
       <% if Settings.article_deposit.enabled && collection.article_deposit_enabled %>
         <%= render SdrViewComponents::Elements::ButtonLinkComponent.new(link: new_article_path(collection_druid: presenter.druid),
                                                                         label: I18n.t('collections.buttons.deposit_article.label'),
-                                                                        variant: 'outline-primary', classes: 'me-2 text-nowrap',
+                                                                        variant: 'outline-primary', classes: 'text-nowrap',
                                                                         aria: { label: I18n.t('collections.buttons.deposit_article.aria_label', collection_title: collection.title) }) %>
       <% end %>
       <% if Settings.github.enabled && collection.github_deposit_enabled %>
@@ -20,7 +20,7 @@
                                                                         aria: { label: I18n.t('collections.buttons.deposit_github_repository.aria_label', collection_title: collection.title) }) %>
       <% end %>
     <% end %>
-    <%= render Admin::FunctionDropdownComponent.new(classes: 'ms-2') do |component| %>
+    <%= render Admin::FunctionDropdownComponent.new do |component| %>
       <% component.with_function(label: 'Delete', link: new_collection_admin_delete_path(presenter.druid), data: { turbo_frame: 'admin-card' }) %>
     <% end %>
   </div>
