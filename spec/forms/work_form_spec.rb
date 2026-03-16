@@ -33,7 +33,7 @@ RSpec.describe WorkForm do
     context 'when depositing with blank work type' do
       it 'is invalid' do
         expect(form.valid?(:deposit)).to be false
-        expect(form.errors[:work_type]).to include("can't be blank")
+        expect(form.errors[:work_type]).to include('Type must be selected.')
       end
     end
 

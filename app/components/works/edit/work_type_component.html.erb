@@ -5,6 +5,7 @@
         <p>The collection manager has selected "<%= work_type %>" as the type for all deposits.</p>
         <%= form.hidden_field :work_type, data: { work_type_target: 'workTypeHidden' } %>
       <% else %>
+        <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :work_type, classes: 'mb-2') %>
         <div class="types-container">
           <%= render Elements::Forms::InputCollectionRadioButtonsComponent.new(form:, field_name: :work_type, input_collection: WorkType.all, input_data: { work_type_target: 'workTypeRadio', action: 'work-type#showSubtypes click->tooltips#hideAll' }, mark_required: true) %>
         </div>

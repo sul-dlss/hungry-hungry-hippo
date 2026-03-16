@@ -150,6 +150,8 @@ en:
       blank: 'This field cannot be blank.'
     select:
       required: 'selection required'
+    work_type:
+      required: 'Type must be selected.'
     url:
       invalid: 'must be a valid URL'
 

@@ -136,7 +136,7 @@ RSpec.describe 'Validate a work deposit' do
     find('.nav-link', text: with_required_tab_mark('Type of deposit')).click
     expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Type of deposit'))
     expect(page).to have_field('work_work_type_text', class: 'is-invalid', type: :radio)
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: "can't be blank")
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Type must be selected.')
 
     # Make the abstract valid
     choose('Text')
