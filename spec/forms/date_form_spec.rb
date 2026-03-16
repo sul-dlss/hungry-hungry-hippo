@@ -64,6 +64,26 @@ RSpec.describe DateForm do
       end
     end
 
+    context 'when year and month but year contains non-numeric characters' do
+      let(:year) { 'abc' }
+      let(:month) { '3' }
+
+      it 'treats the year as blank instead of coercing it to 0, but since month was entered, form is invalid' do
+        expect(form).not_to be_valid
+        expect(form.year).to be_nil
+        expect(form.errors[:year]).to include("can't be blank")
+      end
+    end
+
+    context 'when only year but year contains non-numeric characters' do
+      let(:year) { 'abc' }
+
+      it 'treats the year as blank instead of coercing it to 0, which removes it, making form valid' do
+        expect(form.year).to be_nil
+        expect(form).to be_valid
+      end
+    end
+
     context 'when month but not year' do
       let(:month) { '3' }
 
