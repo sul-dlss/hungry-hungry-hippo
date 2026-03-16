@@ -98,6 +98,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
                                      doi:,
                                      abstract:).count).to eq(1)
     end
+
   end
 
   context 'when extracting fails' do
