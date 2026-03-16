@@ -17,6 +17,53 @@ RSpec.describe 'Validate a work deposit' do
     sign_in(user)
   end
 
+  it 'rerenders validation errors when deposit is submitted with an invalid release date', :dropzone do
+    visit work_path_with_collection
+
+    find('.dropzone').drop('spec/fixtures/files/hippo.png')
+    expect(page).to have_css('table#content-table td', text: 'hippo.png')
+
+    find('.nav-link', text: with_required_tab_mark('Title and contact')).click
+    fill_in('work_title', with: title_fixture)
+    fill_in('Enter contact email', with: contact_emails_fixture.first['email'])
+
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Contributors'))
+
+    form_instances = all('.form-instance')
+    within(form_instances.first) do
+      select('Creator', from: 'Role')
+      within('.orcid-section') do
+        find('label', text: 'Enter name manually').click
+      end
+      fill_in('First name', with: contributors_fixture.first['first_name'])
+      fill_in('Last name', with: contributors_fixture.first['last_name'])
+    end
+
+    click_link_or_button('Next')
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Abstract and keywords'))
+    fill_in('work_abstract', with: abstract_fixture)
+    fill_in('Start typing a keyword', with: keywords_fixture.first['text'])
+
+    find('.nav-link', text: with_required_tab_mark('Type of deposit')).click
+    choose('Text')
+
+    find('.nav-link', text: with_required_tab_mark('Access settings')).click
+    expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Access settings'))
+    choose('On this date')
+    fill_in('Release date', with: (Time.zone.today - 1.day).strftime('%m/%d/%Y'))
+
+    find('.nav-link', text: with_required_tab_mark('Deposit')).click
+    check('I agree')
+    click_link_or_button('Deposit', class: 'btn-primary')
+
+    expect(page).to have_current_path(work_path_with_collection)
+    expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+    expect(page).to have_css('.nav-link.active.is-invalid', text: with_required_tab_mark('Access settings'))
+    expect(page).to have_field('Release date', class: 'is-invalid')
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be today or later')
+  end
+
   it 'validates a work', :dropzone do
     visit work_path_with_collection
 
