@@ -62,6 +62,9 @@ RSpec.describe 'Create an article deposit' do
     click_link_or_button(I18n.t('article_form.buttons.lookup_identifier'))
 
     expect(page).to have_css('.invalid-feedback', text: 'This field cannot be blank.')
+    expect(page).to have_css(
+      'input#article_identifier[aria-invalid="true"][aria-describedby="article_identifier_error"]'
+    )
 
     # Validate missing DOI submission
     fill_in 'article_identifier', with: not_found_doi
@@ -78,6 +81,10 @@ RSpec.describe 'Create an article deposit' do
     expect(page).to have_css('.invalid-feedback', text: 'selection required')
     expect(page).to have_css('.invalid-feedback', text: 'must be accepted')
     expect(page).to have_css('.invalid-feedback', text: 'Look up before editing or depositing')
+    expect(page).to have_css(
+      'select#article_article_version_identification[aria-invalid="true"]' \
+      '[aria-describedby="article_article_version_identification_error"]'
+    )
 
     # Lookup
     click_link_or_button(I18n.t('article_form.buttons.lookup_identifier'))
