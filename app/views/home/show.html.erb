@@ -66,11 +66,11 @@
 
   <div class="search-bar p-4">
     <form action="https://searchworks.stanford.edu/" method="get" target="_blank">
-      <div class="row justify-content-center align-items-center">
-        <div class="col-2 d-flex justify-content-end">
-          <label for="search" class="fw-bold">Find SDR items in SearchWorks</label>
+      <div class="row justify-content-center align-items-center g-3">
+        <div class="col-12 col-md-4 col-lg-3 text-start text-md-end">
+          <label for="search" class="fw-bold mb-0">Find SDR items in SearchWorks</label>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-md-8 col-lg-6">
           <input type="hidden" name="f[building_facet][]" value="Stanford Digital Repository">
           <div class="input-group">
             <input name="q" type="text" id="search" class="form-control" placeholder="Search..." autocomplete="off">
@@ -82,17 +82,13 @@
   </div>
 
   <div class="row mt-5 gy-2 justify-content-center">
-    <div class="col col-sm-12 w-75">
-      <div class="d-flex align-items-center ">
-        <div class="m-3">
-          <%= image_tag 'home_news.jpg', height: 54, width: 185, alt: 'News' %>
-        </div>
-        <div class="m-3">
-          <p>
-            Sign up for our newsletter to stay<br> informed about SDR and related services.
-          </p>
-        </div>
-        <div class="flex-grow-1 m-3">
+      <div class="col-12 col-md-4 col-lg-4 ms-5 ms-md-0 text-md-end">
+        <%= image_tag 'home_news.jpg', height: 54, width: 185, alt: 'News' %>
+      </div>
+      <div class="col-12 col-md-3 col-lg-3 ms-5 ms-md-0 d-flex">
+          Sign up for our newsletter to stay informed about SDR and related services.
+      </div>
+      <div class="col-12 col-md-5 col-lg-5 ms-5 ms-md-0 d-flex">
           <%= tag.form action: Settings.newsletter_url, method: 'post', data: { turbo: false },
                        id: 'mc-embedded-subscribe-form', name: 'mc-embedded-subscribe-form', class: 'validate', target: '_blank', novalidate: true do %>
             <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
@@ -101,14 +97,12 @@
             </div>
             <label for="mce-EMAIL" class="visually-hidden">Sign up for our newsletter</label>
             <div class="input-group">
-              <input type="email" value="" name="EMAIL" class="form-control" id="mce-EMAIL" autocomplete="email" placeholder="Enter your email address" required>
+              <input type="email" value="" name="EMAIL" class="form-control" id="mce-EMAIL" autocomplete="email" placeholder="Enter email address" required>
               <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary">
             </div>
           <% end %>
         </div>
       </div>
-    </div>
-  </div>
 
   <h1 class="h2 text-center mt-5">What Stanford researchers say about SDR</h1>
 
