@@ -348,6 +348,30 @@ RSpec.describe 'Create a work deposit' do
       expect(Ahoy::Event.where_event(Ahoy::Event::WORK_UPDATED, work_id: work.id, deposit: true,
                                                                 review: false).count).to eq(1)
     end
+
+    it 'rerenders validation errors when re-depositing with an invalid release date' do
+      visit work_path(druid)
+
+      expect(page).to have_css('h1', text: title_fixture)
+      click_link_or_button('Edit or deposit')
+
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Manage files'))
+
+      find('.nav-link', text: with_required_tab_mark('Access settings')).click
+      expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Access settings'))
+      choose('On this date')
+      fill_in('Release date', with: (Time.zone.today - 1.day).strftime('%m/%d/%Y'))
+
+      find('.nav-link', text: with_required_tab_mark('Deposit')).click
+      fill_in('What\'s changing?', with: 'Updating release settings.')
+      click_link_or_button('Deposit', class: 'btn-primary')
+
+      expect(page).to have_current_path(edit_work_path(druid))
+      expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+      expect(page).to have_css('.nav-link.active.is-invalid', text: with_required_tab_mark('Access settings'))
+      expect(page).to have_field('Release date', class: 'is-invalid')
+      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be today or later')
+    end
   end
 
   context 'when updating an existing work and only changing a file' do
