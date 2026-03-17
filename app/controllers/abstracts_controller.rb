@@ -25,6 +25,8 @@ class AbstractsController < ApplicationController
 
   def clear
     ahoy.track Ahoy::Event::EXTRACTED_ABSTRACT_CLEARED, doi: @doi
+
+    head :no_content
   end
 
   private

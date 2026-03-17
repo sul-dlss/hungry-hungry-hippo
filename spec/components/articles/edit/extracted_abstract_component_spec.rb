@@ -14,10 +14,9 @@ RSpec.describe Articles::Edit::ExtractedAbstractComponent, type: :component do
     it 'renders the extracted abstract' do
       render_inline(component)
 
-      expect(page).to have_field('extracted_abstract', with: abstract_fixture, type: 'hidden')
-      expect(page).to have_css('p', text: abstract_fixture)
+      expect(page).to have_field('extracted_abstract', with: abstract_fixture)
       expect(page).to have_css('p', text: 'We used AI to try to retrieve the exact abstract')
-      expect(page).to have_link('Clear abstract', href: '/abstracts/clear?doi=10.1234%2Fexample.doi')
+      expect(page).to have_button('Clear abstract')
     end
   end
 

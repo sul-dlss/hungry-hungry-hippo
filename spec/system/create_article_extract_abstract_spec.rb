@@ -68,7 +68,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
       expect(page).to have_css('table#content-table td', text: 'Strategies_for_Digital_Library_Migration.pdf')
 
       click_link_or_button('Get abstract from file using AI')
-      expect(page).to have_css('p', text: abstract)
+      expect(page).to have_css('textarea', text: abstract)
 
       # Setting version description
       select('Author accepted version', from: 'Which version are you depositing?')
@@ -98,7 +98,6 @@ RSpec.describe 'Create an article deposit using abstract extract' do
                                      doi:,
                                      abstract:).count).to eq(1)
     end
-
   end
 
   context 'when extracting fails' do
@@ -141,10 +140,10 @@ RSpec.describe 'Create an article deposit using abstract extract' do
       expect(page).to have_css('table#content-table td', text: 'Strategies_for_Digital_Library_Migration.pdf')
 
       click_link_or_button('Get abstract from file using AI')
-      expect(page).to have_css('p', text: abstract)
+      expect(page).to have_css('textarea', text: abstract)
 
       click_link_or_button('Clear abstract')
-      expect(page).to have_no_css('p', text: abstract)
+      expect(page).to have_css('textarea', text: '')
 
       # Setting version description
       select('Author accepted version', from: 'Which version are you depositing?')
