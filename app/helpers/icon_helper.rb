@@ -93,6 +93,18 @@ module IconHelper
     icon(icon_classes: 'bi bi-stars', **)
   end
 
+  def github_icon(**)
+    icon(icon_classes: 'bi bi-github', **)
+  end
+
+  def open_access_icon(classes: [], **)
+    image_tag('open_access_logo.png', alt: 'Open Access icon',
+                                      width: 12,
+                                      height: 18,
+                                      class: ComponentSupport::CssClasses.merge(classes),
+                                      **)
+  end
+
   def orcid_icon(classes: [], **)
     content_tag(:img, nil, alt: 'ORCiD icon',
                            src: 'https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png',

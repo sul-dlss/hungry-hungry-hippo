@@ -185,7 +185,7 @@ RSpec.describe 'Show dashboard', :rack_test do
   end
 
   context 'when new user with shares but not collections' do
-    let!(:collection) { create(:collection, :with_druid, depositors: [user]) }
+    let!(:collection) { create(:collection, :with_druid, depositors: [user], github_deposit_enabled: true) }
     let(:user) { create(:user) }
 
     before do
@@ -203,6 +203,8 @@ RSpec.describe 'Show dashboard', :rack_test do
       # Your collections section
       expect(page).to have_css('h2', text: 'Your collections')
       expect(page).to have_css('h3', text: collection.title)
+      expect(page).to have_text(I18n.t('collections.buttons.deposit_github_repository.label'))
+      expect(page).to have_css('a i.bi.bi-github.text-black')
 
       expect(page).to have_css('.alert', text: 'Congratulations on taking the first step')
     end

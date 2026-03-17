@@ -87,4 +87,19 @@ RSpec.describe Collections::Show::HeaderComponent, type: :component do
       expect(page).to have_link('Delete', class: 'dropdown-item')
     end
   end
+
+  context 'when github deposit is enabled for the collection' do
+    let(:collection) { create(:collection, managers: [user], druid: druid_fixture, github_deposit_enabled: true) }
+
+    before do
+      allow(Settings.github).to receive(:enabled).and_return(true)
+    end
+
+    it 'shows the GitHub deposit button with icon' do
+      render_inline(described_class.new(presenter:))
+
+      expect(page).to have_text(I18n.t('collections.buttons.deposit_github_repository.label'))
+      expect(page).to have_css('a i.bi.bi-github')
+    end
+  end
 end

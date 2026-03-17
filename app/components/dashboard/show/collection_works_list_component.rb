@@ -30,7 +30,7 @@ module Dashboard
         presenter = WorkPresenter.new(work:, version_status: @status_map.fetch(work.id, VersionStatus::NilStatus.new),
                                       work_form: WorkForm.new(druid: work.druid))
         [
-          link_to(work.title, work_or_wait_path(work)),
+          link_to(work_or_wait_path(work)) { helpers.work_title_with_type_icon(work) },
           presenter.status_message,
           work.user.name,
           work.object_updated_at ? helpers.local_date(work.object_updated_at, format: '%b %d, %Y') : nil,

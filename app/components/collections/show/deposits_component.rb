@@ -30,7 +30,9 @@ module Collections
       def values_for(presenter)
         work = presenter.work
         [
-          helpers.link_to(work.title, work_or_wait_path(work), data: { turbo_frame: '_top' }),
+          helpers.link_to(work_or_wait_path(work), data: { turbo_frame: '_top' }) do
+            helpers.work_title_with_type_icon(work)
+          end,
           presenter.status_message,
           work.user.name,
           work.object_updated_at ? helpers.l(work.object_updated_at, format: '%b %d, %Y') : nil,
