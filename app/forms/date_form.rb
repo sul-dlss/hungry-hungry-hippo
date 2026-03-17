@@ -15,6 +15,16 @@ class DateForm < ApplicationForm
   validates :day, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 31, allow_nil: true }
   attribute :approximate, :boolean, default: false
 
+  # if the user enters a year value that is not a number, set to nil instead of the default (which is cast to 0)
+  # this re-renders year as blank instead of 0, see https://github.com/sul-dlss/hungry-hungry-hippo/issues/2231
+  def year=(value)
+    if value.is_a?(String) && value.match?(/\D/)
+      super(nil)
+    else
+      super
+    end
+  end
+
   def to_s
     to_date&.to_fs(:edtf)
   end

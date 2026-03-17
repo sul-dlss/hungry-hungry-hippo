@@ -36,7 +36,7 @@ RSpec.describe 'Validate a work deposit' do
     find('.nav-link', exact_text: 'Dates').click
     expect(page).to have_css('.nav-link.active', exact_text: 'Dates')
     within('fieldset#publication_date') do
-      fill_in('Year', with: 'abc')
+      fill_in('Year', with: '1')
     end
 
     # Bad creation date
