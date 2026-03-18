@@ -232,7 +232,7 @@ class DepositWorkJob < ApplicationJob # rubocop:disable Metrics/ClassLength
     return unless datacite_validation.errors.any?
 
     errors = datacite_validation.errors.join("\n")
-    Honeybadger.notify("Datacite validation failed for #{work.druid}: #{errors}")
+    Honeybadger.notify("Datacite validation failed", context: { druid: work.druid, errors: datacite_validation.errors })
   rescue StandardError => e
     Honeybadger.notify("Unexpected error during datacite validation for #{work.druid}: #{e.message}")
   end
