@@ -603,6 +603,9 @@ en:
           inclusion: 'is not included in the list'
       keyword:
         label: 'Start typing a keyword'
+        validations:
+          text:
+            blank: "can't be blank"
       license:
         label: 'License'
         help_text: 'Assigning a license may improve discovery of your work in web searches.'
