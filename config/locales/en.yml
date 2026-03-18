@@ -129,20 +129,22 @@ en:
   time:
     formats:
       long: '%B %d, %Y'
+  # This is for shared validations. For form-specific validations, see work_form, collection_form, etc.
   validations:
-    contact_email:
-      email:
-        invalid: 'must provide a valid email address'
-    contributors:
-      first_name:
-        blank: 'must provide a first name'
-      last_name:
-        blank: 'must provide a last name'
-      orcid:
-        invalid: 'must be formatted as "XXXX-XXXX-XXXX-XXXX"'
-      affiliations:
-        uri:
-          invalid: 'select a valid ROR institution'
+    fields:
+      contact_email:
+        email:
+          invalid: 'must provide a valid email address'
+      contributors:
+        first_name:
+          blank: 'must provide a first name'
+        last_name:
+          blank: 'must provide a last name'
+        orcid:
+          invalid: 'must be formatted as "XXXX-XXXX-XXXX-XXXX"'
+        affiliations:
+          uri:
+            invalid: 'select a valid ROR institution'
     date:
       year:
         less_than_or_equal_to: 'must be in the past'
@@ -150,8 +152,6 @@ en:
       blank: 'This field cannot be blank.'
     select:
       required: 'selection required'
-    work_type:
-      required: 'Type must be selected.'
     url:
       invalid: 'must be a valid URL'
 
@@ -548,6 +548,8 @@ en:
         label: 'What type of content are you depositing?'
         tooltip_html: >-
           Choose the one content type that best describes the overall or primary nature of the work. Click on each content type to view and select terms you may use to further describe the work you are depositing.
+        validations:
+          required: 'Type must be selected.'
       work_subtypes:
         label: 'Which of the following terms further describe your deposit?'
         tooltip_html: >-
