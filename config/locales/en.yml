@@ -265,6 +265,11 @@ en:
       druid:
         validations:
           not_found: 'Druid not found'
+  admin_user_search_form:
+    fields:
+      sunetid:
+        validations:
+          not_found: 'User not found'
   article_form:
     buttons:
       lookup_identifier: 'Get publication info from DOI/PMCID'

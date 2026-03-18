@@ -13,7 +13,7 @@ module Admin
     def user_exists
       return if user.present?
 
-      errors.add(:sunetid, 'User not found')
+      errors.add(:sunetid, I18n.t('admin_user_search_form.fields.sunetid.validations.not_found'))
     end
   end
 end
