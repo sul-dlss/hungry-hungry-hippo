@@ -18,13 +18,20 @@ class ContributorForm < ApplicationForm
   validate :name_must_be_complete_on_deposit, on: :deposit, if: :person?
 
   attribute :organization_name, :string
-  validates :organization_name, presence: true, on: :deposit, if: -> { organization? }
+  validates :organization_name,
+            presence: { message: I18n.t('validations.fields.contributors.organization_name.blank') },
+            on: :deposit,
+            if: -> { organization? }
 
   attribute :person_role, :string
-  validates :person_role, presence: true, if: :person?
+  validates :person_role,
+            presence: { message: I18n.t('validations.fields.contributors.person_role.blank') },
+            if: :person?
 
   attribute :organization_role, :string
-  validates :organization_role, presence: true, unless: :person?
+  validates :organization_role,
+            presence: { message: I18n.t('validations.fields.contributors.organization_role.blank') },
+            unless: :person?
 
   # True when the organization_role is degree_granting_institution
   # and organization_name is Stanford University
@@ -35,7 +42,11 @@ class ContributorForm < ApplicationForm
   attribute :suborganization_name, :string
 
   attribute :role_type, :string, default: 'person'
-  validates :role_type, inclusion: { in: %w[person organization] }
+  validates :role_type,
+            inclusion: {
+              in: %w[person organization],
+              message: I18n.t('validations.fields.contributors.role_type.inclusion')
+            }
 
   attribute :with_orcid, :boolean, default: true
   attribute :orcid, :string, default: nil
@@ -43,7 +54,10 @@ class ContributorForm < ApplicationForm
                               message: I18n.t('validations.fields.contributors.orcid.invalid') },
                     allow_blank: true,
                     if: -> { person? && with_orcid }
-  validates :orcid, presence: true, on: :deposit, if: -> { person? && with_orcid? }
+  validates :orcid,
+            presence: { message: I18n.t('validations.fields.contributors.orcid.blank') },
+            on: :deposit,
+            if: -> { person? && with_orcid? }
 
   # When true, indicates that the contributor is required by the collection.
   attribute :collection_required, :boolean, default: false

@@ -136,18 +136,27 @@ en:
         email:
           invalid: 'must provide a valid email address'
       contributors:
-        first_name:
-          blank: 'must provide a first name'
-        last_name:
-          blank: 'must provide a last name'
-        orcid:
-          invalid: 'must be formatted as "XXXX-XXXX-XXXX-XXXX"'
         affiliations:
           institution:
             blank: "can't be blank"
             not_selected: 'must be selected from the list'
           uri:
             invalid: 'select a valid ROR institution'
+        first_name:
+          blank: 'must provide a first name'
+        last_name:
+          blank: 'must provide a last name'
+        orcid:
+          blank: "can't be blank"
+          invalid: 'must be formatted as "XXXX-XXXX-XXXX-XXXX"'
+        organization_name:
+          blank: "can't be blank"
+        organization_role:
+          blank: "can't be blank"
+        person_role:
+          blank: "can't be blank"
+        role_type:
+          inclusion: 'is not included in the list'
       version_identification:
         required: 'selection required'
     date:
