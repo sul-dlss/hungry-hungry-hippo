@@ -483,21 +483,24 @@ en:
         label: 'Abstract'
         tooltip_html: >-
           The abstract should describe the content you are depositing and its relation to or context within any other published works or larger projects. If you are depositing a dataset related to a publication, please describe the dataset itself and not the publication.
+        validations:
+          too_long: 'is too long (maximum is %{count} characters)'
+      access:
+        validations:
+          inclusion: 'is not included in the list'
       affiliations:
         institution:
           label: 'Institution'
           tooltip_html: >-
             Begin typing the name of the institution to see potential matches. Selections must be made from the list; you are not permitted to type in your own entry.
+      agree_to_terms:
+        validations:
+          accepted: 'must be accepted'
+      article_version_identification:
+        validations:
+          inclusion: 'is not included in the list'
       citation:
         label: 'Enter preferred citation'
-      create_date:
-        label: 'Creation date (optional, use for datasets)'
-        tooltip_html: >-
-          Use only for datasets to describe the date or date range when the dataset was collected, generated, or created.
-      custom_rights_statement:
-        label: 'Additional terms of use'
-        tooltip_html: >-
-          For open access articles, use this section if your publisher requires a statement when depositing your work to an institutional repository. For other deposits, use this section to describe other terms of use not covered by the license you have selected.
       content_files:
         description:
           tooltip_html: >-
@@ -505,6 +508,24 @@ en:
         hide:
           tooltip_html: >-
             Check this box to prevent this file from being displayed on or downloaded from the public webpage for your work. The file will still be preserved in the SDR as part of your deposit. Hidden files should NOT contain any content the University classifies as <a href="https://uit.stanford.edu/guide/riskclassifications" target="_blank">High Risk</a>.
+      contributors:
+        validations:
+          minimum: 'must have at least one contributor'
+      create_date:
+        label: 'Creation date (optional, use for datasets)'
+        tooltip_html: >-
+          Use only for datasets to describe the date or date range when the dataset was collected, generated, or created.
+      create_date_range_from:
+        validations:
+          complete: 'must have both a start and end date'
+          sequence: 'must be before end date'
+      create_date_type:
+        validations:
+          inclusion: 'is not included in the list'
+      custom_rights_statement:
+        label: 'Additional terms of use'
+        tooltip_html: >-
+          For open access articles, use this section if your publisher requires a statement when depositing your work to an institutional repository. For other deposits, use this section to describe other terms of use not covered by the license you have selected.
       date:
         year:
           label: 'Year'
@@ -514,6 +535,9 @@ en:
           label: 'Day'
         approximate:
           label: 'Approximate'
+      doi_option:
+        validations:
+          inclusion: 'is not included in the list'
       keyword:
         label: 'Start typing a keyword'
       license:
@@ -521,6 +545,9 @@ en:
         help_text: 'Assigning a license may improve discovery of your work in web searches.'
         tooltip_html: >-
           We strongly recommend that you assign a license to your work, as it will help others understand what you are allowing them to do with your work and under what conditions.  Click on "Get help selecting a license" for assistance with the license options presented here.
+      other_work_subtype:
+        validations:
+          blank: "can't be blank"
       related_works:
         citation:
           label: 'Enter full citation for related work'
@@ -555,29 +582,46 @@ en:
             documents: 'My deposit documents this related work'
             is variant form of: 'My deposit is a variant form of this related work'
             is original form of: 'My deposit is the original form of this related work'
+      release_date:
+        validations:
+          on_or_before: 'must be on or before %{date}'
+          today_or_later: 'must be today or later'
+      release_option:
+        validations:
+          inclusion: 'is not included in the list'
       title:
         label: 'Title of deposit'
         help_text: >-
           A unique, descriptive title may improve discovery of your work in web searches.
         tooltip_html: >-
           Serves as the title of the public webpage for your work and the title of web search results. Detailed titles similar to those used for scholarly publications will make it easier for users to find your work online. Avoid generic titles such as "Dataset for publication" or "My honors thesis."
+        validations:
+          blank: "can't be blank"
       whats_changing:
         label: "What's changing?"
         tooltip_html: >-
           Enter a brief description (200 characters max) indicating which fields were changed or what type of correction was made. This information is not displayed on the public webpage.
-      works_contact_email:
+        validations:
+          blank: "can't be blank"
+      work_subtypes:
+        label: 'Which of the following terms further describe your deposit?'
         tooltip_html: >-
-          The collection manager has provided an email address for all works deposited into this collection. Depositors cannot change or remove this email address. It will be publicly visible and is intended to be a place where people can ask questions about the work you have deposited.
+          Choose terms from this list to further describe the type of work you are depositing. Click "See more subtype options" for additional terms. An entry here is only required if you have selected "Mixed Materials," "Music," or  "Other" above.
+      work_subtypes_mixed_materials:
+        validations:
+          minimum: '%{count} terms are the minimum allowed'
+      work_subtypes_music:
+        validations:
+          minimum: '%{count} music term is the minimum allowed'
       work_type:
         label: 'What type of content are you depositing?'
         tooltip_html: >-
           Choose the one content type that best describes the overall or primary nature of the work. Click on each content type to view and select terms you may use to further describe the work you are depositing.
         validations:
           required: 'Type must be selected.'
-      work_subtypes:
-        label: 'Which of the following terms further describe your deposit?'
+      works_contact_email:
         tooltip_html: >-
-          Choose terms from this list to further describe the type of work you are depositing. Click "See more subtype options" for additional terms. An entry here is only required if you have selected "Mixed Materials," "Music," or  "Other" above.
+          The collection manager has provided an email address for all works deposited into this collection. Depositors cannot change or remove this email address. It will be publicly visible and is intended to be a place where people can ask questions about the work you have deposited.
     messages:
       cannot_be_edited_html: "If you need to make a change to this work, contact <a href=\"mailto:%{support_email}\">%{support_email}</a>."
       cannot_be_deposited_html: "We were not able to save your item. Please refresh the page and try again. If you have questions, contact <a href=\"mailto:%{support_email}\">%{support_email}</a>."
