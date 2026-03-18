@@ -25,7 +25,7 @@ RSpec.describe Elements::Forms::InvalidFeedbackComponent, type: :component do
 
     it 'renders the error message' do
       render_inline(component)
-      expect(page).to have_css('div.invalid-feedback.is-invalid.d-block#text_error', text: "can't be blank")
+      expect(page).to have_css('div.invalid-feedback.is-invalid.d-block#text_error', text: "Can't be blank")
     end
   end
 

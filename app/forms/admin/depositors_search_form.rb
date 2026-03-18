@@ -23,7 +23,7 @@ module Admin
       druid_list.each do |druid|
         next if Work.exists?(druid:) || Collection.exists?(druid:)
 
-        errors.add(:druids, "#{druid} not found in Works or Collections")
+        errors.add(:druids, "Not found in Works or Collections: #{druid}")
       end
     end
   end

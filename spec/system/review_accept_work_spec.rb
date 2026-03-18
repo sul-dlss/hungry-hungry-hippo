@@ -46,7 +46,7 @@ RSpec.describe 'Review and accept a work' do
     choose('Return with comments')
     click_on('Submit')
 
-    expect(page).to have_css('.invalid-feedback', text: "can't be blank")
+    expect(page).to have_css('.invalid-feedback', text: "Can't be blank")
 
     # Approve and submit
     choose('Approve')

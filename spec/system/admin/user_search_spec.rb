@@ -30,7 +30,7 @@ RSpec.describe 'Search for and show a user' do
     within('#user-search') do
       click_link_or_button('Search')
     end
-    expect(page).to have_css('.invalid-feedback', text: 'not found')
+    expect(page).to have_css('.invalid-feedback', text: 'User not found')
 
     fill_in('Search for user by SUNet', with: user.sunetid)
     within('#user-search') do

@@ -34,7 +34,7 @@ RSpec.describe CollectionForm do
 
       it 'validates presence of the provided custom rights statement' do
         expect(form.valid?(:deposit)).to be false
-        expect(form.errors[:provided_custom_rights_statement]).to include("can't be blank")
+        expect(form.errors[:provided_custom_rights_statement]).to include("Can't be blank")
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe CollectionForm do
 
       it 'validates presence of the custom rights statement instructions' do
         expect(form.valid?(:deposit)).to be false
-        expect(form.errors[:custom_rights_statement_instructions]).to include("can't be blank")
+        expect(form.errors[:custom_rights_statement_instructions]).to include("Can't be blank")
       end
     end
 
@@ -66,7 +66,7 @@ RSpec.describe CollectionForm do
 
       it 'validates presence of at least one manager' do
         expect(form).not_to be_valid
-        expect(form.errors[:managers]).to include('must have at least one manager')
+        expect(form.errors[:managers]).to include('Must have at least one manager')
       end
     end
 
@@ -92,7 +92,7 @@ RSpec.describe CollectionForm do
 
       it 'validates presence of at least one reviewer' do
         expect(form).not_to be_valid
-        expect(form.errors[:reviewers]).to include('must have at least one reviewer')
+        expect(form.errors[:reviewers]).to include('Must have at least one reviewer')
       end
     end
   end

@@ -38,7 +38,7 @@ RSpec.describe 'Move a work' do
     fill_in('Enter DRUID of the collection you want to move this item to', with: 'foo')
     click_link_or_button('Submit')
 
-    expect(page).to have_css('.invalid-feedback', text: 'not found')
+    expect(page).to have_css('.invalid-feedback', text: 'Not found')
 
     fill_in('Enter DRUID of the collection you want to move this item to',
             with: new_collection.druid.delete_prefix('druid:'))

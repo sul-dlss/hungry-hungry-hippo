@@ -368,7 +368,7 @@ RSpec.describe 'Create a work deposit' do
       expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
       expect(page).to have_css('.nav-link.active.is-invalid', text: with_required_tab_mark('Access settings'))
       expect(page).to have_field('Release date', class: 'is-invalid')
-      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'must be today or later')
+      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Must be today or later')
     end
   end
 

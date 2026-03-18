@@ -122,7 +122,7 @@ RSpec.describe ContributorForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:orcid]).to eq(['must be formatted as "XXXX-XXXX-XXXX-XXXX"'])
+        expect(form.errors[:orcid]).to eq(['Must be formatted as "XXXX-XXXX-XXXX-XXXX"'])
       end
     end
 
@@ -133,7 +133,7 @@ RSpec.describe ContributorForm do
       it 'is not valid' do
         expect(form.valid?(:deposit)).to be false
         expect(form.errors.size).to eq(1)
-        expect(form.errors[:last_name]).to eq(['must provide a last name'])
+        expect(form.errors[:last_name]).to eq(['Must provide a last name'])
       end
     end
 
@@ -144,8 +144,8 @@ RSpec.describe ContributorForm do
       it 'is not valid' do
         expect(form.valid?(:deposit)).to be false
         expect(form.errors.size).to eq(2)
-        expect(form.errors[:first_name]).to eq(['must provide a first name'])
-        expect(form.errors[:last_name]).to eq(['must provide a last name'])
+        expect(form.errors[:first_name]).to eq(['Must provide a first name'])
+        expect(form.errors[:last_name]).to eq(['Must provide a last name'])
       end
     end
 
@@ -159,7 +159,7 @@ RSpec.describe ContributorForm do
         expect(form.errors.size).to eq(1)
         error = form.errors.first
         expect(error.attribute).to eq(:orcid)
-        expect(error.message).to eq("can't be blank")
+        expect(error.message).to eq("Can't be blank")
         # Note that not validating first and last name because orcid is not present.
       end
     end

@@ -13,7 +13,7 @@ module Admin
     def user_exists
       return if user.present?
 
-      errors.add(:sunetid, 'user not found')
+      errors.add(:sunetid, 'User not found')
     end
   end
 end

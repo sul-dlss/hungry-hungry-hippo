@@ -75,9 +75,9 @@ RSpec.describe 'Create an article deposit' do
     # Deposit without required fields
     fill_in 'article_identifier', with: doi
     click_link_or_button('Deposit')
-    expect(page).to have_css('.invalid-feedback', text: 'must have at least one file')
-    expect(page).to have_css('.invalid-feedback', text: 'selection required')
-    expect(page).to have_css('.invalid-feedback', text: 'must be accepted')
+    expect(page).to have_css('.invalid-feedback', text: 'Must have at least one file')
+    expect(page).to have_css('.invalid-feedback', text: 'Selection required')
+    expect(page).to have_css('.invalid-feedback', text: 'Must be accepted')
     expect(page).to have_css('.invalid-feedback', text: 'Look up before editing or depositing')
     expect(page).to have_css(
       'select#article_article_version_identification[aria-invalid="true"]' \

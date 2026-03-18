@@ -51,7 +51,7 @@ RSpec.describe 'Search for druid' do
         get '/admin/druid_search/search?admin_druid_search[druid]=foo&commit=Submit'
 
         expect(response).to have_http_status(:unprocessable_content)
-        expect(response.body).to include('not found')
+        expect(response.body).to include('Druid not found')
       end
     end
   end

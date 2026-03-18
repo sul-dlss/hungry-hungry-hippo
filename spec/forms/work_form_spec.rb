@@ -42,7 +42,7 @@ RSpec.describe WorkForm do
 
       it 'is invalid' do
         expect(form.valid?(:deposit)).to be false
-        expect(form.errors[:other_work_subtype]).to include("can't be blank")
+        expect(form.errors[:other_work_subtype]).to include("Can't be blank")
       end
     end
 
@@ -106,7 +106,7 @@ RSpec.describe WorkForm do
 
       it 'is invalid' do
         expect(form).not_to be_valid
-        expect(form.errors[:whats_changing]).to include("can't be blank")
+        expect(form.errors[:whats_changing]).to include("Can't be blank")
       end
     end
   end
@@ -139,9 +139,9 @@ RSpec.describe WorkForm do
     context 'when release option is delay and release date is blank' do
       it 'is invalid' do
         expect(form).not_to be_valid
-        expect(form.errors[:release_date]).to include('must be today or later')
+        expect(form.errors[:release_date]).to include('Must be today or later')
         expect(form.errors[:release_date])
-          .to include("must be on or before #{(Time.zone.today + 1.year).strftime('%m/%d/%Y')}")
+          .to include("Must be on or before #{(Time.zone.today + 1.year).strftime('%m/%d/%Y')}")
       end
     end
 
@@ -227,7 +227,7 @@ RSpec.describe WorkForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:create_date_range_from]).to eq(['must be before end date'])
+        expect(form.errors[:create_date_range_from]).to eq(['Must be before end date'])
       end
     end
 
@@ -239,7 +239,7 @@ RSpec.describe WorkForm do
       it 'is not valid' do
         expect(form).not_to be_valid
 
-        expect(form.errors[:create_date_range_from]).to eq(['must have both a start and end date'])
+        expect(form.errors[:create_date_range_from]).to eq(['Must have both a start and end date'])
       end
     end
 
@@ -251,7 +251,7 @@ RSpec.describe WorkForm do
       it 'is not valid' do
         expect(form).not_to be_valid
 
-        expect(form.errors[:create_date_range_from]).to eq(['must have both a start and end date'])
+        expect(form.errors[:create_date_range_from]).to eq(['Must have both a start and end date'])
       end
     end
 
@@ -459,7 +459,7 @@ RSpec.describe WorkForm do
       context 'when depositing' do
         it 'is invalid' do
           expect(form.valid?(:deposit)).to be false
-          expect(form.errors[:contributors]).to include('must have at least one contributor')
+          expect(form.errors[:contributors]).to include('Must have at least one contributor')
         end
       end
     end
@@ -567,7 +567,7 @@ RSpec.describe WorkForm do
 
       it 'is invalid' do
         expect(form.valid?(:deposit)).to be false
-        expect(form.errors[:content]).to include('must have at least one file')
+        expect(form.errors[:content]).to include('Must have at least one file')
       end
     end
 
@@ -588,7 +588,7 @@ RSpec.describe WorkForm do
 
       it 'is invalid' do
         expect(form.valid?).to be false
-        expect(form.errors[:content]).to include('too many files (maximum is 1)')
+        expect(form.errors[:content]).to include('Too many files (maximum is 1)')
       end
     end
   end
@@ -610,7 +610,7 @@ RSpec.describe WorkForm do
 
       it 'validates the maximum length' do
         expect(form).not_to be_valid
-        expect(form.errors[:abstract]).to include('is too long (maximum is 5000 characters)')
+        expect(form.errors[:abstract]).to include('Is too long (maximum is 5000 characters)')
       end
     end
 

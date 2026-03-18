@@ -20,7 +20,7 @@ RSpec.describe RelatedLinkForm do
     it 'is not valid' do
       expect(form).not_to be_valid
 
-      expect(form.errors[:text]).to eq(['can\'t be blank'])
+      expect(form.errors[:text]).to eq(['Can\'t be blank'])
     end
   end
 
@@ -39,7 +39,7 @@ RSpec.describe RelatedLinkForm do
     it 'is not valid' do
       expect(form).not_to be_valid
 
-      expect(form.errors[:url]).to eq(['is not a valid URL'])
+      expect(form.errors[:url]).to eq(['Is not a valid URL'])
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe RelatedLinkForm do
     it 'is not valid' do
       expect(form).not_to be_valid
 
-      expect(form.errors[:url]).to eq(['is not a valid URL'])
+      expect(form.errors[:url]).to eq(['Is not a valid URL'])
     end
   end
 
@@ -60,7 +60,7 @@ RSpec.describe RelatedLinkForm do
     it 'is not valid' do
       expect(form).not_to be_valid
 
-      expect(form.errors[:url]).to eq(['is not a valid URL'])
+      expect(form.errors[:url]).to eq(['Is not a valid URL'])
     end
   end
 end
