@@ -238,14 +238,33 @@ en:
         tooltip_html: >-
           We will use AI to extract an abstract from your file. You can always use the full form to make changes if you need to. You must first upload a PDF to use this feature.
     fields:
+      agree_to_terms:
+        validations:
+          accepted: 'must be accepted'
+      doi:
+        validations:
+          blank: "can't be blank"
       identifier:
         label: 'Enter DOI or PMCID for published version of this work. If PMCID does not work, try the DOI.'
         tooltip_html: >-
           Enter a DOI (with or without "https://doi.org/") or a PMCID (with or without "PMC") to retrieve metadata about your article from the DOI metadata.
+        validations:
+          blank: 'This field cannot be blank.'
+          use_full_form_message: >-
+            You will need to use the "Deposit to this collection" button on the dashboard or collection page to deposit this work.
+          lookup_not_found: 'Unable to retrieve metadata for this DOI/PMCID. %{use_full_form_message}'
+          not_journal_article: 'The metadata for this identifier indicates it is not a journal article. %{use_full_form_message}'
+          incomplete_metadata: 'The metadata for this identifier is incomplete. %{use_full_form_message}'
+          lookup_required: 'Look up before editing or depositing'
+      license:
+        validations:
+          blank: "can't be blank"
       version_identification:
         label: 'Which version are you depositing?'
         tooltip_html: >-
           Indicate which version of the article you are depositing. The "author submitted version" is the version before peer review or editing as submitted by an author to a journal. The "author accepted version" is the version accepted for publication and typically includes all changes made as a result of peer review. The "final published version of the work" is the peer reviewed, edited, formatted, and typeset version of the article.
+        validations:
+          required: 'selection required'
     extract_abstract:
       complete: We used AI to try to retrieve the exact abstract from the file you uploaded above, not to create an abstract from scratch. If you need to make changes, click the 'Edit before depositing' button below.
       error: We were not able to extract your abstract. If you would like to enter an abstract, click "Edit before depositing" below.
