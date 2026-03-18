@@ -174,8 +174,6 @@ en:
         less_than_or_equal_to: 'must be in the past'
     presence:
       blank: 'This field cannot be blank.'
-    select:
-      required: 'selection required'
     url:
       invalid: 'must be a valid URL'
 
@@ -376,8 +374,12 @@ en:
       related_links:
         text:
           label: 'Link text'
+          validations:
+            blank: "can't be blank"
         url:
           label: 'URL'
+          validations:
+            invalid: 'is not a valid URL'
       release_duration:
         validations:
           valid_duration: 'select a valid duration for release'
