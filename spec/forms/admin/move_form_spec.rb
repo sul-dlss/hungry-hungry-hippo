@@ -51,7 +51,7 @@ RSpec.describe Admin::MoveForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:collection_druid]).to eq(["can't be blank"])
+        expect(form.errors[:collection_druid]).to eq(["Can't be blank"])
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe Admin::MoveForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:collection_druid]).to eq(['not found'])
+        expect(form.errors[:collection_druid]).to eq(['Not found'])
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe Admin::MoveForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:collection_druid]).to eq(['already part of this collection'])
+        expect(form.errors[:collection_druid]).to eq(['Already part of this collection'])
       end
     end
 
@@ -78,7 +78,7 @@ RSpec.describe Admin::MoveForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:collection_druid]).to eq(['work is embargoed but collection is immediate release only'])
+        expect(form.errors[:collection_druid]).to eq(['Work is embargoed but collection is immediate release only'])
       end
     end
 
@@ -87,7 +87,7 @@ RSpec.describe Admin::MoveForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:collection_druid]).to eq(['work is not set for DOI assignment but collection requires ' \
+        expect(form.errors[:collection_druid]).to eq(['Work is not set for DOI assignment but collection requires ' \
                                                       'DOI assignment'])
       end
     end
@@ -97,7 +97,7 @@ RSpec.describe Admin::MoveForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:collection_druid]).to eq(['work has a license that is not allowed by the collection'])
+        expect(form.errors[:collection_druid]).to eq(['Work has a license that is not allowed by the collection'])
       end
     end
 
@@ -106,7 +106,7 @@ RSpec.describe Admin::MoveForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:collection_druid]).to eq(['work is set for Stanford visibility but the collection ' \
+        expect(form.errors[:collection_druid]).to eq(['Work is set for Stanford visibility but the collection ' \
                                                       'requires world visibility'])
       end
     end

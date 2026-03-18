@@ -23,7 +23,7 @@ class ArticleWorkForm < BaseWorkForm
   end
 
   validates :article_version_identification,
-            presence: { message: I18n.t('validations.select.required') },
+            presence: { message: I18n.t('validations.fields.version_identification.required') },
             on: :deposit
 
   # This is necessary for proper routing based on Work subclasses.

@@ -13,7 +13,7 @@ module FilesRequired
     return if content_id.nil? # This makes test configuration easier.
 
     file_count = Content.find(content_id).content_files.count
-    errors.add(:content, 'must have at least one file') if file_count.zero?
+    errors.add(:content, I18n.t('form.fields.files.validations.minimum')) if file_count.zero?
   end
 
   def max_content_file_count
@@ -23,6 +23,7 @@ module FilesRequired
     return unless file_count > Settings.file_upload.max_files
 
     errors.add(:content,
-               "too many files (maximum is #{Settings.file_upload.max_files})")
+               I18n.t('form.fields.files.validations.too_many',
+                      count: Settings.file_upload.max_files))
   end
 end

@@ -72,7 +72,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
       class: 'is-invalid'
     )
     expect(page).to have_css('.invalid-feedback',
-                             text: 'Enter a valid link or owner/name of a public GitHub repository.')
+                             text: 'A link or owner/name of a public GitHub repository is required.')
 
     # Enter a valid repository name
     fill_in(with_required_field_mark('Enter the link or owner/name of the GitHub repository you want to deposit'),

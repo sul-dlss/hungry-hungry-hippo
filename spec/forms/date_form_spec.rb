@@ -71,7 +71,7 @@ RSpec.describe DateForm do
       it 'treats the year as blank instead of coercing it to 0, but since month was entered, form is invalid' do
         expect(form).not_to be_valid
         expect(form.year).to be_nil
-        expect(form.errors[:year]).to include("can't be blank")
+        expect(form.errors[:year]).to include('Must be greater than or equal to 1000')
       end
     end
 
@@ -108,7 +108,7 @@ RSpec.describe DateForm do
 
       it 'is invalid' do
         expect(form).not_to be_valid
-        expect(form.errors[:day]).to include('invalid date')
+        expect(form.errors[:day]).to include('Invalid date')
       end
     end
   end

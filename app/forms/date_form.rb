@@ -3,16 +3,38 @@
 # Form object for handling date input
 class DateForm < ApplicationForm
   attribute :year, :integer
-  validates :year, numericality: { greater_than_or_equal_to: 1000, allow_nil: true }
+  validates :year, numericality: {
+    greater_than_or_equal_to: 1000,
+    allow_nil: true,
+    message: I18n.t('validations.date.year.greater_than_or_equal_to')
+  }
   validates :year, numericality: { less_than_or_equal_to: Time.zone.now.year,
                                    allow_nil: true,
                                    message: I18n.t('validations.date.year.less_than_or_equal_to') }
-  validates :year, presence: true, if: -> { month.present? }
+  validates :year, presence: { message: I18n.t('validations.date.year.blank') }, if: -> { month.present? }
   attribute :month, :integer
-  validates :month, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 12, allow_nil: true }
-  validates :month, presence: true, if: -> { day.present? }
+  validates :month, numericality: {
+    greater_than_or_equal_to: 1,
+    allow_nil: true,
+    message: I18n.t('validations.date.month.greater_than_or_equal_to')
+  }
+  validates :month, numericality: {
+    less_than_or_equal_to: 12,
+    allow_nil: true,
+    message: I18n.t('validations.date.month.less_than_or_equal_to')
+  }
+  validates :month, presence: { message: I18n.t('validations.date.month.blank') }, if: -> { day.present? }
   attribute :day, :integer
-  validates :day, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 31, allow_nil: true }
+  validates :day, numericality: {
+    greater_than_or_equal_to: 1,
+    allow_nil: true,
+    message: I18n.t('validations.date.day.greater_than_or_equal_to')
+  }
+  validates :day, numericality: {
+    less_than_or_equal_to: 31,
+    allow_nil: true,
+    message: I18n.t('validations.date.day.less_than_or_equal_to')
+  }
   validate :valid_date, if: -> { day.present? }
 
   attribute :approximate, :boolean, default: false
@@ -38,6 +60,6 @@ class DateForm < ApplicationForm
   def valid_date
     to_date
   rescue Date::Error
-    errors.add(:day, 'invalid date')
+    errors.add(:day, I18n.t('validations.date.day.invalid_date'))
   end
 end

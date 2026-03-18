@@ -5,7 +5,10 @@
 # It includes fields for the institution, department, and ROR identifier
 class AffiliationForm < ApplicationForm
   attribute :institution, :string
-  validates :institution, presence: true, if: -> { department.present? }
+  validates :institution, presence: {
+                            message: I18n.t('validations.fields.contributors.affiliations.institution.blank')
+                          },
+                          if: -> { department.present? }
   validate :validate_institution
 
   attribute :uri, :string
@@ -17,6 +20,6 @@ class AffiliationForm < ApplicationForm
     # This happens when the user types in the autocomplete field but does not select an item.
     return unless institution.present? && uri.blank?
 
-    errors.add(:institution, 'must be selected from the list')
+    errors.add(:institution, I18n.t('validations.fields.contributors.affiliations.institution.not_selected'))
   end
 end

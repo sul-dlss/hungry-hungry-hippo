@@ -46,10 +46,8 @@ RSpec.describe 'Create an article deposit' do
 
   it 'creates and deposits an article', :dropzone do
     visit dashboard_path
-    expect(page).to have_css("a[aria-label='" \
-                             "#{I18n.t('collections.buttons.deposit_article.aria_label',
-                                       collection_title: collection_title_fixture)}']")
-    click_link_or_button(I18n.t('collections.buttons.deposit_article.label'))
+    expect(page).to have_css("a[aria-label='Deposit article by DOI, PMCID to #{collection_title_fixture}']")
+    click_link_or_button('Deposit article by DOI, PMCID')
 
     # Breadcrumb
     expect(page).to have_link('Dashboard', href: dashboard_path)
@@ -59,16 +57,16 @@ RSpec.describe 'Create an article deposit' do
     expect(page).to have_css('h1', text: 'Article deposit')
 
     # Validate blank DOI submission
-    click_link_or_button(I18n.t('article_form.buttons.lookup_identifier'))
+    click_link_or_button('Get publication info from DOI/PMCID')
 
-    expect(page).to have_css('.invalid-feedback', text: 'This field cannot be blank.')
+    expect(page).to have_css('.invalid-feedback', text: 'A DOI or PMCID is required')
     expect(page).to have_css(
       'input#article_identifier[aria-invalid="true"][aria-describedby="article_identifier_error"]'
     )
 
     # Validate missing DOI submission
     fill_in 'article_identifier', with: not_found_doi
-    click_link_or_button(I18n.t('article_form.buttons.lookup_identifier'))
+    click_link_or_button('Get publication info from DOI/PMCID')
     expect(page).to have_css('.invalid-feedback', text: 'Unable to retrieve metadata for this DOI/PMCID')
     expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_NOT_FOUND,
                                    identifier: not_found_doi,
@@ -77,17 +75,18 @@ RSpec.describe 'Create an article deposit' do
     # Deposit without required fields
     fill_in 'article_identifier', with: doi
     click_link_or_button('Deposit')
-    expect(page).to have_css('.invalid-feedback', text: 'must have at least one file')
-    expect(page).to have_css('.invalid-feedback', text: 'selection required')
-    expect(page).to have_css('.invalid-feedback', text: 'must be accepted')
-    expect(page).to have_css('.invalid-feedback', text: 'Look up before editing or depositing')
+    expect(page).to have_css('.invalid-feedback', text: 'At least one file is required')
+    expect(page).to have_css('.invalid-feedback', text: 'Version is required')
+    expect(page).to have_css('.invalid-feedback', text: 'Must be accepted')
+    expect(page).to have_css('.invalid-feedback',
+                             text: 'You must click "Get publication info from DOI/PMCID" before editing or depositing.')
     expect(page).to have_css(
       'select#article_article_version_identification[aria-invalid="true"]' \
       '[aria-describedby="article_article_version_identification_error"]'
     )
 
     # Lookup
-    click_link_or_button(I18n.t('article_form.buttons.lookup_identifier'))
+    click_link_or_button('Get publication info from DOI/PMCID')
     expect(page).to have_no_css('.invalid-feedback')
     expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_SUCCESS,
                                    identifier: doi,
@@ -179,7 +178,7 @@ RSpec.describe 'Create an article deposit' do
 
     it 'creates and deposits an article', :dropzone do
       visit dashboard_path
-      click_link_or_button(I18n.t('collections.buttons.deposit_article.label'))
+      click_link_or_button('Deposit article by DOI, PMCID')
 
       # Breadcrumb
       expect(page).to have_link('Dashboard', href: dashboard_path)
@@ -190,7 +189,7 @@ RSpec.describe 'Create an article deposit' do
 
       # Look up DOI via PMID
       fill_in 'article_identifier', with: pmid
-      click_link_or_button(I18n.t('article_form.buttons.lookup_identifier'))
+      click_link_or_button('Get publication info from DOI/PMCID')
       expect(page).to have_no_css('.invalid-feedback')
       expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_SUCCESS,
                                      identifier: pmid,
@@ -215,7 +214,7 @@ RSpec.describe 'Create an article deposit' do
 
       it 'alerts that the DOI is not a journal article', :dropzone do
         visit dashboard_path
-        click_link_or_button(I18n.t('collections.buttons.deposit_article.label'))
+        click_link_or_button('Deposit article by DOI, PMCID')
 
         # Breadcrumb
         expect(page).to have_link('Dashboard', href: dashboard_path)
@@ -226,7 +225,7 @@ RSpec.describe 'Create an article deposit' do
 
         # Look up DOI via PMID
         fill_in 'article_identifier', with: doi
-        click_link_or_button(I18n.t('article_form.buttons.lookup_identifier'))
+        click_link_or_button('Get publication info from DOI/PMCID')
         expect(page).to have_css('.invalid-feedback',
                                  text: 'The metadata for this identifier indicates it is not a journal article.')
         expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_NOT_ARTICLE,
@@ -242,7 +241,7 @@ RSpec.describe 'Create an article deposit' do
 
       it 'alerts that the DOI is not a journal article', :dropzone do
         visit dashboard_path
-        click_link_or_button(I18n.t('collections.buttons.deposit_article.label'))
+        click_link_or_button('Deposit article by DOI, PMCID')
 
         # Breadcrumb
         expect(page).to have_link('Dashboard', href: dashboard_path)
@@ -253,7 +252,7 @@ RSpec.describe 'Create an article deposit' do
 
         # Look up DOI via PMID
         fill_in 'article_identifier', with: doi
-        click_link_or_button(I18n.t('article_form.buttons.lookup_identifier'))
+        click_link_or_button('Get publication info from DOI/PMCID')
         expect(page).to have_css('.invalid-feedback', text: 'The metadata for this identifier is incomplete.')
         expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_WITH_INCOMPLETE_METADATA,
                                        identifier: doi,

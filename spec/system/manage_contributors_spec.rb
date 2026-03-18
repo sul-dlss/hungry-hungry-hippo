@@ -209,11 +209,11 @@ RSpec.describe 'Manage contributors for a work deposit' do
 
         # Invalid ORCID
         fill_in('ORCID iD', with: '0000-0001-7756-243Y')
-        expect(page).to have_css('.invalid-feedback', text: 'invalid ORCID iD')
+        expect(page).to have_css('.invalid-feedback', text: 'Invalid ORCID iD')
 
         # Not found ORCID
         fill_in('ORCID iD', with: '0000-0001-7756-0000')
-        expect(page).to have_css('.invalid-feedback', text: 'not found')
+        expect(page).to have_css('.invalid-feedback', text: 'Not found')
 
         # Use my ORCID
         click_link_or_button('Use my ORCID')

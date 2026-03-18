@@ -41,7 +41,7 @@ RSpec.describe 'Generate collection report' do
                                                                               date_modified_start: nil,
                                                                               date_modified_end: nil } }
 
-        expect(flash[:success]).to eq(I18n.t('messages.collection_report_generated'))
+        expect(flash[:success]).to eq('Collection report requested and will be emailed when completed.')
         expect(response).to redirect_to(new_admin_collection_report_path)
       end
     end

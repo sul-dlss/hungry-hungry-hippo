@@ -7,9 +7,9 @@ class ArticleForm < ApplicationForm
   # if the user enters a DOI as the identifier, both attributes will be the same,
   # else the identifier attribute will be what they entered, and DOI will be what was looked up
   attribute :doi, :string
-  validates :doi, presence: true
+  validates :doi, presence: { message: I18n.t('article_form.fields.doi.validations.blank') }
   attribute :identifier, :string
-  validates :identifier, presence: { message: I18n.t('validations.presence.blank') }
+  validates :identifier, presence: { message: I18n.t('article_form.fields.identifier.validations.blank') }
 
   validate :doi_article, if: -> { identifier.present? }
   validate :doi_lookup_performed, if: -> { doi_ok? }, on: :deposit
@@ -18,16 +18,20 @@ class ArticleForm < ApplicationForm
   attribute :last_doi_lookup, :string
 
   attribute :agree_to_terms, :boolean
-  validates :agree_to_terms, acceptance: true, on: :deposit
+  validates :agree_to_terms,
+            acceptance: { message: I18n.t('article_form.fields.agree_to_terms.validations.accepted') },
+            on: :deposit
 
   DEFAULT_LICENSE = 'https://creativecommons.org/licenses/by/4.0/legalcode'
 
   attribute :license, :string, default: DEFAULT_LICENSE
-  validates :license, presence: true, on: :deposit
+  validates :license,
+            presence: { message: I18n.t('article_form.fields.license.validations.blank') },
+            on: :deposit
 
   attribute :article_version_identification, :string
   validates :article_version_identification,
-            presence: { message: I18n.t('validations.select.required') },
+            presence: { message: I18n.t('article_form.fields.version_identification.validations.required') },
             on: :deposit
 
   attribute :collection_druid, :string
@@ -83,23 +87,25 @@ class ArticleForm < ApplicationForm
   private
 
   def doi_article
-    use_full_form_message = 'You will need to use the "Deposit to this collection" button on the dashboard or ' \
-                            'collection page to deposit this work.'
+    use_full_form_message = I18n.t('article_form.fields.identifier.validations.use_full_form_message')
 
     unless doi_found?
       return errors.add(:identifier,
-                        "Unable to retrieve metadata for this DOI/PMCID. #{use_full_form_message}")
+                        I18n.t('article_form.fields.identifier.validations.lookup_not_found',
+                               use_full_form_message:))
     end
 
     unless doi_journal_article?
       return errors.add(:identifier,
-                        "The metadata for this identifier indicates it is not a journal article. #{use_full_form_message}") # rubocop:disable Layout/LineLength
+                        I18n.t('article_form.fields.identifier.validations.not_journal_article',
+                               use_full_form_message:))
     end
 
     return if doi_has_complete_metadata?
 
     errors.add(:identifier,
-               "The metadata for this identifier is incomplete. #{use_full_form_message}")
+               I18n.t('article_form.fields.identifier.validations.incomplete_metadata',
+                      use_full_form_message:))
   end
 
   def doi_ok?
@@ -109,6 +115,9 @@ class ArticleForm < ApplicationForm
   end
 
   def doi_lookup_performed
-    errors.add(:identifier, 'Look up before editing or depositing') unless lookup_performed?
+    return if lookup_performed?
+
+    errors.add(:identifier,
+               I18n.t('article_form.fields.identifier.validations.lookup_required'))
   end
 end

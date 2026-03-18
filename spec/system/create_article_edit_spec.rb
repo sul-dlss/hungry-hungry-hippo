@@ -55,7 +55,7 @@ RSpec.describe 'Create an article then edit before deposit' do
 
   it 'creates an article and opens for edit', :dropzone do
     visit dashboard_path
-    click_link_or_button(I18n.t('collections.buttons.deposit_article.label'))
+    click_link_or_button('Deposit article by DOI, PMCID')
 
     # Adding a file
     find('.dropzone').drop('spec/fixtures/files/hippo.png')
@@ -65,7 +65,7 @@ RSpec.describe 'Create an article then edit before deposit' do
     select('Author accepted version', from: 'Which version are you depositing?')
 
     fill_in 'article_identifier', with: doi
-    click_link_or_button(I18n.t('article_form.buttons.lookup_identifier'))
+    click_link_or_button('Get publication info from DOI/PMCID')
 
     # Deposit
     click_link_or_button('Edit before deposit')

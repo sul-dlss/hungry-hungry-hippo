@@ -51,7 +51,7 @@ export default class extends Controller {
 
     if (!/^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(orcid)) {
       this.orcidFeedbackTarget.classList.add('is-invalid')
-      this.orcidFeedbackTarget.textContent = 'invalid ORCID iD'
+      this.orcidFeedbackTarget.textContent = 'Invalid ORCID iD'
       return
     }
     this.orcidInputTarget.value = orcid
@@ -60,7 +60,7 @@ export default class extends Controller {
       .then(response => {
         if (response.status === 404) {
           this.orcidFeedbackTarget.classList.add('is-invalid')
-          this.orcidFeedbackTarget.textContent = 'not found'
+          this.orcidFeedbackTarget.textContent = 'Not found'
           return null
         }
         if (!response.ok) throw new Error(response.status)

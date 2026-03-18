@@ -20,15 +20,19 @@ class CompleteBaseWorkForm < BaseWorkForm
     self.contact_emails = (contact_emails - blank_contact_emails)
   end
 
-  validates :abstract, presence: true, on: :deposit
+  validates :abstract,
+            presence: { message: I18n.t('work_form.fields.abstract.validations.blank') },
+            on: :deposit
 
-  validates :license, presence: true, on: :deposit
+  validates :license,
+            presence: { message: I18n.t('work_form.fields.license.validations.blank') },
+            on: :deposit
 
-  validates :work_type, presence: { message: I18n.t('validations.work_type.required') }, on: :deposit
+  validates :work_type, presence: { message: I18n.t('work_form.fields.work_type.validations.required') }, on: :deposit
 
   def contributor_presence
     return if contributors.any? { |contributor| !contributor.empty? }
 
-    errors.add(:contributors, 'must have at least one contributor')
+    errors.add(:contributors, I18n.t('work_form.fields.contributors.validations.minimum'))
   end
 end

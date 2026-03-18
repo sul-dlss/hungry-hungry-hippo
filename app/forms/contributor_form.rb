@@ -18,13 +18,20 @@ class ContributorForm < ApplicationForm
   validate :name_must_be_complete_on_deposit, on: :deposit, if: :person?
 
   attribute :organization_name, :string
-  validates :organization_name, presence: true, on: :deposit, if: -> { organization? }
+  validates :organization_name,
+            presence: { message: I18n.t('validations.fields.contributors.organization_name.blank') },
+            on: :deposit,
+            if: -> { organization? }
 
   attribute :person_role, :string
-  validates :person_role, presence: true, if: :person?
+  validates :person_role,
+            presence: { message: I18n.t('validations.fields.contributors.person_role.blank') },
+            if: :person?
 
   attribute :organization_role, :string
-  validates :organization_role, presence: true, unless: :person?
+  validates :organization_role,
+            presence: { message: I18n.t('validations.fields.contributors.organization_role.blank') },
+            unless: :person?
 
   # True when the organization_role is degree_granting_institution
   # and organization_name is Stanford University
@@ -35,15 +42,22 @@ class ContributorForm < ApplicationForm
   attribute :suborganization_name, :string
 
   attribute :role_type, :string, default: 'person'
-  validates :role_type, inclusion: { in: %w[person organization] }
+  validates :role_type,
+            inclusion: {
+              in: %w[person organization],
+              message: I18n.t('validations.fields.contributors.role_type.inclusion')
+            }
 
   attribute :with_orcid, :boolean, default: true
   attribute :orcid, :string, default: nil
   validates :orcid, format: { with: /\A\d{4}-\d{4}-\d{4}-\d{3}[0-9X]\z/,
-                              message: I18n.t('validations.contributors.orcid.invalid') },
+                              message: I18n.t('validations.fields.contributors.orcid.invalid') },
                     allow_blank: true,
                     if: -> { person? && with_orcid }
-  validates :orcid, presence: true, on: :deposit, if: -> { person? && with_orcid? }
+  validates :orcid,
+            presence: { message: I18n.t('validations.fields.contributors.orcid.blank') },
+            on: :deposit,
+            if: -> { person? && with_orcid? }
 
   # When true, indicates that the contributor is required by the collection.
   attribute :collection_required, :boolean, default: false
@@ -80,8 +94,8 @@ class ContributorForm < ApplicationForm
     # orcid validation will report an error, so we don't need to report an error here.
     return if with_orcid? && orcid.blank?
 
-    errors.add(:first_name, I18n.t('validations.contributors.first_name.blank'))
-    errors.add(:last_name, I18n.t('validations.contributors.last_name.blank'))
+    errors.add(:first_name, I18n.t('validations.fields.contributors.first_name.blank'))
+    errors.add(:last_name, I18n.t('validations.fields.contributors.last_name.blank'))
   end
 
   def name_must_be_complete # rubocop:disable Metrics/AbcSize
@@ -90,10 +104,10 @@ class ContributorForm < ApplicationForm
     return if first_name.present? && last_name.present?
 
     if first_name.blank?
-      errors.add(:first_name, I18n.t('validations.contributors.first_name.blank'))
+      errors.add(:first_name, I18n.t('validations.fields.contributors.first_name.blank'))
     elsif !with_orcid?
       # Orcids can provide only a single name so we don't require last name if with_orcid is true
-      errors.add(:last_name, I18n.t('validations.contributors.last_name.blank'))
+      errors.add(:last_name, I18n.t('validations.fields.contributors.last_name.blank'))
     end
   end
 end

@@ -45,7 +45,7 @@ RSpec.describe 'Generate item report' do
                                                                   deposited_state: false,
                                                                   version_draft_state: false } }
 
-        expect(flash[:success]).to eq(I18n.t('messages.work_report_generated'))
+        expect(flash[:success]).to eq('Item report requested and will be emailed when completed.')
         expect(response).to redirect_to(new_admin_work_report_path)
       end
     end

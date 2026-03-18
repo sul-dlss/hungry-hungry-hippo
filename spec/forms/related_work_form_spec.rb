@@ -31,7 +31,7 @@ RSpec.describe RelatedWorkForm do
 
     it 'has the custom error message' do
       form.valid?
-      expect(form.errors.messages_for(:identifier)).to contain_exactly('must be a valid URL')
+      expect(form.errors.messages_for(:identifier)).to contain_exactly('A valid link is required')
     end
   end
 
