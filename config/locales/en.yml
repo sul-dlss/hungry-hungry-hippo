@@ -281,6 +281,8 @@ en:
           world: 'Everyone -- anyone in the world will be able to download the files for all deposits in this collection.'
           stanford: 'Stanford Community -- only members of the Stanford community will be able to download the files for all deposits in this collection.'
           depositor_selects: 'Depositor selects -- default for all deposits will be that everyone can download the files, but Depositor can choose to restrict file download for their deposit to the Stanford community.'
+        validations:
+          inclusion: 'is not included in the list'
       article_workflow:
         label: 'Article workflow'
         help_text_html: >-
@@ -294,6 +296,16 @@ en:
             <li>not be assigned default email, authors, or work types for the collection</li>
             <li>Depositors will be allowed to choose any license.</li>
           </ul>
+      custom_rights_statement_instructions:
+        validations:
+          blank: "can't be blank"
+      custom_rights_statement_option:
+        validations:
+          blank: "can't be blank"
+          inclusion: 'is not included in the list'
+      default_license:
+        validations:
+          blank: "can't be blank"
       description:
         label: 'Description'
         help_text: >-
@@ -301,6 +313,8 @@ en:
           A detailed statement may improve the discovery of your collection in web searches.
         tooltip_html: >-
           Enter an approximately 2-3 sentence description of the works to be included in this collection. You may want to include information on who the creators of the works are/will be, general subject matter of the works, types of works (technical reports, datasets, video archives, etc), and the scholarly value of the content.
+        validations:
+          blank: "can't be blank"
       doi_option:
         label: 'Will a DOI be assigned to the deposits in this collection?'
         tooltip_html: >-
@@ -309,6 +323,8 @@ en:
           doi_yes: 'Yes, a DOI will be assigned to each deposit in this collection.'
           doi_no: 'No, DOIs will not be assigned to any deposits in this collection.'
           depositor_selects: 'Depositor selects: all deposits will be assigned a DOI by default unless the Depositor chooses not to have a DOI assigned.'
+        validations:
+          inclusion: 'is not included in the list'
       github_workflow:
         label: 'GitHub workflow'
         help_text_html: >-
@@ -327,17 +343,25 @@ en:
         default_label: 'Default license'
         default_prompt: 'Select license to display by default..'
         help_link: 'Get help selecting a license'
+        validations:
+          blank: "can't be blank"
+      license_option:
+        validations:
+          inclusion: 'is not included in the list'
+      managers:
+        validations:
+          minimum: 'must have at least one manager'
+      provided_custom_rights_statement:
+        validations:
+          blank: "can't be blank"
       related_links:
         text:
           label: 'Link text'
         url:
           label: 'URL'
-      title:
-        label: 'Collection name'
-        help_text: >-
-          A unique, descriptive name may improve discovery of your collection in web searches.
-        tooltip_html: >-
-          Enter a name for your collection. This name will serve as the title on the public webpage for the collection and the title of web search results, as well as in the Stanford University Libraries' catalog. Please do not use the word "Collection" at the end of the title.
+      release_duration:
+        validations:
+          valid_duration: 'select a valid duration for release'
       release_option:
         label: 'When will files on deposits to this collection be downloadable?'
         tooltip_html: >-
@@ -345,6 +369,8 @@ en:
         options:
           immediate: 'Immediately'
           depositor_selects: 'Depositor selects a date up to'
+        validations:
+          inclusion: 'is not included in the list'
       review_workflow:
         label: 'Review workflow'
         help_text_html: >-
@@ -356,20 +382,33 @@ en:
             <li>Reviewers do not need to also be Managers.</li>
             <li>Details about the review workflow are available in our <a href="https://sdr.library.stanford.edu/documentation/sdr-submission-workflows">documentation</a>.</li>
           </ul>
-      works_contact_email:
-        label: 'Contact email to be included in all deposits in this collection'
+      reviewers:
+        validations:
+          minimum: 'must have at least one reviewer'
+      title:
+        label: 'Collection name'
+        help_text: >-
+          A unique, descriptive name may improve discovery of your collection in web searches.
         tooltip_html: >-
-          Enter a valid email address that will be included for each deposit to this collection. Depositors will not be able to change or remove this email address, but they can add other emails. These emails will be publicly visible and are intended to allow others to ask questions about the content deposited.
-      work_type:
-        label: 'Select a work type for deposits in this collection'
-        help_text: 'You can designate a required type of work that will be associated with every deposit to this collection. Depositors will not be able to change this or add other types.'
-        tooltip_html: >-
-          Choose the one content type that best describes the overall or primary nature of each of the works to be deposited in this collection. Click on each content type to view additional terms you may also select that will also be applied to each of the works in this collection. Depositors will not be able to change your selections.
+          Enter a name for your collection. This name will serve as the title on the public webpage for the collection and the title of web search results, as well as in the Stanford University Libraries' catalog. Please do not use the word "Collection" at the end of the title.
+        validations:
+          blank: "can't be blank"
       work_subtypes:
         label: 'Select which subtypes will be applied to each deposit'
         help_text: 'You can also designate required subtypes that will be associated with every deposit to this collection. Depositors will not be able to remove this subtype, but will be able to add more subtypes.'
         tooltip_html: >-
           You have the option, but are not required, to choose terms from this list to further describe the works that are deposited in this collection. Click "See more subtype options" for additional terms. Depositors will be able to add more of these terms, but will not be able to remove the terms you select.
+      work_type:
+        label: 'Select a work type for deposits in this collection'
+        help_text: 'You can designate a required type of work that will be associated with every deposit to this collection. Depositors will not be able to change this or add other types.'
+        tooltip_html: >-
+          Choose the one content type that best describes the overall or primary nature of each of the works to be deposited in this collection. Click on each content type to view additional terms you may also select that will also be applied to each of the works in this collection. Depositors will not be able to change your selections.
+      works_contact_email:
+        label: 'Contact email to be included in all deposits in this collection'
+        tooltip_html: >-
+          Enter a valid email address that will be included for each deposit to this collection. Depositors will not be able to change or remove this email address, but they can add other emails. These emails will be publicly visible and are intended to allow others to ask questions about the content deposited.
+        validations:
+          invalid: 'must provide a valid email address'
     messages:
       cannot_be_edited: 'This collection cannot be edited.'
     nested_forms:

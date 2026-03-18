@@ -10,7 +10,11 @@ class CollectionForm < ApplicationForm
 
     self.managers = managers - blank_managers
   end
-  validates :managers, length: { minimum: 1, message: 'must have at least one manager' } # rubocop:disable Rails/I18nLocaleTexts
+  validates :managers,
+            length: {
+              minimum: 1,
+              message: I18n.t('collection_form.fields.managers.validations.minimum')
+            }
 
   before_validation do
     blank_reviewers = reviewers.select(&:empty?)
@@ -27,8 +31,12 @@ class CollectionForm < ApplicationForm
     self.reviewers = managers.map { |manager| ReviewerForm.new(sunetid: manager.sunetid, name: manager.name) }
   end
 
-  validates :reviewers, length: { minimum: 1, message: 'must have at least one reviewer' }, # rubocop:disable Rails/I18nLocaleTexts
-                        if: -> { review_enabled }
+  validates :reviewers,
+            length: {
+              minimum: 1,
+              message: I18n.t('collection_form.fields.reviewers.validations.minimum')
+            },
+            if: -> { review_enabled }
 
   before_validation do
     blank_contributors = contributors.select(&:empty?)
@@ -53,42 +61,71 @@ class CollectionForm < ApplicationForm
   attribute :version, :integer, default: 1
 
   attribute :title, :string
-  validates :title, presence: true
+  validates :title, presence: { message: I18n.t('collection_form.fields.title.validations.blank') }
 
   # The Collection description maps to the cocina abstract
   attribute :description, :string
-  validates :description, presence: true
+  validates :description, presence: { message: I18n.t('collection_form.fields.description.validations.blank') }
 
   attribute :access, :string, default: 'world'
-  validates :access, inclusion: { in: %w[world stanford depositor_selects] }
+  validates :access,
+            inclusion: {
+              in: %w[world stanford depositor_selects],
+              message: I18n.t('collection_form.fields.access.validations.inclusion')
+            }
 
   attribute :license_option, :string, default: 'required'
-  validates :license_option, inclusion: { in: %w[required depositor_selects] }
+  validates :license_option,
+            inclusion: {
+              in: %w[required depositor_selects],
+              message: I18n.t('collection_form.fields.license_option.validations.inclusion')
+            }
 
   attribute :license, :string
-  validates :license, presence: true, if: -> { license_option == 'required' }
+  validates :license,
+            presence: { message: I18n.t('collection_form.fields.license.validations.blank') },
+            if: -> { license_option == 'required' }
   attribute :default_license, :string
-  validates :default_license, presence: true, if: -> { license_option == 'depositor_selects' }
+  validates :default_license,
+            presence: { message: I18n.t('collection_form.fields.default_license.validations.blank') },
+            if: -> { license_option == 'depositor_selects' }
 
   attribute :custom_rights_statement_option, :string, default: 'no'
-  validates :custom_rights_statement_option, presence: true, inclusion: { in: %w[no provided depositor_selects] }
+  validates :custom_rights_statement_option,
+            presence: { message: I18n.t('collection_form.fields.custom_rights_statement_option.validations.blank') },
+            inclusion: {
+              in: %w[no provided depositor_selects],
+              message: I18n.t('collection_form.fields.custom_rights_statement_option.validations.inclusion')
+            }
 
   attribute :provided_custom_rights_statement, :string
-  validates :provided_custom_rights_statement, presence: true, if: -> { custom_rights_statement_option == 'provided' }
+  validates :provided_custom_rights_statement,
+            presence: {
+              message: I18n.t('collection_form.fields.provided_custom_rights_statement.validations.blank')
+            },
+            if: -> { custom_rights_statement_option == 'provided' }
   before_validation do
     self.provided_custom_rights_statement = LinebreakSupport.normalize(provided_custom_rights_statement)
   end
 
   attribute :custom_rights_statement_instructions, :string
-  validates :custom_rights_statement_instructions, presence: true, if: lambda {
-    custom_rights_statement_option == 'depositor_selects'
-  }
+  validates :custom_rights_statement_instructions,
+            presence: {
+              message: I18n.t('collection_form.fields.custom_rights_statement_instructions.validations.blank')
+            },
+            if: lambda {
+              custom_rights_statement_option == 'depositor_selects'
+            }
   before_validation do
     self.custom_rights_statement_instructions = LinebreakSupport.normalize(custom_rights_statement_instructions)
   end
 
   attribute :release_option, :string, default: 'immediate'
-  validates :release_option, inclusion: { in: %w[immediate depositor_selects] }
+  validates :release_option,
+            inclusion: {
+              in: %w[immediate depositor_selects],
+              message: I18n.t('collection_form.fields.release_option.validations.inclusion')
+            }
 
   attribute :release_duration, :string
   with_options if: -> { release_option == 'depositor_selects' } do
@@ -96,7 +133,11 @@ class CollectionForm < ApplicationForm
   end
 
   attribute :doi_option, :string, default: 'yes'
-  validates :doi_option, inclusion: { in: %w[yes no depositor_selects] }
+  validates :doi_option,
+            inclusion: {
+              in: %w[yes no depositor_selects],
+              message: I18n.t('collection_form.fields.doi_option.validations.inclusion')
+            }
 
   attribute :review_enabled, :boolean, default: false
   attribute :github_deposit_enabled, :boolean, default: false
@@ -115,7 +156,9 @@ class CollectionForm < ApplicationForm
 
   attribute :works_contact_email, :string
   validates :works_contact_email, format: {
-    with: URI::MailTo::EMAIL_REGEXP, allow_blank: true, message: I18n.t('validations.fields.contact_email.email.invalid')
+    with: URI::MailTo::EMAIL_REGEXP,
+    allow_blank: true,
+    message: I18n.t('collection_form.fields.works_contact_email.validations.invalid')
   }
 
   attribute :apo, :string, default: Settings.apo
@@ -123,7 +166,7 @@ class CollectionForm < ApplicationForm
   def duration_must_be_present
     return if release_duration.present?
 
-    errors.add(:release_duration, 'select a valid duration for release')
+    errors.add(:release_duration, I18n.t('collection_form.fields.release_duration.validations.valid_duration'))
   end
 
   def selected_license
