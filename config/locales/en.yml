@@ -255,6 +255,11 @@ en:
     panes:
       access:
         tab_label: 'Access settings'
+  admin_depositor_search_form:
+    fields:
+      druids:
+        validations:
+          not_found: '%{druid} not found in Works or Collections'
   article_form:
     buttons:
       lookup_identifier: 'Get publication info from DOI/PMCID'

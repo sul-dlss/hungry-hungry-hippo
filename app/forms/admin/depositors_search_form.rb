@@ -23,7 +23,7 @@ module Admin
       druid_list.each do |druid|
         next if Work.exists?(druid:) || Collection.exists?(druid:)
 
-        errors.add(:druids, "Not found in Works or Collections: #{druid}")
+        errors.add(:druids, I18n.t('admin_depositor_search_form.fields.druids.validations.not_found', druid:))
       end
     end
   end
