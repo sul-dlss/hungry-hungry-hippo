@@ -122,7 +122,7 @@ RSpec.describe ContributorForm do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:orcid]).to eq(['Must be formatted as "XXXX-XXXX-XXXX-XXXX"'])
+        expect(form.errors[:orcid]).to eq(['A valid ORCID iD in this format "XXXX-XXXX-XXXX-XXXX" is required'])
       end
     end
 
@@ -159,7 +159,7 @@ RSpec.describe ContributorForm do
         expect(form.errors.size).to eq(1)
         error = form.errors.first
         expect(error.attribute).to eq(:orcid)
-        expect(error.message).to eq("Can't be blank")
+        expect(error.message).to eq('A valid ORCID iD in this format "XXXX-XXXX-XXXX-XXXX" is required')
         # Note that not validating first and last name because orcid is not present.
       end
     end

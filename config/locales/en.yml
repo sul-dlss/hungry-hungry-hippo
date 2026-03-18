@@ -136,12 +136,12 @@ en:
     fields:
       contact_email:
         email:
-          invalid: 'Must provide a valid email address'
+          invalid: 'A valid email address is required'
       contributors:
         affiliations:
           institution:
-            blank: "Can't be blank"
-            not_selected: 'Must be selected from the list'
+            blank: "Institution must be selected from the list"
+            not_selected: 'Institution must be selected from the list'
           uri:
             invalid: 'Select a valid ROR institution'
         first_name:
@@ -149,10 +149,10 @@ en:
         last_name:
           blank: 'Must provide a last name'
         orcid:
-          blank: "Can't be blank"
-          invalid: 'Must be formatted as "XXXX-XXXX-XXXX-XXXX"'
+          blank: 'A valid ORCID iD in this format "XXXX-XXXX-XXXX-XXXX" is required'
+          invalid: 'A valid ORCID iD in this format "XXXX-XXXX-XXXX-XXXX" is required'
         organization_name:
-          blank: "Can't be blank"
+          blank: "Organization name is required"
         organization_role:
           blank: "Can't be blank"
         person_role:
@@ -171,7 +171,7 @@ en:
         greater_than_or_equal_to: 'Must be greater than or equal to 1'
         less_than_or_equal_to: 'Must be less than or equal to 12'
       year:
-        blank: "Can't be blank"
+        blank: "Must be greater than or equal to 1000"
         greater_than_or_equal_to: 'Must be greater than or equal to 1000'
         less_than_or_equal_to: 'Must be in the past'
     presence:
@@ -241,7 +241,7 @@ en:
             This is the name we retrieved from ORCID and that will be included in the detailed information about this deposit. Editing this name will change it for this deposit only and will not alter your ORCID record.
       files:
         validations:
-          minimum: 'Must have at least one file'
+          minimum: 'At least one file is required'
           too_many: 'Too many files (maximum is %{count})'
     license_terms_of_use: 'In addition to the license, the following Terms of Use will also be displayed on the public webpage for your work.'
     nested_forms:
@@ -300,13 +300,13 @@ en:
         tooltip_html: >-
           Enter a DOI (with or without "https://doi.org/") or a PMCID (with or without "PMC") to retrieve metadata about your article from the DOI metadata.
         validations:
-          blank: 'This field cannot be blank.'
+          blank: 'A DOI or PMCID is required'
           use_full_form_message: >-
-            You will need to use the "Deposit to this collection" button on the dashboard or collection page to deposit this work.
+            Return to the Dashboard or collection page and use the "Deposit to this collection" button.
           lookup_not_found: 'Unable to retrieve metadata for this DOI/PMCID. %{use_full_form_message}'
           not_journal_article: 'The metadata for this identifier indicates it is not a journal article. %{use_full_form_message}'
           incomplete_metadata: 'The metadata for this identifier is incomplete. %{use_full_form_message}'
-          lookup_required: 'Look up before editing or depositing'
+          lookup_required: 'You must click "Get publication info from DOI/PMCID" before editing or depositing.'
       license:
         validations:
           blank: "Can't be blank"
@@ -315,7 +315,7 @@ en:
         tooltip_html: >-
           Indicate which version of the article you are depositing. The "author submitted version" is the version before peer review or editing as submitted by an author to a journal. The "author accepted version" is the version accepted for publication and typically includes all changes made as a result of peer review. The "final published version of the work" is the peer reviewed, edited, formatted, and typeset version of the article.
         validations:
-          required: 'Selection required'
+          required: 'Version is required'
     extract_abstract:
       complete: We used AI to try to retrieve the exact abstract from the file you uploaded above, not to create an abstract from scratch. If you need to make changes, click the 'Edit before depositing' button below.
       error: We were not able to extract your abstract. If you would like to enter an abstract, click "Edit before depositing" below.
@@ -461,7 +461,7 @@ en:
         tooltip_html: >-
           Enter a valid email address that will be included for each deposit to this collection. Depositors will not be able to change or remove this email address, but they can add other emails. These emails will be publicly visible and are intended to allow others to ask questions about the content deposited.
         validations:
-          invalid: 'Must provide a valid email address'
+          invalid: 'A valid email address is required'
     messages:
       cannot_be_edited: 'This collection cannot be edited.'
     nested_forms:
@@ -559,10 +559,9 @@ en:
         label: 'Enter the link or owner/name of the GitHub repository you want to deposit'
         tooltip_html: >-
           GitHub repositories must be public. Format is either "https://github.com/[owner]/[repository_name]" or "[owner]/[repository_name]". Only releases created after you have finished filling the form will be archived in the SDR.
-    validations:
-      repository:
-        blank: "Can't be blank"
-        invalid: 'Enter a valid link or owner/name of a public GitHub repository.'
+        validations:
+          blank: "Can't be blank"
+          invalid: 'A link or owner/name of a public GitHub repository is required.'
   github_repository_work_form:
     fields:
       github_deposit_enabled:
@@ -588,7 +587,7 @@ en:
         tooltip_html: >-
           The abstract should describe the content you are depositing and its relation to or context within any other published works or larger projects. If you are depositing a dataset related to a publication, please describe the dataset itself and not the publication.
         validations:
-          blank: "Can't be blank"
+          blank: "Abstract is required"
           too_long: 'Is too long (maximum is %{count} characters)'
       access:
         validations:
@@ -615,7 +614,7 @@ en:
             Check this box to prevent this file from being displayed on or downloaded from the public webpage for your work. The file will still be preserved in the SDR as part of your deposit. Hidden files should NOT contain any content the University classifies as <a href="https://uit.stanford.edu/guide/riskclassifications" target="_blank">High Risk</a>.
       contributors:
         validations:
-          minimum: 'Must have at least one contributor'
+          minimum: 'At least one author/contributor is required'
       create_date:
         label: 'Creation date (optional, use for datasets)'
         tooltip_html: >-
@@ -623,7 +622,7 @@ en:
       create_date_range_from:
         validations:
           complete: 'Must have both a start and end date'
-          sequence: 'Must be before end date'
+          sequence: 'Start date must be before end date'
       create_date_type:
         validations:
           inclusion: 'Is not included in the list'
@@ -647,7 +646,7 @@ en:
         label: 'Start typing a keyword'
         validations:
           text:
-            blank: "Can't be blank"
+            blank: "At least one keyword is required"
       license:
         label: 'License'
         help_text: 'Assigning a license may improve discovery of your work in web searches.'
@@ -657,7 +656,7 @@ en:
           blank: "Can't be blank"
       other_work_subtype:
         validations:
-          blank: "Can't be blank"
+          blank: "Description is required"
       related_works:
         citation:
           label: 'Enter full citation for related work'
@@ -670,7 +669,7 @@ en:
             html: 'Full link for a related work <em>(e.g., DOI, arXiv, PMID, PURL, or other URL)</em>. Include "https://".'
           validations:
             absence: 'Must be blank'
-            invalid: 'Must be a valid URL'
+            invalid: 'A valid link is required'
         relationship:
           label:
             html: 'How is your deposit related to this work?  <a href="https://sdr.library.stanford.edu/related-works" target="_blank">Get help choosing a term</a>'
@@ -701,8 +700,8 @@ en:
             inclusion: 'Selection required'
       release_date:
         validations:
-          on_or_before: 'Must be on or before %{date}'
-          today_or_later: 'Must be today or later'
+          on_or_before: 'A valid date that is today or later and on or before %{date} is required'
+          today_or_later: 'A valid date that is today or later and on or before %{count} is required'
       release_option:
         validations:
           inclusion: 'Is not included in the list'
@@ -713,29 +712,29 @@ en:
         tooltip_html: >-
           Serves as the title of the public webpage for your work and the title of web search results. Detailed titles similar to those used for scholarly publications will make it easier for users to find your work online. Avoid generic titles such as "Dataset for publication" or "My honors thesis."
         validations:
-          blank: "Can't be blank"
+          blank: "Title is required"
       whats_changing:
         label: "What's changing?"
         tooltip_html: >-
           Enter a brief description (200 characters max) indicating which fields were changed or what type of correction was made. This information is not displayed on the public webpage.
         validations:
-          blank: "Can't be blank"
+          blank: "Entering what has changed in this version is required"
       work_subtypes:
         label: 'Which of the following terms further describe your deposit?'
         tooltip_html: >-
           Choose terms from this list to further describe the type of work you are depositing. Click "See more subtype options" for additional terms. An entry here is only required if you have selected "Mixed Materials," "Music," or  "Other" above.
       work_subtypes_mixed_materials:
         validations:
-          minimum: '%{count} terms are the minimum allowed'
+          minimum: 'At least %{count} terms must be selected'
       work_subtypes_music:
         validations:
-          minimum: '%{count} music term is the minimum allowed'
+          minimum: 'At least %{count} music term must be selected'
       work_type:
         label: 'What type of content are you depositing?'
         tooltip_html: >-
           Choose the one content type that best describes the overall or primary nature of the work. Click on each content type to view and select terms you may use to further describe the work you are depositing.
         validations:
-          required: 'Type must be selected.'
+          required: 'Type must be selected'
       works_contact_email:
         tooltip_html: >-
           The collection manager has provided an email address for all works deposited into this collection. Depositors cannot change or remove this email address. It will be publicly visible and is intended to be a place where people can ask questions about the work you have deposited.

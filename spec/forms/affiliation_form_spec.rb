@@ -25,7 +25,7 @@ RSpec.describe AffiliationForm, type: :form do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:institution]).to include('Must be selected from the list')
+        expect(form.errors[:institution]).to include('Institution must be selected from the list')
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.describe AffiliationForm, type: :form do
 
       it 'is not valid' do
         expect(form).not_to be_valid
-        expect(form.errors[:institution]).to include("Can't be blank")
+        expect(form.errors[:institution]).to include('Institution must be selected from the list')
       end
     end
   end

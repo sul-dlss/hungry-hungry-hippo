@@ -5,7 +5,7 @@ class GithubRepositoryForm < ApplicationForm
   # <owner>/<repo> or URL
   attribute :repository, :string
   validates :repository,
-            presence: { message: I18n.t('github_repository_form.validations.repository.blank') }
+            presence: { message: I18n.t('github_repository_form.fields.github_repository.validations.blank') }
   validate :valid_repository
 
   attribute :collection_druid, :string
@@ -16,6 +16,6 @@ class GithubRepositoryForm < ApplicationForm
     return if Github::AppService.repository?(repository)
 
     errors.add(:repository,
-               I18n.t('github_repository_form.validations.repository.invalid'))
+               I18n.t('github_repository_form.fields.github_repository.validations.invalid'))
   end
 end

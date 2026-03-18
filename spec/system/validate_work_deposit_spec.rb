@@ -73,8 +73,8 @@ RSpec.describe 'Validate a work deposit' do
                                    errors: ['Work publication_date: invalid',
                                             'Work contributors: invalid',
                                             'Work keywords: invalid',
-                                            'Work contributors: Must have at least one contributor',
-                                            'Work content: Must have at least one file',
+                                            'Work contributors: At least one author/contributor is required',
+                                            'Work content: At least one file is required',
                                             'Work create_date_range_from: Must have both a start and end date',
                                             'Work abstract: blank',
                                             'Work work_type: blank',
@@ -84,7 +84,7 @@ RSpec.describe 'Validate a work deposit' do
 
     # Manage file is marked invalid
     expect(page).to have_css('.nav-link.active.is-invalid', text: 'Manage files')
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Must have at least one file')
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'At least one file is required')
 
     find('.dropzone').drop('spec/fixtures/files/hippo.png')
 
@@ -104,7 +104,6 @@ RSpec.describe 'Validate a work deposit' do
 
     # Authors is marked invalid
     find('.nav-link.is-invalid', text: with_required_tab_mark('Contributors')).click
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: "Can't be blank", visible: :all)
 
     # Fill in the author name
     within('.orcid-section') do
@@ -121,7 +120,7 @@ RSpec.describe 'Validate a work deposit' do
     find('.nav-link.is-invalid', text: with_required_tab_mark('Abstract and keywords')).click
     expect(page).to have_css('.nav-link', text: with_required_tab_mark('Abstract and keywords'))
     expect(page).to have_css('textarea.is-invalid#work_abstract')
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: "Can't be blank")
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Abstract is required')
 
     # Make the abstract valid
     fill_in('Abstract', with: abstract_fixture)
@@ -136,7 +135,7 @@ RSpec.describe 'Validate a work deposit' do
     find('.nav-link', text: with_required_tab_mark('Type of deposit')).click
     expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Type of deposit'))
     expect(page).to have_field('work_work_type_text', class: 'is-invalid', type: :radio)
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Type must be selected.')
+    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Type must be selected')
 
     # Make the abstract valid
     choose('Text')
@@ -160,7 +159,8 @@ RSpec.describe 'Validate a work deposit' do
     # Access settings is marked invalid
     find('.nav-link.is-invalid', text: with_required_tab_mark('Access settings')).click
     expect(page).to have_field('Release date', class: 'is-invalid')
-    expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Must be today or later')
+    expect(page).to have_css('.invalid-feedback.is-invalid',
+                             text: 'A valid date that is today or later and on or before')
     choose('Immediately')
 
     # Deposit is marked invalid
@@ -219,20 +219,20 @@ RSpec.describe 'Validate a work deposit' do
       expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
 
       find('.nav-link.is-invalid', text: with_required_tab_mark('Contributors')).click
-      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Must have at least one contributor')
+      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'At least one author/contributor is required')
       expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Must provide a last name')
 
       # Provide a last name
       fill_in('Last name', with: contributors_fixture.first['last_name'])
       fill_in('First name', with: contributors_fixture.first['first_name'])
       find_field('First name').send_keys(:tab)
-      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Must have at least one contributor')
+      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'At least one author/contributor is required')
       expect(page).to have_no_css('.invalid-feedback.is-invalid', text: 'Must provide a last name')
       expect(page).to have_css('.nav-link.is-invalid', text: with_required_tab_mark('Contributors'))
 
       # Add another contributor to clear the error
       click_link_or_button('Add another contributor')
-      expect(page).to have_no_css('.invalid-feedback.is-invalid', text: 'Must have at least one contributor')
+      expect(page).to have_no_css('.invalid-feedback.is-invalid', text: 'At least one author/contributor is required')
       expect(page).to have_css('.nav-link:not(.is-invalid)', text: with_required_tab_mark('Contributors'))
     end
   end
