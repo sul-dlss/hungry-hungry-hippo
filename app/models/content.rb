@@ -18,6 +18,14 @@ class Content < ApplicationRecord
     event :globus_list_cancel do
       transition globus_listing: :globus_not_in_progress
     end
+
+    event :globus_list_fail do
+      transition globus_listing: :globus_not_in_progress
+    end
+
+    after_transition on: :globus_list_fail do |content, _transition|
+      content.content_files.clear
+    end
   end
 
   def shown_files

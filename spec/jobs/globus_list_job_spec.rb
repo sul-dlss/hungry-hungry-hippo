@@ -64,5 +64,17 @@ RSpec.describe GlobusListJob do
         expect(content.content_files).to be_empty
       end
     end
+
+    context 'when a Globus error occurs' do
+      before do
+        allow(GlobusClient).to receive(:list_files).and_raise(GlobusClient::Errors::InternalServerError)
+      end
+
+      it 'raises an error and sets the content to globus_not_in_progress' do
+        expect { described_class.new.perform(content:) }.to raise_error(GlobusClient::Errors::InternalServerError)
+        expect(content.reload.globus_not_in_progress?).to be true
+        expect(content.content_files).to be_empty
+      end
+    end
   end
 end
