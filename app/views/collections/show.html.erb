@@ -91,8 +91,8 @@
       <% component.with_row(label: 'Reviewers') do |row_component| %>
         <% row_component.with_cell do %><%= render Elements::Tables::ListCellComponent.new(item_values: @collection_presenter.participants(:reviewers)) %> <% end %>
       <% end %>
-      <% component.with_row(label: 'Article Workflow Status', values: [@collection_presenter.article_workflow_status]) %>
-      <% component.with_row(label: 'Github Workflow Status', values: [@collection_presenter.github_workflow_status]) %>
+      <% component.with_row(label: 'Article Workflow Status', values: [@collection_presenter.article_workflow_status]) if Settings.article_deposit.enabled %>
+      <% component.with_row(label: 'Github Workflow Status', values: [@collection_presenter.github_workflow_status]) if Settings.github.enabled %>
     <% end %>
 
     <%= turbo_frame_tag 'history', src: history_collection_path(druid: @collection_presenter.druid) do %>
