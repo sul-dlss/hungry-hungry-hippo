@@ -30,7 +30,7 @@ module Admin
     def collection_or_work_present
       return if collection.present? || work.present?
 
-      errors.add(:druid, 'Druid not found')
+      errors.add(:druid, I18n.t('admin_druid_search_form.fields.druid.validations.not_found'))
     end
   end
 end

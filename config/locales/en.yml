@@ -260,6 +260,11 @@ en:
       druids:
         validations:
           not_found: '%{druid} not found in Works or Collections'
+  admin_druid_search_form:
+    fields:
+      druid:
+        validations:
+          not_found: 'Druid not found'
   article_form:
     buttons:
       lookup_identifier: 'Get publication info from DOI/PMCID'
