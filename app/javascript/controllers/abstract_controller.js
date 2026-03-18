@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = ['spinner', 'formSection', 'extractedAbstract']
-  static values = { clearAbstractsPath: String }
+  static values = { doi: String }
 
   showSpinner (event) {
     this.formSectionTarget.classList.add('d-none')
@@ -12,11 +12,6 @@ export default class extends Controller {
   clearExtracted () {
     this.extractedAbstractTarget.value = ''
 
-    // this calls the server to record the event
-    fetch(this.clearAbstractsPathValue, {
-      method: 'GET',
-      credentials: 'same-origin',
-      keepalive: true
-    })
+    ahoy.track('extracted abstract cleared', { doi: this.doiValue }) // eslint-disable-line no-undef
   }
 }

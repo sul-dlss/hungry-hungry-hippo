@@ -23,12 +23,6 @@ class AbstractsController < ApplicationController
     track_abstract_extraction
   end
 
-  def clear
-    ahoy.track Ahoy::Event::EXTRACTED_ABSTRACT_CLEARED, doi: @doi
-
-    head :no_content
-  end
-
   private
 
   def article_filepath(content)
