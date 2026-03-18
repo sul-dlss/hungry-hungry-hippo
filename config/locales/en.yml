@@ -148,6 +148,8 @@ en:
             not_selected: 'must be selected from the list'
           uri:
             invalid: 'select a valid ROR institution'
+      version_identification:
+        required: 'selection required'
     date:
       year:
         less_than_or_equal_to: 'must be in the past'
