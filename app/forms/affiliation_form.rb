@@ -5,7 +5,9 @@
 # It includes fields for the institution, department, and ROR identifier
 class AffiliationForm < ApplicationForm
   attribute :institution, :string
-  validates :institution, presence: { message: I18n.t('validations.fields.contributors.affiliations.institution.blank') },
+  validates :institution, presence: {
+                            message: I18n.t('validations.fields.contributors.affiliations.institution.blank')
+                          },
                           if: -> { department.present? }
   validate :validate_institution
 

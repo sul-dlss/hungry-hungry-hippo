@@ -3,7 +3,7 @@
 # Base form for a Work.
 # All attributes should be added here (instead of subclasses) so that mappers
 # don't need to know about subclasses.
-class BaseWorkForm < ApplicationForm
+class BaseWorkForm < ApplicationForm # rubocop:disable Metrics/ClassLength
   STANFORD_UNIVERSITY = 'Stanford University'
   ARTICLE_VERSION_IDENTIFICATION_OPTIONS = [
     'Author submitted version',
