@@ -14,7 +14,12 @@ RSpec.describe 'Show home' do
 
     expect(page).to have_content('Create or manage your deposits')
     expect(page).to have_link('Enter here', href: dashboard_path)
-    expect(page).to have_content(strip_tags(I18n.t('banner.home_html')))
+    expect(page).to have_content(
+      strip_tags(
+        'This application will be down for maintenance starting Friday, March 20 after 3:00pm Pacific and will be available again on Monday, March 23. ' \
+          'Depositing to the SDR will be unavailable during this time. If you have any questions, contact us at sdr-contact@lists.stanford.edu.'
+      )
+    )
     expect(page).to have_content('Sign up for our newsletter')
     expect(page).to have_css('.quote-card', text: 'I am definitely hearing more')
     expect(page).to have_css('.quote-card', count: 7)
