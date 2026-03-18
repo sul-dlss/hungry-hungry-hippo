@@ -523,6 +523,7 @@ en:
         tooltip_html: >-
           The abstract should describe the content you are depositing and its relation to or context within any other published works or larger projects. If you are depositing a dataset related to a publication, please describe the dataset itself and not the publication.
         validations:
+          blank: "can't be blank"
           too_long: 'is too long (maximum is %{count} characters)'
       access:
         validations:
@@ -584,6 +585,8 @@ en:
         help_text: 'Assigning a license may improve discovery of your work in web searches.'
         tooltip_html: >-
           We strongly recommend that you assign a license to your work, as it will help others understand what you are allowing them to do with your work and under what conditions.  Click on "Get help selecting a license" for assistance with the license options presented here.
+        validations:
+          blank: "can't be blank"
       other_work_subtype:
         validations:
           blank: "can't be blank"
