@@ -15,8 +15,7 @@ RSpec.describe Works::Show::DepositingGithubComponent, type: :component do
     it 'renders the alert' do
       render_inline(component)
 
-      expect(page).to have_css('.alert', text: 'One more step to complete deposit - ' \
-                                               'Go to GitHub to create a release for this GitHub repository.')
+      expect(page).to have_css('.alert', text: 'Go to GitHub to create a release for this GitHub repository.')
       expect(page).to have_link('Go to GitHub', href: "https://github.com/#{work.github_repository_name}/releases")
     end
   end
