@@ -100,5 +100,16 @@ RSpec.describe DateForm do
         expect(form).not_to be_valid
       end
     end
+
+    context 'when day is not a valid date' do
+      let(:year) { '2021' }
+      let(:month) { '2' }
+      let(:day) { '30' }
+
+      it 'is invalid' do
+        expect(form).not_to be_valid
+        expect(form.errors[:day]).to include('invalid date')
+      end
+    end
   end
 end

@@ -13,6 +13,8 @@ class DateForm < ApplicationForm
   validates :month, presence: true, if: -> { day.present? }
   attribute :day, :integer
   validates :day, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 31, allow_nil: true }
+  validate :valid_date, if: -> { day.present? }
+
   attribute :approximate, :boolean, default: false
 
   # if the user enters a year value that is not a number, set to nil instead of the default (which is cast to 0)
@@ -31,5 +33,11 @@ class DateForm < ApplicationForm
 
   def to_date
     EdtfDate.for(year:, month:, day:, approximate:)
+  end
+
+  def valid_date
+    to_date
+  rescue Date::Error
+    errors.add(:day, 'invalid date')
   end
 end
