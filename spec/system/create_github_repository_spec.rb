@@ -150,7 +150,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
     # Waiting page may be too fast to catch so not testing.
     # On show page
     expect(page).to have_css('h1', text: 'sul-dlss/hungry-hungry-hippo')
-    expect(page).to have_css('.alert', text: 'Go to GitHub to create a release for this GitHub repository.')
+    expect(page).to have_css('.alert', text: 'Go to GitHub and create a new release for this GitHub repository.')
 
     within('table#details-table') do
       expect(page).to have_css('tr', text: 'Automatically deposit future GitHub releases?')
