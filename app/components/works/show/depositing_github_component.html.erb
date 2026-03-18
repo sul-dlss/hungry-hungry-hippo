@@ -1,4 +1,9 @@
 <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :note,
                                                            id: 'depositing-github-note') do %>
-  One more step to complete deposit - <%= link_to 'Go to GitHub', github_releases_path %> to create a release for this GitHub repository.
+  To complete deposit:
+  <ol>
+    <li><%= link_to 'Go to GitHub', github_releases_path %> to create a release for this GitHub repository.</li>
+    <li>We will check nightly and deposit new releases that we find.</li>
+    <li>Or you can click the "Check for new Github releases" button below if you have a release ready for deposit.</li>
+  </ol>
 <% end %>
