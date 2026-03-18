@@ -52,7 +52,7 @@ RSpec.describe 'Validate a collection deposit' do
       # Description is marked invalid
       expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Details'))
       expect(page).to have_css('textarea.is-invalid#collection_description')
-      expect(page).to have_css('.invalid-feedback.is-invalid', text: "Can't be blank")
+      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Description is required')
 
       # Make the description valid
       fill_in('Description', with: collection_description_fixture)
@@ -61,7 +61,7 @@ RSpec.describe 'Validate a collection deposit' do
       expect(page).to have_css('.nav-link', exact_text: 'Related links')
       find('.nav-link', exact_text: 'Related links').click
       expect(page).to have_field('collection_related_links_attributes_0_url', class: 'is-invalid')
-      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Is not a valid URL')
+      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'A valid URL is required')
 
       # Make the related link valid
       fill_in('Link text', with: related_links_fixture.first['text'])
@@ -69,13 +69,13 @@ RSpec.describe 'Validate a collection deposit' do
 
       # Access setting for release duration is marked invalid
       find('.nav-link', text: with_required_tab_mark('Access settings')).click
-      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Select a valid duration for release')
+      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Select a duration')
       select('3 years in the future', from: 'collection_release_duration')
       expect(page).to have_select('Release duration', selected: '3 years in the future')
 
       # Required license is marked invalidate
       find('.nav-link', text: with_required_tab_mark('License')).click
-      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Can\'t be blank')
+      expect(page).to have_css('.invalid-feedback.is-invalid', text: 'Select a license')
       select('No License', from: 'Required license')
 
       # Try to deposit again

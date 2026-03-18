@@ -110,7 +110,10 @@ class BaseWorkForm < ApplicationForm # rubocop:disable Metrics/ClassLength
   with_options if: -> { release_option == 'delay' } do |form|
     form.validates :release_date, comparison: {
       greater_than_or_equal_to: -> { Time.zone.today },
-      message: I18n.t('work_form.fields.release_date.validations.today_or_later')
+      message: lambda do |record, _data|
+        I18n.t('work_form.fields.release_date.validations.today_or_later',
+               date: I18n.l(record.max_release_date, format: :slashes_short))
+      end
     }
 
     form.validates :release_date, comparison: {

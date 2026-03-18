@@ -347,7 +347,7 @@ en:
           </ul>
       custom_rights_statement_instructions:
         validations:
-          blank: "Can't be blank"
+          blank: "Instructions are required"
       custom_rights_statement_option:
         validations:
           blank: "Can't be blank"
@@ -363,7 +363,7 @@ en:
         tooltip_html: >-
           Enter an approximately 2-3 sentence description of the works to be included in this collection. You may want to include information on who the creators of the works are/will be, general subject matter of the works, types of works (technical reports, datasets, video archives, etc), and the scholarly value of the content.
         validations:
-          blank: "Can't be blank"
+          blank: "Description is required"
       doi_option:
         label: 'Will a DOI be assigned to the deposits in this collection?'
         tooltip_html: >-
@@ -393,28 +393,28 @@ en:
         default_prompt: 'Select license to display by default..'
         help_link: 'Get help selecting a license'
         validations:
-          blank: "Can't be blank"
+          blank: "Select a license"
       license_option:
         validations:
           inclusion: 'Is not included in the list'
       managers:
         validations:
-          minimum: 'Must have at least one manager'
+          minimum: 'At least one manager is required'
       provided_custom_rights_statement:
         validations:
-          blank: "Can't be blank"
+          blank: "A custom use statement is required"
       related_links:
         text:
           label: 'Link text'
           validations:
-            blank: "Can't be blank"
+            blank: "Link text is required"
         url:
           label: 'URL'
           validations:
-            invalid: 'Is not a valid URL'
+            invalid: 'A valid URL is required'
       release_duration:
         validations:
-          valid_duration: 'Select a valid duration for release'
+          valid_duration: 'Select a duration'
       release_option:
         label: 'When will files on deposits to this collection be downloadable?'
         tooltip_html: >-
@@ -437,7 +437,7 @@ en:
           </ul>
       reviewers:
         validations:
-          minimum: 'Must have at least one reviewer'
+          minimum: 'At least one reviewer is required'
       title:
         label: 'Collection name'
         help_text: >-
@@ -445,7 +445,7 @@ en:
         tooltip_html: >-
           Enter a name for your collection. This name will serve as the title on the public webpage for the collection and the title of web search results, as well as in the Stanford University Libraries' catalog. Please do not use the word "Collection" at the end of the title.
         validations:
-          blank: "Can't be blank"
+          blank: "Collection name is required"
       work_subtypes:
         label: 'Select which subtypes will be applied to each deposit'
         help_text: 'You can also designate required subtypes that will be associated with every deposit to this collection. Depositors will not be able to remove this subtype, but will be able to add more subtypes.'
@@ -701,7 +701,7 @@ en:
       release_date:
         validations:
           on_or_before: 'A valid date that is today or later and on or before %{date} is required'
-          today_or_later: 'A valid date that is today or later and on or before %{count} is required'
+          today_or_later: 'A valid date that is today or later and on or before %{date} is required'
       release_option:
         validations:
           inclusion: 'Is not included in the list'
