@@ -4,7 +4,7 @@
 class GlobusListJob < RetriableJob
   include Rails.application.routes.url_helpers
 
-  def perform(content:, cancel_check_interval: 100)
+  def perform(content:, cancel_check_interval: 100) # rubocop:disable Metrics/MethodLength
     @content = content
     @cancel_check_interval = cancel_check_interval
 
@@ -24,6 +24,9 @@ class GlobusListJob < RetriableJob
     end
 
     perform_broadcast
+  rescue GlobusClient::Errors::InternalServerError, GlobusClient::Errors::ServiceUnavailable, GlobusClient::Errors::EndpointError
+    content.globus_list_fail!
+    raise
   end
 
   delegate :user, :work, to: :content
