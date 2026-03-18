@@ -143,6 +143,9 @@ en:
         orcid:
           invalid: 'must be formatted as "XXXX-XXXX-XXXX-XXXX"'
         affiliations:
+          institution:
+            blank: "can't be blank"
+            not_selected: 'must be selected from the list'
           uri:
             invalid: 'select a valid ROR institution'
     date:
