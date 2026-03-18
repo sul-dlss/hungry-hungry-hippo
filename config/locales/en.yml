@@ -265,6 +265,17 @@ en:
       druid:
         validations:
           not_found: 'Druid not found'
+  admin_move_form:
+    fields:
+      collection_druid:
+        validations:
+          already_part_of_collection: 'Already part of this collection'
+          blank: "Can't be blank"
+          not_found: 'Not found'
+          work_access_not_allowed: 'Work is set for Stanford visibility but the collection requires world visibility'
+          work_embargoed: 'Work is embargoed but collection is immediate release only'
+          work_license_not_allowed: 'Work has a license that is not allowed by the collection'
+          work_without_doi: 'Work is not set for DOI assignment but collection requires DOI assignment'
   admin_user_search_form:
     fields:
       sunetid:

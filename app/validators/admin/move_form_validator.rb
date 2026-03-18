@@ -34,45 +34,52 @@ module Admin
     delegate :collection, :errors, :work_form, :collection_druid, to: :@record
 
     def validate_collection_druid_present
-      errors.add(:collection_druid, 'Can\'t be blank') if collection_druid.blank?
+      return if collection_druid.present?
+
+      errors.add(:collection_druid,
+                 I18n.t('admin_move_form.fields.collection_druid.validations.blank'))
     end
 
     def validate_collection_found
-      errors.add(:collection_druid, 'Not found') if collection.nil?
+      return unless collection.nil?
+
+      errors.add(:collection_druid,
+                 I18n.t('admin_move_form.fields.collection_druid.validations.not_found'))
     end
 
     def validate_not_already_part_of_collection
       return unless collection_druid == work_form.collection_druid
 
       errors.add(:collection_druid,
-                 'Already part of this collection')
+                 I18n.t('admin_move_form.fields.collection_druid.validations.already_part_of_collection'))
     end
 
     def validate_release_option
       return unless work_form.release_option == 'delay' && collection.release_option == 'immediate'
 
       errors.add(:collection_druid,
-                 'Work is embargoed but collection is immediate release only')
+                 I18n.t('admin_move_form.fields.collection_druid.validations.work_embargoed'))
     end
 
     def validate_doi_option
       return unless work_form.doi_option == 'no' && collection.doi_option == 'yes'
 
       errors.add(:collection_druid,
-                 'Work is not set for DOI assignment but collection requires DOI assignment')
+                 I18n.t('admin_move_form.fields.collection_druid.validations.work_without_doi'))
     end
 
     def validate_license
       return unless collection.license_option == 'required' && work_form.license != collection.license
 
-      errors.add(:collection_druid, 'Work has a license that is not allowed by the collection')
+      errors.add(:collection_druid,
+                 I18n.t('admin_move_form.fields.collection_druid.validations.work_license_not_allowed'))
     end
 
     def validate_access
       return unless collection.access == 'world' && work_form.access == 'stanford'
 
       errors.add(:collection_druid,
-                 'Work is set for Stanford visibility but the collection requires world visibility')
+                 I18n.t('admin_move_form.fields.collection_druid.validations.work_access_not_allowed'))
     end
   end
 end
