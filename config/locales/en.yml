@@ -621,11 +621,16 @@ en:
       related_works:
         citation:
           label: 'Enter full citation for related work'
+          validations:
+            absence: 'must be blank'
         use_citation:
           label: 'Related work'
         identifier:
           label:
             html: 'Full link for a related work <em>(e.g., DOI, arXiv, PMID, PURL, or other URL)</em>. Include "https://".'
+          validations:
+            absence: 'must be blank'
+            invalid: 'must be a valid URL'
         relationship:
           label:
             html: 'How is your deposit related to this work?  <a href="https://sdr.library.stanford.edu/related-works" target="_blank">Get help choosing a term</a>'
@@ -652,6 +657,8 @@ en:
             documents: 'My deposit documents this related work'
             is variant form of: 'My deposit is a variant form of this related work'
             is original form of: 'My deposit is the original form of this related work'
+          validations:
+            inclusion: 'selection required'
       release_date:
         validations:
           on_or_before: 'must be on or before %{date}'
