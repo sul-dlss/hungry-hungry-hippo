@@ -177,9 +177,11 @@ RSpec.describe DepositWorkJob do
       work_form_fixture.tap do |form|
         form.content_id = content.id
         form.collection_druid = collection.druid
+        form.doi_option = doi_option
       end
     end
     let(:version_status) { build(:openable_version_status) }
+    let(:doi_option) { 'no' }
 
     before do
       allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
@@ -205,6 +207,49 @@ RSpec.describe DepositWorkJob do
         .with(cocina_object:, user_name: current_user.sunetid, description: nil)
       expect(Sdr::Repository).to have_received(:accession).with(druid:, new_user_version: false,
                                                                 version_description: 'I am changing the title.')
+    end
+
+    context 'when datacite validation fails' do
+      let(:datacite_validation) { instance_double(Datacite::Validators::CocinaValidator, errors: ['validation error']) }
+      let(:doi_option) { 'yes' }
+
+      before do
+        allow(Datacite::Validators::CocinaValidator).to receive(:new).and_return(datacite_validation)
+        allow(Honeybadger).to receive(:notify)
+      end
+
+      it 'notifies Honeybadger of datacite validation errors' do
+        described_class.perform_now(work_form:, work:, deposit: true,
+                                    request_review: false, current_user:, ahoy_visit:)
+        expect(Honeybadger).to have_received(:notify)
+          .with('Datacite validation failed', context: { druid: work.druid, errors: datacite_validation.errors })
+        expect(Sdr::Repository).to have_received(:update)
+          .with(cocina_object:, user_name: current_user.sunetid, description: nil)
+        expect(Sdr::Repository).to have_received(:accession)
+          .with(druid:, new_user_version: false, version_description: 'I am changing the title.')
+      end
+    end
+
+    context 'when datacite validation raises an unexpected error' do
+      let(:doi_option) { 'yes' }
+
+      before do
+        allow(Datacite::Validators::CocinaValidator).to receive(:new).and_raise(StandardError,
+                                                                                'unexpected validation error')
+        allow(Honeybadger).to receive(:notify)
+      end
+
+      it 'notifies Honeybadger of datacite validation errors' do
+        described_class.perform_now(work_form:, work:, deposit: true,
+                                    request_review: false, current_user:, ahoy_visit:)
+        expect(Honeybadger).to have_received(:notify)
+          .with('Unexpected error during datacite validation', context: { druid: work.druid,
+                                                                          error: an_instance_of(StandardError) })
+        expect(Sdr::Repository).to have_received(:update)
+          .with(cocina_object:, user_name: current_user.sunetid, description: nil)
+        expect(Sdr::Repository).to have_received(:accession)
+          .with(druid:, new_user_version: false, version_description: 'I am changing the title.')
+      end
     end
   end
 

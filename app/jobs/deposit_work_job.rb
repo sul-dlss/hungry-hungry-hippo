@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Performs a deposit or a work (without SDR API).
-class DepositWorkJob < ApplicationJob
+class DepositWorkJob < ApplicationJob # rubocop:disable Metrics/ClassLength
   # @param [WorkForm] work_form
   # @param [Work] work
   # @param [Boolean] deposit if true and review is not requested, deposit the work; otherwise, leave as draft
@@ -144,8 +144,9 @@ class DepositWorkJob < ApplicationJob
     @globus ||= content.content_files.exists?(file_type: 'globus')
   end
 
-  def accession_or_persist_complete(druid:)
+  def accession_or_persist_complete(druid:) # rubocop:disable Metrics/AbcSize
     if accession?
+      validate_datacite
       work.accession!
       Sdr::Repository.accession(druid:, new_user_version: new_user_version?,
                                 version_description: work_form.whats_changing)
@@ -218,5 +219,20 @@ class DepositWorkJob < ApplicationJob
       current_user: Current.user.sunetid,
       lock: work_form.lock
     )
+  end
+
+  # This performs the Datacite validation and notifies Honeybadger if there are validation errors.
+  # It currently does not raise an error, because we don't want to block the deposit if there are validation errors yet,
+  # but we do want to be notified so that we can address any issues and determine how problematic this is for our users.
+  # Controlled by the Settings.validate_datacite.enabled feature flag (true by default).
+  def validate_datacite
+    return unless assign_doi && work_form.persisted? && Settings.validate_datacite.enabled
+
+    datacite_validation = Datacite::Validators::CocinaValidator.new(cocina_object: mapped_cocina_object)
+    return unless datacite_validation.errors.any?
+
+    Honeybadger.notify('Datacite validation failed', context: { druid: work.druid, errors: datacite_validation.errors })
+  rescue StandardError => e
+    Honeybadger.notify('Unexpected error during datacite validation', context: { druid: work.druid, error: e })
   end
 end
