@@ -525,6 +525,10 @@ en:
         label: 'Enter the link or owner/name of the GitHub repository you want to deposit'
         tooltip_html: >-
           GitHub repositories must be public. Format is either "https://github.com/[owner]/[repository_name]" or "[owner]/[repository_name]". Only releases created after you have finished filling the form will be archived in the SDR.
+    validations:
+      repository:
+        blank: "can't be blank"
+        invalid: 'Enter a valid link or owner/name of a public GitHub repository.'
   github_repository_work_form:
     fields:
       github_deposit_enabled:

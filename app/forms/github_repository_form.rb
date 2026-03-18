@@ -4,7 +4,8 @@
 class GithubRepositoryForm < ApplicationForm
   # <owner>/<repo> or URL
   attribute :repository, :string
-  validates :repository, presence: true
+  validates :repository,
+            presence: { message: I18n.t('github_repository_form.validations.repository.blank') }
   validate :valid_repository
 
   attribute :collection_druid, :string
@@ -15,6 +16,6 @@ class GithubRepositoryForm < ApplicationForm
     return if Github::AppService.repository?(repository)
 
     errors.add(:repository,
-               'Enter a valid link or owner/name of a public GitHub repository.')
+               I18n.t('github_repository_form.validations.repository.invalid'))
   end
 end
