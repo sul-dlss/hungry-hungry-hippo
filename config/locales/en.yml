@@ -559,6 +559,11 @@ en:
         label: 'Enter the link or owner/name of the GitHub repository you want to deposit'
         tooltip_html: >-
           GitHub repositories must be public. Format is either "https://github.com/[owner]/[repository_name]" or "[owner]/[repository_name]". Only releases created after you have finished filling the form will be archived in the SDR.
+        help_text: >-
+          <ul>
+            <li>This form will allow you to set up automatic deposits of future GitHub repository releases.</li>
+            <li>Only releases created after this form is saved will be deposited.</li>
+          </ul>
         validations:
           blank: "Can't be blank"
           invalid: 'A link or owner/name of a public GitHub repository is required.'
