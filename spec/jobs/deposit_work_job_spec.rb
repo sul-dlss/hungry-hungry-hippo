@@ -222,7 +222,7 @@ RSpec.describe DepositWorkJob do
         described_class.perform_now(work_form:, work:, deposit: true,
                                     request_review: false, current_user:, ahoy_visit:)
         expect(Honeybadger).to have_received(:notify)
-          .with("Datacite validation failed for #{work.druid}: validation error")
+          .with('Datacite validation failed', context: { druid: work.druid, errors: datacite_validation.errors })
         expect(Sdr::Repository).to have_received(:update)
           .with(cocina_object:, user_name: current_user.sunetid, description: nil)
         expect(Sdr::Repository).to have_received(:accession)
@@ -243,7 +243,8 @@ RSpec.describe DepositWorkJob do
         described_class.perform_now(work_form:, work:, deposit: true,
                                     request_review: false, current_user:, ahoy_visit:)
         expect(Honeybadger).to have_received(:notify)
-          .with("Unexpected error during datacite validation for #{work.druid}: unexpected validation error")
+          .with('Unexpected error during datacite validation', context: { druid: work.druid,
+                                                                          error: an_instance_of(StandardError) })
         expect(Sdr::Repository).to have_received(:update)
           .with(cocina_object:, user_name: current_user.sunetid, description: nil)
         expect(Sdr::Repository).to have_received(:accession)

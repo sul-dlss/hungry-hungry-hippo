@@ -131,4 +131,4 @@ extract_abstracts:
   enabled: false
 
 validate_datacite:
-  enabled: false
+  enabled: true
