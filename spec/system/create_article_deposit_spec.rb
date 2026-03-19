@@ -58,7 +58,6 @@ RSpec.describe 'Create an article deposit' do
 
     # Validate blank DOI submission
     click_link_or_button('Get publication info from DOI/PMCID')
-
     expect(page).to have_css('.invalid-feedback', text: 'A DOI or PMCID is required')
     expect(page).to have_css(
       'input#article_identifier[aria-invalid="true"][aria-describedby="article_identifier_error"]'
@@ -75,6 +74,7 @@ RSpec.describe 'Create an article deposit' do
     # Deposit without required fields
     fill_in 'article_identifier', with: doi
     click_link_or_button('Deposit')
+    expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
     expect(page).to have_css('.invalid-feedback', text: 'At least one file is required')
     expect(page).to have_css('.invalid-feedback', text: 'Version is required')
     expect(page).to have_css('.invalid-feedback', text: 'Must be accepted')

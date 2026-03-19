@@ -3,7 +3,7 @@
   <div class="d-flex">
     <div>
       <p><%= @abstract %></p>
-      <p><%= helpers.magic_icon(classes: 'me-2', style: 'color: #4298B5;') %><%= t('article_form.extract_abstract.complete') %></p>
+      <p><%= helpers.magic_icon(classes: 'me-2', style: 'color: #4298B5;') %><%= t('article_form.messages.extract_abstract_complete') %></p>
     </div>
     <div>
       <%= render Elements::IconButtonLinkComponent.new(link: clear_abstracts_path(doi:), icon: 'delete', label: 'Clear abstract', data: { abstract_target: 'submit' }) %>
@@ -11,6 +11,6 @@
   </div>
 <% else %>
   <div class="invalid-feedback is-invalid d-block">
-    <%= t('article_form.extract_abstract.error') %>
+    <%= t('article_form.messages.extract_abstract_error') %>
   </div>
 <% end %>

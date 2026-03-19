@@ -1,5 +1,5 @@
 <% content_for(:turbo_refresh_method, 'morph') %>
-<% content_for(:turbo_refresh_scroll, 'preserve') %>
+<% content_for(:turbo_refresh_scroll, 'preserve') if @identifier_lookup %>
 
 <%= tag.div data: {
       controller: 'unsaved-changes',
@@ -13,6 +13,7 @@
     <% end %>
   <% end %>
   <%= render SdrViewComponents::Elements::HeadingComponent.new(level: :h1, text: 'Article deposit', classes: 'mb-3') %>
+  <%= render SdrViewComponents::Elements::AlertComponent.new(variant: :danger, text: t('article_form.messages.validation')) if defined?(@valid) && !@valid %>
 
   <%= render Edit::LabelComponent.new(label_text: 'Upload your article', mark_required: true) %>
 
