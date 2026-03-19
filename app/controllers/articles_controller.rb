@@ -26,7 +26,7 @@ class ArticlesController < ApplicationController
     @content = Content.find(@article_form.content_id)
     set_license_presenter
 
-    if identifier_lookup?
+    if (@identifier_lookup = identifier_lookup?)
       # Perform an identifier (DOI/PMCID) lookup and re-render the form showing the article metadata
       # (@article_work_form) if we are able to identify a valid DOI (either directly entered by the user
       # or via a lookup to Pubmed).  @article_form.valid? checks if the DOI is present and exists in Crossref.
@@ -34,7 +34,7 @@ class ArticlesController < ApplicationController
       @article_form.last_doi_lookup = @article_form.doi # Keeps track if the user performed a DOI lookup.
       track_doi_lookup
       render :form, status: :unprocessable_content
-    elsif @article_form.valid?(:deposit)
+    elsif (@valid = @article_form.valid?(:deposit))
       # @article_form.valid?(:deposit) checks all of the fields.
       work = create_work
       work_form = create_article_work_form(article_form: @article_form, content: @content, work:)
