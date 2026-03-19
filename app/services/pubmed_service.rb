@@ -65,6 +65,6 @@ class PubmedService
   end
 
   def ids
-    search.upcase.delete_suffix('PMC')
+    search.upcase.delete_prefix('PMC')
   end
 end

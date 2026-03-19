@@ -3,10 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Create a Github repository and work deposit' do
+  include_context 'with FAST connection'
   include WorkMappingFixtures
 
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
+  let(:query) { keywords_fixture.first['text'] } # Used in stubbing out FAST connection
 
   before do
     allow(Github::AppService).to receive(:repository?).with('sul-dlss/happy-happy-hippo').and_return(false)

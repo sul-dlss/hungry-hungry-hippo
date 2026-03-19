@@ -47,7 +47,7 @@ RSpec.describe PubmedService do
           ids: [search],
           email: Settings.pubmed.email,
           tool:,
-          echo: "ids=#{search}&format=json&tool=#{tool}&email=#{Settings.pubmed.email}",
+          echo: "ids=#{id}&format=json&tool=#{tool}&email=#{Settings.pubmed.email}",
           versions: 'no',
           showaiid: 'no',
           idtype: 'pmcid'
@@ -143,6 +143,8 @@ RSpec.describe PubmedService do
 
   context 'when pubmed API returns a server error' do
     let(:search) { 'PMC3531190' }
+    let(:id) { '3531190' }
+
     let(:status) { 500 }
     let(:pubmed_response) { {}.to_json }
 
