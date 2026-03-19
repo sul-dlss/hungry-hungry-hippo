@@ -78,7 +78,7 @@ module Form
       end
 
       def orcid
-        @orcid ||= contributor.identifier&.find { |id| id.type == 'ORCID' }&.value&.presence
+        @orcid ||= OrcidSupport.orcid_id(contributor.identifier&.find { |id| id.type == 'ORCID' }&.uri)
       end
 
       def full_name
