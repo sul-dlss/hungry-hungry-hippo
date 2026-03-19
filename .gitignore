@@ -48,3 +48,6 @@ config/environments/*.local.yml
 workflow_service.log
 
 /articles
+
+.nvmrc
+.ruby-version

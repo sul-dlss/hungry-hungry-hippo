@@ -6,6 +6,7 @@
         dropzone_form_id_value: form_id,
         dropzone_dropzone_files_outlet: '.dropzone-files',
         dropzone_tab_error_outlet: '.tab-error',
+        dropzone_form_error_outlet: '.form-error',
         action: 'change->unsaved-changes#changed'
       }, id: 'file-dropzone', class: 'dropzone mb-3' do |form| %>
     <%= render SdrViewComponents::Elements::AlertComponent.new(classes: 'd-none', data: { dropzone_target: 'folderAlert' }) do %>
@@ -20,5 +21,6 @@
       <div class="fs-5">or</div>
       <%= render SdrViewComponents::Elements::ButtonComponent.new(label: 'Select files to upload', variant: :'outline-primary', classes: 'mt-2') %>
     </div>
+    <div id="dropzone-hidden-input-container"></div>
   <% end %>
 <% end %>

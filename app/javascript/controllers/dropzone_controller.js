@@ -2,12 +2,13 @@ import { Controller } from '@hotwired/stimulus'
 import Dropzone from 'dropzone'
 
 export default class extends Controller {
-  static outlets = ['dropzone-files', 'tab-error']
+  static outlets = ['dropzone-files', 'tab-error', 'form-error']
   static targets = ['progress', 'error', 'folderAlert', 'folderAlertText']
   static values = {
     maxFilesize: Number,
     ahoy: { type: Boolean, default: false }, // If true, ahoy will track file uploads
-    formId: String
+    formId: String,
+    hiddenInputContainerSelector: { type: String, default: '#dropzone-hidden-input-container' }
   }
 
   // Expected error handling behavior:
@@ -22,7 +23,8 @@ export default class extends Controller {
       createImageThumbnails: false,
       addRemoveLinks: false,
       disablePreviews: true,
-      maxFilesize: this.maxFilesizeValue
+      maxFilesize: this.maxFilesizeValue,
+      hiddenInputContainer: this.hiddenInputContainerSelectorValue
     })
     this.progress = 0
     this.shouldClearErrors = false
@@ -55,6 +57,7 @@ export default class extends Controller {
       // Reload the files section to show the newly uploaded files.
       this.dropzoneFilesOutlets.forEach(dropzoneFiles => dropzoneFiles.reload())
       if (this.hasTabErrorOutlet) this.tabErrorOutlet.clearInvalidStatus('files')
+      if (this.hasFormErrorOutlet) this.formErrorOutlet.changedFiles()
       // If ahoy is enabled, track the file upload completion.
       if (this.ahoyValue) { ahoy.track('files uploaded', { form_id: this.formIdValue }) } // eslint-disable-line no-undef
       this.element.dataset.dropzoneReady = true

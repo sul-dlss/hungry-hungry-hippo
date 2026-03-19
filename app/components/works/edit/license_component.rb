@@ -5,17 +5,18 @@ module Works
     # Select field for license
     class LicenseComponent < ApplicationComponent
       def initialize(form:, license_presenter:, license_help_url: Settings.license_url, show_terms_of_use: true, # rubocop:disable Metrics/ParameterLists
-                     show_help_text: true, tooltip: nil)
+                     show_help_text: true, tooltip: nil, **args)
         @form = form
         @license_presenter = license_presenter
         @license_help_url = license_help_url
         @show_terms_of_use = show_terms_of_use
         @show_help_text = show_help_text
         @tooltip = tooltip
+        @args = args
         super()
       end
 
-      attr_reader :form, :show_terms_of_use, :show_help_text, :license_help_url, :tooltip
+      attr_reader :form, :show_terms_of_use, :show_help_text, :license_help_url, :tooltip, :args
 
       delegate :required_license_option?, to: :@license_presenter
 

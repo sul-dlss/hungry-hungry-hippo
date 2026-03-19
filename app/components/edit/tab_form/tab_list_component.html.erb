@@ -1,4 +1,4 @@
-<%= tag.div class: classes, 'data-controller': 'tab-error' do %>
+<%= tag.div class: classes, data: { controller: 'tab-error' } do %>
   <div class="col-md-3">
     <%= tag.div class: 'nav nav-pills d-flex flex-column rounded-top rounded-bottom', role: 'tablist navigation', 'aria-orientation': 'vertical', tabindex: '0' do |component| %>
       <% tabs.each do |tab| %>
