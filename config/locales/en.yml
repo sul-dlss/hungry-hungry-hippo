@@ -286,8 +286,9 @@ en:
       lookup_identifier: 'Get publication info from DOI/PMCID'
       extract_abstracts:
         label: 'Get abstract from file using AI'
+        note: 'or click "Edit before deposit" below and enter your abstract manually'
         tooltip_html: >-
-          We will use AI to extract an abstract from your file. You can always use the full form to make changes if you need to. You must first upload a PDF to use this feature.
+         We will use AI to try and retrieve the exact abstract from your file. You can always use the full form to make changes if you need to. You must first upload a PDF to use this feature.
     fields:
       agree_to_terms:
         validations:
@@ -318,7 +319,7 @@ en:
           required: 'Version is required'
     messages:
       validation: 'Required fields have not been filled out.'
-      extract_abstract_complete: We used AI to try to retrieve the exact abstract from the file you uploaded above, not to create an abstract from scratch. If you need to make changes, click the 'Edit before depositing' button below.
+      extract_abstract_complete: We used AI to try to retrieve the exact abstract from the file you uploaded above, not to create an abstract from scratch. If you need to make changes, you can edit the abstract directly below.
       extract_abstract_error: We were not able to extract your abstract. If you would like to enter an abstract, click "Edit before depositing" below.
   collection_form:
     default_use_statement_instructions: 'Enter additional terms of use not covered by your chosen license or the default terms shown above, which also display on the public webpage.'

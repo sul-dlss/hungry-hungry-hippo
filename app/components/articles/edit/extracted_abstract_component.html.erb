@@ -1,13 +1,12 @@
 <% if abstract.present? %>
-  <%= form.hidden_field :extracted_abstract, value: @abstract %>
-  <div class="d-flex">
-    <div>
-      <p><%= @abstract %></p>
-      <p><%= helpers.magic_icon(classes: 'me-2', style: 'color: #4298B5;') %><%= t('article_form.messages.extract_abstract_complete') %></p>
-    </div>
-    <div>
-      <%= render Elements::IconButtonLinkComponent.new(link: clear_abstracts_path(doi:), icon: 'delete', label: 'Clear abstract', data: { abstract_target: 'submit' }) %>
-    </div>
+  <div>
+    <p class="magic-blue"><%= helpers.magic_icon(classes: 'me-2') %><%= t('article_form.messages.extract_abstract_complete') %></p>
+    <%= tag.div class: 'd-flex align-items-start justify-content-between gap-3', data: { controller: 'abstract', abstract_doi_value: doi } do %>
+      <div class="flex-grow-1">
+        <%= form.textarea :extracted_abstract, value: @abstract, rows: 5, class: 'form-control w-100', data: { abstract_target: 'extractedAbstract' } %>
+      </div>
+      <%= render Elements::DeleteButtonComponent.new(label: 'Clear abstract', data: { action: 'abstract#clearExtracted' }) %>
+    <% end %>
   </div>
 <% else %>
   <div class="invalid-feedback is-invalid d-block">

@@ -90,7 +90,7 @@ module IconHelper
   end
 
   def magic_icon(**)
-    icon(icon_classes: 'bi bi-stars', **)
+    icon(icon_classes: 'bi bi-stars magic-blue', **)
   end
 
   def github_icon(**)
