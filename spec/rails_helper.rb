@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
-require 'simplecov'
+if ENV['CI']
 
-SKIPPABLE_TEST_COVERAGE_CONCERNS = %w[assets javascript views].freeze
+  require 'simplecov'
+  require 'simplecov_json_formatter'
 
-SimpleCov.start :rails do
-  add_filter '/lib/tasks/'
+  SKIPPABLE_TEST_COVERAGE_CONCERNS = %w[assets javascript views].freeze
 
-  # Use SimpleCov groups to break down test coverage per application concern, e.g.,
-  # controllers, models, & jobs. See https://github.com/simplecov-ruby/simplecov#groups
-  Dir.glob('app/*').each do |concern_path|
-    concern = File.basename(concern_path)
-    next if SKIPPABLE_TEST_COVERAGE_CONCERNS.include?(concern)
+  SimpleCov.start :rails do
+    add_filter '/lib/tasks/'
 
-    add_group concern.capitalize, concern_path
-  end
+    # Use SimpleCov groups to break down test coverage per application concern, e.g.,
+    # controllers, models, & jobs. See https://github.com/simplecov-ruby/simplecov#groups
+    Dir.glob('app/*').each do |concern_path|
+      concern = File.basename(concern_path)
+      next if SKIPPABLE_TEST_COVERAGE_CONCERNS.include?(concern)
 
-  if ENV['CI']
-    require 'simplecov_json_formatter'
+      add_group concern.capitalize, concern_path
+    end
 
     formatter SimpleCov::Formatter::JSONFormatter
   end
