@@ -4,12 +4,13 @@ module Works
   module Edit
     # Component for rendering the article version identification field.
     class VersionIdentificationComponent < ApplicationComponent
-      def initialize(form:)
+      def initialize(form:, **args)
         @form = form
+        @args = args
         super()
       end
 
-      attr_reader :form
+      attr_reader :form, :args
 
       def call
         render Elements::Forms::SelectFieldComponent
@@ -22,7 +23,8 @@ module Works
                label_classes: 'fw-bold',
                mark_required: true,
                prompt: 'Select...',
-               container_classes: 'mb-4')
+               container_classes: 'mb-4',
+               **args)
       end
     end
   end

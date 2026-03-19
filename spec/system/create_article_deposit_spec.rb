@@ -100,6 +100,7 @@ RSpec.describe 'Create an article deposit' do
     # Adding a file
     find('.dropzone').drop('spec/fixtures/files/hippo.png')
     expect(page).to have_css('table#content-table td', text: 'hippo.png')
+    expect(page).to have_no_css('.invalid-feedback', text: 'At least one file is required')
 
     # Setting version description
     select('Author accepted version', from: 'Which version are you depositing?')
