@@ -22,7 +22,7 @@ class BaseWorkForm < ApplicationForm # rubocop:disable Metrics/ClassLength
     self.contributors = contributors - blank_contributors
   end
 
-  with_options if: -> { create_date_type == 'range' } do
+  with_options if: -> { create_date_type == 'range' && create_date_range_from.valid? && create_date_range_to.valid? } do
     validate :create_date_range_complete
     validate :create_date_range_sequence
   end
