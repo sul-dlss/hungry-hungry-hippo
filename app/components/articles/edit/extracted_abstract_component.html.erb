@@ -1,6 +1,6 @@
 <% if abstract.present? %>
   <div>
-    <p class="magic-blue"><%= helpers.magic_icon(classes: 'me-2') %><%= t('article_form.messages.extract_abstract.complete') %></p>
+    <p class="magic-blue"><%= helpers.magic_icon(classes: 'me-2') %><%= t('article_form.messages.extract_abstract_complete') %></p>
     <%= tag.div class: 'd-flex align-items-start justify-content-between gap-3', data: { controller: 'abstract', abstract_doi_value: doi } do %>
       <div class="flex-grow-1">
         <%= form.textarea :extracted_abstract, value: @abstract, rows: 5, class: 'form-control w-100', data: { abstract_target: 'extractedAbstract' } %>
