@@ -275,6 +275,23 @@ RSpec.describe WorkForm do
         expect(form).to be_valid
       end
     end
+
+    context 'when date in range is invalid' do
+      let(:creation_date_range_from) do
+        {
+          year: 2021,
+          month: 2,
+          day: 31,
+          approximate: false
+        }
+      end
+
+      it 'is invalid' do
+        expect(form).not_to be_valid
+
+        expect(form.errors[:create_date_range_from]).to eq(['is invalid'])
+      end
+    end
   end
 
   describe 'single create date validation' do
