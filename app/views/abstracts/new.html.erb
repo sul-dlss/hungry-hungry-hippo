@@ -1,11 +1,14 @@
 <%= turbo_frame_tag 'extract-abstract' do %>
   <div data-controller="abstract">
     <div data-abstract-target="formSection">
-      <div class="d-flex align-items-center">
-      <%= render SdrViewComponents::Elements::ButtonFormComponent.new(label: I18n.t('article_form.buttons.extract_abstracts.label'),
-                                                                      variant: 'outline-primary', method: :post, link: abstracts_path(content_id: @content_id, doi: @doi), top: false,
-                                                                      data: { action: 'submit->abstract#showSpinner' }) %>
-      <%= render SdrViewComponents::Elements::TooltipComponent.new(target_label: I18n.t('article_form.buttons.extract_abstracts.label'), tooltip: I18n.t('article_form.buttons.extract_abstracts.tooltip_html')) %>
+      <div class="d-flex align-items-center flex-wrap">
+        <%= render SdrViewComponents::Elements::ButtonFormComponent.new(label: I18n.t('article_form.buttons.extract_abstracts.label'),
+                                                                        variant: 'outline-primary', method: :post, link: abstracts_path(content_id: @content_id, doi: @doi), top: false,
+                                                                        data: { action: 'submit->abstract#showSpinner' }) %>
+        <%= render SdrViewComponents::Elements::TooltipComponent.new(target_label: I18n.t('article_form.buttons.extract_abstracts.label'), tooltip: I18n.t('article_form.buttons.extract_abstracts.tooltip_html')) %>
+        <p class="w-100 mt-2">
+          <%= I18n.t('article_form.buttons.extract_abstracts.note') %>
+        </p>
       </div>
       <% if @error.present? %>
         <div class="invalid-feedback is-invalid d-block">
