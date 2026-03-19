@@ -126,6 +126,16 @@ Run tests: `bin/rake spec`
 Run linters: `bin/rake lint`
 Run both linters and tests: `bin/rake`
 
+#### Running tests in parallel
+[parallel_tests](https://github.com/grosser/parallel_tests) will significantly speed up running tests locally.
+
+```
+bin/parallel_rspec
+```
+
+Before running the first time: `bin/rake parallel:prepare`
+After a migration: `bin/rake parallel:migrate`
+
 #### Speeding up system tests
 
 By default, system tests will use the headless Chrome browser driver, which supports JavaScript.

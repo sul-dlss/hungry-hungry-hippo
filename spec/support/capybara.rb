@@ -1,5 +1,32 @@
 # frozen_string_literal: true
 
+# Module to make Selenium-driven system tests more resilient to transient WebDriver errors during test teardown.
+module SeleniumTeardownResilience
+  TRANSIENT_ERROR_SNIPPETS = [
+    'No dialog is showing',
+    'no such alert',
+    'aborted by navigation',
+    'Not attached to an active page'
+  ].freeze
+
+  module_function
+
+  def transient_error?(error)
+    message = error.message.to_s
+    TRANSIENT_ERROR_SNIPPETS.any? { |snippet| message.include?(snippet) }
+  end
+
+  # In parallel Selenium runs, alert cleanup can race with navigation and raise
+  # transient WebDriver errors that are safe to ignore during reset.
+  def accept_unhandled_reset_alert
+    super
+  rescue Selenium::WebDriver::Error::WebDriverError => e
+    raise unless SeleniumTeardownResilience.transient_error?(e)
+  end
+end
+
+Capybara::Selenium::Driver.prepend(SeleniumTeardownResilience)
+
 # This is to prevent the animation from running in the system tests which can make the tests flaky.
 Capybara.disable_animation = true
 Capybara.default_max_wait_time = 15 # Capybara default is 2
@@ -32,8 +59,14 @@ RSpec.configure do |config|
     next if example.metadata[:rack_test] || ENV['CYPERFUL'].present?
 
     Rails.logger.info('Browser log entries from system spec run include:')
-    Capybara.page.driver.browser.logs.get(:browser).each do |log_entry|
-      Rails.logger.info("* #{log_entry}")
+    begin
+      Capybara.page.driver.browser.logs.get(:browser).each do |log_entry|
+        Rails.logger.info("* #{log_entry}")
+      end
+    rescue Selenium::WebDriver::Error::WebDriverError => e
+      raise unless SeleniumTeardownResilience.transient_error?(e)
+
+      Rails.logger.info("Skipped browser console log capture: #{e.message.lines.first.chomp}")
     end
   end
 end
