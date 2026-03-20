@@ -56,6 +56,7 @@ gem 'faraday' # HTTP client
 gem 'faraday-follow_redirects'
 gem 'frozen_record' # For licenses
 gem 'globus_client'
+gem 'googleauth' # For Vertex AI authentication
 gem 'hashdiff'
 gem 'hexapdf' # For PDF subsetting
 gem 'honeybadger'

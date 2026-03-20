@@ -127,6 +127,11 @@ person_api:
 gemini_api:
   key: ~
 
+vertexai_api:
+  key: 'fake-key' # Base64 encoded service account key; actual values from vault/puppet
+  project_id: 'sul-ai-sandbox'
+  location: 'global'
+
 extract_abstracts:
   enabled: false
 

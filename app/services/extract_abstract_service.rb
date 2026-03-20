@@ -37,7 +37,7 @@ class ExtractAbstractService
   end
 
   def chat
-    @chat ||= RubyLLM.chat(model: 'gemini-3-flash-preview').with_temperature(0.0).tap do |chat|
+    @chat ||= RubyLLM.chat(model: 'gemini-3-flash-preview', provider:).with_temperature(0.0).tap do |chat|
       chat.with_instructions <<~INSTRUCTIONS
         Extract only the abstract that appears in the provided PDF. If the abstract has multiple sections, return each section separately. If the abstract cannot be found, return an empty string."
       INSTRUCTIONS
@@ -53,5 +53,9 @@ class ExtractAbstractService
       doc.pages.delete_at(index)
     end
     doc.write(new_file)
+  end
+
+  def provider
+    Rails.env.production? ? :vertexai : :gemini
   end
 end
