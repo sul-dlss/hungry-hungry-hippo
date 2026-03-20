@@ -51,3 +51,4 @@ workflow_service.log
 
 .nvmrc
 .ruby-version
+.vscode/

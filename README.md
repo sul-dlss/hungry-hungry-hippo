@@ -158,8 +158,11 @@ RSpec.describe 'Manage files for a work', :headed_test do
 ```
 
 #### Viewing test coverage
+By default, test coverage is not generated when running rspec locally. To generate with test coverage: `CI=true bin/rspec`
 
-Whenever the test suite is run, RSpec uses SimpleCov to generate test coverage reports. To view the most recent test coverage report in your browser, open `coverage/index.html`. NOTE: if the latest test run did not run against the entire test suite---e.g., if you tested a single file or directory---you should expect the coverage to appear very low.
+To view the most recent test coverage report in your browser, open `coverage/index.html`. 
+
+NOTE: if the latest test run did not run against the entire test suite---e.g., if you tested a single file or directory---you should expect the coverage to appear very low.
 
 ### Code Linters
 

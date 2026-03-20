@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Poll for new GitHub releases' do
+RSpec.describe 'Poll for new GitHub releases', :rack_test do
   include WorkMappingFixtures
 
   let(:druid) { druid_fixture }
