@@ -1,32 +1,13 @@
 version: 2.1
 orbs:
-  node: circleci/node@7.0.0
-  ruby-rails: sul-dlss/ruby-rails@4.6.0
-jobs:
-  stylelint:
-    executor: node/default
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-      - run:
-          name: Lint styles
-          command: yarn run stylelint
-  herblint:
-    executor: ruby-rails/ruby
-    steps:
-      - checkout
-      - run:
-          name: Install Ruby dependencies
-          command: bundle install
-      - run:
-          name: Lint ERBs
-          command: bin/rake herb
+  ruby-rails: sul-dlss/ruby-rails@4.7.0
 workflows:
   build:
     jobs:
-      - herblint
-      - stylelint
+      - ruby-rails/herblint:
+          name: herblint
+      - ruby-rails/stylelint:
+          name: stylelint
       - ruby-rails/lint-js
       - ruby-rails/lint:
           name: lint
@@ -37,6 +18,7 @@ workflows:
           name: test
           context: dlss
           install-chrome: true
+          parallelism: 4
           before-test:
             - run:
                 name: Prepare for running specs (install JS dependencies and build assets)
