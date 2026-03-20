@@ -9,8 +9,8 @@
 
 <p>Before you complete your deposit, you will need to accept the <%= link_to 'Terms of Deposit', Settings.terms_url %>.</p>
 
-<%= render Emails::ContactComponent.new %>
-
 <%= render Emails::SignatureComponent.new %>
+
+<%= render Emails::ContactComponent.new %>
 
 <%= render Emails::NewsletterComponent.new %>

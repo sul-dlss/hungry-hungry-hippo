@@ -10,6 +10,10 @@ RSpec.describe WorksMailer do
   let(:collection) { create(:collection, title: '20 Minutes into the Future', managers:) }
   let(:work) { create(:work, druid:, collection:, user:, title: 'S1.E2: Rakers', doi_assigned: true) }
   let(:managers) { [] }
+  let(:contact_link_html) do
+    '<a href="http://example.com/contacts/new">' \
+      'Contact us with questions.</a>'
+  end
 
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
@@ -33,6 +37,7 @@ RSpec.describe WorksMailer do
       expect(mail).to match_body('If you did not recently submit')
       expect(mail).to match_body('License: CC-BY-4.0 Attribution International')
       expect(mail).to match_body('Your work was assigned this DOI: <a href="https://doi.org/10.80343/bc123df4567">https://doi.org/10.80343/bc123df4567</a>')
+      expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
     end
   end
 
@@ -52,6 +57,7 @@ RSpec.describe WorksMailer do
       expect(mail).to match_body('If you did not recently submit')
       expect(mail).to match_body('License: CC-BY-4.0 Attribution International')
       expect(mail).to match_body('Your work was assigned this DOI: <a href="https://doi.org/10.80343/bc123df4567">https://doi.org/10.80343/bc123df4567</a>')
+      expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
     end
   end
 
@@ -70,6 +76,7 @@ RSpec.describe WorksMailer do
       expect(mail).to match_body('Dear Carter,')
       expect(mail).to match_body('The item S1.E2: Rakers has been deposited in the 20 Minutes into the Future ' \
                                  'collection by Max Headroom, a collection manager, or an SDR administrator.')
+      expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
     end
   end
 
@@ -89,6 +96,7 @@ RSpec.describe WorksMailer do
       expect(mail).to match_body("You are now the owner of the item \"#{work.title}\" in the " \
                                  'Stanford Digital Repository and have access to manage its ' \
                                  'metadata and files.')
+      expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
     end
   end
 
@@ -111,6 +119,7 @@ RSpec.describe WorksMailer do
       expect(mail).to match_body("#{user.name} has shared with you the work " \
                                  "\"<a href=\"http://example.com/works/#{work.druid}\">#{work.title}</a>\" " \
                                  "in the Stanford Digital Repository. You have permission to #{permission} the work.")
+      expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
     end
   end
 end
