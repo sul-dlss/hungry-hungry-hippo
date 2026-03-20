@@ -4,11 +4,10 @@
    Stanford Digital Repository. Managers have the ability to manage global settings for the collection,
    manage Depositors and other participants, and edit any deposits in the collection.</p>
 
-<p>To visit the collection where deposits are made, and for more information about SDR repository services,
-   please visit https://<%= Settings.host %>.</p>
-
-<%= render Emails::ContactComponent.new %>
+<p><%= link_to 'Visit this collection.', Settings.host %></p>
 
 <%= render Emails::SignatureComponent.new %>
+
+<%= render Emails::ContactComponent.new %>
 
 <%= render Emails::NewsletterComponent.new %>

@@ -2,6 +2,6 @@
 
 <p>The item <%= @work.title %> has been deposited in the <%= @collection.title %> collection by <%= @work.user.name %>, a collection manager, or an SDR administrator.</p>
 
-<%= render Emails::ContactComponent.new %>
-
 <%= render Emails::SignatureComponent.new %>
+
+<%= render Emails::ContactComponent.new %>

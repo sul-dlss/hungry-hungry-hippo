@@ -9,6 +9,10 @@ RSpec.describe CollectionsMailer do
   end
   let(:email_depositors_status_changed) { true }
   let(:managers) { [] }
+  let(:contact_link_html) do
+    '<a href="http://example.com/contacts/new">' \
+      'Contact us with questions.</a>'
+  end
 
   describe '#invitation_to_deposit_email' do
     let(:mail) { described_class.with(user:, collection:).invitation_to_deposit_email }
@@ -23,6 +27,7 @@ RSpec.describe CollectionsMailer do
       it 'renders the body with salutation of first name' do
         expect(mail).to match_body('Dear Maxwell,')
         expect(mail).to match_body('You have been invited to deposit to the 20 Minutes into the Future collection')
+        expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
         expect(mail).to match_body('Subscribe to the SDR newsletter')
       end
     end
@@ -55,6 +60,7 @@ RSpec.describe CollectionsMailer do
         expect(mail).to match_body('A Manager of the 20 Minutes into the Future collection has updated ' \
                                    'the permissions for this collection and removed you as a depositor.')
         expect(mail).to match_body(manager.email_address)
+        expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
       end
     end
 
@@ -82,6 +88,8 @@ RSpec.describe CollectionsMailer do
         expect(mail).to match_body('Dear Maxwell,')
         expect(mail).to match_body('You have been invited to be a Manager ' \
                                    'of the 20 Minutes into the Future collection')
+        expect(mail).to match_body('<a href="localhost:3000">Visit this collection.</a>')
+        expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
         expect(mail).to match_body('Subscribe to the SDR newsletter')
       end
     end
@@ -109,6 +117,7 @@ RSpec.describe CollectionsMailer do
       expect(mail).to match_body('Dear Maxwell,')
       expect(mail).to match_body('You have been invited to review new deposits ' \
                                  'to the 20 Minutes into the Future collection')
+      expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
       expect(mail).to match_body('Subscribe to the SDR newsletter</a> for feature updates')
     end
   end
@@ -134,6 +143,7 @@ RSpec.describe CollectionsMailer do
         expect(mail).to match_body("Dear #{manager.first_name},")
         expect(mail).to match_body('Members have been either added to or removed from the ' \
                                    '20 Minutes into the Future collection.')
+        expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
       end
     end
   end

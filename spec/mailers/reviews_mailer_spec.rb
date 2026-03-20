@@ -9,6 +9,10 @@ RSpec.describe ReviewsMailer do
   let(:user) { create(:user, name: 'Max Headroom', first_name: 'Maxwell') }
   let(:collection) { create(:collection, title: '20 Minutes into the Future') }
   let(:work) { create(:work, druid:, collection:, user:, title: 'S1.E1: Blipverts', doi_assigned: true) }
+  let(:contact_link_html) do
+    '<a href="http://example.com/contacts/new">' \
+      'Contact us with questions.</a>'
+  end
 
   before do
     allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
@@ -31,6 +35,7 @@ RSpec.describe ReviewsMailer do
                                  '20 Minutes into the Future collection in the Stanford Digital Repository, ' \
                                  'is now waiting for review by a collection Manager.')
       expect(mail).to match_body('If you did not recently submit')
+      expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
     end
   end
 
@@ -54,6 +59,7 @@ RSpec.describe ReviewsMailer do
                                  '20 Minutes into the Future collection in the Stanford Digital Repository, ' \
                                  'has been returned to you')
       expect(mail).to match_body('Add something to make it pop.')
+      expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
     end
   end
 
@@ -80,6 +86,7 @@ RSpec.describe ReviewsMailer do
       expect(mail).to match_body('Access level: Stanford Community')
       expect(mail).to match_body('Release: June 10, 2027')
       expect(mail).to match_body('Your work was assigned this DOI: <a href="https://doi.org/10.80343/bc123df4567">https://doi.org/10.80343/bc123df4567</a>')
+      expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
     end
   end
 
@@ -96,6 +103,7 @@ RSpec.describe ReviewsMailer do
       expect(mail).to match_body('Dear Maxwell,')
       expect(mail).to match_body('The item "S1.E1: Blipverts" has been submitted for review ' \
                                  'in the 20 Minutes into the Future collection by Max Headroom')
+      expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
     end
   end
 end
