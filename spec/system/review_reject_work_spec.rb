@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Review and reject a work' do
+RSpec.describe 'Review and reject a work', :rack_test do
   include WorkMappingFixtures
 
   let(:druid) { druid_fixture }

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Generate an item report' do
+RSpec.describe 'Generate an item report', :rack_test do
   include WorkMappingFixtures
 
   let(:druid) { druid_fixture }

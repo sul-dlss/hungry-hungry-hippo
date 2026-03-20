@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Generate a collection report' do
+RSpec.describe 'Generate a collection report', :rack_test do
   include CollectionMappingFixtures
 
   let(:druid) { collection_druid_fixture }

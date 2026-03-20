@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Emulate not being an admin' do
+RSpec.describe 'Emulate not being an admin', :rack_test do
   before do
     sign_in(create(:user, name: 'Fred Kroll'), groups: ['dlss:hydrus-app-administrators'])
   end

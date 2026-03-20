@@ -27,7 +27,7 @@ development:
 
 test:
   <<: *default
-  database: "<%= ENV.fetch('DATABASE_NAME', 'h3_test') %>"
+  database: "<%= ENV.fetch('DATABASE_NAME', 'h3_test') %><%= ENV['TEST_ENV_NUMBER'] %>"
 
 production:
   primary:
