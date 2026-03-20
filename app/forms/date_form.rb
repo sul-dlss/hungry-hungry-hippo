@@ -51,6 +51,8 @@ class DateForm < ApplicationForm
 
   def to_s
     to_date&.to_fs(:edtf)
+  rescue Date::Error
+    'invalid date'
   end
 
   def to_date
