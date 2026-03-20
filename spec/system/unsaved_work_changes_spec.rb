@@ -137,4 +137,36 @@ RSpec.describe 'Notifies unsaved changes' do
       end
     end
   end
+
+  context 'when the form is re-rendered after validation errors' do
+    it 'still asks user to confirm leaving page after making further edits' do
+      visit new_work_path(collection_druid: collection.druid)
+
+      expect(page).to have_css('h1', text: 'Untitled deposit')
+
+      # Fill in title
+      find('.nav-link', text: 'Title and contact').click
+      fill_in('work_title', with: title_fixture)
+
+      # Fill in a contributor with first name only (missing last name triggers a validation error)
+      find('.nav-link', text: 'Contributors').click
+      within('.orcid-section') do
+        find('label', text: 'Enter name manually').click
+      end
+      fill_in('First name', with: contributors_fixture.first['first_name'])
+
+      # Submit — triggers a validation error and re-renders the form
+      click_link_or_button('Save as draft')
+      expect(page).to have_css('.alert-danger', text: 'Required fields have not been filled out.')
+
+      # Make another change after the error re-render
+      find('.nav-link', text: 'Title and contact').click
+      fill_in('work_title', with: 'Modified title')
+
+      # Warning should still appear when navigating away
+      dismiss_confirm 'Are you sure you want to leave this page?' do
+        click_link_or_button('Dashboard')
+      end
+    end
+  end
 end
