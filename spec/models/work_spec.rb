@@ -48,6 +48,24 @@ RSpec.describe Work do
     end
   end
 
+  describe '#doi_assigned?' do
+    context 'when doi_assigned is true' do
+      let(:work) { build(:work, doi_assigned: true) }
+
+      it 'returns true' do
+        expect(work.doi_assigned?).to be(true)
+      end
+    end
+
+    context 'when doi_assigned is false' do
+      let(:work) { build(:work, doi_assigned: false) }
+
+      it 'returns false' do
+        expect(work.doi_assigned?).to be(false)
+      end
+    end
+  end
+
   describe '.update_settings_from_form' do
     let(:work) { create(:work) }
     let(:work_form) { instance_double(WorkForm) }
