@@ -41,9 +41,6 @@ class RelatedLinksCocinaBuilder
   end
 
   def uri_type_for(identifier)
-    return 'doi' if identifier.include?('doi.org')
-    return 'arxiv' if identifier.include?('arxiv.org')
-
-    'pmid' if identifier.include?('pubmed.ncbi.nlm.nih.gov')
+    UriSupport.uri_type_for(identifier)
   end
 end
