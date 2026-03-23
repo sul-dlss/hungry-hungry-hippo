@@ -37,9 +37,9 @@ en:
     # To hide dashboard banner, set to ''.
     # Banners can include links, e.g., "Email <a href="mailto:sdr-contact@lists.stanford.edu" >sdr-contact@lists.stanford.edu</a> to volunteer!"
     home_html: >-
-      This application will be down for maintenance starting Friday, March 20 after 3:00pm Pacific and will be available again on Monday, March 23. Depositing to the SDR will be unavailable during this time. If you have any questions, contact us at sdr-contact@lists.stanford.edu.
+      Nominations for the <a href="https://library.stanford.edu/news/nominations-are-now-open-data-sharing-prize-deadline-march-31-2026" target="_blank" data-ahoy-track="true">2026 Stanford Libraries Data Sharing Prizes</a>, which recognize outstanding examples of impactful data sharing, are now open. Self-nominations are welcome. <strong>Deadline for nominations is March 31!</strong>
     dashboard_html: >-
-      This application will be down for maintenance starting Friday, March 20 after 3:00pm Pacific and will be available again on Monday, March 23. Depositing to the SDR will be unavailable during this time. If you have any questions, contact us at sdr-contact@lists.stanford.edu.
+      Nominations for the <a href="https://library.stanford.edu/news/nominations-are-now-open-data-sharing-prize-deadline-march-31-2026" target="_blank" data-ahoy-track="true">2026 Stanford Libraries Data Sharing Prizes</a> are now open. <strong>Deadline for nominations is March 31!</strong>
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
