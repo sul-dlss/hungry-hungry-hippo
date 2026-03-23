@@ -6,7 +6,7 @@ raise 'Octokit retry middleware not found' unless retry_index
 
 retry_exceptions = Faraday::Retry::Middleware::DEFAULT_EXCEPTIONS +
                    [Octokit::ServerError, Faraday::ConnectionFailed, Faraday::SSLError]
-retry_block = lambda do |env:, _options:, retry_count:, exception:, will_retry_in:|
+retry_block = lambda do |env:, options:, retry_count:, exception:, will_retry_in:| # rubocop:disable Lint/UnusedBlockArgument
   Rails.logger.info("Octokit retrying #{env.method.upcase} #{env.url} for #{exception.class}: #{exception.message}. " \
                     "Retry count: #{retry_count}, will retry in #{will_retry_in} seconds.")
 end
