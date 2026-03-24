@@ -88,7 +88,7 @@ RSpec.describe CollectionsMailer do
         expect(mail).to match_body('Dear Maxwell,')
         expect(mail).to match_body('You have been invited to be a Manager ' \
                                    'of the 20 Minutes into the Future collection')
-        expect(mail).to match_body('<a href="localhost:3000">Visit this collection.</a>')
+        expect(mail).to match_body('<a href="https://localhost:3000">Visit this collection.</a>')
         expect(mail).to match_body_in_order('The Stanford Digital Repository Team', contact_link_html)
         expect(mail).to match_body('Subscribe to the SDR newsletter')
       end
