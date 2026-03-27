@@ -457,4 +457,15 @@ RSpec.describe 'Edit a work' do
       end
     end
   end
+
+  context 'when deposit is not in progress (accessioning)' do
+    let!(:work) { create(:work, druid:, user:, collection:, deposit_state: :accessioning) }
+
+    it 'redirects to the work show page with a warning' do
+      visit edit_work_path(druid)
+
+      expect(page).to have_current_path(work_path(druid))
+      expect(page).to have_css('.alert-warning', text: 'If you need to make a change to this work')
+    end
+  end
 end
