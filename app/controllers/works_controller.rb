@@ -94,8 +94,9 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       @work_form.prepopulate
       render edit_form_view, status: :unprocessable_content
     end
-  rescue StateMachines::InvalidTransition, Sdr::Repository::StaleLock
+  rescue StateMachines::InvalidTransition, Sdr::Repository::StaleLock => e
     flash[:warning] = helpers.t('work_form.messages.cannot_be_deposited_html', support_email: Settings.support_email)
+    Rails.logger.warn "Failed to update #{druid}: #{e.message}"
     redirect_to work_path(@work)
   end
 
@@ -201,6 +202,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     # This handles the case in which the collection for the work was changed elsewhere
     # and there is not a Collection record for the collection_druid in the work.
     return false unless Collection.exists?(druid: @work_form.collection_druid)
+
+    return false unless @work.deposit_not_in_progress?
 
     WorkRoundtripper.call(work_form: @work_form, cocina_object: @cocina_object,
                           content: @content)
