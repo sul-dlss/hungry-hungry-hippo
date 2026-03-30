@@ -70,6 +70,7 @@ gem 'okcomputer'
 gem 'parallel' # Used for abstract extraction testing.
 gem 'preservation-client'
 gem 'rack-sanitizer'
+gem 'recaptcha' # prevent robots spamming the contact form
 gem 'ruby_llm' # For extracting abstracts
 gem 'ruby_llm-schema'
 gem 'sdr_view_components'

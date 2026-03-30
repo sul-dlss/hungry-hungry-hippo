@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Contact SDR staff' do
   before do
+    allow(Settings.recaptcha).to receive(:enabled).and_return(false)
+
     sign_in(create(:user))
   end
 

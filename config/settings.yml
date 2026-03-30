@@ -132,3 +132,8 @@ extract_abstracts:
 
 validate_datacite:
   enabled: true
+
+recaptcha:
+  enabled: true
+  site_key: 'fake-site-key'
+  secret_key: 'fake-secret-key'
