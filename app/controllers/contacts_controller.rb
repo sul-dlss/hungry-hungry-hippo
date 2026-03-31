@@ -14,7 +14,13 @@ class ContactsController < ApplicationController
     render :new
   end
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize
+    if (@recaptcha_error = recaptcha_error?)
+      flash.delete(:recaptcha_error)
+      @contact_form = ContactForm.new(contact_form_params)
+      return render :new, status: :unprocessable_content
+    end
+
     contact_form = ContactForm.new(contact_form_params)
 
     ContactsMailer.with(
@@ -38,5 +44,9 @@ class ContactsController < ApplicationController
   def set_contact_form_conditions
     @welcome = params[:welcome] == 'true'
     @modal = params[:modal] == 'true'
+  end
+
+  def recaptcha_error?
+    Settings.recaptcha.enabled && !verify_recaptcha(action: 'contact', minimum_score: 0.5)
   end
 end
