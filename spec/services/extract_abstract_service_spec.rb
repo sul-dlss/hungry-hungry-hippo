@@ -48,6 +48,16 @@ RSpec.describe ExtractAbstractService, :vcr do
     end
   end
 
+  context 'when there is a timeout error during extraction' do
+    before do
+      allow_any_instance_of(RubyLLM::Chat).to receive(:ask).and_raise(Faraday::TimeoutError) # rubocop:disable RSpec/AnyInstance
+    end
+
+    it 'returns nil' do
+      expect(abstract).to be_nil
+    end
+  end
+
   context 'when there is an error during extraction and raise_on_error is true' do
     let(:raise_on_error) { true }
 
@@ -57,6 +67,15 @@ RSpec.describe ExtractAbstractService, :vcr do
 
     it 'raises an error' do
       expect { abstract }.to raise_error(RubyLLM::Error)
+    end
+  end
+
+  context 'when there is a problem subsetting the PDF' do
+    let(:filepath) { 'spec/fixtures/files/project_muse_958100.pdf' }
+
+    it 'returns the extracted abstract text' do
+      abstract = described_class.call(filepath:)
+      expect(abstract).to include('In this article, I examine')
     end
   end
 end
