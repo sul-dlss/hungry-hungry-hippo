@@ -19,7 +19,7 @@ class ExtractAbstractService
       subset_pdf(filepath:, new_file: tempfile.path)
       response = chat.ask 'What is the abstract for the article in the attached PDF?', with: tempfile.path
       response.content['abstract_sections'].join("\n\n").presence
-    rescue RubyLLM::Error => e
+    rescue RubyLLM::Error, Faraday::TimeoutError => e
       Honeybadger.notify(e, context: { filepath: })
       raise e if raise_on_error
 
@@ -53,6 +53,10 @@ class ExtractAbstractService
       doc.pages.delete_at(index)
     end
     doc.write(new_file)
+  rescue HexaPDF::Error => e
+    Honeybadger.notify(e, context: { filepath: })
+    # Failsafe to use the original file.
+    FileUtils.cp(filepath, new_file)
   end
 
   def provider
