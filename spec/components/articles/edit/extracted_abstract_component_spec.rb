@@ -8,25 +8,13 @@ RSpec.describe Articles::Edit::ExtractedAbstractComponent, type: :component do
 
   let(:form) { ActionView::Helpers::FormBuilder.new(nil, ArticleForm.new, vc_test_view_context, {}) }
 
-  context 'when an extracted abstract is available' do
-    let(:abstract) { abstract_fixture }
+  let(:abstract) { abstract_fixture }
 
-    it 'renders the extracted abstract' do
-      render_inline(component)
+  it 'renders the extracted abstract' do
+    render_inline(component)
 
-      expect(page).to have_field('extracted_abstract', with: abstract_fixture)
-      expect(page).to have_css('p', text: 'We used AI to try to retrieve the exact abstract')
-      expect(page).to have_button('Clear abstract')
-    end
-  end
-
-  context 'when an extracted abstract is not available' do
-    let(:abstract) { nil }
-
-    it 'renders a message indicating no abstract is available' do
-      render_inline(component)
-
-      expect(page).to have_css('.invalid-feedback', text: 'We were not able to extract your abstract.')
-    end
+    expect(page).to have_field('extracted_abstract', with: abstract_fixture)
+    expect(page).to have_css('p', text: 'We used AI to try to retrieve the exact abstract')
+    expect(page).to have_button('Clear abstract')
   end
 end

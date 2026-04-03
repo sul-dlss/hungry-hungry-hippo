@@ -120,7 +120,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
 
       click_link_or_button('Get abstract from file using AI')
       expect(page).to have_css('.invalid-feedback', text: 'We were not able to extract your abstract.')
-      expect(page).to have_no_button('Get abstract from file using AI')
+      expect(page).to have_button('Get abstract from file using AI')
       expect(Ahoy::Event.where_event(Ahoy::Event::ABSTRACT_EXTRACTED_FAILED, doi:).count).to eq(1)
     end
   end
