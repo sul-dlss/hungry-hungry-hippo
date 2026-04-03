@@ -15,12 +15,16 @@ class AbstractsController < ApplicationController
     filepath = article_filepath(content)
 
     unless filepath
-      @error = 'Upload your article as a PDF to use this feature.'
+      @error = I18n.t('article_form.messages.upload_pdf_error')
       return render :new, status: :unprocessable_content
     end
 
     @abstract = ExtractAbstractService.call(filepath:)
     track_abstract_extraction
+    return if @abstract
+
+    @error = I18n.t('article_form.messages.extract_abstract_error')
+    render :new, status: :unprocessable_content
   end
 
   private
