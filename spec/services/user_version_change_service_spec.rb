@@ -257,6 +257,15 @@ RSpec.describe UserVersionChangeService do
     end
   end
 
+  context 'when only the version number has changed (e.g., due to a technical correction between user versions)' do
+    let(:original_cocina_object) { dro_with_structural_fixture(version: 1) }
+    let(:new_cocina_object) { dro_with_structural_fixture(version: 3) }
+
+    it 'returns false' do
+      expect(changed?).to be false
+    end
+  end
+
   context 'when original cocina object is nil' do
     let(:original_cocina_object) { nil }
     let(:new_cocina_object) { dro_with_structural_fixture }
