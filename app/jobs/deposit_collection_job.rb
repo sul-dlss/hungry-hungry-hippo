@@ -59,10 +59,11 @@ class DepositCollectionJob < ApplicationJob
                        work_type: collection_form.work_type,
                        work_subtypes: collection_form.work_subtypes,
                        works_contact_email: collection_form.works_contact_email)
-    assign_participants(:managers)
-    assign_participants(:depositors)
-    assign_participants(:reviewers)
+    participants_changed = assign_participants(:managers)
+    participants_changed |= assign_participants(:depositors)
+    participants_changed |= assign_participants(:reviewers)
     assign_contributors
+    Notifier.publish(Notifier::PARTICIPANTS_CHANGED, collection:) if participants_changed
   end
 
   def perform_persist
@@ -74,28 +75,24 @@ class DepositCollectionJob < ApplicationJob
     end
   end
 
-  # @param [Symbol] role :managers or :depositors
+  # @param [Symbol] role :managers, :depositors, or :reviewers
   #
-  # Based on the provided role (:managers or :depositors), first clears the existing participants
+  # Based on the provided role, first clears the existing participants
   # in order to apply any deletes, then adds the participants from the form. If the added user
   # does not exist, it will be created and the name set to the sunetid until they login for the first time.
-  def assign_participants(role) # rubocop:disable Metrics/AbcSize
+  # @return [Boolean] true if any participants were added or removed
+  def assign_participants(role)
     updated_users_for_role = []
-    collection_form.public_send(role.to_sym).each do |participant|
+    added = false
+    collection_form.public_send(role).each do |participant|
       next if participant.sunetid.blank?
 
-      user = User.create_with(name: participant.name)
-                 .find_or_create_by!(email_address: sunetid_to_email_address(participant.sunetid))
-      # if this user was first added when the name lookup failed, we should now backfill their name if we have it
-      if (user.name.blank? || user.name == user.sunetid) && participant.name.present?
-        user.update(name: participant.name)
-      end
-
-      collection.public_send(role).append(user) unless collection.public_send(role).include?(user)
+      user = find_or_create_user(participant)
+      added = true if add_participant_if_missing(role, user)
       updated_users_for_role.append(user)
     end
 
-    remove_deleted_participants(role, updated_users_for_role)
+    added || remove_deleted_participants(role, updated_users_for_role).any?
   end
 
   # Remove any participants that are no longer in the form
@@ -103,6 +100,21 @@ class DepositCollectionJob < ApplicationJob
     collection.public_send(role)
               .reject { |user| participants.include?(user) }
               .map { |user| collection.public_send(role).destroy(user) }
+  end
+
+  def find_or_create_user(participant)
+    user = User.create_with(name: participant.name)
+               .find_or_create_by!(email_address: sunetid_to_email_address(participant.sunetid))
+    # if this user was first added when the name lookup failed, we should now backfill their name if we have it
+    user.update(name: participant.name) if (user.name.blank? || user.name == user.sunetid) && participant.name.present?
+    user
+  end
+
+  def add_participant_if_missing(role, user)
+    return false if collection.public_send(role).include?(user)
+
+    collection.public_send(role).append(user)
+    true
   end
 
   def sunetid_to_email_address(sunetid)
