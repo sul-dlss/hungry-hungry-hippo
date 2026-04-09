@@ -9,10 +9,7 @@ Rails.application.config.after_initialize do # rubocop:disable Metrics/BlockLeng
   Notifier.subscribe(event_name: Notifier::DEPOSITOR_REMOVED) do |payload|
     CollectionsMailer.with(**payload).deposit_access_removed_email.deliver_later
   end
-  Notifier.subscribe(event_name: Notifier::DEPOSITOR_ADDED) do |payload|
-    CollectionParticipantsChangedSubscriptionMailer.call(**payload)
-  end
-  Notifier.subscribe(event_name: Notifier::DEPOSITOR_REMOVED) do |payload|
+  Notifier.subscribe(event_name: Notifier::PARTICIPANTS_CHANGED) do |payload|
     CollectionParticipantsChangedSubscriptionMailer.call(**payload)
   end
   Notifier.subscribe(event_name: Notifier::ACCESSIONING_STARTED) do |payload|
@@ -23,22 +20,9 @@ Rails.application.config.after_initialize do # rubocop:disable Metrics/BlockLeng
   Notifier.subscribe(event_name: Notifier::MANAGER_ADDED) do |payload|
     CollectionsMailer.with(**payload).manage_access_granted_email.deliver_later
   end
-  Notifier.subscribe(event_name: Notifier::MANAGER_ADDED) do |payload|
-    CollectionParticipantsChangedSubscriptionMailer.call(**payload)
-  end
-  Notifier.subscribe(event_name: Notifier::MANAGER_REMOVED) do |payload|
-    CollectionParticipantsChangedSubscriptionMailer.call(**payload)
-  end
-
   # Reviewer change notifications
   Notifier.subscribe(event_name: Notifier::REVIEWER_ADDED) do |payload|
     CollectionsMailer.with(**payload).review_access_granted_email.deliver_later
-  end
-  Notifier.subscribe(event_name: Notifier::REVIEWER_ADDED) do |payload|
-    CollectionsMailer.with(**payload).participants_changed_email.deliver_later
-  end
-  Notifier.subscribe(event_name: Notifier::REVIEWER_REMOVED) do |payload|
-    CollectionsMailer.with(**payload).participants_changed_email.deliver_later
   end
 
   # Subscriptions for ReviewsMailer

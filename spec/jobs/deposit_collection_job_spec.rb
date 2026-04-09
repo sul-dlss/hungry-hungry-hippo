@@ -253,10 +253,11 @@ RSpec.describe DepositCollectionJob do
       allow(Notifier).to receive(:publish)
     end
 
-    it 'publishes a MANAGER_ADDED notification' do
+    it 'publishes a MANAGER_ADDED notification and a single PARTICIPANTS_CHANGED notification' do
       described_class.perform_now(collection_form:, collection:, current_user:)
       expect(collection.managers).to include(manager)
       expect(Notifier).to have_received(:publish).with(Notifier::MANAGER_ADDED, collection:, user: manager)
+      expect(Notifier).to have_received(:publish).with(Notifier::PARTICIPANTS_CHANGED, collection:).once
     end
   end
 
@@ -280,12 +281,13 @@ RSpec.describe DepositCollectionJob do
       allow(Notifier).to receive(:publish)
     end
 
-    it 'only publishes a MANGER_REMOVED notification' do
+    it 'publishes a MANAGER_REMOVED notification and a single PARTICIPANTS_CHANGED notification' do
       described_class.perform_now(collection_form:, collection:, current_user:)
       expect(collection.managers).to include(first_manager)
       expect(collection.managers).not_to include(second_manager)
       expect(Notifier).to have_received(:publish).with(Notifier::MANAGER_REMOVED, collection:, user: second_manager)
       expect(Notifier).not_to have_received(:publish).with(Notifier::MANAGER_ADDED)
+      expect(Notifier).to have_received(:publish).with(Notifier::PARTICIPANTS_CHANGED, collection:).once
     end
   end
 

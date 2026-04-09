@@ -11,6 +11,9 @@ class Notifier
   REVIEWER_REMOVED = 'reviewer_removed'
   DEPOSITOR_REMOVED = 'depositor_removed'
 
+  # Fired once per collection save when any participant (depositor/manager/reviewer) was added or removed
+  PARTICIPANTS_CHANGED = 'participants_changed'
+
   REVIEW_REQUESTED = 'review_requested'
   REVIEW_APPROVED = 'review_approved'
   REVIEW_REJECTED = 'review_rejected'
