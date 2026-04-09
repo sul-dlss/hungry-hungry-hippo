@@ -26,9 +26,11 @@ class UserVersionChangeService
     structural.to_h[:contains].tap do |contains_hash|
       contains_hash.each do |file_set_hash|
         file_set_hash.delete(:label)
+        file_set_hash.delete(:version)
         file_set_hash[:structural][:contains].each do |file_hash|
           file_hash.delete(:label)
           file_hash.delete(:access)
+          file_hash.delete(:version)
         end
       end
     end
