@@ -285,10 +285,8 @@ en:
     buttons:
       lookup_identifier: 'Get publication info from DOI/PMCID'
       extract_abstracts:
-        label: 'Get abstract from file using AI'
+        label: 'Get abstract from PDF using AI'
         note: 'or click "Edit before deposit" below and enter your abstract manually'
-        tooltip_html: >-
-         We will use AI to try and retrieve the exact abstract from your file. You can always use the full form to make changes if you need to. You must first upload a PDF to use this feature.
     fields:
       agree_to_terms:
         validations:
