@@ -54,20 +54,20 @@ RSpec.describe 'Create an article deposit using abstract extract' do
       fill_in 'article_identifier', with: doi
       click_link_or_button('Get publication info from DOI/PMCID')
 
-      click_link_or_button('Get abstract from file using AI')
+      click_link_or_button('Get abstract from PDF using AI')
       expect(page).to have_css('.invalid-feedback', text: 'Upload your article as a PDF to use this feature.')
 
       # Adding a file (not PDF)
       find('.dropzone').drop('spec/fixtures/files/hippo.png')
       expect(page).to have_css('table#content-table td', text: 'hippo.png')
 
-      click_link_or_button('Get abstract from file using AI')
+      click_link_or_button('Get abstract from PDF using AI')
       expect(page).to have_css('.invalid-feedback', text: 'Upload your article as a PDF to use this feature.')
 
       find('.dropzone').drop('spec/fixtures/files/Strategies_for_Digital_Library_Migration.pdf')
       expect(page).to have_css('table#content-table td', text: 'Strategies_for_Digital_Library_Migration.pdf')
 
-      click_link_or_button('Get abstract from file using AI')
+      click_link_or_button('Get abstract from PDF using AI')
       expect(page).to have_css('textarea', text: abstract)
 
       # Setting version description
@@ -118,9 +118,9 @@ RSpec.describe 'Create an article deposit using abstract extract' do
       find('.dropzone').drop('spec/fixtures/files/Strategies_for_Digital_Library_Migration.pdf')
       expect(page).to have_css('table#content-table td', text: 'Strategies_for_Digital_Library_Migration.pdf')
 
-      click_link_or_button('Get abstract from file using AI')
+      click_link_or_button('Get abstract from PDF using AI')
       expect(page).to have_css('.invalid-feedback', text: 'We were not able to extract your abstract.')
-      expect(page).to have_button('Get abstract from file using AI')
+      expect(page).to have_button('Get abstract from PDF using AI')
       expect(Ahoy::Event.where_event(Ahoy::Event::ABSTRACT_EXTRACTED_FAILED, doi:).count).to eq(1)
     end
   end
@@ -139,7 +139,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
       find('.dropzone').drop('spec/fixtures/files/Strategies_for_Digital_Library_Migration.pdf')
       expect(page).to have_css('table#content-table td', text: 'Strategies_for_Digital_Library_Migration.pdf')
 
-      click_link_or_button('Get abstract from file using AI')
+      click_link_or_button('Get abstract from PDF using AI')
       expect(page).to have_css('textarea', text: abstract)
 
       click_link_or_button('Clear abstract')
