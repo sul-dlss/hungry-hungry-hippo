@@ -9,10 +9,10 @@ class AbstractsController < ApplicationController
   def new; end
 
   def create
-    content = Content.find(@content_id)
-    authorize! content, with: ContentPolicy
+    @content = Content.find(@content_id)
+    authorize! @content, with: ContentPolicy
 
-    filepath = article_filepath(content)
+    filepath = article_filepath(@content)
 
     unless filepath
       @error = I18n.t('article_form.messages.upload_pdf_error')

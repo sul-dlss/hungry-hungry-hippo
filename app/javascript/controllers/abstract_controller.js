@@ -10,8 +10,6 @@ export default class extends Controller {
   }
 
   clearExtracted () {
-    this.extractedAbstractTarget.value = ''
-
     ahoy.track('extracted abstract cleared', { doi: this.doiValue }) // eslint-disable-line no-undef
   }
 }
