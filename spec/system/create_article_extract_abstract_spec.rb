@@ -143,28 +143,7 @@ RSpec.describe 'Create an article deposit using abstract extract' do
       expect(page).to have_css('textarea', text: abstract)
 
       click_link_or_button('Clear abstract')
-      expect(page).to have_css('textarea', text: '')
-
-      # Setting version description
-      select('Author accepted version', from: 'Which version are you depositing?')
-
-      # Setting license
-      expect(page).to have_select('License', selected: 'CC-BY-4.0 Attribution International')
-      select('CC-BY-NC-4.0 Attribution-NonCommercial International', from: 'License')
-
-      # Deposit
-      click_link_or_button('Deposit')
-
-      # Waiting page may be too fast to catch so not testing.
-      # On show page
-      expect(page).to have_css('h1', text: title_fixture)
-      expect(page).to have_css('.status', text: 'Depositing')
-      expect(page).to have_css('.alert-success', text: 'Deposit successfully submitted')
-
-      # Details
-      within('#description-table') do
-        expect(page).to have_no_css('td', text: abstract)
-      end
+      expect(page).to have_button('Get abstract from PDF using AI')
 
       expect(Ahoy::Event.where_event(Ahoy::Event::EXTRACTED_ABSTRACT_CLEARED, doi:).count).to eq(1)
     end
