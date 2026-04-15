@@ -13,7 +13,7 @@ module Works
       attr_reader :review_form
 
       def render?
-        @work.pending_review? && helpers.allowed_to?(:review?, @work)
+        @work.pending_review? && @work.deposit_not_in_progress? && helpers.allowed_to?(:review?, @work)
       end
     end
   end
