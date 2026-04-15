@@ -58,6 +58,25 @@ RSpec.describe PollGithubReleasesJob do
       )
       expect(DepositGithubReleaseJob).not_to have_received(:perform_later)
     end
+
+    it 'stores the tag when the release name is blank' do
+      allow(Github::AppService).to receive(:releases)
+        .and_return(
+          # rubocop:disable Layout/LineLength
+          [
+            Github::AppService::Release.new(id: 4, tag: 'v1.3', name: '',
+                                            message: { zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.3' },
+                                            published_at: Time.zone.now)
+          ]
+          # rubocop:enable Layout/LineLength
+        )
+
+      described_class.perform_now(github_repository:)
+
+      new_release = GithubRelease.find_by(release_id: 4)
+      expect(new_release.release_tag).to eq('v1.3')
+      expect(new_release.release_name).to eq('v1.3')
+    end
   end
 
   context 'when immediate_deposit is true' do
