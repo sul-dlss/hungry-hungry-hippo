@@ -107,11 +107,27 @@ RSpec.describe DepositGithubReleaseJob do
       github_repository.deposit_persist!
     end
 
-    it 'does not process the release' do
+    it 'does not process the release and rolls back repository deposit state' do
       expect { described_class.perform_now(github_release:) }
         .to change { github_release.reload.status }
         .to('failed').and change(github_release,
                                  :status_details).to('github repository state is deposit_registering_or_updating')
+        .and change { github_repository.reload.deposit_state }.to('deposit_not_in_progress')
+    end
+  end
+
+  context 'when github repository deposit state is accessioning' do
+    before do
+      github_repository.deposit_persist!
+      github_repository.accession!
+    end
+
+    it 'does not process the release and rolls back repository deposit state' do
+      expect { described_class.perform_now(github_release:) }
+        .to change { github_release.reload.status }
+        .to('failed').and change(github_release,
+                                 :status_details).to('github repository state is accessioning')
+        .and change { github_repository.reload.deposit_state }.to('deposit_not_in_progress')
     end
   end
 

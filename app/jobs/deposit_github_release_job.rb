@@ -20,7 +20,7 @@ class DepositGithubReleaseJob < ApplicationJob
       return
     end
 
-    github_release.update!(status: 'started', status_details: nil)
+    update_release_status(status: 'started', status_details: nil)
 
     return if check_release_zip_exists!
 
@@ -32,7 +32,7 @@ class DepositGithubReleaseJob < ApplicationJob
 
     github_release.completed!
   rescue StandardError => e
-    github_release.update!(status: 'failed', status_details: "error processing release: #{e.message}")
+    update_release_status(status: 'failed', status_details: "error processing release: #{e.message}")
     raise
   end
 
@@ -54,7 +54,7 @@ class DepositGithubReleaseJob < ApplicationJob
     return false if skip_publish_wait
     return false unless github_release.published_at > publish_wait
 
-    github_release.update!(status_details: "waiting #{time_ago_in_words(publish_wait)} after publishing")
+    update_release_status(status_details: "waiting #{time_ago_in_words(publish_wait)} after publishing")
 
     true
   end
@@ -63,15 +63,15 @@ class DepositGithubReleaseJob < ApplicationJob
     Settings.github.publish_wait.seconds.ago
   end
 
-  def check_version_status! # rubocop:disable Metrics/AbcSize
+  def check_version_status!
     if version_status.open? && !version_status.closeable?
-      github_release.update!(status_details: 'version is open but not closeable')
+      update_release_status(status_details: 'version is open but not closeable')
       Honeybadger.notify('Version is open but not closeable')
       return true
     end
 
     if !version_status.open? && !version_status.openable?
-      github_release.update!(status_details: 'version is not openable')
+      update_release_status(status_details: 'version is not openable')
       Honeybadger.notify('Version is not openable')
       return true
     end
@@ -127,7 +127,7 @@ class DepositGithubReleaseJob < ApplicationJob
   def check_release_zip_exists!
     return false if Github::Downloader.new(url: github_release.zip_url).exist?
 
-    github_release.update!(status: 'completed', status_details: 'version zip missing')
+    update_release_status(status: 'completed', status_details: 'version zip missing')
     true
   end
 
@@ -140,8 +140,8 @@ class DepositGithubReleaseJob < ApplicationJob
   def check_github_repository_deposit_state!
     return false if github_repository.deposit_not_in_progress?
 
-    github_release.update!(status: 'failed',
-                           status_details: "github repository state is #{github_repository.deposit_state}")
+    update_release_status(status: 'failed',
+                          status_details: "github repository state is #{github_repository.deposit_state}")
     true
   end
 
@@ -162,5 +162,14 @@ class DepositGithubReleaseJob < ApplicationJob
         create_content_file(tempfile:, filename: asset['name'], mime_type: asset['content_type'])
       end
     end
+  end
+
+  def update_release_status(status_details:, status: github_release.status)
+    github_release.update!(status_details:, status:)
+
+    return unless status == 'failed'
+
+    # if the release failed, rollback the repository status so it can be tried again
+    github_repository.deposit_fail! if github_repository.can_deposit_fail?
   end
 end
