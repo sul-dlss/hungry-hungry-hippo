@@ -18,7 +18,7 @@ module DepositStateMachine
       end
 
       # On deposit failure, clear in-progress states so a retry can be attempted.
-      event :deposit_fail do
+      event :deposit_clear_fail do
         transition deposit_registering_or_updating: :deposit_not_in_progress
         transition accessioning: :deposit_not_in_progress
       end
