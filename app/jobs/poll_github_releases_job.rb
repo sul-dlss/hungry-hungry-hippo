@@ -27,7 +27,7 @@ class PollGithubReleasesJob < ApplicationJob
     github_repository.github_releases.create!(
       release_tag: release.tag,
       release_id: release.id,
-      release_name: release.name,
+      release_name: release.name.presence || release.tag,
       message: release.message,
       published_at: release.published_at
     )
