@@ -48,6 +48,17 @@ RSpec.describe Work do
     end
   end
 
+  describe '.deposit_clear_fail!' do
+    let(:work) { create(:work, deposit_state: 'accessioning') }
+
+    it 'resets state back to not in progress and does not send a notification' do
+      expect do
+        work.deposit_clear_fail!
+      end.to change(work, :deposit_state).from('accessioning').to('deposit_not_in_progress')
+      expect(Notifier).not_to have_received(:publish).with(Notifier::ACCESSIONING_COMPLETE, object: work)
+    end
+  end
+
   describe '.update_settings_from_form' do
     let(:work) { create(:work) }
     let(:work_form) { instance_double(WorkForm) }

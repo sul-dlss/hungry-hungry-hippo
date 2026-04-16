@@ -4,6 +4,7 @@
 module DepositStateMachine
   extend ActiveSupport::Concern
 
+  # rubocop:disable Metrics/BlockLength
   included do
     # In general, the version status should be used for the status of an object.
     # However, deposit_state is used for very specific purposes.
@@ -14,6 +15,12 @@ module DepositStateMachine
     state_machine :deposit_state, initial: :deposit_not_in_progress do
       event :deposit_persist do
         transition deposit_not_in_progress: :deposit_registering_or_updating
+      end
+
+      # On deposit failure, clear in-progress states so a retry can be attempted.
+      event :deposit_clear_fail do
+        transition deposit_registering_or_updating: :deposit_not_in_progress
+        transition accessioning: :deposit_not_in_progress
       end
 
       # As part of the deposit job, accessioning may or may not be started.
@@ -31,7 +38,7 @@ module DepositStateMachine
         transition accessioning: :deposit_not_in_progress
       end
 
-      before_transition deposit_registering_or_updating: any do |object|
+      before_transition on: %i[deposit_persist_complete accession] do |object|
         Notifier.publish(Notifier::DEPOSIT_PERSIST_COMPLETE, object:)
       end
 
@@ -39,9 +46,10 @@ module DepositStateMachine
         Notifier.publish(Notifier::ACCESSIONING_STARTED, object:, current_user: Current.user)
       end
 
-      before_transition accessioning: :deposit_not_in_progress do |object|
+      before_transition on: :accession_complete do |object|
         Notifier.publish(Notifier::ACCESSIONING_COMPLETE, object:)
       end
     end
+    # rubocop:enable Metrics/BlockLength
   end
 end

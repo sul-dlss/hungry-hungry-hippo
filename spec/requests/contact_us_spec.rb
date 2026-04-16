@@ -63,7 +63,7 @@ RSpec.describe 'Contact us' do
       it 'renders the form with an error and does not send email' do
         expect { post contacts_path, params: contact_params }.not_to change(ActionMailer::Base.deliveries, :count)
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.body).to include('reCAPTCHA challenge failed.')
       end
     end

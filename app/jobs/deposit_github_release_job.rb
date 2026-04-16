@@ -33,6 +33,9 @@ class DepositGithubReleaseJob < ApplicationJob
     github_release.completed!
   rescue StandardError => e
     github_release.update!(status: 'failed', status_details: "error processing release: #{e.message}")
+
+    # rollback the repository status so it can be tried again
+    github_repository.deposit_clear_fail! if github_repository.can_deposit_clear_fail?
     raise
   end
 
@@ -142,6 +145,9 @@ class DepositGithubReleaseJob < ApplicationJob
 
     github_release.update!(status: 'failed',
                            status_details: "github repository state is #{github_repository.deposit_state}")
+    # rollback the repository status so it can be tried again
+    github_repository.deposit_clear_fail! if github_repository.can_deposit_clear_fail?
+
     true
   end
 
