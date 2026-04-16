@@ -10,6 +10,8 @@ module Github
     end
 
     def exist?
+      return false if url.blank?
+
       response = connection.head(url)
       return true if response.success?
       return false if response.status == 404
