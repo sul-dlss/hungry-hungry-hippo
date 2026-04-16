@@ -2,9 +2,9 @@
 
 module Elements
   module Forms
-    # Encapsulates a non-repeatable nested form.
+    # Encapsulates a has_one (non-repeatable) form.
     # NOTE: Use the `NestedComponentPresenter` to invoke this component; do not directly instantiate it.
-    class NonRepeatableNestedComponent < ApplicationComponent
+    class HasOneComponent < ApplicationComponent
       def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, # rubocop:disable Metrics/ParameterLists
                      legend_classes: [], fieldset_classes: [], **form_component_args)
         @form = form

@@ -2,7 +2,7 @@
 
 # Form for a Collection
 class CollectionForm < ApplicationForm
-  accepts_nested_attributes_for :related_links, :contact_emails, :managers, :depositors, :reviewers, :contributors
+  has_many :related_links, :contact_emails, :managers, :depositors, :reviewers, :contributors
 
   before_validation do
     blank_managers = managers.select(&:empty?)

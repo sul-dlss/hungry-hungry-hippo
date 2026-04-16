@@ -55,8 +55,8 @@ module Edit
       role_type == 'person'
     end
 
-    # This method is invoked by RepeatableNestedComponent to determine whether to render the delete button.
-    def hide_repeatable_nested_delete_button?
+    # This method is invoked by HasManyComponent to determine whether to render the delete button.
+    def hide_delete_button?
       collection_required?
     end
 

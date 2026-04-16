@@ -91,7 +91,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       handle_no_changes_or_invalid
       set_license_presenter
       set_presenter
-      @work_form.prepopulate
+      @work_form.seed_for_form_render!
       render edit_form_view, status: :unprocessable_content
     end
   rescue StateMachines::InvalidTransition, Sdr::Repository::StaleLock => e
@@ -180,7 +180,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
                                        agree_to_terms: current_user.agree_to_terms?,
                                        version_description:, collection: @collection,
                                        work_form_class:,
-                                       github_deposit_enabled: @work.github_deposit_enabled).prepopulate
+                                       github_deposit_enabled: @work.github_deposit_enabled)
+                                 .seed_for_form_render!
   end
 
   def doi_assigned?
@@ -237,7 +238,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       end
       work_form.max_release_date = @collection.max_release_date if @collection.depositor_selects_release_option?
     end
-      .prepopulate
+      .seed_for_form_render!
   end
 
   def perform_deposit(work:)

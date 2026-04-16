@@ -42,7 +42,7 @@ RSpec.describe Cocina::WorkDescriptionMapper, type: :mapping do
   context 'with a contributor containing only empty affiliations' do
     let(:work_form) do
       work_form_fixture.tap do |form|
-        form.contributors_attributes = contributors_attributes
+        form.contributors = [ContributorForm.new(**contributors_attributes.first)]
       end
     end
 
@@ -66,7 +66,7 @@ RSpec.describe Cocina::WorkDescriptionMapper, type: :mapping do
     end
 
     it 'maps to cocina with the expected number of contributors' do
-      expect(description.contributor.size).to eq(4)
+      expect(description.contributor.size).to eq(1)
     end
   end
 
