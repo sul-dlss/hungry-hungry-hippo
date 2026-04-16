@@ -35,6 +35,14 @@ RSpec.describe Github::Downloader, :vcr do
         end.to raise_error(Github::Downloader::DownloaderError, /Failed to access/)
       end
     end
+
+    context 'when the url is blank' do
+      let(:zip_url) { '' }
+
+      it 'returns false' do
+        expect(downloader.exist?).to be false
+      end
+    end
   end
 
   describe '#download_to' do
