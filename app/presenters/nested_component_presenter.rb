@@ -21,9 +21,9 @@ class NestedComponentPresenter
   private
 
   def nested_class
-    return Elements::Forms::RepeatableNestedComponent if one_to_many?
+    return Elements::Forms::HasManyComponent if one_to_many?
 
-    Elements::Forms::NonRepeatableNestedComponent
+    Elements::Forms::HasOneComponent
   end
 
   def one_to_many?

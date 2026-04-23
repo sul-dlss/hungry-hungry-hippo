@@ -2,9 +2,9 @@
 
 module Elements
   module Forms
-    # Encapsulates a repeatable nested form, including adding and removing nested models.
+    # Encapsulates a has_many (repeatable) form, including adding and removing nested models.
     # NOTE: Use the `NestedComponentPresenter` to invoke this component; do not directly instantiate it.
-    class RepeatableNestedComponent < ApplicationComponent
+    class HasManyComponent < ApplicationComponent
       renders_one :before_section # Optional
 
       def initialize(form:, model_class:, field_name:, form_component:, hidden_label: false, bordered: true, # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength, Metrics/AbcSize
@@ -124,18 +124,17 @@ module Elements
       # method that returns true.
       # This can be used for a required field that the user cannot delete.
       def hide_delete_button?(form_component_instance:)
-        form_component_instance.try(:hide_repeatable_nested_delete_button?) || false
+        form_component_instance.try(:hide_delete_button?) || false
       end
 
-      # A form component can provide a delete button label by providing a `form_button_label` method.
       def delete_button_label(form_component_instance:)
         form_component_instance.try(:delete_button_label) || 'Clear'
       end
 
       def template_model
-        model_class
-          .new
-          .then { |form_instance| form_instance.try(:prepopulate) || form_instance }
+        model_class.new.tap do |form_instance|
+          form_instance.seed_for_form_render! if form_instance.respond_to?(:seed_for_form_render!)
+        end
       end
 
       def nested_form_translation(key)

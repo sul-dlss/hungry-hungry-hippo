@@ -11,8 +11,9 @@ class BaseWorkForm < ApplicationForm # rubocop:disable Metrics/ClassLength
     'Final published version of the work'
   ].freeze
 
-  accepts_nested_attributes_for :related_works, :publication_date, :contact_emails, :contributors,
-                                :keywords, :create_date_single, :create_date_range_from, :create_date_range_to
+  has_many :related_works, minimum_rows: 1, render_if_empty: true
+  has_many :contact_emails, :contributors, :keywords
+  has_one :publication_date, :create_date_single, :create_date_range_from, :create_date_range_to, render_if_empty: true
 
   # At least one contributor is required.
   before_validation do

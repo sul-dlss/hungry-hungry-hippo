@@ -45,6 +45,10 @@ Metrics/ModuleLength:
   Exclude:
     - spec/support/work_mapping_fixtures.rb # it's meant to be a large container of mappings
 
+Naming/PredicatePrefix:
+  Exclude:
+    - lib/active_model/nested_attributes.rb
+
 Rails/HasAndBelongsToMany:
   Enabled: false
 

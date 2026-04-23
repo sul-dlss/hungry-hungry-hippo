@@ -40,7 +40,7 @@
                 Why? New instances of these fields are created by copying an HTML template element, so
                 we need that populated. Some forms are handled differently, such as participant fields,
                 which are populated via a textarea and an async lookup, so we do not want the empty form
-                rendered or else the form gets blank managers/depositors/reviewers.  %>
+                rendered or else the form gets blank managers/depositors/reviewers. %>
       <% next if nested_form.object.empty? && !render_empty? %>
 
       <%# NOTE: this div is duplicated above. If making a change here, also make the change above. %>

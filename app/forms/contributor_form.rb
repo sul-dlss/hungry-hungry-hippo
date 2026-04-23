@@ -2,7 +2,7 @@
 
 # Form for a contributor
 class ContributorForm < ApplicationForm
-  accepts_nested_attributes_for :affiliations
+  has_many :affiliations
 
   before_validation do
     blank_affiliations = affiliations.select(&:empty?)

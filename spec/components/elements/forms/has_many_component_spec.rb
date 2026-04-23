@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
+RSpec.describe Elements::Forms::HasManyComponent, type: :component do
   subject(:component) do
     described_class.new(form: ActionView::Helpers::FormBuilder.new(nil, form, vc_test_view_context, {}),
                         field_name:, model_class:, form_component:, hidden_label:, bordered:, single_field:,
@@ -10,7 +10,7 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
   end
 
   let(:field_name) { :related_works }
-  let(:form) { WorkForm.new.prepopulate }
+  let(:form) { WorkForm.new.seed_for_form_render! }
   let(:form_component) { RelatedWorks::EditComponent }
   let(:model_class) { RelatedWorkForm }
   let(:hidden_label) { false }
@@ -22,11 +22,11 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
 
   context 'when rendering the default component' do
     let(:field_name) { :related_links }
-    let(:form) { CollectionForm.new.prepopulate }
+    let(:form) { CollectionForm.new.seed_for_form_render! }
     let(:form_component) { RelatedLinks::EditComponent }
     let(:model_class) { RelatedLinkForm }
 
-    it 'renders the nested component' do
+    it 'renders the has_many component' do
       render_inline(component)
       expect(page).to have_css('label', exact_text: 'Related links')
       expect(page).to have_field('Link text')
@@ -58,7 +58,10 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
 
   context 'when a single field' do
     let(:field_name) { :contact_emails }
-    let(:form) { WorkForm.new(contact_emails_attributes: contact_emails_fixture).prepopulate }
+    let(:form) do
+      WorkForm.new(contact_emails_attributes: contact_emails_fixture)
+              .seed_for_form_render!
+    end
     let(:form_component) { Works::Edit::ContactEmailsComponent }
     let(:model_class) { ContactEmailForm }
     let(:single_field) { true }
@@ -86,7 +89,7 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
                        'suborganization_name' => nil,
                        'collection_required' => true
                      }
-                   ]).prepopulate
+                   ]).seed_for_form_render!
     end
     let(:form_component) { Edit::ContributorComponent }
     let(:model_class) { ContributorForm }
@@ -106,14 +109,13 @@ RSpec.describe Elements::Forms::RepeatableNestedComponent, type: :component do
                              'sunetid' => 'jstanford',
                              'name' => 'Jane Stanford'
                            }
-                         ]).prepopulate
+                         ]).seed_for_form_render!
     end
     let(:form_component) { Collections::Edit::ParticipantComponent }
     let(:model_class) { ParticipantForm }
 
     it 'show the delete button with the label specified by the component' do
       render_inline(component)
-
       expect(page).to have_css('label', text: 'Depositors')
       expect(page).to have_button('Clear Jane Stanford')
     end

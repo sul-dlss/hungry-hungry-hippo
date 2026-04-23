@@ -44,15 +44,17 @@ RSpec.describe Notifier do
 
         expect(ActiveSupport::Notifications).to have_received(:instrument).with(Notifier::REVIEW_REQUESTED,
                                                                                 work:, current_user: user)
-        expect(has_message(user: reviewer, subject: 'Item ready for review in the My Stuff collection')).to be true
-        expect(has_message(user: manager, subject: 'Item ready for review in the My Stuff collection')).to be false
+        expect(message_delivered?(user: reviewer, subject: 'Item ready for review in the My Stuff collection'))
+          .to be true
+        expect(message_delivered?(user: manager, subject: 'Item ready for review in the My Stuff collection'))
+          .to be false
         expect(Sdr::Event).to have_received(:create).with(druid: work.druid, type: 'h3_review_requested',
                                                           data: { who: user.sunetid })
       end
     end
   end
 
-  def has_message(user:, subject:)
+  def message_delivered?(user:, subject:)
     ActionMailer::Base.deliveries.any? { |m| m.to == [user.email_address] && m.subject == subject }
   end
 end
