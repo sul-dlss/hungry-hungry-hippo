@@ -69,7 +69,8 @@ module Sdr
       # Setting to update_if_existing (the default in DSA) for now.
       Dor::Services::Client.object(druid)
                            .version.close(user_versions: new_user_version ? 'new' : 'update_if_existing',
-                                          user_name: Current.user.sunetid, description: version_description)
+                                          user_name: Current.user.sunetid, description: version_description,
+                                          lane_id: 'high')
     rescue Dor::Services::Client::Error => e
       raise Error, "Initiating accession failed: #{e.message}"
     end

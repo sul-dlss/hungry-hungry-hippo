@@ -71,7 +71,7 @@ RSpec.describe Sdr::Repository do
 
         expect(Dor::Services::Client).to have_received(:object).with(druid)
         expect(version_client).to have_received(:close).with(user_versions: 'update_if_existing', user_name:,
-                                                             description: 'Changed title')
+                                                             description: 'Changed title', lane_id: 'high')
       end
     end
 
@@ -80,7 +80,8 @@ RSpec.describe Sdr::Repository do
         described_class.accession(druid:, new_user_version: true)
 
         expect(Dor::Services::Client).to have_received(:object).with(druid)
-        expect(version_client).to have_received(:close).with(user_versions: 'new', user_name:, description: nil)
+        expect(version_client).to have_received(:close).with(user_versions: 'new', user_name:, description: nil,
+                                                             lane_id: 'high')
       end
     end
 
