@@ -93,7 +93,8 @@ RSpec.describe 'Create an article deposit using abstract extract' do
 
       expect(Ahoy::Event.where_event(Ahoy::Event::IDENTIFIER_LOOKUP_SUCCESS,
                                      identifier: doi,
-                                     identifier_type: 'DOI').count).to eq(1)
+                                     identifier_type: 'DOI',
+                                     abstract: false).count).to eq(1)
       expect(Ahoy::Event.where_event(Ahoy::Event::ABSTRACT_EXTRACTED_SUCCESS,
                                      doi:,
                                      abstract:).count).to eq(1)
