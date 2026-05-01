@@ -171,6 +171,32 @@ RSpec.describe DepositWorkJob do
     end
   end
 
+  context 'when an existing draft work has metadata changes but unchanged files' do
+    let(:work) { create(:work, :registering_or_updating, druid:) }
+    let(:work_form) do
+      work_form_fixture.tap do |form|
+        form.content_id = content.id
+        form.collection_druid = collection.druid
+      end
+    end
+    let(:version_status) { build(:draft_version_status) }
+
+    before do
+      allow(Sdr::Repository).to receive_messages(open_if_needed: cocina_object, update: cocina_object)
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(original_cocina_object)
+      allow(Sdr::Repository).to receive(:status).and_return(version_status)
+      allow(Sdr::Repository).to receive(:find_latest_user_version).with(druid:).and_return(nil)
+    end
+
+    it 'does not describe the change as files changed' do
+      described_class.perform_now(work_form:, work:, deposit: false, request_review: false,
+                                  current_user:, ahoy_visit:)
+
+      expect(Sdr::Repository).to have_received(:update)
+        .with(cocina_object:, user_name: current_user.sunetid, description: nil)
+    end
+  end
+
   context 'when an existing work with changed cocina object and depositing' do
     let(:work) { create(:work, :registering_or_updating, druid:) }
     let(:work_form) do
