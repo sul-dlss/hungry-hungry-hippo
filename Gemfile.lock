@@ -758,7 +758,7 @@ DEPENDENCIES
   mais_person_client
   marcel
   mission_control-jobs
-  multi_json (~> 1.20.1)
+  multi_json (~> 1.20)
   octokit
   okcomputer
   overmind
