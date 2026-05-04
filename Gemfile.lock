@@ -400,7 +400,7 @@ GEM
       nokogiri
       nokogiri-happymapper
     msgpack (1.8.0)
-    multi_json (1.21.0)
+    multi_json (1.20.1)
     multipart-post (2.4.1)
     net-http (0.9.1)
       uri (>= 0.11.1)
@@ -758,6 +758,7 @@ DEPENDENCIES
   mais_person_client
   marcel
   mission_control-jobs
+  multi_json (~> 1.20.1)
   octokit
   okcomputer
   overmind
