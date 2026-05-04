@@ -477,9 +477,9 @@ Performance/Sum: # new in 1.8
 
 Capybara/ClickLinkOrButtonStyle: # new in 2.19
   Enabled: true
-Capybara/MatchStyle: # new in 2.17
+Capybara/RSpec/MatchStyle: # new in 2.17
   Enabled: true
-Capybara/NegationMatcher: # new in 2.14
+Capybara/RSpec/NegationMatcher: # new in 2.14
   Enabled: true
 Capybara/RedundantWithinFind: # new in 2.20
   Enabled: true
@@ -487,7 +487,7 @@ Capybara/SpecificActions: # new in 2.14
   Enabled: true
 Capybara/SpecificFinders: # new in 2.13
   Enabled: true
-Capybara/SpecificMatcher: # new in 2.12
+Capybara/RSpec/SpecificMatcher: # new in 2.12
   Enabled: true
   Exclude:
     - spec/components/elements/forms/submit_component_spec.rb # we want to explicitly test for an HTML input with type="submit"
@@ -569,7 +569,7 @@ Performance/ZipWithoutBlock: # new in 1.24
 
 Capybara/FindAllFirst: # new in 2.22
   Enabled: true
-Capybara/NegationMatcherAfterVisit: # new in 2.22
+Capybara/RSpec/NegationMatcherAfterVisit: # new in 2.22
   Enabled: true
 Capybara/RSpec/PredicateMatcher: # new in 2.19
   Enabled: true
