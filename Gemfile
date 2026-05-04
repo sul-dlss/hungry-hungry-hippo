@@ -66,6 +66,7 @@ gem 'kicks' # Background processing of rabbitMQ messages. (Formerly sneakers.)
 gem 'local_time'
 gem 'mais_person_client'
 gem 'marcel' # For MIME type detection
+gem 'multi_json', '~> 1.20'
 gem 'octokit' # GitHub API client
 gem 'okcomputer'
 gem 'parallel' # Used for abstract extraction testing.

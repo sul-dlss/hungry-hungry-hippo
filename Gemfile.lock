@@ -99,7 +99,7 @@ GEM
       smart_properties
     bigdecimal (4.1.2)
     bindex (0.8.1)
-    bootsnap (1.24.0)
+    bootsnap (1.24.1)
       msgpack (~> 1.2)
     builder (3.3.0)
     bunny (2.24.0)
@@ -137,7 +137,7 @@ GEM
     cgi (0.5.1)
     chronic (0.10.2)
     cmdparse (3.0.7)
-    cocina-models (0.116.0)
+    cocina-models (0.117.0)
       activesupport
       deprecation
       dry-struct (~> 1.0)
@@ -194,9 +194,9 @@ GEM
       activesupport (>= 4.2)
       bunny (~> 2.17)
       zeitwerk (~> 2.1)
-    dor-services-client (15.41.0)
+    dor-services-client (15.42.0)
       activesupport (>= 7.0.0)
-      cocina-models (~> 0.116.0)
+      cocina-models (~> 0.117.0)
       deprecation
       faraday (~> 2.0)
       faraday-retry
@@ -326,7 +326,7 @@ GEM
     jbuilder (2.14.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (2.19.4)
+    json (2.19.5)
     json_schemer (2.5.0)
       bigdecimal
       hana (~> 1.3)
@@ -381,7 +381,7 @@ GEM
     marcel (1.1.0)
     matrix (0.4.3)
     mini_mime (1.1.5)
-    minitest (6.0.5)
+    minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
     mission_control-jobs (1.1.0)
@@ -419,9 +419,9 @@ GEM
       net-protocol
     net-ssh (7.3.2)
     nio4r (2.7.5)
-    nokogiri (1.19.2-arm64-darwin)
+    nokogiri (1.19.3-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.19.2-x86_64-linux-gnu)
+    nokogiri (1.19.3-x86_64-linux-gnu)
       racc (~> 1.4)
     nokogiri-happymapper (0.10.1)
       nokogiri (~> 1.5)
@@ -555,9 +555,9 @@ GEM
     rubocop-ast (1.49.1)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
-    rubocop-capybara (2.22.1)
+    rubocop-capybara (2.23.0)
       lint_roller (~> 1.1)
-      rubocop (~> 1.72, >= 1.72.1)
+      rubocop (~> 1.81)
     rubocop-factory_bot (2.28.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
@@ -591,7 +591,7 @@ GEM
       ruby_llm-schema (~> 0)
       zeitwerk (~> 2)
     ruby_llm-schema (0.3.0)
-    rubyzip (3.2.2)
+    rubyzip (3.3.0)
     safely_block (1.0.0)
     sawyer (0.9.3)
       addressable (>= 2.3.5)
@@ -661,10 +661,10 @@ GEM
       railties (>= 6.0.0)
     stringio (3.2.0)
     strscan (3.1.8)
-    super_diff (0.18.0)
-      attr_extras (>= 6.2.4)
-      diff-lcs
-      patience_diff
+    super_diff (0.19.0)
+      attr_extras (>= 6.2.4, < 8)
+      diff-lcs (~> 1.5)
+      patience_diff (~> 1.2)
     thor (1.5.0)
     timeout (0.6.1)
     tsort (0.2.0)
@@ -758,6 +758,7 @@ DEPENDENCIES
   mais_person_client
   marcel
   mission_control-jobs
+  multi_json (~> 1.20)
   octokit
   okcomputer
   overmind
@@ -799,4 +800,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-  4.0.10
+  4.0.11
