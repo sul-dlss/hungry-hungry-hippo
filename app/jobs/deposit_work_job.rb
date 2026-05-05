@@ -88,8 +88,8 @@ class DepositWorkJob < ApplicationJob # rubocop:disable Metrics/ClassLength
     # @changed can be false, so normal ||= won't work here
     return @changed if defined?(@changed)
 
-    original_cocina_object = Sdr::Repository.find(druid: work_form.druid)
-    @changed = RoundtripSupport.changed?(cocina_object: mapped_cocina_object, original_cocina_object:)
+    @changed = RoundtripSupport.changed?(cocina_object: mapped_cocina_object,
+                                         original_cocina_object: current_cocina_object)
   end
 
   # rubocop:disable Metrics/AbcSize
@@ -102,7 +102,7 @@ class DepositWorkJob < ApplicationJob # rubocop:disable Metrics/ClassLength
                                      user_name:)
                      .then do |cocina_object|
         Sdr::Repository.update(cocina_object:, user_name:,
-                               description: new_user_version? ? 'Files changed' : nil)
+                               description: files_changed? ? 'Files changed' : nil)
       end
     elsif deposit?
       # If the work is not changed but is being deposited, still need to update the deposit publication date.
@@ -173,6 +173,18 @@ class DepositWorkJob < ApplicationJob # rubocop:disable Metrics/ClassLength
     # return true if structural changed since last user version
     original_cocina_object = Sdr::Repository.find_latest_user_version(druid: work_form.druid)
     @new_user_version = UserVersionChangeService.call(original_cocina_object:, new_cocina_object: mapped_cocina_object)
+  end
+
+  def current_cocina_object
+    @current_cocina_object ||= Sdr::Repository.find(druid: work_form.druid)
+  end
+
+  def files_changed?
+    # @files_changed can be false, so normal ||= won't work here
+    return @files_changed if defined?(@files_changed)
+
+    @files_changed = UserVersionChangeService.call(original_cocina_object: current_cocina_object,
+                                                   new_cocina_object: mapped_cocina_object)
   end
 
   def remove_globus_permissions
