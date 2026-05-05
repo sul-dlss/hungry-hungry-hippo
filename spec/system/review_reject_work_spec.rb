@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Review and reject a work', :rack_test do
+RSpec.describe 'Review and reject a work' do
   include WorkMappingFixtures
 
   let(:druid) { druid_fixture }
@@ -34,6 +34,8 @@ RSpec.describe 'Review and reject a work', :rack_test do
     expect(page).to have_text('Review all details below then approve this deposit or return with comments.')
 
     expect(page).to have_checked_field('Approve')
+
+    expect(page).to have_field('Reason for returning', disabled: true)
 
     # Submit invalid (reason is required)
     choose('Return with comments')
