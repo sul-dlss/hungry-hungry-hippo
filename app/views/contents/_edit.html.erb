@@ -7,6 +7,7 @@
         dropzone_dropzone_files_outlet: '.dropzone-files',
         dropzone_tab_error_outlet: '.tab-error',
         dropzone_form_error_outlet: '.form-error',
+        dropzone_disableable_outlet: '.disableable',
         action: 'change->unsaved-changes#changed'
       }, id: 'file-dropzone', class: 'dropzone mb-3' do |form| %>
     <%= render SdrViewComponents::Elements::AlertComponent.new(classes: 'd-none', data: { dropzone_target: 'folderAlert' }) do %>

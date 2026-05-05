@@ -113,7 +113,7 @@
         <% end %>
         <%= render Works::Edit::TermsOfDepositComponent.new(form:) %>
         <% pane_component.with_deposit_button do %>
-          <%= render Works::Edit::SubmitComponent.new(work: @work, collection: @collection, data: { action: 'unsaved-changes#allowFormSubmission' }) %>
+          <%= render Works::Edit::SubmitComponent.new(work: @work, collection: @collection, data: { action: 'unsaved-changes#allowFormSubmission', controller: 'disableable' }, classes: 'disableable') %>
         <% end %>
       <% end %>
     <% end %>
