@@ -8,7 +8,7 @@ RSpec.describe 'Edit a work' do
 
   include_context 'with FAST connection'
 
-  let(:query) { 'First%20Keyword' }
+  let(:query) { 'First Keyword' }
   let(:druid) { druid_fixture }
   let(:user) { create(:user) }
   let(:cocina_object) do

@@ -4,7 +4,7 @@ RSpec.shared_context('with FAST connection') do
   before do
     stub_request(:get, Settings.autocomplete_lookup.url)
       .with(headers: lookup_headers, query: {
-              query:,
+              query: ERB::Util.url_encode(query).gsub('%20', '+'),
               rows: 20,
               sort: 'usage desc',
               queryIndex: 'suggestall',
