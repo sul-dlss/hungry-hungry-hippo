@@ -61,7 +61,7 @@ class KeywordResolver
 
   def resolve(query) # rubocop:disable Metrics/AbcSize
     response = connection.get do |req|
-      req.params['query'] = ERB::Util.url_encode(query)
+      req.params['query'] = ERB::Util.url_encode(query).gsub('%20', '+')
       req.params['queryIndex'] = 'suggestall'
       req.params['queryReturn'] = 'idroot,suggestall,tag'
       req.params['suggest'] = 'autoSubject'
@@ -70,7 +70,6 @@ class KeywordResolver
       req.params['rows'] = Settings.autocomplete_lookup.num_records * 2
       req.params['sort'] = 'usage desc'
     end
-
     return Success(parse(response.body)) if response.success?
 
     Honeybadger.notify('FAST API Error',
