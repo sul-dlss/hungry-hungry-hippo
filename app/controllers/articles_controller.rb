@@ -49,7 +49,7 @@ class ArticlesController < ApplicationController
   end
 
   def wait
-    @work = Article.find(params[:id])
+    @work = Article.find(params.expect(:id))
     authorize! @work, with: WorkPolicy
 
     # Don't show flashes on wait and preserve them for the next page

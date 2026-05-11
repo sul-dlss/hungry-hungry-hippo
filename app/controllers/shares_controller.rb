@@ -30,7 +30,7 @@ class SharesController < ApplicationController
   private
 
   def set_work
-    @work = Work.find_by!(druid: params[:work_druid])
+    @work = Work.find_by!(druid: params.expect(:work_druid))
   end
 
   def share_params

@@ -51,7 +51,7 @@ class GlobusesController < ApplicationController
   private
 
   def set_content
-    @content = Content.find(params[:content_id])
+    @content = Content.find(params.expect(:content_id))
   end
 
   def set_destination_path

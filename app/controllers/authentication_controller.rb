@@ -15,7 +15,7 @@ class AuthenticationController < ApplicationController
   # This is used by specs to allow TestShibbolethHeaders middleware to set headers.
   # This endpoint is only available in the test environment.
   def test_login # rubocop:disable Metrics/AbcSize
-    user = User.find(params[:id])
+    user = User.find(params.expect(:id))
     cookies[:test_shibboleth_remote_user] = user.email_address
     cookies[:test_shibboleth_full_name] = user.name
     cookies[:test_shibboleth_first_name] = user.first_name

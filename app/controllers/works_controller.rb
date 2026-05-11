@@ -116,7 +116,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def wait
-    @work = Work.find(params[:id])
+    @work = Work.find(params.expect(:id))
     authorize! @work, with: WorkPolicy
 
     # Don't show flashes on wait and preserve them for the next page

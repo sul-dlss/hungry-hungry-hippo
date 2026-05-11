@@ -52,7 +52,7 @@ module Admin
     end
 
     def cocina_object
-      @cocina_object ||= Sdr::Repository.find(druid: params[:work_druid])
+      @cocina_object ||= Sdr::Repository.find(druid: params.expect(:work_druid))
     end
 
     def work_form
