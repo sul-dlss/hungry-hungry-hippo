@@ -76,7 +76,7 @@ class ContentFilesController < ApplicationController
   end
 
   def set_content_file
-    @content_file = ContentFile.includes(:content).find(params[:id])
+    @content_file = ContentFile.includes(:content).find(params.expect(:id))
   end
 
   def content_file_params

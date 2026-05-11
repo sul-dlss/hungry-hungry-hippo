@@ -36,7 +36,7 @@ class GithubRepositoriesController < ApplicationController
   end
 
   def wait
-    @work = GithubRepository.find(params[:id])
+    @work = GithubRepository.find(params.expect(:id))
     authorize! @work, with: WorkPolicy
 
     # Don't show flashes on wait and preserve them for the next page

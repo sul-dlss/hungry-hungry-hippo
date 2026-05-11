@@ -73,7 +73,7 @@ class CollectionsController < ApplicationController
   end
 
   def wait
-    @collection = Collection.find(params[:id])
+    @collection = Collection.find(params.expect(:id))
     authorize! @collection
 
     redirect_to collection_path(@collection) unless @collection.deposit_registering_or_updating?
@@ -127,7 +127,7 @@ class CollectionsController < ApplicationController
   end
 
   def set_collection
-    @collection = Collection.find_by!(druid: params[:druid])
+    @collection = Collection.find_by!(druid: params.expect(:druid))
   end
 
   def check_deposit_registering_or_updating
@@ -135,7 +135,7 @@ class CollectionsController < ApplicationController
   end
 
   def set_collection_form_from_cocina
-    @cocina_object = Sdr::Repository.find(druid: params[:druid])
+    @cocina_object = Sdr::Repository.find(druid: params.expect(:druid))
     @collection_form = Form::CollectionMapper.call(cocina_object: @cocina_object, collection: @collection)
                                              .seed_for_form_render!
   end

@@ -44,7 +44,7 @@ class ContentsController < ApplicationController
   private
 
   def set_content
-    @content = Content.find(params[:id])
+    @content = Content.find(params.expect(:id))
   end
 
   def set_content_files
