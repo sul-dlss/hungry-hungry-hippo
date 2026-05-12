@@ -1,4 +1,4 @@
-<% if @account.nil? %>
+<% if @account.blank? %>
   <%= tag.li class: 'list-group-item', role: 'option', 'aria-disabled': 'true' do %>
     No results for "<%= params[:id] %>"
   <% end %>
