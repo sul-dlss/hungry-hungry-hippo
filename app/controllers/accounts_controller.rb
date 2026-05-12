@@ -7,24 +7,17 @@ class AccountsController < ApplicationController
   def search
     authorize! with: AccountPolicy
 
-    account = lookup_account
-    return head :not_found if account.nil?
-
-    render json: account
-  end
-
-  def search_user
-    authorize! with: AccountPolicy
-
     @account = lookup_account
     return head :not_found if @account.nil?
 
-    render layout: false
+    respond_to do |format|
+      format.html { render layout: false }
+      format.json { render json: @account }
+    end
   end
 
   private
 
-  # Returns the id from the params, either from :id (search) or :sunetid (search_user).
   def id
     @id ||= params[:id] || params[:sunetid]
   end

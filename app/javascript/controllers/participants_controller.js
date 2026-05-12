@@ -25,13 +25,15 @@ export default class extends Controller {
   }
 
   async lookupId (id) {
-    const sunetid = id.replaceAll('@stanford.edu', '')
-    return fetch(`${this.urlValue}?id=${sunetid}`)
-      .then(response => {
-        if (response.status === 404) return null
-        if (!response.ok) throw new Error(response.status)
-        return response.json()
-      })
+    const sunetid = id.replaceAll('@stanford.edu', '').replace(/[^\w\s]/gi, '')
+
+    return fetch(`${this.urlValue}?id=${sunetid}`, {
+      headers: { Accept: 'application/json' }
+    }).then(response => {
+      if (response.status === 404) return null
+      if (!response.ok) throw new Error(response.status)
+      return response.json()
+    })
       .then(data => {
         if (!data) {
           return id

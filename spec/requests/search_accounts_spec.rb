@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Accounts search' do
-  describe 'GET /accounts/search/:id' do
+  describe 'GET /accounts/search?id=...' do
     let(:user) { create(:user) }
+    let(:headers) { { accept: 'application/json' } }
 
     before do
       allow(AccountService).to receive(:call)
@@ -21,7 +22,7 @@ RSpec.describe 'Accounts search' do
       end
 
       it 'is unauthorized' do
-        get '/accounts/search?id=fred'
+        get('/accounts/search?id=fred', headers:)
         expect(response).to redirect_to(:root)
       end
     end
@@ -32,7 +33,7 @@ RSpec.describe 'Accounts search' do
       end
 
       it 'displays the data' do
-        get '/accounts/search?id=jc'
+        get('/accounts/search?id=jc', headers:)
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body).to eq({ sunetid: 'jc', name: 'Justin Coyne',
                                              description: 'Digital Library Systems and Services' }
@@ -47,7 +48,7 @@ RSpec.describe 'Accounts search' do
       end
 
       it 'displays the data' do
-        get '/accounts/search?id=jc'
+        get('/accounts/search?id=jc', headers:)
         expect(response).to have_http_status(:ok)
       end
     end
@@ -60,7 +61,7 @@ RSpec.describe 'Accounts search' do
       end
 
       it 'displays no results' do
-        get '/accounts/search?id=not_user'
+        get('/accounts/search?id=not_user', headers:)
         expect(response).to have_http_status(:not_found)
       end
     end
