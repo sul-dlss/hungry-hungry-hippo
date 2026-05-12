@@ -145,7 +145,10 @@ RSpec.describe 'Edit a collection' do
     end
     expect(page).to have_no_text('Al Borland (alborland)')
 
-    fill_in('managers-textarea', with: 'stepking@stanford.edu')
+    # Why fully-qualified with angle brackets? So we test that the SUNet ID
+    # comes through without the domain and the surrounding brackets, which we
+    # have seen in production, likely from users copy/pasting.
+    fill_in('managers-textarea', with: '<stepking@stanford.edu>')
     click_link_or_button('Add Managers')
     expect(page).to have_css('.participant-label', text: 'Stephen King (stepking)')
 
