@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 import Dropzone from 'dropzone'
 
 export default class extends Controller {
-  static outlets = ['dropzone-files', 'tab-error', 'form-error']
+  static outlets = ['dropzone-files', 'tab-error', 'form-error', 'disableable']
   static targets = ['progress', 'error', 'folderAlert', 'folderAlertText']
   static values = {
     maxFilesize: Number,
@@ -34,6 +34,7 @@ export default class extends Controller {
       // Using processingmultiple instead of addedfiles for showing the progress bar
       // since addedfiles is triggered by dropping an empty directory.
       // This is not.
+      this.disableableOutlets.forEach(disableable => disableable.disable())
       this.progressTarget.classList.remove('d-none')
       // This shows the user that something is going on since there may be a paused before first progress.
       this.updateProgress(2)
@@ -60,6 +61,7 @@ export default class extends Controller {
       if (this.hasFormErrorOutlet) this.formErrorOutlet.changedFiles()
       // If ahoy is enabled, track the file upload completion.
       if (this.ahoyValue) { ahoy.track('files uploaded', { form_id: this.formIdValue }) } // eslint-disable-line no-undef
+      this.disableableOutlets.forEach(disableable => disableable.enable())
       this.element.dataset.dropzoneReady = true
     })
     this.dropzone.on('sendingmultiple', (files, xhr, data) => {
