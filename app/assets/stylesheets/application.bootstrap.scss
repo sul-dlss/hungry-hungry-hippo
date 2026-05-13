@@ -118,35 +118,6 @@ legend h3 {
 
 
 // Common to styled tables
-table.table-h3 {
-  caption {
-    padding: .25rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    line-height: 1.5;
-    color: var(--stanford-black);
-    caption-side: top;
-    border-bottom: 1px solid var(--stanford-black);
-  }
-
-  th {
-    font-size: 1.0rem;
-    font-weight: 600;
-    color: var(--stanford-black);
-  }
-
-  tr {
-    border-color: var(--stanford-30-black);
-  }
-
-  // used for item lists
-  .list-unstyled {
-    list-style: none;
-    margin-left: 0;
-    padding-left: 0;
-  }
-}
-
 table.table-treegrid {
   tr[aria-expanded] > td:first-child::before {
     cursor: pointer;

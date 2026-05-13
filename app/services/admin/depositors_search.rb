@@ -14,7 +14,7 @@ module Admin
 
     # @return [Array<Hash{Symbol => String, Array<String>}>] an array of key-value
     #   pairs corresponding to work DRUIDs and work depositor SUNet IDs, a data
-    #   structure used by, e.g., the `with_rows` slot of the `Elements::Tables::TableComponent`
+    #   structure used by, e.g., the `with_rows` slot of the `SdrViewComponents::Tables::TableComponent`
     def call
       druid_list.map { |druid| fetch_object(druid) }
                 .map do |object|

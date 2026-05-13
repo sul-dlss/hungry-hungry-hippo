@@ -21,7 +21,7 @@
 <%= render Works::Show::DepositingGithubComponent.new(work_presenter: @work_presenter) %>
 <%= render Works::Show::HeaderComponent.new(presenter: @work_presenter) %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'details-table', classes: 'mb-5') do |component| %>
+<%= render SdrViewComponents::Tables::TableComponent.new(id: 'details-table', classes: 'mb-5') do |component| %>
   <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Details') %><% end %>
   <% component.with_row(label: 'Public webpage', tooltip: t('collections.fields.sharing_link.tooltip_html'), values: [@work_presenter.purl_link]) %>
   <% component.with_row(label: 'DOI', tooltip: t('works.fields.doi_link.tooltip_html'), values: [@work_presenter.doi_value]) %>
@@ -55,7 +55,7 @@
   <%= render SdrViewComponents::Elements::SpinnerComponent.new %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'title-table', classes: 'mb-5') do |component| %>
+<%= render SdrViewComponents::Tables::TableComponent.new(id: 'title-table', classes: 'mb-5') do |component| %>
   <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Title and contact', presenter: @work_presenter, tab: :title) %><% end %>
   <% component.with_row(label: 'Title', values: [@work_presenter.title]) %>
   <% component.with_row(label: 'Contact emails', values: [@work_presenter.contact_emails]) %>
@@ -64,25 +64,25 @@
 <%= render Show::ContributorsShowComponent.new(contributors: @work_presenter.contributors, presenter: @work_presenter, label: 'Authors / Contributors') %>
 
 <% unless @work_presenter.github_repository? %>
-  <%= render Elements::Tables::TableComponent.new(id: 'dates-table', classes: 'mb-5') do |component| %>
+  <%= render SdrViewComponents::Tables::TableComponent.new(id: 'dates-table', classes: 'mb-5') do |component| %>
     <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Dates', presenter: @work_presenter, tab: :dates) %><% end %>
     <% component.with_row(label: 'Publication date', values: [@work_presenter.publication_date]) %>
     <% component.with_row(label: 'Creation date', values: [@work_presenter.creation_date]) %>
   <% end %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'citation-table', classes: 'mb-5') do |component| %>
+<%= render SdrViewComponents::Tables::TableComponent.new(id: 'citation-table', classes: 'mb-5') do |component| %>
   <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Citation', presenter: @work_presenter, tab: :citation) %><% end %>
   <% component.with_row(label: 'Preferred citation', values: [@work_presenter.citation]) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'description-table', classes: 'mb-5') do |component| %>
+<%= render SdrViewComponents::Tables::TableComponent.new(id: 'description-table', classes: 'mb-5') do |component| %>
   <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Abstract and keywords', presenter: @work_presenter, tab: :abstract) %><% end %>
   <% component.with_row(label: 'Abstract', values: [simple_format(@work_presenter.abstract).html_safe]) %> <%# erb_lint:disable ErbSafety %>
   <% component.with_row(label: 'Keywords', values: [@work_presenter.keywords]) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'work-type-table', classes: 'mb-5') do |component| %>
+<%= render SdrViewComponents::Tables::TableComponent.new(id: 'work-type-table', classes: 'mb-5') do |component| %>
   <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Type of deposit', presenter: @work_presenter, tab: :types) %><% end %>
   <% component.with_row(label: 'Deposit type', values: [@work_presenter.work_type]) %>
   <% component.with_row(label: 'Deposit subtypes', values: [@work_presenter.all_work_subtypes]) %>
@@ -91,13 +91,13 @@
 
 <%= render Works::Show::RelatedContentShowComponent.new(work_presenter: @work_presenter) %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'access-table', classes: 'mb-5') do |component| %>
+<%= render SdrViewComponents::Tables::TableComponent.new(id: 'access-table', classes: 'mb-5') do |component| %>
   <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Access settings', presenter: @work_presenter, tab: :access) %><% end %>
   <% component.with_row(label: 'Available', values: [@work_presenter.release_date_label]) %>
   <% component.with_row(label: 'Access', values: [@work_presenter.access_label]) %>
 <% end %>
 
-<%= render Elements::Tables::TableComponent.new(id: 'license-table', classes: 'mb-5') do |component| %>
+<%= render SdrViewComponents::Tables::TableComponent.new(id: 'license-table', classes: 'mb-5') do |component| %>
   <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'License and additional terms of use', presenter: @work_presenter, tab: :license) %><% end %>
   <% component.with_row(label: 'License', values: [@work_presenter.license_label]) %>
   <% component.with_row(label: 'Terms of use', values: [simple_format(@work_presenter.terms_of_use).html_safe]) %> <%# erb_lint:disable ErbSafety %>
