@@ -1,4 +1,4 @@
-<%= render Elements::Tables::TableComponent.new(id: 'content-table', label: 'Files', show_label: false) do |component| %>
+<%= render SdrViewComponents::Tables::TableComponent.new(id: 'content-table', label: 'Files', show_label: false) do |component| %>
     <%# These headers are duplicated in app/components/works/edit/content_hierarchy_component.html.erb %>
     <% component.with_headers([
                                 { label: 'File Name' },
