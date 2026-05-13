@@ -70,6 +70,10 @@ bin/setup
 
 Then browse to http://localhost:3000 to see the running application.
 
+#### Lookbook for SDR View Components
+
+When running locally, Lookbook is available at http://localhost:3000/lookbook
+
 #### Change default user role
 
 You can change your abilities within the app by setting the `ROLES` environment

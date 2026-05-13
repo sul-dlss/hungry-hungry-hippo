@@ -147,4 +147,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   root 'home#show'
 
   mount MissionControl::Jobs::Engine, at: '/jobs'
+  if Rails.env.development?
+    mount SdrViewComponents::Engine => '/sdr_view_components'
+    mount Lookbook::Engine, at: '/lookbook'
+  end
 end
