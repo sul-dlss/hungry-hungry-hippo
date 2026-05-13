@@ -15,27 +15,6 @@ $enable-smooth-scroll: false;
 @import "dropzone";
 
 
-
-// This is used on the collection show page
-.nav-underline {
-  border-bottom: 1px solid black;
-  margin-bottom: 10px;
-
-  .nav-link {
-    width: 10.5rem;
-  }
-
-  .nav-link:not(.active) {
-    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
-  }
-
-  .nav-link.active {
-    border-bottom: 3px solid #B1040E;
-    color: #B1040E;
-    font-weight: bold;
-  }
-}
-
 .required {
   @extend .fw-bold;
 

@@ -18,7 +18,7 @@
 <% end %>
 
 <% deposits_active = params[:tab] == 'deposits' %>
-<%= render Elements::Tabs::TabListComponent.new(classes: 'nav-underline mb-3') do |component| %>
+<%= render SdrViewComponents::Elements::Tabs::TabListComponent.new(classes: 'mb-3', variant: :underline) do |component| %>
   <% component.with_tab(id: 'details-tab', pane_id: 'details-pane', label: 'Collection information', active: !deposits_active) %>
   <% component.with_tab(id: 'deposits-tab', pane_id: 'deposits-pane', label: 'Deposits', active: deposits_active) %>
 
