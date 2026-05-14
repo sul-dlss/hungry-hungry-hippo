@@ -43,7 +43,7 @@ gem 'bootsnap', require: false
 gem 'action_policy'
 gem 'ahoy_matey' # Analytics
 gem 'bunny' # RabbitMQ client
-gem 'cocina-models'
+gem 'cocina-models', github: 'sul-dlss/cocina-models', branch: 'validate-unexpected-properties#1027'
 gem 'config'
 gem 'csv'
 gem 'datacite'
