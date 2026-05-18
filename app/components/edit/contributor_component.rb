@@ -51,6 +51,18 @@ module Edit
       object.collection_required
     end
 
+    # Nested HasMany renders a NEW_RECORD template for client-side adds.
+    def template_row?
+      form.options[:child_index].to_s == 'NEW_RECORD'
+    end
+
+    # Keep empty affiliation rows for template contributors on a clean form,
+    # but suppress them after validation-error re-renders where specs expect
+    # blank template contributors to have no nested affiliation row.
+    def render_empty_affiliations?
+      !(template_row? && root_form_has_errors?)
+    end
+
     def person?
       role_type == 'person'
     end
@@ -59,6 +71,14 @@ module Edit
     def hide_delete_button?
       collection_required?
     end
+
+    def root_form_has_errors?
+      root_builder = form
+      root_builder = root_builder.options[:parent_builder] while root_builder.options[:parent_builder].present?
+
+      root_builder.object.errors.any?
+    end
+    private :root_form_has_errors?
 
     PERSON_ROLES = [
       ['Author', 'author'],

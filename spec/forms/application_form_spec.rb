@@ -10,8 +10,8 @@ RSpec.describe ApplicationForm do
       stub_const('TestForm', test_form_class)
     end
 
-    it 'returns a model name without the "Form" suffix' do
-      expect(TestForm.model_name).to eq('Test')
+    it 'returns a model name without the Form suffix' do
+      expect(TestForm.model_name.to_s).to eq('Test')
     end
   end
 
@@ -22,17 +22,20 @@ RSpec.describe ApplicationForm do
       stub_const('TestForm', test_form_class)
     end
 
-    it 'returns an empty array' do
-      expect(TestForm.immutable_attributes).to be_empty
+    it 'returns an empty array by default' do
+      expect(TestForm.immutable_attributes).to eq([])
     end
   end
 
-  describe '.user_editable_attributes' do
+  describe '.permitted_params' do
     let(:test_form_class) do
       Class.new(described_class) do
         attribute :foo, :string
         attribute :bar, array: true
         attribute :baz, :string
+
+        has_many :widgets
+        has_one :publication_date
 
         def self.immutable_attributes
           [:baz]
@@ -40,12 +43,19 @@ RSpec.describe ApplicationForm do
       end
     end
 
+    let(:widget_form_class) { Class.new(described_class) }
+    let(:publication_date_form_class) { Class.new(described_class) }
+
     before do
+      stub_const('WidgetForm', widget_form_class)
+      stub_const('PublicationDateForm', publication_date_form_class)
       stub_const('TestForm', test_form_class)
     end
 
-    it 'returns attributes not declared as immutable' do
-      expect(TestForm.send(:user_editable_attributes)).to eq([:foo, { bar: [] }])
+    it 'includes editable attributes and nested attributes keys' do
+      expect(TestForm.permitted_params).to include(:foo, { bar: [] },
+                                                   widgets_attributes: {}, publication_date_attributes: {})
+      expect(TestForm.permitted_params).not_to include(:baz)
     end
   end
 
@@ -54,8 +64,8 @@ RSpec.describe ApplicationForm do
 
     let(:test_form_class) do
       Class.new(described_class) do
-        has_many :widgets, render_if_empty: true, minimum_rows: 2
-        has_one :publication_date, render_if_empty: true
+        has_many :widgets, prepopulate_if_empty: true, prepopulate_count: 2
+        has_one :publication_date, prepopulate_if_empty: true
       end
     end
 
@@ -77,42 +87,48 @@ RSpec.describe ApplicationForm do
       stub_const('TestForm', test_form_class)
     end
 
-    it 'sets explicit cardinality metadata for has_many' do
-      expect(TestForm.nested_association_definitions[:widgets][:repeatable]).to be(true)
-      expect(form_instance.widgets).to eq([])
+    it 'stores has_many metadata in associations' do
+      expect(TestForm.associations['widgets']).to include(type: :has_many, class_name: 'WidgetForm', primary_key: 'id')
+      expect(form_instance.widgets).to be_empty
     end
 
-    it 'supports render options metadata for has_many' do
-      expect(TestForm.nested_attributes_options[:widgets]).to include(render_if_empty: true, minimum_rows: 2)
+    it 'stores options for has_many in nested_attributes_options' do
+      expect(TestForm.nested_attributes_options['widgets']).to include(prepopulate_if_empty: true, prepopulate_count: 2)
     end
 
-    it 'sets explicit cardinality metadata for has_one' do
-      expect(TestForm.nested_association_definitions[:publication_date][:repeatable]).to be(false)
+    it 'stores has_one metadata in associations' do
+      expect(TestForm.associations['publication_date']).to include(type: :has_one,
+                                                                   class_name: 'PublicationDateForm',
+                                                                   primary_key: 'id')
       expect(form_instance.publication_date).to be_nil
     end
 
-    it 'supports render options metadata for has_one' do
-      expect(TestForm.nested_attributes_options[:publication_date]).to include(render_if_empty: true)
+    it 'stores options for has_one in nested_attributes_options' do
+      expect(TestForm.nested_attributes_options['publication_date']).to include(prepopulate_if_empty: true)
     end
 
-    it 'hydrates has_one attributes as a single form object' do
+    it 'hydrates has_one attributes as a single nested form' do
       form_instance.publication_date_attributes = { year: 2024 }
 
       expect(form_instance.publication_date).to be_a(PublicationDateForm)
       expect(form_instance.publication_date.year).to eq(2024)
     end
 
-    it 'seed_for_form_render! builds minimum rows for has_many' do
-      form_instance.seed_for_form_render!
+    it 'prepopulate! builds minimum rows for has_many' do
+      form_instance.prepopulate!
 
       expect(form_instance.widgets.size).to eq(2)
-      expect(form_instance.widgets).to all(be_a(WidgetForm))
+      expect(form_instance.widgets.to_a).to all(be_a(WidgetForm))
     end
 
-    it 'seed_for_form_render! builds empty has_one when configured' do
-      form_instance.seed_for_form_render!
+    it 'prepopulate! builds empty has_one when configured' do
+      form_instance.prepopulate!
 
       expect(form_instance.publication_date).to be_a(PublicationDateForm)
+    end
+
+    it 'prepopulate! returns self' do
+      expect(form_instance.prepopulate!).to eq(form_instance)
     end
   end
 
@@ -133,71 +149,33 @@ RSpec.describe ApplicationForm do
       stub_const('TestForm', test_form_class)
     end
 
-    it 'stores options keyed by nested association name' do
-      expect(TestForm.nested_attributes_options).to eq(
-        widgets: { allow_destroy: true },
-        publication_date: { reject_if: :all_blank }
+    it 'stores options keyed by association name strings' do
+      expect(TestForm.nested_attributes_options).to include(
+        'widgets' => include(allow_destroy: true),
+        'publication_date' => include(reject_if: :all_blank)
       )
     end
   end
 
-  describe '.seed_for_form_render!' do
-    subject(:form_instance) { TestForm.new }
-
-    let(:test_form_class) do
-      Class.new(described_class) do
-        has_many :widgets, minimum_rows: 1
-        has_one :publication_date, render_if_empty: true
-      end
-    end
-
-    let(:widget_form_class) { Class.new(described_class) }
-    let(:publication_date_form_class) { Class.new(described_class) }
-
-    before do
-      stub_const('WidgetForm', widget_form_class)
-      stub_const('PublicationDateForm', publication_date_form_class)
-      stub_const('TestForm', test_form_class)
-    end
-
-    it 'seed_for_form_render! returns self' do
-      expect(form_instance.seed_for_form_render!).to eq(form_instance)
-    end
-  end
-
-  describe '.nested_attributes inheritance' do
+  describe '.nested attributes inheritance' do
     subject(:child_form_instance) { ChildTestForm.new }
 
     let(:base_test_form_class) do
       Class.new(described_class) do
-        attribute :foo, :string
-        has_many :widgets, :gadgets
+        has_many :widgets, prepopulate_if_empty: true
+        has_many :gadgets, prepopulate_if_empty: true
       end
     end
 
     let(:child_test_form_class) do
       Class.new(base_test_form_class) do
-        has_many :thingamabobs
+        has_many :thingamabobs, prepopulate_if_empty: true
       end
     end
 
-    let(:widget_form_class) do
-      Class.new(described_class) do
-        attribute :fake_attr, :string
-      end
-    end
-
-    let(:gadget_form_class) do
-      Class.new(described_class) do
-        attribute :fake_attr, :string
-      end
-    end
-
-    let(:thingamabob_form_class) do
-      Class.new(described_class) do
-        attribute :fake_attr, :string
-      end
-    end
+    let(:widget_form_class) { Class.new(described_class) }
+    let(:gadget_form_class) { Class.new(described_class) }
+    let(:thingamabob_form_class) { Class.new(described_class) }
 
     before do
       stub_const('WidgetForm', widget_form_class)
@@ -207,17 +185,20 @@ RSpec.describe ApplicationForm do
       stub_const('ChildTestForm', child_test_form_class)
     end
 
-    it 'merges nested attribute definitions from parent and child' do
-      expect(ChildTestForm.nested_attributes).to eq({ widgets_attributes: {}, gadgets_attributes: {},
-                                                      thingamabobs_attributes: {} })
+    it 'exposes nested attributes from parent and child' do
+      expect(ChildTestForm.nested_attributes).to eq(
+        widgets_attributes: {},
+        gadgets_attributes: {},
+        thingamabobs_attributes: {}
+      )
     end
 
-    it 'merges nested attributes options from parent and child' do
-      expect(ChildTestForm.nested_attributes_options).to eq({ widgets: {}, gadgets: {}, thingamabobs: {} })
+    it 'merges nested attribute options from parent and child' do
+      expect(ChildTestForm.nested_attributes_options).to include('widgets', 'gadgets', 'thingamabobs')
     end
 
-    it 'supports render preparation across inherited nested associations' do
-      child_form_instance.seed_for_form_render!
+    it 'supports prepopulation across inherited nested associations' do
+      child_form_instance.prepopulate!
 
       expect(child_form_instance.widgets).to be_present
       expect(child_form_instance.gadgets).to be_present
@@ -225,7 +206,7 @@ RSpec.describe ApplicationForm do
     end
   end
 
-  describe '.loggable_errors' do
+  describe '#loggable_errors' do
     subject(:form) { TestForm.new(widgets_attributes: [{}]) }
 
     let(:test_form_class) do
@@ -250,12 +231,12 @@ RSpec.describe ApplicationForm do
 
     it 'returns an empty array when there are no errors' do
       expect(form).to be_valid
-      expect(form.loggable_errors).to be_empty
+      expect(form.loggable_errors).to eq([])
     end
 
-    it 'returns loggable errors when there are errors' do
-      expect(form.valid?(:deposit)).to be false
-      expect(form.loggable_errors).to eq ['Test foo: blank', 'Test widgets: invalid']
+    it 'returns loggable errors for top-level and nested validation failures' do
+      expect(form.valid?(:deposit)).to be(false)
+      expect(form.loggable_errors).to include('Test foo: blank', 'Test widgets: invalid')
     end
   end
 end

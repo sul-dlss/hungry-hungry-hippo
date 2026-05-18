@@ -28,7 +28,8 @@ module WorkMappingFixtures
       create_date_type: 'range',
       whats_changing: 'Initial version',
       works_contact_email: works_contact_email_fixture,
-      creation_date: creation_date_fixture
+      creation_date: creation_date_fixture,
+      form_id: form_id_fixture
     )
   end
 

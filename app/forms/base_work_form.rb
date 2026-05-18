@@ -4,6 +4,8 @@
 # All attributes should be added here (instead of subclasses) so that mappers
 # don't need to know about subclasses.
 class BaseWorkForm < ApplicationForm # rubocop:disable Metrics/ClassLength
+  model_name_for :work
+
   STANFORD_UNIVERSITY = 'Stanford University'
   ARTICLE_VERSION_IDENTIFICATION_OPTIONS = [
     'Author submitted version',
@@ -11,19 +13,27 @@ class BaseWorkForm < ApplicationForm # rubocop:disable Metrics/ClassLength
     'Final published version of the work'
   ].freeze
 
-  has_many :related_works, minimum_rows: 1, render_if_empty: true
-  has_many :contact_emails, :contributors, :keywords
-  has_one :publication_date, :create_date_single, :create_date_range_from, :create_date_range_to, render_if_empty: true
+  has_many :related_works, prepopulate_count: 1, prepopulate_if_empty: true
+  has_many :contact_emails
+  has_many :contributors, prepopulate_count: 1, prepopulate_if_empty: true
+  has_many :keywords, prepopulate_count: 1, prepopulate_if_empty: true
+  has_one :publication_date, prepopulate_if_empty: true
+  has_one :create_date_single, prepopulate_if_empty: true
+  has_one :create_date_range_from, prepopulate_if_empty: true
+  has_one :create_date_range_to, prepopulate_if_empty: true
 
   # At least one contributor is required.
   before_validation do
-    blank_contributors = contributors.select(&:empty?)
-    next if blank_contributors.empty? || blank_contributors.length == contributors.length
+    non_blank_contributors = contributors.reject(&:empty?)
+    next if non_blank_contributors.empty? || non_blank_contributors.length == contributors.length
 
-    self.contributors = contributors - blank_contributors
+    contributors.clear
+    non_blank_contributors.each { |contributor| contributors << contributor }
   end
 
-  with_options if: -> { create_date_type == 'range' && create_date_range_from.valid? && create_date_range_to.valid? } do
+  with_options if: lambda {
+                     create_date_type == 'range' && create_date_range_from&.valid? && create_date_range_to&.valid?
+                   } do
     validate :create_date_range_complete
     validate :create_date_range_sequence
   end
@@ -34,10 +44,6 @@ class BaseWorkForm < ApplicationForm # rubocop:disable Metrics/ClassLength
 
   attribute :druid, :string
   alias id druid
-
-  def persisted?
-    druid.present?
-  end
 
   attribute :collection_druid, :string
 
@@ -53,6 +59,7 @@ class BaseWorkForm < ApplicationForm # rubocop:disable Metrics/ClassLength
   validates :title, presence: { message: I18n.t('work_form.fields.title.validations.blank') }
 
   attribute :abstract, :string
+  normalizes :abstract, with: ->(value) { LinebreakSupport.normalize(value) }
   validates :abstract,
             length: {
               maximum: Settings.abstract_maximum_length,
@@ -60,18 +67,13 @@ class BaseWorkForm < ApplicationForm # rubocop:disable Metrics/ClassLength
                 I18n.t('work_form.fields.abstract.validations.too_long', count: data[:count])
               end
             }
-  before_validation do
-    self.abstract = LinebreakSupport.normalize(abstract)
-  end
 
   attribute :citation, :string
 
   attribute :license, :string
 
   attribute :work_type, :string
-  before_validation do
-    self.work_type = work_type.presence
-  end
+  normalizes :work_type, with: ->(value) { value.presence }
 
   attribute :work_subtypes, array: true, default: -> { [] }
   before_validation { work_subtypes.compact_blank! }
@@ -128,9 +130,7 @@ class BaseWorkForm < ApplicationForm # rubocop:disable Metrics/ClassLength
   attribute :max_release_date, :date
 
   attribute :custom_rights_statement, :string
-  before_validation do
-    self.custom_rights_statement = LinebreakSupport.normalize(custom_rights_statement)
-  end
+  normalizes :custom_rights_statement, with: ->(value) { LinebreakSupport.normalize(value) }
 
   attribute :doi_option, :string, default: 'yes'
   validates :doi_option,
@@ -156,9 +156,12 @@ class BaseWorkForm < ApplicationForm # rubocop:disable Metrics/ClassLength
   before_validation do
     if create_date_type == 'range'
       self.create_date_single = DateForm.new
+      self.create_date_range_from ||= DateForm.new
+      self.create_date_range_to ||= DateForm.new
     else
       self.create_date_range_from = DateForm.new
       self.create_date_range_to = DateForm.new
+      self.create_date_single ||= DateForm.new
     end
   end
 
@@ -217,9 +220,5 @@ class BaseWorkForm < ApplicationForm # rubocop:disable Metrics/ClassLength
     return if contributors.any? { |contributor| !contributor.empty? }
 
     errors.add(:contributors, I18n.t('work_form.fields.contributors.validations.minimum'))
-  end
-
-  def locales_key
-    'work_form'
   end
 end

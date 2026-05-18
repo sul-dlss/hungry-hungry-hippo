@@ -8,7 +8,15 @@ class ApplicationSerializer < ActiveJob::Serializers::ObjectSerializer
   end
 
   def serialize(model)
-    super(model.serializable_hash)
+    payload = if model.respond_to?(:serializable_hash)
+                model.serializable_hash
+              elsif model.respond_to?(:attributes)
+                model.attributes
+              else
+                raise TypeError, "Cannot serialize #{model.class}: expected serializable_hash or attributes"
+              end
+
+    super(payload)
   end
 
   def deserialize(hash)

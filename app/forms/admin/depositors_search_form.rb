@@ -3,20 +3,18 @@
 module Admin
   # Admin form object for searching for depositor information
   class DepositorsSearchForm < ApplicationForm
-    before_validation :normalize_druids
     attribute :druids, :string
+    normalizes :druids, with: lambda { |value|
+      value.split(/\s+/).uniq.filter_map do |druid|
+        next if druid.blank?
+
+        druid.starts_with?('druid:') ? druid : "druid:#{druid}"
+      end.join(' ')
+    }
     validate :works_or_collections_present
 
     def druid_list
       druids.split(/\s+/)
-    end
-
-    def normalize_druids
-      self.druids = druid_list.uniq.filter_map do |druid|
-        next if druid.blank?
-
-        druid.starts_with?('druid:') ? druid : druid.prepend('druid:')
-      end.join(' ')
     end
 
     def works_or_collections_present

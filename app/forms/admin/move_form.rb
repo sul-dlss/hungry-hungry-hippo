@@ -3,8 +3,12 @@
 module Admin
   # Admin form object for moving a work to a different collection.
   class MoveForm < ApplicationForm
-    before_validation :normalize_druid
     attribute :collection_druid, :string
+    normalizes :collection_druid, with: lambda { |value|
+      next value if value.blank? || value.starts_with?('druid:')
+
+      "druid:#{value}"
+    }
     validates_with Admin::MoveFormValidator
 
     attribute :content_id, :integer
@@ -14,12 +18,6 @@ module Admin
       return @collection if defined?(@collection)
 
       @collection = Collection.find_by(druid: collection_druid)
-    end
-
-    def normalize_druid
-      return if collection_druid.starts_with?('druid:') || collection_druid.blank?
-
-      self.collection_druid = collection_druid.prepend('druid:')
     end
   end
 end
