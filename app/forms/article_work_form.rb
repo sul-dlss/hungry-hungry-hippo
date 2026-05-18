@@ -25,9 +25,4 @@ class ArticleWorkForm < BaseWorkForm
   validates :article_version_identification,
             presence: { message: I18n.t('validations.fields.version_identification.required') },
             on: :deposit
-
-  # This is necessary for proper routing based on Work subclasses.
-  def self.model_name
-    ActiveModel::Name.new(self, nil, 'Work')
-  end
 end

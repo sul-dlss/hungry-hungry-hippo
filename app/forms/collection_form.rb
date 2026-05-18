@@ -2,13 +2,19 @@
 
 # Form for a Collection
 class CollectionForm < ApplicationForm
-  has_many :related_links, :contact_emails, :managers, :depositors, :reviewers, :contributors
+  has_many :related_links, prepopulate_if_empty: true
+  has_many :contact_emails
+  has_many :managers
+  has_many :depositors
+  has_many :reviewers
+  has_many :contributors, prepopulate_count: 1, prepopulate_if_empty: true
 
   before_validation do
-    blank_managers = managers.select(&:empty?)
-    next if blank_managers.empty?
+    non_blank_managers = managers.reject(&:empty?)
+    next if non_blank_managers.length == managers.length
 
-    self.managers = managers - blank_managers
+    managers.clear
+    non_blank_managers.each { |manager| managers << manager }
   end
   validates :managers,
             length: {
@@ -17,10 +23,11 @@ class CollectionForm < ApplicationForm
             }
 
   before_validation do
-    blank_reviewers = reviewers.select(&:empty?)
-    next if blank_reviewers.empty?
+    non_blank_reviewers = reviewers.reject(&:empty?)
+    next if non_blank_reviewers.length == reviewers.length
 
-    self.reviewers = reviewers - blank_reviewers
+    reviewers.clear
+    non_blank_reviewers.each { |reviewer| reviewers << reviewer }
   end
 
   before_validation if: :review_enabled do
@@ -28,7 +35,7 @@ class CollectionForm < ApplicationForm
 
     # if the review workflow is on and there are not currently any reviewers added by the user,
     # any managers will be added as reviewers, see https://github.com/sul-dlss/hungry-hungry-hippo/issues/1710
-    self.reviewers = managers.map { |manager| ReviewerForm.new(sunetid: manager.sunetid, name: manager.name) }
+    managers.each { |manager| reviewers.build(sunetid: manager.sunetid, name: manager.name) }
   end
 
   validates :reviewers,
@@ -39,10 +46,11 @@ class CollectionForm < ApplicationForm
             if: -> { review_enabled }
 
   before_validation do
-    blank_contributors = contributors.select(&:empty?)
-    next if blank_contributors.empty?
+    non_blank_contributors = contributors.reject(&:empty?)
+    next if non_blank_contributors.length == contributors.length
 
-    self.contributors = contributors - blank_contributors
+    contributors.clear
+    non_blank_contributors.each { |contributor| contributors << contributor }
   end
 
   def self.immutable_attributes
@@ -51,10 +59,6 @@ class CollectionForm < ApplicationForm
 
   attribute :druid, :string
   alias id druid
-
-  def persisted?
-    druid.present?
-  end
 
   attribute :lock, :string
 
@@ -99,16 +103,15 @@ class CollectionForm < ApplicationForm
             }
 
   attribute :provided_custom_rights_statement, :string
+  normalizes :provided_custom_rights_statement, with: ->(value) { LinebreakSupport.normalize(value) }
   validates :provided_custom_rights_statement,
             presence: {
               message: I18n.t('collection_form.fields.provided_custom_rights_statement.validations.blank')
             },
             if: -> { custom_rights_statement_option == 'provided' }
-  before_validation do
-    self.provided_custom_rights_statement = LinebreakSupport.normalize(provided_custom_rights_statement)
-  end
 
   attribute :custom_rights_statement_instructions, :string
+  normalizes :custom_rights_statement_instructions, with: ->(value) { LinebreakSupport.normalize(value) }
   validates :custom_rights_statement_instructions,
             presence: {
               message: I18n.t('collection_form.fields.custom_rights_statement_instructions.validations.blank')
@@ -116,9 +119,6 @@ class CollectionForm < ApplicationForm
             if: lambda {
               custom_rights_statement_option == 'depositor_selects'
             }
-  before_validation do
-    self.custom_rights_statement_instructions = LinebreakSupport.normalize(custom_rights_statement_instructions)
-  end
 
   attribute :release_option, :string, default: 'immediate'
   validates :release_option,
@@ -147,9 +147,7 @@ class CollectionForm < ApplicationForm
   attribute :email_depositors_status_changed, :boolean, default: true
 
   attribute :work_type, :string
-  before_validation do
-    self.work_type = work_type.presence
-  end
+  normalizes :work_type, with: ->(value) { value.presence }
 
   attribute :work_subtypes, array: true, default: -> { [] }
   before_validation { work_subtypes.compact_blank! }

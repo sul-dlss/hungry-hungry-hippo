@@ -99,6 +99,9 @@ GEM
       smart_properties
     bigdecimal (4.1.2)
     bindex (0.8.1)
+    blanks (1.0.0)
+      activemodel (>= 6.0)
+      activesupport (>= 6.0)
     bootsnap (1.24.3)
       msgpack (~> 1.2)
     builder (3.3.0)
@@ -736,6 +739,7 @@ DEPENDENCIES
   action_policy
   ahoy_matey
   bcrypt (~> 3.1.7)
+  blanks
   bootsnap
   bunny
   capistrano-maintenance (~> 1.2)

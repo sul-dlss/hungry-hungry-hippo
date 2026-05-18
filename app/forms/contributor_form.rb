@@ -2,13 +2,14 @@
 
 # Form for a contributor
 class ContributorForm < ApplicationForm
-  has_many :affiliations
+  has_many :affiliations, prepopulate_count: 1, prepopulate_if_empty: true
 
   before_validation do
-    blank_affiliations = affiliations.select(&:empty?)
-    next if blank_affiliations.empty?
+    non_blank_affiliations = affiliations.reject(&:empty?)
+    next if non_blank_affiliations.length == affiliations.length
 
-    self.affiliations = affiliations - blank_affiliations
+    affiliations.clear
+    non_blank_affiliations.each { |affiliation| affiliations << affiliation }
   end
 
   attribute :first_name, :string
@@ -78,6 +79,15 @@ class ContributorForm < ApplicationForm
 
   def with_orcid?
     with_orcid
+  end
+
+  def prepopulate!
+    super
+    return self if empty?
+    return self unless affiliations.to_a.all?(&:empty?)
+
+    affiliations.clear
+    self
   end
 
   def empty?

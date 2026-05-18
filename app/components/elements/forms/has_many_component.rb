@@ -38,6 +38,9 @@ module Elements
         @label_text = label_text
         @tooltip = tooltip
         @mark_required = mark_required
+
+        @form.object.prepopulate! if @form.object.respond_to?(:prepopulate!)
+
         super()
       end
 
@@ -133,7 +136,7 @@ module Elements
 
       def template_model
         model_class.new.tap do |form_instance|
-          form_instance.seed_for_form_render! if form_instance.respond_to?(:seed_for_form_render!)
+          form_instance.prepopulate! if form_instance.respond_to?(:prepopulate!)
         end
       end
 

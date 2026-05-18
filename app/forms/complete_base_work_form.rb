@@ -6,10 +6,11 @@ class CompleteBaseWorkForm < BaseWorkForm
   validate :contributor_presence, on: :deposit
 
   before_validation do
-    blank_keywords = keywords.select(&:empty?)
-    next if blank_keywords.empty? || blank_keywords.length == keywords.length
+    non_blank_keywords = keywords.reject(&:empty?)
+    next if non_blank_keywords.empty? || non_blank_keywords.length == keywords.length
 
-    self.keywords = keywords - blank_keywords
+    keywords.clear
+    non_blank_keywords.each { |keyword| keywords << keyword }
   end
 
   before_validation do
@@ -17,7 +18,9 @@ class CompleteBaseWorkForm < BaseWorkForm
     next if blank_contact_emails.empty?
     next if blank_contact_emails.length == contact_emails.length && works_contact_email.blank?
 
-    self.contact_emails = (contact_emails - blank_contact_emails)
+    non_blank_contact_emails = contact_emails.reject(&:empty?)
+    contact_emails.clear
+    non_blank_contact_emails.each { |contact_email| contact_emails << contact_email }
   end
 
   validates :abstract,

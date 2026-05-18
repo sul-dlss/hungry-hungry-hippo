@@ -42,6 +42,7 @@ gem 'bootsnap', require: false
 # Additional gems
 gem 'action_policy'
 gem 'ahoy_matey' # Analytics
+gem 'blanks' # ActiveModel forms with validation, nesting, and other smarts
 gem 'bunny' # RabbitMQ client
 gem 'cocina-models'
 gem 'config'

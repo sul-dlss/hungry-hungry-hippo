@@ -10,7 +10,7 @@ RSpec.describe Elements::Forms::HasManyComponent, type: :component do
   end
 
   let(:field_name) { :related_works }
-  let(:form) { WorkForm.new.seed_for_form_render! }
+  let(:form) { WorkForm.new }
   let(:form_component) { RelatedWorks::EditComponent }
   let(:model_class) { RelatedWorkForm }
   let(:hidden_label) { false }
@@ -22,7 +22,7 @@ RSpec.describe Elements::Forms::HasManyComponent, type: :component do
 
   context 'when rendering the default component' do
     let(:field_name) { :related_links }
-    let(:form) { CollectionForm.new.seed_for_form_render! }
+    let(:form) { CollectionForm.new }
     let(:form_component) { RelatedLinks::EditComponent }
     let(:model_class) { RelatedLinkForm }
 
@@ -60,7 +60,6 @@ RSpec.describe Elements::Forms::HasManyComponent, type: :component do
     let(:field_name) { :contact_emails }
     let(:form) do
       WorkForm.new(contact_emails_attributes: contact_emails_fixture)
-              .seed_for_form_render!
     end
     let(:form_component) { Works::Edit::ContactEmailsComponent }
     let(:model_class) { ContactEmailForm }
@@ -89,7 +88,7 @@ RSpec.describe Elements::Forms::HasManyComponent, type: :component do
                        'suborganization_name' => nil,
                        'collection_required' => true
                      }
-                   ]).seed_for_form_render!
+                   ])
     end
     let(:form_component) { Edit::ContributorComponent }
     let(:model_class) { ContributorForm }
@@ -109,7 +108,7 @@ RSpec.describe Elements::Forms::HasManyComponent, type: :component do
                              'sunetid' => 'jstanford',
                              'name' => 'Jane Stanford'
                            }
-                         ]).seed_for_form_render!
+                         ])
     end
     let(:form_component) { Collections::Edit::ParticipantComponent }
     let(:model_class) { ParticipantForm }
