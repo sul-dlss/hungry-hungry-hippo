@@ -54,6 +54,9 @@ RSpec.describe 'Edit a collection' do
       .with(id: 'stepking')
       .and_return(AccountService::Account.new(name: 'Stephen King', sunetid: 'stepking'))
     allow(AccountService).to receive(:call)
+      .with(id: 'alborland')
+      .and_return(AccountService::Account.new(name: 'Al Borland', sunetid: 'alborland'))
+    allow(AccountService).to receive(:call)
       .with(id: 'joehill')
       .and_return(AccountService::Account.new(name: 'Joe Hill', sunetid: 'joehill'))
 
@@ -151,6 +154,12 @@ RSpec.describe 'Edit a collection' do
     fill_in('managers-textarea', with: '<stepking@stanford.edu>')
     click_link_or_button('Add Managers')
     expect(page).to have_css('.participant-label', text: 'Stephen King (stepking)')
+
+    # A trailing no-break space should be treated like other whitespace and
+    # not become part of the SUNet ID.
+    fill_in('managers-textarea', with: "alborland\u00A0")
+    click_link_or_button('Add Managers')
+    expect(page).to have_css('.participant-label', text: 'Al Borland (alborland)')
 
     # Fill in the depositor form
     fill_in('depositors-textarea', with: 'joehill')
