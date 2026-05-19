@@ -90,7 +90,8 @@ class ArticlesController < ApplicationController
                    Ahoy::Event::IDENTIFIER_LOOKUP_SUCCESS
                  end
 
-    ahoy.track event_type, identifier: @article_form.identifier, identifier_type:
+    ahoy.track event_type, **{ identifier: @article_form.identifier, identifier_type:,
+                               abstract: @article_work_form&.abstract.present? }.compact
   end
 
   def article_form_params
