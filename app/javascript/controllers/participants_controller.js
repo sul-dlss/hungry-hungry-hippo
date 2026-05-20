@@ -11,7 +11,8 @@ export default class extends Controller {
     if (this.inputTarget.value === '') return
 
     this.invalidFeedbackContainerTarget.innerHTML = ''
-    const ids = this.inputTarget.value.split(/[,;| ]+|\n/)
+    // Split on comma, semicolon, pipe, or whitespace (including any no-break spaces), and remove leading/trailing empty strings
+    const ids = this.inputTarget.value.split(/[,;|\s]+/).filter(Boolean)
     await Promise.all(ids.map(id => this.lookupId(id)))
       .then((errorIds) => {
         this.inputTarget.value = ''
