@@ -11,8 +11,9 @@ module Works
         super()
       end
 
+      # only render if the work is pending review and the current user is the depositor
       def render?
-        work_presenter.pending_review?
+        work_presenter.pending_review? && work_presenter.user == Current.user
       end
     end
   end
