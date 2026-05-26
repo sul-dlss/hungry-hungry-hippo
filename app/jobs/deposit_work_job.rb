@@ -162,7 +162,8 @@ class DepositWorkJob < ApplicationJob # rubocop:disable Metrics/ClassLength
   end
 
   def authorized_reviewer?
-    work.collection.reviewers.exists?(Current.user.id) || work.collection.managers.exists?(Current.user.id)
+    work.user_id == Current.user.id || work.collection.reviewers.exists?(Current.user.id) ||
+      work.collection.managers.exists?(Current.user.id)
   end
 
   def update_last_deposited_at!
