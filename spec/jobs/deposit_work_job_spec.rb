@@ -482,6 +482,67 @@ RSpec.describe DepositWorkJob do
     end
   end
 
+  context 'when review is pending and a reviewer deposits' do
+    let(:druid) { druid_fixture }
+    let(:cocina_object) { dro_with_metadata_fixture }
+    let(:work_form) { WorkForm.new(druid:, content_id: content.id, lock: lock_fixture) }
+    let(:work) do
+      create(:work, :registering_or_updating, druid:, collection:, review_state: 'pending_review')
+    end
+    let(:version_status) { build(:draft_version_status) }
+    let(:collection) { create(:collection, druid: collection_druid_fixture, reviewers: [current_user]) }
+
+    before do
+      allow(Sdr::Repository).to receive(:status).and_return(version_status)
+      allow(Cocina::WorkMapper).to receive(:call).and_return(cocina_object)
+      allow(RoundtripSupport).to receive(:changed?).and_return(false)
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:find_latest_user_version).with(druid:).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:update)
+    end
+
+    it 'approves the work and deposits' do
+      expect(work.pending_review?).to be true
+
+      described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:, ahoy_visit:)
+
+      expect(work.review_not_in_progress?).to be true
+      expect(Sdr::Repository).to have_received(:accession)
+      expect(Sdr::Repository).to have_received(:update)
+    end
+  end
+
+  context 'when review is pending and a non-reviewer deposits' do
+    let(:druid) { druid_fixture }
+    let(:cocina_object) { dro_with_metadata_fixture }
+    let(:work_form) { WorkForm.new(druid:, content_id: content.id, lock: lock_fixture) }
+    let(:collection) { create(:collection, druid: collection_druid_fixture) }
+    let(:work) do
+      create(:work, :registering_or_updating, druid:, collection:, review_state: 'pending_review')
+    end
+    let(:version_status) { build(:draft_version_status) }
+
+    before do
+      allow(Sdr::Repository).to receive(:status).and_return(version_status)
+      allow(Cocina::WorkMapper).to receive(:call).and_return(cocina_object)
+      allow(RoundtripSupport).to receive(:changed?).and_return(false)
+      allow(Sdr::Repository).to receive(:find).with(druid:).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:find_latest_user_version).with(druid:).and_return(cocina_object)
+      allow(Sdr::Repository).to receive(:update)
+    end
+
+    it 'returns without approving the work' do
+      expect(work.pending_review?).to be true
+
+      expect do
+        described_class.perform_now(work_form:, work:, deposit: true, request_review: false, current_user:, ahoy_visit:)
+      end.not_to raise_error
+
+      expect(work.reload.pending_review?).to be true
+      expect(Sdr::Repository).to have_received(:accession)
+    end
+  end
+
   context 'when a stale lock' do
     let(:work) { create(:work, :registering_or_updating, druid:) }
     let(:work_form) do

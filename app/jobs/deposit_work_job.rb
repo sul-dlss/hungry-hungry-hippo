@@ -147,6 +147,7 @@ class DepositWorkJob < ApplicationJob # rubocop:disable Metrics/ClassLength
   def accession_or_persist_complete(druid:) # rubocop:disable Metrics/AbcSize
     if accession?
       validate_datacite
+      work.approve! if work.pending_review? && authorized_reviewer?
       work.accession!
       Sdr::Repository.accession(druid:, new_user_version: new_user_version?,
                                 version_description: work_form.whats_changing)
@@ -158,6 +159,11 @@ class DepositWorkJob < ApplicationJob # rubocop:disable Metrics/ClassLength
     else
       work.deposit_persist_complete!
     end
+  end
+
+  def authorized_reviewer?
+    work.user_id == Current.user.id || work.collection.reviewers.exists?(Current.user.id) ||
+      work.collection.managers.exists?(Current.user.id)
   end
 
   def update_last_deposited_at!

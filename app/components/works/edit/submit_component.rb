@@ -25,7 +25,9 @@ module Works
       end
 
       def label
-        if review?
+        if approve_and_deposit?
+          'Approve and deposit'
+        elsif review?
           'Submit for review'
         else
           deposit_label
@@ -42,6 +44,10 @@ module Works
 
       def review_permissions?
         @review_permissions ||= helpers.allowed_to?(:review?, collection)
+      end
+
+      def approve_and_deposit?
+        work&.pending_review? && review_permissions?
       end
 
       def deposit_permissions?

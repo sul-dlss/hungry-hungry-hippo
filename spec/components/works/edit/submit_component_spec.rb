@@ -55,6 +55,21 @@ RSpec.describe Works::Edit::SubmitComponent, type: :component do
     end
   end
 
+  context 'when user is reviewer and work is pending review' do
+    let(:work) { create(:work, :registering_or_updating, user:, collection:, review_state: 'pending_review') }
+
+    before do
+      allow(vc_test_controller).to receive(:current_user).and_return(reviewer)
+      allow(Current).to receive(:groups).and_return([])
+    end
+
+    it 'renders approve and deposit' do
+      render_inline(described_class.new(form_id:, work:, collection:))
+
+      expect(page).to have_button('Approve and deposit')
+    end
+  end
+
   context 'when user has deposit share permissions' do
     let(:permission) { Share::VIEW_EDIT_DEPOSIT_PERMISSION }
     let(:review_enabled) { false }
