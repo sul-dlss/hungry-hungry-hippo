@@ -38,8 +38,8 @@ module Cocina
           accessContact: DescriptionCocinaBuilder.contact_emails(
             contact_emails: collection_form.contact_emails
           )
-        }
-      }.compact
+        }.compact_blank
+      }.compact_blank
     end
 
     def note_params
