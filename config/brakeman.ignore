@@ -1,0 +1,28 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "0fd5fcdb82620bf36b5c08787fd5a7fc21d8a880f38d24b756a3691c0e1a2f61",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "app/controllers/content_files_controller.rb",
+      "line": 39,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(ContentFile.includes(:content).find(params.expect(:id)).staging_filepath, :filename => filepath, :type => ContentFile.includes(:content).find(params.expect(:id)).mime_type)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ContentFilesController",
+        "method": "download"
+      },
+      "user_input": "ContentFile.includes(:content).find(params.expect(:id)).staging_filepath",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    }
+  ],
+  "brakeman_version": "8.0.5"
+}
