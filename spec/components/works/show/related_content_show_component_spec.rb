@@ -18,9 +18,9 @@ RSpec.describe Works::Show::RelatedContentShowComponent, type: :component do
     it 'renders the related work with a link' do
       render_inline(described_class.new(work_presenter:))
 
-      expect(page).to have_content('Related published work')
+      expect(page).to have_text('Related published work')
       expect(page).to have_link('https://example.org/related', href: 'https://example.org/related')
-      expect(page).to have_content('Is Cited By')
+      expect(page).to have_text('Is Cited By')
     end
   end
 
@@ -30,10 +30,10 @@ RSpec.describe Works::Show::RelatedContentShowComponent, type: :component do
     it 'renders the related work with a link' do
       render_inline(described_class.new(work_presenter:))
 
-      expect(page).to have_content('Related published work')
+      expect(page).to have_text('Related published work')
       expect(page).to have_no_link('https://example.org/related', href: 'https://example.org/related')
-      expect(page).to have_content('A related work')
-      expect(page).to have_content('Is Cited By')
+      expect(page).to have_text('A related work')
+      expect(page).to have_text('Is Cited By')
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe Works::Show::RelatedContentShowComponent, type: :component do
     it 'renders the related content section with a blank row' do
       render_inline(described_class.new(work_presenter:))
 
-      expect(page).to have_content('Related published work')
+      expect(page).to have_text('Related published work')
     end
   end
 end
