@@ -107,7 +107,7 @@ RSpec.describe 'Edit a collection' do
     # Clicking on Next to go to access settings tab
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('Access settings'))
-    expect(page).to have_content('Manage release of deposits for discovery and download')
+    expect(page).to have_text('Manage release of deposits for discovery and download')
     expect(page).to have_checked_field('Depositor selects a date up to')
     expect(page).to have_select('Release duration', selected: '1 year in the future')
     expect(page).to have_checked_field('Yes, a DOI will be assigned to each deposit in this collection.')
@@ -216,7 +216,7 @@ RSpec.describe 'Edit a collection' do
     # Waiting page may be too fast to catch so not testing.
     # On show page
     expect(page).to have_css('h1', text: updated_title)
-    expect(page).to have_content(updated_description)
+    expect(page).to have_text(updated_description)
     expect(page).to have_link(updated_related_links.first['text'], href: updated_related_links.first['url'])
 
     # Work types
@@ -227,16 +227,16 @@ RSpec.describe 'Edit a collection' do
     expect(page).to have_no_text(works_contact_email_fixture)
 
     # Access settings
-    expect(page).to have_content('3 years in the future')
+    expect(page).to have_text('3 years in the future')
 
     # Participants
-    expect(page).to have_content('Stephen King (stepking)')
-    expect(page).to have_content('Joe Hill (joehill)')
+    expect(page).to have_text('Stephen King (stepking)')
+    expect(page).to have_text('Joe Hill (joehill)')
 
     # License
     expect(page).to have_css('th', text: 'License')
     expect(page).to have_css('td', text: 'Depositor selects. Default license: CC-BY-4.0 Attribution International')
-    expect(page).to have_no_content('aborland@stanford.edu')
+    expect(page).to have_no_text('aborland@stanford.edu')
 
     # Workflows
     within('table#workflows-table') do

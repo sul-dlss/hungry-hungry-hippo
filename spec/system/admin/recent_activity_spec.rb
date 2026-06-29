@@ -53,7 +53,7 @@ RSpec.describe 'Show recent activity for items' do
     select('1 day', from: 'Days limit')
     expect(page).to have_table('recent-activity-table')
     expect(page).to have_css('tbody tr', count: 0)
-    expect(page).to have_content('No items activity for time period selected.')
+    expect(page).to have_text('No items activity for time period selected.')
   end
 
   it 'displays the collections with recent activity' do
@@ -85,6 +85,6 @@ RSpec.describe 'Show recent activity for items' do
     select('1 day', from: 'Days limit')
     expect(page).to have_table('recent-activity-table')
     expect(page).to have_css('tbody tr', count: 0)
-    expect(page).to have_content('No collections activity for time period selected.')
+    expect(page).to have_text('No collections activity for time period selected.')
   end
 end

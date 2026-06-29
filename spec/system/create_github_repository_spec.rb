@@ -119,7 +119,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
 
     # DOI tab is displayed
     find('.nav-link', text: with_required_tab_mark('DOI')).click
-    expect(page).to have_content('A DOI will be assigned.')
+    expect(page).to have_text('A DOI will be assigned.')
 
     # Access settings tab is displayed
     find('.nav-link', text: with_required_tab_mark('Access settings')).click

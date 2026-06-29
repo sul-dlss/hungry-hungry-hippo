@@ -12,10 +12,10 @@ RSpec.describe 'Show home' do
   it 'shows the home page' do
     visit root_path
 
-    expect(page).to have_content('Create or manage your deposits')
+    expect(page).to have_text('Create or manage your deposits')
     expect(page).to have_link('Enter here', href: dashboard_path)
-    expect(page).to have_content(strip_tags(I18n.t('banner.home_html')))
-    expect(page).to have_content('Sign up for our newsletter')
+    expect(page).to have_text(strip_tags(I18n.t('banner.home_html')))
+    expect(page).to have_text('Sign up for our newsletter')
     expect(page).to have_css('.quote-card', text: 'I am definitely hearing more')
     expect(page).to have_css('.quote-card', count: 7)
     credit = page.find('.hero .position-absolute.bottom-0.start-0').text

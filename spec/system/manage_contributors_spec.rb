@@ -224,12 +224,12 @@ RSpec.describe 'Manage contributors for a work deposit' do
         fill_in('ORCID iD', with: 'https://orcid.org/0000-0001-7756-243X')
         expect(page).to have_field('First name', with: 'Michael A.')
         expect(page).to have_field('Last name', with: 'Keller')
-        expect(page).to have_content('Name associated with this ORCID iD is Michael A. Keller.')
+        expect(page).to have_text('Name associated with this ORCID iD is Michael A. Keller.')
 
         fill_in('ORCID iD', with: '')
         expect(page).to have_field('First name', with: '', disabled: true)
         expect(page).to have_field('Last name', with: '', disabled: true)
-        expect(page).to have_no_content('Name associated with this ORCID iD is Michael A. Keller.')
+        expect(page).to have_no_text('Name associated with this ORCID iD is Michael A. Keller.')
 
         fill_in('ORCID iD', with: 'https://orcid.org/0000-0001-7756-243X')
       end

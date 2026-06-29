@@ -11,7 +11,7 @@ RSpec.describe Admin::RecentActivityListComponent, type: :component do
 
       expect(page).to have_table('recent-activity-table')
       expect(page).to have_css('tbody tr', count: 0)
-      expect(page).to have_content('No items activity for time period selected.')
+      expect(page).to have_text('No items activity for time period selected.')
     end
   end
 
