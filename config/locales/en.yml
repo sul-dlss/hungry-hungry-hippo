@@ -37,9 +37,9 @@ en:
     # To hide dashboard banner, set to ''.
     # Banners can include links, e.g., "Email <a href="mailto:sdr-contact@lists.stanford.edu" >sdr-contact@lists.stanford.edu</a> to volunteer!"
     home_html: >-
-      Depositing an article that already has a DOI to our Open Access collection? <a href="https://sdr.library.stanford.edu/documentation/articles-workflow" target="_blank" data-ahoy-track="true">Try the new, streamlined Articles Workflow</a>! Do you manage your own collection of published articles? You can opt in to this workflow for your collection as well! If you have any questions, contact us at sdr-contact@lists.stanford.edu.
+      Need to edit a deposit that is already complete? <a href="https://www.youtube.com/watch?v=VTBpX40yoyA" target="_blank" data-ahoy-track="true">Watch a brief video on how to make changes to your deposits</a>, and read more about <a href="https://sdr.library.stanford.edu/documentation/versioning" target="_blank" data-ahoy-track="true">how versioning works</a>.
     dashboard_html: >-
-      Depositing an article that already has a DOI to our Open Access collection? <a href="https://sdr.library.stanford.edu/documentation/articles-workflow" target="_blank" data-ahoy-track="true">Try the new, streamlined Articles Workflow</a>!
+      Need to edit a deposit that is already complete? <a href="https://www.youtube.com/watch?v=VTBpX40yoyA" target="_blank" data-ahoy-track="true">Watch a brief video on how to make changes to your deposits.</a>
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
