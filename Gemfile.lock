@@ -139,7 +139,7 @@ GEM
     cgi (0.5.2)
     chronic (0.10.2)
     cmdparse (3.0.7)
-    cocina-models (0.126.0)
+    cocina-models (0.127.0)
       activesupport
       cocina_display
       deprecation
@@ -207,9 +207,9 @@ GEM
       activesupport (>= 4.2)
       bunny (~> 2.17)
       zeitwerk (~> 2.1)
-    dor-services-client (15.51.0)
+    dor-services-client (15.61.0)
       activesupport (>= 7.0.0)
-      cocina-models (~> 0.126.0)
+      cocina-models (~> 0.127.0)
       deprecation
       faraday (~> 2.0)
       faraday-retry
