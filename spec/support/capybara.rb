@@ -13,7 +13,7 @@ module SeleniumTeardownResilience
 
   def transient_error?(error)
     message = error.message.to_s
-    TRANSIENT_ERROR_SNIPPETS.any? { |snippet| message.include?(snippet) }
+    TRANSIENT_ERROR_SNIPPETS.intersect?(message)
   end
 
   # In parallel Selenium runs, alert cleanup can race with navigation and raise
