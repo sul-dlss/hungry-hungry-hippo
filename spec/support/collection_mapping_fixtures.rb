@@ -41,7 +41,6 @@ module CollectionMappingFixtures
     Cocina::Models.build_request(
       {
         type: Cocina::Models::ObjectType.collection,
-        label: collection_title_fixture,
         description: {
           title: DescriptionCocinaBuilder.title(title: collection_title_fixture),
           note: [DescriptionCocinaBuilder.note(type: 'abstract', value: collection_description_fixture)],
@@ -63,7 +62,6 @@ module CollectionMappingFixtures
       {
         externalIdentifier: collection_druid_fixture,
         type: Cocina::Models::ObjectType.collection,
-        label: collection_title_fixture,
         description: {
           title: DescriptionCocinaBuilder.title(title: collection_title_fixture),
           note: [DescriptionCocinaBuilder.note(type: 'abstract', value: collection_description_fixture)],

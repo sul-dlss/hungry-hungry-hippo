@@ -34,7 +34,6 @@ module Cocina
       {
         externalIdentifier: work_form.druid,
         type: object_type,
-        label: work_form.title,
         description: WorkDescriptionMapper.call(work_form:),
         version: work_form.version,
         access: WorkAccessMapper.call(work_form:),

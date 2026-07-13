@@ -14,7 +14,7 @@ RSpec.describe RoundtripSupport do
     end
 
     context 'when the cocina object has changed' do
-      let(:original_cocina_object) { cocina_object.new(label: 'new label') }
+      let(:original_cocina_object) { cocina_object.new(version: 3) }
 
       it 'returns true' do
         expect(described_class.changed?(cocina_object: original_cocina_object)).to be true
