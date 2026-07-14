@@ -117,7 +117,6 @@ module WorkMappingFixtures
     Cocina::Models.build_request(
       {
         type: Cocina::Models::ObjectType.object,
-        label: title_fixture,
         description: {
           title: DescriptionCocinaBuilder.title(title: title_fixture),
           subject: DescriptionCocinaBuilder.keywords(keywords: keywords_fixture),
@@ -270,7 +269,6 @@ module WorkMappingFixtures
       {
         externalIdentifier: druid_fixture,
         type: Cocina::Models::ObjectType.object,
-        label: title_fixture,
         description: {
           title: DescriptionCocinaBuilder.title(title: title_fixture),
           subject: DescriptionCocinaBuilder.keywords(keywords: keywords_fixture),

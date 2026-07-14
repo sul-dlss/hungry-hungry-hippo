@@ -32,7 +32,6 @@ module Cocina
       {
         externalIdentifier: collection_form.druid,
         type: Cocina::Models::ObjectType.collection,
-        label: collection_form.title,
         description: CollectionDescriptionMapper.call(collection_form:),
         version: collection_form.version,
         access:,
