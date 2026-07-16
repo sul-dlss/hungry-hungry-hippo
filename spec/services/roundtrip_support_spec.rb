@@ -26,6 +26,14 @@ RSpec.describe RoundtripSupport do
         expect(described_class.changed?(cocina_object:)).to be false
       end
     end
+
+    context 'when the original cocina object has a label but the mapped cocina object does not' do
+      let(:original_cocina_object) { cocina_object.new(label: 'a pre-existing label') }
+
+      it 'returns false' do
+        expect(described_class.changed?(cocina_object:, original_cocina_object:)).to be false
+      end
+    end
   end
 
   describe '#normalize_cocina_object' do

@@ -14,7 +14,9 @@ class RoundtripSupport
                   else
                     {}
                   end
-    norm_cocina_object = norm_cocina_object.new(cocinaVersion: Cocina::Models::VERSION, **other_attrs)
+    # Label is not set when mapping to Cocina, so ignore it (e.g., when it is still present on
+    # objects retrieved from dor-services-app) when roundtripping.
+    norm_cocina_object = norm_cocina_object.new(cocinaVersion: Cocina::Models::VERSION, label: '', **other_attrs)
 
     Cocina::Models.with_metadata(norm_cocina_object, lock)
   end
