@@ -112,9 +112,7 @@ RSpec.describe Cocina::WorkTypesMapper do
       expect(forms).to eq(
         [
           {
-            structuredValue: [
-              { value: 'Data', type: 'type' }
-            ],
+            value: 'Data',
             source: { value: 'Stanford self-deposit resource types' },
             type: 'resource type'
           },

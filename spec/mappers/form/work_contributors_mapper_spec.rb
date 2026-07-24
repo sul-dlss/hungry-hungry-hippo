@@ -170,16 +170,12 @@ RSpec.describe Form::WorkContributorsMapper do
         ],
         affiliation: [
           {
-            structuredValue: [
+            value: 'Stanford University',
+            identifier: [
               {
-                value: 'Stanford University',
-                identifier: [
-                  {
-                    type: 'ROR',
-                    uri: 'https://ror.org/01abcd',
-                    source: { code: 'ror' }
-                  }
-                ]
+                type: 'ROR',
+                uri: 'https://ror.org/01abcd',
+                source: { code: 'ror' }
               }
             ]
           }
