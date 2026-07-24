@@ -26,7 +26,8 @@ module Form
     end
 
     def work_type
-      @work_type ||= self_deposit_values.find { |value| value[:type] == 'type' }&.value
+      @work_type ||= self_deposit_form&.value.presence ||
+                     self_deposit_values.find { |value| value[:type] == 'type' }&.value
     end
 
     def work_subtypes
