@@ -77,19 +77,15 @@ RSpec.describe PersonContributorCocinaBuilder do
         ]
       end
 
-      it 'includes affiliations in the note' do
+      it 'maps the institution directly to the affiliation' do
         expected_affiliations = [
           {
-            structuredValue: [
+            value: 'Stanford University',
+            identifier: [
               {
-                value: 'Stanford University',
-                identifier: [
-                  {
-                    uri: 'https://ror.org/01abcd',
-                    type: 'ROR',
-                    source: { code: 'ror' }
-                  }
-                ]
+                uri: 'https://ror.org/01abcd',
+                type: 'ROR',
+                source: { code: 'ror' }
               }
             ]
           }
@@ -111,11 +107,7 @@ RSpec.describe PersonContributorCocinaBuilder do
       it 'includes affiliations' do
         expected_affiliations = [
           {
-            structuredValue: [
-              {
-                value: 'Stanford University'
-              }
-            ]
+            value: 'Stanford University'
           }
         ]
 

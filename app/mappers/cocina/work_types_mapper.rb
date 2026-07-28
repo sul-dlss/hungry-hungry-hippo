@@ -33,16 +33,22 @@ module Cocina
 
     def self_deposit_resource_types
       [
-        {
-          structuredValue: [self_deposit_resource_type_value] + self_deposit_resource_subtype_values,
+        self_deposit_resource_type.merge(
           source: { value: RESOURCE_TYPE_SOURCE_LABEL },
           type: 'resource type'
-        }
+        )
       ]
     end
 
-    def self_deposit_resource_type_value
-      { value: work_type, type: 'type' }
+    def self_deposit_resource_type
+      return { value: work_type } if work_subtypes.empty?
+
+      {
+        structuredValue: [
+          { value: work_type, type: 'type' },
+          *self_deposit_resource_subtype_values
+        ]
+      }
     end
 
     def self_deposit_resource_subtype_values

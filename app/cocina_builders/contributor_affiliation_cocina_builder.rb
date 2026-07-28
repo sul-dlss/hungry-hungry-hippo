@@ -15,11 +15,13 @@ class ContributorAffiliationCocinaBuilder
   attr_reader :department, :institution, :uri
 
   def call
+    return institution_params if department.blank?
+
     {
       structuredValue: [
         institution_params,
-        ({ value: department } if department.present?)
-      ].compact
+        { value: department }
+      ]
     }
   end
 
