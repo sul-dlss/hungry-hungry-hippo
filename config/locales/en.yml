@@ -37,9 +37,9 @@ en:
     # To hide dashboard banner, set to ''.
     # Banners can include links, e.g., "Email <a href="mailto:sdr-contact@lists.stanford.edu" >sdr-contact@lists.stanford.edu</a> to volunteer!"
     home_html: >-
-      Need to edit a deposit that is already complete? <a href="https://www.youtube.com/watch?v=VTBpX40yoyA" target="_blank" data-ahoy-track="true">Watch a brief video on how to make changes to your deposits</a>, and read more about <a href="https://sdr.library.stanford.edu/documentation/versioning" target="_blank" data-ahoy-track="true">how versioning works</a>.
+      Got software? Automatically deposit new releases of your public GitHub repositories. <a href="https://sdr.library.stanford.edu/documentation/github-workflow" target="_blank" data-ahoy-track="true">Read details and watch our brief video on the process</a>.
     dashboard_html: >-
-      Need to edit a deposit that is already complete? <a href="https://www.youtube.com/watch?v=VTBpX40yoyA" target="_blank" data-ahoy-track="true">Watch a brief video on how to make changes to your deposits.</a>
+      Automatically deposit new releases of your public GitHub repositories. <a href="https://sdr.library.stanford.edu/documentation/github-workflow" target="_blank" data-ahoy-track="true">Read details and watch our brief video on the process</a>.
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
