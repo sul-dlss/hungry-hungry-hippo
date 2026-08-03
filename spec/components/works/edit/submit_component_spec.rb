@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Works::Edit::SubmitComponent, type: :component do
-  let(:form_id) { 'new_work' }
+  let(:form) { instance_double(ActionView::Helpers::FormBuilder, id: 'new_work') }
   let(:user) { create(:user) }
   let(:reviewer) { create(:user) }
   let(:share_user) { create(:user) }
@@ -23,7 +23,7 @@ RSpec.describe Works::Edit::SubmitComponent, type: :component do
     let(:review_enabled) { false }
 
     it 'renders the submit' do
-      render_inline(described_class.new(form_id:, work:, collection:))
+      render_inline(described_class.new(form:, work:, collection:))
 
       expect(page).to have_button('Deposit')
     end
@@ -36,7 +36,7 @@ RSpec.describe Works::Edit::SubmitComponent, type: :component do
     end
 
     it 'renders the submit' do
-      render_inline(described_class.new(form_id:, work:, collection:))
+      render_inline(described_class.new(form:, work:, collection:))
 
       expect(page).to have_button('Submit for review')
     end
@@ -49,7 +49,7 @@ RSpec.describe Works::Edit::SubmitComponent, type: :component do
     end
 
     it 'renders the submit' do
-      render_inline(described_class.new(form_id:, work:, collection:))
+      render_inline(described_class.new(form:, work:, collection:))
 
       expect(page).to have_button('Deposit')
     end
@@ -64,7 +64,7 @@ RSpec.describe Works::Edit::SubmitComponent, type: :component do
     end
 
     it 'renders approve and deposit' do
-      render_inline(described_class.new(form_id:, work:, collection:))
+      render_inline(described_class.new(form:, work:, collection:))
 
       expect(page).to have_button('Approve and deposit')
     end
@@ -80,7 +80,7 @@ RSpec.describe Works::Edit::SubmitComponent, type: :component do
     end
 
     it 'renders the submit' do
-      render_inline(described_class.new(form_id:, work:, collection:))
+      render_inline(described_class.new(form:, work:, collection:))
 
       expect(page).to have_button('Deposit')
     end
@@ -93,7 +93,7 @@ RSpec.describe Works::Edit::SubmitComponent, type: :component do
     end
 
     it 'renders the submit' do
-      render_inline(described_class.new(form_id:, work:, collection:))
+      render_inline(described_class.new(form:, work:, collection:))
 
       expect(page).to have_no_button('Submit for review')
       expect(page).to have_no_button('Deposit')
@@ -107,7 +107,7 @@ RSpec.describe Works::Edit::SubmitComponent, type: :component do
     end
 
     it 'does not render the submit' do
-      render_inline(described_class.new(form_id:, work:, collection:))
+      render_inline(described_class.new(form:, work:, collection:))
 
       expect(page).to have_no_button('Submit for review')
       expect(page).to have_no_button('Deposit')
@@ -119,7 +119,7 @@ RSpec.describe Works::Edit::SubmitComponent, type: :component do
     let(:review_enabled) { false }
 
     it 'renders the submit' do
-      render_inline(described_class.new(form_id:, collection:, work: nil))
+      render_inline(described_class.new(form:, collection:, work: nil))
 
       expect(page).to have_button('Deposit')
     end
