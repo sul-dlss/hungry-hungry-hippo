@@ -5,13 +5,16 @@ module Edit
     # Component for rendering tabbed navigation for the provided form.
     class TabListComponent < ApplicationComponent
       renders_many :tabs, Edit::TabForm::TabComponent
-      renders_many :panes
+      renders_many :panes, ->(pane) { pane }
 
-      def initialize(classes: [], data: {})
+      def initialize(active_tab_name:, classes: [], data: {})
+        @active_tab_name = active_tab_name
         @classes = classes
         @data = data
         super()
       end
+
+      attr_reader :active_tab_name
 
       def classes
         # Provides d-flex, tabbable-panes as the static default classes

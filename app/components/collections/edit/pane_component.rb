@@ -7,6 +7,8 @@ module Collections
       renders_one :deposit_button # only renders if provided
       renders_one :help
 
+      attr_accessor :active_tab_name
+
       def initialize(collection_presenter:, label:, previous_tab_btn: true, next_tab_btn: true, mark_required: false, # rubocop:disable Metrics/ParameterLists
                      **pane_args)
         @collection_presenter = collection_presenter

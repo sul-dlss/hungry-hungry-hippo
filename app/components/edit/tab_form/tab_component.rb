@@ -4,10 +4,11 @@ module Edit
   module TabForm
     # Component for a tab in a tabbed pane.
     class TabComponent < ApplicationComponent
-      def initialize(label:, tab_name:, active_tab_name:, mark_required: false)
+      attr_accessor :active_tab_name
+
+      def initialize(label:, tab_name:, mark_required: false)
         @label = label
         @tab_name = tab_name
-        @selected = tab_name == active_tab_name
         @mark_required = mark_required
         super()
       end
@@ -37,7 +38,7 @@ module Edit
       attr_reader :tab_name
 
       def selected?
-        @selected
+        tab_name == active_tab_name
       end
 
       def classes

@@ -7,6 +7,8 @@ module Works
       renders_one :deposit_button # If not provided will render Next button
       renders_one :help
 
+      attr_accessor :active_tab_name
+
       def initialize(form:, work_presenter:, label:, discard_draft_form_id: nil, previous_tab_btn: true, # rubocop:disable Metrics/ParameterLists
                      next_tab_btn: true, mark_required: false, **pane_args)
         @pane_args = pane_args
