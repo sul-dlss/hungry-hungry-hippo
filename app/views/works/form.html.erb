@@ -1,8 +1,8 @@
 <% content_for :content do %>
   <%= render Edit::DiscardDraftFormComponent.new(presenter: @work_presenter, id: @tab_form_presenter.discard_draft_form_id) if @work_presenter %>
   <%# The real form is rendered outside the TabListComponent, but will be referenced by input fields inside of it. %>
-  <%= render Edit::TabForm::HiddenFieldsFormComponent.new(model: @work_form, id: @tab_form_presenter.form_id, hidden_fields: %i[lock version collection_druid content_id creation_date deposit_publication_date apo copyright form_id]) %>
-  <%= render Edit::TabForm::TabListComponent.new(active_tab_name: @tab_form_presenter.active_tab_name, data: { action: 'change->ahoy-form-changes#changed change->unsaved-changes#changed change->tab-error#changed' }) do |component| %>
+  <%= render SdrViewComponents::TabForm::HiddenFieldsFormComponent.new(model: @work_form, id: @tab_form_presenter.form_id, hidden_fields: %i[lock version collection_druid content_id creation_date deposit_publication_date apo copyright form_id]) %>
+  <%= render SdrViewComponents::TabForm::TabListComponent.new(id: @tab_form_presenter.form_id, active_tab_name: @tab_form_presenter.active_tab_name, data: { action: 'change->ahoy-form-changes#changed change->unsaved-changes#changed change->sdr-tab-error#changed' }) do |component| %>
     <% component.with_tab(label: t('work_form.panes.files.tab_label'), tab_name: :files, mark_required: true) %>
     <% component.with_tab(label: t('work_form.panes.title.tab_label'), tab_name: :title, mark_required: true) %>
     <% component.with_tab(label: t('work_form.panes.contributors.tab_label'), tab_name: :contributors, mark_required: true) %>
@@ -19,7 +19,7 @@
     <%# This builder is used only to render pane content; TabListComponent will not render this as a form. %>
     <%# TabbedFormBuilder sets the `form` attribute on the fields it builds to the real form's id, so they %>
     <%# submit correctly even though they aren't necessarily nested inside it. %>
-    <% form_with(model: @work_form, html: { id: @tab_form_presenter.form_id }, builder: Edit::TabForm::TabbedFormBuilder) do |form| %>
+    <% form_with(model: @work_form, html: { id: @tab_form_presenter.form_id }, builder: SdrViewComponents::TabForm::TabbedFormBuilder) do |form| %>
       <%# This pane contains its own form for files. %>
       <% component.with_pane(Works::Edit::PaneComponent.new(tab_name: :files, label: t('work_form.panes.files.label'), form:, discard_draft_form_id: @tab_form_presenter.discard_draft_form_id, work_presenter: @work_presenter, previous_tab_btn: false, mark_required: true)) do %>
         <%= render Elements::Forms::InvalidFeedbackComponent.new(form:, field_name: :content) %>
@@ -103,10 +103,10 @@
             <%#
               When what's changing textarea is invalid and the user provides a value and then clicks Deposit / Save as draft,
               the change event is triggered first. The changes made to the DOM cause the form submit to be blocked.
-              By calling tab-error#changed on the input event, the DOM is updated sooner than the change event,
+              By calling sdr-tab-error#changed on the input event, the DOM is updated sooner than the change event,
               allowing the form to be submitted without blocking.
             %>
-            <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: t('work_form.fields.whats_changing.label'), tooltip: t('work_form.fields.whats_changing.tooltip_html'), maxlength: 100, data: { action: 'input->tab-error#changed' }, label_classes: 'fw-bold', mark_required: true) %>
+            <%= render Elements::Forms::TextareaFieldComponent.new(form:, field_name: :whats_changing, label: t('work_form.fields.whats_changing.label'), tooltip: t('work_form.fields.whats_changing.tooltip_html'), maxlength: 100, data: { action: 'input->sdr-tab-error#changed' }, label_classes: 'fw-bold', mark_required: true) %>
           </div>
         <% else %>
           <%# This is a dummy value that is needed for validation, but won't be used for the version description. %>

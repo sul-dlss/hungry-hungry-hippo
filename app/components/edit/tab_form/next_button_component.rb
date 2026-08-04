@@ -12,9 +12,9 @@ module Edit
 
       def data
         {
-          controller: 'tab-nav',
-          tab_nav_tab_id_value: @tab_id,
-          action: 'click->tab-nav#showNext'
+          controller: 'sdr-tab-nav',
+          sdr_tab_nav_tab_id_value: @tab_id,
+          action: 'click->sdr-tab-nav#showNext'
         }
       end
 

@@ -5,8 +5,10 @@ require 'rails_helper'
 RSpec.describe Works::Edit::PaneComponent, type: :component do
   let(:component) do
     described_class.new(tab_name: :test_pane, label: 'Test Pane', form:,
-                        discard_draft_form_id:, work_presenter:, active_tab_name:,
-                        previous_tab_btn:, next_tab_btn:, mark_required:)
+                        discard_draft_form_id:, work_presenter:,
+                        previous_tab_btn:, next_tab_btn:, mark_required:).tap do |c|
+      c.active_tab_name = active_tab_name
+    end
   end
   let(:form) { instance_double(ActionView::Helpers::FormBuilder, id: 'new_work') }
   let(:work_presenter) { nil }

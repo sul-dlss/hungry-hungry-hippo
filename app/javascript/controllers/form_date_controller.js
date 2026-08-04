@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static outlets = ['tab-error']
+  static outlets = ['sdr-tab-error']
   static targets = ['year', 'month', 'day', 'approximate']
 
   connect () {
@@ -25,7 +25,7 @@ export default class extends Controller {
     this.approximateTarget.disabled = this.dayTarget.value !== ''
     this.dayTarget.disabled = this.dayTarget.disabled || this.approximateTarget.checked
 
-    if (!event?.skipClearingInvalidStatus) this.tabErrorOutlet.clearInvalidStatus('dates')
+    if (!event?.skipClearingInvalidStatus) this.sdrTabErrorOutlet.clearInvalidStatus('dates')
   }
 
   reset () {

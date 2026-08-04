@@ -4,8 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Collections::Edit::PaneComponent, type: :component do
   let(:component) do
-    described_class.new(tab_name: :test_pane, label: 'Test Pane', active_tab_name:, collection_presenter:,
-                        previous_tab_btn:, next_tab_btn:, mark_required:)
+    described_class.new(tab_name: :test_pane, label: 'Test Pane', collection_presenter:,
+                        previous_tab_btn:, next_tab_btn:, mark_required:).tap do |c|
+      c.active_tab_name = active_tab_name
+    end
   end
   let(:active_tab_name) { :test_pane }
   let(:collection_presenter) { nil }
