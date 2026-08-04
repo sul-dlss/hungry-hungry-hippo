@@ -19,11 +19,7 @@
   <%= render Edit::DiscardDraftFormComponent.new(presenter: @collection_presenter, id: discard_draft_form_id) if @collection_presenter %>
   <% active_tab_name = params[:tab]&.to_sym || :details %>
   <% form_id = dom_id(@collection_form, 'tabbed_form') %>
-  <%= form_with(model: @collection_form, id: form_id, html: { novalidate: true }) do |f| %>
-    <% %i[lock version apo].each do |field| %>
-      <%= f.hidden_field field %>
-    <% end %>
-  <% end %>
+  <%= render Edit::TabForm::HiddenFieldsFormComponent.new(model: @collection_form, id: form_id, hidden_fields: %i[lock version apo]) %>
   <%= render Edit::TabForm::TabListComponent.new(active_tab_name:, data: { action: 'change->ahoy-form-changes#changed change->unsaved-changes#changed change->tab-error#changed' }) do |component| %>
     <% component.with_tab(label: t('collection_form.panes.details.tab_label'), tab_name: :details, mark_required: true) %>
     <% component.with_tab(label: t('collection_form.panes.related_links.tab_label'), tab_name: :related_links) %>

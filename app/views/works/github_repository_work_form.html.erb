@@ -5,11 +5,7 @@
   <% active_tab_name = params[:tab]&.to_sym || @active_tab_name || :title %>
   <%# The real form is rendered outside the TabListComponent, but will be referenced by input fields inside of it. %>
   <% form_id = dom_id(@work_form, 'tabbed_form') %>
-  <%= form_with(model: @work_form, id: form_id, html: { novalidate: true }) do |f| %>
-    <% %i[lock version collection_druid content_id creation_date deposit_publication_date apo copyright form_id].each do |field| %>
-      <%= f.hidden_field field %>
-    <% end %>
-  <% end %>
+  <%= render Edit::TabForm::HiddenFieldsFormComponent.new(model: @work_form, id: form_id, hidden_fields: %i[lock version collection_druid content_id creation_date deposit_publication_date apo copyright form_id]) %>
   <%= render Edit::TabForm::TabListComponent.new(active_tab_name:, data: { action: 'change->ahoy-form-changes#changed change->unsaved-changes#changed change->tab-error#changed' }) do |component| %>
     <% component.with_tab(label: t('work_form.panes.title.tab_label'), tab_name: :title, mark_required: true) %>
     <% component.with_tab(label: t('work_form.panes.contributors.tab_label'), tab_name: :contributors, mark_required: true) %>
