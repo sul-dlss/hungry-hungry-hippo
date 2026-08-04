@@ -32,6 +32,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     set_license_presenter # Note this requires @collection and @work_form set above.
     mark_collection_required_contributors # Note this requires @collection and @work_form set above.
     ahoy.track Ahoy::Event::WORK_FORM_STARTED, form_id: @work_form.form_id
+    set_tab_form_presenter
 
     render :form
   end
@@ -50,6 +51,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     mark_collection_required_contributors
     add_max_release_date
     ahoy.track Ahoy::Event::WORK_FORM_STARTED, form_id: @work_form.form_id, work_id: @work.id
+    set_tab_form_presenter
 
     render edit_form_view
   end
@@ -72,6 +74,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
     else
       handle_invalid
       set_license_presenter
+      set_tab_form_presenter
       render :form, status: :unprocessable_content
     end
   end
@@ -92,6 +95,7 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
       set_license_presenter
       set_presenter
       @work_form.seed_for_form_render!
+      set_tab_form_presenter
       render edit_form_view, status: :unprocessable_content
     end
   rescue StateMachines::InvalidTransition, Sdr::Repository::StaleLock => e
@@ -217,6 +221,23 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
 
   def set_license_presenter
     @license_presenter = LicensePresenter.new(work_form: @work_form, collection: @collection)
+  end
+
+  def set_tab_form_presenter
+    @tab_form_presenter = TabbedFormPresenter.new(model: @work_form, default_tab_name: tab_form_default_tab_name,
+                                                  active_tab_name: params[:tab]&.to_sym || @active_tab_name,
+                                                  discard_draft_form_id: tab_form_discard_draft_form_id)
+  end
+
+  # @work is nil for the new/create actions, which are only ever for a plain Work.
+  def tab_form_default_tab_name
+    @work.is_a?(GithubRepository) ? :title : :files
+  end
+
+  def tab_form_discard_draft_form_id
+    return helpers.dom_id(@work_form, 'discard_form') unless @work.is_a?(GithubRepository)
+
+    @work_presenter.github_deposit_never_enabled? ? helpers.dom_id(@work_form, 'discard_form') : nil
   end
 
   def new_work_form # rubocop:disable Metrics/AbcSize

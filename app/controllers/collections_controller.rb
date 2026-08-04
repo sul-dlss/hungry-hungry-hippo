@@ -24,6 +24,7 @@ class CollectionsController < ApplicationController
       reviewers_attributes: [],
       depositors_attributes: []
     ).seed_for_form_render!
+    set_tab_form_presenter
 
     render :form
   end
@@ -38,6 +39,7 @@ class CollectionsController < ApplicationController
 
     # This updates the Collection with the latest metadata from the Cocina object.
     CollectionModelSynchronizer.call(collection: @collection, cocina_object: @cocina_object)
+    set_tab_form_presenter
 
     render :form
   end
@@ -53,6 +55,7 @@ class CollectionsController < ApplicationController
       redirect_to wait_collections_path(collection.id)
     else
       add_blank_contributor
+      set_tab_form_presenter
       render :form, status: :unprocessable_content
     end
   end
@@ -68,6 +71,7 @@ class CollectionsController < ApplicationController
       redirect_to wait_collections_path(@collection.id)
     else
       add_blank_contributor
+      set_tab_form_presenter
       render :form, status: :unprocessable_content
     end
   end
@@ -158,5 +162,12 @@ class CollectionsController < ApplicationController
 
   def add_blank_contributor
     @collection_form.contributors_attributes = [{}] if @collection_form.contributors.empty?
+  end
+
+  def set_tab_form_presenter
+    @tab_form_presenter = TabbedFormPresenter.new(
+      model: @collection_form, default_tab_name: :details, active_tab_name: params[:tab]&.to_sym,
+      discard_draft_form_id: helpers.dom_id(@collection_form, 'discard_form')
+    )
   end
 end
