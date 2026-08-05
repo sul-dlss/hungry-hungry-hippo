@@ -33,6 +33,7 @@ RSpec.describe DepositWorkJob do
     allow(Sdr::Repository).to receive(:register).and_return(cocina_object)
     allow(Sdr::Repository).to receive(:check_lock)
     allow(Turbo::StreamsChannel).to receive(:broadcast_refresh_to)
+    allow(Sdr::Event).to receive(:list).and_return([])
   end
 
   context 'when a new work' do

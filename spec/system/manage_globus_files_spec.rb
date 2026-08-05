@@ -15,6 +15,7 @@ RSpec.describe 'Manage files for a work' do
     allow(GlobusSetupJob).to receive(:perform_later)
     allow(GlobusClient).to receive(:tasks_in_progress?).and_return(true, false)
     allow(GlobusClient).to receive_messages(disallow_writes: true, list_files: file_infos)
+    allow(Sdr::Event).to receive(:list).and_return([])
 
     sign_in(user)
   end

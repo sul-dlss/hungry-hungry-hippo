@@ -35,8 +35,17 @@ class WorkModelSynchronizer
       collection:,
       version:
     }.tap do |params|
-      params[:object_updated_at] = cocina_object.try(:modified)
+      params[:object_updated_at] = most_recent_event_timestamp || cocina_object.try(:modified)
     end.compact
+  end
+
+  def most_recent_event_timestamp
+    return nil unless work.druid
+
+    events = Sdr::Event.list(druid: work.druid)
+    return nil if events.blank?
+
+    events.first.timestamp
   end
 
   def title
