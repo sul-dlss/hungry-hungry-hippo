@@ -1,8 +1,4 @@
-<%# PaneComponent only accepts active_tab_name via attr_accessor, not as a constructor keyword, so it %>
-<%# has to be built first and assigned afterward rather than passed in with label:/pane_args above. %>
-<% pane = SdrViewComponents::TabForm::PaneComponent.new(label:, **pane_args) %>
-<% pane.active_tab_name = active_tab_name %>
-<%= render pane do |component| %>
+<%= render pane_component do |component| %>
   <%= content %>
   <% component.with_help do %>
     <%= help if help? %>

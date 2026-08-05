@@ -10,7 +10,7 @@ module Works
       attr_accessor :active_tab_name
 
       def initialize(form:, work_presenter:, label:, discard_draft_form_id: nil, previous_tab_btn: true, # rubocop:disable Metrics/ParameterLists
-                     next_tab_btn: true, mark_required: false, **pane_args)
+                     next_tab_btn: true, **pane_args)
         @pane_args = pane_args
         @form = form
         @work_presenter = work_presenter
@@ -18,11 +18,18 @@ module Works
         @previous_tab_btn = previous_tab_btn
         @next_tab_btn = next_tab_btn
         @label = label
-        @mark_required = mark_required
         super()
       end
 
-      attr_reader :pane_args, :form, :work_presenter, :discard_draft_form_id, :mark_required
+      attr_reader :pane_args, :form, :work_presenter, :discard_draft_form_id, :label
+
+      def pane_component
+        SdrViewComponents::TabForm::PaneComponent.new(label:, **pane_args).tap do |component|
+          # PaneComponent only accepts active_tab_name via attr_accessor, not as a constructor keyword, so it
+          # has to be built first and assigned afterward.
+          component.active_tab_name = active_tab_name
+        end
+      end
 
       def tab_id
         "#{pane_args[:tab_name]}-tab"
@@ -42,10 +49,6 @@ module Works
 
       def draft_btns?
         discard_draft_form_id.present?
-      end
-
-      def label
-        mark_label_required(label: @label, mark_required:)
       end
     end
   end
