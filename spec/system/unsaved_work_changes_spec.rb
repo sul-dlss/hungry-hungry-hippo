@@ -9,6 +9,7 @@ RSpec.describe 'Notifies unsaved changes' do
   let(:collection) { create(:collection, :with_druid, user:) }
 
   before do
+    allow(Sdr::Event).to receive(:list).and_return([])
     sign_in(user)
   end
 

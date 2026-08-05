@@ -7,6 +7,10 @@ RSpec.describe 'Show work' do
 
   let(:druid) { druid_fixture }
 
+  before do
+    allow(Sdr::Event).to receive(:list).and_return([])
+  end
+
   context 'when the user is not authorized' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)

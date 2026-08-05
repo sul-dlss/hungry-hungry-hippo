@@ -9,6 +9,7 @@ RSpec.describe 'Update work' do
 
   before do
     allow(Sdr::Repository).to receive(:status).and_return(build(:openable_version_status))
+    allow(Sdr::Event).to receive(:list).and_return([])
   end
 
   context 'when the user is not authorized' do

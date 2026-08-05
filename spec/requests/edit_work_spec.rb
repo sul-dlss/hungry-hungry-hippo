@@ -11,6 +11,10 @@ RSpec.describe 'Edit work' do
     'If you need to make a change to this work, contact <a href="mailto:sdr-support@lists.stanford.edu">sdr-support@lists.stanford.edu</a>' # rubocop:disable Layout/LineLength
   end
 
+  before do
+    allow(Sdr::Event).to receive(:list).and_return([])
+  end
+
   context 'when the user is not authorized' do
     before do
       allow(Sdr::Repository).to receive(:find).with(druid:).and_return(dro_with_metadata_fixture)
