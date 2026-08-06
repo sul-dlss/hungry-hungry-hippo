@@ -39,7 +39,8 @@ class RoundtripSupport
   def self.notify_error(original_cocina_object:, roundtripped_cocina_object:) # rubocop:disable Metrics/AbcSize
     original_prettier ||= Cocina::Prettier.new(cocina_object: original_cocina_object)
     roundtripped_prettier ||= Cocina::Prettier.new(cocina_object: roundtripped_cocina_object)
-    hash_diff = Hashdiff.diff(original_prettier.clean, roundtripped_prettier.clean)
+    # use_lcs is false because we have encountered HashDiff never finishing. See https://github.com/liufengyun/hashdiff/issues/49
+    hash_diff = Hashdiff.diff(original_prettier.clean, roundtripped_prettier.clean, use_lcs: false)
     Honeybadger.notify('Roundtrip failed',
                        context: {
                          original: original_prettier.json,
