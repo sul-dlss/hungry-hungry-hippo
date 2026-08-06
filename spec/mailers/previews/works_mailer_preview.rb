@@ -12,7 +12,7 @@ class WorksMailerPreview < ActionMailer::Preview
   end
 
   def managers_depositing_email
-    WorksMailer.with(work: Work.first).managers_depositing_email
+    WorksMailer.with(work: Work.first, user: User.first).managers_depositing_email
   end
 
   def ownership_changed_email

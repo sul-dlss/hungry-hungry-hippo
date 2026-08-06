@@ -16,10 +16,7 @@ class WorksMailer < ApplicationMailer
   end
 
   def managers_depositing_email
-    (@collection.managers - Array(params[:current_user])).each do |user|
-      @user = user
-      mail(to: @user.email_address, subject: "Item deposit completed in the #{@collection.title} collection")
-    end
+    mail(to: @user.email_address, subject: "Item deposit completed in the #{@collection.title} collection")
   end
 
   def ownership_changed_email

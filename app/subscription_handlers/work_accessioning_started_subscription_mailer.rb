@@ -16,7 +16,9 @@ class WorkAccessioningStartedSubscriptionMailer
   def call
     return unless object.is_a?(Work)
 
-    WorksMailer.with(work: object, current_user:).managers_depositing_email.deliver_later
+    (object.collection.managers - Array(current_user)).each do |user|
+      WorksMailer.with(work: object, user:).managers_depositing_email.deliver_later
+    end
   end
 
   private

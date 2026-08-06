@@ -62,7 +62,7 @@ RSpec.describe WorksMailer do
   end
 
   describe '.managers_depositing_email' do
-    let(:mail) { described_class.with(work:, current_user: user).managers_depositing_email }
+    let(:mail) { described_class.with(work:, user: manager).managers_depositing_email }
     let(:manager) { create(:user, first_name: 'Carter') }
     let(:managers) { [user, manager] }
 
