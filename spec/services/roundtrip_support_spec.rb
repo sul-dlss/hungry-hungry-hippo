@@ -31,10 +31,48 @@ RSpec.describe RoundtripSupport do
   describe '#normalize_cocina_object' do
     context 'when the cocina object is a DRO' do
       let(:cocina_object) { dro_with_structural_and_metadata_fixture(version: 1).new(cocinaVersion: '0.0.0') }
+      let(:expected_cocina_object) do
+        dro_with_structural_and_metadata_fixture.new(
+          # This is the deterministic form ordering.
+          description: dro_fixture.description.new(form: expected_form)
+        )
+      end
+      let(:expected_form) do
+        [{ value: 'Photographs',
+           type: 'genre',
+           uri: 'http://id.loc.gov/authorities/genreForms/gf2017027249',
+           source: { code: 'lcgft' } },
+         { value: 'Data sets',
+           type: 'genre',
+           uri: 'http://id.loc.gov/authorities/genreForms/gf2018026119',
+           source: { code: 'lcgft' } },
+         { value: 'dataset',
+           type: 'genre',
+           source: { code: 'local' } },
+         { value: 'Dataset',
+           type: 'resource type',
+           uri: 'http://id.loc.gov/vocabulary/resourceTypes/dat',
+           source: { uri: 'http://id.loc.gov/vocabulary/resourceTypes/' } },
+         { value: 'Image',
+           type: 'resource type',
+           source: { value: 'DataCite resource types' } },
+         { value: 'still image',
+           type: 'resource type',
+           source: { value: 'MODS resource types' } },
+         { structuredValue:
+           [{ value: 'Image',
+              type: 'type' },
+            { value: 'Data',
+              type: 'subtype' },
+            { value: 'Photograph',
+              type: 'subtype' }],
+           type: 'resource type',
+           source: { value: 'Stanford self-deposit resource types' } }]
+      end
 
       it 'returns a normalized cocina object' do
         expect(described_class.normalize_cocina_object(cocina_object:))
-          .to equal_cocina dro_with_structural_and_metadata_fixture
+          .to equal_cocina expected_cocina_object
       end
     end
 
