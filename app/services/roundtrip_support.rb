@@ -9,8 +9,11 @@ class RoundtripSupport
     lock = cocina_object&.lock
     norm_cocina_object = Cocina::Models.without_metadata(cocina_object)
     other_attrs = if cocina_object.dro?
-                    { structural: normalize_structural_attrs(structural_attrs: cocina_object.structural.to_h,
-                                                             version: cocina_object.version) }
+                    {
+                      structural: normalize_structural_attrs(structural_attrs: cocina_object.structural.to_h,
+                                                             version: cocina_object.version),
+                      description: normalize_description_attrs(description_attrs: cocina_object.description.to_h)
+                    }
                   else
                     {}
                   end
@@ -29,11 +32,23 @@ class RoundtripSupport
   end
   private_class_method :normalize_structural_attrs
 
+  def self.normalize_description_attrs(description_attrs:)
+    # Form ordering doesn't matter and may be re-ordered by Argo description updates.
+    # This provides deterministic ordering.
+    description_attrs[:form] = Array(description_attrs[:form]).sort_by do |h|
+      h.to_a.sort_by do |k, v|
+        [k.to_s, v.to_s]
+      end.inspect
+    end
+    description_attrs
+  end
+  private_class_method :normalize_description_attrs
+
   # @param [Cocina::Models::DRO,Cocina::Models::Collection] cocina_object
   # @return [Boolean] true if the provided cocina object is the same as a cocina object retrieved from SDR.
   def self.changed?(cocina_object:, original_cocina_object: nil)
     original_cocina_object ||= Sdr::Repository.find(druid: cocina_object.externalIdentifier)
-    cocina_object != normalize_cocina_object(cocina_object: original_cocina_object)
+    normalize_cocina_object(cocina_object:) != normalize_cocina_object(cocina_object: original_cocina_object)
   end
 
   def self.notify_error(original_cocina_object:, roundtripped_cocina_object:) # rubocop:disable Metrics/AbcSize

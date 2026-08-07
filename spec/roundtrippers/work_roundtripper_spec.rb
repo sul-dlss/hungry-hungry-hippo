@@ -10,7 +10,12 @@ RSpec.describe WorkRoundtripper, type: :mapping do
   let(:notify) { true }
 
   context 'when roundtrippable' do
-    let(:cocina_object) { dro_with_structural_and_metadata_fixture }
+    let(:cocina_object) do
+      dro_with_structural_and_metadata_fixture.new(
+        # Randomly shuffle the form array to ensure that the order of the form elements does not affect the roundtrip.
+        description: dro_fixture.description.new(form: form_fixture.shuffle)
+      )
+    end
 
     it 'returns true' do
       expect(validator.call).to be true

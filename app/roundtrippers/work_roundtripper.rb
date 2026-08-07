@@ -31,12 +31,12 @@ class WorkRoundtripper
 
   # @return [Boolean] true if the work form can be converted to a cocina object and back without loss
   def call
-    if roundtripped_cocina_object == normalized_original_cocina_object
+    if normalized_roundtripped_cocina_object == normalized_original_cocina_object
       true
     else
       if notify
         RoundtripSupport.notify_error(original_cocina_object: normalized_original_cocina_object,
-                                      roundtripped_cocina_object:)
+                                      roundtripped_cocina_object: normalized_roundtripped_cocina_object)
       end
       false
     end
@@ -50,6 +50,11 @@ class WorkRoundtripper
     Cocina::WorkMapper.call(work_form:,
                             content:,
                             source_id: normalized_original_cocina_object.identification&.sourceId)
+  end
+
+  def normalized_roundtripped_cocina_object
+    @normalized_roundtripped_cocina_object ||=
+      RoundtripSupport.normalize_cocina_object(cocina_object: roundtripped_cocina_object)
   end
 
   def normalized_original_cocina_object
