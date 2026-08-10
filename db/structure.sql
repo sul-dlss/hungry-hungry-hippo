@@ -1206,6 +1206,9 @@ ALTER TABLE ONLY public.affiliations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260810154256'),
+('20260810154255'),
+('20260810154254'),
 ('20260302141243'),
 ('20260217184300'),
 ('20260212190714'),
