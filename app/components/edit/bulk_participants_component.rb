@@ -23,7 +23,7 @@ module Edit
         controller: 'participants',
         participants_url_value: '/accounts/search',
         participants_nested_form_outlet: "##{fieldset_id}",
-        participants_tab_error_outlet: '.tab-error'
+        participants_sdr_tab_error_outlet: '.tab-error'
       }
     end
 

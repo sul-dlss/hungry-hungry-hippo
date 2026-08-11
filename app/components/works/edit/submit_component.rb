@@ -4,8 +4,8 @@ module Works
   module Edit
     # Component for rendering a submit button
     class SubmitComponent < ApplicationComponent
-      def initialize(work:, collection:, form_id: nil, classes: [], data: {}, deposit_label: 'Deposit') # rubocop:disable Metrics/ParameterLists
-        @form_id = form_id
+      def initialize(work:, collection:, form: nil, classes: [], data: {}, deposit_label: 'Deposit') # rubocop:disable Metrics/ParameterLists
+        @form = form
         @work = work
         @collection = collection
         @classes = classes
@@ -14,10 +14,10 @@ module Works
         super()
       end
 
-      attr_reader :form_id, :work, :collection, :classes, :data, :deposit_label
+      attr_reader :form, :work, :collection, :classes, :data, :deposit_label
 
       def call
-        render Elements::Forms::SubmitComponent.new(form_id:, label:, classes:, data:, value:)
+        render Elements::Forms::SubmitComponent.new(form_id: form&.id, label:, classes:, data:, value:)
       end
 
       def render?

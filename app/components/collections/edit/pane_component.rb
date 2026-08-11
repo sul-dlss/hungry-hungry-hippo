@@ -7,18 +7,26 @@ module Collections
       renders_one :deposit_button # only renders if provided
       renders_one :help
 
-      def initialize(collection_presenter:, label:, previous_tab_btn: true, next_tab_btn: true, mark_required: false, # rubocop:disable Metrics/ParameterLists
-                     **pane_args)
+      attr_accessor :active_tab_name
+
+      def initialize(collection_presenter:, label:, previous_tab_btn: true, next_tab_btn: true, **pane_args)
         @collection_presenter = collection_presenter
         @previous_tab_btn = previous_tab_btn
         @next_tab_btn = next_tab_btn
         @label = label
-        @mark_required = mark_required
         @pane_args = pane_args
         super()
       end
 
-      attr_reader :pane_args, :mark_required
+      attr_reader :pane_args, :label
+
+      def pane_component
+        SdrViewComponents::TabForm::PaneComponent.new(label:, **pane_args).tap do |component|
+          # PaneComponent only accepts active_tab_name via attr_accessor, not as a constructor keyword, so it
+          # has to be built first and assigned afterward.
+          component.active_tab_name = active_tab_name
+        end
+      end
 
       def previous_tab_btn?
         @previous_tab_btn
@@ -30,10 +38,6 @@ module Collections
 
       def cancel_path
         @collection_presenter.nil? ? dashboard_path : collection_path(@collection_presenter)
-      end
-
-      def label
-        mark_label_required(label: @label, mark_required:)
       end
     end
   end

@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static outlets = ['nested-form', 'tab-error']
+  static outlets = ['nested-form', 'sdr-tab-error']
   static targets = ['input', 'invalidFeedbackContainer', 'invalidFeedbackTemplate']
   static values = { url: String }
 
@@ -58,6 +58,6 @@ export default class extends Controller {
     formInstanceEl.querySelector('input[name$="[sunetid]"]').value = accountData.sunetid
     formInstanceEl.querySelector('input[name$="[name]"]').value = accountData.name
     formInstanceEl.querySelector('[data-delete-btn] .visually-hidden').innerHTML = `Clear ${accountData.name}`
-    this.tabErrorOutlet.clearInvalidStatus('participants')
+    this.sdrTabErrorOutlet.clearInvalidStatus('participants')
   }
 }

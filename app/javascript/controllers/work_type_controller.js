@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static outlets = ['tab-error']
+  static outlets = ['sdr-tab-error']
   static targets = ['subtypeSection', 'workTypeRadio', 'workTypeHidden']
 
   connect () {
@@ -26,6 +26,6 @@ export default class extends Controller {
   }
 
   clearInvalidStatus () {
-    this.tabErrorOutlet.clearInvalidStatus('types')
+    this.sdrTabErrorOutlet.clearInvalidStatus('types')
   }
 }
