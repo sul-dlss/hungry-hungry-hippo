@@ -12,8 +12,5 @@ github:
 article_deposit:
   enabled: true
 
-gemini_api:
-  key: 'fake-gemini-api-key'
-
 extract_abstracts:
   enabled: true
