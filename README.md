@@ -288,4 +288,8 @@ Note that the state of a GithubRelease is tracked by the `status` and `status_de
 ## Extracting Abstracts with LLM
 When an abstract cannot be retrieved from CrossRef for an article, the user has the option of attempting to extract the abstract using an LLM.
 
+### Delopment key for LiteLLM
+
+Request a personal key from ops for the LiteLLM proxy and set that key in `development.local.yml`. Connection to the LiteLLM proxy requires connecting to the Stanford VPN.
+
 To support development, abstracts can be extracted from a set of PDFs placed in `articles/` with: `bin/rake development:extract_abstracts`.

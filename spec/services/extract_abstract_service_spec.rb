@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ExtractAbstractService, :vcr do
-  # Note that VCR is configured to filter the Gemini API key from requests.
+  # Note that VCR is configured to filter the LLM API key from requests.
   subject(:abstract) { described_class.call(filepath:, raise_on_error:) }
 
   let(:raise_on_error) { false }
