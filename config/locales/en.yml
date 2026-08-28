@@ -37,9 +37,9 @@ en:
     # To hide dashboard banner, set to ''.
     # Banners can include links, e.g., "Email <a href="mailto:sdr-contact@lists.stanford.edu" >sdr-contact@lists.stanford.edu</a> to volunteer!"
     home_html: >-
-      Got software? Automatically deposit new releases of your public GitHub repositories. <a href="https://sdr.library.stanford.edu/documentation/github-workflow" target="_blank" data-ahoy-track="true">Read details and watch our brief video on the process</a>.
+      Need a link to your dataset to include in a manuscript, but aren't quite ready to deposit? We've got you covered! Watch our <a href="https://youtu.be/xhspxnuYYz4" target="_blank" data-ahoy-track="true">short video on how to get your DOI or PURL link with just a dataset title</a>. Come back later to finish your deposit when you're ready!
     dashboard_html: >-
-      Automatically deposit new releases of your public GitHub repositories. <a href="https://sdr.library.stanford.edu/documentation/github-workflow" target="_blank" data-ahoy-track="true">Read details and watch our brief video on the process</a>.
+      Need a link to your dataset to include in a manuscript, but aren't quite ready to deposit? Watch our <a href="https://youtu.be/xhspxnuYYz4" target="_blank" data-ahoy-track="true">short video on how to get your DOI with just a dataset title</a>.
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
