@@ -37,9 +37,9 @@ en:
     # To hide dashboard banner, set to ''.
     # Banners can include links, e.g., "Email <a href="mailto:sdr-contact@lists.stanford.edu" >sdr-contact@lists.stanford.edu</a> to volunteer!"
     home_html: >-
-      Need a link to your dataset to include in a manuscript, but aren't quite ready to deposit? We've got you covered! Watch our <a href="https://youtu.be/xhspxnuYYz4" target="_blank" data-ahoy-track="true">short video on how to get your DOI or PURL link with just a dataset title</a>. Come back later to finish your deposit when you're ready!
+      This application will be down for maintenance starting Wednesday, September 9 after 5:00pm Pacific and will be available again on Thursday, September 10. Depositing to the SDR will be unavailable during this time. If you have any questions, contact us at sdr-contact@lists.stanford.edu.
     dashboard_html: >-
-      Need a link to your dataset to include in a manuscript, but aren't quite ready to deposit? Watch our <a href="https://youtu.be/xhspxnuYYz4" target="_blank" data-ahoy-track="true">short video on how to get your DOI with just a dataset title</a>.
+      This application will be down for maintenance starting Wednesday, September 9 after 5:00pm Pacific and will be available again on Thursday, September 10. Depositing to the SDR will be unavailable during this time. If you have any questions, contact us at sdr-contact@lists.stanford.edu.
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
