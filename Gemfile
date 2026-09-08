@@ -60,6 +60,7 @@ gem 'googleauth' # For Vertex AI authentication
 gem 'hashdiff'
 gem 'hexapdf' # For PDF subsetting
 gem 'honeybadger'
+gem 'json', '~> 2.0' # Pinned until Rails 8.1.4 is released https://github.com/rails/rails/issues/58685
 gem 'jwt' # For GitHub App authentication
 gem 'kaminari' # For pagination
 gem 'kicks' # Background processing of rabbitMQ messages. (Formerly sneakers.)
