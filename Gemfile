@@ -74,7 +74,8 @@ gem 'parallel' # Used for abstract extraction testing.
 gem 'preservation-client'
 gem 'rack-sanitizer'
 gem 'recaptcha' # prevent robots spamming the contact form
-gem 'ruby_llm' # For extracting abstracts
+# NOTE: pinning ruby_llm to 1.x for now, see https://github.com/sul-dlss/hungry-hungry-hippo/issues/2425
+gem 'ruby_llm', '~> 1.16' # For extracting abstracts
 gem 'ruby_llm-schema'
 gem 'sdr_view_components'
 gem 'state_machines-activerecord'
