@@ -14,11 +14,5 @@ affiliations:
 github:
   enabled: true
 
-article_deposit:
-  enabled: true
-
-extract_abstracts:
-  enabled: true
-
 recaptcha:
   enabled: false
