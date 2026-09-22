@@ -117,7 +117,7 @@ github:
   deposit_queue_interval: 1800 # 30 minutes in seconds between checks for releases that are ready to deposit
 
 article_deposit:
-  enabled: false
+  enabled: true
 
 person_api:
   url: 'https://registry.stanford.edu'
@@ -138,7 +138,7 @@ vertexai_api:
   location: 'global'
 
 extract_abstracts:
-  enabled: false
+  enabled: true
 
 validate_datacite:
   enabled: true
