@@ -37,9 +37,9 @@ en:
     # To hide dashboard banner, set to ''.
     # Banners can include links, e.g., "Email <a href="mailto:sdr-contact@lists.stanford.edu" >sdr-contact@lists.stanford.edu</a> to volunteer!"
     home_html: >-
-      Need a link to your dataset to include in a manuscript, but aren't quite ready to deposit? We've got you covered! Watch our <a href="https://youtu.be/xhspxnuYYz4" target="_blank" data-ahoy-track="true">short video on how to get your DOI or PURL link with just a dataset title</a>. Come back later to finish your deposit when you're ready!
+      SDR's Articles Workflow now includes an option to use AI to retrieve the abstract from the pdf you upload. <a href="https://sdr.library.stanford.edu/documentation/articles-workflow" target="_blank" data-ahoy-track="true">Read more about how it works and the AI best practices we follow.</a>
     dashboard_html: >-
-      Need a link to your dataset to include in a manuscript, but aren't quite ready to deposit? Watch our <a href="https://youtu.be/xhspxnuYYz4" target="_blank" data-ahoy-track="true">short video on how to get your DOI with just a dataset title</a>.
+      SDR's Articles Workflow now includes an option to use AI to retrieve the abstract from the pdf you upload. <a href="https://sdr.library.stanford.edu/documentation/articles-workflow" target="_blank" data-ahoy-track="true">Read more about how it works.</a>
   access:
     stanford: 'Stanford Community'
     world: 'Everyone'
