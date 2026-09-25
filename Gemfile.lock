@@ -624,22 +624,23 @@ GEM
       rubocop-rspec (~> 3.5)
     ruby-next-core (1.2.1)
     ruby-progressbar (1.13.0)
-    ruby_llm (1.16.0)
+    ruby_llm (2.0.0)
       base64
       event_stream_parser (~> 1)
       faraday (>= 1.10.0)
       faraday-multipart (>= 1)
       faraday-net_http (>= 1)
       faraday-retry (>= 1)
-      marcel (~> 1)
-      ruby_llm-schema (~> 0)
+      json (< 3)
+      marcel (>= 1.0, < 3)
+      schematist (~> 1.1)
       zeitwerk (~> 2)
-    ruby_llm-schema (0.4.0)
     rubyzip (3.7.0)
     safely_block (1.0.0)
     sawyer (0.9.3)
       addressable (>= 2.3.5)
       faraday (>= 0.17.3, < 3)
+    schematist (1.1.0)
     sdr_view_components (0.12.1)
       rails (~> 8.0)
       view_component
@@ -822,8 +823,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-rspec_rails
-  ruby_llm (~> 1.16)
-  ruby_llm-schema
+  ruby_llm (~> 2.0)
   sdr_view_components
   selenium-webdriver
   simplecov

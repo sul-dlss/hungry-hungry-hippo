@@ -8,4 +8,8 @@ RubyLLM.configure do |config|
   # Total wait time before giving up on a request should be 60 seconds.
   config.request_timeout = 60
   config.max_retries = 0
+  # Use the Chat Completions API (RubyLLM 2.x defaults to the Responses API for openai)
+  config.openai_protocol = :chat_completions
+  # Always send PDFs inline, rather than uploading large files via the files API
+  config.auto_upload_large_files = false
 end

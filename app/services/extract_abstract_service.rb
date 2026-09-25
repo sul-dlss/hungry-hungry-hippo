@@ -18,7 +18,7 @@ class ExtractAbstractService
     Tempfile.create(['subset-', '.pdf']) do |tempfile|
       subset_pdf(filepath:, new_file: tempfile.path)
       response = chat.ask 'What is the abstract for the article in the attached PDF?', with: tempfile.path
-      response.content['abstract_sections'].join("\n\n").presence
+      response.parsed['abstract_sections'].join("\n\n").presence
     rescue RubyLLM::Error, Faraday::TimeoutError => e
       Honeybadger.notify(e, context: { filepath: })
       raise e if raise_on_error
@@ -32,7 +32,7 @@ class ExtractAbstractService
   attr_reader :filepath, :raise_on_error
 
   # Schema for the LLM response
-  class AbstractSchema < RubyLLM::Schema
+  class AbstractSchema < Schematist::Schema
     array :abstract_sections, description: 'sections of the abstract of the article', of: :string
   end
 
