@@ -791,7 +791,6 @@ DEPENDENCIES
   hotwire-spark
   importmap-rails
   jbuilder
-  json (~> 2.0)
   jwt
   kaminari
   kicks
