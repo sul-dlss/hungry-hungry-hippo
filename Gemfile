@@ -3,9 +3,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-# Pinned: actionview 8.1.4 generates a label `for` that doesn't match the input `id` for
-# collection_radio_buttons options whose value is an empty string.
-gem 'rails', '8.1.3.1'
+gem 'rails', '~> 8.1.0'
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem 'propshaft'
 # Use Postgres as the database for Active Record
