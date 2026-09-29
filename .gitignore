@@ -42,6 +42,10 @@ config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
 
+config/settings.local.yaml
+config/settings/*.local.yaml
+config/environments/*.local.yaml
+
 # SimpleCov coverage artifacts
 /coverage
 
