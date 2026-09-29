@@ -59,14 +59,30 @@ namespace :development do
   end
 
   task extract_abstracts: :environment do
-    Parallel.each(Dir.glob('articles/*.pdf'), in_processes: 4) do |filepath|
-      abstract = nil
-      realtime = Benchmark.realtime do
-        abstract = ExtractAbstractService.call(filepath:, raise_on_error: true)
+    puts 'Testing abstract extraction'
+    commit_sha_short = `git rev-parse --short HEAD`.strip
+    branch_name = `git rev-parse --abbrev-ref --short HEAD`.strip
+    puts "On commit #{commit_sha_short} (branch #{branch_name})\n\n"
+
+    results =
+      Parallel.map(Dir.glob('articles/*.pdf'), in_processes: 4) do |filepath|
+        puts "Extracting abstract for #{filepath}"
+        abstract = nil
+        realtime = Benchmark.realtime do
+          abstract = ExtractAbstractService.call(filepath:, raise_on_error: true)
+        rescue StandardError => e
+          puts "Error extracting abstract for #{filepath}: #{e.message}"
+        end
+        [filepath, { realtime:, abstract: }]
       rescue StandardError => e
-        abstract = "Error extracting abstract: #{e.message}"
+        puts "Error extracting abstract: #{e.message}"
       end
-      puts "Abstract for #{filepath} (#{realtime.round(1)} seconds):\n#{abstract || 'Not extracted.'}\n\n"
+
+    puts "\n\nAbstract extractions, sorted by input filepath:\n\n"
+    results.sort.each do |filepath, result|
+      realtime = result[:realtime]
+      abstract = result[:abstract]
+      puts "Abstract for #{filepath} (#{realtime.round(1)} seconds):\n#{abstract || '⚠️ Not extracted.'}\n\n"
     end
   end
   # rubocop:enable Metrics/BlockLength
