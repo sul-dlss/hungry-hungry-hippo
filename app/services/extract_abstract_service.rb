@@ -54,7 +54,9 @@ class ExtractAbstractService
     page_indexes.reverse_each do |index|
       doc.pages.delete_at(index)
     end
-    doc.write(new_file)
+    # Skipping validation since this is a temporary file for the LLM and some PDFs
+    # have validation errors that HexaPDF cannot auto-correct.
+    doc.write(new_file, validate: false)
   rescue HexaPDF::Error => e
     Honeybadger.notify(e, context: { filepath: })
     # Failsafe to use the original file.
