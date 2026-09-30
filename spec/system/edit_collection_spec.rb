@@ -123,9 +123,9 @@ RSpec.describe 'Edit a collection' do
     click_link_or_button('Next')
     expect(page).to have_css('.nav-link.active', text: with_required_tab_mark('License'))
     expect(page).to have_checked_field('Require license for all deposits')
-    expect(page).to have_select('Required license', selected: 'CC-BY-4.0 Attribution International')
+    expect(page).to have_select('Required license', selected: 'CC BY 4.0 Attribution International')
     choose('Depositor selects license')
-    select('CC-BY-4.0 Attribution International', from: 'Default license')
+    select('CC BY 4.0 Attribution International', from: 'Default license')
 
     # Clicking on Next to go to Terms of Use tab
     click_link_or_button('Next')
@@ -235,7 +235,7 @@ RSpec.describe 'Edit a collection' do
 
     # License
     expect(page).to have_css('th', text: 'License')
-    expect(page).to have_css('td', text: 'Depositor selects. Default license: CC-BY-4.0 Attribution International')
+    expect(page).to have_css('td', text: 'Depositor selects. Default license: CC BY 4.0 Attribution International')
     expect(page).to have_no_text('aborland@stanford.edu')
 
     # Workflows

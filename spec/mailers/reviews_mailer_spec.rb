@@ -82,7 +82,7 @@ RSpec.describe ReviewsMailer do
       expect(mail).to match_body('Your deposit, "S1.E1: Blipverts", to the ' \
                                  '20 Minutes into the Future collection has been approved')
       expect(mail).to match_body('If you did not recently submit')
-      expect(mail).to match_body('License: CC-BY-4.0 Attribution International')
+      expect(mail).to match_body('License: CC BY 4.0 Attribution International')
       expect(mail).to match_body('Access level: Stanford Community')
       expect(mail).to match_body('Release: June 10, 2027')
       expect(mail).to match_body('Your work was assigned this DOI: <a href="https://doi.org/10.80343/bc123df4567">https://doi.org/10.80343/bc123df4567</a>')

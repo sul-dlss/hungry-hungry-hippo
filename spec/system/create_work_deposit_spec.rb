@@ -185,7 +185,7 @@ RSpec.describe 'Create a work deposit' do
 
       # Selecting license
       expect(page).to have_select('License', selected: 'Apache-2.0')
-      select('CC-BY-4.0 Attribution International', from: 'work_license')
+      select('CC BY 4.0 Attribution International', from: 'work_license')
 
       # Entering additional terms of use
       fill_in('Additional terms of use', with: custom_rights_statement_fixture)

@@ -128,7 +128,7 @@ RSpec.describe 'Create a collection deposit' do
     expect(page).to have_text('License')
     expect(page).to have_checked_field('Require license for all deposits')
     expect(page).to have_select('Required license', selected: 'Select required license...')
-    select('CC-BY-4.0 Attribution International', from: 'Required license')
+    select('CC BY 4.0 Attribution International', from: 'Required license')
 
     # Clicking on Next to go to Terms of Use tab
     click_link_or_button('Next')
@@ -298,7 +298,7 @@ RSpec.describe 'Create a collection deposit' do
 
     # License
     expect(page).to have_css('th', text: 'License')
-    expect(page).to have_css('td', text: 'License required: CC-BY-4.0 Attribution International')
+    expect(page).to have_css('td', text: 'License required: CC BY 4.0 Attribution International')
 
     # Review workflow
     within('#workflows-table') do

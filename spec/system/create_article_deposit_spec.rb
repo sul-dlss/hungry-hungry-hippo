@@ -106,8 +106,8 @@ RSpec.describe 'Create an article deposit' do
     select('Author accepted version', from: 'Which version are you depositing?')
 
     # License is selectable and pre-set to the default even though collection setting had a different required license
-    expect(page).to have_select('License', selected: 'CC-BY-4.0 Attribution International')
-    select('CC-BY-NC-4.0 Attribution-NonCommercial International', from: 'License')
+    expect(page).to have_select('License', selected: 'CC BY 4.0 Attribution International')
+    select('CC BY-NC 4.0 Attribution-NonCommercial International', from: 'License')
 
     # Agreeing to terms
     check('I agree to the Terms of Deposit')
@@ -147,7 +147,7 @@ RSpec.describe 'Create an article deposit' do
 
     # License
     within('#license-table') do
-      expect(page).to have_css('td', text: 'CC-BY-NC-4.0 Attribution-NonCommercial International')
+      expect(page).to have_css('td', text: 'CC BY-NC 4.0 Attribution-NonCommercial International')
     end
 
     expect(Sdr::Repository).to have_received(:accession)

@@ -74,8 +74,8 @@ RSpec.describe 'Create an article deposit using abstract extract' do
       select('Author accepted version', from: 'Which version are you depositing?')
 
       # Setting license
-      expect(page).to have_select('License', selected: 'CC-BY-4.0 Attribution International')
-      select('CC-BY-NC-4.0 Attribution-NonCommercial International', from: 'License')
+      expect(page).to have_select('License', selected: 'CC BY 4.0 Attribution International')
+      select('CC BY-NC 4.0 Attribution-NonCommercial International', from: 'License')
 
       # Deposit
       click_link_or_button('Deposit')

@@ -19,7 +19,7 @@ RSpec.describe Works::Edit::LicenseComponent, type: :component do
       expect(page).to have_select('license')
       expect(page).to have_css('optgroup[label="Creative Commons"]')
       expect(page).to have_css('option[value="https://creativecommons.org/licenses/by/4.0/legalcode"]',
-                               text: 'CC-BY-4.0 Attribution International')
+                               text: 'CC BY 4.0 Attribution International')
       # Does not have deprecated licenses
       expect(page).to have_no_css('option[value="https://creativecommons.org/licenses/by-nc-nd/3.0/legalcode"]')
 
@@ -35,7 +35,7 @@ RSpec.describe Works::Edit::LicenseComponent, type: :component do
         render_inline(described_class.new(form:, license_presenter:))
 
         expect(page).to have_css('option[value="https://creativecommons.org/licenses/by-nc-nd/3.0/legalcode"]',
-                                 text: 'CC-BY-NC-ND-3.0 Attribution Non Commercial No Derivatives (Unsupported)')
+                                 text: 'CC BY-NC-ND 3.0 Attribution-NonCommercial-NoDerivatives (Unsupported)')
       end
     end
   end
@@ -48,7 +48,7 @@ RSpec.describe Works::Edit::LicenseComponent, type: :component do
 
       expect(page).to have_no_link('Get help selecting a license')
 
-      expect(page).to have_text('The license for this deposit is CC-BY-4.0 Attribution International')
+      expect(page).to have_text('The license for this deposit is CC BY 4.0 Attribution International')
       expect(page).to have_field('license', type: 'hidden', with: 'https://creativecommons.org/licenses/by/4.0/legalcode')
     end
   end

@@ -146,7 +146,7 @@ RSpec.describe 'Show a collection' do
         expect(page).to have_css('tr', text: 'Additional terms of use')
         expect(page).to have_css('td', text: 'My custom rights statement')
         expect(page).to have_css('tr', text: 'License')
-        expect(page).to have_css('td', text: 'License required: CC-BY-4.0 Attribution International')
+        expect(page).to have_css('td', text: 'License required: CC BY 4.0 Attribution International')
       end
 
       # Participants table
