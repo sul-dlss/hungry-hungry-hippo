@@ -99,7 +99,7 @@ def license_fixture
 end
 
 def license_label_fixture
-  'CC-BY-4.0'
+  'CC BY 4.0'
 end
 
 def filename_fixture

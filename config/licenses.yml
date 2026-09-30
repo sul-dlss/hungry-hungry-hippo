@@ -16,31 +16,31 @@
   group: "Software Licenses"
 - id: "https://creativecommons.org/licenses/by/4.0/legalcode"
   deprecated: false
-  label: "CC-BY-4.0 Attribution International"
+  label: "CC BY 4.0 Attribution International"
   group: "Creative Commons"
 - id: "https://creativecommons.org/licenses/by-nc/4.0/legalcode"
   deprecated: false
-  label: "CC-BY-NC-4.0 Attribution-NonCommercial International"
+  label: "CC BY-NC 4.0 Attribution-NonCommercial International"
   group: "Creative Commons"
 - id: "https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode"
   deprecated: false
-  label: "CC-BY-NC-ND-4.0 Attribution-NonCommercial-No Derivatives"
+  label: "CC BY-NC-ND 4.0 Attribution-NonCommercial-NoDerivatives"
   group: "Creative Commons"
 - id: "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode"
   deprecated: false
-  label: "CC-BY-NC-SA-4.0 Attribution-NonCommercial-Share Alike International"
+  label: "CC BY-NC-SA 4.0 Attribution-NonCommercial-ShareAlike International"
   group: "Creative Commons"
 - id: "https://creativecommons.org/licenses/by-nd/4.0/legalcode"
   deprecated: false
-  label: "CC-BY-ND-4.0 Attribution-No Derivatives International"
+  label: "CC BY-ND 4.0 Attribution-NoDerivatives International"
   group: "Creative Commons"
 - id: "https://creativecommons.org/licenses/by-sa/4.0/legalcode"
   deprecated: false
-  label: "CC-BY-SA-4.0 Attribution-Share Alike International"
+  label: "CC BY-SA 4.0 Attribution-ShareAlike International"
   group: "Creative Commons"
 - id: "https://creativecommons.org/publicdomain/zero/1.0/legalcode"
   deprecated: false
-  label: "CC0-1.0"
+  label: "CC0 1.0 Universal"
   group: "Creative Commons"
 - id: "https://opensource.org/licenses/cddl1"
   deprecated: false
@@ -92,25 +92,25 @@
   group: "Other"
 - id: "https://creativecommons.org/licenses/by/3.0/legalcode"
   deprecated: true
-  label: 'CC-BY-3.0 Attribution (Unsupported)'
+  label: 'CC BY 3.0 Attribution (Unsupported)'
   group: "Creative Commons"
 - id: "https://creativecommons.org/licenses/by-sa/3.0/legalcode"
   deprecated: true
-  label: 'CC-BY-SA-3.0 Attribution Share Alike (Unsupported)'
+  label: 'CC BY-SA 3.0 Attribution-ShareAlike (Unsupported)'
   group: "Creative Commons"
 - id: "https://creativecommons.org/licenses/by-nd/3.0/legalcode"
   deprecated: true
-  label: 'CC-BY-ND-3.0 Attribution No Derivatives (Unsupported)'
+  label: 'CC BY-ND 3.0 Attribution-NoDerivatives (Unsupported)'
   group: "Creative Commons"
 - id: "https://creativecommons.org/licenses/by-nc/3.0/legalcode"
   deprecated: true
-  label: 'CC-BY-NC-3.0 Attribution Non Commercial (Unsupported)'
+  label: 'CC BY-NC 3.0 Attribution-NonCommercial (Unsupported)'
   group: "Creative Commons"
 - id: "https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode"
   deprecated: true
-  label: 'CC-BY-NC-SA-3.0 Attribution Non Commercial Share Alike (Unsupported)'
+  label: 'CC BY-NC-SA 3.0 Attribution-NonCommercial-ShareAlike (Unsupported)'
   group: "Creative Commons"
 - id: "https://creativecommons.org/licenses/by-nc-nd/3.0/legalcode"
   deprecated: true
-  label: 'CC-BY-NC-ND-3.0 Attribution Non Commercial No Derivatives (Unsupported)'
+  label: 'CC BY-NC-ND 3.0 Attribution-NonCommercial-NoDerivatives (Unsupported)'
   group: "Creative Commons"

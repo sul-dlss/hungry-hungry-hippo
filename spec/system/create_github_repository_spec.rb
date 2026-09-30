@@ -163,7 +163,7 @@ RSpec.describe 'Create a Github repository and work deposit' do
 
     within('table#license-table') do
       expect(page).to have_css('tr', text: 'License')
-      expect(page).to have_css('td', text: 'CC-BY-4.0 Attribution International')
+      expect(page).to have_css('td', text: 'CC BY 4.0 Attribution International')
     end
     within('table#title-table') do
       expect(page).to have_css('tr', text: 'Contact emails')
