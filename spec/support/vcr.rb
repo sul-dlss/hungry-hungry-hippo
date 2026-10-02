@@ -13,7 +13,7 @@ VCR.configure do |c|
     interaction.request.headers['Authorization']&.first
   end
   # Record the LiteLLM proxy under the placeholder base URL from settings.yml, whatever real base was used
-  c.filter_sensitive_data('https://example.gateway.com/v1/') { Settings.lite_llm.base }
+  c.filter_sensitive_data(Settings.lite_llm.placeholder_base) { Settings.lite_llm.base }
   # Don't record LiteLLM proxy internals (spend, rate limits, upstream project, etc.)
   c.before_record do |interaction|
     interaction.response.headers.reject! { |name, _| name.match?(/\AX-(Litellm|Ratelimit)-/i) }
