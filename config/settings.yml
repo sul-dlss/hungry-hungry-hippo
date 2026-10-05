@@ -125,8 +125,15 @@ person_api:
   cert: 'fake-cert'  # Base64 encoded; actual values from vault/puppet
 
 lite_llm:
+  # placeholder_base is used to replace the real endpoint URL when VCR cassettes
+  # are recorded, see filter_sensitive_data call in spec/support/vcr.rb.
+  placeholder_base: &lite_llm_placeholder_base
+    'https://example.gateway.com/v1/'
   key: 'fake-lite-llm-key'
-  base: 'https://example.gateway.com/v1/'
+  # base comes from vault/puppet in deployed environments; test env config uses the placeholder (so VCR cassettes work).
+  # When overriding (in e.g. test.local.yml) to re-record VCR cassettes, base must end with '/', like the placeholder,
+  # or the recorded URLs won't match on playback.
+  base: *lite_llm_placeholder_base
   model: 'gemini-3.1-pro'
 
 gemini_api:
