@@ -169,4 +169,39 @@ RSpec.describe 'Update work' do
       expect(work).not_to have_received(:deposit_persist!)
     end
   end
+
+  context 'when the work is invalid in a way that cannot be mapped to cocina' do
+    let(:user) { create(:user) }
+    let(:work) { create(:work, druid:, collection:, user:) }
+    let(:collection) { create(:collection, :with_druid) }
+    let(:content) { create(:content, :with_content_files, user:, work:) }
+    let(:update_work_params) do
+      {
+        work: {
+          content_id: content.id,
+          collection_druid: collection.druid,
+          title: 'Fake Title',
+          whats_changing: 'Initial version',
+          lock: "W/\"#{work.druid}=1=1\"",
+          related_works_attributes: {
+            '0' => { identifier: 'doi: https://doi.org/10.1083/jcb.202610007', relationship: 'is part of' }
+          }
+        }
+      }
+    end
+
+    before do
+      allow(DepositWorkJob).to receive(:perform_later)
+      allow(Sdr::Repository).to receive(:find).with(druid: work.druid).and_return(dro_with_metadata_fixture)
+      allow(Sdr::Repository).to receive(:latest_user_version).and_return(work.version)
+      sign_in(user)
+    end
+
+    it 'renders the form with errors' do
+      put "/works/#{work.druid}", params: update_work_params
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(DepositWorkJob).not_to have_received(:perform_later)
+    end
+  end
 end

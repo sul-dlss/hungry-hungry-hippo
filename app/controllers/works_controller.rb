@@ -329,7 +329,8 @@ class WorksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def handle_no_changes_or_invalid
-    if cocina_object_changed?
+    # An invalid form may not be mappable to cocina, so only check for changes when the form is otherwise valid.
+    if (!@valid && !invalid_for_whats_changing_only?) || cocina_object_changed?
       handle_invalid
     else
       if invalid_for_whats_changing_only?
