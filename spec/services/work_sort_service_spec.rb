@@ -8,7 +8,7 @@ RSpec.describe WorkSortService do
   let(:work2) { create(:work, :with_druid, user: user2, title: 'MMM Title', updated_at: 2.days.ago, collection:) }
   let(:work3) { create(:work, :with_druid, user:, title: 'ZZZ Title', updated_at: 1.day.ago, collection:) }
   let(:works) do
-    collection.works.joins(:user)
+    collection.works # Note that this is not joined on users (which cannot be assumed)
   end
   # New version in draft
   let(:version_status) do
@@ -72,6 +72,16 @@ RSpec.describe WorkSortService do
 
     context 'when sorting by owner descending' do
       let(:sort_by) { 'users.name desc' }
+
+      it 'orders by owner name descending' do
+        expect(presenters.first.work.user.name).to eq('Zoe')
+        expect(presenters.last.work.user.name).to eq('Amelia')
+      end
+    end
+
+    context 'when sorting by owner descending and works not joined to user' do
+      let(:sort_by) { 'users.name desc' }
+      let(:works) { collection.works }
 
       it 'orders by owner name descending' do
         expect(presenters.first.work.user.name).to eq('Zoe')

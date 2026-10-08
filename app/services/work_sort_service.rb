@@ -27,7 +27,8 @@ class WorkSortService
                         # Making this more efficient by only getting statuses for the page.
                         # The rest of the statuses are nil, which is fine since they aren't being displayed.
                         # Returning a Kaminari array so that pagination works.
-                        sorted_works = works.order(sort_by)
+                        # Joining user since may be sorting by users.name.
+                        sorted_works = works.joins(:user).order(sort_by)
                         works_page = sorted_works.page(page)
                         statuses = statuses_for(works_page)
                         presenters_from(works: sorted_works, statuses:)
