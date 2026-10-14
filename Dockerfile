@@ -5,8 +5,8 @@
 # build speed for size. If we were using this for production, we might instead
 # optimize for a smaller size at the cost of a slower build.
 
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version
-ARG RUBY_VERSION=3.4.1
+# Use the same Ruby version for local development and CI.
+ARG RUBY_VERSION=4.0.7
 FROM docker.io/library/ruby:$RUBY_VERSION-slim
 
 # Install base packages

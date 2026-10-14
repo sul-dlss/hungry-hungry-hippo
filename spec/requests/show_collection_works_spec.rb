@@ -86,6 +86,10 @@ RSpec.describe 'Show collection works' do
         other_works[i].update(title: works[i].title, user: works[i].user)
       end
 
+      # Keep randomly generated prefixes from matching the search accidentally.
+      works[0].update(druid: "druid:bb#{works[0].druid.slice(8..)}")
+      other_works[0].update(druid: "druid:bb#{other_works[0].druid.slice(8..)}")
+
       # give the second work in each collection a shared prefix, so we can show
       # searching for it only returns from the target collection
       works[1].update(druid: "#{common_druid_prefix}#{works[1].druid.slice(8..)}")

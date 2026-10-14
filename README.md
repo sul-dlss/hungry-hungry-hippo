@@ -11,6 +11,7 @@ During work cycles, the application is deployed continuously by our on-prem Jenk
 
 ### Requirements
 
+* Ruby 4.0.7
 * docker & docker compose
 * tmux ([installation instructions](https://github.com/tmux/tmux#installation))
 * overmind ([installed automatically via bundler](https://github.com/DarthSim/overmind/tree/master/packaging/rubygems#installation-with-rails))

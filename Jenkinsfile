@@ -25,7 +25,7 @@ pipeline {
           export DEPLOY=1
 
           # Load RVM
-          rvm use 3.4.1@hungry-hungry-hippo --create
+          rvm use 4.0.7@hungry-hungry-hippo --create
           gem install bundler
 
           bundle config set without 'production'
