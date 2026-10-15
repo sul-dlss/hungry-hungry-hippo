@@ -17,7 +17,7 @@ RSpec.describe PollGithubReleasesJob do
   before do
     allow(Github::AppService).to receive(:releases)
       .and_return(
-        # rubocop:disable Layout/LineLength
+        # rubocop:disable-next Layout/LineLength
         [
           # Before the created_at of the repository, so ignored
           Github::AppService::Release.new(id: 1, tag: 'v1.0', name: 'First release',
@@ -31,7 +31,6 @@ RSpec.describe PollGithubReleasesJob do
                                           message: { zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.2' },
                                           published_at: Time.zone.now)
         ]
-        # rubocop:enable Layout/LineLength
       )
     allow(DepositGithubReleaseJob).to receive(:perform_later)
   end
@@ -62,13 +61,12 @@ RSpec.describe PollGithubReleasesJob do
     it 'stores the tag when the release name is blank' do
       allow(Github::AppService).to receive(:releases)
         .and_return(
-          # rubocop:disable Layout/LineLength
+          # rubocop:disable-next Layout/LineLength
           [
             Github::AppService::Release.new(id: 4, tag: 'v1.3', name: '',
                                             message: { zip_url: 'https://api.github.com/repos/sul-dlss/github_repo_1/zipball/v1.3' },
                                             published_at: Time.zone.now)
           ]
-          # rubocop:enable Layout/LineLength
         )
 
       described_class.perform_now(github_repository:)

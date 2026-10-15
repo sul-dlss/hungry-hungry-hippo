@@ -17,7 +17,7 @@ module Form
       @related_resources ||= cocina_object.description.relatedResource
     end
 
-    # rubocop:disable Style/SafeNavigationChainLength
+    # rubocop:disable-next Style/SafeNavigationChainLength
     def related_link_for(related_resource)
       {
         'url' => related_resource.purl ||
@@ -26,6 +26,5 @@ module Form
         'text' => related_resource.title.first&.[](:value)
       }
     end
-    # rubocop:enable Style/SafeNavigationChainLength
   end
 end
