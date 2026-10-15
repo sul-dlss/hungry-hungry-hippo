@@ -15,7 +15,7 @@ module Admin
       @admin_user = admin_user
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable-next Metrics/AbcSize
     def call
       # user == the requested new owner of the work submitted by the admin
       # work.user == the current owner of the work
@@ -38,7 +38,6 @@ module Admin
       DepositWorkJob.perform_later(work:, work_form:, deposit: deposit?,
                                    request_review: false, current_user: user)
     end
-    # rubocop:enable Metrics/AbcSize
 
     private
 

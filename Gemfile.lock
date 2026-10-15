@@ -136,7 +136,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    capybara-lockstep (2.3.2)
+    capybara-lockstep (2.4.0)
       activesupport (>= 7.0)
       capybara (>= 3.0)
     cgi (0.5.2)
@@ -211,7 +211,7 @@ GEM
       activesupport (>= 4.2)
       bunny (~> 2.17)
       zeitwerk (~> 2.1)
-    dor-services-client (15.67.0)
+    dor-services-client (15.69.0)
       activesupport (>= 7.0.0)
       cocina-models (~> 0.133.0)
       deprecation
@@ -300,8 +300,8 @@ GEM
     google-cloud-env (2.4.1)
       base64 (~> 0.2)
       faraday (>= 1.0, < 3.a)
-    google-logging-utils (0.2.0)
-    googleauth (1.17.4)
+    google-logging-utils (0.2.1)
+    googleauth (1.17.5)
       faraday (>= 1.0, < 3.a)
       google-cloud-env (~> 2.2)
       google-logging-utils (~> 0.1)
@@ -347,7 +347,7 @@ GEM
     jbuilder (2.15.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (3.0.2)
+    json (3.1.0)
     json_schemer (2.5.0)
       bigdecimal
       hana (~> 1.3)
@@ -440,7 +440,7 @@ GEM
     net-http (0.10.0)
       net-protocol (>= 0.3.0)
       uri (>= 0.11.1)
-    net-imap (0.6.7)
+    net-imap (0.6.8)
       date
       net-protocol
     net-pop (0.1.2)
@@ -655,7 +655,7 @@ GEM
       logger (~> 1.4)
       sigdump (~> 0.2.2)
     sigdump (0.2.5)
-    signet (0.22.0)
+    signet (0.22.1)
       addressable (~> 2.8)
       faraday (>= 0.17.5, < 3.a)
       jwt (>= 1.5, < 4.0)
@@ -727,7 +727,7 @@ GEM
       actionview (>= 8.0.0)
       bindex (>= 0.4.0)
       railties (>= 8.0.0)
-    webmock (3.29.0)
+    webmock (3.34.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -754,11 +754,11 @@ PLATFORMS
 DEPENDENCIES
   action_policy
   ahoy_matey
-  bcrypt (~> 3.1.7)
+  bcrypt
   bootsnap
   brakeman
   bunny
-  capistrano-maintenance (~> 1.2)
+  capistrano-maintenance
   capistrano-passenger
   capistrano-rails
   capybara
@@ -798,7 +798,7 @@ DEPENDENCIES
   mais_person_client
   marcel
   mission_control-jobs
-  multi_json (~> 1.20)
+  multi_json
   octokit
   okcomputer
   overmind
@@ -807,7 +807,7 @@ DEPENDENCIES
   pg
   preservation-client
   propshaft
-  puma (>= 5.0)
+  puma
   rack-sanitizer
   rails (~> 8.1.0)
   recaptcha
@@ -820,7 +820,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-rspec_rails
-  ruby_llm (~> 2.0)
+  ruby_llm
   sdr_view_components
   selenium-webdriver
   simplecov

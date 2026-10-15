@@ -9,7 +9,7 @@ gem 'propshaft'
 # Use Postgres as the database for Active Record
 gem 'pg'
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '>= 5.0'
+gem 'puma'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -22,7 +22,7 @@ gem 'cssbundling-rails'
 gem 'jbuilder'
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[windows jruby]
@@ -66,14 +66,14 @@ gem 'kicks' # Background processing of rabbitMQ messages. (Formerly sneakers.)
 gem 'local_time'
 gem 'mais_person_client'
 gem 'marcel' # For MIME type detection
-gem 'multi_json', '~> 1.20'
+gem 'multi_json'
 gem 'octokit' # GitHub API client
 gem 'okcomputer'
 gem 'parallel' # Used for abstract extraction testing.
 gem 'preservation-client'
 gem 'rack-sanitizer'
 gem 'recaptcha' # prevent robots spamming the contact form
-gem 'ruby_llm', '~> 2.0' # For extracting abstracts
+gem 'ruby_llm'
 gem 'sdr_view_components'
 gem 'state_machines-activerecord'
 gem 'validate_url'
@@ -120,7 +120,7 @@ group :test do
 end
 
 group :deployment do
-  gem 'capistrano-maintenance', '~> 1.2', require: false
+  gem 'capistrano-maintenance', require: false
   gem 'capistrano-passenger', require: false
   gem 'capistrano-rails', require: false
   gem 'dlss-capistrano', require: false

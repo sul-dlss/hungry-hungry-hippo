@@ -118,10 +118,9 @@ RSpec.describe 'Show collection' do
 
       expect(response).to have_http_status(:ok)
       # Match when a line contains custom instructions immediately after a line contains "Additional terms of use"
-      # rubocop:disable Layout/LineLength
+      # rubocop:disable-next Layout/LineLength
       expect(response.body)
         .to match(%r{Additional terms of use.+<td><p>Allow user to enter with instructions:</p>\n\n<p>Whip it!</p></td>}m)
-      # rubocop:enable Layout/LineLength
     end
   end
 end

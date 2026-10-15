@@ -92,7 +92,7 @@ class DepositWorkJob < ApplicationJob # rubocop:disable Metrics/ClassLength
                                          original_cocina_object: current_cocina_object)
   end
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable-next Metrics/AbcSize
   def perform_persist
     if !work_form.persisted?
       Sdr::Repository.register(cocina_object: cocina_object_for_persist, assign_doi:, user_name:)
@@ -109,7 +109,6 @@ class DepositWorkJob < ApplicationJob # rubocop:disable Metrics/ClassLength
       Sdr::Repository.update(cocina_object: mapped_cocina_object_with_update_deposit_publication_date, user_name:)
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   def assign_doi
     work_form.doi_option == 'yes'
