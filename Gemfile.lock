@@ -77,7 +77,7 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    addressable (2.9.0)
+    addressable (2.9.2)
       public_suffix (>= 2.0.2, < 8.0)
     ahoy_matey (5.5.0)
       activesupport (>= 7.2)
@@ -86,7 +86,7 @@ GEM
       safely_block (>= 0.4)
     airbrussh (1.6.2)
       sshkit (>= 1.6.1, != 1.7.0)
-    amq-protocol (2.9.0)
+    amq-protocol (2.10.0)
     ast (2.4.3)
     attr_extras (7.1.0)
     base64 (0.3.0)
@@ -173,25 +173,27 @@ GEM
       bigdecimal
       rexml
     crass (1.0.8)
-    css_parser (3.3.0)
+    css_parser (3.4.0)
       addressable
       base64
       ssrf_filter (~> 1.5)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
-    csv (3.3.6)
+    csv (3.3.7)
     cyperful (0.3.1)
       capybara (~> 3)
       listen (~> 3)
       parser (~> 3)
       webrick-websocket (~> 0.0.4)
-    datacite (0.8.6)
+    datacite (0.8.7)
       activesupport
+      base64
       cocina_display
-      dry-monads (~> 1.3)
-      faraday (~> 2.0)
+      dry-monads
+      faraday
+      json
       json_schemer
-      zeitwerk (~> 2.4)
+      zeitwerk
     date (3.6.0)
     debug (1.11.1)
       irb (~> 1.10)
@@ -292,7 +294,7 @@ GEM
     geom2d (0.4.1)
     globalid (1.4.0)
       activesupport (>= 6.1)
-    globus_client (0.19.0)
+    globus_client (0.19.1)
       activesupport (>= 4.2)
       faraday
       faraday-retry
@@ -300,8 +302,8 @@ GEM
     google-cloud-env (2.4.1)
       base64 (~> 0.2)
       faraday (>= 1.0, < 3.a)
-    google-logging-utils (0.2.1)
-    googleauth (1.17.6)
+    google-logging-utils (0.2.2)
+    googleauth (1.17.7)
       faraday (>= 1.0, < 3.a)
       google-cloud-env (~> 2.2)
       google-logging-utils (~> 0.1)
@@ -320,7 +322,7 @@ GEM
       geom2d (~> 0.4, >= 0.4.1)
       openssl (>= 2.2.1)
       strscan (>= 3.1.2)
-    honeybadger (6.10.0)
+    honeybadger (6.10.1)
       logger
       ostruct
     hotwire-spark (0.1.13)
@@ -336,7 +338,7 @@ GEM
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
-    io-console (0.9.4)
+    io-console (0.9.5)
     irb (1.18.0)
       pp (>= 0.6.0)
       prism (>= 1.3.0)
@@ -353,24 +355,24 @@ GEM
       hana (~> 1.3)
       regexp_parser (~> 2.0)
       simpleidn (~> 0.2)
-    jsonschema_rs (0.60.1-arm64-darwin)
+    jsonschema_rs (0.60.2-arm64-darwin)
       bigdecimal (>= 3.1, < 5)
-    jsonschema_rs (0.60.1-x86_64-linux)
+    jsonschema_rs (0.60.2-x86_64-linux)
       bigdecimal (>= 3.1, < 5)
     jwt (3.3.0)
       base64
-    kaminari (1.3.0)
+    kaminari (1.3.2)
       activesupport (>= 4.1.0)
-      kaminari-actionview (= 1.3.0)
-      kaminari-activerecord (= 1.3.0)
-      kaminari-core (= 1.3.0)
-    kaminari-actionview (1.3.0)
+      kaminari-actionview (= 1.3.2)
+      kaminari-activerecord (= 1.3.2)
+      kaminari-core (= 1.3.2)
+    kaminari-actionview (1.3.2)
       actionview
-      kaminari-core (= 1.3.0)
-    kaminari-activerecord (1.3.0)
+      kaminari-core (= 1.3.2)
+    kaminari-activerecord (1.3.2)
       activerecord
-      kaminari-core (= 1.3.0)
-    kaminari-core (1.3.0)
+      kaminari-core (= 1.3.2)
+    kaminari-core (1.3.2)
     kicks (3.3.0)
       bunny (~> 2.24)
       concurrent-ruby (~> 1.0)
@@ -385,9 +387,9 @@ GEM
       rb-inotify (~> 0.9, >= 0.9.10)
     local_time (3.0.3)
     logger (1.7.0)
-    loofah (2.25.2)
+    loofah (2.25.3)
       crass (~> 1.0.2)
-      nokogiri (>= 1.12.0)
+      nokogiri (>= 1.19.5)
     lookbook (2.3.15)
       activemodel
       css_parser
@@ -434,7 +436,7 @@ GEM
       json
       nokogiri
       nokogiri-happymapper
-    msgpack (1.8.5)
+    msgpack (1.8.7)
     multi_json (1.21.2)
     multipart-post (2.4.1)
     net-http (0.10.0)
@@ -447,9 +449,9 @@ GEM
       net-protocol
     net-protocol (0.4.0)
       timeout
-    net-scp (4.1.2)
+    net-scp (4.2.0)
       net-ssh (>= 2.6.5, < 9.0.0)
-    net-sftp (4.0.2)
+    net-sftp (4.1.1)
       net-ssh (>= 5.0.0, < 9.0.0)
     net-smtp (0.5.2)
       net-protocol
@@ -457,9 +459,9 @@ GEM
       logger
       openssl (>= 3.2.0)
     nio4r (2.7.5)
-    nokogiri (1.19.4-arm64-darwin)
+    nokogiri (1.19.6-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.19.4-x86_64-linux-gnu)
+    nokogiri (1.19.6-x86_64-linux-gnu)
       racc (~> 1.4)
     nokogiri-happymapper (0.10.1)
       nokogiri (~> 1.5)
@@ -475,7 +477,7 @@ GEM
     overmind (2.5.1)
     overmind (2.5.1-arm64-darwin)
     parallel (2.3.0)
-    parallel_tests (5.8.0)
+    parallel_tests (5.9.0)
       parallel
     parser (3.3.13.0)
       ast (~> 2.4.1)
@@ -504,7 +506,7 @@ GEM
       nio4r (~> 2.0)
     raabro (1.5.0)
     racc (1.8.1)
-    rack (3.2.7)
+    rack (3.2.8)
     rack-sanitizer (2.1.0)
       rack (>= 1.0, < 4.0)
     rack-session (2.1.2)
@@ -532,8 +534,8 @@ GEM
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.7.1)
-      loofah (~> 2.25, >= 2.25.2)
+    rails-html-sanitizer (1.7.2)
+      loofah (~> 2.25, >= 2.25.3)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
     railties (8.1.4)
       actionpack (= 8.1.4)
@@ -586,7 +588,7 @@ GEM
     rspec-support (3.13.7)
     rspec_junit_formatter (0.8.0)
       rspec-core (>= 3.13, < 4)
-    rubocop (1.92.1)
+    rubocop (1.92.2)
       json (>= 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -642,12 +644,12 @@ GEM
       addressable (>= 2.3.5)
       faraday (>= 0.17.3, < 3)
     schematist (1.1.0)
-    sdr_view_components (0.13.0)
+    sdr_view_components (0.16.0)
       rails (~> 8.0)
       view_component
       zeitwerk
     securerandom (0.4.1)
-    selenium-webdriver (4.51.0)
+    selenium-webdriver (4.52.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rubyzip (>= 1.2.2, < 4.0)
@@ -657,7 +659,7 @@ GEM
       logger (~> 1.4)
       sigdump (~> 0.2.2)
     sigdump (0.2.5)
-    signet (0.22.1)
+    signet (0.22.2)
       addressable (~> 2.8)
       faraday (>= 0.17.5, < 3.a)
       jwt (>= 1.5, < 4.0)
@@ -720,10 +722,11 @@ GEM
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
-    vcr (6.4.0)
-    view_component (4.19.0)
+    vcr (6.4.1)
+    view_component (4.20.0)
       actionview (>= 7.1.0)
       activesupport (>= 7.1.0)
+      prism (>= 1.0)
     web-console (4.3.0)
       actionview (>= 8.0.0)
       bindex (>= 0.4.0)
