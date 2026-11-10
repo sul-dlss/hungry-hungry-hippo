@@ -22,7 +22,9 @@ RSpec.describe 'Show dashboard', :rack_test do
     let(:user) { create(:user) }
     let(:version_status) { build(:accessioning_version_status) }
     let(:draft_version_status) { build(:draft_version_status) }
-    let(:banner_text) { strip_tags(I18n.t('banner.dashboard_html')) }
+    # the gsub is a hack to allow matching, since strip_tags converts single-quote to its
+    # escape sequence, which will prevent have_text/have_css(css_string, text:)/etc matcher from working
+    let(:banner_text) { strip_tags(I18n.t('banner.dashboard_html')).gsub('&#39;', "'") }
 
     before do
       allow(Sdr::Repository).to receive(:statuses).and_return({ work.druid => version_status,
@@ -99,7 +101,9 @@ RSpec.describe 'Show dashboard', :rack_test do
     let(:version_status) { build(:accessioning_version_status) }
     let(:draft_version_status) { build(:draft_version_status) }
     let(:pending_review_version_status) { build(:first_draft_version_status) }
-    let(:banner_text) { strip_tags(I18n.t('banner.dashboard_html')) }
+    # the gsub is a hack to allow matching, since strip_tags converts single-quote to its
+    # escape sequence, which will prevent have_text/have_css(css_string, text:)/etc matcher from working
+    let(:banner_text) { strip_tags(I18n.t('banner.dashboard_html')).gsub('&#39;', "'") }
 
     before do
       allow(Sdr::Repository).to receive(:statuses).and_return({ work.druid => version_status,
