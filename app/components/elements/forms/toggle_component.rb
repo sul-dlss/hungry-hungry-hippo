@@ -15,6 +15,11 @@ module Elements
         args[:label_classes] = merge_classes('d-block', args[:label_classes])
         super
       end
+
+      # toggle-radio applies the component library's toggle styles.
+      def container_classes
+        merge_classes('toggle-radio', super)
+      end
     end
   end
 end
