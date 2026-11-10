@@ -14,7 +14,9 @@ RSpec.describe 'Show home' do
 
     expect(page).to have_text('Create or manage your deposits')
     expect(page).to have_link('Enter here', href: dashboard_path)
-    expect(page).to have_text(strip_tags(I18n.t('banner.home_html')))
+    # the gsub is a hack to allow matching, since strip_tags converts single-quote to its
+    # escape sequence, which will prevent the have_text matcher from working
+    expect(page).to have_text(strip_tags(I18n.t('banner.home_html')).gsub('&#39;', "'"))
     expect(page).to have_text('Sign up for our newsletter')
     expect(page).to have_css('.quote-card', text: 'I am definitely hearing more')
     expect(page).to have_css('.quote-card', count: 7)
