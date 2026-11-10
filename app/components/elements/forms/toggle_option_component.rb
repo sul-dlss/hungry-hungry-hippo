@@ -17,11 +17,6 @@ module Elements
       end
 
       attr_reader :form, :field_name, :label, :value, :data
-
-      # The component library's toggle-radio styles round each option, so no rounding classes are added here.
-      def label_classes
-        'btn'
-      end
     end
   end
 end
