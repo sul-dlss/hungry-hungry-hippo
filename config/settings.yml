@@ -156,4 +156,4 @@ recaptcha:
   secret_key: 'fake-secret-key'
 
 component_library:
-  url: 'https://cdn.jsdelivr.net/gh/sul-dlss/component-library@v2026-01-27'
+  url: 'https://cdn.jsdelivr.net/gh/sul-dlss/component-library@v2026-09-28'

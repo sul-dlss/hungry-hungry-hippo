@@ -18,8 +18,9 @@ module Elements
 
       attr_reader :form, :field_name, :label, :value, :data
 
+      # The component library's toggle-radio styles round each option, so no rounding classes are added here.
       def label_classes
-        merge_classes('btn', @position == :left ? 'rounded-start-pill' : 'rounded-end-pill')
+        'btn'
       end
     end
   end
