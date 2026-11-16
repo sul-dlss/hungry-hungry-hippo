@@ -43,7 +43,7 @@ table.table-treegrid {
     display: inline-block;
     font-weight: 900;
     font-size: .9rem;
-    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+    color: rgb(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
     border-color: var(--stanford-30-black);
   }
 
@@ -84,7 +84,7 @@ table.table-treegrid {
 }
 
 .btn-link {
-  color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+  color: rgb(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
 }
 
 // Breadcrumb custom divider
@@ -231,7 +231,7 @@ fieldset.form-fieldset legend {
 }
 
 .opaque {
-  background-color: rgba(255 255 255 / 90%);
+  background-color: rgb(255 255 255 / 90%);
 }
 
 .borderless {
