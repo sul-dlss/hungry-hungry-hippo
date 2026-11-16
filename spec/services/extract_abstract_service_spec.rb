@@ -8,6 +8,7 @@ RSpec.describe ExtractAbstractService, :vcr do
 
   let(:raise_on_error) { false }
   let(:filepath) { 'spec/fixtures/files/Strategies_for_Digital_Library_Migration.pdf' }
+  let(:chat) { instance_double(RubyLLM::Chat, with_instructions: nil, with_schema: nil) }
 
   context 'when the abstract can be successfully extracted' do
     it 'returns the extracted abstract text' do
@@ -40,7 +41,9 @@ RSpec.describe ExtractAbstractService, :vcr do
 
   context 'when there is an error during extraction' do
     before do
-      allow_any_instance_of(RubyLLM::Chat).to receive(:ask).and_raise(RubyLLM::Error) # rubocop:disable RSpec/AnyInstance
+      allow(RubyLLM).to receive(:chat).and_return(chat)
+      allow(chat).to receive(:with_temperature).and_return(chat)
+      allow(chat).to receive(:ask).and_raise(RubyLLM::Error)
     end
 
     it 'returns nil' do
@@ -50,7 +53,9 @@ RSpec.describe ExtractAbstractService, :vcr do
 
   context 'when there is a timeout error during extraction' do
     before do
-      allow_any_instance_of(RubyLLM::Chat).to receive(:ask).and_raise(Faraday::TimeoutError) # rubocop:disable RSpec/AnyInstance
+      allow(RubyLLM).to receive(:chat).and_return(chat)
+      allow(chat).to receive(:with_temperature).and_return(chat)
+      allow(chat).to receive(:ask).and_raise(Faraday::TimeoutError)
     end
 
     it 'returns nil' do
@@ -62,7 +67,9 @@ RSpec.describe ExtractAbstractService, :vcr do
     let(:raise_on_error) { true }
 
     before do
-      allow_any_instance_of(RubyLLM::Chat).to receive(:ask).and_raise(RubyLLM::Error) # rubocop:disable RSpec/AnyInstance
+      allow(RubyLLM).to receive(:chat).and_return(chat)
+      allow(chat).to receive(:with_temperature).and_return(chat)
+      allow(chat).to receive(:ask).and_raise(RubyLLM::Error)
     end
 
     it 'raises an error' do
