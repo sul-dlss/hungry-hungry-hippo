@@ -28,6 +28,14 @@ module Works
         GlobusSupport.endpoint_url(destination_path:, origin: 'onedrive')
       end
 
+      def marlowe_home_url
+        GlobusSupport.endpoint_url(destination_path:, origin: 'marlowe_home')
+      end
+
+      def marlowe_project_url
+        GlobusSupport.endpoint_url(destination_path:, origin: 'marlowe_project')
+      end
+
       def local_url
         GlobusSupport.endpoint_url(destination_path:)
       end

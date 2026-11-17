@@ -14,6 +14,15 @@ RSpec.describe Works::Edit::GlobusComponent, type: :component do
     expect(page).to have_link('Sherlock', href: 'https://app.globus.org/file-manager?destination_id=fake7087-d32d-4588-8517-b2d0d32d53b8&destination_path=/uploads/jstanford/new&origin_id=6881ae2e-db26-11e5-9772-22000b9da45e')
     expect(page).to have_link('Oak', href: 'https://app.globus.org/file-manager?destination_id=fake7087-d32d-4588-8517-b2d0d32d53b8&destination_path=/uploads/jstanford/new&origin_id=8b3a8b64-d4ab-4551-b37e-ca0092f769a7')
     expect(page).to have_link('Microsoft OneDrive', href: 'https://app.globus.org/file-manager?destination_id=fake7087-d32d-4588-8517-b2d0d32d53b8&destination_path=/uploads/jstanford/new&origin_id=9beecf19-601f-47b9-a15b-a0f34845abb1')
+    expect(page).to have_link('Marlowe home directories', href: 'https://app.globus.org/file-manager?destination_id=fake7087-d32d-4588-8517-b2d0d32d53b8&destination_path=/uploads/jstanford/new&origin_id=05846e8e-fcd3-4b02-869d-0052f5e8597a')
+    expect(page).to have_link('Marlowe project space', href: 'https://app.globus.org/file-manager?destination_id=fake7087-d32d-4588-8517-b2d0d32d53b8&destination_path=/uploads/jstanford/new&origin_id=c07db93f-1c24-4241-852e-9f573f72987a')
     expect(page).to have_button('Globus file transfer complete')
+  end
+
+  it 'lists globus links alphabetically' do
+    render_inline(described_class.new(content_obj:, globus_destination_path: destination_path))
+
+    expect(page.all('li a').map(&:text)).to eq(['Google Drive', 'Marlowe home directories', 'Marlowe project space',
+                                                'Microsoft OneDrive', 'Oak', 'Sherlock', 'Your computer'])
   end
 end
