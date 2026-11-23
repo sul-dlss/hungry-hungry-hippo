@@ -26,7 +26,7 @@ RSpec.describe 'Manage files for a work' do
 
       expect(page).to have_css('h1', text: 'Untitled deposit')
       expect(page).to have_text('Save a draft to enable Globus file deposit.')
-      expect(find_button(globus_button_label, disabled: false)[:class]).to match('disabled')
+      expect(page).to have_button(globus_button_label, disabled: true, class: 'disabled')
       expect(page).to have_no_text('Click the link where your files are located')
     end
   end
